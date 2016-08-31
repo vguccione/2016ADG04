@@ -1,0 +1,7 @@
+/home/dana/eclipse_proj/2016AD_G04_Servidor/src/main/java/com/ADG04/Servidor/dao/ClienteDao.java
+/home/dana/eclipse_proj/2016AD_G04_Servidor/src/main/java/com/ADG04/Servidor/rmi/DistribucionPaquetesRMI.java
+/home/dana/eclipse_proj/2016AD_G04_Servidor/src/main/java/com/ADG04/Servidor/Servidor.java
+/home/dana/eclipse_proj/2016AD_G04_Servidor/src/main/java/com/ADG04/Servidor/App.java
+/home/dana/eclipse_proj/2016AD_G04_Servidor/src/main/java/com/ADG04/Servidor/dao/GenericDao.java
+/home/dana/eclipse_proj/2016AD_G04_Servidor/src/main/java/com/ADG04/Servidor/model/Cliente.java
+/home/dana/eclipse_proj/2016AD_G04_Servidor/src/main/java/com/ADG04/Servidor/util/EntityManagerProvider.java

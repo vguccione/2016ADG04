@@ -1,0 +1,7 @@
+com/ADG04/Servidor/Servidor.class
+com/ADG04/Servidor/model/Cliente.class
+com/ADG04/Servidor/dao/ClienteDao.class
+com/ADG04/Servidor/dao/GenericDao.class
+com/ADG04/Servidor/App.class
+com/ADG04/Servidor/util/EntityManagerProvider.class
+com/ADG04/Servidor/rmi/DistribucionPaquetesRMI.class

@@ -50,8 +50,9 @@ Al utilizar **sql server**, debe realizarse lo siguiente, también en consola, e
 
 ```mvn install:install-file -Dfile=sqljdbc4.jar -DgroupId=com.microsoft.sqlserver -DartifactId=sqljdbc4 -Dversion=4.0 -Dpackaging=jar```
 
-Indicar en Dfile el directorio (path) donde se encuentre el jar sqljdbc4
-Volver a hacer mvc clean install luego
+Indicar en Dfile el directorio (path) donde se encuentre el jar sqljdbc4.
+
+Volver a hacer mvc clean install.
 
 
 5. Ir a eclipse y probar correr el Servidor en src/java/main/ > com.ADG04.Servidor > Servidor.java. Debera levantar el servidor rmi

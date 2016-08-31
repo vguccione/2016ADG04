@@ -11,10 +11,10 @@ Instrucciones para levantar el servidor
 
 **Uso de Github**
 
-1- Posicionarse en el directorio donde se desee descargar el repositorio en consola (cmd en windows)
-2- En la pantalla inicial de este repositorio, hacer click en  el boton "clone or download" y copiar la url que se indica
-3- En la consola ingresar : git clone <url del paso anterior>
-4- Una vez que hayan bajado los archivos ir a eclipse
+1. Posicionarse en el directorio donde se desee descargar el repositorio en consola (cmd en windows)
+2. En la pantalla inicial de este repositorio, hacer click en  el boton "clone or download" y copiar la url que se indica
+3. En la consola ingresar : git clone <url del paso anterior>
+4. Una vez que hayan bajado los archivos ir a eclipse
 
 **En eclipse**
 

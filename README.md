@@ -10,6 +10,7 @@ Instrucciones para levantar el servidor
 - Para instalar maven seguir las siguientes instrucciones: https://maven.apache.org/install.html
 
 **Uso de Github**
+
 1. Hacer click en "Fork" y elegir usuario
 2. Posicionarse en el directorio donde se desee descargar el repositorio en consola (cmd en windows)
 3. En la pantalla inicial de tu repositorio (en la url va a aparecer el nombre de tu usuario), hacer click en  el boton "clone or download" y copiar la url que se indica

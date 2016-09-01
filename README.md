@@ -10,11 +10,20 @@ Instrucciones para levantar el servidor
 - Para instalar maven seguir las siguientes instrucciones: https://maven.apache.org/install.html
 
 **Uso de Github**
+1. Hacer click en "Fork" y elegir usuario
+2. Posicionarse en el directorio donde se desee descargar el repositorio en consola (cmd en windows)
+3. En la pantalla inicial de tu repositorio (en la url va a aparecer el nombre de tu usuario), hacer click en  el boton "clone or download" y copiar la url que se indica
+4. En la consola ingresar : git clone <url del paso anterior>
+5. Indicar por consola: git remote add upstream git@github.com:2016AplicacionesDistribuidas/2016ADG04.git
+6. Indicar: git remote -v   y comprobar figuren origin y upstream. Origin debe tener la url de tu repositorio y upstream la url del repositorio master.
+7. Una vez que hayan bajado los archivos ir a eclipse
 
-1. Posicionarse en el directorio donde se desee descargar el repositorio en consola (cmd en windows)
-2. En la pantalla inicial de este repositorio, hacer click en  el boton "clone or download" y copiar la url que se indica
-3. En la consola ingresar : git clone <url del paso anterior>
-4. Una vez que hayan bajado los archivos ir a eclipse
+(si hiciste git pull del repositorio master, forkeá el repo y modificá el remote origin con los siguientes pasos:
+- git remote set-url origin  <url de tu repo forkeado>
+- git remote add upstream git@github.com:2016AplicacionesDistribuidas/2016ADG04.git
+- git remote -v (verificá origin y upstream)
+)
+
 
 **En eclipse**
 

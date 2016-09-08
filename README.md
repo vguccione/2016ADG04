@@ -66,7 +66,7 @@ Volver a hacer mvc clean install.
 
 
 5. Ir a eclipse y probar correr el Servidor en src/java/main/ > com.ADG04.Servidor > Servidor.java. Debera levantar el servidor rmi
-6. Tambien correr en src/java/main  , en com.ADG04.Servidor > App.java.  Si la configuracion de la base es correcta, se creará la tabla clientes y se creará el registro "Juan". 
+6. Tambien correr en src/java/main  , en com.ADG04.Servidor > App.java.  Si la configuracion de la base es correcta, se crearán las tablas y se agregara un registro a la tabla Pais. 
 
 
 

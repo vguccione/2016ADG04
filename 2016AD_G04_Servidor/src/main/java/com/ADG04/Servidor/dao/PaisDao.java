@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.Pais;
 
 import java.lang.reflect.ParameterizedType;

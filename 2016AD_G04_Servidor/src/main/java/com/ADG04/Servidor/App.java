@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.model.Cliente;
+import com.ADG04.Servidor.model.Pais;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
@@ -17,12 +18,12 @@ public class App
 {
     public static void main( String[] args )
     {
-    	 ClienteDao dao = new ClienteDao(EntityManagerProvider.getInstance().getEntityManager());
+    	 PaisDao dao = new PaisDao(EntityManagerProvider.getInstance().getEntityManager());
          
-         Cliente juan =new Cliente("Juan");
+         Pais p =new Pais("Argentina");
         
          
-         dao.persist(juan);
+         dao.persist(p);
          
          EntityManagerProvider.getInstance().close();
     }

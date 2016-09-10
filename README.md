@@ -79,7 +79,8 @@ Como subir cambios al master usando Git
 ```git commit -m "comentarios de los cambios..."```
 ```git push origin master ```
 
-2- Ir a github web y verificar si los cambios fueron subidos a TU repositorio (ej https://github.com/**dcorvetto**/2016ADG04) . La url tendra el nombre de su usuario.
+2- Ir a github web y verificar si los cambios fueron subidos a TU repositorio (ej https://github.com/**dcorvetto**/2016ADG04) . La url tendra el nombre de su usuario. Veran la leyenda:
+"This branch is 1 commit ahead of 2016AplicacionesDistribuidas:master." (puede ser 1 o más commits diferentes)
 
 3- Desde github web, crear un Pull Request (PR). La opción está al costado debajo del botón "Clone or Download"
 

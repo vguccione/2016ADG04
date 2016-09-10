@@ -29,9 +29,10 @@ public class Cliente implements java.io.Serializable {
 	@JoinColumn(name = "IdTipoCliente", nullable = false)
 	private TipoCliente tipoCliente;
 	
+	/*
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdDireccion", nullable = false)
-	private Direccion direccion;
+	private Direccion direccion;*/
 	
 	@Column(name = "RazonSocial", length = 50)
 	private String razonSocial;
@@ -60,10 +61,10 @@ public class Cliente implements java.io.Serializable {
 	public Cliente() {
 	}
 
-	public Cliente(TipoCliente tipoCliente, Direccion direccion,
+	public Cliente(TipoCliente tipoCliente, //Direccion direccion,
 			boolean estado, String email, String telefono) {
 		this.tipoCliente = tipoCliente;
-		this.direccion = direccion;
+		//this.direccion = direccion;
 		this.estado = estado;
 		this.email = email;
 		this.telefono = telefono;
@@ -85,13 +86,13 @@ public class Cliente implements java.io.Serializable {
 		this.tipoCliente = tipoCliente;
 	}
 
-	public Direccion getDireccion() {
+	/*public Direccion getDireccion() {
 		return this.direccion;
 	}
 
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
-	}
+	}*/
 
 	public String getRazonSocial() {
 		return this.razonSocial;

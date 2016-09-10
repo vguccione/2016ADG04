@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import dto.Administracion.DTO_Empleado;
+import com.ADG94.bean.ClienteDTO;
 
 
 public interface InterfazRemotaDistribucionPaquetes extends Remote{
@@ -15,5 +15,8 @@ public interface InterfazRemotaDistribucionPaquetes extends Remote{
 	public void modificarEmpleado(DTO_Empleado empleado) throws RemoteException;
 	public void bajaEmpleado(Integer idEmpleado) throws RemoteException;
 	*/
+	
+	//Clientes
+	public ClienteDTO getCliente(String cuit) throws RemoteException;
 	
 }

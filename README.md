@@ -75,9 +75,9 @@ Como subir cambios al master usando Git
 
 1- Desde consola realizar los siguientes pasos:
 
-```git add .```
-```git commit -m "comentarios de los cambios..."```
-```git push origin master ```
+- ```git add .```
+- ```git commit -m "comentarios de los cambios..."```
+- ```git push origin master ```
 
 2- Ir a github web y verificar si los cambios fueron subidos a TU repositorio (ej https://github.com/**dcorvetto**/2016ADG04) . La url tendra el nombre de su usuario. Veran la leyenda:
 "This branch is 1 commit ahead of 2016AplicacionesDistribuidas:master." (puede ser 1 o más commits diferentes)
@@ -90,9 +90,9 @@ Como subir cambios al master usando Git
 
 6- **Todavía falta bajar los cambios de master a su fork!!** Para eso realizar por consola los siguientes pasos
 
-```git fetch upstream
-git rebase upstream/master
-git push origin master```
+- ```git fetch upstream```
+- ```git rebase upstream/master```
+- ```git push origin master```
 
 El comando ```git status``` les puede ser de utilidad para verificar el estado de su repositorio en cualquier momento.
 

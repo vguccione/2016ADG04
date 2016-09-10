@@ -71,23 +71,23 @@ Volver a hacer mvc clean install.
 
 Como subir cambios al master usando Git
 -----------------------------------------
-__(Estos pasos deben realizarse ya habiendose efectuado los pasos **Uso de Github** detallados arriba)__
+(Estos pasos deben realizarse ya habiendose efectuado los pasos **Uso de Github** detallados arriba)
 
-1. Desde consola realizar los siguientes pasos:
+1- Desde consola realizar los siguientes pasos:
 
 ```git add .```
 ```git commit -m "comentarios de los cambios..."```
 ```git push origin master ```
 
-2. Ir a github web y verificar si los cambios fueron subidos a TU repositorio (ej https://github.com/**dcorvetto**/2016ADG04) . La url tendra el nombre de su usuario.
+2- Ir a github web y verificar si los cambios fueron subidos a TU repositorio (ej https://github.com/**dcorvetto**/2016ADG04) . La url tendra el nombre de su usuario.
 
-3. Desde github web, crear un Pull Request (PR). La opción está al costado debajo del botón "Clone or Download"
+3- Desde github web, crear un Pull Request (PR). La opción está al costado debajo del botón "Clone or Download"
 
-4. Una vez creado el PR pueden mergearlo desde allí mismo. Abajo de todo esta el botón "Merge"
+4- Una vez creado el PR pueden mergearlo desde allí mismo. Abajo de todo esta el botón "Merge"
 
-5. Una vez que mergean el cambio, verificar que los cambios estan en el repositorio master: https://github.com/2016AplicacionesDistribuidas/2016ADG04
+5- Una vez que mergean el cambio, verificar que los cambios estan en el repositorio master: https://github.com/2016AplicacionesDistribuidas/2016ADG04
 
-6. **Todavía falta bajar los cambios de master a su fork!!** Para eso realizar por consola los siguientes pasos
+6- **Todavía falta bajar los cambios de master a su fork!!** Para eso realizar por consola los siguientes pasos
 
 ```git fetch upstream
 git rebase upstream/master
@@ -95,7 +95,7 @@ git push origin master```
 
 El comando ```git status``` les puede ser de utilidad para verificar el estado de su repositorio en cualquier momento.
 
-7. En github web podes verificar que en TU repositorio aparece una leyenda como esta:
+7- En github web podes verificar que en TU repositorio aparece una leyenda como esta:
 "This branch is even with 2016AplicacionesDistribuidas:master."
 
 De ser así, su repositorio y el master son iguales. :)

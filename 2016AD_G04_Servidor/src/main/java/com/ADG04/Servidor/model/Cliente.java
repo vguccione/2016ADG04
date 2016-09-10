@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,11 +30,6 @@ public class Cliente implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdTipoCliente", nullable = false)
 	private TipoCliente tipoCliente;
-	
-	/*
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdDireccion", nullable = false)
-	private Direccion direccion;*/
 	
 	@Column(name = "RazonSocial", length = 50)
 	private String razonSocial;
@@ -85,14 +82,6 @@ public class Cliente implements java.io.Serializable {
 	public void setTipoCliente(TipoCliente tipoCliente) {
 		this.tipoCliente = tipoCliente;
 	}
-
-	/*public Direccion getDireccion() {
-		return this.direccion;
-	}
-
-	public void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
-	}*/
 
 	public String getRazonSocial() {
 		return this.razonSocial;

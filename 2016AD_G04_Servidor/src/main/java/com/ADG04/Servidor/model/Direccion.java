@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -52,9 +53,6 @@ public class Direccion implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccion")
 	private List<Proveedor> proveedores;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccion")
-	private List<Cliente> clientes;
-
 	public Direccion() {
 	}
 
@@ -158,16 +156,6 @@ public class Direccion implements java.io.Serializable {
 
 	public void setProveedores(List<Proveedor> proveedores) {
 		this.proveedores = proveedores;
-	}
-
-
-	public List<Cliente> getClientes() {
-		return clientes;
-	}
-
-
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
 	}
 
 }

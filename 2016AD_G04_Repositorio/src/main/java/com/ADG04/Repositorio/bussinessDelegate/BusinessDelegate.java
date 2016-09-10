@@ -7,9 +7,8 @@ import java.rmi.RemoteException;
 import java.util.Set;
 
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
+import com.ADG94.bean.ClienteDTO;
 
-import ejemplo_1.bean.Alumno;
-import ejemplo_1.interfaz.TDAManejoDatos;
 
 public class BusinessDelegate
 {
@@ -46,5 +45,8 @@ public class BusinessDelegate
 		
 	}
 
+	public ClienteDTO getCliente(String cuit) throws RemoteException{
+		return this.businessService.getCliente(cuit);
+	}
 
 }

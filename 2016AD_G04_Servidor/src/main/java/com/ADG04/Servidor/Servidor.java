@@ -29,6 +29,8 @@ public class Servidor extends Thread {
                  //Vincula el objeto con un nombre en el registry
                  Naming.rebind (InterfazRemotaDistribucionPaquetes.url, objetoRemoto);
                  System.out.println("Servidor inicializado correctamente...");
+                 System.out.println(InterfazRemotaDistribucionPaquetes.url);
+                 System.out.println("Puerto 1099");
                      } catch (Exception e) {
                              e.printStackTrace();
                      }

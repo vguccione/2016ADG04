@@ -31,6 +31,16 @@ public class Cliente implements java.io.Serializable {
 	@JoinColumn(name = "IdTipoCliente", nullable = false)
 	private TipoCliente tipoCliente;
 	
+	@Column(name = "Nombre", length = 100)
+	private String nombre;
+	
+	@Column(name = "Apellido", length = 200)
+	private String apellido;
+	
+	@Column(name = "Dni", length = 8)
+	private String dni;
+	
+	
 	@Column(name = "RazonSocial", length = 50)
 	private String razonSocial;
 	
@@ -58,14 +68,25 @@ public class Cliente implements java.io.Serializable {
 	public Cliente() {
 	}
 
-	public Cliente(TipoCliente tipoCliente, //Direccion direccion,
+	
+
+	public Cliente(int idCliente, TipoCliente tipoCliente, String nombre,
+			String apellido, String dni, String razonSocial, String cuit,
 			boolean estado, String email, String telefono) {
+		super();
+		this.idCliente = idCliente;
 		this.tipoCliente = tipoCliente;
-		//this.direccion = direccion;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.razonSocial = razonSocial;
+		this.cuit = cuit;
 		this.estado = estado;
 		this.email = email;
 		this.telefono = telefono;
 	}
+
+
 
 	public int getIdCliente() {
 		return this.idCliente;
@@ -78,6 +99,42 @@ public class Cliente implements java.io.Serializable {
 	public TipoCliente getTipoCliente() {
 		return this.tipoCliente;
 	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+
+	public String getApellido() {
+		return apellido;
+	}
+
+
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+
+
+	public String getDni() {
+		return dni;
+	}
+
+
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+
 
 	public void setTipoCliente(TipoCliente tipoCliente) {
 		this.tipoCliente = tipoCliente;

@@ -7,28 +7,12 @@ import java.rmi.RemoteException;
 import java.util.Set;
 
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
-import com.ADG94.bean.ClienteDTO;
-
+import com.ADG94.bean.Cliente.DTO_Cliente;
 
 public class BusinessDelegate
 {
- 
-  private InterfazRemotaDistribucionPaquetes businessService;
+ 	private InterfazRemotaDistribucionPaquetes businessService;
   
-  
-  /* da de alta empleado */ 
-  /*public void altaEmpleado(DTO_Empleado empleado) throws RemoteException{
-   		businessService.altaEmpleado(empleado);
-	}
-	 
-	public void modificarEmpleado(DTO_Empleado empleado) throws RemoteException{
-		businessService.modificarEmplead(empleado);
-	}
-	
-	public void bajaEmpleado(Integer idEmpleado) throws RemoteException{
-		businessSernvice.bajaEmpleado(idEmpleado)
-	}
-*/
 	public InterfazRemotaDistribucionPaquetes getBusinessService() {
 		
 		return businessService;
@@ -45,8 +29,12 @@ public class BusinessDelegate
 		
 	}
 
-	public ClienteDTO getCliente(String cuit) throws RemoteException{
-		return this.businessService.getCliente(cuit);
+	public DTO_Cliente getClienteByCuit(String cuit) throws RemoteException{
+		return this.businessService.getClienteByCuit(cuit);
+	}
+	
+	public DTO_Cliente getClienteByDni(String dni) throws RemoteException{
+		return this.businessService.getClienteByDni(dni);
 	}
 
 }

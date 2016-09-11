@@ -4,19 +4,15 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import com.ADG94.bean.ClienteDTO;
+import com.ADG94.bean.Administracion.DTO_Sucursal;
+import com.ADG94.bean.Administracion.DTO_Usuario;
+import com.ADG94.bean.Cliente.DTO_Cliente;
+import com.ADG94.bean.Cliente.DTO_CuentaCorriente;
+import com.ADG94.bean.Cliente.DTO_Factura;
 
 
-public interface InterfazRemotaDistribucionPaquetes extends Remote{
+public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministracionRemote, IClienteRemote, IFacturaRemote{
+	
 	public static final String url = "localhost/DistribucionPaquetesRMI";
-	
-	//Empleado
-	/*public void altaEmpleado(DTO_Empleado empleado) throws RemoteException;
-	public void modificarEmpleado(DTO_Empleado empleado) throws RemoteException;
-	public void bajaEmpleado(Integer idEmpleado) throws RemoteException;
-	*/
-	
-	//Clientes
-	public ClienteDTO getCliente(String cuit) throws RemoteException;
 	
 }

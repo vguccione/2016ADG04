@@ -6,24 +6,53 @@ import java.util.List;
 
 
 public class DTO_Usuario implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
-	private String usuario;
+
+	private int idUsuario;
+	private String nombreUsuario;
 	private String password;
 	private Date ultimoAcceso;
 	private Date fechaCreacion;
 	private DTO_RolUsuario rolUsuario;  
-	private Integer idEmpleado;
-		
+	private String nombre;
+	private String apellido;
+	private String dni;
+	
 	public DTO_Usuario() {
 	
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+	
+	public String getNombreUsuario() {
+		return nombreUsuario;
+	}
+
+	public void setNombreUsuario(String usuario) {
+		this.nombreUsuario = usuario;
 	}
 
 	public String getPassword() {
@@ -58,12 +87,8 @@ public class DTO_Usuario implements Serializable{
 		this.rolUsuario = rol;
 	}
 
-	public Integer getIdEmpleado() {
-		return idEmpleado;
-	}
-
-	public void setIdEmpleado(Integer idEmpleado) {
-		this.idEmpleado = idEmpleado;
+	public Integer getId() {
+		return idUsuario;
 	}
 
 }

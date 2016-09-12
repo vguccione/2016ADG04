@@ -9,11 +9,11 @@ public class DTO_Envio implements Serializable{
 	private Integer id;
 	private String estado;
 	private String posicionActual;
-	private List<DTO_Encomienda> encomiendas;
+	private List<DTO_EncomiendaParticular> encomiendas;
 	
 	
 	public DTO_Envio(){
-		encomiendas = new ArrayList<DTO_Encomienda>();
+		encomiendas = new ArrayList<DTO_EncomiendaParticular>();
 	}
 
 
@@ -46,12 +46,12 @@ public class DTO_Envio implements Serializable{
 	}
 
 
-	public List<DTO_Encomienda> getEncomiendas() {
+	public List<DTO_EncomiendaParticular> getEncomiendas() {
 		return encomiendas;
 	}
 
 
-	public void setEncomiendas(List<DTO_Encomienda> encomiendas) {
+	public void setEncomiendas(List<DTO_EncomiendaParticular> encomiendas) {
 		this.encomiendas = encomiendas;
 	}
 

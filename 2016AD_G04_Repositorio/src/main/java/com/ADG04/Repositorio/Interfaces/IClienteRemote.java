@@ -3,20 +3,23 @@ package com.ADG04.Repositorio.Interfaces;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import com.ADG94.bean.Cliente.DTO_Cliente;
+import com.ADG94.bean.Cliente.DTO_ClienteEmpresa;
+import com.ADG94.bean.Cliente.DTO_ClienteParticular;
 
 public interface IClienteRemote {
 
 
 	/************************ Cliente ******************************************/
-	public void altaCliente(DTO_Cliente cliente) throws RemoteException;
-	public void modificarCliente(DTO_Cliente cliente) throws RemoteException;
+	public void altaCliente(DTO_ClienteParticular cliente) throws RemoteException;
+	public void modificarCliente(DTO_ClienteParticular cliente) throws RemoteException;
 	public void bajaCliente(Integer idCliente) throws RemoteException;
-	public DTO_Cliente getCliente(Integer idCliente) throws RemoteException;
-	public DTO_Cliente getClienteByCuit(String cuit) throws RemoteException;
-	public DTO_Cliente getClienteByDni(String dni) throws RemoteException;
-	public List<DTO_Cliente> getClientesEmpresa() throws RemoteException;
-	public List<DTO_Cliente> getClientesParticular() throws RemoteException;
 	
+	public DTO_ClienteParticular getClienteParticular(Integer idCliente) throws RemoteException;
+	public DTO_ClienteParticular getClienteParticular(String dni) throws RemoteException;
+		
+	public List<DTO_ClienteParticular> getClientesEmpresa() throws RemoteException;
+	public List<DTO_ClienteParticular> getClientesParticular() throws RemoteException;
 	
+	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente) throws RemoteException;
+	public DTO_ClienteEmpresa getClienteEmpresaByCuit(String cuit) throws RemoteException;	
 }

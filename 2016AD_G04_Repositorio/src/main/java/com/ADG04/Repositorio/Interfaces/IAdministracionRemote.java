@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.ADG94.bean.Administracion.DTO_Sucursal;
 import com.ADG94.bean.Administracion.DTO_Usuario;
-import com.ADG94.bean.Cliente.DTO_Cliente;
+import com.ADG94.bean.Cliente.DTO_ClienteParticular;
 
 public interface IAdministracionRemote {
 
@@ -14,6 +14,7 @@ public interface IAdministracionRemote {
 	public void modificarUsuario(DTO_Usuario Usuario) throws RemoteException;
 	public void bajaUsuario(Integer idUsuario) throws RemoteException;
 	public DTO_Usuario getUsuario(Integer idUsuario) throws RemoteException;
+	public DTO_Usuario getUsuario(String dni) throws RemoteException;
 	
 	/*************************** Sucursal *************************************/
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException;

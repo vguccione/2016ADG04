@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.ADG94.bean.Administracion.DTO_Sucursal;
 import com.ADG94.bean.Administracion.DTO_Usuario;
-import com.ADG94.bean.Cliente.DTO_Cliente;
+import com.ADG94.bean.Cliente.DTO_ClienteParticular;
 import com.ADG94.bean.Cliente.DTO_CuentaCorriente;
 import com.ADG94.bean.Cliente.DTO_Factura;
 

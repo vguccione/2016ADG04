@@ -7,12 +7,14 @@ import java.util.List;
 
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.TipoCliente;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG94.bean.Administracion.DTO_Sucursal;
 import com.ADG94.bean.Administracion.DTO_Usuario;
-import com.ADG94.bean.Cliente.DTO_Cliente;
+import com.ADG94.bean.Cliente.DTO_ClienteEmpresa;
+import com.ADG94.bean.Cliente.DTO_ClienteParticular;
 import com.ADG94.bean.Cliente.DTO_Factura;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
@@ -75,13 +77,13 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	@Override
-	public void altaCliente(DTO_Cliente cliente) throws RemoteException {
+	public void altaCliente(DTO_ClienteParticular cliente) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void modificarCliente(DTO_Cliente cliente) throws RemoteException {
+	public void modificarCliente(DTO_ClienteParticular cliente) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -92,39 +94,29 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 
-	@Override
-	public DTO_Cliente getCliente(Integer idCliente) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public DTO_Cliente getClienteByCuit(String cuit) throws RemoteException {
+	public DTO_ClienteParticular getClienteParticular(String dni) throws RemoteException {
 
-		DTO_Cliente cdto = new DTO_Cliente();
+		DTO_ClienteParticular cdto = new DTO_ClienteParticular();
 		//ClienteDao dao = new ClienteDao(EntityManagerProvider.getInstance().getEntityManager());
 		//Cliente cliente = dao.getCliente(cuit);
 		
-		cdto.setCuit("12345678");
-		cdto.setRazonSocial("Peperulo");
+		cdto.setDni("12345678");
+		cdto.setNombre("Peperulo");
+		cdto.setApellido("Perez");
 		
 		return cdto;
 	}
 
 	@Override
-	public DTO_Cliente getClienteByDni(String dni) throws RemoteException {
+	public List<DTO_ClienteParticular> getClientesEmpresa() throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<DTO_Cliente> getClientesEmpresa() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<DTO_Cliente> getClientesParticular() throws RemoteException {
+	public List<DTO_ClienteParticular> getClientesParticular() throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -221,6 +213,40 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	@Override
 	public List<DTO_Factura> getFacturasByDni(String dni)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Usuario getUsuario(String dni) throws RemoteException {
+
+		//UsuarioDao dao = new UsuarioDao(entityManager);
+		DTO_Usuario usuario = new DTO_Usuario();
+		
+		usuario.setNombre("Vanesa");
+		usuario.setApellido("Guccione");
+		usuario.setDni("32437264");
+		
+		return usuario;
+	}
+
+	@Override
+	public DTO_ClienteParticular getClienteParticular(Integer idCliente)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_ClienteEmpresa getClienteEmpresaByCuit(String cuit)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;

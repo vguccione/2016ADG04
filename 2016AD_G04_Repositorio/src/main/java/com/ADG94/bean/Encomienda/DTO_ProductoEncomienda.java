@@ -3,13 +3,13 @@ package com.ADG94.bean.Encomienda;
 import java.io.Serializable;
 
 
-public class DTO_ProductoClienteEncomienda implements Serializable{
+public class DTO_ProductoEncomienda implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private float cantidad;
 	private Integer idProductoCliente;
 	
-	public DTO_ProductoClienteEncomienda(){
+	public DTO_ProductoEncomienda(){
 	}
 	
 	public Integer getId() {

@@ -4,7 +4,8 @@ import java.rmi.RemoteException;
 import java.util.Date;
 
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
-import com.ADG94.bean.Cliente.DTO_Cliente;
+import com.ADG94.bean.Administracion.DTO_Usuario;
+import com.ADG94.bean.Cliente.DTO_ClienteParticular;
 
 public class TestClient {
 
@@ -21,12 +22,27 @@ public class TestClient {
 			BusinessDelegate bDelegate = new BusinessDelegate();
 			
 			System.out.println("Test get Cliente:");
-			DTO_Cliente cliente;
+			DTO_ClienteParticular cliente;
 			
-			cliente = bDelegate.getClienteByCuit("23324372644");
-			System.out.println(cliente.getCuit());
-			System.out.println(cliente.getRazonSocial());
+			cliente = bDelegate.getClienteParticularByDni("1234578");
+			System.out.println(cliente.getDni());
+			System.out.println(cliente.getNombre());
+			System.out.println(cliente.getApellido());
 			System.out.print("Test finished...");
+			
+			System.out.println();
+			System.out.println("------------------------------------------");
+			System.out.println();
+			
+			System.out.println("Test get Usuario:");
+			DTO_Usuario usuario;
+			
+			usuario = bDelegate.getUsuario("32437264");
+			System.out.println(usuario.getDni());
+			System.out.println(usuario.getNombre());
+			System.out.println(usuario.getApellido());
+			System.out.print("Test finished...");
+			
 			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

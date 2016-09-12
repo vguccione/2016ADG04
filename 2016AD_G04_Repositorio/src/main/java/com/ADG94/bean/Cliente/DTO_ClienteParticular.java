@@ -4,44 +4,49 @@ import java.io.Serializable;
 
 import com.ADG94.bean.Administracion.DTO_Direccion;
 
-public class DTO_Cliente implements Serializable{
+public class DTO_ClienteParticular implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private int idTipoCliente;
-	private String razonSocial;
 	private String nombre;
 	private String apellido;
 	private String dni;
-	private String cuit;
 	private boolean estado;
 	private DTO_Direccion direccion;
 	private String email;
 	private String telefono;
-	private DTO_CuentaCorriente cuentaCorriente;
 	
-	public DTO_Cliente(){
+	public DTO_ClienteParticular(){
 		
 	}
 
+	public String getDni(){
+		return this.dni;
+	}
+	
+	public void setDni(String dni){
+		this.dni = dni;
+	}
+
+	public String getNombre(){
+		return this.nombre;
+	}
+	
+	public void setNombre(String nombre){
+		this.nombre = nombre;
+	}
+
+	public String getApellido(){
+		return this.apellido;
+	}
+	
+	public void setApellido(String apellido){
+		this.apellido = apellido;
+	}	
+	
 	public Integer getId() {
 		return id;
-	}
-
-	public String getRazonSocial() {
-		return razonSocial;
-	}
-
-	public void setRazonSocial(String razonSocial) {
-		this.razonSocial = razonSocial;
-	}
-
-	public String getCuit() {
-		return cuit;
-	}
-
-	public void setCuit(String cuit) {
-		this.cuit = cuit;
 	}
 
 	public boolean getEstado() {
@@ -76,19 +81,4 @@ public class DTO_Cliente implements Serializable{
 		this.telefono = telefono;
 	}
 
-	public DTO_CuentaCorriente getCuentaCorriente() {
-		return cuentaCorriente;
-	}
-
-	public void setCuentaCorriente(DTO_CuentaCorriente cuentaCorriente) {
-		this.cuentaCorriente = cuentaCorriente;
-	}
-
-	public int getIdTipoCliente(int idTipoCliente){
-		return this.idTipoCliente;
-	}
-	
-	public void setIdTipoCliente(int idTipoCliente){
-		this.idTipoCliente = idTipoCliente;
-	}
 }

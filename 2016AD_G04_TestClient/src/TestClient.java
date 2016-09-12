@@ -1,6 +1,7 @@
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Date;
 
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
 import com.ADG94.bean.Cliente.DTO_Cliente;
@@ -9,7 +10,14 @@ public class TestClient {
 
 	public static void main(String[] args) {
 		
+		TestBusinesDelegate();
+
+	}
+
+	public static void TestBusinesDelegate(){
+		
 		try {
+			
 			BusinessDelegate bDelegate = new BusinessDelegate();
 			
 			System.out.println("Test get Cliente:");
@@ -31,7 +39,5 @@ public class TestClient {
 			e.printStackTrace();
 		}
 
-
 	}
-
 }

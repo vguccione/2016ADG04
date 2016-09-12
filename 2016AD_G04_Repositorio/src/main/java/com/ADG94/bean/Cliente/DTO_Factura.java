@@ -13,7 +13,7 @@ public class DTO_Factura implements Serializable{
 	private Integer id;
 	private String tipo;	//A-B-C
 	private Date fecha;
-	//TODO: private Date vencimiento;
+	private Date fechaVencimiento;
 	//private float total; - TODO: necesitamos el total o podemos calcularlo sumando los items directamente??
 	private List<DTO_ItemFactura> detalle;
 	//TODO: private List<DTO_DetalleReciboPago> detalleRecibo;
@@ -48,14 +48,22 @@ public class DTO_Factura implements Serializable{
 		this.fecha = fecha;
 	}
 
-/*	public Date getVencimiento() {
-		return vencimiento;
+	public Date getFechaVencimiento() {
+		return fechaVencimiento;
 	}
 
-	public void setVencimiento(Date vencimiento) {
-		this.vencimiento = vencimiento;
+	public void fechaVencimiento(Date fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
 	}
-
+	
+	public boolean estaVencida(){
+		//Si está impaga y la fecha de vencimiento ya paso, return true,
+		if(fechaVencimiento.before(new Date()))
+			return true;
+		
+		return false;
+	}
+/*
 	public float getTotal() {
 		return total;
 	}

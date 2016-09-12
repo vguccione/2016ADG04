@@ -19,7 +19,21 @@ public class App
 {
     public static void main( String[] args )
     {
-    	 PaisDao dao = new PaisDao(EntityManagerProvider.getInstance().getEntityManager());
+    	TestClienteDao();
+    }
+    
+    public static void TestClienteDao(){
+    	
+    	ClienteDao dao = new ClienteDao(EntityManagerProvider.getInstance().getEntityManager());
+        Cliente cliente = dao.getById((long)1);
+        EntityManagerProvider.getInstance().close();
+        
+        System.out.println(cliente.getApellido());
+    }
+    
+    public static void TestPaisDao(){
+    	
+    	PaisDao dao = new PaisDao(EntityManagerProvider.getInstance().getEntityManager());
          
          Pais p =new Pais("Argentina");
         

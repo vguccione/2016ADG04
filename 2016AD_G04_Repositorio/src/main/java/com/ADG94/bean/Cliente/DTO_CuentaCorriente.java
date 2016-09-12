@@ -13,12 +13,12 @@ public class DTO_CuentaCorriente implements Serializable{
 	private List<DTO_Factura> facturas;
 	
 	/*ToDo: no tenemos recibos en nuestro modelo!!!*/
-	private List<DTO_ReciboPago> recibos;
+	//private List<DTO_ReciboPago> recibos;
 
 	
 	public DTO_CuentaCorriente(){
 		facturas = new ArrayList<DTO_Factura>();
-		recibos = new ArrayList<DTO_ReciboPago>();
+		///recibos = new ArrayList<DTO_ReciboPago>();
 	}
 
 	public Integer getId() {
@@ -60,11 +60,16 @@ public class DTO_CuentaCorriente implements Serializable{
 		this.facturas = facturas;
 	}
 
+	public void addFactura(DTO_Factura factura){
+		this.facturas.add(factura);
+	}
+	
+	/*
 	public List<DTO_ReciboPago> getRecibos() {
 		return recibos;
 	}
 
 	public void setRecibos(List<DTO_ReciboPago> recibos) {
 		this.recibos = recibos;
-	}
+	}*/
 }

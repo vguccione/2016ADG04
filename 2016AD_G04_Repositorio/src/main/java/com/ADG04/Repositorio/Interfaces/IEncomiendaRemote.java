@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.ADG94.bean.Administracion.DTO_Direccion;
 import com.ADG94.bean.Administracion.DTO_Sucursal;
+import com.ADG94.bean.Cliente.DTO_Producto;
 import com.ADG94.bean.Encomienda.DTO_Remito;
 
 public interface IEncomiendaRemote {
@@ -39,4 +40,7 @@ public interface IEncomiendaRemote {
 	public void setFechaEstimadaEntrega(int idEncomienda, Date fechaEstimadaDeEntrega) throws RemoteException;
 	
 	public void agregarRemito(int idEncomienda, DTO_Remito remito) throws RemoteException;
+	
+	public void agregarProducto(DTO_Producto producto, int idEncomienda) throws RemoteException;
+	public void eliminarProducto(int idProducto, int idEncomienda) throws RemoteException;
 }

@@ -3,33 +3,42 @@ package com.ADG94.bean.Vehiculo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.ADG94.bean.Administracion.DTO_Sucursal;
+
 
 public class DTO_Vehiculo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private String tipo;
-	private String patente;
-	private String marca;
-	private int modelo;
-	private float kilometros;
+	
+	private float largo;
 	private float ancho;
 	private float alto;
-	private float largo;
 	private float peso;
-	private float tara;
 	private float volumen;
+	private boolean refrigerado;
+	private String condicionTransporte;
+	private float kmsRecorridos;
+
+	private String patente;
+	private int modelo;
+	private String marca;
+	private int anio;
+	
+	private float tara;
+	
 	private float costoKM;
 	private Date fechaIngreso;
-	private Date ultimoMantenimiento;
-	private Date ultimoUso;
-	private Date vencimientoGarantia;
-	private Integer idSucursal;
-	private Integer idSucursalActual;
-	private Float temperaturaMin;
-	private Float temperaturaMax;
-	private Integer idPlanMantenimiento;
-	private Integer idEnvio;
+	
+	//private Date ultimoMantenimiento;
+	//private Date ultimoUso;
+	//private Date vencimientoGarantia;
+	//private Integer idSucursal;
+	private DTO_Sucursal sucursalActual;
+	//private Float temperaturaMin;
+	//private Float temperaturaMax;
+	private DTO_PlanMantenimiento planMantenimiento;
+		
 	public DTO_Vehiculo() {
 
 	}
@@ -42,12 +51,12 @@ public class DTO_Vehiculo implements Serializable{
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public boolean getRefrigerado() {
+		return refrigerado;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setRefrigerado(boolean refrigerado) {
+		this.refrigerado = refrigerado;
 	}
 
 	public String getPatente() {
@@ -75,11 +84,11 @@ public class DTO_Vehiculo implements Serializable{
 	}
 
 	public float getKilometros() {
-		return kilometros;
+		return kmsRecorridos;
 	}
 
 	public void setKilometros(float kilometros) {
-		this.kilometros = kilometros;
+		this.kmsRecorridos = kilometros;
 	}
 
 	public float getAncho() {
@@ -145,7 +154,7 @@ public class DTO_Vehiculo implements Serializable{
 	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
-
+/*
 	public Date getUltimoMantenimiento() {
 		return ultimoMantenimiento;
 	}
@@ -170,22 +179,15 @@ public class DTO_Vehiculo implements Serializable{
 		this.vencimientoGarantia = vencimientoGarantia;
 	}
 
-	public Integer getIdSucursal() {
-		return idSucursal;
+*/
+	public DTO_Sucursal getSucursalActual() {
+		return sucursalActual;
 	}
 
-	public void setIdSucursal(Integer idSucursal) {
-		this.idSucursal = idSucursal;
+	public void setSucursalActual(DTO_Sucursal sucursalActual) {
+		this.sucursalActual = sucursalActual;
 	}
-
-	public Integer getIdSucursalActual() {
-		return idSucursalActual;
-	}
-
-	public void setIdSucursalActual(Integer idSucursalActual) {
-		this.idSucursalActual = idSucursalActual;
-	}
-
+/*
 	public Float getTemperaturaMin() {
 		return temperaturaMin;
 	}
@@ -201,25 +203,25 @@ public class DTO_Vehiculo implements Serializable{
 	public void setTemperaturaMax(Float temperaturaMax) {
 		this.temperaturaMax = temperaturaMax;
 	}
-
-	public Integer getIdPlanMantenimiento() {
-		return idPlanMantenimiento;
+*/
+	public DTO_PlanMantenimiento getPlanMantenimiento() {
+		return planMantenimiento;
 	}
 
-	public void setIdPlanMantenimiento(Integer idPlanMantenimiento) {
-		this.idPlanMantenimiento = idPlanMantenimiento;
+	public void setPlanMantenimiento(DTO_PlanMantenimiento planMantenimiento) {
+		this.planMantenimiento = planMantenimiento;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+/*
 	public Integer getIdEnvio() {
 		return idEnvio;
 	}
 
 	public void setIdEnvio(Integer idEnvio) {
 		this.idEnvio = idEnvio;
-	}
+	}*/
 
 }

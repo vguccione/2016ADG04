@@ -16,6 +16,7 @@ import com.ADG94.bean.Administracion.DTO_Usuario;
 import com.ADG94.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG94.bean.Cliente.DTO_ClienteParticular;
 import com.ADG94.bean.Cliente.DTO_Factura;
+import com.ADG94.bean.Cliente.DTO_Producto;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 
@@ -247,6 +248,44 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	@Override
 	public DTO_ClienteEmpresa getClienteEmpresaByCuit(String cuit)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void altaProducto(DTO_Producto producto) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modificarProducto(DTO_Producto producto) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarProducto(Integer idProducto) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarProducto(Integer idCliente, String codigoProducto)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DTO_Producto getProducto(Integer idProducto) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Producto getProducto(Integer idCliente, String codigoProducto)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;

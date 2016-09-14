@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PaisDao extends GenericDao<Pais, Long> {
+public class PaisDao extends GenericDao<Pais, Integer> {
 
 	
 	public PaisDao(EntityManager entityManager) {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FacturaDao extends GenericDao<Factura, Long> {
+public class FacturaDao extends GenericDao<Factura, Integer> {
 
 	
 	public FacturaDao(EntityManager entityManager) {

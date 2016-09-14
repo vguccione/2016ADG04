@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -64,17 +65,22 @@ public class Cliente implements java.io.Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
 	private List <CuentaCorriente> cuentaCorrientes;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="direccion")
+	private Direccion direccion;
 
 	public Cliente() {
 	}
 
 	
 
-	public Cliente(int idCliente, TipoCliente tipoCliente, String nombre,
-			String apellido, String dni, String razonSocial, String cuit,
-			boolean estado, String email, String telefono) {
+	
+
+	public Cliente(TipoCliente tipoCliente, String nombre, String apellido,
+			String dni, String razonSocial, String cuit, boolean estado,
+			String email, String telefono) {
 		super();
-		this.idCliente = idCliente;
 		this.tipoCliente = tipoCliente;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -85,8 +91,6 @@ public class Cliente implements java.io.Serializable {
 		this.email = email;
 		this.telefono = telefono;
 	}
-
-
 
 	public int getIdCliente() {
 		return this.idCliente;
@@ -202,6 +206,14 @@ public class Cliente implements java.io.Serializable {
 
 	public void setCuentaCorrientes(List<CuentaCorriente> cuentaCorrientes) {
 		this.cuentaCorrientes = cuentaCorrientes;
+	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 }

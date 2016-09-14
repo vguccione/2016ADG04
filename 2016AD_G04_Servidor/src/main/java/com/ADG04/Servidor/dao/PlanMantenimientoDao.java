@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Long> {
+public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer> {
 
 	
 	public PlanMantenimientoDao(EntityManager entityManager) {

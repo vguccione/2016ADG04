@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProvinciaDao extends GenericDao<Provincia, Long> {
+public class ProvinciaDao extends GenericDao<Provincia, Integer> {
 
 	
 	public ProvinciaDao(EntityManager entityManager) {

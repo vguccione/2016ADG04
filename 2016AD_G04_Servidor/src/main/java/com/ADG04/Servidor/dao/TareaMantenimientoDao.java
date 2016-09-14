@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TareaMantenimientoDao extends GenericDao<TareaMantenimiento, Long> {
+public class TareaMantenimientoDao extends GenericDao<TareaMantenimiento, Integer> {
 
 	
 	public TareaMantenimientoDao(EntityManager entityManager) {

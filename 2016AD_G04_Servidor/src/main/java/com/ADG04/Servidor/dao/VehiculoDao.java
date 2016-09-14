@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class VehiculoDao extends GenericDao<Vehiculo, Long> {
+public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 
 	
 	public VehiculoDao(EntityManager entityManager) {

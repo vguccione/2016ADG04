@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RemitoDao extends GenericDao<Remito, Long> {
+public class RemitoDao extends GenericDao<Remito, Integer> {
 
 	
 	public RemitoDao(EntityManager entityManager) {

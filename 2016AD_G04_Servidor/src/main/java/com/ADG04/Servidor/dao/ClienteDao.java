@@ -6,7 +6,7 @@ import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
-public class ClienteDao extends GenericDao<Cliente, Long> {
+public class ClienteDao extends GenericDao<Cliente, Integer> {
 
 	public ClienteDao(EntityManager entityManager) {
         super(entityManager);
@@ -15,7 +15,7 @@ public class ClienteDao extends GenericDao<Cliente, Long> {
 	public Cliente getCliente(String cuit){
 		
 		try{
-		long id = 1;
+		int id = 1;
 		Cliente cliente = this.getById(id);
 		
 		return cliente;

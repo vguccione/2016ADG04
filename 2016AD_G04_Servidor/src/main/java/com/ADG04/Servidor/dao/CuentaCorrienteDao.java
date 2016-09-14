@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CuentaCorrienteDao extends GenericDao<CuentaCorriente, Long> {
+public class CuentaCorrienteDao extends GenericDao<CuentaCorriente, Integer> {
 
 	
 	public CuentaCorrienteDao(EntityManager entityManager) {

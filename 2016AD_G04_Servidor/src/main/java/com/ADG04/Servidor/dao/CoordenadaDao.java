@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CoordenadaDao extends GenericDao<Coordenada, Long> {
+public class CoordenadaDao extends GenericDao<Coordenada, Integer> {
 
 	
 	public CoordenadaDao(EntityManager entityManager) {

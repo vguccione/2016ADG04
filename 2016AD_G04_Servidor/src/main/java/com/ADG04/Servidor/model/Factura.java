@@ -41,6 +41,9 @@ public class Factura implements java.io.Serializable {
 	@Column(name = "Pagada", nullable = false)
 	private boolean pagada;
 	
+	@Column(name="FechaVencimiento")
+	private Date fechaVencimiento;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Vencimiento", nullable = false, length = 23)
 	private Date vencimiento;

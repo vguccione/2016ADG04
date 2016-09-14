@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DireccionDao extends GenericDao<Direccion, Long> {
+public class DireccionDao extends GenericDao<Direccion, Integer> {
 
 	
 	public DireccionDao(EntityManager entityManager) {

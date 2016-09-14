@@ -29,6 +29,9 @@ public class ItemFactura implements java.io.Serializable {
 	@JoinColumn(name = "IdFactura")
 	private Factura factura;
 
+	@Column(name="Descripcion")
+	private String descripcion;
+	
 	@Column(name = "Cantidad", nullable = false)
 	private int cantidad;
 
@@ -38,20 +41,22 @@ public class ItemFactura implements java.io.Serializable {
 	public ItemFactura() {
 	}
 
-	public ItemFactura(int idItemFactura, int cantidad, float valor) {
-		this.idItemFactura = idItemFactura;
+
+	public ItemFactura(String descripcion, int cantidad, float valor) {
+		super();
+		this.descripcion = descripcion;
 		this.cantidad = cantidad;
 		this.valor = valor;
 	}
 
-	public ItemFactura(Factura factura, int cantidad,
-			float valor) {
-		this.factura = factura;
-		this.cantidad = cantidad;
-		this.valor = valor;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	public int getIdItemFactura() {
 		return this.idItemFactura;
 	}

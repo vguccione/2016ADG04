@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EnvioDao extends GenericDao<Envio, Long> {
+public class EnvioDao extends GenericDao<Envio, Integer> {
 
 	
 	public EnvioDao(EntityManager entityManager) {

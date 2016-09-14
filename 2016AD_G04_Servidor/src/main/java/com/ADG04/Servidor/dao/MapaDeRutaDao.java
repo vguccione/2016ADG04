@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MapaDeRutaDao extends GenericDao<MapaDeRuta, Long> {
+public class MapaDeRutaDao extends GenericDao<MapaDeRuta, Integer> {
 
 	
 	public MapaDeRutaDao(EntityManager entityManager) {

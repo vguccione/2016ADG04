@@ -53,6 +53,9 @@ public class Direccion implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccion")
 	private List<Proveedor> proveedores;
 	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy="direccion")
+	private Cliente cliente;
+	
 	public Direccion() {
 	}
 
@@ -156,6 +159,15 @@ public class Direccion implements java.io.Serializable {
 
 	public void setProveedores(List<Proveedor> proveedores) {
 		this.proveedores = proveedores;
+	}
+
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 }

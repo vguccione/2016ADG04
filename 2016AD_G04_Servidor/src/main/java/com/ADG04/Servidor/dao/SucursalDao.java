@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SucursalDao extends GenericDao<Sucursal, Long> {
+public class SucursalDao extends GenericDao<Sucursal, Integer> {
 
 	
 	public SucursalDao(EntityManager entityManager) {

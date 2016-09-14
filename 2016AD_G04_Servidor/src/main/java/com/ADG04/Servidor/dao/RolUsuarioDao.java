@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RolUsuarioDao extends GenericDao<RolUsuario, Long> {
+public class RolUsuarioDao extends GenericDao<RolUsuario, Integer> {
 
 	
 	public RolUsuarioDao(EntityManager entityManager) {

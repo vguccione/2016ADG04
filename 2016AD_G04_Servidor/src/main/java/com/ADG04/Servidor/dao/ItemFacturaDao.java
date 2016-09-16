@@ -5,6 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.ADG04.Servidor.model.ItemFactura;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -14,9 +15,19 @@ import java.util.List;
 
 public class ItemFacturaDao extends GenericDao<ItemFactura, Integer> {
 
-	
-	public ItemFacturaDao(EntityManager entityManager) {
-        super(entityManager);
-    }
+	private static ItemFacturaDao instancia;
+
+
+	private ItemFacturaDao(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
+
+	public static ItemFacturaDao getInstancia(){
+		if(instancia == null){	
+			instancia = new ItemFacturaDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
+		} 
+		return instancia;
+	}
 
 }

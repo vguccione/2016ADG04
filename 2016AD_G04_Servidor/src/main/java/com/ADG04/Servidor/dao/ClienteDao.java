@@ -8,22 +8,18 @@ import com.ADG04.Servidor.util.EntityManagerProvider;
 
 public class ClienteDao extends GenericDao<Cliente, Integer> {
 
-	public ClienteDao(EntityManager entityManager) {
-        super(entityManager);
-    }
+	private static ClienteDao instancia;
 
-	public Cliente getCliente(String cuit){
-		
-		try{
-		int id = 1;
-		Cliente cliente = this.getById(id);
-		
-		return cliente;
-		}
-		catch(Exception ex){
-			System.out.print(ex.getMessage());
-			throw ex;
-		}
+
+	private ClienteDao(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
 	}
 
+	public static ClienteDao getInstancia(){
+		if(instancia == null){	
+			instancia = new ClienteDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
+		} 
+		return instancia;
+	}
 }

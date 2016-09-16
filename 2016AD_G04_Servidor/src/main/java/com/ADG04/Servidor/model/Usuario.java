@@ -2,6 +2,10 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.ADG04.Negocio.GestionAdministracion;
+import com.ADG04.bean.Administracion.DTO_RolUsuario;
+import com.ADG04.bean.Administracion.DTO_Usuario;
 
 @Entity
 @Table(name = "Usuario")
@@ -24,7 +32,7 @@ public class Usuario implements java.io.Serializable {
 	@JoinColumn(name = "IdSucursal")
 	private Sucursal sucursal;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdRolUsuario")
 	private RolUsuario rolUsuario;
 
@@ -36,27 +44,31 @@ public class Usuario implements java.io.Serializable {
 
 	@Column(name = "Dni", nullable = false, length = 8)	
 	private String dni;
+	
+	@Column(name = "Password")
+	private String password;
+	
+	@Column(name = "UltimoAcceso")
+	private Date ultimoAcceso;
+	
+	@Column(name = "fechaCreacion")
+	private Date fechaCreacion;
 
 	
 	public Usuario() {
 	}
 
-	public Usuario(String nombre, String apellido, String dni) {
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.dni = dni;
-	}
-
-	public Usuario(int idUsuario, Sucursal sucursal, RolUsuario rolUsuario,
-			String nombre, String apellido, String dni) {
-		this.idUsuario = idUsuario;
+	public Usuario(Sucursal sucursal, String nombre, String apellido,
+			String dni, String password, Date ultimoAcceso, Date fechaCreacion) {
+		super();
 		this.sucursal = sucursal;
-		this.rolUsuario = rolUsuario;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
+		this.password = password;
+		this.ultimoAcceso = ultimoAcceso;
+		this.fechaCreacion = fechaCreacion;
 	}
-
 
 	public int getIdUsuario() {
 		return this.idUsuario;
@@ -106,4 +118,50 @@ public class Usuario implements java.io.Serializable {
 		this.dni = dni;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Date getUltimoAcceso() {
+		return ultimoAcceso;
+	}
+
+	public void setUltimoAcceso(Date ultimoAcceso) {
+		this.ultimoAcceso = ultimoAcceso;
+	}
+
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [idUsuario=" + idUsuario + ", sucursal=" + sucursal
+				+ ", nombre=" + nombre + ", apellido=" + apellido + ", dni="
+				+ dni + ", password=" + password + ", ultimoAcceso="
+				+ ultimoAcceso + ", fechaCreacion=" + fechaCreacion + "]";
+	}
+	
+	public DTO_Usuario toDTO(){
+		DTO_Usuario u = new DTO_Usuario();
+		u.setDni(this.getDni());
+		u.setNombre(this.getNombre());
+		u.setApellido(this.getApellido());
+		u.setPassword(this.getPassword());
+		u.setFechaCreacion(this.getFechaCreacion());
+		u.setUltimoAcceso(this.getUltimoAcceso());
+		u.setRolUsuario(new DTO_RolUsuario(this.getRolUsuario().getIdRolUsuario(), this.getRolUsuario().getDescripcion()));	
+		u.setIdUsuario(this.getIdUsuario());
+		return u;
+	}
+
+	
 }

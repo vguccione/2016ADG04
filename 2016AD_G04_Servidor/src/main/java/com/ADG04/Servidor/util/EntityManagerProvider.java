@@ -6,7 +6,7 @@ import javax.persistence.Persistence;
 
 public class EntityManagerProvider {
 
-    private static EntityManagerProvider instance;
+	private static EntityManagerProvider instance;
     private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
 
@@ -23,13 +23,11 @@ public class EntityManagerProvider {
         return instance;
     }
 
-    public EntityManager getEntityManager() {
-        entityManager = entityManagerFactory.createEntityManager();
-        return entityManager;
+    public EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
     }
 
     public void close(){
-        entityManager.close();
         entityManagerFactory.close();
     }
 

@@ -11,13 +11,13 @@ import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.TipoCliente;
 import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Administracion.DTO_Usuario;
+import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
+import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Cliente.DTO_Factura;
+import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG94.bean.ClienteDTO;
-import com.ADG94.bean.Administracion.DTO_Sucursal;
-import com.ADG94.bean.Administracion.DTO_Usuario;
-import com.ADG94.bean.Cliente.DTO_ClienteEmpresa;
-import com.ADG94.bean.Cliente.DTO_ClienteParticular;
-import com.ADG94.bean.Cliente.DTO_Factura;
-import com.ADG94.bean.Cliente.DTO_Producto;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 

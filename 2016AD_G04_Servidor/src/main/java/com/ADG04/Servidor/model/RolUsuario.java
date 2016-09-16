@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,7 +25,8 @@ public class RolUsuario implements java.io.Serializable {
 	@Column(name = "Descripcion", nullable = false, length = 50)
 	private String descripcion;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rolUsuario")
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "rolUsuario")
 	private List<Usuario> usuarios;
 
 	public RolUsuario() {

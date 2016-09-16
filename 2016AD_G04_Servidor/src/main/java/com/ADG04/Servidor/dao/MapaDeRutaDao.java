@@ -5,6 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.ADG04.Servidor.model.MapaDeRuta;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -15,8 +16,19 @@ import java.util.List;
 public class MapaDeRutaDao extends GenericDao<MapaDeRuta, Integer> {
 
 	
-	public MapaDeRutaDao(EntityManager entityManager) {
-        super(entityManager);
-    }
+	private static MapaDeRutaDao instancia;
+
+
+	private MapaDeRutaDao(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
+
+	public static MapaDeRutaDao getInstancia(){
+		if(instancia == null){	
+			instancia = new MapaDeRutaDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
+		} 
+		return instancia;
+	}
 
 }

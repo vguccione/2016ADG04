@@ -5,6 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.ADG04.Servidor.model.TareaMantenimientoRealizada;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -13,10 +14,19 @@ import java.util.List;
 
 
 public class TareaMantenimientoRealizadaDao extends GenericDao<TareaMantenimientoRealizada, Integer> {
+	private static TareaMantenimientoRealizadaDao instancia;
 
-	
-	public TareaMantenimientoRealizadaDao(EntityManager entityManager) {
-        super(entityManager);
-    }
+
+	private TareaMantenimientoRealizadaDao(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
+
+	public static TareaMantenimientoRealizadaDao getInstancia(){
+		if(instancia == null){	
+			instancia = new TareaMantenimientoRealizadaDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
+		} 
+		return instancia;
+	}
 
 }

@@ -7,9 +7,15 @@ public class DTO_RolUsuario {
 	private Integer id;
 	private String descripcion;
 
-	public DTO_RolUsuario(){
+	public DTO_RolUsuario(){}
+	
+	public DTO_RolUsuario(int idRolUsuario, String descripcionRol)
+	{
+		this.id = idRolUsuario;
+		this.descripcion = descripcionRol;
 	}
 
+	
 	public Integer getId() {
 		return id;
 	}

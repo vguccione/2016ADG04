@@ -23,7 +23,7 @@ public class MapaDeRutaCoordenadaDao extends GenericDao<MapaDeRutaCoordenada, In
 		// TODO Auto-generated constructor stub
 	}
 
-	public static ItemFacturaDao getInstancia(){
+	public static MapaDeRutaCoordenadaDao getInstancia(){
 		if(instancia == null){	
 			instancia = new MapaDeRutaCoordenadaDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
 		} 

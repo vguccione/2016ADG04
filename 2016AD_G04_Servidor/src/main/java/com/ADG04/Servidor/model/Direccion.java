@@ -47,8 +47,8 @@ public class Direccion implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccion")
 	private List<Sucursal> sucursales;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccionByIdDireccionOrigen")
-	private List<Encomienda> encomiendasForIdDireccionOrigen;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccionOrigen")
+	private List<Encomienda> encomiendasOrigen;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccion")
 	private List<Proveedor> proveedores;
@@ -141,14 +141,14 @@ public class Direccion implements java.io.Serializable {
 	}
 
 
-	public List<Encomienda> getEncomiendasForIdDireccionOrigen() {
-		return encomiendasForIdDireccionOrigen;
+	public List<Encomienda> getEncomiendasOrigen() {
+		return encomiendasOrigen;
 	}
 
 
-	public void setEncomiendasForIdDireccionOrigen(
-			List<Encomienda> encomiendasForIdDireccionOrigen) {
-		this.encomiendasForIdDireccionOrigen = encomiendasForIdDireccionOrigen;
+	public void setEncomiendasOrigen(
+			List<Encomienda> encomiendasOrigen) {
+		this.encomiendasOrigen = encomiendasOrigen;
 	}
 
 

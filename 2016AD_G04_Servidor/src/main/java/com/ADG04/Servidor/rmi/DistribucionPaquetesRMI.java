@@ -3,20 +3,26 @@ package com.ADG04.Servidor.rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Date;
 import java.util.List;
 
+import com.ADG04.Negocio.GestionCliente;
+import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.TipoCliente;
 import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
+import com.ADG04.bean.Encomienda.DTO_Remito;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 
@@ -75,7 +81,9 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	
 	public void altaCliente(DTO_ClienteParticular cliente) throws RemoteException {
-		// TODO Auto-generated method stub
+		
+		GestionCliente gCliente = GestionCliente.getInstancia();
+		gCliente.altaCliente(cliente);
 		
 	}
 
@@ -284,6 +292,116 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void nuevaEncomiedaParticular(String dniCliente,
+			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
+			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
+			double largo, double ancho, double alto, double peso,
+			double volumen, String tratamiento, boolean apilable,
+			short cantApilable, boolean refrigerado,
+			String condiciionTransporte, String indicacionesManipulacion,
+			String fragilidad, String nombreReceptor, String apellidoReceptor,
+			String dniReceptor, Double volumenGranel, String unidadGranel,
+			String cargaGranel) throws RemoteException {
+		
+		GestionEncomienda gEnc = GestionEncomienda.getInstancia();
+	}
+	
+	@Override
+	public void nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) {
+		
+		GestionEncomienda gEnc = GestionEncomienda.getInstancia();
+		
+		gEnc.altaEncomiendaParticular(encomiendaParticular.getCliente(), 
+				encomiendaParticular.getDireccionOrigen(), 
+				encomiendaParticular.getDireccionDestino(), 
+				encomiendaParticular.getSucursalOrigen(), 
+				encomiendaParticular.getSucursalDestino(), 
+				encomiendaParticular.getLargo(), 
+				encomiendaParticular.getAncho(), 
+				encomiendaParticular.getAlto(), 
+				encomiendaParticular.getPeso(), 
+				encomiendaParticular.getVolumen(), 
+				encomiendaParticular.getTratamiento(), 
+				encomiendaParticular.getApilable(), 
+				encomiendaParticular.getCantApilable(), 
+				encomiendaParticular.getRefrigerado(), 
+				encomiendaParticular.getCondicionTransporte(), 
+				encomiendaParticular.getIndicacionesManipulacion(), 
+				encomiendaParticular.getFragilidad(), 
+				encomiendaParticular.getNombreReceptor(), 
+				encomiendaParticular.getApellidoReceptor(), 
+				encomiendaParticular.getDniReceptor(), 
+				encomiendaParticular.getVolumenGranel(), 
+				encomiendaParticular.getUnidadGranel(), 
+				encomiendaParticular.getCargaGranel());
+	}
+						
+	@Override
+	public void nuevaEncomiedaParticular(
+			String dniCliente, 
+			DTO_Sucursal sucursalOrigen,
+			DTO_Sucursal sucursalDestino,
+			double largo, double ancho, double alto, double peso, double volumen,
+			String nombreReceptor, String apellidoReceptor,String dniReceptor){
+	
+	}
+								
+
+	@Override
+	public void nuevaEncomiedaEmpresa(String dniCliente,
+			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
+			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
+			double largo, double ancho, double alto, double peso,
+			double volumen, String tratamiento, boolean apilable,
+			short cantApilable, boolean refrigerado,
+			String condiciionTransporte, String indicacionesManipulacion,
+			String fragilidad, String nombreReceptor, String apellidoReceptor,
+			String dniReceptor, Double volumenGranel, String unidadGranel,
+			String cargaGranel) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setFechaEstimadaEntrega(int idEncomienda,
+			Date fechaEstimadaDeEntrega) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void agregarRemito(int idEncomienda, DTO_Remito remito)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void agregarProducto(DTO_Producto producto, int idEncomienda)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarProducto(int idProducto, int idEncomienda)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nuevaEncomiedaParticular(String dniCliente,
+			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
+			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
+			double largo, double ancho, double alto, double peso,
+			double volumen, String nombreReceptor, String apellidoReceptor,
+			String dniReceptor) throws RemoteException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

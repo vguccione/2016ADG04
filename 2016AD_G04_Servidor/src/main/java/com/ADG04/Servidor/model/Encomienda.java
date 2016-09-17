@@ -34,11 +34,11 @@ public class Encomienda implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdDireccionDestino")
-	private Direccion direccionByIdDireccionDestino;
+	private Direccion direccionDestino;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdSucursalDestino", nullable = false)
-	private Sucursal sucursalByIdSucursalDestino;
+	private Sucursal sucursalDestno;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdEnvio", nullable = false)
@@ -46,15 +46,15 @@ public class Encomienda implements java.io.Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdSucursalOrigen", nullable = false)
-	private Sucursal sucursalByIdSucursalOrigen;
+	private Sucursal sucursalOrigen;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdDireccionOrigen")
-	private Direccion direccionByIdDireccionOrigen;
+	private Direccion direccionOrigen;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdSucursalActual")
-	private Sucursal sucursalByIdSucursalActual;
+	private Sucursal sucursalActual;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdCliente", nullable = false)
@@ -140,25 +140,26 @@ public class Encomienda implements java.io.Serializable {
 	public Encomienda() {
 	}
 
-	public Encomienda(ItemFactura itemFactura,
-			Sucursal sucursalByIdSucursalDestino, Envio envio,
-			Sucursal sucursalByIdSucursalOrigen, Cliente cliente,
+	public Encomienda(//ItemFactura itemFactura,
+			Sucursal sucursalDestino, Envio envio,
+			Sucursal sucursalOrigen, Cliente cliente,
 			String tipoEncomienda, Date fechaCreacion,
-			Date fechaEstimadaEntrega, String estado, boolean tercerizado,
-			String nombreReceptor, String apellidoReceptor, String dniReceptor) {
-		this.itemFactura = itemFactura;
-		this.sucursalByIdSucursalDestino = sucursalByIdSucursalDestino;
-		this.envio = envio;
-		this.sucursalByIdSucursalOrigen = sucursalByIdSucursalOrigen;
+			Date fechaEstimadaEntrega, String estado)//, boolean tercerizado,
+			//String nombreReceptor, String apellidoReceptor, String dniReceptor) 
+			{
+	//	this.itemFactura = itemFactura;
+		this.sucursalDestno = sucursalDestino;
+		//this.envio = envio;
+		this.sucursalOrigen = sucursalOrigen;
 		this.cliente = cliente;
 		this.tipoEncomienda = tipoEncomienda;
 		this.fechaCreacion = fechaCreacion;
 		this.fechaEstimadaEntrega = fechaEstimadaEntrega;
 		this.estado = estado;
-		this.tercerizado = tercerizado;
-		this.nombreReceptor = nombreReceptor;
-		this.apellidoReceptor = apellidoReceptor;
-		this.dniReceptor = dniReceptor;
+		//this.tercerizado = tercerizado;
+		//this.nombreReceptor = nombreReceptor;
+	//	this.apellidoReceptor = apellidoReceptor;
+	//	this.dniReceptor = dniReceptor;
 	}
 
 	public int getIdEncomienda() {
@@ -177,22 +178,22 @@ public class Encomienda implements java.io.Serializable {
 		this.itemFactura = itemFactura;
 	}
 
-	public Direccion getDireccionByIdDireccionDestino() {
-		return this.direccionByIdDireccionDestino;
+	public Direccion getDireccionDestino() {
+		return this.direccionDestino;
 	}
 
-	public void setDireccionByIdDireccionDestino(
-			Direccion direccionByIdDireccionDestino) {
-		this.direccionByIdDireccionDestino = direccionByIdDireccionDestino;
+	public void setDireccionDestino(
+			Direccion direccionDestino) {
+		this.direccionDestino = direccionDestino;
 	}
 
-	public Sucursal getSucursalByIdSucursalDestino() {
-		return this.sucursalByIdSucursalDestino;
+	public Sucursal getSucursalDestino() {
+		return this.sucursalDestno;
 	}
 
-	public void setSucursalByIdSucursalDestino(
-			Sucursal sucursalByIdSucursalDestino) {
-		this.sucursalByIdSucursalDestino = sucursalByIdSucursalDestino;
+	public void setSucursalDestino(
+			Sucursal sucursalDestino) {
+		this.sucursalDestno = sucursalDestino;
 	}
 
 	public Envio getEnvio() {
@@ -204,32 +205,31 @@ public class Encomienda implements java.io.Serializable {
 	}
 
 
-	public Sucursal getSucursalByIdSucursalOrigen() {
-		return this.sucursalByIdSucursalOrigen;
+	public Sucursal getSucursalOrigen() {
+		return this.sucursalOrigen;
 	}
 
-	public void setSucursalByIdSucursalOrigen(
-			Sucursal sucursalByIdSucursalOrigen) {
-		this.sucursalByIdSucursalOrigen = sucursalByIdSucursalOrigen;
+	public void setSucursalOrigen(
+			Sucursal sucursalOrigen) {
+		this.sucursalOrigen = sucursalOrigen;
 	}
 
-	public Direccion getDireccionByIdDireccionOrigen() {
-		return this.direccionByIdDireccionOrigen;
+	public Direccion getDireccionOrigen() {
+		return this.direccionOrigen;
 	}
 
-	public void setDireccionByIdDireccionOrigen(
-			Direccion direccionByIdDireccionOrigen) {
-		this.direccionByIdDireccionOrigen = direccionByIdDireccionOrigen;
+	public void setDireccionOrigen(
+			Direccion direccionOrigen) {
+		this.direccionOrigen = direccionOrigen;
 	}
 
 
-	public Sucursal getSucursalByIdSucursalActual() {
-		return this.sucursalByIdSucursalActual;
+	public Sucursal getSucursalActual() {
+		return this.sucursalActual;
 	}
 
-	public void setSucursalByIdSucursalActual(
-			Sucursal sucursalByIdSucursalActual) {
-		this.sucursalByIdSucursalActual = sucursalByIdSucursalActual;
+	public void setSucursalActual(Sucursal sucursalActual) {
+		this.sucursalActual = sucursalActual;
 	}
 
 	public Cliente getCliente() {

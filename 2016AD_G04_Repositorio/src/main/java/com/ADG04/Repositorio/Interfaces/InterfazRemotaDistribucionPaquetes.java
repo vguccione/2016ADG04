@@ -11,7 +11,7 @@ import com.ADG04.bean.Cliente.DTO_CuentaCorriente;
 import com.ADG04.bean.Cliente.DTO_Factura;
 
 
-public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministracionRemote, IClienteRemote, IFacturaRemote{
+public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministracionRemote, IClienteRemote, IFacturaRemote, IEncomiendaRemote{
 	
 	public static final String url = "localhost/DistribucionPaquetesRMI";
 	

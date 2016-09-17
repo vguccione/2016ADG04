@@ -1,4 +1,4 @@
-package com.ADG94.bean.Encomienda;
+package com.ADG04.bean.Encomienda;
 
 
 public class DTO_EnvioTercerizado extends DTO_Envio{

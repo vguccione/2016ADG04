@@ -1,4 +1,4 @@
-package com.ADG94.bean.Encomienda;
+package com.ADG04.bean.Encomienda;
 
 public class DTO_TrayectoIntersucursal extends DTO_Trayecto{
 	private static final long serialVersionUID = 1L;

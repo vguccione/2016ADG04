@@ -1,4 +1,4 @@
-package com.ADG94.bean.Vehiculo;
+package com.ADG04.bean.Vehiculo;
 
 public class DTO_TareasPorTiempo extends DTO_TareaMantenimiento{
 	private static final long serialVersionUID = 1L;

@@ -33,14 +33,6 @@ public class App
     	TestUsuario();
     }
     
-    public static void TestClienteDao(){
-    	EntityManagerFactory factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
-    	EntityManager em = factory.createEntityManager();
-    	ClienteDao dao = new ClienteDao(em);
-        Cliente cliente = dao.getById(1);
-        System.out.println(cliente.getApellido());    
-   }
-    
     public static void TestUsuario(){
     	DTO_Usuario usuario = new DTO_Usuario();
     	usuario.setApellido("Pepe");
@@ -58,16 +50,5 @@ public class App
     	GestionAdministracion.getInstancia().altaUsuario(usuario);
     }
     
-    public static void TestPaisDao(){
-    	EntityManagerFactory factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
-    	EntityManager em = factory.createEntityManager();
-    	PaisDao dao = new PaisDao(em);
-         
-         Pais p =new Pais("Argentina");
-        
-         
-         dao.persist(p);
-         
-         EntityManagerProvider.getInstance().close();
-    }
+    
 }

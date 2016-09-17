@@ -4,8 +4,8 @@ import java.rmi.RemoteException;
 import java.util.Date;
 
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
-import com.ADG94.bean.Administracion.DTO_Usuario;
-import com.ADG94.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Administracion.DTO_Usuario;
+import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 
 public class TestClient {
 

@@ -91,4 +91,8 @@ public class DTO_Usuario implements Serializable{
 		return idUsuario;
 	}
 
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;	
+	}
+
 }

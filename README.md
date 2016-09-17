@@ -102,3 +102,12 @@ El comando ```git status``` les puede ser de utilidad para verificar el estado d
 
 De ser así, su repositorio y el master son iguales. :)
 
+
+-------Agregado por Vane-----------------------
+
+Si te aparece el error "Cannot rebase: You have unstaged changes. Please commit or stash them."
+ejecuta:
+- "git stash": resguarda los cambios que no queres que se te pisen
+- "git rebase upstream/master"
+- "git push origin master"
+- "git stash apply" : retoma los cambios que guardaste previamente.

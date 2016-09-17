@@ -5,6 +5,7 @@ package com.ADG04.Servidor.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Administracion.DTO_RolUsuario;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Administracion.DTO_Usuario;
+
 @Entity
 @Table(name = "Sucursal")
 public class Sucursal implements java.io.Serializable {
@@ -24,7 +29,13 @@ public class Sucursal implements java.io.Serializable {
 	@Column(name = "IdSucursal", unique = true, nullable = false)
 	private int idSucursal;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@Column(name="Descripcion")
+	private String descripcion;
+	
+	@Column(name = "Telefono")
+	private String telefono;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdDireccion", nullable = false)
 	private Direccion direccion;
 
@@ -61,6 +72,16 @@ public class Sucursal implements java.io.Serializable {
 	}
 	public int getIdSucursal() {
 		return this.idSucursal;
+	}
+	
+	
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public Direccion getDireccion() {
@@ -140,6 +161,18 @@ public class Sucursal implements java.io.Serializable {
 
 	public void setIdSucursal(int idSucursal) {
 		this.idSucursal = idSucursal;
+	}
+
+	public void setTelefono(String telefono) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public DTO_Sucursal toDTO(){
+		DTO_Sucursal s = new DTO_Sucursal();
+		s.setDescripcion(this.descripcion);
+		s.setTelefono(this.telefono);
+		return s;
 	}
 
 }

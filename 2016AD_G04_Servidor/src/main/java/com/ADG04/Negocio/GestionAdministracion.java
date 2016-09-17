@@ -6,14 +6,23 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import com.ADG04.Servidor.dao.DireccionDao;
+import com.ADG04.Servidor.dao.PaisDao;
+import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolUsuarioDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
+import com.ADG04.Servidor.model.Direccion;
+import com.ADG04.Servidor.model.Pais;
+import com.ADG04.Servidor.model.Provincia;
 import com.ADG04.Servidor.model.RolUsuario;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.bean.Administracion.DTO_Provincia;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
+
 
 
 public class GestionAdministracion {
@@ -34,10 +43,10 @@ private static GestionAdministracion instancia;
 	}
 	
 	public void altaUsuario(DTO_Usuario usuario) {
-		EntityManager em = factory.createEntityManager();
 		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getId());
 		RolUsuario rol = new RolUsuario(usuario.getRolUsuario().getdescripcion());
 		
+		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Usuario u= new Usuario();
@@ -99,6 +108,91 @@ private static GestionAdministracion instancia;
 	
 	public DTO_Usuario getUsuario(String dni) {
 		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
+	}
+
+	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		
+		/*Crear Direccion*/
+		Direccion dir = new Direccion();
+		dir.setCalle(sucursal.getDireccion().getCalle());
+		dir.setCodigoPostal(sucursal.getDireccion().getCodigoPostal());
+		dir.setLocalidad(sucursal.getDireccion().getLocalidad());
+		dir.setNro(sucursal.getDireccion().getNro());
+		
+		ProvinciaDao provDao = ProvinciaDao.getInstancia();
+		Provincia prov = (Provincia) provDao.getById(sucursal.getDireccion().getProvincia().getId());
+		
+		dir.setProvincia(prov);
+		
+		PaisDao paisDao = PaisDao.getInstancia();
+		Pais pais = (Pais) paisDao.getById(sucursal.getDireccion().getPais().getId());
+		
+		dir.setPais(pais);
+			
+		/*Crear Sucursal*/		
+		Sucursal s = new Sucursal();
+		s.setDescripcion(sucursal.getDescripcion());
+		s.setTelefono(sucursal.getTelefono());
+		s.setDireccion(dir);
+		
+		SucursalDao.getInstancia().persist(s);
+		tx.commit();
+	}
+
+	public void modificarSucursal(DTO_Sucursal sucursal) throws RemoteException {
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		
+		/*Crear Direccion*/
+		Direccion dir = new Direccion();
+		dir.setCalle(sucursal.getDireccion().getCalle());
+		dir.setCodigoPostal(sucursal.getDireccion().getCodigoPostal());
+		dir.setLocalidad(sucursal.getDireccion().getLocalidad());
+		dir.setNro(sucursal.getDireccion().getNro());
+		
+		ProvinciaDao provDao = ProvinciaDao.getInstancia();
+		Provincia prov = (Provincia) provDao.getById(sucursal.getDireccion().getProvincia().getId());
+		
+		dir.setProvincia(prov);
+		
+		PaisDao paisDao = PaisDao.getInstancia();
+		Pais pais = (Pais) paisDao.getById(sucursal.getDireccion().getPais().getId());
+		
+		dir.setPais(pais);
+			
+				
+		Sucursal s = new Sucursal();
+		
+		s.setDescripcion(sucursal.getDescripcion());
+		s.setTelefono(sucursal.getTelefono());
+		s.setDireccion(dir);
+		
+		SucursalDao.getInstancia().saveOrUpdate(s);
+		tx.commit();
+	}
+
+	public void bajaSucursal(Integer idSucursal) throws RemoteException {
+		EntityManager em = factory.createEntityManager();
+		
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		Sucursal s = SucursalDao.getInstancia().getById(idSucursal);
+		
+		if (s != null)
+			SucursalDao.getInstancia().remove(s); //baja logica o total?
+		
+		tx.commit();
+	}
+
+	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException {
+		 return SucursalDao.getInstancia().getById(idSucursal).toDTO();
 	}
 	
 	

@@ -2,7 +2,7 @@ package com.ADG04.bean.Cliente;
 
 import java.io.Serializable;
 
-import com.ADG94.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Direccion;
 
 public class DTO_ClienteEmpresa implements Serializable{
 

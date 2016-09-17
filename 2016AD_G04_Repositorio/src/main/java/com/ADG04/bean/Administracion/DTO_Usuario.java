@@ -83,7 +83,7 @@ public class DTO_Usuario implements Serializable{
 		return this.rolUsuario;
 	}
 
-	public void setrolUsuarios(DTO_RolUsuario rol) {
+	public void setRolUsuario(DTO_RolUsuario rol) {
 		this.rolUsuario = rol;
 	}
 

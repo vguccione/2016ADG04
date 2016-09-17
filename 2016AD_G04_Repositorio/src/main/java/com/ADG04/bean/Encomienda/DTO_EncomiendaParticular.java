@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import com.ADG94.bean.Administracion.DTO_Direccion;
-import com.ADG94.bean.Administracion.DTO_Sucursal;
-import com.ADG94.bean.Cliente.DTO_ClienteParticular;
-import com.ADG94.bean.Cliente.DTO_ItemFactura;
+import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
 public  class DTO_EncomiendaParticular implements Serializable{
 

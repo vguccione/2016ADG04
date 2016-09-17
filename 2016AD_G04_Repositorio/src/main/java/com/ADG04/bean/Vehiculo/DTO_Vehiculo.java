@@ -3,7 +3,7 @@ package com.ADG04.bean.Vehiculo;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.ADG94.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
 
 
 public class DTO_Vehiculo implements Serializable{

@@ -3,9 +3,9 @@ package com.ADG04.Repositorio.Interfaces;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import com.ADG94.bean.Cliente.DTO_ClienteEmpresa;
-import com.ADG94.bean.Cliente.DTO_ClienteParticular;
-import com.ADG94.bean.Cliente.DTO_Producto;
+import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
+import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Cliente.DTO_Producto;
 
 public interface IClienteRemote {
 

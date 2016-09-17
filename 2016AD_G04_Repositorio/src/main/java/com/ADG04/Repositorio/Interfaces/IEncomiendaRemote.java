@@ -4,10 +4,10 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
-import com.ADG94.bean.Administracion.DTO_Direccion;
-import com.ADG94.bean.Administracion.DTO_Sucursal;
-import com.ADG94.bean.Cliente.DTO_Producto;
-import com.ADG94.bean.Encomienda.DTO_Remito;
+import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Cliente.DTO_Producto;
+import com.ADG04.bean.Encomienda.DTO_Remito;
 
 public interface IEncomiendaRemote {
 

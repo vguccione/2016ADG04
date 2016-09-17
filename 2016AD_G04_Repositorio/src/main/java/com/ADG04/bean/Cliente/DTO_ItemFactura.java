@@ -1,4 +1,4 @@
-package com.ADG94.bean.Cliente;
+package com.ADG04.bean.Cliente;
 
 import java.io.Serializable;
 

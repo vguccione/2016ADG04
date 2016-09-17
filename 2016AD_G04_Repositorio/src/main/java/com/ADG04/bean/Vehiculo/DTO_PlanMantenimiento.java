@@ -1,4 +1,4 @@
-package com.ADG94.bean.Vehiculo;
+package com.ADG04.bean.Vehiculo;
 
 import java.io.Serializable;
 import java.util.ArrayList;

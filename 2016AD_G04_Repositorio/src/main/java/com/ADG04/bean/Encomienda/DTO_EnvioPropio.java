@@ -1,4 +1,4 @@
-package com.ADG94.bean.Encomienda;
+package com.ADG04.bean.Encomienda;
 
 import java.util.Date;
 

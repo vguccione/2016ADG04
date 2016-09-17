@@ -1,4 +1,4 @@
-package com.ADG94.bean.Administracion;
+package com.ADG04.bean.Administracion;
 
 import java.io.Serializable;
 /*import java.util.ArrayList;

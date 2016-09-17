@@ -1,4 +1,4 @@
-package com.ADG94.bean.Proveedor;
+package com.ADG04.bean.Proveedor;
 
 import java.io.Serializable;
 import java.util.Date;

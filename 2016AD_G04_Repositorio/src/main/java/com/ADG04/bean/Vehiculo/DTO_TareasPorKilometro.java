@@ -1,4 +1,4 @@
-package com.ADG94.bean.Vehiculo;
+package com.ADG04.bean.Vehiculo;
 
 
 public class DTO_TareasPorKilometro extends DTO_TareaMantenimiento{

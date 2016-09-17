@@ -111,3 +111,8 @@ ejecuta:
 - "git rebase upstream/master"
 - "git push origin master"
 - "git stash apply" : retoma los cambios que guardaste previamente.
+
+
+Si queres descartar los cambios de algun archivo en tu compu:
+
+- git checkout <file>

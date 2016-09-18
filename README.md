@@ -30,17 +30,21 @@ Instrucciones para levantar el servidor
 **En eclipse**
 
 1- Ir a File>Import , buscar Maven y elegir "Existing maven project"
+
 2- Elegir el proyecto a importar (lo que se descargó de github, al momento será un proyecto Servidor y otro proyecto Repositorio)
 
 Una vez que se descargaron los proyectos, modificar la configuración de la base de datos local
 
 3- En eclipse, en el proyecto 2016AD_G04_Servidor, ir a src/main/resources/META-INF y abrir el archivo persistencia.xml
+
 4- Modificar la property
 
 ```<property name="hibernate.connection.url" value="jdbc:sqlserver://....>```  
 (recordar previamente tener creado la base de datos que se indique en esta property)
 
+
 5- Modificar password y contraseña de la base de datos en las propiedades respectivas
+
 6- En el archivo pom.xml verificar la dependency apunta al directorio correcto
 ```
 <dependency>
@@ -53,7 +57,9 @@ Una vez que se descargaron los proyectos, modificar la configuración de la base
 ```
 (systemPath debe apuntar al directorio donde se encuentra el jar del proyecto Repositorio)
 
+
 7- Ir por consola al proyecto 2016AD_G04_Repositorio y ejecutar ```mvn clean install``` y luego ```mvn package```  (cada vez que haya un cambio en el projeto 2016AD_G04_Repositorio deberá hacerse un nuevo jar , eso lo ejecuta el **mvn package**)
+
 
 8- Usando la consola, posicionarse en el directorio del proyecto 2016AD_G04_Servidor e ingresar  ```mvn clean install```
 

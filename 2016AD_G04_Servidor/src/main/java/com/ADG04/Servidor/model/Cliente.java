@@ -31,7 +31,7 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 @Entity
 @Table(name = "Cliente")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="tipoCliente",discriminatorType=DiscriminatorType.CHAR) 
+@DiscriminatorColumn(name="TipoCliente",discriminatorType=DiscriminatorType.CHAR) 
 @DiscriminatorValue("c")
 public class Cliente implements java.io.Serializable {
 

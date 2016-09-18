@@ -176,7 +176,7 @@ public class Sucursal implements java.io.Serializable {
 	
 	
 	public String getTelefono() {
-		return telefono;
+		return telefono;//afkash alidhahd
 	}
 
 	public DTO_Sucursal toDTO(){

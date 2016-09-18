@@ -62,7 +62,7 @@ public class GestionCliente {
 		TipoCliente tipo = new TipoCliente();
 		tipo.setIdTipoCliente(1);
 		tipo.setDescripcion("Particular");
-		
+		//jjhjkh
 		return tipo;
 	}
 

@@ -26,9 +26,9 @@ public class TipoCliente implements java.io.Serializable {
 	@Column(name = "Descripcion", nullable = false, length = 100)
 	private String descripcion;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoCliente")
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoCliente")
 	private List<Cliente> clientes;
-
+*/
 	public TipoCliente() {
 	}
 
@@ -53,13 +53,13 @@ public class TipoCliente implements java.io.Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public List<Cliente> getClientes() {
+/*	public List<Cliente> getClientes() {
 		return clientes;
 	}
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
 	}
-
+*/
 
 }

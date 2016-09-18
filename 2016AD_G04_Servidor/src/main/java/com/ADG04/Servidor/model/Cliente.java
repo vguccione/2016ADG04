@@ -8,10 +8,15 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,6 +30,9 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 
 @Entity
 @Table(name = "Cliente")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="tipoCliente",discriminatorType=DiscriminatorType.CHAR) 
+@DiscriminatorValue("c")
 public class Cliente implements java.io.Serializable {
 
 	@Id
@@ -32,25 +40,10 @@ public class Cliente implements java.io.Serializable {
 	@Column(name = "IdCliente", unique = true, nullable = false)
 	private int idCliente;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	/*@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdTipoCliente", nullable = false)
 	private TipoCliente tipoCliente;
-	
-	@Column(name = "Nombre", length = 100)
-	private String nombre;
-	
-	@Column(name = "Apellido", length = 200)
-	private String apellido;
-	
-	@Column(name = "Dni", length = 8)
-	private String dni;
-	
-	
-	@Column(name = "RazonSocial", length = 50)
-	private String razonSocial;
-	
-	@Column(name = "Cuit", length = 50)
-	private String cuit;
+	*/
 	
 	@Column(name = "Estado", nullable = false)
 	private boolean estado;
@@ -62,13 +55,7 @@ public class Cliente implements java.io.Serializable {
 	private String telefono;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
-	private List <Producto> productos;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
 	private List <Encomienda> encomiendas;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
-	private List <CuentaCorriente> cuentaCorrientes;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="IdDireccion")
@@ -77,24 +64,17 @@ public class Cliente implements java.io.Serializable {
 	public Cliente() {
 	}
 
-	
 
-	
 
-	public Cliente(TipoCliente tipoCliente, String nombre, String apellido,
-			String dni, String razonSocial, String cuit, boolean estado,
-			String email, String telefono) {
+	public Cliente(int idCliente, boolean estado, String email, String telefono) {
 		super();
-		this.tipoCliente = tipoCliente;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.dni = dni;
-		this.razonSocial = razonSocial;
-		this.cuit = cuit;
+		this.idCliente = idCliente;
 		this.estado = estado;
 		this.email = email;
 		this.telefono = telefono;
 	}
+
+
 
 	public int getIdCliente() {
 		return this.idCliente;
@@ -102,66 +82,6 @@ public class Cliente implements java.io.Serializable {
 
 	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
-	}
-
-	public TipoCliente getTipoCliente() {
-		return this.tipoCliente;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
-
-	public String getApellido() {
-		return apellido;
-	}
-
-
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-
-
-
-	public String getDni() {
-		return dni;
-	}
-
-
-
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
-
-
-
-	public void setTipoCliente(TipoCliente tipoCliente) {
-		this.tipoCliente = tipoCliente;
-	}
-
-	public String getRazonSocial() {
-		return this.razonSocial;
-	}
-
-	public void setRazonSocial(String razonSocial) {
-		this.razonSocial = razonSocial;
-	}
-
-	public String getCuit() {
-		return this.cuit;
-	}
-
-	public void setCuit(String cuit) {
-		this.cuit = cuit;
 	}
 
 	public boolean getEstado(){
@@ -188,28 +108,12 @@ public class Cliente implements java.io.Serializable {
 		this.telefono = telefono;
 	}
 
-	public List<Producto> getProductos() {
-		return productos;
-	}
-
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
-	}
-
 	public List<Encomienda> getEncomiendas() {
 		return encomiendas;
 	}
 
 	public void setEncomiendas(List<Encomienda> encomiendas) {
 		this.encomiendas = encomiendas;
-	}
-
-	public List<CuentaCorriente> getCuentaCorrientes() {
-		return cuentaCorrientes;
-	}
-
-	public void setCuentaCorrientes(List<CuentaCorriente> cuentaCorrientes) {
-		this.cuentaCorrientes = cuentaCorrientes;
 	}
 
 	public Direccion getDireccion() {
@@ -220,17 +124,4 @@ public class Cliente implements java.io.Serializable {
 		this.direccion = direccion;
 	}
 
-
-	public DTO_ClienteParticular toDTOClienteParticualr(){
-
-		DTO_ClienteParticular cli = new DTO_ClienteParticular();
-		cli.setDni(this.getDni());
-		cli.setNombre(this.getNombre());
-		cli.setApellido(this.getApellido());
-		cli.setEmail(this.getEmail());	
-		cli.setEstado(this.getEstado());
-		cli.setTelefono(this.getTelefono());
-		
-		return cli;
-	}
 }

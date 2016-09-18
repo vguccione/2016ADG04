@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Administracion.DTO_Pais;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
+
 @Entity
 @Table(name = "Pais")
 public class Pais implements java.io.Serializable {
@@ -60,6 +63,15 @@ public class Pais implements java.io.Serializable {
 	public void setDirecciones(List<Direccion> direcciones) {
 		this.direcciones = direcciones;
 	}
+	
+	public DTO_Pais toDTO(){
+		DTO_Pais p = new DTO_Pais();
+		p.seDescripcion(this.descripcion);
+		p.setId(this.idPais);
+		return p;
+	}
+	
+
 
 	
 }

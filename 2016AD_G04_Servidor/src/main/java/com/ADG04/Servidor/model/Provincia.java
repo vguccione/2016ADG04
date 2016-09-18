@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Administracion.DTO_Pais;
+import com.ADG04.bean.Administracion.DTO_Provincia;
+
 @Entity
 @Table(name = "Provincia")
 public class Provincia implements java.io.Serializable {
@@ -62,4 +65,10 @@ public class Provincia implements java.io.Serializable {
 		this.direcciones = direcciones;
 	}
 
+	public DTO_Provincia toDTO(){
+		DTO_Provincia p = new DTO_Provincia();
+		p.setDescripcion(this.descripcion);
+	    p.setId(this.idProvincia);
+		return p;
+	}
 }

@@ -51,14 +51,14 @@ public class Sucursal implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalByIdSucursalOrigen")
 	private List<Envio> enviosSucursalOrigen;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalByIdSucursalDestino")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalDestno")
 	private List<Encomienda> encomiendasSucursalDestino;
 
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalByIdSucursalOrigen")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalOrigen")
 	private List<Encomienda> encomiendasSucursalOrigen;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalByIdSucursalActual")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalActual")
 	private List<Encomienda> encomiendasSucursalActual;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursal")
@@ -66,10 +66,16 @@ public class Sucursal implements java.io.Serializable {
 
 	public Sucursal() {
 	}
-
-	public Sucursal(Direccion direccion) {
-		this.direccion = direccion;
+	
+	public Sucursal(String descripcion, String telefono) {
+		super();
+		this.descripcion = descripcion;
+		this.telefono = telefono;
 	}
+
+
+
+
 	public int getIdSucursal() {
 		return this.idSucursal;
 	}
@@ -168,6 +174,11 @@ public class Sucursal implements java.io.Serializable {
 		
 	}
 	
+	
+	public String getTelefono() {
+		return telefono;
+	}
+
 	public DTO_Sucursal toDTO(){
 		DTO_Sucursal s = new DTO_Sucursal();
 		s.setDescripcion(this.descripcion);

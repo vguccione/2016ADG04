@@ -81,6 +81,7 @@ Volver a hacer mvc clean install.
 
 
 9- Ir a eclipse y probar correr el Servidor en src/java/main/ > com.ADG04.Servidor > Servidor.java. Debera levantar el servidor rmi
+
 10- Tambien correr en src/java/main  , en com.ADG04.Servidor > App.java.  Si la configuracion de la base es correcta, se crearán las tablas y se ejecutara la prueba que figure exitosamente.
 
 

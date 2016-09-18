@@ -5,9 +5,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.model.Cliente;
+import com.ADG04.Servidor.model.ClienteParticular;
 import com.ADG04.Servidor.model.RolUsuario;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.TipoCliente;
@@ -34,9 +36,9 @@ public class GestionCliente {
 	
 	public void altaCliente(DTO_ClienteParticular clienteParticular) 
 	{
-		TipoCliente tipoCliente = this.getTipoClienteParticular();
+		//TipoCliente tipoCliente = this.getTipoClienteParticular();
 		
-		Cliente c = new Cliente();
+		ClienteParticular c = new ClienteParticular();
 		
 		c.setNombre(clienteParticular.getNombre());
 		c.setApellido(clienteParticular.getApellido());
@@ -44,7 +46,7 @@ public class GestionCliente {
 		c.setEmail(clienteParticular.getEmail());
 		c.setEstado(true);
 		c.setTelefono(clienteParticular.getTelefono());
-		c.setTipoCliente(tipoCliente);
+		//c.setTipoCliente(tipoCliente);
 	
 		EntityManager em = factory.createEntityManager();
 		
@@ -57,17 +59,17 @@ public class GestionCliente {
 		
 	}
 	
-	private TipoCliente getTipoClienteParticular() {
+	/*private TipoCliente getTipoClienteParticular() {
 		
 		TipoCliente tipo = new TipoCliente();
 		tipo.setIdTipoCliente(1);
 		tipo.setDescripcion("Particular");
 		//jjhjkh
 		return tipo;
-	}
+	}*/
 
 	public DTO_ClienteParticular getClienteParticularByDni(String dniCliente) {
-		return ClienteDao.getInstancia().getByDni(dniCliente).toDTOClienteParticualr();
+		return ClienteParticularDao.getInstancia().getByDni(dniCliente).toDTO();
 	}
 	
 	

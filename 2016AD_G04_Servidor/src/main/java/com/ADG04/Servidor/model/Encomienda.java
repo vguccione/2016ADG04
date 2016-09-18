@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +33,7 @@ public class Encomienda implements java.io.Serializable {
 	@JoinColumn(name = "IdItemFactura", nullable = false)
 	private ItemFactura itemFactura;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdDireccionDestino")
 	private Direccion direccionDestino;
 
@@ -48,7 +49,7 @@ public class Encomienda implements java.io.Serializable {
 	@JoinColumn(name = "IdSucursalOrigen", nullable = false)
 	private Sucursal sucursalOrigen;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdDireccionOrigen")
 	private Direccion direccionOrigen;
 	

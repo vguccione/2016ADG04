@@ -45,11 +45,17 @@ public class App
     //	TestUsuario();
     }
     
-    private static void TestAltaCliente() {
-
-    	//Para probar uso una direccion que existe
-    	DTO_Direccion direccion = new DTO_Direccion();
-    	direccion.setIdDireccion(1);
+    private static void TestAltaCliente() {  	
+    	DTO_Direccion dir = new DTO_Direccion();
+    	Pais pais = (Pais) PaisDao.getInstancia().getById(1);
+    	Provincia prov = (Provincia) ProvinciaDao.getInstancia().getById(1);
+    	
+    	dir.setCalle("b");
+    	dir.setCodigoPostal(1234);
+    	dir.setLocalidad("Capital Federal");
+    	dir.setNro(123);
+    	dir.setPais(pais.toDTO());
+    	dir.setProvincia(prov.toDTO());
     	    	
     	DTO_ClienteParticular cliParticular = new DTO_ClienteParticular();
     	
@@ -59,7 +65,7 @@ public class App
 		cliParticular.setEstado(true);
 		cliParticular.setNombre("Vanesa");
 		cliParticular.setTelefono("1556932544");
-		cliParticular.setDireccion(direccion);
+		cliParticular.setDireccion(dir);
 		
 		GestionCliente.getInstancia().altaCliente(cliParticular);
     }

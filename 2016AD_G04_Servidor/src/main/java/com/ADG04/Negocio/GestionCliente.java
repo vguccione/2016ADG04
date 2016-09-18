@@ -10,6 +10,7 @@ import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.ClienteParticular;
+import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.RolUsuario;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.TipoCliente;
@@ -38,6 +39,8 @@ public class GestionCliente {
 	{
 		//TipoCliente tipoCliente = this.getTipoClienteParticular();
 		
+		//Direccion dir = GestionAdministracion.getInstancia().crearDireccion(clienteParticular.getDireccion());
+	
 		ClienteParticular c = new ClienteParticular();
 		
 		c.setNombre(clienteParticular.getNombre());
@@ -48,8 +51,9 @@ public class GestionCliente {
 		c.setTelefono(clienteParticular.getTelefono());
 		//c.setTipoCliente(tipoCliente);
 	
-		EntityManager em = factory.createEntityManager();
+		//c.setDireccion(dir);
 		
+		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 	

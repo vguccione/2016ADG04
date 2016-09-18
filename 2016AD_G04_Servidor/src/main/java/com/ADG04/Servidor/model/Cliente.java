@@ -57,7 +57,7 @@ public class Cliente implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
 	private List <Encomienda> encomiendas;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="IdDireccion")
 	private Direccion direccion;
 

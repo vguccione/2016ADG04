@@ -30,7 +30,7 @@ public class Encomienda implements java.io.Serializable {
 	private int idEncomienda;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdItemFactura", nullable = false)
+	@JoinColumn(name = "IdItemFactura", nullable = true)
 	private ItemFactura itemFactura;
 
 	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
@@ -42,7 +42,7 @@ public class Encomienda implements java.io.Serializable {
 	private Sucursal sucursalDestno;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdEnvio", nullable = false)
+	@JoinColumn(name = "IdEnvio", nullable = true)
 	private Envio envio;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -69,7 +69,7 @@ public class Encomienda implements java.io.Serializable {
 	private Date fechaCreacion;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "FechaEstimadaEntrega", nullable = false, length = 23)
+	@Column(name = "FechaEstimadaEntrega", nullable = true, length = 23)
 	private Date fechaEstimadaEntrega;
 
 	@Column(name = "Estado", nullable = false, length = 50)

@@ -111,7 +111,8 @@ private static GestionAdministracion instancia;
 		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
 	}
 
-	public void altaSucursal(DTO_Sucursal sucursal) {
+	public int altaSucursal(DTO_Sucursal sucursal) {
+		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -126,7 +127,10 @@ private static GestionAdministracion instancia;
 		s.setDireccion(dir);
 		
 		SucursalDao.getInstancia().persist(s);
+		
 		tx.commit();
+		
+		return s.getIdSucursal();
 	}
 
 	public void modificarSucursal(DTO_Sucursal sucursal) {

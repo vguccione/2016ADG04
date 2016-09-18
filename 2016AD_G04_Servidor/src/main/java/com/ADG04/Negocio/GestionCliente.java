@@ -37,10 +37,6 @@ public class GestionCliente {
 	
 	public void altaCliente(DTO_ClienteParticular clienteParticular) 
 	{
-		//TipoCliente tipoCliente = this.getTipoClienteParticular();
-		
-		//Direccion dir = GestionAdministracion.getInstancia().crearDireccion(clienteParticular.getDireccion());
-	
 		ClienteParticular c = new ClienteParticular();
 		
 		c.setNombre(clienteParticular.getNombre());
@@ -49,14 +45,13 @@ public class GestionCliente {
 		c.setEmail(clienteParticular.getEmail());
 		c.setEstado(true);
 		c.setTelefono(clienteParticular.getTelefono());
-		//c.setTipoCliente(tipoCliente);
 	
-		//c.setDireccion(dir);
-		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-	
+
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(clienteParticular.getDireccion());
+		c.setDireccion(dir);
 		ClienteDao.getInstancia().persist(c);
 		
 		tx.commit();

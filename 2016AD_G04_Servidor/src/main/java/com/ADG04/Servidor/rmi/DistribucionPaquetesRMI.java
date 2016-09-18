@@ -313,29 +313,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		GestionEncomienda gEnc = GestionEncomienda.getInstancia();
 		
-		gEnc.altaEncomiendaParticular(encomiendaParticular.getCliente(), 
-				encomiendaParticular.getDireccionOrigen(), 
-				encomiendaParticular.getDireccionDestino(), 
-				encomiendaParticular.getSucursalOrigen(), 
-				encomiendaParticular.getSucursalDestino(), 
-				encomiendaParticular.getLargo(), 
-				encomiendaParticular.getAncho(), 
-				encomiendaParticular.getAlto(), 
-				encomiendaParticular.getPeso(), 
-				encomiendaParticular.getVolumen(), 
-				encomiendaParticular.getTratamiento(), 
-				encomiendaParticular.getApilable(), 
-				encomiendaParticular.getCantApilable(), 
-				encomiendaParticular.getRefrigerado(), 
-				encomiendaParticular.getCondicionTransporte(), 
-				encomiendaParticular.getIndicacionesManipulacion(), 
-				encomiendaParticular.getFragilidad(), 
-				encomiendaParticular.getNombreReceptor(), 
-				encomiendaParticular.getApellidoReceptor(), 
-				encomiendaParticular.getDniReceptor(), 
-				encomiendaParticular.getVolumenGranel(), 
-				encomiendaParticular.getUnidadGranel(), 
-				encomiendaParticular.getCargaGranel());
+		gEnc.altaEncomiendaParticular(encomiendaParticular);
 	}
 						
 	

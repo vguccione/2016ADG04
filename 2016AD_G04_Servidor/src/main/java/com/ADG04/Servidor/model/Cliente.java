@@ -71,7 +71,7 @@ public class Cliente implements java.io.Serializable {
 	private List <CuentaCorriente> cuentaCorrientes;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="direccion")
+	@JoinColumn(name="IdDireccion")
 	private Direccion direccion;
 
 	public Cliente() {

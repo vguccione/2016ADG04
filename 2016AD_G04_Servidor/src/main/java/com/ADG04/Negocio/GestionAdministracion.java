@@ -110,7 +110,7 @@ private static GestionAdministracion instancia;
 		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
 	}
 
-	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
+	public void altaSucursal(DTO_Sucursal sucursal) {
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();

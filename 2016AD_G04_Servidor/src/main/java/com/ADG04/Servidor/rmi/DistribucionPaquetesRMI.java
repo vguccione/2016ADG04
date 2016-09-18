@@ -294,7 +294,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		return null;
 	}
 
-	@Override
 	public void nuevaEncomiedaParticular(String dniCliente,
 			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
 			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
@@ -309,7 +308,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		GestionEncomienda gEnc = GestionEncomienda.getInstancia();
 	}
 	
-	@Override
+	
 	public void nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) {
 		
 		GestionEncomienda gEnc = GestionEncomienda.getInstancia();
@@ -339,7 +338,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 				encomiendaParticular.getCargaGranel());
 	}
 						
-	@Override
+	
 	public void nuevaEncomiedaParticular(
 			String dniCliente, 
 			DTO_Sucursal sucursalOrigen,
@@ -350,7 +349,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 								
 
-	@Override
+	
 	public void nuevaEncomiedaEmpresa(String dniCliente,
 			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
 			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
@@ -365,35 +364,33 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 
-	@Override
+	
 	public void setFechaEstimadaEntrega(int idEncomienda,
 			Date fechaEstimadaDeEntrega) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void agregarRemito(int idEncomienda, DTO_Remito remito)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void agregarProducto(DTO_Producto producto, int idEncomienda)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void eliminarProducto(int idProducto, int idEncomienda)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void nuevaEncomiedaParticular(String dniCliente,
 			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
 			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,

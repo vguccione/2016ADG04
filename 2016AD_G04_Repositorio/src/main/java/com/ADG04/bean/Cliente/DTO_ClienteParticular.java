@@ -21,6 +21,10 @@ public class DTO_ClienteParticular implements Serializable{
 		
 	}
 
+	public void setId(int id){
+		this.id = id;
+	}
+	
 	public String getDni(){
 		return this.dni;
 	}

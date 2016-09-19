@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,10 +30,10 @@ public class Encomienda implements java.io.Serializable {
 	private int idEncomienda;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdItemFactura", nullable = false)
+	@JoinColumn(name = "IdItemFactura", nullable = true)
 	private ItemFactura itemFactura;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdDireccionDestino")
 	private Direccion direccionDestino;
 
@@ -41,14 +42,14 @@ public class Encomienda implements java.io.Serializable {
 	private Sucursal sucursalDestno;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdEnvio", nullable = false)
+	@JoinColumn(name = "IdEnvio", nullable = true)
 	private Envio envio;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdSucursalOrigen", nullable = false)
 	private Sucursal sucursalOrigen;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdDireccionOrigen")
 	private Direccion direccionOrigen;
 	
@@ -68,7 +69,7 @@ public class Encomienda implements java.io.Serializable {
 	private Date fechaCreacion;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "FechaEstimadaEntrega", nullable = false, length = 23)
+	@Column(name = "FechaEstimadaEntrega", nullable = true, length = 23)
 	private Date fechaEstimadaEntrega;
 
 	@Column(name = "Estado", nullable = false, length = 50)

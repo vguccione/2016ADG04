@@ -24,8 +24,8 @@ import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
-	
-	public class GestionEncomienda {
+//Gestion Encomienda	
+public class GestionEncomienda {
 	
 	private static GestionEncomienda instancia;
 		

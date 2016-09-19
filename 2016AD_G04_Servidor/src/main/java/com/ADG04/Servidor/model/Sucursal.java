@@ -170,13 +170,12 @@ public class Sucursal implements java.io.Serializable {
 	}
 
 	public void setTelefono(String telefono) {
-		// TODO Auto-generated method stub
-		
+		this.telefono=telefono;
 	}
 	
 	
 	public String getTelefono() {
-		return telefono;//afkash alidhahd
+		return telefono;
 	}
 
 	public DTO_Sucursal toDTO(){

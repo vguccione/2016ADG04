@@ -1,5 +1,7 @@
 package com.ADG04.Negocio;
 
+import java.util.Date;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -8,18 +10,22 @@ import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
+import com.ADG04.Servidor.model.Cliente;
+import com.ADG04.Servidor.model.ClienteParticular;
 import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.model.ItemFactura;
 import com.ADG04.Servidor.model.RolUsuario;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.Usuario;
+import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
-	
-	public class GestionEncomienda {
+import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
+//Gestion Encomienda	
+public class GestionEncomienda {
 	
 	private static GestionEncomienda instancia;
 		
@@ -35,7 +41,7 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 		} 
 		return instancia;
 	}
-
+/*
 	public void altaEncomiendaParticular(DTO_ClienteParticular cliente,
 			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
 			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
@@ -45,40 +51,46 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 			String condiciionTransporte, String indicacionesManipulacion,
 			String fragilidad, String nombreReceptor, String apellidoReceptor,
 			String dniReceptor, Double volumenGranel, String unidadGranel,
-			String cargaGranel) {
+			String cargaGranel) 
+	*/
+	public void altaEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
 		
 		//Validaciones??????????
 		
-		SucursalDao sucDao = SucursalDao.getInstancia();
-		ClienteDao clieDao = ClienteDao.getInstancia();
-
+		Sucursal origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
+		Sucursal destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
+		Cliente cli = ClienteDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
+				
 		Encomienda encomienda = new Encomienda();
-		encomienda.setCliente(clieDao.getByDni(cliente.getDni()));
-		encomienda.setSucursalOrigen(sucDao.getById(sucursalOrigen.getId()));
-		encomienda.setSucursalDestino(sucDao.getById(sucursalDestino.getId()));
-		encomienda.setLargo(largo);
-		encomienda.setAncho(ancho);
+		encomienda.setCliente(cli);
+		encomienda.setSucursalOrigen(origen);
+		encomienda.setSucursalDestino(destino);
+		encomienda.setLargo(dtoEncomienda.getLargo());
+		encomienda.setAncho(dtoEncomienda.getAncho());
 		
-		encomienda.setAlto(alto);
-		encomienda.setPeso(peso);
-		encomienda.setVolumen(volumen);
-		encomienda.setTratamiento(tratamiento); 
-		encomienda.setApilable(apilable);
-		encomienda.setCantApilable(cantApilable); 
-		encomienda.setRefrigerado(refrigerado);
-		encomienda.setCondicionTransporte(condiciionTransporte); 
-		encomienda.setIndicacionesManipulacion(indicacionesManipulacion);
-		encomienda.setFragilidad(fragilidad); 
-		encomienda.setNombreReceptor(nombreReceptor); 
-		encomienda.setApellidoReceptor(apellidoReceptor);
-		encomienda.setDniReceptor(dniReceptor); 
-		encomienda.setVolumenGranel(volumenGranel); 
-		encomienda.setUnidadGranel(unidadGranel);
-		encomienda.setCargaGranel(cargaGranel);		
-		encomienda.setTipoEncomienda("P");
+		encomienda.setAlto(dtoEncomienda.getAlto());
+		encomienda.setPeso(dtoEncomienda.getPeso());
+		encomienda.setVolumen(dtoEncomienda.getVolumen());
+		encomienda.setTratamiento(dtoEncomienda.getTratamiento()); 
+		encomienda.setApilable(dtoEncomienda.getApilable());
+		encomienda.setCantApilable(dtoEncomienda.getCantApilable()); 
+		encomienda.setRefrigerado(dtoEncomienda.getRefrigerado());
+		encomienda.setCondicionTransporte(dtoEncomienda.getCondicionTransporte()); 
+		encomienda.setIndicacionesManipulacion(dtoEncomienda.getIndicacionesManipulacion());
+		encomienda.setFragilidad(dtoEncomienda.getFragilidad()); 
+		encomienda.setNombreReceptor(dtoEncomienda.getNombreReceptor()); 
+		encomienda.setApellidoReceptor(dtoEncomienda.getApellidoReceptor());
+		encomienda.setDniReceptor(dtoEncomienda.getDniReceptor()); 
+		encomienda.setVolumenGranel(dtoEncomienda.getVolumenGranel()); 
+		encomienda.setUnidadGranel(dtoEncomienda.getUnidadGranel());
+		encomienda.setCargaGranel(dtoEncomienda.getCargaGranel());		
+		encomienda.setTipoEncomienda("P");//Encomeinda partiular
 		
 		encomienda.setTercerizado(this.esTercerizada(encomienda));
+		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
+		encomienda.setFechaCreacion(new Date());
 		
+			
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();

@@ -13,6 +13,7 @@ import com.ADG04.Negocio.GestionAdministracion;
 import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.TipoClienteDao;
@@ -42,8 +43,8 @@ public class App
 {
     public static void main( String[] args )
     {
-    	TestEncomienda();
-    	
+//    	TestEncomienda();
+    	TestFacturaEncomiendaParticular();
     	//TestAltaCliente();
     	//TestSucursal("Sucursal Origen");
     	//TestSucursal("Sucursal Destino");
@@ -116,6 +117,19 @@ public class App
     	GestionAdministracion.getInstancia().altaSucursal(sucursal);
     }
 		
+	public static void TestFacturaEncomiendaParticular(){
+		
+		System.out.println("---------------TestFacturaEncomiendaParticular--------------------");
+		
+		GestionEncomienda.getInstancia().facturarEncomiendaParticular(1);
+
+		System.out.println("Id de Factura generada:");
+		int idFactura = GestionEncomienda.getInstancia().getFacturaParticularByIdEncomienda(1);
+		System.out.println(idFactura);
+		
+		System.out.println("-------------------------------------------------------------------");
+	}
+	
 	public static void TestEncomienda(){
 		
 		double nro = 123;

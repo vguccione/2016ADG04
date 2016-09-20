@@ -30,8 +30,8 @@ public class Encomienda implements java.io.Serializable {
 	private int idEncomienda;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdItemFactura", nullable = true)
-	private ItemFactura itemFactura;
+	@JoinColumn(name = "IdFactura", nullable = true)
+	private Factura factura;
 
 	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdDireccionDestino")
@@ -171,12 +171,12 @@ public class Encomienda implements java.io.Serializable {
 		this.idEncomienda = idEncomienda;
 	}
 
-	public ItemFactura getItemFactura() {
-		return this.itemFactura;
+	public Factura getFactura() {
+		return this.factura;
 	}
 
-	public void setItemFactura(ItemFactura itemFactura) {
-		this.itemFactura = itemFactura;
+	public void setFactura(Factura factura) {
+		this.factura = factura;
 	}
 
 	public Direccion getDireccionDestino() {
@@ -439,6 +439,30 @@ public class Encomienda implements java.io.Serializable {
 
 	public void setProductoEncomiendas(List<ProductoEncomienda> productoEncomiendas) {
 		this.productoEncomiendas = productoEncomiendas;
+	}
+
+	public float getKMs() {
+		// TODO se calcula cada vez que se pide, o se calcula cuando se da de alta la encomienda y lo guardamos????
+		return 0;
+	}
+
+	public float getCostoKMExtra() {
+		// TODO esto????
+		return 0;
+	}
+
+	public float getCostoPorKm() {
+		// TODO y esto??????
+		return 0;
+	}
+
+	public Proveedor getSeguro() {
+		// TODO hay que hacer esto!!!!!!1, tenemos que guardar un proovedor de tipo "Seguro"
+		Proveedor p = new Proveedor();
+		p.setTarifa(123.0);
+		p.setTarifaPorKm(456.0);
+		p.setIdProveedor(1);
+		return p;
 	}
 
 }

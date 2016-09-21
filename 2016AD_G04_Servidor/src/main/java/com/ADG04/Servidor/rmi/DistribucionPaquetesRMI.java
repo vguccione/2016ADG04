@@ -18,7 +18,6 @@ import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Remito;
-import com.ADG94.bean.ClienteDTO;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 
@@ -374,11 +373,25 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public ClienteDTO getCliente(String arg0) throws RemoteException {
+	
+	public DTO_ClienteParticular getClienteParticularByDni(String dni)throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public DTO_ClienteParticular getClienteParticularById(Integer idCliente) throws RemoteException {
+		return null;
+	}
+	
+	public void eliminarCliente(Integer idCliente) throws RemoteException {
+		
+	}
 
+	public void altaClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException{
+		
+	}
+	public void modificarClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException{
+		
+	}
+	
 }

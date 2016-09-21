@@ -36,7 +36,7 @@ public interface IEncomiendaRemote {
 					throws RemoteException;
 
 
-	void nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular);
+	public void nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException;
 	
 	public void nuevaEncomiedaParticular(
 			String dniCliente, 

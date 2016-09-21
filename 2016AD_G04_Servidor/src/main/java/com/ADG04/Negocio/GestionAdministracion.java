@@ -1,12 +1,13 @@
 package com.ADG04.Negocio;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
-import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolUsuarioDao;
@@ -20,10 +21,8 @@ import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Direccion;
-import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
-
 
 
 public class GestionAdministracion {
@@ -44,12 +43,13 @@ private static GestionAdministracion instancia;
 	}
 	
 	public void altaUsuario(DTO_Usuario usuario) {
-		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getId());
-		RolUsuario rol = new RolUsuario(usuario.getRolUsuario().getdescripcion());
+		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
+		RolUsuario rol = (RolUsuario) RolUsuarioDao.getInstancia().getById(usuario.getIdRolUsuario());
 		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
+		
 		Usuario u= new Usuario();
 		u.setNombre(usuario.getNombre());
 		u.setApellido(usuario.getApellido());
@@ -61,15 +61,13 @@ private static GestionAdministracion instancia;
 		
 		UsuarioDao.getInstancia().persist(u);
 		tx.commit();
-		//EntityManagerProvider.getInstance().close();
 	}
 	
 	public void modificarUsuario(DTO_Usuario usuario) {
+		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
+		RolUsuario rol = (RolUsuario) RolUsuarioDao.getInstancia().getById(usuario.getIdRolUsuario());
+		
 		EntityManager em = factory.createEntityManager();
-		
-		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getId());
-		RolUsuario rol = new RolUsuario(usuario.getRolUsuario().getdescripcion());
-		
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
@@ -81,15 +79,14 @@ private static GestionAdministracion instancia;
 		u.setFechaCreacion(usuario.getFechaCreacion());
 		u.setSucursal(suc);
 		u.setRolUsuario(rol);
+		
 		UsuarioDao.getInstancia().saveOrUpdate(u);
 		tx.commit();
-		//EntityManagerProvider.getInstance().close();
 	}
 	
 	
-	public void bajaUsuario(Integer idUsuario){
-		EntityManager em = factory.createEntityManager();
-		
+	public void bajaUsuario(Integer idUsuario){	
+		EntityManager em = factory.createEntityManager();	
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
@@ -99,7 +96,6 @@ private static GestionAdministracion instancia;
 			UsuarioDao.getInstancia().remove(u); //baja logica o total?
 		
 		tx.commit();
-		//EntityManagerProvider.getInstance().close();
 	}
 	
 	
@@ -111,8 +107,7 @@ private static GestionAdministracion instancia;
 		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
 	}
 
-	public int altaSucursal(DTO_Sucursal sucursal) {
-		
+	public int altaSucursal(DTO_Sucursal sucursal) {	
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -152,7 +147,6 @@ private static GestionAdministracion instancia;
 
 	public void bajaSucursal(Integer idSucursal){
 		EntityManager em = factory.createEntityManager();
-		
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
@@ -190,6 +184,29 @@ private static GestionAdministracion instancia;
 		return dir;
 	}
 	
-
+	 public List<DTO_Usuario> listarEmpleados(){
+		 List<Usuario> empleados = UsuarioDao.getInstancia().getAll();
+		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
+	    for(Usuario empleado : empleados){
+	    	empleadosDTO.add(empleado.toDTO());	    		
+	    }
+		return empleadosDTO;
+	 }
+	 public List<DTO_Usuario> listarEmpleados(Integer idSucursal){
+		 List<Usuario> empleados = UsuarioDao.getInstancia().listarEmpleados(idSucursal);
+		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
+	    for(Usuario empleado : empleados){
+	    	empleadosDTO.add(empleado.toDTO());	    		
+	    }
+		return empleadosDTO;
+	 }
+	 public List<DTO_Sucursal> listarSucursales(){
+		 List<Sucursal> sucursales = SucursalDao.getInstancia().getAll();
+		 List<DTO_Sucursal> sucursalesDTO = new ArrayList<DTO_Sucursal>();
+		 for(Sucursal sucursal : sucursales){
+	    	sucursalesDTO.add(sucursal.toDTO());	    		
+	    }
+		return sucursalesDTO;
+	 }
 	
 }

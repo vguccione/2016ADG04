@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.ADG04.Servidor.model.Cliente;
-import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 

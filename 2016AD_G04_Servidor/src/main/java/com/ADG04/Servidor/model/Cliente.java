@@ -123,5 +123,6 @@ public class Cliente implements java.io.Serializable {
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
+				
 
 }

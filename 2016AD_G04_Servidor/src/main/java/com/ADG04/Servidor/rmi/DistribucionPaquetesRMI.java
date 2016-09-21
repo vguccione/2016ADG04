@@ -9,11 +9,6 @@ import java.util.List;
 import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
-import com.ADG04.Servidor.dao.ClienteDao;
-import com.ADG04.Servidor.dao.UsuarioDao;
-import com.ADG04.Servidor.model.Cliente;
-import com.ADG04.Servidor.model.TipoCliente;
-import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
@@ -23,6 +18,7 @@ import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Remito;
+import com.ADG94.bean.ClienteDTO;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 
@@ -80,15 +76,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	
-	public void altaCliente(DTO_ClienteParticular cliente) throws RemoteException {
+	public void altaClienteParticular(DTO_ClienteParticular cliente) throws RemoteException {
 		
 		GestionCliente gCliente = GestionCliente.getInstancia();
-		gCliente.altaCliente(cliente);
+		gCliente.altaClienteParticular(cliente);
 		
 	}
 
 	
-	public void modificarCliente(DTO_ClienteParticular cliente) throws RemoteException {
+	public void modificarClienteParticular(DTO_ClienteParticular cliente) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -377,6 +373,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			String dniReceptor) throws RemoteException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public ClienteDTO getCliente(String arg0) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

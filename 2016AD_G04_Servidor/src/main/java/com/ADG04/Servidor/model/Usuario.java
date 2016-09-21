@@ -32,7 +32,7 @@ public class Usuario implements java.io.Serializable {
 	@JoinColumn(name = "IdSucursal")
 	private Sucursal sucursal;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdRolUsuario")
 	private RolUsuario rolUsuario;
 
@@ -158,7 +158,7 @@ public class Usuario implements java.io.Serializable {
 		u.setPassword(this.getPassword());
 		u.setFechaCreacion(this.getFechaCreacion());
 		u.setUltimoAcceso(this.getUltimoAcceso());
-		u.setRolUsuario(new DTO_RolUsuario(this.getRolUsuario().getIdRolUsuario(), this.getRolUsuario().getDescripcion()));	
+		u.setIdRolUsuario(this.rolUsuario.getIdRolUsuario());	
 		u.setIdUsuario(this.getIdUsuario());
 		return u;
 	}

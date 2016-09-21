@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Cliente.DTO_Producto;
+
 @Entity
 @Table(name = "Producto")
 public class Producto implements java.io.Serializable {
@@ -32,6 +34,9 @@ public class Producto implements java.io.Serializable {
 
 	@Column(name = "CodigoProducto", nullable = false)
 	private int codigoProducto;
+	
+	@Column(name = "Categoria")
+	private String categoria;
 
 	@Column(name = "Descripcion", nullable = false, length = 100)
 	private String descripcion;
@@ -101,4 +106,14 @@ public class Producto implements java.io.Serializable {
 		this.productoEncomiendas = productoEncomiendas;
 	}
 
+	public DTO_Producto toDTO(){
+		DTO_Producto prod = new DTO_Producto();
+		prod.setCategoria(this.categoria);
+		prod.setUnidad(this.unidad);
+		prod.setCodigo(this.codigoProducto);
+		prod.setDescripcion(this.descripcion);
+		prod.setId(this.idProducto);
+		
+		return prod;
+	}
 }

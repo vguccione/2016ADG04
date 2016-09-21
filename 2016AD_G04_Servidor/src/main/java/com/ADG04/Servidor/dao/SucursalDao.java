@@ -29,4 +29,5 @@ public class SucursalDao extends GenericDao<Sucursal, Integer> {
 		} 
 		return instancia;
 	}
+
 }

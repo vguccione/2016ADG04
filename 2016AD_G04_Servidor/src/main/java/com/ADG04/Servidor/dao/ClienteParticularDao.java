@@ -1,15 +1,15 @@
 package com.ADG04.Servidor.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.ClienteParticular;
-import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
-public class ClienteParticularDao extends GenericDao<Cliente, Integer> {
+public class ClienteParticularDao extends GenericDao<ClienteParticular, Integer> {
 
 	private static ClienteParticularDao instancia;
 
@@ -39,4 +39,18 @@ public class ClienteParticularDao extends GenericDao<Cliente, Integer> {
             return null;
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ClienteParticular> listarClientes() {
+		try{
+			return entityManager
+	                .createQuery("from Cliente c where c.class = 'p'")
+	                .getResultList();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: Listar clientes particulares");
+        }
+        return null;
+	}
 }
+

@@ -47,4 +47,19 @@ public class UsuarioDao extends GenericDao<Usuario, Integer> {
         }
 	}
 
+
+	@SuppressWarnings("unchecked")
+	public List<Usuario> listarEmpleados(Integer idSucursal) {
+		try{
+			return entityManager
+	                .createQuery("from Usuario e where e.sucursal.idSucursal = :idSucursal ")
+	                .setParameter("idSucursal", idSucursal)
+	                .getResultList();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: Listar empleados por Sucursal");
+        }
+        return null;
+	}
+
 }

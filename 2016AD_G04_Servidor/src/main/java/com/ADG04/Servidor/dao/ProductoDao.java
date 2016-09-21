@@ -30,4 +30,11 @@ public class ProductoDao extends GenericDao<Producto, Integer> {
 		return instancia;
 	}
 
+	public Producto getByClienteCodigo(Integer idCliente, String codigoProducto) {
+		return (Producto) entityManager.createQuery("select p from Producto p where p.idCliente=:idCliente and p.codigoProducto=:codigoProducto")
+						    .setParameter("idCliente", idCliente)
+						    .setParameter("codigoProducto", codigoProducto)
+						    .getSingleResult();
+	}
+
 }

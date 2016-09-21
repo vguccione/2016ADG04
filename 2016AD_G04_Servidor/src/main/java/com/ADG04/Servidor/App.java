@@ -111,7 +111,7 @@ public class App
 		cliParticular.setTelefono("1556932544");
 		cliParticular.setDireccion(dir);
 		
-		GestionCliente.getInstancia().altaCliente(cliParticular);
+		GestionCliente.getInstancia().altaClienteParticular(cliParticular);
     }
 
 	public static void TestUsuario(){
@@ -122,11 +122,8 @@ public class App
     	usuario.setNombre("pepepe");
     	usuario.setPassword("xxxxxx");
     	usuario.setUltimoAcceso(new Date());
-    	
-    	DTO_RolUsuario rol = new DTO_RolUsuario();
-    	rol.setdescripcion("Rol1");
-    	
-    	usuario.setRolUsuario(rol);
+    	usuario.setIdSucursal(1);
+    	usuario.setIdRolUsuario(1);
     	
     	GestionAdministracion.getInstancia().altaUsuario(usuario);
     }

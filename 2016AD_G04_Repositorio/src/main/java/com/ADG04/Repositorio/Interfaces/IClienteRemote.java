@@ -11,12 +11,14 @@ public interface IClienteRemote {
 
 
 	/************************ Cliente ******************************************/
-	public void altaCliente(DTO_ClienteParticular cliente) throws RemoteException;
-	public void modificarCliente(DTO_ClienteParticular cliente) throws RemoteException;
-	public void bajaCliente(Integer idCliente) throws RemoteException;
+	public void altaClienteParticular(DTO_ClienteParticular cliente) throws RemoteException;
+	public void modificarClienteParticular(DTO_ClienteParticular cliente) throws RemoteException;
+	public void altaClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException;
+	public void modificarClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException;
+	public void eliminarCliente(Integer idCliente) throws RemoteException;
 	
-	public DTO_ClienteParticular getClienteParticular(Integer idCliente) throws RemoteException;
-	public DTO_ClienteParticular getClienteParticular(String dni) throws RemoteException;
+	public DTO_ClienteParticular getClienteParticularById(Integer idCliente) throws RemoteException;
+	public DTO_ClienteParticular getClienteParticularByDni(String dni) throws RemoteException;
 		
 	public List<DTO_ClienteParticular> getClientesEmpresa() throws RemoteException;
 	public List<DTO_ClienteParticular> getClientesParticular() throws RemoteException;

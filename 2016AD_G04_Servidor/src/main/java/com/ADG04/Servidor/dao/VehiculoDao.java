@@ -29,5 +29,7 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 		} 
 		return instancia;
 	}
+	
+	
 
 }

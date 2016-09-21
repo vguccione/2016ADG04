@@ -12,6 +12,7 @@ import javax.sound.sampled.Clip;
 import com.ADG04.Negocio.GestionAdministracion;
 import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionEncomienda;
+import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.PaisDao;
@@ -32,6 +33,10 @@ import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
+import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 
 
 
@@ -43,8 +48,10 @@ public class App
 {
     public static void main( String[] args )
     {
+    	TestPlanMantenimiento();
+    	
 //    	TestEncomienda();
-    	TestFacturaEncomiendaParticular();
+    	//TestFacturaEncomiendaParticular();
     	//TestAltaCliente();
     	//TestSucursal("Sucursal Origen");
     	//TestSucursal("Sucursal Destino");
@@ -53,7 +60,35 @@ public class App
     //	TestUsuario();
     }
     
-    private static void TestAltaCliente() {  	
+    private static void TestPlanMantenimiento() {
+		
+    	DTO_PlanMantenimiento pm = new DTO_PlanMantenimiento();
+    	pm.setComentarios("Mi primer plan");
+    	pm.setDescripcion("Plan Toyota");
+    	pm.setTolerancia(123);
+    	
+    	int idPm = GestionVehiculo.getInstancia().altaPlanMantenimiento(pm);
+    	DTO_TareasPorKilometro tareaXKM = new DTO_TareasPorKilometro();
+    	tareaXKM.setCantidadKilometros(123);
+    	tareaXKM.setIdPlanMantenimiento(idPm);
+    	tareaXKM.setTarea("Cambiar ruedas");
+    	GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXKM);
+    	
+    	DTO_TareasPorTiempo tareaXTiempo = new DTO_TareasPorTiempo();
+    	tareaXTiempo.setCantidadDias(656);
+    	tareaXTiempo.setIdPlanMantenimiento(idPm);
+    	tareaXTiempo.setTarea("Cambiar aceite");
+    	int idTarea = GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXTiempo);
+    	
+    	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
+    	tRealizada.setFecha(new Date());
+    	tRealizada.setIdProveedor(2);
+    	tRealizada.setIdVehiculo(1);
+    	tRealizada.setIdTareaMantenimiento(idTarea);
+    	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
+	}
+
+	private static void TestAltaCliente() {  	
     	DTO_Direccion dir = new DTO_Direccion();
     	
     	Pais pais = (Pais) PaisDao.getInstancia().getById(1);

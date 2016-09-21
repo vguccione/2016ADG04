@@ -40,7 +40,7 @@ public class TareaMantenimientoRealizada implements java.io.Serializable {
 	@Column(name = "FechaRealizada", nullable = false, length = 23)
 	private Date fechaRealizada;
 
-	@Column(name = "CantidadKilometros", nullable = false, precision = 53, scale = 0)
+	@Column(name = "CantidadKilometros", nullable = true, precision = 53, scale = 0)
 	private double cantidadKilometros;
 
 	public TareaMantenimientoRealizada() {

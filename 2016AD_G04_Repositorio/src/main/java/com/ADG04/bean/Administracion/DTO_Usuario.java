@@ -14,7 +14,8 @@ public class DTO_Usuario implements Serializable{
 	private String password;
 	private Date ultimoAcceso;
 	private Date fechaCreacion;
-	private DTO_RolUsuario rolUsuario;  
+	private int idRolUsuario;  
+	private int idSucursal;
 	private String nombre;
 	private String apellido;
 	private String dni;
@@ -79,12 +80,12 @@ public class DTO_Usuario implements Serializable{
 		this.fechaCreacion = fechaCreacion;
 	}
 	
-	public DTO_RolUsuario getRolUsuario() {
-		return this.rolUsuario;
+	public int getIdRolUsuario() {
+		return this.idRolUsuario;
 	}
 
-	public void setRolUsuario(DTO_RolUsuario rol) {
-		this.rolUsuario = rol;
+	public void setIdRolUsuario(int idRol) {
+		this.idRolUsuario = idRol;
 	}
 
 	public Integer getId() {
@@ -94,5 +95,19 @@ public class DTO_Usuario implements Serializable{
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;	
 	}
+
+	public int getIdSucursal() {
+		return idSucursal;
+	}
+
+	public void setIdSucursal(int idSucursal) {
+		this.idSucursal = idSucursal;
+	}
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+	
+	
 
 }

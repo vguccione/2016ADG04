@@ -31,11 +31,11 @@ public class BusinessDelegate
 	}
 
 	public DTO_ClienteParticular getClienteParticularById(Integer idCliente) throws RemoteException{
-		return this.businessService.getClienteParticular(idCliente);
+		return this.businessService.getClienteParticularById(idCliente);
 	}
 	
 	public DTO_ClienteParticular getClienteParticularByDni(String dni) throws RemoteException{
-		return this.businessService.getClienteParticular(dni);
+		return this.businessService.getClienteParticularByDni(dni);
 	}
 
 	public DTO_Usuario getUsuario(String dni) throws RemoteException{

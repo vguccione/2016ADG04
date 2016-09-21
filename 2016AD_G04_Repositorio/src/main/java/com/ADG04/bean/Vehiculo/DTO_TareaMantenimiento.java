@@ -7,13 +7,12 @@ public abstract class DTO_TareaMantenimiento implements Serializable{
 	
 	private Integer id;
 	private String tarea;
-	private String tipo;
+//	private String tipo;
 	private Integer idPlanMantenimiento;
 
-	public DTO_TareaMantenimiento(){
-		
+	public DTO_TareaMantenimiento() {
+		super();
 	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -28,7 +27,7 @@ public abstract class DTO_TareaMantenimiento implements Serializable{
 	public void setTarea(String tarea) {
 		this.tarea = tarea;
 	}
-
+/*
 	public String getTipo() {
 		return tipo;
 	}
@@ -36,7 +35,7 @@ public abstract class DTO_TareaMantenimiento implements Serializable{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
+*/
 	public Integer getIdPlanMantenimiento() {
 		return idPlanMantenimiento;
 	}

@@ -1,7 +1,8 @@
 package com.ADG04.bean.Vehiculo;
 
 
-public class DTO_TareasPorKilometro extends DTO_TareaMantenimiento{
+public class DTO_TareasPorKilometro extends DTO_TareaMantenimiento {
+	
 	private static final long serialVersionUID = 1L;
 	private float cantidadKilometros;
 

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,6 +21,7 @@ import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 
 @Entity
 @Table(name = "Proveedor")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Proveedor implements java.io.Serializable {
 
 	@Id

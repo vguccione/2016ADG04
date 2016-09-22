@@ -8,7 +8,7 @@ import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
 @Entity
 @Table(name="TallerMecanico")
 @PrimaryKeyJoinColumn(name="idProveedor") 
-public class TallerMecanico extends Proveedor {
+public class TallerMecanico extends Proveedor implements java.io.Serializable{
 	
 	@Column(name="Tarifa")
 	private float tarifa;

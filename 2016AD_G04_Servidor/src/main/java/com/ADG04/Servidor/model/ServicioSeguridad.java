@@ -7,9 +7,12 @@ import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 @Entity
 @Table(name="ServicioSeguridad")
 @PrimaryKeyJoinColumn(name="idProveedor") 
-public class ServicioSeguridad extends Proveedor{
+public class ServicioSeguridad extends Proveedor implements java.io.Serializable{
 
+	@Column(name="Descripcion")
     private String descripcion;
+	
+	@Column(name="Tarifa")
     private float tarifa;
 
     public ServicioSeguridad() {

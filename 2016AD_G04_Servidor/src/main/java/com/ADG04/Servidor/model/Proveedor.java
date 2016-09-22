@@ -16,7 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.Servidor.dao.DireccionDao;
+import com.ADG04.Servidor.dao.PaisDao;
+import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
+import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 
 @Entity

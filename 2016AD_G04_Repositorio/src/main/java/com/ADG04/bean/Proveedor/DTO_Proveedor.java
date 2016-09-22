@@ -3,18 +3,15 @@ package com.ADG04.bean.Proveedor;
 import java.io.Serializable;
 import java.util.List;
 
+import com.ADG04.bean.Administracion.DTO_Direccion;
+
 public class DTO_Proveedor implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String activo;
 	private String razonSocial;
 	private String cuit;
-	private String categoria;
-	private String direccion;
-	private String codigoPostal;
-	private String localidad;
-	private String provincia;
-	private String pais;
+	private DTO_Direccion direccion;
 	private String email;
 	private String telefono;
 	private String metodoPago;
@@ -64,74 +61,16 @@ public class DTO_Proveedor implements Serializable{
 
 
 
-	public String getCategoria() {
-		return categoria;
-	}
+	
 
 
-
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
-
-
-
-	public String getDireccion() {
+	public DTO_Direccion getDireccion() {
 		return direccion;
 	}
 
-
-
-	public void setDireccion(String direccion) {
+	public void setDireccion(DTO_Direccion direccion) {
 		this.direccion = direccion;
 	}
-
-
-	public String getCodigoPostal() {
-		return codigoPostal;
-	}
-
-	
-	public void setCodigoPostal(String codigoPostal) {
-		this.codigoPostal = codigoPostal;
-	}
-
-	
-	public String getLocalidad() {
-		return localidad;
-	}
-
-
-
-	public void setLocalidad(String localidad) {
-		this.localidad = localidad;
-	}
-
-
-
-	public String getProvincia() {
-		return provincia;
-	}
-
-
-
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
-
-
-
-	public String getPais() {
-		return pais;
-	}
-
-
-
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-
-
 
 	public String getEmail() {
 		return email;

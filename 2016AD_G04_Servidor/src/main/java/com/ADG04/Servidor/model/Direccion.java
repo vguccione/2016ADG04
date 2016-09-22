@@ -17,6 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.ADG04.Servidor.dao.PaisDao;
+import com.ADG04.Servidor.dao.ProvinciaDao;
+import com.ADG04.bean.Administracion.DTO_Direccion;
+
 @Entity
 @Table(name = "Direccion")
 public class Direccion implements java.io.Serializable {
@@ -168,6 +172,18 @@ public class Direccion implements java.io.Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public DTO_Direccion toDTO(){
+		DTO_Direccion dir = new DTO_Direccion();
+		dir.setCalle(this.calle);
+		dir.setCodigoPostal(this.codigoPostal);
+		dir.setIdDireccion(this.idDireccion);
+		dir.setLocalidad(this.localidad);
+		dir.setNro(this.nro);
+		dir.setPais(PaisDao.getInstancia().getById(this.getPais().getIdPais()).toDTO());
+		dir.setProvincia(ProvinciaDao.getInstancia().getById(this.getProvincia().getIdProvincia()).toDTO());
+		return dir;
 	}
 
 }

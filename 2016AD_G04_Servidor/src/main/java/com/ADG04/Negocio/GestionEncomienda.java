@@ -23,6 +23,7 @@ import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.model.ItemFactura;
 import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.RolUsuario;
+import com.ADG04.Servidor.model.Seguro;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.util.EncomiendaEstado;
@@ -142,7 +143,7 @@ public class GestionEncomienda {
 		items.add(itemTransporte);
 						
 		//Segunda Linea Seguros
-		Proveedor pSeguro = encomienda.getSeguro();
+		Seguro pSeguro = encomienda.getSeguro();
 		if(pSeguro != null){
 			ItemFactura itemSeguro = new ItemFactura();
 			itemSeguro.setDescripcion("Seguro: " + encomienda.getCliente().getEmail() + "-" + encomienda.getSucursalOrigen().getDescripcion() + "-" + encomienda.getSucursalDestino().getDescripcion());

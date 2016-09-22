@@ -3,18 +3,18 @@ package com.ADG04.bean.Proveedor;
 import java.io.Serializable;
 
 
-public class DTO_PrecioCarrier implements Serializable{
+public class DTO_Carrier implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	private Integer idProveedor;
-	private Integer idDestino;
+	private Integer idDireccion;
 	private String comentarios;
 	private String prioridad;
 	private float precioKMExtra;
 	private float tarifa;
 
-	public DTO_PrecioCarrier() {
+	public DTO_Carrier() {
 		
 	}
 
@@ -35,12 +35,12 @@ public class DTO_PrecioCarrier implements Serializable{
 		this.idProveedor = idProveedor;
 	}
 
-	public Integer getIdDestino() {
-		return idDestino;
+	public Integer getIdDireccion() {
+		return idDireccion;
 	}
 
-	public void setIdDestino(Integer idDestino) {
-		this.idDestino = idDestino;
+	public void setIdDireccion(Integer idDireccion) {
+		this.idDireccion = idDireccion;
 	}
 
 	public String getComentarios() {

@@ -9,6 +9,7 @@ public class DTO_Seguro implements Serializable{
 	private String descripcion;
 	private Integer idProveedor;
 	private float tarifa;
+	private float tarifaPorKm;
 
 	
 	public DTO_Seguro(){
@@ -60,6 +61,16 @@ public class DTO_Seguro implements Serializable{
 
 	public void setTarifa(float tarifa) {
 		this.tarifa = tarifa;
+	}
+
+
+	public float getTarifaPorKm() {
+		return tarifaPorKm;
+	}
+
+
+	public void setTarifaPorKm(float tarifaPorKm) {
+		this.tarifaPorKm = tarifaPorKm;
 	}
 
 

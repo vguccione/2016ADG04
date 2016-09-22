@@ -34,9 +34,10 @@
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Vehiculo/DTO_TareasPorKilometro.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Proveedor/DTO_ServicioSeguridad.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Vehiculo/DTO_Vehiculo.java
-/home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Proveedor/DTO_PrecioCarrier.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/Repositorio/App.java
+/home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Proveedor/DTO_TallerMecanico.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Cliente/DTO_ClienteParticular.java
+/home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Proveedor/DTO_Carrier.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Encomienda/DTO_Manifiesto.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Cliente/DTO_Producto.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Administracion/DTO_Usuario.java

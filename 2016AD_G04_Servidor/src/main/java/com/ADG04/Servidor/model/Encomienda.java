@@ -456,11 +456,11 @@ public class Encomienda implements java.io.Serializable {
 		return 0;
 	}
 
-	public Proveedor getSeguro() {
+	public Seguro getSeguro() {
 		// TODO hay que hacer esto!!!!!!1, tenemos que guardar un proovedor de tipo "Seguro"
-		Proveedor p = new Proveedor();
-		p.setTarifa(123.0);
-		p.setTarifaPorKm(456.0);
+		Seguro p = new Seguro();
+		p.setTarifa(123.0F);
+		p.setTarifaPorKm(456.0F);
 		p.setIdProveedor(1);
 		return p;
 	}

@@ -2,9 +2,7 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
+import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
+
 @Entity
 @Table(name = "Proveedor")
 public class Proveedor implements java.io.Serializable {
@@ -24,10 +25,6 @@ public class Proveedor implements java.io.Serializable {
 	@GeneratedValue
 	@Column(name = "IdProveedor", unique = true, nullable = false)
 	private int idProveedor;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdTipoProveedor", nullable = false)
-	private TipoProveedor tipoProveedor;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdDireccion")
@@ -48,28 +45,22 @@ public class Proveedor implements java.io.Serializable {
 	@Column(name = "Telefono", nullable = false, length = 50)
 	private String telefono;
 
-	@Column(name = "TarifaPorKm", precision = 53, scale = 0)
-	private Double tarifaPorKm;
-
-	@Column(name = "Tarifa", precision = 53, scale = 0)
-	private Double tarifa;
-
+/*
 	@Column(name = "TipoTaller", length = 20)
 	private String tipoTaller;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
 	private List<TareaMantenimientoRealizada> tareaMantenimientoRealizadas;
-	
+
+*/
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
 	private List<Envio> envios;
 	
 	public Proveedor() {
 	}
 
-	public Proveedor(TipoProveedor tipoProveedor,
-			String activo, String cuit, String razonSocial, String email,
+	public Proveedor(String activo, String cuit, String razonSocial, String email,
 			String telefono) {
-		this.tipoProveedor = tipoProveedor;
 		this.activo = activo;
 		this.cuit = cuit;
 		this.razonSocial = razonSocial;
@@ -83,14 +74,6 @@ public class Proveedor implements java.io.Serializable {
 
 	public void setIdProveedor(int idProveedor) {
 		this.idProveedor = idProveedor;
-	}
-
-	public TipoProveedor getTipoProveedor() {
-		return this.tipoProveedor;
-	}
-
-	public void setTipoProveedor(TipoProveedor tipoProveedor) {
-		this.tipoProveedor = tipoProveedor;
 	}
 
 	public Direccion getDireccion() {
@@ -142,39 +125,6 @@ public class Proveedor implements java.io.Serializable {
 		this.telefono = telefono;
 	}
 
-	public Double getTarifaPorKm() {
-		return this.tarifaPorKm;
-	}
-
-	public void setTarifaPorKm(Double tarifaPorKm) {
-		this.tarifaPorKm = tarifaPorKm;
-	}
-
-	public Double getTarifa() {
-		return this.tarifa;
-	}
-
-	public void setTarifa(Double tarifa) {
-		this.tarifa = tarifa;
-	}
-
-	public String getTipoTaller() {
-		return this.tipoTaller;
-	}
-
-	public void setTipoTaller(String tipoTaller) {
-		this.tipoTaller = tipoTaller;
-	}
-
-	public List<TareaMantenimientoRealizada> getTareaMantenimientoRealizadas() {
-		return tareaMantenimientoRealizadas;
-	}
-
-	public void setTareaMantenimientoRealizadas(
-			List<TareaMantenimientoRealizada> tareaMantenimientoRealizadas) {
-		this.tareaMantenimientoRealizadas = tareaMantenimientoRealizadas;
-	}
-
 	public List<Envio> getEnvios() {
 		return envios;
 	}
@@ -183,5 +133,5 @@ public class Proveedor implements java.io.Serializable {
 		this.envios = envios;
 	}
 	
-	
+
 }

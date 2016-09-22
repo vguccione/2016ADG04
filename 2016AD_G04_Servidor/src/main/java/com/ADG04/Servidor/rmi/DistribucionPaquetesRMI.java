@@ -18,6 +18,10 @@ import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Remito;
+import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_Seguro;
+import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
+import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 
@@ -391,6 +395,34 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 	public void modificarClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException{
+		
+	}
+	
+	public void altaSeguro(DTO_Seguro seguro) throws RemoteException {
+		
+	}
+	public void modificarSeguro(DTO_Seguro seguro) throws RemoteException{
+		
+	}
+	public void altaServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad) throws RemoteException{
+		
+	}
+	public void modificarServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad) throws RemoteException{
+		
+	}
+	public void altaTallerMecanico(DTO_TallerMecanico taller) throws RemoteException{
+		
+	}
+	public void modificarTallerMecanico(DTO_TallerMecanico taller) throws RemoteException{
+		
+	}
+	public void altaCarrier(DTO_Carrier carrier) throws RemoteException{
+		
+	}
+	public void modificarCarrier(DTO_Carrier carrier) throws RemoteException{
+		
+	}
+	public void bajaProveedor(Integer idProveedor) throws RemoteException{
 		
 	}
 	

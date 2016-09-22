@@ -11,19 +11,18 @@ public class DTO_Direccion {
 	private String calle;
 	private int nro;
 	private String localidad;
-
+	private int codigoPostal;	
+	
+	public DTO_Direccion(){
+		
+	}
+	
 	public int getIdDireccion() {
 		return idDireccion;
 	}
 
 	public void setIdDireccion(int idDireccion) {
 		this.idDireccion = idDireccion;
-	}
-
-	private int codigoPostal;
-	
-	public DTO_Direccion(){
-		
 	}
 	
 	public DTO_Pais getPais() {

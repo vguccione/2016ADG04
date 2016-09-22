@@ -5,29 +5,25 @@ import javax.persistence.*;
 import com.ADG04.bean.Proveedor.DTO_Carrier;
 
 @Entity
-@Table(name="PrecioCarrier")
+@Table(name="Carrier")
 @PrimaryKeyJoinColumn(name="idProveedor") 
-public class Carrier extends Proveedor {
-	@OneToOne
-	@JoinColumn(name="idDestino")
-	private Direccion direccion;
+public class Carrier extends Proveedor implements java.io.Serializable{	
+	@Column(name="Comentarios")
 	private String comentarios;
+	
+	@Column(name="Prioridad")
 	private String prioridad;
+	
+	@Column(name="PrecioKMExtra")
 	private float precioKMExtra;
+	
+	@Column(name="Tarifa")
 	private float tarifa;
 
 	public Carrier() {
 		
 	}
-
-	public Direccion getDireccion() {
-		return direccion;
-	}
-
-	public void setDestino(Direccion direccion) {
-		this.direccion = direccion;
-	}
-
+	
 	public String getComentarios() {
 		return comentarios;
 	}

@@ -8,7 +8,7 @@ import com.ADG04.bean.Proveedor.DTO_Seguro;
 @Entity
 @Table(name="Seguro")
 @PrimaryKeyJoinColumn(name="idProveedor") 
-public class Seguro extends Proveedor {
+public class Seguro extends Proveedor implements java.io.Serializable{
 
 	@Column(name="TipoSeguro")
 	private String tipoSeguro;

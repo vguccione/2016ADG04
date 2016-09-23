@@ -426,4 +426,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 	
+	public DTO_Usuario login(String usuario, String password) throws RemoteException{
+		return null;
+	}
+	
 }

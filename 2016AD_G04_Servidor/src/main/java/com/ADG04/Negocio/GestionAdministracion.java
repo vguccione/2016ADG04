@@ -24,7 +24,6 @@ import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
-
 public class GestionAdministracion {
 
 private static GestionAdministracion instancia;
@@ -42,6 +41,8 @@ private static GestionAdministracion instancia;
 		return instancia;
 	}
 	
+	/*Usuario*/
+	
 	public void altaUsuario(DTO_Usuario usuario) {
 		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
 		RolUsuario rol = (RolUsuario) RolUsuarioDao.getInstancia().getById(usuario.getIdRolUsuario());
@@ -58,6 +59,8 @@ private static GestionAdministracion instancia;
 		u.setFechaCreacion(usuario.getFechaCreacion());
 		u.setSucursal(suc);
 		u.setRolUsuario(rol);
+		u.setUsuario(usuario.getNombreUsuario());
+		u.setPassword(usuario.getPassword());
 		
 		UsuarioDao.getInstancia().persist(u);
 		tx.commit();
@@ -79,6 +82,8 @@ private static GestionAdministracion instancia;
 		u.setFechaCreacion(usuario.getFechaCreacion());
 		u.setSucursal(suc);
 		u.setRolUsuario(rol);
+		u.setUsuario(usuario.getNombreUsuario());
+		u.setPassword(usuario.getPassword());
 		
 		UsuarioDao.getInstancia().saveOrUpdate(u);
 		tx.commit();
@@ -106,6 +111,35 @@ private static GestionAdministracion instancia;
 	public DTO_Usuario getUsuario(String dni) {
 		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
 	}
+	
+	
+	 public DTO_Usuario login(String usuario, String password){
+		 Usuario u = UsuarioDao.getInstancia().buscarUsuario(usuario);
+		 if (u.getPassword().equals(password))
+			 return u.toDTO();
+		 else
+			 return null;
+	 }
+	 
+	 public List<DTO_Usuario> listarEmpleados(){
+		 List<Usuario> empleados = UsuarioDao.getInstancia().getAll();
+		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
+	    for(Usuario empleado : empleados){
+	    	empleadosDTO.add(empleado.toDTO());	    		
+	    }
+		return empleadosDTO;
+	 }
+	 public List<DTO_Usuario> listarEmpleados(Integer idSucursal){
+		 List<Usuario> empleados = UsuarioDao.getInstancia().listarEmpleados(idSucursal);
+		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
+	    for(Usuario empleado : empleados){
+	    	empleadosDTO.add(empleado.toDTO());	    		
+	    }
+		return empleadosDTO;
+	 }
+	 
+		
+	/*Sucursal*/
 
 	public int altaSucursal(DTO_Sucursal sucursal) {	
 		EntityManager em = factory.createEntityManager();
@@ -162,6 +196,18 @@ private static GestionAdministracion instancia;
 		 return SucursalDao.getInstancia().getById(idSucursal).toDTO();
 	}
 	
+
+	 public List<DTO_Sucursal> listarSucursales(){
+		 List<Sucursal> sucursales = SucursalDao.getInstancia().getAll();
+		 List<DTO_Sucursal> sucursalesDTO = new ArrayList<DTO_Sucursal>();
+		 for(Sucursal sucursal : sucursales){
+	    	sucursalesDTO.add(sucursal.toDTO());	    		
+	    }
+		return sucursalesDTO;
+	 }
+	
+	/*Direccion*/
+	
 	public Direccion crearDireccion(DTO_Direccion direccion) {
 		
 		/*Crear Direccion*/
@@ -184,29 +230,6 @@ private static GestionAdministracion instancia;
 		return dir;
 	}
 	
-	 public List<DTO_Usuario> listarEmpleados(){
-		 List<Usuario> empleados = UsuarioDao.getInstancia().getAll();
-		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
-	    for(Usuario empleado : empleados){
-	    	empleadosDTO.add(empleado.toDTO());	    		
-	    }
-		return empleadosDTO;
-	 }
-	 public List<DTO_Usuario> listarEmpleados(Integer idSucursal){
-		 List<Usuario> empleados = UsuarioDao.getInstancia().listarEmpleados(idSucursal);
-		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
-	    for(Usuario empleado : empleados){
-	    	empleadosDTO.add(empleado.toDTO());	    		
-	    }
-		return empleadosDTO;
-	 }
-	 public List<DTO_Sucursal> listarSucursales(){
-		 List<Sucursal> sucursales = SucursalDao.getInstancia().getAll();
-		 List<DTO_Sucursal> sucursalesDTO = new ArrayList<DTO_Sucursal>();
-		 for(Sucursal sucursal : sucursales){
-	    	sucursalesDTO.add(sucursal.toDTO());	    		
-	    }
-		return sucursalesDTO;
-	 }
+	
 	
 }

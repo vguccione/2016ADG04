@@ -19,6 +19,7 @@ public interface IAdministracionRemote {
 	public void bajaUsuario(Integer idUsuario) throws RemoteException;
 	public DTO_Usuario getUsuario(Integer idUsuario) throws RemoteException;
 	public DTO_Usuario getUsuario(String dni) throws RemoteException;
+	public DTO_Usuario login(String usuario, String password) throws RemoteException;
 	
 	/*************************** Sucursal *************************************/
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException;

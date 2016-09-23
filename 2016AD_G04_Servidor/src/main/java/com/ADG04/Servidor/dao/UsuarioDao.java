@@ -62,4 +62,18 @@ public class UsuarioDao extends GenericDao<Usuario, Integer> {
         return null;
 	}
 
+	public Usuario buscarUsuario(String usuario) {
+		try {
+			  Query query = entityManager.createQuery("from Usuario where usuario =:usuario");
+			  query.setParameter("usuario", usuario);
+			  Usuario u = (Usuario) query.getSingleResult();
+			  return u;
+			       
+	        } catch (Exception e){
+	            System.out.println(e);
+	            System.out.println("Error en traer usuario");
+	            return null;
+	        }
+	}
+
 }

@@ -45,6 +45,9 @@ public class Usuario implements java.io.Serializable {
 	@Column(name = "Dni", nullable = false, length = 8)	
 	private String dni;
 	
+	@Column(name="usuario")
+	private String usuario;
+	
 	@Column(name = "Password")
 	private String password;
 	
@@ -58,12 +61,13 @@ public class Usuario implements java.io.Serializable {
 	public Usuario() {
 	}
 
-	public Usuario(Sucursal sucursal, String nombre, String apellido,
+	public Usuario(Sucursal sucursal, String nombre, String apellido, String usuario,
 			String dni, String password, Date ultimoAcceso, Date fechaCreacion) {
 		super();
 		this.sucursal = sucursal;
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.usuario = usuario;
 		this.dni = dni;
 		this.password = password;
 		this.ultimoAcceso = ultimoAcceso;
@@ -76,6 +80,15 @@ public class Usuario implements java.io.Serializable {
 
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+	
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public Sucursal getSucursal() {

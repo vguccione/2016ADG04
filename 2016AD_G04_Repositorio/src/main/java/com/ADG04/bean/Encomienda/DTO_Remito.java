@@ -2,6 +2,7 @@ package com.ADG04.bean.Encomienda;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 public class DTO_Remito implements Serializable{
@@ -12,6 +13,7 @@ public class DTO_Remito implements Serializable{
 	private boolean conformado;
 	private String recibidoPor;
 	private Integer idEncomienda;
+	private List<DTO_ItemRemito> detalle;
 	
 	public DTO_Remito(){
 	
@@ -56,5 +58,15 @@ public class DTO_Remito implements Serializable{
 	public void setIdEncomienda(Integer idEncomienda) {
 		this.idEncomienda = idEncomienda;
 	}
+
+	public List<DTO_ItemRemito> getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(List<DTO_ItemRemito> detalle) {
+		this.detalle = detalle;
+	}
+	
+	
 
 }

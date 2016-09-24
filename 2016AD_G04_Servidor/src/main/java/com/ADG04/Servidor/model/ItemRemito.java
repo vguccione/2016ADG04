@@ -17,20 +17,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
-import com.ADG04.bean.Cliente.DTO_ItemManifiesto;
+import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 
 @Entity
-@Table(name = "ItemFactura")
-public class ItemFactura implements java.io.Serializable {
+@Table(name = "ItemRemito")
+public class ItemRemito implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue
 	@Column(name = "IdItemFactura", unique = true, nullable = false)
-	private int idItemFactura;
+	private int idItemRemito;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdFactura")
-	private Factura factura;
+	@JoinColumn(name = "IdRemito")
+	private Remito remito;
 
 	@Column(name="Descripcion")
 	private String descripcion;
@@ -38,18 +38,16 @@ public class ItemFactura implements java.io.Serializable {
 	@Column(name = "Cantidad", nullable = false)
 	private int cantidad;
 
-	@Column(name = "Valor", nullable = false, scale = 4)
-	private float valor;
-
-	public ItemFactura() {
+	public ItemRemito() {
 	}
 
 
-	public ItemFactura(String descripcion, int cantidad, float valor) {
+	public ItemRemito(int idItemRemito,String descripcion,
+			int cantidad) {
 		super();
+		this.idItemRemito = idItemRemito;
 		this.descripcion = descripcion;
 		this.cantidad = cantidad;
-		this.valor = valor;
 	}
 
 	public String getDescripcion() {
@@ -60,21 +58,7 @@ public class ItemFactura implements java.io.Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public int getIdItemFactura() {
-		return this.idItemFactura;
-	}
 
-	public void setIdItemFactura(int idItemFactura) {
-		this.idItemFactura = idItemFactura;
-	}
-
-	public Factura getFactura() {
-		return this.factura;
-	}
-
-	public void setFactura(Factura factura) {
-		this.factura = factura;
-	}
 
 	public int getCantidad() {
 		return this.cantidad;
@@ -85,24 +69,32 @@ public class ItemFactura implements java.io.Serializable {
 	}
 
 
-	public void setValor(float valor) {
-		this.valor = valor;
-	}
-
-	public float getValor() {
-		return valor;
+	public int getIdItemRemito() {
+		return idItemRemito;
 	}
 
 
-	public DTO_ItemFactura toDTO() {
-		DTO_ItemFactura item= new DTO_ItemFactura();
+	public void setIdItemRemito(int idItemRemito) {
+		this.idItemRemito = idItemRemito;
+	}
+
+
+	public Remito getRemito() {
+		return remito;
+	}
+
+
+	public void setRemito(Remito remito) {
+		this.remito = remito;
+	}
+
+	public DTO_ItemRemito toDTO() {
+		DTO_ItemRemito item= new DTO_ItemRemito();
     	item.setCantidad(this.cantidad);
     	item.setDescripcion(this.descripcion);
-    	item.setFactura(this.factura.getIdFactura());
-    	item.setId(this.idItemFactura);
-    	item.setValor(this.valor);
+    	item.setId(this.idItemRemito);
+    	item.setIdRemito(this.remito.getIdRemito());
     	return item;
 	}
-
 
 }

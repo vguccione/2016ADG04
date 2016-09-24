@@ -2,11 +2,13 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +20,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.ADG04.bean.Cliente.DTO_Factura;
+import com.ADG04.bean.Cliente.DTO_ItemFactura;
+import com.ADG04.bean.Cliente.DTO_ItemManifiesto;
+import com.ADG04.bean.Cliente.DTO_Manifiesto;
 
 @Entity
 @Table(name = "Factura")
@@ -32,7 +39,7 @@ public class Factura implements java.io.Serializable {
 	private CuentaCorriente cuentaCorriente;
 	
 	@Column(name = "TipoFactura", nullable = false, length = 1)
-	private char tipoFactura;
+	private String tipoFactura;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Fecha", nullable = false, length = 23)
@@ -48,24 +55,15 @@ public class Factura implements java.io.Serializable {
 	@Column(name = "Vencimiento", nullable = false, length = 23)
 	private Date vencimiento;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "factura")
-	private List<ItemFactura> itemFacturas;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "factura", cascade = CascadeType.ALL)
+	private List<ItemFactura> itemsFactura;
 
 	public Factura() {
 	}
 
-	public Factura(int idFactura, char tipoFactura, Date fecha, boolean pagada,
+	public Factura(int idFactura, String tipoFactura, Date fecha, boolean pagada,
 			Date vencimiento) {
 		this.idFactura = idFactura;
-		this.tipoFactura = tipoFactura;
-		this.fecha = fecha;
-		this.pagada = pagada;
-		this.vencimiento = vencimiento;
-	}
-
-	public Factura(CuentaCorriente cuentaCorriente,
-			char tipoFactura, Date fecha, boolean pagada, Date vencimiento) {
-		this.cuentaCorriente = cuentaCorriente;
 		this.tipoFactura = tipoFactura;
 		this.fecha = fecha;
 		this.pagada = pagada;
@@ -90,11 +88,11 @@ public class Factura implements java.io.Serializable {
 		this.cuentaCorriente = cuentaCorriente;
 	}
 
-	public char getTipoFactura() {
-		return this.tipoFactura;
+	public String getTipoFactura() {
+		return tipoFactura;
 	}
 
-	public void setTipoFactura(char tipoFactura) {
+	public void setTipoFactura(String tipoFactura) {
 		this.tipoFactura = tipoFactura;
 	}
 
@@ -122,12 +120,37 @@ public class Factura implements java.io.Serializable {
 		this.vencimiento = vencimiento;
 	}
 
-	public List<ItemFactura> getItemFacturas() {
-		return itemFacturas;
+	public Date getFechaVencimiento() {
+		return fechaVencimiento;
 	}
 
-	public void setItemFacturas(List<ItemFactura> itemFacturas) {
-		this.itemFacturas = itemFacturas;
+	public void setFechaVencimiento(Date fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
 	}
+
+	public List<ItemFactura> getItemsFactura() {
+		return itemsFactura;
+	}
+
+	public void setItemsFactura(List<ItemFactura> itemsFactura) {
+		this.itemsFactura = itemsFactura;
+	}
+
+	public DTO_Factura toDTO(){
+		DTO_Factura f = new DTO_Factura();
+    	f.setFecha(this.fecha);
+    	f.setIdCuentaCorriente(this.cuentaCorriente.getIdCtaCte());
+    	f.setPagado(this.pagada);
+    	f.setTipo(this.tipoFactura);
+    	
+    	List<DTO_ItemFactura> list = new ArrayList<DTO_ItemFactura>();
+    	for(ItemFactura item : this.itemsFactura){
+    		list.add(item.toDTO());
+    	}
+    	
+    	f.setItems(list);
+    	
+    	return f;
+    }
 
 }

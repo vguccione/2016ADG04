@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,6 +35,9 @@ public class Provincia implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "provincia")
 	private List<Direccion> direcciones;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IdPais", nullable = false)
+	private Pais pais;
 
 	public Provincia() {
 	}
@@ -63,6 +68,16 @@ public class Provincia implements java.io.Serializable {
 
 	public void setDirecciones(List<Direccion> direcciones) {
 		this.direcciones = direcciones;
+	}
+	
+	
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 
 	public DTO_Provincia toDTO(){

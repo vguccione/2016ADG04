@@ -21,8 +21,12 @@ import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Pais;
+import com.ADG04.bean.Administracion.DTO_Provincia;
+import com.ADG04.bean.Administracion.DTO_RolUsuario;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
+
 
 public class GestionAdministracion {
 
@@ -138,6 +142,29 @@ private static GestionAdministracion instancia;
 		return empleadosDTO;
 	 }
 	 
+	 //Roles
+	 public List<DTO_RolUsuario> listarRoles(){
+		 List<RolUsuario> lista = RolUsuarioDao.getInstancia().getAll();
+		 List<DTO_RolUsuario> listaDTO = new ArrayList<DTO_RolUsuario>();
+         for(RolUsuario p: lista)
+         	listaDTO.add(p.toDTO());
+         
+		 return listaDTO;
+	 }
+	 
+	 
+	 public List<DTO_RolUsuario> buscarRolesUsuario(String usuario){
+		 List<RolUsuario> roles = RolUsuarioDao.getInstancia().buscarRolesUsuario(usuario);
+		 List<DTO_RolUsuario> dtoRoles = new ArrayList<DTO_RolUsuario>();
+	    	for(RolUsuario rol : roles){
+	    		DTO_RolUsuario dto = new DTO_RolUsuario();
+	    		dto.setId(rol.getIdRolUsuario());
+	    		dto.setdescripcion(rol.getDescripcion());
+	    		dtoRoles.add(dto);	    		
+	    	}
+		return dtoRoles;
+	 }
+	 
 		
 	/*Sucursal*/
 
@@ -228,6 +255,24 @@ private static GestionAdministracion instancia;
 		dir.setPais(pais);
 		
 		return dir;
+	}
+	
+	public List<DTO_Pais> listarPaises(){
+		List<Pais> paises = PaisDao.getInstancia().getAll();
+		List<DTO_Pais> paisesDTO = new ArrayList<DTO_Pais>();
+	    for(Pais pais : paises){
+	    	paisesDTO.add(pais.toDTO());	    		
+	    }
+		return paisesDTO;
+	}
+	
+	public List<DTO_Provincia> listarProvincias(int idPais){
+		List<Provincia> provincias = ProvinciaDao.getInstancia().getByPais(idPais);
+		List<DTO_Provincia> provinciasDTO = new ArrayList<DTO_Provincia>();
+	    for(Provincia prov : provincias){
+	    	provinciasDTO.add(prov.toDTO());	    		
+	    }
+		return provinciasDTO;
 	}
 	
 	

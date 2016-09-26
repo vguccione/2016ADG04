@@ -7,7 +7,6 @@ import javax.persistence.Query;
 import com.ADG04.Servidor.model.RolUsuario;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -30,5 +29,18 @@ public class RolUsuarioDao extends GenericDao<RolUsuario, Integer> {
 			instancia = new RolUsuarioDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
 		} 
 		return instancia;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<RolUsuario> buscarRolesUsuario(String usuario) {
+		try{
+		return entityManager.createQuery("from Usuario where idUsuario=:usuario")
+				            .setParameter("usuario", usuario)
+				            .getResultList();
+		}catch(Exception e){
+            System.out.println(e);
+            System.out.println("ErrorDAO: Listar roles usuario");
+		}
+		return null;
 	}
 }

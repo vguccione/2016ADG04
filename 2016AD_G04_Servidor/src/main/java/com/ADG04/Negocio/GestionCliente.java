@@ -10,16 +10,20 @@ import javax.persistence.EntityTransaction;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.dao.ClienteParticularDao;
+import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.ClienteEmpresa;
 import com.ADG04.Servidor.model.ClienteParticular;
 import com.ADG04.Servidor.model.Direccion;
+import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.model.Producto;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
+
 
 public class GestionCliente {
 
@@ -247,6 +251,37 @@ public class GestionCliente {
 	public DTO_Producto getProducto(Integer idCliente, String codigoProducto){
 		return ProductoDao.getInstancia().getByClienteCodigo(idCliente, codigoProducto).toDTO();
 		
+	}
+	
+	public DTO_Factura getFacturaCliente(Integer idCliente){
+		return FacturaDao.getInstancia().getFacturaCliente(idCliente).toDTO();
+	}
+	
+	public List<DTO_Factura> listarFacturasCliente(){
+		List<Factura> facturas = FacturaDao.getInstancia().getAll();
+		List<DTO_Factura> facturasDTO = new ArrayList<DTO_Factura>();
+		for(Factura factura : facturas){
+			facturasDTO.add(factura.toDTO());
+		}
+		return facturasDTO;
+	}
+	
+	public List<DTO_Factura> listarFacturasClientePendientes(Integer idCliente){
+		List<Factura> facturas = FacturaDao.getInstancia().listarFacturasClientePendientes(idCliente);
+		List<DTO_Factura> facturasDTO = new ArrayList<DTO_Factura>();
+		for(Factura factura : facturas){
+			facturasDTO.add(factura.toDTO());
+		}
+		return facturasDTO;
+	}
+	
+	public List<DTO_Factura> listarFacturasCliente(Integer idCliente){
+		List<Factura> facturas = FacturaDao.getInstancia().listarFacturasCliente(idCliente);
+		List<DTO_Factura> facturasDTO = new ArrayList<DTO_Factura>();
+		for(Factura factura : facturas){
+			facturasDTO.add(factura.toDTO());
+		}
+		return facturasDTO;
 	}
 
 	

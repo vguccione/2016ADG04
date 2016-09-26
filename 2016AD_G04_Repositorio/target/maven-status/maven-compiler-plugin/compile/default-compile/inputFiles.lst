@@ -21,10 +21,8 @@
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Encomienda/DTO_TrayectoSucursalDestino.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Cliente/DTO_ItemFactura.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Encomienda/DTO_TrayectoIntersucursal.java
-/home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Cliente/DTO_ItemManifiesto.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Vehiculo/DTO_TareasPorKilometro.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Proveedor/DTO_ServicioSeguridad.java
-/home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Cliente/DTO_Manifiesto.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Cliente/DTO_ClienteParticular.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Proveedor/DTO_Carrier.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Encomienda/DTO_Manifiesto.java
@@ -39,6 +37,7 @@
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Administracion/DTO_Provincia.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Encomienda/DTO_EnvioTercerizado.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Encomienda/DTO_ActividadEncomienda.java
+/home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Encomienda/DTO_ItemManifiesto.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/Repositorio/Interfaces/IFacturaRemote.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Vehiculo/DTO_TareaMantenimiento.java
 /home/dana/Desktop/Distribuidas/2016ADG04/2016AD_G04_Repositorio/src/main/java/com/ADG04/bean/Cliente/DTO_ClienteEmpresa.java

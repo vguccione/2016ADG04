@@ -1,4 +1,4 @@
-package com.ADG04.bean.Cliente;
+package com.ADG04.bean.Encomienda;
 
 import java.io.Serializable;
 

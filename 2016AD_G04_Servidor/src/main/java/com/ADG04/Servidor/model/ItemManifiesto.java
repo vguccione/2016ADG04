@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.ADG04.bean.Cliente.DTO_ItemManifiesto;
+import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 
 @Entity
 @Table(name = "ItemManifiesto")

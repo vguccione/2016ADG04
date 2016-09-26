@@ -1,36 +1,24 @@
 package com.ADG04.Servidor;
 
-import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.sound.sampled.Clip;
+
+
 
 import com.ADG04.Negocio.GestionAdministracion;
 import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionVehiculo;
-import com.ADG04.Servidor.dao.ClienteDao;
-import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
-import com.ADG04.Servidor.dao.TallerMecanicoDao;
-import com.ADG04.Servidor.model.Cliente;
-import com.ADG04.Servidor.model.Direccion;
-import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Pais;
 import com.ADG04.Servidor.model.Provincia;
-import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
-import com.ADG04.bean.Administracion.DTO_RolUsuario;
+import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
-import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
@@ -47,8 +35,8 @@ public class App
 {
     public static void main( String[] args )
     {
-    	TestPlanMantenimiento();
-    	
+    	//TestPlanMantenimiento();
+    	crearPaisesYProvincias();
 //    	TestEncomienda();
     	//TestFacturaEncomiendaParticular();
     	//TestAltaCliente();
@@ -57,6 +45,24 @@ public class App
     	
  //   	TestPaisDao();
     //	TestUsuario();
+    }
+    
+    private static void crearPaisesYProvincias(){
+    	DTO_Pais pais = new DTO_Pais();
+    	pais.setDescripcion("Argentina");
+    	GestionAdministracion.getInstancia().altaPais(pais);
+    	
+    	DTO_Provincia prov = new DTO_Provincia();
+    	prov.setDescripcion("Mendoza");
+    	prov.setPais(PaisDao.getInstancia().getById(1).toDTO());
+    	GestionAdministracion.getInstancia().altaProvincia(prov);
+    	
+    	prov.setDescripcion("Cordoba");
+    	prov.setPais(PaisDao.getInstancia().getById(1).toDTO());
+    	GestionAdministracion.getInstancia().altaProvincia(prov);
+    	
+    	pais.setDescripcion("Peru");
+    	GestionAdministracion.getInstancia().altaPais(pais);
     }
     
     private static void TestPlanMantenimiento() {

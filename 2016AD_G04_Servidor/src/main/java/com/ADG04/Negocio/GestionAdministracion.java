@@ -276,4 +276,28 @@ private static GestionAdministracion instancia;
 	}
 		
 	
+	public void altaPais(DTO_Pais pais){
+		Pais p = new Pais();
+		p.setDescripcion(pais.getDescripcion());
+		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		PaisDao.getInstancia().persist(p);
+		tx.commit();
+	}
+	
+	public void altaProvincia(DTO_Provincia prov){
+		Provincia p = new Provincia();
+		System.out.println(PaisDao.getInstancia().getById(prov.getPais().getId()));
+		p.setPais(PaisDao.getInstancia().getById(prov.getPais().getId()));
+		p.setDescripcion(prov.getDescripcion());
+		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		ProvinciaDao.getInstancia().persist(p);
+		tx.commit();
+	}
+	
 }

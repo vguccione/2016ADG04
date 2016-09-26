@@ -2,9 +2,7 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -26,7 +24,7 @@ public class CuentaCorriente implements java.io.Serializable {
 	@Column(name = "IdCtaCte", unique = true, nullable = false)
 	private int idCtaCte;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdCliente")
 	private Cliente cliente;
 	
@@ -38,19 +36,26 @@ public class CuentaCorriente implements java.io.Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cuentaCorriente")
 	private List<Factura> facturas;
+	
+	@Column(name="FormaPago")
+	private String formaPago;
 
 	public CuentaCorriente() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CuentaCorriente(Cliente cliente, double credito,
-			double limiteCredito) {
+	
+
+	public CuentaCorriente(double credito, double limiteCredito,
+			String formaPago) {
 		super();
-		this.cliente = cliente;
 		this.credito = credito;
 		this.limiteCredito = limiteCredito;
+		this.formaPago = formaPago;
 	}
+
+
 
 	public int getIdCtaCte() {
 		return idCtaCte;
@@ -90,6 +95,14 @@ public class CuentaCorriente implements java.io.Serializable {
 
 	public void setFacturas(List<Factura> facturas) {
 		this.facturas = facturas;
+	}
+
+	public String getFormaPago() {
+		return formaPago;
+	}
+
+	public void setFormaPago(String formaPago) {
+		this.formaPago = formaPago;
 	}
 
 }

@@ -19,12 +19,12 @@ public class DTO_Pais  implements Serializable {
 		this.id = id;
 	}
 	
-	public String getdescripcion() {
+	public String getDescripcion() {
 		return descripcion;
 	}
 
-	public void seDescripcion(String pais) {
-		this.descripcion = pais;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 

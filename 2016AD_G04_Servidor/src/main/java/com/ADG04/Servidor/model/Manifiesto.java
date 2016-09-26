@@ -21,8 +21,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.ADG04.bean.Cliente.DTO_ItemManifiesto;
-import com.ADG04.bean.Cliente.DTO_Manifiesto;
+import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
+import com.ADG04.bean.Encomienda.DTO_Manifiesto;
+
 
 @Entity
 @Table(name = "Manifiesto")

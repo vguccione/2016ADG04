@@ -23,8 +23,6 @@ import javax.persistence.TemporalType;
 
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
-import com.ADG04.bean.Cliente.DTO_ItemManifiesto;
-import com.ADG04.bean.Cliente.DTO_Manifiesto;
 
 @Entity
 @Table(name = "Factura")

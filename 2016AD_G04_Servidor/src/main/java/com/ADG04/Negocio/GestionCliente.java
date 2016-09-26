@@ -257,7 +257,7 @@ public class GestionCliente {
 		return FacturaDao.getInstancia().getFacturaCliente(idCliente).toDTO();
 	}
 	
-	public List<DTO_Factura> listarFacturasCliente(){
+	public List<DTO_Factura> listarFacturas(){
 		List<Factura> facturas = FacturaDao.getInstancia().getAll();
 		List<DTO_Factura> facturasDTO = new ArrayList<DTO_Factura>();
 		for(Factura factura : facturas){

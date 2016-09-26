@@ -2,9 +2,6 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
-import com.ADG04.bean.Cliente.DTO_ItemManifiesto;
+
 
 @Entity
 @Table(name = "ItemFactura")

@@ -10,18 +10,22 @@ import javax.persistence.EntityTransaction;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.dao.ClienteParticularDao;
+import com.ADG04.Servidor.dao.CuentaCorrienteDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.ClienteEmpresa;
 import com.ADG04.Servidor.model.ClienteParticular;
+import com.ADG04.Servidor.model.CuentaCorriente;
 import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.Factura;
+import com.ADG04.Servidor.model.ItemFactura;
 import com.ADG04.Servidor.model.Producto;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
+import com.ADG04.bean.Cliente.DTO_ItemFactura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 
 
@@ -97,17 +101,25 @@ public class GestionCliente {
 		c.setEstado(clienteEmpresa.getEstado());
 		c.setTelefono(clienteEmpresa.getTelefono());
 		
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-
+		CuentaCorriente cc = new CuentaCorriente();
+		cc.setLimiteCredito(clienteEmpresa.getCuentaCorriente().getLimiteCredito());
+		cc.setCredito(clienteEmpresa.getCuentaCorriente().getCredito());
+		cc.setFormaPago(clienteEmpresa.getCuentaCorriente().getFormaPago());
+		
+		c.setCuentaCorrientes(cc);
+		
 		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(clienteEmpresa.getDireccion());
 		c.setDireccion(dir);
 		
+		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
 		ClienteDao.getInstancia().persist(c);
-		
+	
 		tx.commit();
-		
+	
 	}
 	
 	public void modificarClienteEmpresa(DTO_ClienteEmpresa clienteEmpresa) {
@@ -251,6 +263,64 @@ public class GestionCliente {
 	public DTO_Producto getProducto(Integer idCliente, String codigoProducto){
 		return ProductoDao.getInstancia().getByClienteCodigo(idCliente, codigoProducto).toDTO();
 		
+	}
+	
+	
+	/*Factura*/
+	public void altaFactura(DTO_Factura factura){
+		CuentaCorriente cc  = CuentaCorrienteDao.getInstancia().getById(factura.getIdCuentaCorriente());
+		Factura fc = new Factura();
+
+		List<ItemFactura> detalleFactura = new ArrayList<ItemFactura>();
+		for(DTO_ItemFactura it: factura.getItems()){
+			ItemFactura item = new ItemFactura();
+			item.setCantidad(it.getCantidad());
+			item.setDescripcion(it.getDescripcion());
+			item.setValor(it.getValor());
+			
+			detalleFactura.add(item);
+		}
+		fc.setItemsFactura(detalleFactura);
+		
+		fc.setCuentaCorriente(cc);
+		fc.setFecha(factura.getFecha());
+		fc.setFechaVencimiento(factura.getFechaVencimiento());
+		fc.setPagada(false);
+		fc.setTipoFactura(factura.getTipo());
+		
+		EntityManager em = factory.createEntityManager();	
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		FacturaDao.getInstancia().persist(fc);
+		tx.commit();
+	}
+	public void modificarFacturaCliente(DTO_Factura factura){
+		CuentaCorriente cc  = CuentaCorrienteDao.getInstancia().getById(factura.getIdCuentaCorriente());
+		Factura fc = new Factura();
+
+		List<ItemFactura> detalleFactura = new ArrayList<ItemFactura>();
+		for(DTO_ItemFactura it: factura.getItems()){
+			ItemFactura item = new ItemFactura();
+			item.setCantidad(it.getCantidad());
+			item.setDescripcion(it.getDescripcion());
+			item.setValor(it.getValor());
+			
+			detalleFactura.add(item);
+		}
+		fc.setItemsFactura(detalleFactura);
+		
+		fc.setIdFactura(factura.getId());
+		fc.setCuentaCorriente(cc);
+		fc.setFecha(factura.getFecha());
+		fc.setFechaVencimiento(factura.getFechaVencimiento());
+		fc.setPagada(false);
+		fc.setTipoFactura(factura.getTipo());
+		
+		EntityManager em = factory.createEntityManager();	
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		FacturaDao.getInstancia().saveOrUpdate(fc);
+		tx.commit();
 	}
 	
 	public DTO_Factura getFacturaCliente(Integer idCliente){

@@ -2,9 +2,8 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,15 +17,11 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.ADG04.bean.Administracion.DTO_RolUsuario;
-import com.ADG04.bean.Administracion.DTO_Usuario;
-import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 
 @Entity
 @Table(name = "Cliente")

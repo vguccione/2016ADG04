@@ -2,9 +2,7 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ADG04.bean.Administracion.DTO_Pais;
-import com.ADG04.bean.Administracion.DTO_Sucursal;
 
 @Entity
 @Table(name = "Pais")
@@ -66,7 +63,7 @@ public class Pais implements java.io.Serializable {
 	
 	public DTO_Pais toDTO(){
 		DTO_Pais p = new DTO_Pais();
-		p.seDescripcion(this.descripcion);
+		p.setDescripcion(this.descripcion);
 		p.setId(this.idPais);
 		return p;
 	}

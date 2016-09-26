@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.ADG04.Servidor.model.ClienteEmpresa;
+import com.ADG04.Servidor.model.ClienteParticular;
 import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
@@ -15,6 +17,7 @@ import java.util.List;
 
 public class FacturaDao extends GenericDao<Factura, Integer> {
 
+	private static final Factura Factura = null;
 	private static FacturaDao instancia;
 
 
@@ -28,6 +31,49 @@ public class FacturaDao extends GenericDao<Factura, Integer> {
 			instancia = new FacturaDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
 		} 
 		return instancia;
+	}
+
+	public Factura getFacturaCliente(Integer idCliente) {
+		try {
+			  Query query = entityManager.createQuery("from Factura where cliente =:cliente");
+			  query.setParameter("cliente", idCliente);
+			  Factura f = (Factura) query.getSingleResult();
+			  return f;
+			       
+	        } catch (Exception e){
+	            System.out.println(e);
+	            System.out.println("Error en traer factura por cliente");
+	            return null;
+	        }
+	}
+
+	public List<Factura> listarFacturasClientePendientes(Integer idCliente) {
+		try {
+			  Query query = entityManager.createQuery("from Factura where cliente =:cliente and pagada=false" );
+			  query.setParameter("cliente", idCliente);
+			  List<Factura> f = (List<Factura>) query.getResultList();
+			  return f;
+			       
+	        } catch (Exception e){
+	            System.out.println(e);
+	            System.out.println("Error en listar facturas por cliente pendiente");
+	            return null;
+	        }
+	        
+	}
+
+	public List<Factura> listarFacturasCliente(Integer idCliente) {
+		try {
+			  Query query = entityManager.createQuery("from Factura where cliente =:cliente");
+			  query.setParameter("cliente", idCliente);
+			  List<Factura> f = (List<Factura>) query.getResultList();
+			  return f;
+			       
+	        } catch (Exception e){
+	            System.out.println(e);
+	            System.out.println("Error en listar facturas por cliente");
+	            return null;
+	        }
 	}
 
 }

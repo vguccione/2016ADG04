@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Administracion.DTO_RolUsuario;
+
 @Entity
 @Table(name = "RolUsuario")
 public class RolUsuario implements java.io.Serializable {
@@ -57,6 +59,14 @@ public class RolUsuario implements java.io.Serializable {
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+	public DTO_RolUsuario toDTO() {
+		DTO_RolUsuario rol = new DTO_RolUsuario();
+		rol.setdescripcion(this.descripcion);
+		rol.setId(this.getIdRolUsuario());
+		
+		return rol;
 	}
 
 

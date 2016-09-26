@@ -30,4 +30,17 @@ public class ProvinciaDao extends GenericDao<Provincia, Integer> {
 		return instancia;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Provincia> getByPais(int idPais) {
+		try{
+		return entityManager.createQuery("from Provincia where pais=:pais")
+				            .setParameter("pais", idPais)
+				            .getResultList();
+		}catch(Exception e){
+            System.out.println(e);
+            System.out.println("ErrorDAO: Listar provincias");
+		}
+		return null;
+	}
+
 }

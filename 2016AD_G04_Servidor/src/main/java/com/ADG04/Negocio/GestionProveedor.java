@@ -1,21 +1,27 @@
 package com.ADG04.Negocio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import com.ADG04.Servidor.dao.CarrierDao;
+import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.Servidor.dao.SeguroDao;
 import com.ADG04.Servidor.dao.ServicioSeguridadDao;
 import com.ADG04.Servidor.dao.TallerMecanicoDao;
 import com.ADG04.Servidor.model.Carrier;
 import com.ADG04.Servidor.model.Direccion;
+import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.Seguro;
 import com.ADG04.Servidor.model.ServicioSeguridad;
 import com.ADG04.Servidor.model.TallerMecanico;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Proveedor.DTO_Carrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
@@ -255,13 +261,73 @@ public class GestionProveedor {
 		}
 	}
 
-	/*public DTO_Proveedor buscarProveedor(String cuit) {
-		return ProveedorDao.getInstancia().buscarProveedor(cuit).toDTO();
+	public DTO_ServicioSeguridad buscarServicioSeguridad(String cuit) {
+		return ServicioSeguridadDao.getInstancia().getByCuit(cuit).toDTO();
 	}
 	
-	public DTO_Proveedor getProveedor(Integer id) {
-		return ProveedorDao.getInstancia().getById(id).toDTO();
-	}*/
+	public DTO_ServicioSeguridad getServicioSeguridad(Integer id) {
+		return ServicioSeguridadDao.getInstancia().getById(id).toDTO();
+	}
+	
+	public DTO_Seguro buscarSeguro(String cuit) {
+		return SeguroDao.getInstancia().getByCuit(cuit).toDTO();
+	}
+	
+	public DTO_Seguro getSeguro(Integer id) {
+		return SeguroDao.getInstancia().getById(id).toDTO();
+	}
+	
+	public DTO_TallerMecanico buscarTaller(String cuit) {
+		return TallerMecanicoDao.getInstancia().getByCuit(cuit).toDTO();
+	}
+	
+	public DTO_TallerMecanico getTallerMecanico(Integer id) {
+		return TallerMecanicoDao.getInstancia().getById(id).toDTO();
+	}
+	
+	public DTO_Carrier buscarCarrier(String cuit) {
+		return CarrierDao.getInstancia().getByCuit(cuit).toDTO();
+	}
+	
+	public DTO_Carrier getCarrier(Integer id) {
+		return CarrierDao.getInstancia().getById(id).toDTO();
+	}
+	
+	public List<DTO_Seguro> getSeguros(){
+		List<Seguro> seguros = SeguroDao.getInstancia().getAll();
+		List<DTO_Seguro> segurosDTO = new ArrayList<DTO_Seguro>();
+		for(Seguro seguro : seguros){
+			segurosDTO.add(seguro.toDTO());
+		}
+		return segurosDTO;
+	}
+	
+	public List<DTO_Carrier> getCarriers(){
+		List<Carrier> carriers = CarrierDao.getInstancia().getAll();
+		List<DTO_Carrier> carriersDTO = new ArrayList<DTO_Carrier>();
+		for(Carrier carrier : carriers){
+			carriersDTO.add(carrier.toDTO());
+		}
+		return carriersDTO;
+	}
+	
+	public List<DTO_ServicioSeguridad> getServicioSeguridad(){
+		List<ServicioSeguridad> ss = ServicioSeguridadDao.getInstancia().getAll();
+		List<DTO_ServicioSeguridad> ssDTO = new ArrayList<DTO_ServicioSeguridad>();
+		for(ServicioSeguridad s : ss){
+			ssDTO.add(s.toDTO());
+		}
+		return ssDTO;
+	}
+	
+	public List<DTO_TallerMecanico> getDTO_TalleresMecanicos(){
+		List<TallerMecanico> tallers = TallerMecanicoDao.getInstancia().getAll();
+		List<DTO_TallerMecanico> talleresDTO = new ArrayList<DTO_TallerMecanico>();
+		for(TallerMecanico taller : tallers){
+			talleresDTO.add(taller.toDTO());
+		}
+		return talleresDTO;
+	}
 	
 
 }

@@ -1,17 +1,20 @@
 package com.ADG04.bean.Encomienda;
 
 import java.io.Serializable;
+import java.util.List;
 
 
-public class DTO_Trayecto implements Serializable{
+public class DTO_MapaDeRuta implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private Integer idHojaRuta;
-	private float distanciaKM;
-	private float tiempoDias;
-	private String descripcion;
+	private Integer idEnvio;
+	private float duracion;
+	private float cantKm;
+	private Integer idSucursalOrigen;
+	private Integer idSucursalDestino;
+	private List<DTO_Coordenada> coordenadas;
 
-	public DTO_Trayecto(){
+	public DTO_MapaDeRuta(){
 		
 	}
 
@@ -23,38 +26,57 @@ public class DTO_Trayecto implements Serializable{
 		this.id = id;
 	}
 
-	public Integer getIdHojaRuta() {
-		return idHojaRuta;
+	public Integer getIdEnvio() {
+		return idEnvio;
 	}
 
-	public void setIdHojaRuta(Integer idHojaRuta) {
-		this.idHojaRuta = idHojaRuta;
+	public void setIdEnvio(Integer idEnvio) {
+		this.idEnvio = idEnvio;
 	}
 
-	public float getDistanciaKM() {
-		return distanciaKM;
+	public float getDuracion() {
+		return duracion;
 	}
 
-	public void setDistanciaKM(float distanciaKM) {
-		this.distanciaKM = distanciaKM;
+	public void setDuracion(float duracion) {
+		this.duracion = duracion;
 	}
 
-	public float getTiempoDias() {
-		return tiempoDias;
+	public float getCantKm() {
+		return cantKm;
 	}
 
-	public void setTiempoDias(float tiempoDias) {
-		this.tiempoDias = tiempoDias;
+	public void setCantKm(float cantKm) {
+		this.cantKm = cantKm;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public Integer getIdSucursalOrigen() {
+		return idSucursalOrigen;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setIdSucursalOrigen(Integer idSucursalOrigen) {
+		this.idSucursalOrigen = idSucursalOrigen;
 	}
 
+	public Integer getIdSucursalDestino() {
+		return idSucursalDestino;
+	}
 
+	public void setIdSucursalDestino(Integer idSucursalDestino) {
+		this.idSucursalDestino = idSucursalDestino;
+	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public List<DTO_Coordenada> getCoordenadas() {
+		return coordenadas;
+	}
+
+	public void setCoordenadas(List<DTO_Coordenada> coordenadas) {
+		this.coordenadas = coordenadas;
+	}
+
+	
 }

@@ -2,6 +2,7 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -13,8 +14,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,8 +36,8 @@ public class Envio implements java.io.Serializable {
 	@JoinColumn(name = "IdProveedor")
 	private Proveedor proveedor;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdMapaDeRuta")
+	@ManyToOne
+	@JoinColumn(name="IdMapaDeRuta")
 	private MapaDeRuta mapaDeRuta;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -43,11 +46,11 @@ public class Envio implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdSucursalDestino", nullable = false)
-	private Sucursal sucursalByIdSucursalDestino;
+	private Sucursal sucursalDestino;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdSucursalOrigen", nullable = false)
-	private Sucursal sucursalByIdSucursalOrigen;
+	private Sucursal sucursalOrigen;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdVehiculo")
@@ -58,19 +61,12 @@ public class Envio implements java.io.Serializable {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "FechaLlegadaEstimada", nullable = false, length = 10)
-	private Date fechaLlegadaEstimada;
+	private Date fechaYHoraLlegadaEstimada;
 	
-	@Temporal(TemporalType.TIME)
-	@Column(name = "HoraLlegadaEstimada", nullable = false, length = 16)
-	private Date horaLlegadaEstimada;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "FechaSalida", nullable = false, length = 10)
-	private Date fechaSalida;
-
-	@Temporal(TemporalType.TIME)
-	@Column(name = "HoraSalida", nullable = false, length = 16)
-	private Date horaSalida;
+	private Date fechaYHoraSalida;
 
 	@Column(name = "Propio", nullable = false)
 	private boolean propio;
@@ -84,21 +80,22 @@ public class Envio implements java.io.Serializable {
 	public Envio() {
 	}
 
-	public Envio(Coordenada coordenada,
-			Sucursal sucursalByIdSucursalDestino,
-			Sucursal sucursalByIdSucursalOrigen, String estado,
-			Date fechaLlegadaEstimada, Date horaLlegadaEstimada,
-			Date fechaSalida, Date horaSalida, boolean propio) {
-		this.coordenada = coordenada;
-		this.sucursalByIdSucursalDestino = sucursalByIdSucursalDestino;
-		this.sucursalByIdSucursalOrigen = sucursalByIdSucursalOrigen;
+	
+
+
+	public Envio(Vehiculo vehiculo, String estado,
+			Date fechaYHoraLlegadaEstimada, Date fechaYHoraSalida,
+			boolean propio, Integer nroTracking) {
+		super();
+		this.vehiculo = vehiculo;
 		this.estado = estado;
-		this.fechaLlegadaEstimada = fechaLlegadaEstimada;
-		this.horaLlegadaEstimada = horaLlegadaEstimada;
-		this.fechaSalida = fechaSalida;
-		this.horaSalida = horaSalida;
+		this.fechaYHoraLlegadaEstimada = fechaYHoraLlegadaEstimada;
+		this.fechaYHoraSalida = fechaYHoraSalida;
 		this.propio = propio;
+		this.nroTracking = nroTracking;
 	}
+
+
 
 
 	public int getIdEnvio() {
@@ -117,13 +114,6 @@ public class Envio implements java.io.Serializable {
 		this.proveedor = proveedor;
 	}
 
-	public MapaDeRuta getMapaDeRuta() {
-		return this.mapaDeRuta;
-	}
-
-	public void setMapaDeRuta(MapaDeRuta mapaDeRuta) {
-		this.mapaDeRuta = mapaDeRuta;
-	}
 
 
 	public Coordenada getCoordenada() {
@@ -134,22 +124,30 @@ public class Envio implements java.io.Serializable {
 		this.coordenada = coordenada;
 	}
 
-	public Sucursal getSucursalByIdSucursalDestino() {
-		return this.sucursalByIdSucursalDestino;
+	
+
+	public MapaDeRuta getMapaDeRuta() {
+		return mapaDeRuta;
 	}
 
-	public void setSucursalByIdSucursalDestino(
-			Sucursal sucursalByIdSucursalDestino) {
-		this.sucursalByIdSucursalDestino = sucursalByIdSucursalDestino;
+	public void setMapaDeRuta(MapaDeRuta mapaDeRuta) {
+		this.mapaDeRuta = mapaDeRuta;
 	}
 
-	public Sucursal getSucursalByIdSucursalOrigen() {
-		return this.sucursalByIdSucursalOrigen;
+	public Sucursal getSucursalDestino() {
+		return sucursalDestino;
 	}
 
-	public void setSucursalByIdSucursalOrigen(
-			Sucursal sucursalByIdSucursalOrigen) {
-		this.sucursalByIdSucursalOrigen = sucursalByIdSucursalOrigen;
+	public void setSucursalDestino(Sucursal sucursalDestino) {
+		this.sucursalDestino = sucursalDestino;
+	}
+
+	public Sucursal getSucursalOrigen() {
+		return sucursalOrigen;
+	}
+
+	public void setSucursalOrigen(Sucursal sucursalOrigen) {
+		this.sucursalOrigen = sucursalOrigen;
 	}
 
 	public Vehiculo getVehiculo() {
@@ -168,38 +166,25 @@ public class Envio implements java.io.Serializable {
 		this.estado = estado;
 	}
 
-	public Date getFechaLlegadaEstimada() {
-		return this.fechaLlegadaEstimada;
-	}
 
-	public void setFechaLlegadaEstimada(Date fechaLlegadaEstimada) {
-		this.fechaLlegadaEstimada = fechaLlegadaEstimada;
+	public Date getFechaYHoraLlegadaEstimada() {
+		return fechaYHoraLlegadaEstimada;
 	}
 
 
-	public Date getHoraLlegadaEstimada() {
-		return this.horaLlegadaEstimada;
+	public void setFechaYHoraLlegadaEstimada(Date fechaYHoraLlegadaEstimada) {
+		this.fechaYHoraLlegadaEstimada = fechaYHoraLlegadaEstimada;
 	}
 
-	public void setHoraLlegadaEstimada(Date horaLlegadaEstimada) {
-		this.horaLlegadaEstimada = horaLlegadaEstimada;
+
+	public Date getFechaYHoraSalida() {
+		return fechaYHoraSalida;
 	}
 
-	public Date getFechaSalida() {
-		return this.fechaSalida;
+	public void setFechaYHoraSalida(Date fechaYHoraSalida) {
+		this.fechaYHoraSalida = fechaYHoraSalida;
 	}
 
-	public void setFechaSalida(Date fechaSalida) {
-		this.fechaSalida = fechaSalida;
-	}
-
-	public Date getHoraSalida() {
-		return this.horaSalida;
-	}
-
-	public void setHoraSalida(Date horaSalida) {
-		this.horaSalida = horaSalida;
-	}
 
 	public boolean isPropio() {
 		return this.propio;

@@ -2,15 +2,14 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,11 +29,8 @@ public class Coordenada implements java.io.Serializable {
 	@Column(name = "Longitud", nullable = false, precision = 53, scale = 0)
 	private double longitud;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "coordenada")
-	private List<Envio> envios;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "coordenada")
-	private List<MapaDeRutaCoordenada> mapaDeRutaCoordenadas;
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "coordenadas")
+	private List<MapaDeRuta> rutas;
 
 	public Coordenada() {
 	}
@@ -70,21 +66,12 @@ public class Coordenada implements java.io.Serializable {
 		this.longitud = longitud;
 	}
 
-	public List<Envio> getEnvios() {
-		return envios;
+	public List<MapaDeRuta> getRutas() {
+		return rutas;
 	}
 
-	public void setEnvios(List<Envio> envios) {
-		this.envios = envios;
-	}
-
-	public List<MapaDeRutaCoordenada> getMapaDeRutaCoordenadas() {
-		return mapaDeRutaCoordenadas;
-	}
-
-	public void setMapaDeRutaCoordenadas(
-			List<MapaDeRutaCoordenada> mapaDeRutaCoordenadas) {
-		this.mapaDeRutaCoordenadas = mapaDeRutaCoordenadas;
+	public void setRutas(List<MapaDeRuta> rutas) {
+		this.rutas = rutas;
 	}
 
 

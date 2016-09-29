@@ -39,16 +39,16 @@ public class Sucursal implements java.io.Serializable {
 	@JoinColumn(name = "IdDireccion", nullable = false)
 	private Direccion direccion;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalByIdSucursalOrigen")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalOrigen")
 	private List<MapaDeRuta> mapasSucursalOrigen;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalByIdSucursalDestino")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalDestino")
 	private List<MapaDeRuta> mapasSucursalDestino;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalByIdSucursalDestino")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalOrigen")
 	private List<Envio> enviosSucursalDestino;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalByIdSucursalOrigen")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalDestino")
 	private List<Envio> enviosSucursalOrigen;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalDestno")

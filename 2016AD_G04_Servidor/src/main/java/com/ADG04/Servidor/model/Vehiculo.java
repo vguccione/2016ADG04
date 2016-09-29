@@ -29,6 +29,9 @@ public class Vehiculo implements java.io.Serializable {
 	@JoinColumn(name = "IdPlanMantenimiento", nullable = false)
 	private PlanMantenimiento planMantenimiento;
 	
+	@Column(name="Estado")
+	private String estado;
+	
 	@Column(name = "Largo", precision = 53, scale = 0)
 	private Double largo;
 
@@ -238,6 +241,14 @@ public class Vehiculo implements java.io.Serializable {
 	public void setCondicionesEspecialesVehiculos(
 			List<CondicionesEspecialesVehiculo> condicionesEspecialesVehiculos) {
 		this.condicionesEspecialesVehiculos = condicionesEspecialesVehiculos;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 }

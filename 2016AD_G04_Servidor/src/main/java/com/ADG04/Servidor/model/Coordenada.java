@@ -24,10 +24,10 @@ public class Coordenada implements java.io.Serializable {
 	private int idCoordenada;
 	
 	@Column(name = "Latitud", nullable = false, precision = 53, scale = 0)
-	private double latitud;
+	private String latitud;
 	
 	@Column(name = "Longitud", nullable = false, precision = 53, scale = 0)
-	private double longitud;
+	private String longitud;
 	
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "coordenadas")
 	private List<MapaDeRuta> rutas;
@@ -35,34 +35,33 @@ public class Coordenada implements java.io.Serializable {
 	public Coordenada() {
 	}
 
-	public Coordenada(double latitud, double longitud) {
+	public Coordenada(String latitud, String longitud) {
+		super();
 		this.latitud = latitud;
 		this.longitud = longitud;
 	}
 
-	
 	public int getIdCoordenada() {
-		return this.idCoordenada;
+		return idCoordenada;
 	}
 
 	public void setIdCoordenada(int idCoordenada) {
 		this.idCoordenada = idCoordenada;
 	}
 
-	public double getLatitud() {
-		return this.latitud;
+	public String getLatitud() {
+		return latitud;
 	}
 
-	public void setLatitud(double latitud) {
+	public void setLatitud(String latitud) {
 		this.latitud = latitud;
 	}
 
-	
-	public double getLongitud() {
-		return this.longitud;
+	public String getLongitud() {
+		return longitud;
 	}
 
-	public void setLongitud(double longitud) {
+	public void setLongitud(String longitud) {
 		this.longitud = longitud;
 	}
 

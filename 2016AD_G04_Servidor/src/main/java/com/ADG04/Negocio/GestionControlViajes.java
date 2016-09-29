@@ -19,6 +19,7 @@ import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
@@ -34,7 +35,7 @@ public class GestionControlViajes {
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
 	}
 	
-	private static GestionControlViajes getInstancia(){
+	public static GestionControlViajes getInstancia(){
 		if(instancia == null){
 			instancia = new GestionControlViajes();
 		}
@@ -97,10 +98,14 @@ public class GestionControlViajes {
 	
 	
 	/*La idea es llamar este metodo cada 5 minutos desde la web para actualizar
-	 * el estado del envio y su vehiculo
+	 * el estado del envio
 	 * La coordenadaActual sera obtenida del XML provisto por los vehiculos
 	 */
 	public void actualizarEstadoVehiculo(int idEnvio, Coordenada coordActual){
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
 		Envio e = EnvioDao.getInstancia().getById(idEnvio);
 		MapaDeRuta mr = e.getMapaDeRuta();
 		List<Coordenada> lista = mr.getCoordenadas();
@@ -111,24 +116,42 @@ public class GestionControlViajes {
 			}
 		}
 		
-		Vehiculo v = VehiculoDao.getInstancia().getById(e.getVehiculo().getIdVehiculo());
 		if(!encontrado){
-			if(v.getEstado()=="En viaje"){
-				v.setEstado("Desviado");
+			if(e.getEstado()==EnvioEstado.EnViaje.toString()){
+				e.setEstado(EnvioEstado.Desviado.toString());
 			}
 			else {
-				if(v.getEstado()=="Desviado"){
-					v.setEstado("Alerta");
+				if(e.getEstado()==EnvioEstado.Desviado.toString()){
+					e.setEstado(EnvioEstado.Alerta.toString());
 				}
 			}
 		}
-		
+		e.setPosicionActual(coordActual);
+		EnvioDao.getInstancia().saveOrUpdate(e);
+		tx.commit();
+	}
+	
+	public void estaEnvioDemorado(int idEnvio){
+		Envio e = EnvioDao.getInstancia().getById(idEnvio);
+		Date hoy = new Date();
+		if(e.getFechaYHoraLlegadaEstimada().compareTo(hoy)<0){
+			e.setEstado(EnvioEstado.Demorado.toString());
+			EntityManager em = factory.createEntityManager();
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			EnvioDao.getInstancia().saveOrUpdate(e);
+			tx.commit();
+		}
+	}
+	
+	public void concluirEnvio(int idEnvio){
+		Envio e = EnvioDao.getInstancia().getById(idEnvio);
+		e.setEstado(EnvioEstado.Concluido.toString());
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		VehiculoDao.getInstancia().saveOrUpdate(v);
+		EnvioDao.getInstancia().saveOrUpdate(e);
 		tx.commit();
 	}
 		
-
 }

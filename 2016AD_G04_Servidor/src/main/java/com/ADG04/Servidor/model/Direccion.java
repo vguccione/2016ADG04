@@ -48,17 +48,6 @@ public class Direccion implements java.io.Serializable {
 	private String localidad;
 	private int codigoPostal;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccion")
-	private List<Sucursal> sucursales;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccionOrigen")
-	private List<Encomienda> encomiendasOrigen;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "direccion")
-	private List<Proveedor> proveedores;
-	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy="direccion")
-	private Cliente cliente;
 	
 	public Direccion() {
 	}
@@ -135,45 +124,8 @@ public class Direccion implements java.io.Serializable {
 	}
 
 
-	public List<Sucursal> getSucursales() {
-		return sucursales;
-	}
 
 
-	public void setSucursales(List<Sucursal> sucursales) {
-		this.sucursales = sucursales;
-	}
-
-
-	public List<Encomienda> getEncomiendasOrigen() {
-		return encomiendasOrigen;
-	}
-
-
-	public void setEncomiendasOrigen(
-			List<Encomienda> encomiendasOrigen) {
-		this.encomiendasOrigen = encomiendasOrigen;
-	}
-
-
-	public List<Proveedor> getProveedores() {
-		return proveedores;
-	}
-
-
-	public void setProveedores(List<Proveedor> proveedores) {
-		this.proveedores = proveedores;
-	}
-
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-	
 	public DTO_Direccion toDTO(){
 		DTO_Direccion dir = new DTO_Direccion();
 		dir.setCalle(this.calle);

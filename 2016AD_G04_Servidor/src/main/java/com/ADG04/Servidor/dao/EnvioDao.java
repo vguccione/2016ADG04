@@ -29,5 +29,6 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		} 
 		return instancia;
 	}
+	
 
 }

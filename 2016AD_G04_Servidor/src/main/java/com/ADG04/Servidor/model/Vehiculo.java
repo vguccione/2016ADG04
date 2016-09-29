@@ -26,7 +26,7 @@ public class Vehiculo implements java.io.Serializable {
 	private int idVehiculo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdPlanMantenimiento", nullable = false)
+	@JoinColumn(name = "IdPlanMantenimiento")
 	private PlanMantenimiento planMantenimiento;
 	
 	@Column(name="Estado")
@@ -66,16 +66,13 @@ public class Vehiculo implements java.io.Serializable {
 	private String patente;
 
 	@Column(name = "Anio", nullable = false)
-	private short anio;
+	private String anio;
 
 	@Column(name = "Tara", nullable = false, precision = 53, scale = 0)
 	private double tara;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
 	private List<TareaMantenimientoRealizada> tareasMantenimientoRealizadas;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
-	private List<Envio> envios;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
 	private List<CondicionesEspecialesVehiculo> condicionesEspecialesVehiculos;
@@ -85,7 +82,7 @@ public class Vehiculo implements java.io.Serializable {
 
 	public Vehiculo(PlanMantenimiento planMantenimiento,
 			double kmRecorridos, String marca, String modelo, String patente,
-			short anio, double tara) {
+			String anio, double tara) {
 		this.planMantenimiento = planMantenimiento;
 		this.kmRecorridos = kmRecorridos;
 		this.marca = marca;
@@ -201,11 +198,11 @@ public class Vehiculo implements java.io.Serializable {
 		this.patente = patente;
 	}
 
-	public short getAnio() {
+	public String getAnio() {
 		return this.anio;
 	}
 
-	public void setAnio(short anio) {
+	public void setAnio(String anio) {
 		this.anio = anio;
 	}
 
@@ -226,13 +223,6 @@ public class Vehiculo implements java.io.Serializable {
 		this.tareasMantenimientoRealizadas = tareasMantenimientoRealizadas;
 	}
 
-	public List<Envio> getEnvios() {
-		return envios;
-	}
-
-	public void setEnvios(List<Envio> envios) {
-		this.envios = envios;
-	}
 
 	public List<CondicionesEspecialesVehiculo> getCondicionesEspecialesVehiculos() {
 		return condicionesEspecialesVehiculos;

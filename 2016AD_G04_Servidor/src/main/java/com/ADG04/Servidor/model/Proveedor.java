@@ -14,6 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.ADG04.Servidor.dao.DireccionDao;
@@ -33,7 +34,7 @@ public class Proveedor implements java.io.Serializable {
 	@Column(name = "IdProveedor", unique = true, nullable = false)
 	private int idProveedor;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdDireccion")
 	private Direccion direccion;
 

@@ -8,7 +8,7 @@ public class DTO_Envio implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String estado;
-	private String posicionActual;
+	private DTO_Coordenada posicionActual;
 	private List<DTO_EncomiendaParticular> encomiendas;
 	
 	
@@ -36,12 +36,13 @@ public class DTO_Envio implements Serializable{
 	}
 
 
-	public String getPosicionActual() {
+
+	public DTO_Coordenada getPosicionActual() {
 		return posicionActual;
 	}
 
 
-	public void setPosicionActual(String posicionActual) {
+	public void setPosicionActual(DTO_Coordenada posicionActual) {
 		this.posicionActual = posicionActual;
 	}
 

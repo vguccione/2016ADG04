@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +34,7 @@ public class Encomienda implements java.io.Serializable {
 	@JoinColumn(name = "IdFactura", nullable = true)
 	private Factura factura;
 
-	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdDireccionDestino")
 	private Direccion direccionDestino;
 

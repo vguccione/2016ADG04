@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class DTO_Coordenada implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private double longitud;
-	private double latitud;
-	public DTO_Coordenada(int id, double longitud, double latitud) {
+	private String longitud;
+	private String latitud;
+	public DTO_Coordenada(int id, String longitud, String latitud) {
 		super();
 		this.id = id;
 		this.longitud = longitud;
@@ -23,16 +23,16 @@ public class DTO_Coordenada implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public double getLongitud() {
+	public String getLongitud() {
 		return longitud;
 	}
-	public void setLongitud(double longitud) {
+	public void setLongitud(String longitud) {
 		this.longitud = longitud;
 	}
-	public double getLatitud() {
+	public String getLatitud() {
 		return latitud;
 	}
-	public void setLatitud(double latitud) {
+	public void setLatitud(String latitud) {
 		this.latitud = latitud;
 	}
 	

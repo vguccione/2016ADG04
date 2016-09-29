@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.ADG04.bean.Administracion.DTO_RolUsuario;
@@ -35,15 +36,9 @@ public class Sucursal implements java.io.Serializable {
 	@Column(name = "Telefono")
 	private String telefono;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "IdDireccion", nullable = false)
 	private Direccion direccion;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalOrigen")
-	private List<MapaDeRuta> mapasSucursalOrigen;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalDestino")
-	private List<MapaDeRuta> mapasSucursalDestino;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalOrigen")
 	private List<Envio> enviosSucursalDestino;
@@ -96,22 +91,6 @@ public class Sucursal implements java.io.Serializable {
 
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
-	}
-
-	public List<MapaDeRuta> getMapasSucursalOrigen() {
-		return mapasSucursalOrigen;
-	}
-
-	public void setMapasSucursalOrigen(List<MapaDeRuta> mapasSucursalOrigen) {
-		this.mapasSucursalOrigen = mapasSucursalOrigen;
-	}
-
-	public List<MapaDeRuta> getMapasSucursalDestino() {
-		return mapasSucursalDestino;
-	}
-
-	public void setMapasSucursalDestino(List<MapaDeRuta> mapasSucursalDestino) {
-		this.mapasSucursalDestino = mapasSucursalDestino;
 	}
 
 	public List<Envio> getEnviosSucursalDestino() {

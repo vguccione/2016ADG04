@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,9 +41,9 @@ public class Envio implements java.io.Serializable {
 	@JoinColumn(name="IdMapaDeRuta")
 	private MapaDeRuta mapaDeRuta;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdCoordenadaActual", nullable = false)
-	private Coordenada coordenada;
+	private Coordenada posicionActual;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdSucursalDestino", nullable = false)
@@ -52,8 +53,7 @@ public class Envio implements java.io.Serializable {
 	@JoinColumn(name = "IdSucursalOrigen", nullable = false)
 	private Sucursal sucursalOrigen;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdVehiculo")
+	@OneToOne(fetch = FetchType.LAZY)
 	private Vehiculo vehiculo;
 
 	@Column(name = "Estado", nullable = false, length = 20)
@@ -114,17 +114,13 @@ public class Envio implements java.io.Serializable {
 		this.proveedor = proveedor;
 	}
 
-
-
-	public Coordenada getCoordenada() {
-		return this.coordenada;
+	public Coordenada getPosicionActual() {
+		return posicionActual;
 	}
 
-	public void setCoordenada(Coordenada coordenada) {
-		this.coordenada = coordenada;
+	public void setPosicionActual(Coordenada posicionActual) {
+		this.posicionActual = posicionActual;
 	}
-
-	
 
 	public MapaDeRuta getMapaDeRuta() {
 		return mapaDeRuta;

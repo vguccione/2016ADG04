@@ -1,18 +1,38 @@
 package com.ADG04.Servidor;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-
-
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import com.ADG04.Negocio.GestionAdministracion;
 import com.ADG04.Negocio.GestionCliente;
+import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionVehiculo;
+import com.ADG04.Servidor.dao.CoordenadaDao;
+import com.ADG04.Servidor.dao.DireccionDao;
+import com.ADG04.Servidor.dao.EnvioDao;
+import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
+import com.ADG04.Servidor.dao.SucursalDao;
+import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.Cliente;
+import com.ADG04.Servidor.model.Coordenada;
+import com.ADG04.Servidor.model.Direccion;
+import com.ADG04.Servidor.model.Envio;
+import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.Pais;
 import com.ADG04.Servidor.model.Provincia;
+import com.ADG04.Servidor.model.Sucursal;
+import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
@@ -37,6 +57,7 @@ public class App
     {
     	//TestPlanMantenimiento();
     	crearPaisesYProvincias();
+    	testControlViajes();
 //    	TestEncomienda();
     	//TestFacturaEncomiendaParticular();
     	//TestAltaCliente();
@@ -205,4 +226,157 @@ public class App
     	GestionEncomienda.getInstancia().altaEncomiendaParticular(encomienda);
     }
     
+	
+	public static void testControlViajes(){	
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		
+		//Creo vehiculo
+		tx.begin();
+		Vehiculo v = new Vehiculo();
+		v.setAlto(100d);
+		v.setAncho(100d);
+		v.setAnio("2016");
+		v.setEstado("");
+		v.setKmRecorridos(1000);
+		v.setLargo(1000d);
+		v.setMarca("Ford");
+		v.setModelo("Ka");
+		v.setPatente("ADJ000");
+		v.setPeso(560d);
+		v.setTara(20);	
+		v.setRefrigerado(false);
+		
+		VehiculoDao.getInstancia().persist(v);	
+		tx.commit();
+		
+		//Creo Direccion para sucursal origen
+		tx.begin();
+		
+		Direccion dirOrigen = new Direccion();
+		dirOrigen.setCalle("Calle a");
+		dirOrigen.setCodigoPostal(123);
+		dirOrigen.setLocalidad("localidad");
+		dirOrigen.setNro(123);
+		dirOrigen.setPais(PaisDao.getInstancia().getById(1));
+		dirOrigen.setProvincia(ProvinciaDao.getInstancia().getById(1));
+		
+		DireccionDao.getInstancia().persist(dirOrigen);
+		tx.commit();
+		
+		//Creo sucursal Origen
+		tx.begin();
+		Sucursal so = new Sucursal();
+		so.setDescripcion("A");
+		so.setTelefono("767676767");
+		so.setDireccion(DireccionDao.getInstancia().getById(1));
+		
+		SucursalDao.getInstancia().persist(so);
+		tx.commit();	
+		
+		//Creo Direccion para sucursal destino
+		tx.begin();
+
+		Direccion dirDestino = new Direccion();
+		dirDestino.setCalle("Calle bbb");
+		dirDestino.setCodigoPostal(123);
+		dirDestino.setLocalidad("localidad");
+		dirDestino.setNro(123);
+		dirDestino.setPais(PaisDao.getInstancia().getById(1));
+		dirDestino.setProvincia(ProvinciaDao.getInstancia().getById(2));
+		
+		DireccionDao.getInstancia().persist(dirDestino);
+		tx.commit();	
+		
+		//Creo Sucursal Destino		
+		tx.begin();
+
+		Sucursal sd = new Sucursal();
+		sd.setDescripcion("B");
+		sd.setTelefono("34343");
+		sd.setDireccion(DireccionDao.getInstancia().getById(2));
+		
+		SucursalDao.getInstancia().persist(sd);
+		tx.commit();	
+		
+		//Creo lista de coordenadas para asociar a un mapa de rutas
+		
+		List<Coordenada> listaCoord = new ArrayList<Coordenada>();
+		listaCoord.add(new Coordenada("34°35′59″S","58°22′55″O﻿"));
+		listaCoord.add(new Coordenada("37°35′59″S","54°22′55″O﻿"));
+		listaCoord.add(new Coordenada("14°25′59″S","28°22′55″O﻿"));
+		listaCoord.add(new Coordenada("18°25′39″S","29°26′55″O﻿"));
+		for(Coordenada c:listaCoord){
+			tx.begin();
+			Coordenada coord = new Coordenada();
+			coord.setLatitud(c.getLatitud());
+			coord.setLongitud(c.getLongitud());
+			CoordenadaDao.getInstancia().persist(coord);
+			tx.commit();
+		}
+		
+		
+		//Creo mapa de ruta
+		tx.begin();
+
+		MapaDeRuta mp = new MapaDeRuta();
+		mp.setCantKm(150f);
+		mp.setDuracion(8f);
+		mp.setSucursalDestino(SucursalDao.getInstancia().getById(2));
+		mp.setSucursalOrigen(SucursalDao.getInstancia().getById(1));
+		mp.setCoordenadas(listaCoord);
+
+		MapaDeRutaDao.getInstancia().persist(mp);
+		tx.commit();	
+		
+		//Creo envio
+		tx.begin();
+		
+		Envio e = new Envio();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		try {
+			Date date = sdf.parse("2016-09-21T12:08:56.235-0700");
+			e.setFechaYHoraLlegadaEstimada(date);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		e.setEstado(EnvioEstado.EnViaje.toString());
+		e.setFechaYHoraSalida(new Date());
+		e.setPropio(true);
+		e.setMapaDeRuta(MapaDeRutaDao.getInstancia().getById(1));
+		e.setSucursalDestino(SucursalDao.getInstancia().getById(2));
+		e.setSucursalOrigen(SucursalDao.getInstancia().getById(1));
+		e.setVehiculo(VehiculoDao.getInstancia().getById(1));
+		
+		Coordenada coordActual = new Coordenada();
+		coordActual.setLatitud("34°35′59″S");
+		coordActual.setLongitud("58°22′55″O﻿");
+		
+		e.setPosicionActual(coordActual);
+		
+		EnvioDao.getInstancia().persist(e);
+		
+		tx.commit();	
+		
+		/*Seguira en viaje*/
+		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(1, CoordenadaDao.getInstancia().getById(1));
+		Envio envio = EnvioDao.getInstancia().getById(1);
+		System.out.println(envio.getEstado());
+		
+		/*Se indicara desviado*/
+		Coordenada coordAct = new Coordenada();
+		coordAct.setLatitud("54°35′59″S");
+		coordAct.setLongitud("48°22′55″O﻿");
+		
+		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(1, coordAct);
+		Envio envio2 = EnvioDao.getInstancia().getById(1);
+		System.out.println(envio2.getEstado());	
+		
+		/*Se indicara demorado*/
+		GestionControlViajes.getInstancia().estaEnvioDemorado(1);
+		Envio envio3 = EnvioDao.getInstancia().getById(1);
+		System.out.println(envio3.getEstado());	
+	}
 }

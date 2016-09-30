@@ -250,7 +250,7 @@ public class App
 		VehiculoDao.getInstancia().persist(v);	
 		tx.commit();
 		
-		//Creo Direccion para sucursal origen
+		//Creo sucursal origen
 		tx.begin();
 		
 		Direccion dirOrigen = new Direccion();
@@ -261,20 +261,15 @@ public class App
 		dirOrigen.setPais(PaisDao.getInstancia().getById(1));
 		dirOrigen.setProvincia(ProvinciaDao.getInstancia().getById(1));
 		
-		DireccionDao.getInstancia().persist(dirOrigen);
-		tx.commit();
-		
-		//Creo sucursal Origen
-		tx.begin();
 		Sucursal so = new Sucursal();
 		so.setDescripcion("A");
 		so.setTelefono("767676767");
-		so.setDireccion(DireccionDao.getInstancia().getById(1));
+		so.setDireccion(dirOrigen);
 		
 		SucursalDao.getInstancia().persist(so);
 		tx.commit();	
 		
-		//Creo Direccion para sucursal destino
+		//Creo Sucursal destino
 		tx.begin();
 
 		Direccion dirDestino = new Direccion();
@@ -285,16 +280,10 @@ public class App
 		dirDestino.setPais(PaisDao.getInstancia().getById(1));
 		dirDestino.setProvincia(ProvinciaDao.getInstancia().getById(2));
 		
-		DireccionDao.getInstancia().persist(dirDestino);
-		tx.commit();	
-		
-		//Creo Sucursal Destino		
-		tx.begin();
-
 		Sucursal sd = new Sucursal();
 		sd.setDescripcion("B");
 		sd.setTelefono("34343");
-		sd.setDireccion(DireccionDao.getInstancia().getById(2));
+		sd.setDireccion(dirDestino);
 		
 		SucursalDao.getInstancia().persist(sd);
 		tx.commit();	

@@ -36,7 +36,7 @@ public class Sucursal implements java.io.Serializable {
 	@Column(name = "Telefono")
 	private String telefono;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "IdDireccion", nullable = false)
 	private Direccion direccion;
 

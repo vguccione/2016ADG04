@@ -4,6 +4,7 @@ package com.ADG04.Servidor.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public class Proveedor implements java.io.Serializable {
 	@Column(name = "IdProveedor", unique = true, nullable = false)
 	private int idProveedor;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "IdDireccion")
 	private Direccion direccion;
 

@@ -41,6 +41,7 @@ import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
@@ -55,9 +56,10 @@ public class App
 {
     public static void main( String[] args )
     {
-    	//TestPlanMantenimiento();
-    	crearPaisesYProvincias();
-    	testControlViajes();
+    	TestGetPlanes();    	
+//    	TestPlanMantenimiento();
+    //	crearPaisesYProvincias();
+    //	testControlViajes();
 //    	TestEncomienda();
     	//TestFacturaEncomiendaParticular();
     	//TestAltaCliente();
@@ -68,7 +70,17 @@ public class App
     //	TestUsuario();
     }
     
-    private static void crearPaisesYProvincias(){
+    private static void TestGetPlanes() {
+
+    	DTO_PlanMantenimiento plan = GestionVehiculo.getInstancia().getPlanByVehiculo(3);
+    	System.out.println(plan.getDescripcion());
+    	
+    	for(DTO_TareaMantenimiento t:plan.getTareasMantenimiento()){
+    		System.out.println(t.getTarea());
+    	}
+	}
+
+	private static void crearPaisesYProvincias(){
     	DTO_Pais pais = new DTO_Pais();
     	pais.setDescripcion("Argentina");
     	GestionAdministracion.getInstancia().altaPais(pais);
@@ -98,6 +110,7 @@ public class App
     	tareaXKM.setCantidadKilometros(123);
     	tareaXKM.setIdPlanMantenimiento(idPm);
     	tareaXKM.setTarea("Cambiar ruedas");
+    	
     	GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXKM);
     	
     	DTO_TareasPorTiempo tareaXTiempo = new DTO_TareasPorTiempo();
@@ -108,7 +121,7 @@ public class App
     	
     	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
     	tRealizada.setFecha(new Date());
-    	tRealizada.setIdProveedor(2);
+    	tRealizada.setIdProveedor(1);
     	tRealizada.setIdVehiculo(1);
     	tRealizada.setIdTareaMantenimiento(idTarea);
     	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);

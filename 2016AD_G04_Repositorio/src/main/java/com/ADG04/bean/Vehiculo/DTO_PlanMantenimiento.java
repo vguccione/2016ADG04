@@ -57,4 +57,11 @@ public class DTO_PlanMantenimiento  implements Serializable{
 		this.tareasMantenimiento = tareasMantenimiento;
 	}
 
+	public void addTarea(DTO_TareaMantenimiento tarea){
+		if(this.tareasMantenimiento == null){
+			this.tareasMantenimiento = new ArrayList<DTO_TareaMantenimiento>();
+		}
+		
+		this.tareasMantenimiento.add(tarea);
+	}
 }

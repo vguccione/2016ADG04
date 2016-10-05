@@ -2,6 +2,7 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -85,4 +86,11 @@ public class PlanMantenimiento implements java.io.Serializable {
 		this.tareaMantenimientos = tareaMantenimientos;
 	}
 
+	public void addTarea(TareaMantenimiento tarea){
+		
+		if(this.tareaMantenimientos == null)
+			this.tareaMantenimientos = new ArrayList<TareaMantenimiento>();
+		
+		this.tareaMantenimientos.add(tarea);
+	}
 }

@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @DiscriminatorValue("t")  
 public class TareaMantenimientoPorTiempo extends TareaMantenimiento implements java.io.Serializable {
 
-	@Column(name = "CantidadDias", nullable=false)
+	@Column(name = "CantidadDias")
 	private int cantidadDias;
 
 	public TareaMantenimientoPorTiempo() {

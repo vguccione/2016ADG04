@@ -1,5 +1,6 @@
 package com.ADG04.Negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -161,6 +162,46 @@ public class GestionVehiculo {
 		
 	}
 
+	public DTO_PlanMantenimiento getPlanByVehiculo(int idVehiculo){
+		
+		PlanMantenimiento plan = PlanMantenimientoDao.getInstancia().getByIdVehiculo(idVehiculo);
+		
+		//List<DTO_PlanMantenimiento> planes = new ArrayList<DTO_PlanMantenimiento>();
+		//for(PlanMantenimiento plan: planesEntity){
+			
+			DTO_PlanMantenimiento planDTO = new DTO_PlanMantenimiento();
+			planDTO.setComentarios(plan.getComentarios());
+			planDTO.setDescripcion(plan.getDescripcion());
+			planDTO.setId(plan.getIdPlanMantenimiento());
+			
+			for(TareaMantenimiento t:plan.getTareaMantenimientos()){
+				if(t.getClass().equals(TareaMantenimientoPorKm.class)){
+					DTO_TareasPorKilometro dtokm = new DTO_TareasPorKilometro();
+					TareaMantenimientoPorKm tk = (TareaMantenimientoPorKm)t;
+					dtokm.setCantidadKilometros(tk.getCantidadKilometros());
+					dtokm.setId(tk.getIdTareaMantenimiento());
+					dtokm.setIdPlanMantenimiento(plan.getIdPlanMantenimiento());
+					dtokm.setTarea(tk.getTarea());
+
+					planDTO.addTarea(dtokm);
+				}
+				else{
+					DTO_TareasPorTiempo dtokm = new DTO_TareasPorTiempo();
+					TareaMantenimientoPorTiempo tk = (TareaMantenimientoPorTiempo)t;
+					dtokm.setCantidadDias(tk.getCantidadDias());
+					dtokm.setId(tk.getIdTareaMantenimiento());
+					dtokm.setIdPlanMantenimiento(plan.getIdPlanMantenimiento());
+					dtokm.setTarea(tk.getTarea());
+					
+					planDTO.addTarea(dtokm);
+				}
+			}
+			
+			//planes.add(planDTO);
+	//	}
+		
+		return planDTO;
+	}
 
 /*
 	public void modificarTareaMantenimientoKilometro(DTO_TareasPorKilometro tarea) {

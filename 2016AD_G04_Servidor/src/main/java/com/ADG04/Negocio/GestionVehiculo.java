@@ -12,6 +12,7 @@ import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoRealizadaDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.CondicionesEspecialesVehiculo;
 import com.ADG04.Servidor.model.PlanMantenimiento;
 import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.TareaMantenimiento;
@@ -432,9 +433,9 @@ public class GestionVehiculo {
 		return null;
 	}
 
-
-	public List<DTO_Vehiculo> listarVehiculosDisponibles(Integer idSucursal, float volumen, float peso) {
-		List<Vehiculo> lista =	VehiculoDao.getInstancia().listarVehiculosDisponibles(idSucursal, volumen, peso);
+*/
+	public List<DTO_Vehiculo> listarVehiculosDisponibles(int idSucursal) {
+		List<Vehiculo> lista =	VehiculoDao.getInstancia().listarVehiculosDisponibles(idSucursal);
 		if(lista != null){
 			List<DTO_Vehiculo>  listaDTO = new ArrayList<DTO_Vehiculo>();
 			for(Vehiculo t : lista)
@@ -443,6 +444,28 @@ public class GestionVehiculo {
 		}
 		return null;
 	}
-*/
+
+	/*ver como calcular capacidad*/
+	public List<Vehiculo> buscarVehiculoConCapacidad(List<Vehiculo> vehiculos, float capacidad){
+		List<Vehiculo> vecs = new ArrayList<Vehiculo>();
+		for(Vehiculo v: vehiculos){
+			float cap = (float) ((v.getAlto())*(v.getAncho())*(v.getLargo()));
+			if(cap >=capacidad){
+				vecs.add(v);
+			}
+		}
+		return vecs;		
+	}
 	
+	public List<Vehiculo>  buscarVehiculoConCondicion(List<Vehiculo> vehiculos, String condicion){
+		List<Vehiculo> vecs = new ArrayList<Vehiculo>();
+		for(Vehiculo v: vehiculos){
+			for(CondicionesEspecialesVehiculo ce: v.getCondicionesEspecialesVehiculos()){
+				if(ce.getDescripcion()==condicion){
+					vecs.add(v);
+				}
+			}
+		}
+		return vecs;
+	}
 }

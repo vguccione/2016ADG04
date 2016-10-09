@@ -16,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
+
 @Entity
 @Table(name = "Vehiculo")
 public class Vehiculo implements java.io.Serializable {
@@ -33,19 +36,19 @@ public class Vehiculo implements java.io.Serializable {
 	private String estado;
 	
 	@Column(name = "Largo", precision = 53, scale = 0)
-	private Double largo;
+	private float largo;
 
 	@Column(name = "Alto", precision = 53, scale = 0)
-	private Double alto;
+	private float alto;
 
 	@Column(name = "Ancho", precision = 53, scale = 0)
-	private Double ancho;
+	private float ancho;
 
 	@Column(name = "Peso", precision = 53, scale = 0)
-	private Double peso;
+	private float peso;
 
 	@Column(name = "Volumen", precision = 53, scale = 0)
-	private Double volumen;
+	private float volumen;
 
 	@Column(name = "Refrigerado")
 	private Boolean refrigerado;
@@ -54,7 +57,7 @@ public class Vehiculo implements java.io.Serializable {
 	private String condicionTransporte;
 
 	@Column(name = "KmRecorridos", nullable = false, precision = 53, scale = 0)
-	private double kmRecorridos;
+	private float kmRecorridos;
 
 	@Column(name = "Marca", nullable = false, length = 100)
 	private String marca;
@@ -69,7 +72,11 @@ public class Vehiculo implements java.io.Serializable {
 	private String anio;
 
 	@Column(name = "Tara", nullable = false, precision = 53, scale = 0)
-	private double tara;
+	private float tara;
+	
+	@ManyToOne
+	@JoinColumn(name="idSucursal")
+	private Sucursal sucursal;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
 	private List<TareaMantenimientoRealizada> tareasMantenimientoRealizadas;
@@ -81,8 +88,8 @@ public class Vehiculo implements java.io.Serializable {
 	}
 
 	public Vehiculo(PlanMantenimiento planMantenimiento,
-			double kmRecorridos, String marca, String modelo, String patente,
-			String anio, double tara) {
+			float kmRecorridos, String marca, String modelo, String patente,
+			String anio, float tara) {
 		this.planMantenimiento = planMantenimiento;
 		this.kmRecorridos = kmRecorridos;
 		this.marca = marca;
@@ -91,6 +98,10 @@ public class Vehiculo implements java.io.Serializable {
 		this.anio = anio;
 		this.tara = tara;
 	}
+	
+	
+	
+	
 	public int getIdVehiculo() {
 		return this.idVehiculo;
 	}
@@ -109,48 +120,58 @@ public class Vehiculo implements java.io.Serializable {
 	}
 
 
-	public Double getLargo() {
-		return this.largo;
+	
+
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setLargo(Double largo) {
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public float getLargo() {
+		return largo;
+	}
+
+	public void setLargo(float largo) {
 		this.largo = largo;
 	}
 
-	public Double getAlto() {
-		return this.alto;
+	public float getAlto() {
+		return alto;
 	}
 
-	public void setAlto(Double alto) {
+	public void setAlto(float alto) {
 		this.alto = alto;
 	}
 
-	public Double getAncho() {
-		return this.ancho;
+	public float getAncho() {
+		return ancho;
 	}
 
-	public void setAncho(Double ancho) {
+	public void setAncho(float ancho) {
 		this.ancho = ancho;
 	}
 
-	public Double getPeso() {
-		return this.peso;
+	public float getPeso() {
+		return peso;
 	}
 
-	public void setPeso(Double peso) {
+	public void setPeso(float peso) {
 		this.peso = peso;
 	}
 
-	public Double getVolumen() {
-		return this.volumen;
+	public float getVolumen() {
+		return volumen;
 	}
 
-	public void setVolumen(Double volumen) {
+	public void setVolumen(float volumen) {
 		this.volumen = volumen;
 	}
 
 	public Boolean getRefrigerado() {
-		return this.refrigerado;
+		return refrigerado;
 	}
 
 	public void setRefrigerado(Boolean refrigerado) {
@@ -158,32 +179,31 @@ public class Vehiculo implements java.io.Serializable {
 	}
 
 	public String getCondicionTransporte() {
-		return this.condicionTransporte;
+		return condicionTransporte;
 	}
 
 	public void setCondicionTransporte(String condicionTransporte) {
 		this.condicionTransporte = condicionTransporte;
 	}
-	
-	public double getKmRecorridos() {
-		return this.kmRecorridos;
+
+	public float getKmRecorridos() {
+		return kmRecorridos;
 	}
 
-	public void setKmRecorridos(double kmRecorridos) {
+	public void setKmRecorridos(float kmRecorridos) {
 		this.kmRecorridos = kmRecorridos;
 	}
 
 	public String getMarca() {
-		return this.marca;
+		return marca;
 	}
 
 	public void setMarca(String marca) {
 		this.marca = marca;
 	}
 
-
 	public String getModelo() {
-		return this.modelo;
+		return modelo;
 	}
 
 	public void setModelo(String modelo) {
@@ -191,7 +211,7 @@ public class Vehiculo implements java.io.Serializable {
 	}
 
 	public String getPatente() {
-		return this.patente;
+		return patente;
 	}
 
 	public void setPatente(String patente) {
@@ -199,19 +219,27 @@ public class Vehiculo implements java.io.Serializable {
 	}
 
 	public String getAnio() {
-		return this.anio;
+		return anio;
 	}
 
 	public void setAnio(String anio) {
 		this.anio = anio;
 	}
 
-	public double getTara() {
-		return this.tara;
+	public float getTara() {
+		return tara;
 	}
 
-	public void setTara(double tara) {
+	public void setTara(float tara) {
 		this.tara = tara;
+	}
+
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
 	}
 
 	public List<TareaMantenimientoRealizada> getTareasMantenimientoRealizadas() {
@@ -223,7 +251,6 @@ public class Vehiculo implements java.io.Serializable {
 		this.tareasMantenimientoRealizadas = tareasMantenimientoRealizadas;
 	}
 
-
 	public List<CondicionesEspecialesVehiculo> getCondicionesEspecialesVehiculos() {
 		return condicionesEspecialesVehiculos;
 	}
@@ -233,12 +260,20 @@ public class Vehiculo implements java.io.Serializable {
 		this.condicionesEspecialesVehiculos = condicionesEspecialesVehiculos;
 	}
 
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public DTO_Vehiculo toDTO() {
+		DTO_Vehiculo v = new DTO_Vehiculo();
+		v.setAlto(alto);
+		v.setAncho(ancho);
+		v.setKilometros(this.getKmRecorridos());
+		v.setLargo(largo);
+		v.setMarca(marca);
+		//v.setModelo(modelo);
+		v.setPatente(patente);
+		v.setPeso(peso);
+		v.setRefrigerado(refrigerado);
+		v.setTara(tara);
+		v.setVolumen(volumen);
+		return v;
 	}
 
 }

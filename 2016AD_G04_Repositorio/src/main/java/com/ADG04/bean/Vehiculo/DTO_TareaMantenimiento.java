@@ -10,6 +10,7 @@ public abstract class DTO_TareaMantenimiento implements Serializable{
 //	private String tipo;
 	private Integer idPlanMantenimiento;
 
+	
 	public DTO_TareaMantenimiento() {
 		super();
 	}

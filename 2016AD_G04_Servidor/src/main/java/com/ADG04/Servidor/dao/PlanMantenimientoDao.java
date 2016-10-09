@@ -8,6 +8,7 @@ import com.ADG04.Servidor.model.PlanMantenimiento;
 import com.ADG04.Servidor.model.TareaMantenimiento;
 import com.ADG04.Servidor.model.TareaMantenimientoPorKm;
 import com.ADG04.Servidor.model.TareaMantenimientoPorTiempo;
+import com.ADG04.Servidor.model.TareaMantenimientoRealizada;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -32,8 +33,49 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 		return instancia;
 	}
 
+	public boolean tareaPerteneceAVehiculo(Integer idTareaMantenimiento, Integer idVehiculo) {
+		// TODO Completar
+		return true;
+	}
+	
+	//Obtener las tareas que ya deberían haberse realizado, ya sea xq se pasa del tiempo o de la cantidad de km que tiene el vehiculo
+	public List<TareaMantenimiento> getTareasVencidas(Integer idVehiculo){
+		
+		
+		return null;
+	}
+	
+	//Obtener las tareas que ya deberían haberse realizado, xq ya e paso el tiempo
+	public List<TareaMantenimientoPorTiempo> getTareasVencidasPorTiempo(Integer idVehiculo){
+		
+		//TODO: se puede optimizar trayendo solamente las por tiempo directamente.	
+		List<TareaMantenimiento> tareas = this.getPlanByIdVehiculo(idVehiculo).getTareaMantenimientos();
+		
+		//Me quedo con las tareas que son por tiempo
+		List<TareaMantenimientoPorTiempo> tareasVencidas = new ArrayList<TareaMantenimientoPorTiempo>();
+		
+		//Por cada una de estas tareas, tengo que buscar cual fue la ultima vez que se realizo.
+		for(TareaMantenimiento t:tareas){
+			if(t.getClass().equals(TareaMantenimientoPorTiempo.class)){
+				
+				PlanMantenimiento plan = (PlanMantenimiento)entityManager.createQuery("select ts "
+						+ " from PlanMantenimiento p"
+						+ " join p.vehiculos v"
+						+ " join v.tareasMantenimientoRealizadas ts"
+						+ " where v.idVehiculo=:idVeh").setParameter("idVeh", idVehiculo)
+						.getResultList();
+						
+				
+			}
+		}
+				
+		//
+		
+		return tareasVencidas;
+	}	
+	
 	@SuppressWarnings("unchecked")
-	public PlanMantenimiento getByIdVehiculo(int idVehiculo) {
+	public PlanMantenimiento getPlanByIdVehiculo(int idVehiculo) {
 			
 		PlanMantenimiento plan = (PlanMantenimiento)entityManager.createQuery("select p "
 				+ " from PlanMantenimiento p"

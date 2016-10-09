@@ -132,21 +132,18 @@ public class GestionVehiculo {
 		
 		return tm.getIdTareaMantenimiento();
 	}
-	
 
 	public void realizarTareaMantenimiento(DTO_TareaMantenimientoRealizada tareaMantenimientoRealizada) {
+		
+		//Verifico que la tarea pertenezca al vehiculo.
+		//TODO: Ver que hacemos con estas validaciones. Exception???????
+		//if(!this.tareaPerteneceAVehiculo(tareaMantenimientoRealizada.getIdTareaMantenimiento(), tareaMantenimientoRealizada.getIdVehiculo()))
+			//return;
+			//throw new Exception("La Tarea " + tareaMantenimientoRealizada.getIdTareaMantenimiento() + " no se corresponde con el plan de Mantenimiento del Vehiculo " + tareaMantenimientoRealizada.getIdVehiculo());
 		
 		TareaMantenimientoRealizada tmr = new TareaMantenimientoRealizada();
 		TareaMantenimiento tareaMantenimiento = TareaMantenimientoDao.getInstancia().getById(tareaMantenimientoRealizada.getIdTareaMantenimiento());
 		tmr.setTareaMantenimiento(tareaMantenimiento);
-		
-		//TareaMantenimientoKilometro tk = VehiculoDao.getInstancia().getTareaMantenimientoKilometro(tareaMantenimientoRealizada.getIdTareaMantenimiento());
-		//TareaMantenimientoTiempo tt = VehiculoDao.getInstancia().getTareaMantenimientoTiempo(tareaMantenimientoRealizada.getIdTareaMantenimiento());
-		
-		//if (tk != null)
-			//tmr.setTareaMantenimiento(tk);
-		//if (tt != null)
-			//tmr.setTareaMantenimiento(tt);
 
 		Vehiculo v = VehiculoDao.getInstancia().getById(tareaMantenimientoRealizada.getIdVehiculo());
 		tmr.setVehiculo(v);
@@ -164,7 +161,7 @@ public class GestionVehiculo {
 
 	public DTO_PlanMantenimiento getPlanByVehiculo(int idVehiculo){
 		
-		PlanMantenimiento plan = PlanMantenimientoDao.getInstancia().getByIdVehiculo(idVehiculo);
+		PlanMantenimiento plan = PlanMantenimientoDao.getInstancia().getPlanByIdVehiculo(idVehiculo);
 		
 		//List<DTO_PlanMantenimiento> planes = new ArrayList<DTO_PlanMantenimiento>();
 		//for(PlanMantenimiento plan: planesEntity){

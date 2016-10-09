@@ -9,6 +9,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.hibernate.type.descriptor.java.UUIDTypeDescriptor.ToStringTransformer;
+
 import com.ADG04.Negocio.GestionAdministracion;
 import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionControlViajes;
@@ -30,6 +32,7 @@ import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.Pais;
 import com.ADG04.Servidor.model.Provincia;
 import com.ADG04.Servidor.model.Sucursal;
+import com.ADG04.Servidor.model.TareaMantenimientoPorKm;
 import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
@@ -56,8 +59,10 @@ public class App
 {
     public static void main( String[] args )
     {
-    	TestGetPlanes();    	
-//    	TestPlanMantenimiento();
+    	//TestRealizarTareaPorKm();
+    	//TestRealizarTareaPorTiempo();
+    	//TestGetPlanes();    	
+    	//TestAltaPlanMantenimientoConTareas();
     //	crearPaisesYProvincias();
     //	testControlViajes();
 //    	TestEncomienda();
@@ -72,12 +77,32 @@ public class App
     
     private static void TestGetPlanes() {
 
-    	DTO_PlanMantenimiento plan = GestionVehiculo.getInstancia().getPlanByVehiculo(3);
-    	System.out.println(plan.getDescripcion());
+    	int idVehiculo = 3;
+    	DTO_PlanMantenimiento planDTO = GestionVehiculo.getInstancia().getPlanByVehiculo(idVehiculo);
+    	System.out.println(planDTO.getDescripcion());
+    	System.out.println("------------------------------------------------------------");
+    	System.out.println("------------------------------------------------------------");
+    	System.out.println("Plan de mantenimiento del vehiculo " + idVehiculo);
+    	System.out.println(planDTO.getDescripcion());
+    	System.out.println(planDTO.getId());
     	
-    	for(DTO_TareaMantenimiento t:plan.getTareasMantenimiento()){
+    	System.out.println("------------------------------------------------------------");
+    	System.out.println("Tareas por KMs:");
+    	for(DTO_TareasPorKilometro t:planDTO.getTareasPorKM()){
     		System.out.println(t.getTarea());
+    		System.out.println(t.getCantidadKilometros());
+    		System.out.println(t.getId());
     	}
+    	System.out.println("------------------------------------------------------------");
+    	System.out.println("Tareas por Tiempo:");
+    	for(DTO_TareasPorTiempo t:planDTO.getTareasPorTiempo()){
+    		System.out.println(t.getTarea());
+    		System.out.println(t.getCantidadDias());
+    		System.out.println(t.getId());
+    	}
+    	
+    	System.out.println("------------------------------------------------------------");
+    	System.out.println("------------------------------------------------------------");
 	}
 
 	private static void crearPaisesYProvincias(){
@@ -98,7 +123,7 @@ public class App
     	GestionAdministracion.getInstancia().altaPais(pais);
     }
     
-    private static void TestPlanMantenimiento() {
+    private static void TestAltaPlanMantenimientoConTareas() {
 		
     	DTO_PlanMantenimiento pm = new DTO_PlanMantenimiento();
     	pm.setComentarios("Mi primer plan");
@@ -119,14 +144,37 @@ public class App
     	tareaXTiempo.setTarea("Cambiar aceite");
     	int idTarea = GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXTiempo);
     	
-    	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
-    	tRealizada.setFecha(new Date());
-    	tRealizada.setIdProveedor(1);
-    	tRealizada.setIdVehiculo(1);
-    	tRealizada.setIdTareaMantenimiento(idTarea);
-    	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
 	}
 
+    private static void TestRealizarTareaPorKm(){
+
+    	int idVehiculo = 3;
+    	int idProveedor = 1;
+    	int idTarea = 3;
+    	
+    	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
+    	tRealizada.setFecha(new Date());
+    	tRealizada.setIdProveedor(idProveedor);
+    	tRealizada.setIdVehiculo(idVehiculo);
+    	tRealizada.setIdTareaMantenimiento(idTarea);
+    	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
+    }
+    
+    private static void TestRealizarTareaPorTiempo(){
+
+    	int idVehiculo = 3;
+    	int idProveedor = 1;
+    	int idTarea = 4;
+    	
+    	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
+    	tRealizada.setFecha(new Date());
+    	tRealizada.setIdProveedor(idProveedor);
+    	tRealizada.setIdVehiculo(idVehiculo);
+    	tRealizada.setIdTareaMantenimiento(idTarea);
+    	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
+    }
+
+    
 	private static void TestAltaCliente() {  	
     	DTO_Direccion dir = new DTO_Direccion();
     	

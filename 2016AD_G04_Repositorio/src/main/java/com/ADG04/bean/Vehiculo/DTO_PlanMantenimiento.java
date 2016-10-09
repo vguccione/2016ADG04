@@ -11,10 +11,12 @@ public class DTO_PlanMantenimiento  implements Serializable{
 	private String descripcion;
 	private float tolerancia;
 	private String comentarios;
-	private List<DTO_TareaMantenimiento> tareasMantenimiento;
+	private List<DTO_TareasPorKilometro> tareasPorKM;
+	private List<DTO_TareasPorTiempo> tareasPorTiempo;
 	
 	public DTO_PlanMantenimiento(){
-		tareasMantenimiento = new ArrayList<DTO_TareaMantenimiento>();
+		tareasPorKM = new ArrayList<DTO_TareasPorKilometro>();
+		tareasPorTiempo = new ArrayList<DTO_TareasPorTiempo>();
 	}
 	
 	public Integer getId() {
@@ -48,20 +50,27 @@ public class DTO_PlanMantenimiento  implements Serializable{
 		this.tolerancia = tolerancia;
 	}
 
-	public List<DTO_TareaMantenimiento> getTareasMantenimiento() {
-		return tareasMantenimiento;
+	public List<DTO_TareasPorKilometro> getTareasPorKM() {
+		return tareasPorKM;
 	}
 
-	public void setTareasMantenimiento(
-			List<DTO_TareaMantenimiento> tareasMantenimiento) {
-		this.tareasMantenimiento = tareasMantenimiento;
+	public void setTareasPorKM(List<DTO_TareasPorKilometro> tareasPorKM) {
+		this.tareasPorKM = tareasPorKM;
 	}
 
-	public void addTarea(DTO_TareaMantenimiento tarea){
-		if(this.tareasMantenimiento == null){
-			this.tareasMantenimiento = new ArrayList<DTO_TareaMantenimiento>();
-		}
-		
-		this.tareasMantenimiento.add(tarea);
+	public List<DTO_TareasPorTiempo> getTareasPorTiempo() {
+		return tareasPorTiempo;
+	}
+
+	public void setTareasPorTiempo(List<DTO_TareasPorTiempo> tareasPorTiempo) {
+		this.tareasPorTiempo = tareasPorTiempo;
+	}
+
+	public void addTarea(DTO_TareasPorKilometro tareaPorKm){
+		this.tareasPorKM.add(tareaPorKm);
+	}
+	
+	public void addTarea(DTO_TareasPorTiempo tareaPorTiempo){
+		this.tareasPorTiempo.add(tareaPorTiempo);
 	}
 }

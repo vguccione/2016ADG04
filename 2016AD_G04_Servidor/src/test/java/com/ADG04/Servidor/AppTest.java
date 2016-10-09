@@ -1,5 +1,10 @@
 package com.ADG04.Servidor;
 
+import java.util.List;
+
+import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.Vehiculo;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -34,5 +39,13 @@ public class AppTest
     public void testApp()
     {
         assertTrue( true );
+    }
+    
+    public static void main (String[] args){
+    	List<Vehiculo> vehiculos = VehiculoDao.getInstancia().obtenerVehiculosDisponibles();
+    	
+    	for(Vehiculo v : vehiculos){
+    		System.out.println(v.toString());
+    	}
     }
 }

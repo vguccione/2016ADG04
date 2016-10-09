@@ -4,6 +4,7 @@ package com.ADG04.Servidor.util;
 public enum EnvioEstado {
 
 	Pendiente,	//por salir en viaje
+	VehiculoCompleto, //se lleno la capacidad del vehiculo
 	EnViaje,	//esta en viaje
 	Desviado,   //el vehiculo asignado al envio no esta siguiendo la ruta acordada
 	Alerta,     //el vehiculo asignado hace 10 minutos que esta en otra ruta

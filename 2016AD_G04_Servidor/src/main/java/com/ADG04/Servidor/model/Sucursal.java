@@ -57,7 +57,10 @@ public class Sucursal implements java.io.Serializable {
 	private List<Encomienda> encomiendasSucursalActual;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursal")
-	private List<Usuario> usuarios;
+	private List<Usuario> usuarios; 
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursal")
+	private List<Vehiculo> vehiculos;
 
 	public Sucursal() {
 	}
@@ -155,6 +158,16 @@ public class Sucursal implements java.io.Serializable {
 	
 	public String getTelefono() {
 		return telefono;
+	}
+	
+	
+
+	public List<Vehiculo> getVehiculos() {
+		return vehiculos;
+	}
+
+	public void setVehiculos(List<Vehiculo> vehiculos) {
+		this.vehiculos = vehiculos;
 	}
 
 	public DTO_Sucursal toDTO(){

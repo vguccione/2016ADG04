@@ -25,11 +25,11 @@ public class DTO_EncomiendaEmpresa implements Serializable{
 	private Date fechaEstimadaEntrega;
 	private String estado;
 	private boolean tercerizado;
-	private Double largo;
-	private Double alto;
-	private Double ancho;
-	private Double peso;
-	private Double volumen;
+	private Float largo;
+	private Float alto;
+	private Float ancho;
+	private Float peso;
+	private Float volumen;
 	private String tratamiento;
 	private Boolean apilable;
 	private Short cantApilable;
@@ -40,7 +40,7 @@ public class DTO_EncomiendaEmpresa implements Serializable{
 	private String nombreReceptor;
 	private String apellidoReceptor;
 	private String dniReceptor;
-	private Double volumenGranel;
+	private Float volumenGranel;
 	private String unidadGranel;
 	private String cargaGranel;
 	private List<DTO_Remito> remitos;
@@ -167,43 +167,43 @@ public class DTO_EncomiendaEmpresa implements Serializable{
 		this.tercerizado = tercerizado;
 	}
 
-	public Double getLargo() {
+	public Float getLargo() {
 		return this.largo;
 	}
 
-	public void setLargo(Double largo) {
+	public void setLargo(Float largo) {
 		this.largo = largo;
 	}
 
-	public Double getAlto() {
+	public Float getAlto() {
 		return this.alto;
 	}
 
-	public void setAlto(Double alto) {
+	public void setAlto(Float alto) {
 		this.alto = alto;
 	}
 
-	public Double getAncho() {
+	public Float getAncho() {
 		return this.ancho;
 	}
 
-	public void setAncho(Double ancho) {
+	public void setAncho(Float ancho) {
 		this.ancho = ancho;
 	}
 
-	public Double getPeso() {
+	public Float getPeso() {
 		return this.peso;
 	}
 
-	public void setPeso(Double peso) {
+	public void setPeso(Float peso) {
 		this.peso = peso;
 	}
 
-	public Double getVolumen() {
+	public Float getVolumen() {
 		return this.volumen;
 	}
 
-	public void setVolumen(Double volumen) {
+	public void setVolumen(Float volumen) {
 		this.volumen = volumen;
 	}
 
@@ -287,11 +287,11 @@ public class DTO_EncomiendaEmpresa implements Serializable{
 		this.dniReceptor = dniReceptor;
 	}
 
-	public Double getVolumenGranel() {
+	public Float getVolumenGranel() {
 		return this.volumenGranel;
 	}
 
-	public void setVolumenGranel(Double volumenGranel) {
+	public void setVolumenGranel(Float volumenGranel) {
 		this.volumenGranel = volumenGranel;
 	}
 

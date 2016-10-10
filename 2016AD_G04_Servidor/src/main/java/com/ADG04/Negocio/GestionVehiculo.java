@@ -267,7 +267,7 @@ public class GestionVehiculo {
 		//v.setUltimoUso(vehiculo.getUltimoUso());
 		//v.setVencimientoGarantia(vehiculo.getVencimientoGarantia());
 		
-		Sucursal s = SucursalDao.getInstancia().getById(vehiculo.getSucursal().getId());
+		Sucursal s = SucursalDao.getInstancia().getById(vehiculo.getSucursalActual().getId());
 		v.setSucursal(s);
 		
 		//Sucursal actual???????
@@ -437,28 +437,7 @@ public class GestionVehiculo {
 	}
 
 */
-	public List<DTO_Vehiculo> listarVehiculosDisponibles(int idSucursal) {
-		List<Vehiculo> lista =	VehiculoDao.getInstancia().listarVehiculosDisponibles(idSucursal);
-		if(lista != null){
-			List<DTO_Vehiculo>  listaDTO = new ArrayList<DTO_Vehiculo>();
-			for(Vehiculo t : lista)
-				listaDTO.add(t.toDTO());
-			return listaDTO;
-		}
-		return null;
-	}
 
-	/*ver como calcular capacidad*/
-	public List<Vehiculo> buscarVehiculoConCapacidad(List<Vehiculo> vehiculos, float capacidad){
-		List<Vehiculo> vecs = new ArrayList<Vehiculo>();
-		for(Vehiculo v: vehiculos){
-			float cap = (float) ((v.getAlto())*(v.getAncho())*(v.getLargo()));
-			if(cap >=capacidad){
-				vecs.add(v);
-			}
-		}
-		return vecs;		
-	}
 	
 	public List<Vehiculo>  buscarVehiculoConCondicion(List<Vehiculo> vehiculos, String condicion){
 		List<Vehiculo> vecs = new ArrayList<Vehiculo>();

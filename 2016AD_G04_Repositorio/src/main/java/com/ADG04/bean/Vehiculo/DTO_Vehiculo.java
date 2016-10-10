@@ -10,7 +10,8 @@ public class DTO_Vehiculo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	
+	private Date fechaIngreso;
+
 	private float largo;
 	private float ancho;
 	private float alto;
@@ -21,20 +22,84 @@ public class DTO_Vehiculo implements Serializable{
 	private float kmsRecorridos;
 
 	private String patente;
-	private int modelo;
+	private String modelo;
 	private String marca;
-	private int anio;
+	private String anio;
 	
+	private String estado;
+
+	public DTO_Vehiculo(Date fechaIngreso, float largo, float ancho,
+			float alto, float peso, float volumen, boolean refrigerado,
+			String condicionTransporte, float kmsRecorridos, String patente,
+			String modelo, String marca, String anio, String estado, float tara) {
+		super();
+		this.fechaIngreso = fechaIngreso;
+		this.largo = largo;
+		this.ancho = ancho;
+		this.alto = alto;
+		this.peso = peso;
+		this.volumen = volumen;
+		this.refrigerado = refrigerado;
+		this.condicionTransporte = condicionTransporte;
+		this.kmsRecorridos = kmsRecorridos;
+		this.patente = patente;
+		this.modelo = modelo;
+		this.marca = marca;
+		this.anio = anio;
+		this.estado = estado;
+		this.tara = tara;
+	}
+
+	public Date getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getCondicionTransporte() {
+		return condicionTransporte;
+	}
+
+	public void setCondicionTransporte(String condicionTransporte) {
+		this.condicionTransporte = condicionTransporte;
+	}
+
+	public float getKmsRecorridos() {
+		return kmsRecorridos;
+	}
+
+	public void setKmsRecorridos(float kmsRecorridos) {
+		this.kmsRecorridos = kmsRecorridos;
+	}
+
+	public String getAnio() {
+		return anio;
+	}
+
+	public void setAnio(String anio) {
+		this.anio = anio;
+	}
+
 	private float tara;
 	
-	private float costoKM;
-	private Date fechaIngreso;
+	//private float costoKM;
+	//private Date fechaIngreso;
 	
 	//private Date ultimoMantenimiento;
 	//private Date ultimoUso;
 	//private Date vencimientoGarantia;
 	//private Integer idSucursal;
-	private DTO_Sucursal sucursalActual;
+	private DTO_Sucursal sucursal;
 	//private Float temperaturaMin;
 	//private Float temperaturaMax;
 	private DTO_PlanMantenimiento planMantenimiento;
@@ -75,20 +140,12 @@ public class DTO_Vehiculo implements Serializable{
 		this.marca = marca;
 	}
 
-	public int getModelo() {
+	public String getModelo() {
 		return modelo;
 	}
 
-	public void setModelo(int modelo) {
+	public void setModelo(String modelo) {
 		this.modelo = modelo;
-	}
-
-	public float getKilometros() {
-		return kmsRecorridos;
-	}
-
-	public void setKilometros(float kilometros) {
-		this.kmsRecorridos = kilometros;
 	}
 
 	public float getAncho() {
@@ -138,22 +195,22 @@ public class DTO_Vehiculo implements Serializable{
 	public void setVolumen(float volumen) {
 		this.volumen = volumen;
 	}
-
+/*
 	public float getCostoKM() {
 		return costoKM;
 	}
 
 	public void setCostoKM(float costoKM) {
 		this.costoKM = costoKM;
-	}
-
+	}*/
+/*
 	public Date getFechaIngreso() {
 		return fechaIngreso;
 	}
 
 	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
-	}
+	}*/
 /*
 	public Date getUltimoMantenimiento() {
 		return ultimoMantenimiento;
@@ -180,12 +237,12 @@ public class DTO_Vehiculo implements Serializable{
 	}
 
 */
-	public DTO_Sucursal getSucursalActual() {
-		return sucursalActual;
+	public DTO_Sucursal getSucursal() {
+		return sucursal;
 	}
 
-	public void setSucursalActual(DTO_Sucursal sucursalActual) {
-		this.sucursalActual = sucursalActual;
+	public void setSucursal(DTO_Sucursal sucursal) {
+		this.sucursal = sucursal;
 	}
 /*
 	public Float getTemperaturaMin() {

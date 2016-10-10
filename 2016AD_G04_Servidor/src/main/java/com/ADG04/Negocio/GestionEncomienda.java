@@ -87,7 +87,7 @@ public class GestionEncomienda {
 		encomienda.setVolumenGranel(dtoEncomienda.getVolumenGranel()); 
 		encomienda.setUnidadGranel(dtoEncomienda.getUnidadGranel());
 		encomienda.setCargaGranel(dtoEncomienda.getCargaGranel());		
-		encomienda.setTipoEncomienda("P");//Encomeinda partiular
+		encomienda.setTipoEncomienda("P");
 		
 		encomienda.setTercerizado(this.esTercerizada(encomienda));
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());

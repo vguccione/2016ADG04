@@ -267,7 +267,7 @@ public class GestionVehiculo {
 		//v.setUltimoUso(vehiculo.getUltimoUso());
 		//v.setVencimientoGarantia(vehiculo.getVencimientoGarantia());
 		
-		Sucursal s = SucursalDao.getInstancia().getById(vehiculo.getSucursalActual().getId());
+		Sucursal s = SucursalDao.getInstancia().getById(vehiculo.getSucursal().getId());
 		v.setSucursal(s);
 		
 		//Sucursal actual???????

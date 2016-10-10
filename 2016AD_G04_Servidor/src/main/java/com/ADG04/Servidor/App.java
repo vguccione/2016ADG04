@@ -325,8 +325,8 @@ public class App
 		v.setAlto(100f);
 		v.setAncho(100f);
 		v.setAnio(anio);
-		v.setEstado("");
-		v.setKilometros(13400);
+		v.setEstado(null);
+		v.setKmsRecorridos(13400);
 		v.setLargo(1000f);
 		v.setMarca(marca);
 		v.setModelo(modelo);
@@ -343,7 +343,7 @@ public class App
 		
 		DTO_Sucursal su  = new DTO_Sucursal();
 		su.setId(1);
-		v.setSucursalActual(su);
+		v.setSucursal(su);
 		
 		GestionVehiculo.getInstancia().altaVehiculo(v);
 		

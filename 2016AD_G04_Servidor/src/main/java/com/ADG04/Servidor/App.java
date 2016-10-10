@@ -280,7 +280,7 @@ public class App
 	
 	public static void TestEncomienda(){
 		
-		double nro = 123;
+		float nro = 123;
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();
 		cli.setId(1);
     	DTO_Sucursal sucursalOrigen = new DTO_Sucursal();
@@ -296,9 +296,9 @@ public class App
 		encomienda.setLargo(nro);
 		encomienda.setAncho(nro);
 		
-		encomienda.setAlto(12.0);
-		encomienda.setPeso(34.6);
-		encomienda.setVolumen(44.5);
+		encomienda.setAlto(12.0f);
+		encomienda.setPeso(34.6f);
+		encomienda.setVolumen(44.5f);
 		encomienda.setTratamiento("nada"); 
 		encomienda.setApilable(true);
 		encomienda.setCantApilable((short)2); 
@@ -309,7 +309,7 @@ public class App
 		encomienda.setNombreReceptor("Alfredo"); 
 		encomienda.setApellidoReceptor("Receptor");
 		encomienda.setDniReceptor("99876543"); 
-		encomienda.setVolumenGranel(0d); 
+		encomienda.setVolumenGranel(0f); 
 		encomienda.setUnidadGranel(null);
 		encomienda.setCargaGranel(null);		
 		   	    	    	
@@ -325,8 +325,8 @@ public class App
 		v.setAlto(100f);
 		v.setAncho(100f);
 		v.setAnio(anio);
-		v.setEstado(null);
-		v.setKmsRecorridos(13400);
+		v.setEstado("");
+		v.setKilometros(13400);
 		v.setLargo(1000f);
 		v.setMarca(marca);
 		v.setModelo(modelo);
@@ -343,7 +343,7 @@ public class App
 		
 		DTO_Sucursal su  = new DTO_Sucursal();
 		su.setId(1);
-		v.setSucursal(su);
+		v.setSucursalActual(su);
 		
 		GestionVehiculo.getInstancia().altaVehiculo(v);
 		

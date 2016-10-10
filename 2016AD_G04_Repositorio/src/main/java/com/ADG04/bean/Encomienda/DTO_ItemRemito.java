@@ -2,14 +2,17 @@ package com.ADG04.bean.Encomienda;
 
 import java.io.Serializable;
 
+import com.ADG04.bean.Cliente.DTO_Producto;
+
 public class DTO_ItemRemito implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private int idRemito;
+	private DTO_Remito remito;
 	private int cantidad;
 	private String descripcion;
+	private DTO_Producto producto;
 	
 	public DTO_ItemRemito(){
 	}
@@ -39,13 +42,21 @@ public class DTO_ItemRemito implements Serializable{
 		this.descripcion = descripcion;
 	}
 
-	public int getIdRemito() {
-		return idRemito;
+
+	public DTO_Remito getRemito() {
+		return remito;
 	}
 
-	public void setIdRemito(int idRemito) {
-		this.idRemito = idRemito;
+	public void setRemito(DTO_Remito remito) {
+		this.remito = remito;
+	}
+
+	public DTO_Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(DTO_Producto producto) {
+		this.producto = producto;
 	}
 	
-
 }

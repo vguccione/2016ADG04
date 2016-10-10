@@ -2,6 +2,8 @@ package com.ADG04.bean.Encomienda;
 
 import java.io.Serializable;
 
+import com.ADG04.bean.Cliente.DTO_Producto;
+
 public class DTO_ItemManifiesto implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -9,7 +11,7 @@ public class DTO_ItemManifiesto implements Serializable{
 	private Integer id;
 	private int idManifiesto;
 	private int cantidad;
-	private int idProducto;
+	private DTO_Producto Producto;
 	private String descripcion;
 	
 	public DTO_ItemManifiesto(){
@@ -39,12 +41,13 @@ public class DTO_ItemManifiesto implements Serializable{
 		this.cantidad = cantidad;
 	}
 
-	public int getIdProducto() {
-		return idProducto;
+	
+	public DTO_Producto getProducto() {
+		return Producto;
 	}
 
-	public void setIdProducto(int idProducto) {
-		this.idProducto = idProducto;
+	public void setProducto(DTO_Producto producto) {
+		Producto = producto;
 	}
 
 	public String getDescripcion() {

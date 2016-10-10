@@ -33,7 +33,8 @@ public class ItemManifiesto implements java.io.Serializable {
 	@Column(name = "Cantidad", nullable = false)
 	private int cantidad;
 
-	@Column(name = "Producto")
+	@ManyToOne
+	@JoinColumn(name="IdProducto")
 	private Producto producto;
 
 	public ItemManifiesto() {
@@ -88,7 +89,6 @@ public class ItemManifiesto implements java.io.Serializable {
     	im.setCantidad(this.cantidad);
     	im.setDescripcion(this.descripcion);
     	im.setIdManifiesto(this.getManifiesto().getIdManifiesto());
-    	im.setIdProducto(this.getProducto().getIdProducto());
     	return im;
     }
 

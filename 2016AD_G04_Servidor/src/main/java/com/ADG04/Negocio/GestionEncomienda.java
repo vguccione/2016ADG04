@@ -12,24 +12,37 @@ import javax.persistence.EntityTransaction;
 
 import com.ADG04.Servidor.dao.CarrierDao;
 import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.ClienteEmpresaDao;
+import com.ADG04.Servidor.dao.ClienteParticularDao;
+import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.ItemFacturaDao;
+import com.ADG04.Servidor.dao.MapaDeRutaDao;
+import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.RemitoDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.Carrier;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.ClienteParticular;
+import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
 import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.model.ItemFactura;
+import com.ADG04.Servidor.model.ItemManifiesto;
+import com.ADG04.Servidor.model.ItemRemito;
+import com.ADG04.Servidor.model.Manifiesto;
+import com.ADG04.Servidor.model.Producto;
 import com.ADG04.Servidor.model.Proveedor;
+import com.ADG04.Servidor.model.Remito;
 import com.ADG04.Servidor.model.RolUsuario;
 import com.ADG04.Servidor.model.Seguro;
+import com.ADG04.Servidor.model.ServicioSeguridad;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.model.Vehiculo;
@@ -39,7 +52,13 @@ import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
+import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
+import com.ADG04.bean.Encomienda.DTO_ItemRemito;
+import com.ADG04.bean.Encomienda.DTO_Manifiesto;
+import com.ADG04.bean.Encomienda.DTO_Remito;
+
 
 //Gestion Encomienda	
 public class GestionEncomienda {
@@ -62,7 +81,7 @@ public class GestionEncomienda {
 	public void altaEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
 		Sucursal origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
 		Sucursal destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
-		Cliente cli = ClienteDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
+		Cliente cli = ClienteParticularDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
 				
 		Encomienda encomienda = new Encomienda();
 		encomienda.setCliente(cli);
@@ -70,7 +89,7 @@ public class GestionEncomienda {
 		encomienda.setSucursalDestino(destino);
 		encomienda.setLargo(dtoEncomienda.getLargo());
 		encomienda.setAncho(dtoEncomienda.getAncho());
-		
+		encomienda.setInternacional(dtoEncomienda.isInternacional());
 		encomienda.setAlto(dtoEncomienda.getAlto());
 		encomienda.setPeso(dtoEncomienda.getPeso());
 		encomienda.setVolumen(dtoEncomienda.getVolumen());
@@ -89,44 +108,179 @@ public class GestionEncomienda {
 		encomienda.setCargaGranel(dtoEncomienda.getCargaGranel());		
 		encomienda.setTipoEncomienda("P");
 		
-		encomienda.setTercerizado(this.esTercerizada(encomienda));
+		encomienda.setTercerizado(dtoEncomienda.isTercerizada());
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
 		encomienda.setFechaCreacion(new Date());
 					
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
-		tx.begin();
+		tx.begin();	
 		
-		EncomiendaDao.getInstancia().persist(encomienda);
-		
-		// TODO
-/*		DTO_Manifiesto dtoM = encomienda.getManifiesto();
+		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
 		if(dtoM != null){
-			Entity_Manifiesto m = new Entity_Manifiesto();
-			m.setCategoria(dtoM.getCategoria());
-			m.setOtro(dtoM.getOtro());
-			m.setFecha(dtoM.getFecha());
-			m.setDescripcion(dtoM.getDescripcion());
-			m.setArchivo(dtoM.getArchivo());
+			Manifiesto m = new Manifiesto();
+			m.setEncomienda(encomienda);
+			m.setFecha(new Date());		
+			m.setEncomienda(encomienda);
+		
+			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
+				if(item!=null){
+					ItemManifiesto im = new ItemManifiesto();
+					im.setCantidad(item.getCantidad());
+					im.setDescripcion(item.getDescripcion());
+					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					im.setProducto(prod);
+					im.setManifiesto(m);
+					itemsManifiesto.add(im);
+				}
+			}
+			m.setItemsManifiesto(itemsManifiesto);
 			
-			e.setManifiesto(m);
+			encomienda.setManifiesto(m);
 		}
-	*/	
 		
+		DTO_Remito dtoR = dtoEncomienda.getRemito();
+		if(dtoR != null){
+			Remito remito = new Remito();
+			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
+			remito.setConformado(dtoR.isConformado());
+			remito.setDniReceptor(dtoR.getDniReceptor());
+			remito.setFechaConformado(dtoR.getFecha());
+			remito.setNombreReceptor(dtoR.getNombreReceptor());
+			remito.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
+			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
+			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
+			
+			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			for(DTO_ItemRemito item:dtoR.getDetalle()){
+				ItemRemito ir = new ItemRemito();
+				ir.setCantidad(item.getCantidad());
+				ir.setDescripcion(item.getDescripcion());
+				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ir.setProducto(prod);
+				ir.setRemito(remito);
+				itemsRemito.add(ir);
+			}
+			remito.setItemsRemito(itemsRemito);
+			remito.setEncomienda(encomienda);
+			encomienda.setRemito(remito);
+		}
+
+		/*Deberia persistir en cascada*/
+		EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
 		tx.commit();
-		
-		
 	}
 
+	public void modificarEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
+		Sucursal origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
+		Sucursal destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
+		Cliente cli = ClienteParticularDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
+				
+		Encomienda encomienda = new Encomienda();
+		
+		encomienda.setIdEncomienda(dtoEncomienda.getIdEncomienda());
+		
+		encomienda.setCliente(cli);
+		encomienda.setSucursalOrigen(origen);
+		encomienda.setSucursalDestino(destino);
+		encomienda.setLargo(dtoEncomienda.getLargo());
+		encomienda.setAncho(dtoEncomienda.getAncho());
+		encomienda.setInternacional(dtoEncomienda.isInternacional());
+		encomienda.setAlto(dtoEncomienda.getAlto());
+		encomienda.setPeso(dtoEncomienda.getPeso());
+		encomienda.setVolumen(dtoEncomienda.getVolumen());
+		encomienda.setTratamiento(dtoEncomienda.getTratamiento()); 
+		encomienda.setApilable(dtoEncomienda.getApilable());
+		encomienda.setCantApilable(dtoEncomienda.getCantApilable()); 
+		encomienda.setRefrigerado(dtoEncomienda.getRefrigerado());
+		encomienda.setCondicionTransporte(dtoEncomienda.getCondicionTransporte()); 
+		encomienda.setIndicacionesManipulacion(dtoEncomienda.getIndicacionesManipulacion());
+		encomienda.setFragilidad(dtoEncomienda.getFragilidad()); 
+		encomienda.setNombreReceptor(dtoEncomienda.getNombreReceptor()); 
+		encomienda.setApellidoReceptor(dtoEncomienda.getApellidoReceptor());
+		encomienda.setDniReceptor(dtoEncomienda.getDniReceptor()); 
+		encomienda.setVolumenGranel(dtoEncomienda.getVolumenGranel()); 
+		encomienda.setUnidadGranel(dtoEncomienda.getUnidadGranel());
+		encomienda.setCargaGranel(dtoEncomienda.getCargaGranel());		
+		encomienda.setTipoEncomienda("P");
+		
+		encomienda.setTercerizado(dtoEncomienda.isTercerizada());
+		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
+		encomienda.setFechaCreacion(new Date());
+					
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();	
+		
+		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
+		if(dtoM != null){
+			Manifiesto m = new Manifiesto();
+			m.setEncomienda(encomienda);
+			m.setFecha(new Date());		
+			m.setEncomienda(encomienda);
+		
+			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
+				if(item!=null){
+					ItemManifiesto im = new ItemManifiesto();
+					im.setCantidad(item.getCantidad());
+					im.setDescripcion(item.getDescripcion());
+					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					im.setProducto(prod);
+					im.setManifiesto(m);
+					itemsManifiesto.add(im);
+				}
+			}
+			m.setItemsManifiesto(itemsManifiesto);
+			
+			encomienda.setManifiesto(m);
+		}
+		
+		DTO_Remito dtoR = dtoEncomienda.getRemito();
+		if(dtoR != null){
+			Remito remito = new Remito();
+			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
+			remito.setConformado(dtoR.isConformado());
+			remito.setDniReceptor(dtoR.getDniReceptor());
+			remito.setFechaConformado(dtoR.getFecha());
+			remito.setNombreReceptor(dtoR.getNombreReceptor());
+			remito.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
+			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
+			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
+			
+			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			for(DTO_ItemRemito item:dtoR.getDetalle()){
+				ItemRemito ir = new ItemRemito();
+				ir.setCantidad(item.getCantidad());
+				ir.setDescripcion(item.getDescripcion());
+				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ir.setProducto(prod);
+				ir.setRemito(remito);
+				itemsRemito.add(ir);
+			}
+			remito.setItemsRemito(itemsRemito);
+			remito.setEncomienda(encomienda);
+			encomienda.setRemito(remito);
+		}
+
+		/*Deberia persistir en cascada*/
+		EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
+		tx.commit();
+	}
+	
 	public void facturarEncomiendaParticular(int idEncomienda){
 		
 		List<ItemFactura>  detalle = new ArrayList<ItemFactura>();
 		
 		Encomienda encomienda = EncomiendaDao.getInstancia().getById(idEncomienda);
 		
-		//Calculo la primer linea de la factura - El valor del transporte
-		float kilometros = encomienda.getKMs();
-		float costoPorKm = encomienda.getCostoPorKm();
+		//Calculo la primer linea de la factura - El valor del transporte lo define la cantidad de km y el costo
+		//que se obtiene del mapa de ruta. 
+		Sucursal sucursalOrigen =encomienda.getSucursalOrigen();
+		Sucursal sucursalDestino=encomienda.getSucursalDestino();
+		float kilometros =MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCantKm();
+		float costo = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCosto();
 
 		List<ItemFactura> items = new ArrayList<ItemFactura>();
 
@@ -134,7 +288,7 @@ public class GestionEncomienda {
 		ItemFactura itemTransporte = new ItemFactura();
 		itemTransporte.setDescripcion("Transporte: " + encomienda.getCliente().getEmail() + "-" + encomienda.getSucursalOrigen().getDescripcion() + "-" + encomienda.getSucursalDestino().getDescripcion());
 		itemTransporte.setCantidad(1);
-		itemTransporte.setValor(calcularPrecio(encomienda));
+		itemTransporte.setValor(costo);
 		items.add(itemTransporte);
 						
 		//Segunda Linea Seguros
@@ -147,33 +301,24 @@ public class GestionEncomienda {
 			items.add(itemSeguro);
 		}
 				
-		//TODO Tercer Linea Servicioo Seguridad
-		/*Entity_ServicioSeguridad ss = encomienda.getServicioSeguridad();
+		//Tercer Linea Servicio Seguridad
+		ServicioSeguridad ss = encomienda.getServicioSeguridad();
 		if(ss != null){
-			Entity_DetalleFacturaCliente d3 = new Entity_DetalleFacturaCliente();
-			d3.setLinea(linea);
-			d3.setDescripcion("Servicio de Seguridad: " + ss.getDescripcion());	
-			d3.setSubtotal(ss.getTarifa());
-			
-			costo =+ ss.getTarifa();
-			linea++;
-			
-			costoTotal = costoTotal + costo;
-			detalle.add(d3);
-		}*/
-		
-		//TODO: impuestos??????????Cuarta Linea Impueestos
-	/*	costo = (float) (costoTotal * 0.21);
-		Entity_DetalleFacturaCliente d4 = new Entity_DetalleFacturaCliente();
-		d4.setLinea(linea);
-		d4.setDescripcion("IVA 21%");	
-		d4.setSubtotal(costo);
-		
-		costoTotal = costoTotal + costo;
-		linea++;
-		detalle.add(d4);
-		*/
+			ItemFactura itemSeguridad = new ItemFactura();
+			itemSeguridad.setDescripcion("Servicio de Seguridad: " + ss.getDescripcion());
+			itemSeguridad.setCantidad(1);
+			itemSeguridad.setValor((float)(ss.getTarifa()));
+			items.add(itemSeguridad);
+		}
 	
+		//Cuarta Linea Impueestos
+		ItemFactura itemImpuesto = new ItemFactura();
+		itemImpuesto.setDescripcion("IVA 21%");
+		itemImpuesto.setCantidad(1);
+		float costoTotal = (float) (this.calcularPrecioTotal(encomienda) * 0.21);
+		itemImpuesto.setValor(costoTotal);
+		items.add(itemImpuesto);
+		
 		Factura factura = new Factura();
 		factura.setFecha(new Date());
 		factura.setPagada(false);
@@ -182,37 +327,35 @@ public class GestionEncomienda {
 		c.setTime(new Date()); // Now use today date.
 		c.add(Calendar.DATE, 30); // Adding 30 days
 		factura.setVencimiento(c.getTime());
-		//factura.setItemFacturas(items);
-						
+		
+		
+		//almaceno los items
+		for(ItemFactura item:items){
+			item.setFactura(factura);
+		}
+		
+		factura.setItemsFactura(items);
+		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
-		//guardo la factura
-		FacturaDao.getInstancia().persist(factura);
-		
-		//guardo los items
-		for(ItemFactura item:items){
-			item.setFactura(factura);
-			ItemFacturaDao.getInstancia().persist(item);
-		}
-		
 		//actualizo la encomienda
 		encomienda.setFactura(factura);
-		EncomiendaDao.getInstancia().persist(encomienda);
+		EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
 		
 		tx.commit();
 	}
 	
-	private float calcularPrecio(Encomienda encomienda) {
-		// TODO Auto-generated method stub
-		return 23;
+	private float calcularPrecioTotal(Encomienda encomienda) {
+		Factura factura = FacturaDao.getInstancia().getById(encomienda.getFactura().getIdFactura());
+		float costoTotal=0;
+		for(ItemFactura item: factura.getItemsFactura()){
+			costoTotal =+ item.getValor();
+		}
+		return costoTotal;
 	}
 
-	private boolean esTercerizada(Encomienda encomienda) {
-		// TODO armar logica que determina si va por camion de tercero
-		return false;
-	}
 
 	public int getFacturaParticularByIdEncomienda(int idEncomienda) {
 
@@ -220,15 +363,293 @@ public class GestionEncomienda {
 		
 	}
 	
+	
+	public void altaEncomiendaEmpresa(DTO_EncomiendaEmpresa dtoEncomienda) {
+		Direccion origen = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionOrigen().getIdDireccion());
+		Direccion destino = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionDestino().getIdDireccion());
+		
+		Cliente cli = ClienteEmpresaDao.getInstancia().getById(dtoEncomienda.getEmpresa().getId());
+				
+		Encomienda encomienda = new Encomienda();
+		encomienda.setCliente(cli);
+		encomienda.setDireccionDestino(destino);
+		encomienda.setDireccionOrigen(origen);
+		encomienda.setLargo(dtoEncomienda.getLargo());
+		encomienda.setAncho(dtoEncomienda.getAncho());
+		encomienda.setInternacional(dtoEncomienda.isInternacional());
+		
+		encomienda.setAlto(dtoEncomienda.getAlto());
+		encomienda.setPeso(dtoEncomienda.getPeso());
+		encomienda.setVolumen(dtoEncomienda.getVolumen());
+		encomienda.setTratamiento(dtoEncomienda.getTratamiento()); 
+		encomienda.setApilable(dtoEncomienda.getApilable());
+		encomienda.setCantApilable(dtoEncomienda.getCantApilable()); 
+		encomienda.setRefrigerado(dtoEncomienda.getRefrigerado());
+		encomienda.setCondicionTransporte(dtoEncomienda.getCondicionTransporte()); 
+		encomienda.setIndicacionesManipulacion(dtoEncomienda.getIndicacionesManipulacion());
+		encomienda.setFragilidad(dtoEncomienda.getFragilidad()); 
+		encomienda.setNombreReceptor(dtoEncomienda.getNombreReceptor()); 
+		encomienda.setApellidoReceptor(dtoEncomienda.getApellidoReceptor());
+		encomienda.setDniReceptor(dtoEncomienda.getDniReceptor()); 
+		encomienda.setVolumenGranel(dtoEncomienda.getVolumenGranel()); 
+		encomienda.setUnidadGranel(dtoEncomienda.getUnidadGranel());
+		encomienda.setCargaGranel(dtoEncomienda.getCargaGranel());		
+		encomienda.setTipoEncomienda("E");
+		
+		encomienda.setTercerizado(dtoEncomienda.isTercerizada());
+		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
+		encomienda.setFechaCreacion(new Date());
+					
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();	
+		
+		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
+		if(dtoM != null){
+			Manifiesto m = new Manifiesto();
+			m.setEncomienda(encomienda);
+			m.setFecha(new Date());		
+			m.setEncomienda(encomienda);
+		
+			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
+				if(item!=null){
+					ItemManifiesto im = new ItemManifiesto();
+					im.setCantidad(item.getCantidad());
+					im.setDescripcion(item.getDescripcion());
+					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					im.setProducto(prod);
+					im.setManifiesto(m);
+					itemsManifiesto.add(im);
+				}
+			}
+			m.setItemsManifiesto(itemsManifiesto);
+			
+			encomienda.setManifiesto(m);
+		}
+		
+		DTO_Remito dtoR = dtoEncomienda.getRemito();
+		if(dtoR != null){
+			Remito remito = new Remito();
+			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
+			remito.setConformado(dtoR.isConformado());
+			remito.setDniReceptor(dtoR.getDniReceptor());
+			remito.setFechaConformado(dtoR.getFecha());
+			remito.setNombreReceptor(dtoR.getNombreReceptor());
+			remito.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
+			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
+			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
+			
+			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			for(DTO_ItemRemito item:dtoR.getDetalle()){
+				ItemRemito ir = new ItemRemito();
+				ir.setCantidad(item.getCantidad());
+				ir.setDescripcion(item.getDescripcion());
+				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ir.setProducto(prod);
+				ir.setRemito(remito);
+				itemsRemito.add(ir);
+			}
+			remito.setItemsRemito(itemsRemito);
+			remito.setEncomienda(encomienda);
+			encomienda.setRemito(remito);
+		}
+
+		/*Deberia persistir en cascada*/
+		EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
+		tx.commit();
+	}
+	
+	
+	public void modificarEncomiendaEmpresa(DTO_EncomiendaEmpresa dtoEncomienda) {
+		Direccion origen = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionOrigen().getIdDireccion());
+		Direccion destino = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionDestino().getIdDireccion());
+		Cliente cli = ClienteEmpresaDao.getInstancia().getById(dtoEncomienda.getEmpresa().getId());
+				
+		Encomienda encomienda = new Encomienda();
+	
+		encomienda.setIdEncomienda(dtoEncomienda.getIdEncomienda());
+	
+		encomienda.setCliente(cli);
+		encomienda.setDireccionDestino(destino);
+		encomienda.setDireccionOrigen(origen);
+		encomienda.setLargo(dtoEncomienda.getLargo());
+		encomienda.setAncho(dtoEncomienda.getAncho());
+		encomienda.setInternacional(dtoEncomienda.isInternacional());
+		
+		encomienda.setAlto(dtoEncomienda.getAlto());
+		encomienda.setPeso(dtoEncomienda.getPeso());
+		encomienda.setVolumen(dtoEncomienda.getVolumen());
+		encomienda.setTratamiento(dtoEncomienda.getTratamiento()); 
+		encomienda.setApilable(dtoEncomienda.getApilable());
+		encomienda.setCantApilable(dtoEncomienda.getCantApilable()); 
+		encomienda.setRefrigerado(dtoEncomienda.getRefrigerado());
+		encomienda.setCondicionTransporte(dtoEncomienda.getCondicionTransporte()); 
+		encomienda.setIndicacionesManipulacion(dtoEncomienda.getIndicacionesManipulacion());
+		encomienda.setFragilidad(dtoEncomienda.getFragilidad()); 
+		encomienda.setNombreReceptor(dtoEncomienda.getNombreReceptor()); 
+		encomienda.setApellidoReceptor(dtoEncomienda.getApellidoReceptor());
+		encomienda.setDniReceptor(dtoEncomienda.getDniReceptor()); 
+		encomienda.setVolumenGranel(dtoEncomienda.getVolumenGranel()); 
+		encomienda.setUnidadGranel(dtoEncomienda.getUnidadGranel());
+		encomienda.setCargaGranel(dtoEncomienda.getCargaGranel());		
+		encomienda.setTipoEncomienda("E");
+		
+		encomienda.setTercerizado(dtoEncomienda.isTercerizada());
+		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
+		encomienda.setFechaCreacion(new Date());
+					
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();	
+		
+		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
+		if(dtoM != null){
+			Manifiesto m = new Manifiesto();
+			m.setEncomienda(encomienda);
+			m.setFecha(new Date());		
+			m.setEncomienda(encomienda);
+		
+			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
+				if(item!=null){
+					ItemManifiesto im = new ItemManifiesto();
+					im.setCantidad(item.getCantidad());
+					im.setDescripcion(item.getDescripcion());
+					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					im.setProducto(prod);
+					im.setManifiesto(m);
+					itemsManifiesto.add(im);
+				}
+			}
+			m.setItemsManifiesto(itemsManifiesto);
+			
+			encomienda.setManifiesto(m);
+		}
+		
+		DTO_Remito dtoR = dtoEncomienda.getRemito();
+		if(dtoR != null){
+			Remito remito = new Remito();
+			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
+			remito.setConformado(dtoR.isConformado());
+			remito.setDniReceptor(dtoR.getDniReceptor());
+			remito.setFechaConformado(dtoR.getFecha());
+			remito.setNombreReceptor(dtoR.getNombreReceptor());
+			remito.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
+			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
+			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
+			
+			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			for(DTO_ItemRemito item:dtoR.getDetalle()){
+				ItemRemito ir = new ItemRemito();
+				ir.setCantidad(item.getCantidad());
+				ir.setDescripcion(item.getDescripcion());
+				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ir.setProducto(prod);
+				ir.setRemito(remito);
+				itemsRemito.add(ir);
+			}
+			remito.setItemsRemito(itemsRemito);
+			remito.setEncomienda(encomienda);
+			encomienda.setRemito(remito);
+		}
+
+		/*Deberia persistir en cascada*/
+		EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
+		tx.commit();
+	}
+	
+	
+	public void facturarEncomiendaEmpresa(int idEncomienda){
+		
+		List<ItemFactura>  detalle = new ArrayList<ItemFactura>();
+		
+		Encomienda encomienda = EncomiendaDao.getInstancia().getById(idEncomienda);
+		
+		//Calculo la primer linea de la factura - El valor del transporte lo define la cantidad de km y el costo
+		//que se obtiene del mapa de ruta. 
+		Sucursal sucursalOrigen =encomienda.getSucursalOrigen();
+		Sucursal sucursalDestino=encomienda.getSucursalDestino();
+		float kilometros =MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCantKm();
+		float costo = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCosto();
+
+		List<ItemFactura> items = new ArrayList<ItemFactura>();
+
+		//Costo por Km
+		ItemFactura itemTransporte = new ItemFactura();
+		itemTransporte.setDescripcion("Transporte: " + encomienda.getCliente().getEmail() + "-" + encomienda.getSucursalOrigen().getDescripcion() + "-" + encomienda.getSucursalDestino().getDescripcion());
+		itemTransporte.setCantidad(1);
+		itemTransporte.setValor(costo);
+		items.add(itemTransporte);
+						
+		//Segunda Linea Seguros
+		Seguro pSeguro = encomienda.getSeguro();
+		if(pSeguro != null){
+			ItemFactura itemSeguro = new ItemFactura();
+			itemSeguro.setDescripcion("Seguro: " + encomienda.getCliente().getEmail() + "-" + encomienda.getSucursalOrigen().getDescripcion() + "-" + encomienda.getSucursalDestino().getDescripcion());
+			itemSeguro.setCantidad(1);
+			itemSeguro.setValor((float)(pSeguro.getTarifa() + (pSeguro.getTarifaPorKm() * kilometros)));
+			items.add(itemSeguro);
+		}
+				
+		//Tercer Linea Servicio Seguridad
+		ServicioSeguridad ss = encomienda.getServicioSeguridad();
+		if(ss != null){
+			ItemFactura itemSeguridad = new ItemFactura();
+			itemSeguridad.setDescripcion("Servicio de Seguridad: " + ss.getDescripcion());
+			itemSeguridad.setCantidad(1);
+			itemSeguridad.setValor((float)(ss.getTarifa()));
+			items.add(itemSeguridad);
+		}
+	
+		//Cuarta Linea Impuestos
+		ItemFactura itemImpuesto = new ItemFactura();
+		itemImpuesto.setDescripcion("IVA 21%");
+		itemImpuesto.setCantidad(1);
+		float costoTotal = (float) (this.calcularPrecioTotal(encomienda) * 0.21);
+		itemImpuesto.setValor(costoTotal);
+		items.add(itemImpuesto);
+		
+		Factura factura = new Factura();
+		factura.setFecha(new Date());
+		factura.setPagada(false);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); // Now use today date.
+		c.add(Calendar.DATE, 30); // Adding 30 days
+		factura.setVencimiento(c.getTime());
+		
+		
+		//almaceno los items
+		for(ItemFactura item:items){
+			item.setFactura(factura);
+		}
+		
+		factura.setItemsFactura(items);
+		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		//actualizo la encomienda
+		encomienda.setFactura(factura);
+		EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
+		
+		tx.commit();
+	}
+	
+	
 	public Integer asignarEnvio(Integer idEncomienda, Integer idCarrier){
 		Encomienda e = EncomiendaDao.getInstancia().getById(idEncomienda);
 		if(e != null){
 			if(e.isTercerizado()){ 
 				Envio envioTercerizado = new Envio();
-				Carrier prov = CarrierDao.getInstancia().getById(idCarrier);
+				if(e.isInternacional()){
+					Carrier prov = CarrierDao.getInstancia().getById(idCarrier);
+					envioTercerizado.setProveedor(prov);
+				}
 				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
 				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
-				envioTercerizado.setProveedor(prov);
 				envioTercerizado.setNroTracking(2000);
 				envioTercerizado.setSucursalOrigen(e.getSucursalOrigen());
 				envioTercerizado.setSucursalDestino(e.getSucursalDestino());

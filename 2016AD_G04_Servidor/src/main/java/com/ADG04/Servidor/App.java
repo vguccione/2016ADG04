@@ -22,6 +22,7 @@ import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
@@ -43,7 +44,12 @@ import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
+import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
+import com.ADG04.bean.Encomienda.DTO_ItemRemito;
+import com.ADG04.bean.Encomienda.DTO_Manifiesto;
+import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
@@ -61,7 +67,7 @@ public class App
 {
     public static void main( String[] args )
     {
-    	TestTareasVencidas();
+    	//TestTareasVencidas();
     	
     	//TestRealizarTareaPorKm();
     	//TestRealizarTareaPorTiempo();
@@ -76,7 +82,7 @@ public class App
     	//crearPaisesYProvincias();
     	//TestAltaCliente();
     	//testControlViajes();
-    	//TestEncomienda();
+    	TestEncomienda();
     	//TestFacturaEncomiendaParticular();
     	
     	//TestSucursal("Sucursal Origen");
@@ -283,10 +289,8 @@ public class App
 		float nro = 123;
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();
 		cli.setId(1);
-    	DTO_Sucursal sucursalOrigen = new DTO_Sucursal();
-    	DTO_Sucursal sucursalDestino = new DTO_Sucursal();
-    	sucursalOrigen.setId(5);
-    	sucursalDestino.setId(6);
+    	DTO_Sucursal sucursalOrigen = SucursalDao.getInstancia().getById(1).toDTO();
+    	DTO_Sucursal sucursalDestino = SucursalDao.getInstancia().getById(2).toDTO();
     	
     	DTO_EncomiendaParticular encomienda = new DTO_EncomiendaParticular();
 
@@ -312,7 +316,44 @@ public class App
 		encomienda.setVolumenGranel(0f); 
 		encomienda.setUnidadGranel(null);
 		encomienda.setCargaGranel(null);		
-		   	    	    	
+		
+		DTO_Manifiesto manifiesto = new DTO_Manifiesto();
+		manifiesto.setFecha(new Date());
+		List<DTO_ItemManifiesto>items = new ArrayList<DTO_ItemManifiesto>();
+		DTO_ItemManifiesto item = new DTO_ItemManifiesto();
+		item.setCantidad(10);
+		item.setDescripcion("hola que tal ");
+		DTO_Producto producto = ProductoDao.getInstancia().getById(1).toDTO();
+		item.setProducto(producto);
+		
+		items.add(item);
+		manifiesto.setDetalle(items);
+		encomienda.setManifiesto(manifiesto);
+		
+		
+		DTO_Remito remito = new DTO_Remito();
+		remito.setApellidoReceptor("Apellido receptor");
+		remito.setNombreReceptor("Nombre receptor");
+		remito.setDniReceptor("12312321");
+		remito.setConformado(false);
+		remito.setFecha(new Date());
+		remito.setFechaEstimadaEntrega(new Date());
+		remito.setCondicionTransporte(encomienda.getCondicionTransporte());
+		remito.setIndicacionesManipulacion(encomienda.getIndicacionesManipulacion());
+		
+		List<DTO_ItemRemito>itemsr = new ArrayList<DTO_ItemRemito>();
+		DTO_ItemRemito itemr = new DTO_ItemRemito();
+		item.setCantidad(10);
+		item.setDescripcion("hola que tal remito");
+		DTO_Producto productor = ProductoDao.getInstancia().getById(1).toDTO();
+		itemr.setCantidad(10);
+		itemr.setProducto(productor);
+		itemr.setRemito(remito);
+		itemsr.add(itemr);
+		remito.setDetalle(itemsr);
+		
+		encomienda.setRemito(remito);
+		
     	GestionEncomienda.getInstancia().altaEncomiendaParticular(encomienda);
     }
     

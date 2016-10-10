@@ -21,6 +21,7 @@ import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.PaisDao;
+import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
@@ -48,6 +49,7 @@ import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
+import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 
 
@@ -59,15 +61,24 @@ public class App
 {
     public static void main( String[] args )
     {
+    	TestTareasVencidas();
+    	
     	//TestRealizarTareaPorKm();
     	//TestRealizarTareaPorTiempo();
+    	//generarVehiculoTest("Mercedez Benz", "Camion1", "2010", "AAA001",1);   	
+    	//generarVehiculoTest("Mercedez Benz", "Camion2", "2011", "AAA002",2);
+    	//generarVehiculoTest("Mercedez Benz", "Camion3", "2012", "AAA003",1);
+    	//generarVehiculoTest("Mercedez Benz", "Camion4", "2013", "AAA004",2);
+    	
+    	//TestCrearPlanesYTareas();
+    	
     	//TestGetPlanes();    	
-    	//TestAltaPlanMantenimientoConTareas();
-    //	crearPaisesYProvincias();
-    //	testControlViajes();
-//    	TestEncomienda();
-    	//TestFacturaEncomiendaParticular();
+    	//crearPaisesYProvincias();
     	//TestAltaCliente();
+    	//testControlViajes();
+    	//TestEncomienda();
+    	//TestFacturaEncomiendaParticular();
+    	
     	//TestSucursal("Sucursal Origen");
     	//TestSucursal("Sucursal Destino");
     	
@@ -75,9 +86,20 @@ public class App
     //	TestUsuario();
     }
     
+    private static void TestTareasVencidas(){
+    	PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(6);
+    }
+    
+    private static void TestCrearPlanesYTareas(){
+    	int idPm = TestAddPlanMantenimiento("Mantenimiento de un Mercedes 1");
+    	TestAddTareasToPlan("Cambiar ruedas 1", 123, "Cambiar aceite 1", 230,idPm);
+    	idPm = TestAddPlanMantenimiento("Mantenimiento de un Mercedes 2");
+    	TestAddTareasToPlan("Cambiar ruedas 2", 678, "Cambiar aceite 2", 1230,idPm);
+    }
+    
     private static void TestGetPlanes() {
 
-    	int idVehiculo = 3;
+    	int idVehiculo = 6;
     	DTO_PlanMantenimiento planDTO = GestionVehiculo.getInstancia().getPlanByVehiculo(idVehiculo);
     	System.out.println(planDTO.getDescripcion());
     	System.out.println("------------------------------------------------------------");
@@ -122,29 +144,36 @@ public class App
     	pais.setDescripcion("Peru");
     	GestionAdministracion.getInstancia().altaPais(pais);
     }
-    
-    private static void TestAltaPlanMantenimientoConTareas() {
+    /**
+     * Alta de 1 plan de mantenimiento, con una tarea de km y una por tiempo.
+     */
+    private static int TestAddPlanMantenimiento(String descPlan) {
 		
     	DTO_PlanMantenimiento pm = new DTO_PlanMantenimiento();
-    	pm.setComentarios("Mi primer plan");
-    	pm.setDescripcion("Plan Toyota");
+    	pm.setComentarios("Comentarios: " + descPlan);
+    	pm.setDescripcion(descPlan);
     	pm.setTolerancia(123);
     	
     	int idPm = GestionVehiculo.getInstancia().altaPlanMantenimiento(pm);
+    	System.out.println("Plan nro " + idPm + " creado.");
+    	return idPm;
+	}
+    
+    private static void TestAddTareasToPlan(String tareaKm, float kms, String tareaTiempo, int dias, int idPlanMantenimiento){
+
     	DTO_TareasPorKilometro tareaXKM = new DTO_TareasPorKilometro();
-    	tareaXKM.setCantidadKilometros(123);
-    	tareaXKM.setIdPlanMantenimiento(idPm);
-    	tareaXKM.setTarea("Cambiar ruedas");
+    	tareaXKM.setCantidadKilometros(kms);
+    	tareaXKM.setIdPlanMantenimiento(idPlanMantenimiento);
+    	tareaXKM.setTarea(tareaKm);
     	
     	GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXKM);
     	
     	DTO_TareasPorTiempo tareaXTiempo = new DTO_TareasPorTiempo();
-    	tareaXTiempo.setCantidadDias(656);
-    	tareaXTiempo.setIdPlanMantenimiento(idPm);
-    	tareaXTiempo.setTarea("Cambiar aceite");
+    	tareaXTiempo.setCantidadDias(dias);
+    	tareaXTiempo.setIdPlanMantenimiento(idPlanMantenimiento);
+    	tareaXTiempo.setTarea(tareaTiempo);
     	int idTarea = GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXTiempo);
-    	
-	}
+    }
 
     private static void TestRealizarTareaPorKm(){
 
@@ -270,23 +299,55 @@ public class App
 		encomienda.setAlto(12.0);
 		encomienda.setPeso(34.6);
 		encomienda.setVolumen(44.5);
-		//encomienda.setTratamiento("nada"); 
+		encomienda.setTratamiento("nada"); 
 		encomienda.setApilable(true);
 		encomienda.setCantApilable((short)2); 
 		encomienda.setRefrigerado(false);
-		//encomienda.setCondicionTransporte(condiciionTransporte); 
-		//encomienda.setIndicacionesManipulacion(indicacionesManipulacion);
-		//encomienda.setFragilidad(fragilidad); 
+		encomienda.setCondicionTransporte(null); 
+		encomienda.setIndicacionesManipulacion(null);
+		encomienda.setFragilidad("no"); 
 		encomienda.setNombreReceptor("Alfredo"); 
 		encomienda.setApellidoReceptor("Receptor");
 		encomienda.setDniReceptor("99876543"); 
-		//encomienda.setVolumenGranel(volumenGranel); 
-		//encomienda.setUnidadGranel(unidadGranel);
-		//encomienda.setCargaGranel(cargaGranel);		
+		encomienda.setVolumenGranel(0d); 
+		encomienda.setUnidadGranel(null);
+		encomienda.setCargaGranel(null);		
 		   	    	    	
     	GestionEncomienda.getInstancia().altaEncomiendaParticular(encomienda);
     }
     
+	public static void generarVehiculoTest(String marca, String modelo, String anio, String patente, int idPm){
+		
+		//buscar el plan
+			
+		//Creo vehiculo
+		DTO_Vehiculo v = new DTO_Vehiculo();
+		v.setAlto(100f);
+		v.setAncho(100f);
+		v.setAnio(anio);
+		v.setEstado(null);
+		v.setKmsRecorridos(13400);
+		v.setLargo(1000f);
+		v.setMarca(marca);
+		v.setModelo(modelo);
+		v.setPatente(patente);
+		v.setPeso(560f);
+		v.setTara(20);	
+		v.setRefrigerado(false);
+		v.setVolumen(3333f);
+		v.setFechaIngreso(new Date(2016,01,01));
+		
+		DTO_PlanMantenimiento plan = new DTO_PlanMantenimiento();
+		plan.setId(idPm);
+		v.setPlanMantenimiento(plan);
+		
+		DTO_Sucursal su  = new DTO_Sucursal();
+		su.setId(1);
+		v.setSucursal(su);
+		
+		GestionVehiculo.getInstancia().altaVehiculo(v);
+		
+	}
 	
 	public static void testControlViajes(){	
 		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
@@ -295,18 +356,19 @@ public class App
 		//Creo vehiculo
 		tx.begin();
 		Vehiculo v = new Vehiculo();
-		v.setAlto(100d);
-		v.setAncho(100d);
+		v.setAlto(100f);
+		v.setAncho(100f);
 		v.setAnio("2016");
 		v.setEstado("");
 		v.setKmRecorridos(1000);
-		v.setLargo(1000d);
+		v.setLargo(1000f);
 		v.setMarca("Ford");
 		v.setModelo("Ka");
 		v.setPatente("ADJ000");
-		v.setPeso(560d);
+		v.setPeso(560f);
 		v.setTara(20);	
 		v.setRefrigerado(false);
+		v.setVolumen(3333f);
 		
 		VehiculoDao.getInstancia().persist(v);	
 		tx.commit();
@@ -410,6 +472,9 @@ public class App
 		
 		tx.commit();	
 		
+		
+		
+		
 		/*Seguira en viaje*/
 		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(1, CoordenadaDao.getInstancia().getById(1));
 		Envio envio = EnvioDao.getInstancia().getById(1);
@@ -429,4 +494,7 @@ public class App
 		Envio envio3 = EnvioDao.getInstancia().getById(1);
 		System.out.println(envio3.getEstado());	
 	}
+	
+	
+	
 }

@@ -9,12 +9,14 @@ import javax.persistence.EntityTransaction;
 
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoRealizadaDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.CondicionesEspecialesVehiculo;
 import com.ADG04.Servidor.model.PlanMantenimiento;
 import com.ADG04.Servidor.model.Proveedor;
+import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.TareaMantenimiento;
 import com.ADG04.Servidor.model.TareaMantenimientoPorKm;
 import com.ADG04.Servidor.model.TareaMantenimientoPorTiempo;
@@ -172,7 +174,9 @@ public class GestionVehiculo {
 			planDTO.setDescripcion(plan.getDescripcion());
 			planDTO.setId(plan.getIdPlanMantenimiento());
 			
-			for(TareaMantenimiento t:plan.getTareaMantenimientos()){
+			List<TareaMantenimiento> tareas = plan.getTareaMantenimientos();
+			System.out.println("Cantidad de tareas del plan: "+tareas.size());
+			for(TareaMantenimiento t:tareas){
 				if(t.getClass().equals(TareaMantenimientoPorKm.class)){
 					DTO_TareasPorKilometro dtokm = new DTO_TareasPorKilometro();
 					TareaMantenimientoPorKm tk = (TareaMantenimientoPorKm)t;
@@ -238,42 +242,44 @@ public class GestionVehiculo {
 	}
 	public DTO_TareasPorTiempo getTareaMantenimientoTiempo(Integer idTareaMantenimientoTiempo){
 		return (DTO_TareasPorTiempo) VehiculoDao.getInstancia().getTareaMantenimientoTiempo(idTareaMantenimientoTiempo).toDTO();
-	}
+	}*/
+	
+		
 	public void altaVehiculo(DTO_Vehiculo vehiculo) {
+	
 		Vehiculo v = new Vehiculo();
-		v.setTipo(vehiculo.getTipo());
+		v.setAnio(vehiculo.getAnio());
 		v.setPatente(vehiculo.getPatente());
 		v.setMarca(vehiculo.getMarca());
 		v.setModelo(vehiculo.getModelo());
-		v.setKilometros(vehiculo.getKilometros());
+		v.setKmRecorridos(vehiculo.getKmsRecorridos());
 		v.setAncho(vehiculo.getAncho());
 		v.setAlto(vehiculo.getAlto());
 		v.setLargo(vehiculo.getLargo());
 		v.setPeso(vehiculo.getPeso());
 		v.setTara(vehiculo.getTara());
 		v.setVolumen(vehiculo.getVolumen());
-		v.setCostoKM(vehiculo.getCostoKM());
+		v.setEstado(vehiculo.getEstado());
 		v.setFechaIngreso(vehiculo.getFechaIngreso());
-		v.setUltimoMantenimiento(vehiculo.getUltimoMantenimiento());
-		v.setUltimoUso(vehiculo.getUltimoUso());
-		v.setVencimientoGarantia(vehiculo.getVencimientoGarantia());
+		//v.setco(vehiculo.getCostoKM());
+		//v.setFechaIngreso(vehiculo.getFechaIngreso());
+		//v.setUltimoMantenimiento(vehiculo.getUltimoMantenimiento());
+		//v.setUltimoUso(vehiculo.getUltimoUso());
+		//v.setVencimientoGarantia(vehiculo.getVencimientoGarantia());
 		
-		Entity_Sucursal s = AdministracionDAO.getInstancia().getSucursal(vehiculo.getIdSucursal());
+		Sucursal s = SucursalDao.getInstancia().getById(vehiculo.getSucursal().getId());
 		v.setSucursal(s);
 		
-		Entity_Sucursal sa = AdministracionDAO.getInstancia().getSucursal(vehiculo.getIdSucursalActual());
-		v.setSucursalActual(sa);
-		
-		v.setTemperaturaMin(vehiculo.getTemperaturaMin());
-		v.setTemperaturaMax(vehiculo.getTemperaturaMax());
-		
-		PlanMantenimiento pm = VehiculoDao.getInstancia().getPlanMantenimiento(vehiculo.getIdPlanMantenimiento());
-		v.setPlan(pm);
-
-		
-		VehiculoDao.getInstancia().altaVehiculo(v);
+		//Sucursal actual???????
+		//Entity_Sucursal sa = AdministracionDAO.getInstancia().getSucursal(vehiculo.getIdSucursalActual());
+		//v.setSucursal(sa);
+			
+		PlanMantenimiento pm = PlanMantenimientoDao.getInstancia().getById(vehiculo.getPlanMantenimiento().getId());
+		v.setPlanMantenimiento(pm);
+				
+		VehiculoDao.getInstancia().persist(v);
 	}
-
+/*
 	public void modificarVehiculo(DTO_Vehiculo vehiculo) {
 		Vehiculo v = new Vehiculo();
 		v.setId(vehiculo.getId());

@@ -3,6 +3,7 @@ package com.ADG04.Servidor.model;
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -84,23 +85,46 @@ public class Vehiculo implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
 	private List<CondicionesEspecialesVehiculo> condicionesEspecialesVehiculos;
 
+	@Column(name="FechaIngreso", nullable=false)
+	private Date FechaIngreso;
+
 	public Vehiculo() {
 	}
 
-	public Vehiculo(PlanMantenimiento planMantenimiento,
-			float kmRecorridos, String marca, String modelo, String patente,
-			String anio, float tara) {
-		this.planMantenimiento = planMantenimiento;
+	public Vehiculo(String estado, float largo, float alto, float ancho,
+			float peso, float volumen, Boolean refrigerado,
+			String condicionTransporte, float kmRecorridos, String marca,
+			String modelo, String patente, String anio, float tara,
+			List<CondicionesEspecialesVehiculo> condicionesEspecialesVehiculos,
+			Date fechaIngreso) {
+		super();
+		this.estado = estado;
+		this.largo = largo;
+		this.alto = alto;
+		this.ancho = ancho;
+		this.peso = peso;
+		this.volumen = volumen;
+		this.refrigerado = refrigerado;
+		this.condicionTransporte = condicionTransporte;
 		this.kmRecorridos = kmRecorridos;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.patente = patente;
 		this.anio = anio;
 		this.tara = tara;
+		this.condicionesEspecialesVehiculos = condicionesEspecialesVehiculos;
+		FechaIngreso = fechaIngreso;
 	}
-	
-	
-	
+
+
+
+	public Date getFechaIngreso() {
+		return FechaIngreso;
+	}
+
+	public void setFechaIngreso(Date fechaIngreso) {
+		FechaIngreso = fechaIngreso;
+	}	
 	
 	public int getIdVehiculo() {
 		return this.idVehiculo;
@@ -264,10 +288,10 @@ public class Vehiculo implements java.io.Serializable {
 		DTO_Vehiculo v = new DTO_Vehiculo();
 		v.setAlto(alto);
 		v.setAncho(ancho);
-		v.setKilometros(this.getKmRecorridos());
+		v.setKmsRecorridos(this.getKmRecorridos());
 		v.setLargo(largo);
 		v.setMarca(marca);
-		//v.setModelo(modelo);
+		v.setModelo(modelo);
 		v.setPatente(patente);
 		v.setPeso(peso);
 		v.setRefrigerado(refrigerado);

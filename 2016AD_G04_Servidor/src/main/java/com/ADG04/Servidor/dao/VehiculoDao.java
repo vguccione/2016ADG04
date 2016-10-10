@@ -65,6 +65,6 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 		else
 			return false;
 	}
-	
+
 
 }

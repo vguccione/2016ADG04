@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +33,10 @@ public class Manifiesto implements java.io.Serializable {
 	@GeneratedValue
 	@Column(name = "IdManifiesto", unique = true, nullable = false)
 	private int idManifiesto;
+	
+	@OneToOne
+	@JoinColumn(name="IdEncomienda")
+	private Encomienda encomienda;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Fecha", nullable = false, length = 23)
@@ -81,7 +86,18 @@ public class Manifiesto implements java.io.Serializable {
 		this.itemsManifiesto = itemsManifiesto;
 	}
 
-    public DTO_Manifiesto toDTO(){
+	
+    public Encomienda getEncomienda() {
+		return encomienda;
+	}
+
+
+	public void setEncomienda(Encomienda encomienda) {
+		this.encomienda = encomienda;
+	}
+
+
+	public DTO_Manifiesto toDTO(){
     	DTO_Manifiesto m = new DTO_Manifiesto();
     	m.setFecha(this.fecha);
     	m.setIdManifiesto(this.idManifiesto);

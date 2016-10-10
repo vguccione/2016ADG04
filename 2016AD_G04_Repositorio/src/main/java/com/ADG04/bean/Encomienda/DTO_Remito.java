@@ -11,9 +11,13 @@ public class DTO_Remito implements Serializable{
 	private Integer id;
 	private Date fecha;
 	private boolean conformado;
-	private String recibidoPor;
-	private Integer idEncomienda;
+	private String apellidoReceptor;
+	private String nombreReceptor;
+	private String dniReceptor;
 	private List<DTO_ItemRemito> detalle;
+	private Date fechaEstimadaEntrega;
+	private String condicionTransporte;
+	private String indicacionesManipulacion;
 	
 	public DTO_Remito(){
 	
@@ -43,20 +47,30 @@ public class DTO_Remito implements Serializable{
 		this.conformado = conformado;
 	}
 
-	public String getRecibidoPor() {
-		return recibidoPor;
+	
+
+	public String getApellidoReceptor() {
+		return apellidoReceptor;
 	}
 
-	public void setRecibidoPor(String recibidoPor) {
-		this.recibidoPor = recibidoPor;
+	public void setApellidoReceptor(String apellidoReceptor) {
+		this.apellidoReceptor = apellidoReceptor;
 	}
 
-	public Integer getIdEncomienda() {
-		return idEncomienda;
+	public String getNombreReceptor() {
+		return nombreReceptor;
 	}
 
-	public void setIdEncomienda(Integer idEncomienda) {
-		this.idEncomienda = idEncomienda;
+	public void setNombreReceptor(String nombreReceptor) {
+		this.nombreReceptor = nombreReceptor;
+	}
+
+	public String getDniReceptor() {
+		return dniReceptor;
+	}
+
+	public void setDniReceptor(String dniReceptor) {
+		this.dniReceptor = dniReceptor;
 	}
 
 	public List<DTO_ItemRemito> getDetalle() {
@@ -66,7 +80,29 @@ public class DTO_Remito implements Serializable{
 	public void setDetalle(List<DTO_ItemRemito> detalle) {
 		this.detalle = detalle;
 	}
-	
-	
+
+	public Date getFechaEstimadaEntrega() {
+		return fechaEstimadaEntrega;
+	}
+
+	public void setFechaEstimadaEntrega(Date fechaEstimadaEntrega) {
+		this.fechaEstimadaEntrega = fechaEstimadaEntrega;
+	}
+
+	public String getCondicionTransporte() {
+		return condicionTransporte;
+	}
+
+	public void setCondicionTransporte(String condicionTransporte) {
+		this.condicionTransporte = condicionTransporte;
+	}
+
+	public String getIndicacionesManipulacion() {
+		return indicacionesManipulacion;
+	}
+
+	public void setIndicacionesManipulacion(String indicacionesManipulacion) {
+		this.indicacionesManipulacion = indicacionesManipulacion;
+	}	
 
 }

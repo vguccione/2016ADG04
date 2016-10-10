@@ -5,6 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.ADG04.Servidor.model.MapaDeRuta;
+import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -29,6 +30,14 @@ public class MapaDeRutaDao extends GenericDao<MapaDeRuta, Integer> {
 			instancia = new MapaDeRutaDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
 		} 
 		return instancia;
+	}
+
+	public MapaDeRuta getBySucursalOrigenyDestino(int idSucursalOrigen, int idSucursalDestino) {
+		
+		return (MapaDeRuta) entityManager.createQuery("from MapaDeRuta mr where mr.sucursalOrigen.idSucursal=:idSucursalOrigen"
+											+ " and mr.sucursalDestino.idSucursal=:idSucursalDestino")
+											.setParameter("idSucursalOrigen", idSucursalOrigen)
+											.setParameter("idSucursalDestino", idSucursalDestino).getSingleResult();
 	}
 
 }

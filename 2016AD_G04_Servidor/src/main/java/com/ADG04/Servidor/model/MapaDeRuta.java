@@ -42,6 +42,9 @@ public class MapaDeRuta implements java.io.Serializable {
 	@Column(name="CantKm")
 	private float cantKm;
 	
+	@Column(name="costo")
+	private float costo;
+	
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IdSucursalDestino")
 	private Sucursal sucursalDestino;
@@ -114,5 +117,15 @@ public class MapaDeRuta implements java.io.Serializable {
 	public void setSucursalOrigen(Sucursal sucursalOrigen) {
 		this.sucursalOrigen = sucursalOrigen;
 	}
+
+	public float getCosto() {
+		return costo;
+	}
+
+	public void setCosto(float costo) {
+		this.costo = costo;
+	}
+	
+	
 
 }

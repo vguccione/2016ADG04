@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,7 +54,11 @@ public class Factura implements java.io.Serializable {
 	@Column(name = "Vencimiento", nullable = false, length = 23)
 	private Date vencimiento;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "factura", cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name="IdEncomienda")
+	private Encomienda encomienda;	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<ItemFactura> itemsFactura;
 
 	public Factura() {
@@ -132,6 +137,15 @@ public class Factura implements java.io.Serializable {
 
 	public void setItemsFactura(List<ItemFactura> itemsFactura) {
 		this.itemsFactura = itemsFactura;
+	}
+	
+
+	public Encomienda getEncomienda() {
+		return encomienda;
+	}
+
+	public void setEncomienda(Encomienda encomienda) {
+		this.encomienda = encomienda;
 	}
 
 	public DTO_Factura toDTO(){

@@ -37,6 +37,10 @@ public class ItemRemito implements java.io.Serializable {
 	
 	@Column(name = "Cantidad", nullable = false)
 	private int cantidad;
+	
+	@ManyToOne
+	@JoinColumn(name="IdProducto")
+	private Producto producto;
 
 	public ItemRemito() {
 	}
@@ -93,8 +97,18 @@ public class ItemRemito implements java.io.Serializable {
     	item.setCantidad(this.cantidad);
     	item.setDescripcion(this.descripcion);
     	item.setId(this.idItemRemito);
-    	item.setIdRemito(this.remito.getIdRemito());
     	return item;
 	}
 
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+	
+	
 }

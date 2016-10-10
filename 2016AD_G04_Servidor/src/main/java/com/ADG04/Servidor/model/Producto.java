@@ -46,6 +46,12 @@ public class Producto implements java.io.Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
 	private List<ProductoEncomienda> productoEncomiendas;
+	
+	@OneToMany(mappedBy="producto")
+	private List<ItemManifiesto> manifiestos;
+	
+	@OneToMany(mappedBy="producto")
+	private List<ItemRemito> remitos;
 
 	public Producto() {
 	}
@@ -104,6 +110,32 @@ public class Producto implements java.io.Serializable {
 
 	public void setProductoEncomiendas(List<ProductoEncomienda> productoEncomiendas) {
 		this.productoEncomiendas = productoEncomiendas;
+	}
+	
+	
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public List<ItemManifiesto> getManifiestos() {
+		return manifiestos;
+	}
+
+	public void setManifiestos(List<ItemManifiesto> manifiestos) {
+		this.manifiestos = manifiestos;
+	}
+
+	public List<ItemRemito> getRemitos() {
+		return remitos;
+	}
+
+	public void setRemitos(List<ItemRemito> remitos) {
+		this.remitos = remitos;
 	}
 
 	public DTO_Producto toDTO(){

@@ -42,7 +42,7 @@ public class AppTest
     }
     
     public static void main (String[] args){
-    	List<Vehiculo> vehiculos = VehiculoDao.getInstancia().obtenerVehiculosDisponibles();
+    	List<Vehiculo> vehiculos = VehiculoDao.getInstancia().listarVehiculosDisponibles(1, 100f, 200f);
     	
     	for(Vehiculo v : vehiculos){
     		System.out.println(v.toString());

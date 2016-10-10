@@ -12,6 +12,7 @@ public class DTO_MapaDeRuta implements Serializable{
 	private float cantKm;
 	private Integer idSucursalOrigen;
 	private Integer idSucursalDestino;
+	private float costo;
 	private List<DTO_Coordenada> coordenadas;
 
 	public DTO_MapaDeRuta(){
@@ -78,5 +79,11 @@ public class DTO_MapaDeRuta implements Serializable{
 		this.coordenadas = coordenadas;
 	}
 
-	
+	public float getCosto() {
+		return costo;
+	}
+
+	public void setCosto(float costo) {
+		this.costo = costo;
+	}
 }

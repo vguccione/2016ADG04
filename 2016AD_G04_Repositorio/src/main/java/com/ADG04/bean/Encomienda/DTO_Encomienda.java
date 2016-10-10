@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
 public class DTO_Encomienda {
@@ -43,7 +44,12 @@ public class DTO_Encomienda {
 	private float volumenGranel;
 	private String unidadGranel;
 	private String cargaGranel;
-	private List<DTO_Remito> remitos;
+	private DTO_Remito remito;
+	private DTO_Manifiesto manifiesto;
+	private DTO_Factura factura;
+	private boolean tercerizada;
+	private boolean internacional;
+	
 			
 	public DTO_Encomienda() {
 		super();
@@ -216,12 +222,37 @@ public class DTO_Encomienda {
 	public void setCargaGranel(String cargaGranel) {
 		this.cargaGranel = cargaGranel;
 	}
-	public List<DTO_Remito> getRemitos() {
-		return remitos;
+	public DTO_Remito getRemito() {
+		return remito;
 	}
-	public void setRemitos(List<DTO_Remito> remitos) {
-		this.remitos = remitos;
+	public void setRemito(DTO_Remito remito) {
+		this.remito = remito;
 	}
-
+	public DTO_Manifiesto getManifiesto() {
+		return manifiesto;
+	}
+	public void setManifiesto(DTO_Manifiesto manifiesto) {
+		this.manifiesto = manifiesto;
+	}
+	public DTO_Factura getFactura() {
+		return factura;
+	}
+	public void setFactura(DTO_Factura factura) {
+		this.factura = factura;
+	}
+	public boolean isTercerizada() {
+		return tercerizada;
+	}
+	public void setTercerizada(boolean tercerizada) {
+		this.tercerizada = tercerizada;
+	}
+	public boolean isInternacional() {
+		return internacional;
+	}
+	public void setInternacional(boolean internacional) {
+		this.internacional = internacional;
+	}
+	
+	
 	
 }

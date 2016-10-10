@@ -186,6 +186,7 @@ public class Sucursal implements java.io.Serializable {
 
 	public DTO_Sucursal toDTO(){
 		DTO_Sucursal s = new DTO_Sucursal();
+		s.setId(this.idSucursal);
 		s.setDescripcion(this.descripcion);
 		s.setTelefono(this.telefono);
 		return s;

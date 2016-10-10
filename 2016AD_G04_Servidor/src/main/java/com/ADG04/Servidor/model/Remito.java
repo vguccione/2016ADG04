@@ -14,7 +14,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.ADG04.bean.Encomienda.DTO_ItemRemito;
@@ -29,10 +31,6 @@ public class Remito implements java.io.Serializable {
 	@Column(name = "IdRemito", unique = true, nullable = false)
 	private int idRemito;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdEncomienda", nullable = false)
-	private Encomienda encomienda;
-
 	@Column(name = "NombreReceptor", nullable = false, length = 100)
 	private String nombreReceptor;
 
@@ -47,6 +45,19 @@ public class Remito implements java.io.Serializable {
 
 	@Column(name = "FechaConformado", nullable = false)
 	private Date fechaConformado;
+	
+	@Column(name="FechaEstimadaEntrega")
+	private Date fechaEstimadaEntrega;
+	
+	@Column(name="CondicionTransporte")
+	private String condicionTransporte;
+	
+	@Column(name="IndicacionesManipulacion")
+	private String indicacionesManipulacion;
+	
+	@OneToOne
+	@JoinColumn(name="IdEncomienda")
+	private Encomienda encomienda;		
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "remito", cascade = CascadeType.ALL)
 	private List<ItemRemito> itemsRemito;
@@ -133,14 +144,43 @@ public class Remito implements java.io.Serializable {
 	public void setItemsRemito(List<ItemRemito> itemsRemito) {
 		this.itemsRemito = itemsRemito;
 	}
+	
+	
+
+	public Date getFechaEstimadaEntrega() {
+		return fechaEstimadaEntrega;
+	}
+
+	public void setFechaEstimadaEntrega(Date fechaEstimadaEntrega) {
+		this.fechaEstimadaEntrega = fechaEstimadaEntrega;
+	}
+
+	public String getCondicionTransporte() {
+		return condicionTransporte;
+	}
+
+	public void setCondicionTransporte(String condicionTransporte) {
+		this.condicionTransporte = condicionTransporte;
+	}
+
+	public String getIndicacionesManipulacion() {
+		return indicacionesManipulacion;
+	}
+
+	public void setIndicacionesManipulacion(String indicacionesManipulacion) {
+		this.indicacionesManipulacion = indicacionesManipulacion;
+	}
+	
+	
 
 	public DTO_Remito toDTO(){
 		DTO_Remito r = new DTO_Remito();
     	r.setConformado(this.conformado);
 		r.setFecha(this.fechaConformado);
 		r.setId(this.idRemito);
-		r.setIdEncomienda(this.encomienda.getIdEncomienda());
-		r.setRecibidoPor(this.getDniReceptor());
+		r.setApellidoReceptor(apellidoReceptor);
+		r.setDniReceptor(dniReceptor);
+		r.setNombreReceptor(nombreReceptor);
     	
     	List<DTO_ItemRemito> list = new ArrayList<DTO_ItemRemito>();
     	for(ItemRemito item : this.itemsRemito){

@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,13 +27,9 @@ import javax.persistence.TemporalType;
 public class Encomienda implements java.io.Serializable {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "IdEncomienda", unique = true, nullable = false)
 	private int idEncomienda;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdFactura", nullable = true)
-	private Factura factura;
 
 	@OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name = "IdDireccionDestino")
@@ -134,13 +131,25 @@ public class Encomienda implements java.io.Serializable {
 	private String cargaGranel;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "encomienda")
-	private List<Remito> remitos;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "encomienda")
 	private List<ProductoEncomienda> productoEncomiendas;
 	
 	@Column(name="EsTerciarizado")
 	private boolean terciarizado;
+	
+	@Column(name="ServicioSeguridad")
+	private ServicioSeguridad servicioSeguridad;
+	
+	@OneToOne(mappedBy="encomienda", cascade=CascadeType.ALL, orphanRemoval=true)
+	private Manifiesto manifiesto;
+	
+	@OneToOne(mappedBy="encomienda", cascade=CascadeType.ALL, orphanRemoval=true)
+	private Factura factura;
+	
+	@OneToOne(mappedBy="encomienda", cascade=CascadeType.ALL, orphanRemoval=true)
+	private Remito remito;
+	
+	@Column(name="Internacional")
+	private boolean internacional;
 	
 
 	public Encomienda() {
@@ -430,14 +439,6 @@ public class Encomienda implements java.io.Serializable {
 		this.cargaGranel = cargaGranel;
 	}
 
-	public List<Remito> getRemitos() {
-		return remitos;
-	}
-
-	public void setRemitos(List<Remito> remitos) {
-		this.remitos = remitos;
-	}
-
 	public List<ProductoEncomienda> getProductoEncomiendas() {
 		return productoEncomiendas;
 	}
@@ -446,23 +447,7 @@ public class Encomienda implements java.io.Serializable {
 		this.productoEncomiendas = productoEncomiendas;
 	}
 
-	public float getKMs() {
-		// TODO se calcula cada vez que se pide, o se calcula cuando se da de alta la encomienda y lo guardamos????
-		return 0;
-	}
-
-	public float getCostoKMExtra() {
-		// TODO esto????
-		return 0;
-	}
-
-	public float getCostoPorKm() {
-		// TODO y esto??????
-		return 0;
-	}
-
 	public Seguro getSeguro() {
-		// TODO hay que hacer esto!!!!!!1, tenemos que guardar un proovedor de tipo "Seguro"
 		Seguro p = new Seguro();
 		p.setTarifa(123.0F);
 		p.setTarifaPorKm(456.0F);
@@ -486,7 +471,37 @@ public class Encomienda implements java.io.Serializable {
 		this.terciarizado = terciarizado;
 	}
 
-	
-	
+	public ServicioSeguridad getServicioSeguridad() {
+		return servicioSeguridad;
+	}
 
+	public void setServicioSeguridad(ServicioSeguridad servicioSeguridad) {
+		this.servicioSeguridad = servicioSeguridad;
+	}
+
+	public Manifiesto getManifiesto() {
+		return manifiesto;
+	}
+
+	public void setManifiesto(Manifiesto manifiesto) {
+		this.manifiesto = manifiesto;
+	}
+
+	public Remito getRemito() {
+		return remito;
+	}
+
+	public void setRemito(Remito remito) {
+		this.remito = remito;
+	}
+
+	public boolean isInternacional() {
+		return internacional;
+	}
+
+	public void setInternacional(boolean internacional) {
+		this.internacional = internacional;
+	}
+
+	
 }

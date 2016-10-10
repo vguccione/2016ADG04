@@ -80,19 +80,19 @@ public class Encomienda implements java.io.Serializable {
 	private boolean tercerizado;
 
 	@Column(name = "Largo", precision = 53, scale = 0)
-	private Double largo;
+	private float largo;
 
 	@Column(name = "Alto", precision = 53, scale = 0)
-	private Double alto;
+	private float alto;
 
 	@Column(name = "Ancho", precision = 53, scale = 0)
-	private Double ancho;
+	private float ancho;
 
 	@Column(name = "Peso", precision = 53, scale = 0)
-	private Double peso;
+	private float peso;
 
 	@Column(name = "Volumen", precision = 53, scale = 0)
-	private Double volumen;
+	private float volumen;
 
 	@Column(name = "Tratamiento", length = 50)
 	private String tratamiento;
@@ -125,7 +125,7 @@ public class Encomienda implements java.io.Serializable {
 	private String dniReceptor;
 
 	@Column(name = "VolumenGranel", precision = 53, scale = 0)
-	private Double volumenGranel;
+	private float volumenGranel;
 
 	@Column(name = "UnidadGranel", length = 25)
 	private String unidadGranel;
@@ -138,6 +138,10 @@ public class Encomienda implements java.io.Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "encomienda")
 	private List<ProductoEncomienda> productoEncomiendas;
+	
+	@Column(name="EsTerciarizado")
+	private boolean terciarizado;
+	
 
 	public Encomienda() {
 	}
@@ -282,43 +286,43 @@ public class Encomienda implements java.io.Serializable {
 		this.tercerizado = tercerizado;
 	}
 
-	public Double getLargo() {
+	public float getLargo() {
 		return this.largo;
 	}
 
-	public void setLargo(Double largo) {
+	public void setLargo(float largo) {
 		this.largo = largo;
 	}
 
-	public Double getAlto() {
+	public float getAlto() {
 		return this.alto;
 	}
 
-	public void setAlto(Double alto) {
+	public void setAlto(float alto) {
 		this.alto = alto;
 	}
 
-	public Double getAncho() {
+	public float getAncho() {
 		return this.ancho;
 	}
 
-	public void setAncho(Double ancho) {
+	public void setAncho(float ancho) {
 		this.ancho = ancho;
 	}
 
-	public Double getPeso() {
+	public float getPeso() {
 		return this.peso;
 	}
 
-	public void setPeso(Double peso) {
+	public void setPeso(float peso) {
 		this.peso = peso;
 	}
 
-	public Double getVolumen() {
+	public float getVolumen() {
 		return this.volumen;
 	}
 
-	public void setVolumen(Double volumen) {
+	public void setVolumen(float volumen) {
 		this.volumen = volumen;
 	}
 
@@ -402,11 +406,11 @@ public class Encomienda implements java.io.Serializable {
 		this.dniReceptor = dniReceptor;
 	}
 
-	public Double getVolumenGranel() {
+	public float getVolumenGranel() {
 		return this.volumenGranel;
 	}
 
-	public void setVolumenGranel(Double volumenGranel) {
+	public void setVolumenGranel(float volumenGranel) {
 		this.volumenGranel = volumenGranel;
 	}
 
@@ -465,5 +469,24 @@ public class Encomienda implements java.io.Serializable {
 		p.setIdProveedor(1);
 		return p;
 	}
+
+	public Sucursal getSucursalDestno() {
+		return sucursalDestno;
+	}
+
+	public void setSucursalDestno(Sucursal sucursalDestno) {
+		this.sucursalDestno = sucursalDestno;
+	}
+
+	public boolean isTerciarizado() {
+		return terciarizado;
+	}
+
+	public void setTerciarizado(boolean terciarizado) {
+		this.terciarizado = terciarizado;
+	}
+
+	
+	
 
 }

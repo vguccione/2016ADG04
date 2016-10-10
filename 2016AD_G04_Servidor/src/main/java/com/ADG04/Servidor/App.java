@@ -295,16 +295,16 @@ public class App
 		//Creo vehiculo
 		tx.begin();
 		Vehiculo v = new Vehiculo();
-		v.setAlto(100d);
-		v.setAncho(100d);
+		v.setAlto(100f);
+		v.setAncho(100f);
 		v.setAnio("2016");
 		v.setEstado("");
 		v.setKmRecorridos(1000);
-		v.setLargo(1000d);
+		v.setLargo(1000f);
 		v.setMarca("Ford");
 		v.setModelo("Ka");
 		v.setPatente("ADJ000");
-		v.setPeso(560d);
+		v.setPeso(560f);
 		v.setTara(20);	
 		v.setRefrigerado(false);
 		

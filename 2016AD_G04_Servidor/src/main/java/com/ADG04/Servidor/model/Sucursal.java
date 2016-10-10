@@ -61,6 +61,10 @@ public class Sucursal implements java.io.Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursal")
 	private List<Vehiculo> vehiculos;
+	
+	@OneToOne
+	@JoinColumn(name="Coordenada")
+	private Coordenada coordenadas;
 
 	public Sucursal() {
 	}
@@ -168,6 +172,16 @@ public class Sucursal implements java.io.Serializable {
 
 	public void setVehiculos(List<Vehiculo> vehiculos) {
 		this.vehiculos = vehiculos;
+	}
+	
+	
+
+	public Coordenada getCoordenadas() {
+		return coordenadas;
+	}
+
+	public void setCoordenadas(Coordenada coordenadas) {
+		this.coordenadas = coordenadas;
 	}
 
 	public DTO_Sucursal toDTO(){

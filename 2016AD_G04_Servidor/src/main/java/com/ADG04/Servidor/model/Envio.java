@@ -41,7 +41,7 @@ public class Envio implements java.io.Serializable {
 	@JoinColumn(name="IdMapaDeRuta")
 	private MapaDeRuta mapaDeRuta;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "IdCoordenadaActual", nullable = false)
 	private Coordenada posicionActual;
 
@@ -205,4 +205,20 @@ public class Envio implements java.io.Serializable {
 	public void setEncomiendas(List<Encomienda> encomiendas) {
 		this.encomiendas = encomiendas;
 	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "Envio [idEnvio=" + idEnvio 
+				+ ", posicionActual=" + posicionActual + ", sucursalDestino="
+				+ sucursalDestino.getIdSucursal() + ", sucursalOrigen=" + sucursalOrigen.getIdSucursal()
+				+ ", vehiculo=" + vehiculo.getIdVehiculo() + ", estado=" + estado
+				+ ", fechaYHoraLlegadaEstimada=" + fechaYHoraLlegadaEstimada
+				+ ", fechaYHoraSalida=" + fechaYHoraSalida + ", propio="
+				+ propio + ", nroTracking=" + nroTracking + "]";
+	}
+	
+	
 }

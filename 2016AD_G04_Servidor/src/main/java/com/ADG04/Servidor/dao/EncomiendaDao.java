@@ -40,7 +40,7 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 		Timestamp fecha = Timestamp.valueOf(fminus1day);
 		
 		@SuppressWarnings("unchecked")
-		List<Encomienda> encomiendas = entityManager.createQuery("select e from Encomienda"
+		List<Encomienda> encomiendas = entityManager.createQuery("select e from Encomienda e"
 																+ " where e.fechaEstimadaEntrega = :fecha"
 																+ " and e.estado='Colocada'")
 																.setParameter("fecha", fecha)

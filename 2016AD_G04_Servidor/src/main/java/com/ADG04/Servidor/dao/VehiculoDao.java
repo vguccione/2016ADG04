@@ -36,7 +36,7 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 		String estado = (String) entityManager.createQuery("select estado from Vehiculo v"
 								+ " where v.idVehiculo =:idVehiculo")
 								.setParameter("idVehiculo", v.getIdVehiculo()).getSingleResult();
-		if(estado == EnvioEstado.Pendiente.toString() || estado == "")
+		if(estado == EnvioEstado.Pendiente.toString() || estado == "" || estado == null)
 			return true;
 		else
 			return false;
@@ -63,7 +63,7 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 		
 		for(int id: idsVehiculos){
 			Vehiculo v = this.getById(id);
-			if(this.estaUtilizable(v)){
+			if(this.estaUtilizable(v) && !this.estaAsignado(v)){
 				vehiculos.add(v);
 			}
 		}
@@ -71,27 +71,42 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 		
 	}
 
-	public List<Vehiculo> listarVehiculosEnvios(int idSucursalOrigen,
-			int idSucursalDestino, float volumen, float peso) {
+
+	private boolean estaAsignado(Vehiculo v) {
+		try{
+			Vehiculo ve = (Vehiculo) entityManager.createQuery("select e.vehiculo from Envio e "
+					+ " where e.vehiculo.idVehiculo =:idVehiculo"
+					+ " and e.estado!=:concluido")
+					.setParameter("idVehiculo", v.getIdVehiculo())
+					.setParameter("concluido", EnvioEstado.Concluido.toString())
+					.getSingleResult();
+			if(ve!=null)
+				return true;
+			else
+				return false;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public List<Vehiculo> listarVehiculosEnvios(int idSucursalDestino, float peso, float volumen) {
 		@SuppressWarnings("unchecked")
 		List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
 		@SuppressWarnings("unchecked")
-		List<Integer> idsVehiculos =  entityManager.createQuery("Select tmr.vehiculo.idVehiculo "
-															+ " from TareaMantenimientoRealizada tmr "
-															+ " join tmr.tareaMantenimiento t"
-															+ " where tmr.vehiculo.sucursal.idSucursal =:idSucursal"
-															+ " and tmr.vehiculo.volumen >= :volumen and (tmr.vehiculo.peso - tmr.vehiculo.tara) >= :peso "
-															+ " group by tmr.vehiculo, t.planMantenimiento"
-															+ " having count(*) >= (Select count(*) from "
-															+ " TareaMantenimiento tm where tm.planMantenimiento ="
-															+ " t.planMantenimiento)").setParameter("idSucursal", idSucursalOrigen)
-												.getResultList();
+		List<Integer> idsVehiculos =  entityManager.createQuery("Select e.vehiculo.idVehiculo"
+				+ " from Envio e"
+				+ " where e.sucursalDestino.idSucursal=:idSucursalDestino"
+				+ " group by e.vehiculo.idVehiculo")
+				.setParameter("idSucursalDestino", idSucursalDestino)
+				.getResultList();
 		
 		
 		
 		for(int id: idsVehiculos){
 			Vehiculo v = this.getById(id);
-			if(this.estaUtilizable(v) && EnvioDao.getInstancia().getByVehiculoYSucursal(id, idSucursalDestino)!=null){
+			if(this.estaUtilizable(v)){
 				vehiculos.add(v);
 			}
 		}

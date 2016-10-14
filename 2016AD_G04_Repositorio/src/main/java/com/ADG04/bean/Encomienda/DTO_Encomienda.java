@@ -18,6 +18,7 @@ public class DTO_Encomienda {
 	private DTO_Envio envio;
 	
 	private DTO_Sucursal sucursalOrigen;
+	private DTO_Sucursal sucursalActual;
 	private DTO_Sucursal sucursalDestino;
 	
 	private Date fechaCreacion;
@@ -77,6 +78,13 @@ public class DTO_Encomienda {
 	}
 	public void setDireccionDestino(DTO_Direccion direccionDestino) {
 		this.direccionDestino = direccionDestino;
+	}
+	
+	public DTO_Sucursal getSucursalActual() {
+		return sucursalActual;
+	}
+	public void setSucursalActual(DTO_Sucursal sucursalActual) {
+		this.sucursalActual = sucursalActual;
 	}
 	public DTO_Envio getEnvio() {
 		return envio;

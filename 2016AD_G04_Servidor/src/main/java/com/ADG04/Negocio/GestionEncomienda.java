@@ -1,6 +1,5 @@
 package com.ADG04.Negocio;
 
-import java.awt.ItemSelectable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,24 +10,18 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import com.ADG04.Servidor.dao.CarrierDao;
-import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.FacturaDao;
-import com.ADG04.Servidor.dao.ItemFacturaDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
-import com.ADG04.Servidor.dao.ProveedorDao;
-import com.ADG04.Servidor.dao.RemitoDao;
 import com.ADG04.Servidor.dao.SucursalDao;
-import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.Carrier;
 import com.ADG04.Servidor.model.Cliente;
-import com.ADG04.Servidor.model.ClienteParticular;
 import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
@@ -38,20 +31,14 @@ import com.ADG04.Servidor.model.ItemManifiesto;
 import com.ADG04.Servidor.model.ItemRemito;
 import com.ADG04.Servidor.model.Manifiesto;
 import com.ADG04.Servidor.model.Producto;
-import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.Remito;
-import com.ADG04.Servidor.model.RolUsuario;
 import com.ADG04.Servidor.model.Seguro;
 import com.ADG04.Servidor.model.ServicioSeguridad;
 import com.ADG04.Servidor.model.Sucursal;
-import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
-import com.ADG04.bean.Administracion.DTO_Direccion;
-import com.ADG04.bean.Administracion.DTO_Sucursal;
-import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
@@ -171,6 +158,105 @@ public class GestionEncomienda {
 		EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
 		tx.commit();
 	}
+	
+	public Encomienda crearEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
+		Sucursal actual = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalActual().getId());
+		Sucursal origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
+		Sucursal destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
+		Cliente cli = ClienteParticularDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
+				
+		Encomienda encomienda = new Encomienda();
+		encomienda.setCliente(cli);
+		encomienda.setSucursalActual(actual);
+		encomienda.setSucursalOrigen(origen);
+		encomienda.setSucursalDestino(destino);
+		encomienda.setLargo(dtoEncomienda.getLargo());
+		encomienda.setAncho(dtoEncomienda.getAncho());
+		encomienda.setInternacional(dtoEncomienda.isInternacional());
+		encomienda.setAlto(dtoEncomienda.getAlto());
+		encomienda.setPeso(dtoEncomienda.getPeso());
+		encomienda.setVolumen(dtoEncomienda.getVolumen());
+		encomienda.setTratamiento(dtoEncomienda.getTratamiento()); 
+		encomienda.setApilable(dtoEncomienda.getApilable());
+		encomienda.setCantApilable(dtoEncomienda.getCantApilable()); 
+		encomienda.setRefrigerado(dtoEncomienda.getRefrigerado());
+		encomienda.setCondicionTransporte(dtoEncomienda.getCondicionTransporte()); 
+		encomienda.setIndicacionesManipulacion(dtoEncomienda.getIndicacionesManipulacion());
+		encomienda.setFragilidad(dtoEncomienda.getFragilidad()); 
+		encomienda.setNombreReceptor(dtoEncomienda.getNombreReceptor()); 
+		encomienda.setApellidoReceptor(dtoEncomienda.getApellidoReceptor());
+		encomienda.setDniReceptor(dtoEncomienda.getDniReceptor()); 
+		encomienda.setVolumenGranel(dtoEncomienda.getVolumenGranel()); 
+		encomienda.setUnidadGranel(dtoEncomienda.getUnidadGranel());
+		encomienda.setCargaGranel(dtoEncomienda.getCargaGranel());		
+		encomienda.setTipoEncomienda("P");
+		encomienda.setFechaEstimadaEntrega(dtoEncomienda.getFechaEstimadaEntrega());
+		
+		encomienda.setTercerizado(dtoEncomienda.isTercerizada());
+		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
+		encomienda.setFechaCreacion(new Date());
+					
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();	
+		
+		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
+		if(dtoM != null){
+			Manifiesto m = new Manifiesto();
+			m.setEncomienda(encomienda);
+			m.setFecha(new Date());		
+			m.setEncomienda(encomienda);
+		
+			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
+				if(item!=null){
+					ItemManifiesto im = new ItemManifiesto();
+					im.setCantidad(item.getCantidad());
+					im.setDescripcion(item.getDescripcion());
+					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					im.setProducto(prod);
+					im.setManifiesto(m);
+					itemsManifiesto.add(im);
+				}
+			}
+			m.setItemsManifiesto(itemsManifiesto);
+			
+			encomienda.setManifiesto(m);
+		}
+		
+		DTO_Remito dtoR = dtoEncomienda.getRemito();
+		if(dtoR != null){
+			Remito remito = new Remito();
+			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
+			remito.setConformado(dtoR.isConformado());
+			remito.setDniReceptor(dtoR.getDniReceptor());
+			remito.setFechaConformado(dtoR.getFecha());
+			remito.setNombreReceptor(dtoR.getNombreReceptor());
+			remito.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
+			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
+			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
+			
+			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			for(DTO_ItemRemito item:dtoR.getDetalle()){
+				ItemRemito ir = new ItemRemito();
+				ir.setCantidad(item.getCantidad());
+				ir.setDescripcion(item.getDescripcion());
+				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ir.setProducto(prod);
+				ir.setRemito(remito);
+				itemsRemito.add(ir);
+			}
+			remito.setItemsRemito(itemsRemito);
+			remito.setEncomienda(encomienda);
+			encomienda.setRemito(remito);
+		}
+
+		/*Deberia persistir en cascada*/
+		Encomienda enc = EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
+		tx.commit();
+		return enc;
+		
+	}
 
 	public void modificarEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
 		Sucursal origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
@@ -270,8 +356,6 @@ public class GestionEncomienda {
 	}
 	
 	public void facturarEncomiendaParticular(int idEncomienda){
-		
-		List<ItemFactura>  detalle = new ArrayList<ItemFactura>();
 		
 		Encomienda encomienda = EncomiendaDao.getInstancia().getById(idEncomienda);
 		
@@ -561,9 +645,6 @@ public class GestionEncomienda {
 	
 	
 	public void facturarEncomiendaEmpresa(int idEncomienda){
-		
-		List<ItemFactura>  detalle = new ArrayList<ItemFactura>();
-		
 		Encomienda encomienda = EncomiendaDao.getInstancia().getById(idEncomienda);
 		
 		//Calculo la primer linea de la factura - El valor del transporte lo define la cantidad de km y el costo
@@ -641,6 +722,7 @@ public class GestionEncomienda {
 	
 	public Integer asignarEnvio(Integer idEncomienda, Integer idCarrier){
 		Encomienda e = EncomiendaDao.getInstancia().getById(idEncomienda);
+		System.out.println(e.toString());
 		if(e != null){
 			if(e.isTercerizado()){ 
 				Envio envioTercerizado = new Envio();
@@ -663,102 +745,108 @@ public class GestionEncomienda {
 			} else {
 				//Busco si ya hay algun envio que vaya a la misma ciudad
 				boolean nuevoEnvio = true;
-				List<Vehiculo> vehiculos = VehiculoDao.getInstancia().listarVehiculosEnvios(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal(), e.getVolumen(), e.getPeso());
-				for(Vehiculo v: vehiculos){
-					
-					Envio envProp = EnvioDao.getInstancia().getByVehiculo(v.getIdVehiculo());
-					
-					//Sumo los pesos y los volumenes
-					boolean pesoOK = false;
-					boolean volumenOK = false;
-					float peso = 0;
-					float volumen = 0;
-					float pesoTotal = v.getPeso() - v.getTara();
-					float volumenTotal = v.getVolumen();
-					for(Encomienda enc: envProp.getEncomiendas()){
-						peso = (float) (peso + enc.getPeso());
-						volumen = (float) (volumen + enc.getVolumen());
-					}
-					
-					//Verifico si entra el nuevo pedido
-					if(pesoTotal >= peso + e.getPeso()){
-						pesoOK = true;
-					}
-					if(volumenTotal >= volumen + e.getVolumen()){
-						volumenOK = true;
-					}
-
-					if(pesoOK && volumenOK){ //lo asigno a este envio
-						
-						List<Encomienda> encomiendas = envProp.getEncomiendas();
-						encomiendas.add(e);
-						envProp.setEncomiendas(encomiendas);
-				
-						float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
-						float peso70 = (float)(peso + e.getPeso()/pesoTotal);
-						
-						if(peso70 > 0.7 || volumen70 > 0.7){
-							envProp.setEstado("Listo");
+				List<Envio> envios = EnvioDao.getInstancia().listarEnviosPorSucursalDestino(e.getSucursalDestino().getIdSucursal(), e.getFechaEstimadaEntrega());
+				boolean pesoOK = false;
+				boolean volumenOK = false;
+				for(Envio envProp: envios){
+					if(!pesoOK || !volumenOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
+						//Sumo los pesos y los volumenes
+						float peso = 0;
+						float volumen = 0;
+						float pesoTotal = envProp.getVehiculo().getPeso() - envProp.getVehiculo().getTara();
+						float volumenTotal = envProp.getVehiculo().getVolumen();
+						for(Encomienda enc: envProp.getEncomiendas()){
+							peso = (float) (peso + enc.getPeso());
+							volumen = (float) (volumen + enc.getVolumen());
 						}
 						
-						e.setEstado(EncomiendaEstado.Colocada.toString());
-						
-						EnvioDao.getInstancia().saveOrUpdate(envProp);
-						EncomiendaDao.getInstancia().saveOrUpdate(e);
-						nuevoEnvio = false;
-						
-						
-						return envProp.getIdEnvio();
-					} 
+						//Verifico si entra el nuevo pedido
+						if(pesoTotal >= peso + e.getPeso()){
+							pesoOK = true;
+						}
+						if(volumenTotal >= volumen + e.getVolumen()){
+							volumenOK = true;
+						}
+	
+						if(pesoOK && volumenOK){ //lo asigno a este envio
+							
+							List<Encomienda> encomiendas = envProp.getEncomiendas();
+							encomiendas.add(e);
+							envProp.setEncomiendas(encomiendas);
+					
+							float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
+							float peso70 = (float)(peso + e.getPeso()/pesoTotal);
+							
+							if(peso70 > 0.7 || volumen70 > 0.7){
+								envProp.setEstado("Listo");
+							}
+							
+							e.setEstado(EncomiendaEstado.Colocada.toString());
+							
+							EnvioDao.getInstancia().saveOrUpdate(envProp);
+							EncomiendaDao.getInstancia().saveOrUpdate(e);
+							nuevoEnvio = false;
+							
+							
+							return envProp.getIdEnvio();
+						} 
+					}
 				}//End loop
 				
 				//Es un nuevo envio por que no se encontro camion disponible
 				if (nuevoEnvio){
-					//Buscar Vehiculo para asignar
+					//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<> Concluido)
 					List<Vehiculo> vehiculosDisponibles = VehiculoDao.getInstancia().listarVehiculosDisponibles(e.getSucursalOrigen().getIdSucursal(),  e.getVolumen(), e.getPeso());
+					boolean pesoNuevoOK = false;
+					boolean volumenNuevoOK = false;
+					
 					for(Vehiculo v: vehiculosDisponibles){
 						//Sumo los pesos y los volumenes
-						boolean pesoOK = false;
-						boolean volumenOK = false;
-						float pesoTotal = v.getPeso() - v.getTara();
-						float volumenTotal = v.getVolumen();
-						
-						
-						//Verifico si entra el nuevo pedido
-						if(pesoTotal >= e.getPeso()){
-							pesoOK = true;
-						}
-						if(volumenTotal >= e.getVolumen()){
-							volumenOK = true;
-						}
-						if(pesoOK && volumenOK){ //lo asigno a este envio
-							//Genero el envio
-										
-							Envio envioPropio = new Envio();
-							envioPropio.setEstado(EnvioEstado.Pendiente.toString());
-							envioPropio.setFechaYHoraSalida(new Date());
-							envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
-							envioPropio.setFechaYHoraLlegadaEstimada(null);
-							envioPropio.setVehiculo(v);
-							envioPropio.setSucursalDestino(e.getSucursalDestino());
-							List<Encomienda> lista = new ArrayList<Encomienda>();
-							lista.add(e);
-							envioPropio.setEncomiendas(lista);
-							float volumen70 = (float)(e.getVolumen()/volumenTotal);
-							float peso70 = (float)(e.getPeso()/pesoTotal);
+						if(!pesoNuevoOK || !volumenNuevoOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
+							float pesoTotal = v.getPeso() - v.getTara();
+							float volumenTotal = v.getVolumen();
 							
-							if(peso70 > 0.7 || volumen70 > 0.7){
-								e.setEstado(EncomiendaEstado.Colocada.toString());
+							
+							//Verifico si entra el nuevo pedido
+							if(pesoTotal >= e.getPeso()){
+								pesoNuevoOK = true;
 							}
-							
-							Envio envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
-							EncomiendaDao.getInstancia().saveOrUpdate(e);
-							return envio.getIdEnvio();
+							if(volumenTotal >= e.getVolumen()){
+								volumenNuevoOK = true;
+							}
+							if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
+								//Genero el envio
+											
+								Envio envioPropio = new Envio();
+								envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+								envioPropio.setFechaYHoraSalida(new Date());
+								envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
+								envioPropio.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+								envioPropio.setVehiculo(v);
+								envioPropio.setSucursalOrigen(e.getSucursalActual());
+								envioPropio.setSucursalDestino(e.getSucursalDestino());
+								List<Encomienda> lista = new ArrayList<Encomienda>();
+								lista.add(e);
+								envioPropio.setEncomiendas(lista);
+								float volumen70 = (float)(e.getVolumen()/volumenTotal);
+								float peso70 = (float)(e.getPeso()/pesoTotal);
+								
+								if(peso70 > 0.7 || volumen70 > 0.7){
+									e.setEstado(EncomiendaEstado.Colocada.toString());
+									envioPropio.setEstado("Listo");
+								}
+								
+								Envio envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
+								EncomiendaDao.getInstancia().saveOrUpdate(e);
+								return envio.getIdEnvio();
+							}
 						}
 					}//End for
 				}//End Nuevo Envio
 			}//End if else envio propio/tercerizado
 		}//End if no encontro encomienda
+		
+		
 		
 		/*Coloco el vehiculo como completo y listo para salir si hay encomiendas por vencer*/
 		List<Encomienda> encomiendasColocadasPorVencer = EncomiendaDao.getInstancia().obtenerEncomiendasColocadasPorVencerHoy();
@@ -769,6 +857,8 @@ public class GestionEncomienda {
 		return null;
 	}
 	
-	
+	public void asignarEncomiendasNoColocadasAVencer(){
+		
+	}
 	
 }

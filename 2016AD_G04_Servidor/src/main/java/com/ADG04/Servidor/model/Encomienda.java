@@ -35,7 +35,7 @@ public class Encomienda implements java.io.Serializable {
 	@JoinColumn(name = "IdDireccionDestino")
 	private Direccion direccionDestino;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdSucursalDestino", nullable = false)
 	private Sucursal sucursalDestno;
 
@@ -43,7 +43,7 @@ public class Encomienda implements java.io.Serializable {
 	@JoinColumn(name = "IdEnvio", nullable = true)
 	private Envio envio;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdSucursalOrigen", nullable = false)
 	private Sucursal sucursalOrigen;
 
@@ -51,11 +51,11 @@ public class Encomienda implements java.io.Serializable {
 	@JoinColumn(name = "IdDireccionOrigen")
 	private Direccion direccionOrigen;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdSucursalActual")
 	private Sucursal sucursalActual;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdCliente", nullable = false)
 	private Cliente cliente;
 
@@ -503,5 +503,27 @@ public class Encomienda implements java.io.Serializable {
 		this.internacional = internacional;
 	}
 
+	@Override
+	public String toString() {
+		return "Encomienda [cliente=" + cliente.getIdCliente() + ", tipoEncomienda=" + tipoEncomienda
+				+ ", fechaCreacion=" + fechaCreacion
+				+ ", fechaEstimadaEntrega=" + fechaEstimadaEntrega
+				+ ", estado=" + estado + ", tercerizado=" + tercerizado
+				+ ", largo=" + largo + ", alto=" + alto + ", ancho=" + ancho
+				+ ", peso=" + peso + ", volumen=" + volumen + ", tratamiento="
+				+ tratamiento + ", apilable=" + apilable + ", cantApilable="
+				+ cantApilable + ", refrigerado=" + refrigerado
+				+ ", condicionTransporte=" + condicionTransporte
+				+ ", indicacionesManipulacion=" + indicacionesManipulacion
+				+ ", fragilidad=" + fragilidad + ", nombreReceptor="
+				+ nombreReceptor + ", apellidoReceptor=" + apellidoReceptor
+				+ ", dniReceptor=" + dniReceptor + ", volumenGranel="
+				+ volumenGranel + ", unidadGranel=" + unidadGranel
+				+ ", cargaGranel=" + cargaGranel + ", productoEncomiendas="
+				+ productoEncomiendas + ", terciarizado=" + terciarizado +""
+						+ " internacional +" + internacional + "]";
+	}
+
+	
 	
 }

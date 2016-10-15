@@ -84,6 +84,7 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		catch(Exception e){
 			System.out.println("No hay envio pendiente para esa encomienda colocada");
 			e.printStackTrace();
+			return null;
 		}
 		return envio;
 	}

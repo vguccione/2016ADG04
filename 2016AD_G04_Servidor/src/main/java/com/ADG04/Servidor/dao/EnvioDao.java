@@ -69,6 +69,24 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		return envios;
 		
 	}
+
+	public Envio getByEncomiendaColocada(int idEncomienda) {
+		Envio envio = null;
+		try{
+			envio = (Envio) entityManager.createQuery("select e from Envio e "
+					+ " join e.encomiendas enc"
+					+ " where enc.estado='Colocada'"
+					+ " and e.estado='Pendiente'"
+					+ " and enc.idEncomienda=:idEncomienda")
+					.setParameter("idEncomienda", idEncomienda)
+					.getSingleResult();
+		}
+		catch(Exception e){
+			System.out.println("No hay envio pendiente para esa encomienda colocada");
+			e.printStackTrace();
+		}
+		return envio;
+	}
 	
 
 }

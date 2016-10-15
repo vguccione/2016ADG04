@@ -783,6 +783,10 @@ public class GestionEncomienda {
 	}
 	
 	public Integer asignarEnvio(Integer idEncomienda, Integer idCarrier){
+		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
+		 * y asi marco esos envios y vehiculos como no disponibles*/
+		ponerEnViajeEncomiendasPorVencer();
+		
 		Encomienda e = EncomiendaDao.getInstancia().getById(idEncomienda);
 		System.out.println(e.toString());
 		Integer idEnvio = null;
@@ -793,6 +797,7 @@ public class GestionEncomienda {
 					Carrier prov = CarrierDao.getInstancia().getById(idCarrier);
 					envioTercerizado.setProveedor(prov);
 				}
+				MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
 				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
 				envioTercerizado.setNroTracking(2000);
@@ -800,16 +805,18 @@ public class GestionEncomienda {
 				envioTercerizado.setSucursalDestino(e.getSucursalDestino());
 				envioTercerizado.setFechaYHoraSalida(new Date());
 				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+				envioTercerizado.setMapaDeRuta(mr);
 				List<Encomienda> lista = new ArrayList<Encomienda>();
 				lista.add(e);
 				envioTercerizado.setEncomiendas(lista);
-				
+				e.setEstado(EncomiendaEstado.Colocada.toString());
 				
 				Envio envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
+				EncomiendaDao.getInstancia().saveOrUpdate(e);
 				
 				idEnvio = envio.getIdEnvio();
 			} else {
-				//Busco si ya hay algun envio que vaya a la misma ciudad
+				//Busco si ya hay algun envio que vaya a la misma ciudad y pendientes
 				boolean nuevoEnvio = true;
 				List<Envio> envios = EnvioDao.getInstancia().listarEnviosPorSucursalDestino(e.getSucursalDestino().getIdSucursal(), e.getFechaEstimadaEntrega());
 				boolean pesoOK = false;
@@ -882,7 +889,9 @@ public class GestionEncomienda {
 							}
 							if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
 								//Genero el envio
-											
+								
+								MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+								
 								Envio envioPropio = new Envio();
 								envioPropio.setEstado(EnvioEstado.Pendiente.toString());
 								envioPropio.setFechaYHoraSalida(new Date());
@@ -891,6 +900,7 @@ public class GestionEncomienda {
 								envioPropio.setVehiculo(v);
 								envioPropio.setSucursalOrigen(e.getSucursalActual());
 								envioPropio.setSucursalDestino(e.getSucursalDestino());
+								envioPropio.setMapaDeRuta(mr);
 								List<Encomienda> lista = new ArrayList<Encomienda>();
 								lista.add(e);
 								envioPropio.setEncomiendas(lista);
@@ -913,14 +923,22 @@ public class GestionEncomienda {
 		}//End if no encontro encomienda
 		
 
-		/*Coloco el vehiculo como completo y listo para salir si hay encomiendas por vencer
-		 * TODO */
-		/*List<Encomienda> encomiendasColocadasPorVencer = EncomiendaDao.getInstancia().obtenerEncomiendasColocadasPorVencerHoy();
+		/*Coloco las encomiendas en viaje y envio en viaje si hay encomiendas por vencer*/
+		ponerEnViajeEncomiendasPorVencer();
+		
+		return idEnvio;
+	}
+	
+	public void ponerEnViajeEncomiendasPorVencer(){
+		List<Encomienda> encomiendasColocadasPorVencer = EncomiendaDao.getInstancia().obtenerEncomiendasColocadasPorVencerHoy();
 		for(Encomienda enc : encomiendasColocadasPorVencer){
 		      enc.setEstado(EncomiendaEstado.EnViaje.toString());
-		      enc.getEnvio().setEstado(EnvioEstado.VehiculoCompleto.toString());    
-		}*/
-		return idEnvio;
+		      Envio envio = EnvioDao.getInstancia().getByEncomiendaColocada(enc.getIdEncomienda());
+		      envio.setEstado(EnvioEstado.EnViaje.toString());
+		      
+			  EncomiendaDao.getInstancia().saveOrUpdate(enc);
+			  EnvioDao.getInstancia().saveOrUpdate(envio);
+		}
 	}
 	
 	public void asignarEncomiendasNoColocadasAVencer(){

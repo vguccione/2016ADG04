@@ -517,9 +517,7 @@ public class App
 		
 		tx.commit();	
 		
-		
-		
-		
+
 		/*Seguira en viaje*/
 		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(1, CoordenadaDao.getInstancia().getById(1));
 		Envio envio = EnvioDao.getInstancia().getById(1);
@@ -714,13 +712,12 @@ public class App
 			System.out.println("Encomienda Tercerizada con fecha estimada de entrega: "+ enc8.getFechaEstimadaEntrega());
 			System.out.println("sucursal origen:  "+ envio8.getSucursalOrigen().getDescripcion());
 			System.out.println("sucursal destino:  "+ envio8.getSucursalDestino().getDescripcion());
-			System.out.println("estado :  "+ envio8.getEstado());
+			System.out.println("estado envio:  "+ envio8.getEstado());
 			System.out.println("Encomienda tiene estado :  "+ enc8.getEstado());
 		}
 		else{
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 			}
-		
 		
 		EnvioDao.getInstancia().remove(envio8);
 		EncomiendaDao.getInstancia().remove(enc8);

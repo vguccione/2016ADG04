@@ -40,10 +40,6 @@ public class Encomienda implements java.io.Serializable {
 	@JoinColumn(name = "IdSucursalDestino", nullable = false)
 	private Sucursal sucursalDestno;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdEnvio", nullable = true)
-	private Envio envio;
-	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdSucursalOrigen", nullable = false)
 	private Sucursal sucursalOrigen;
@@ -160,7 +156,7 @@ public class Encomienda implements java.io.Serializable {
 	}
 
 	public Encomienda(//ItemFactura itemFactura,
-			Sucursal sucursalDestino, Envio envio,
+			Sucursal sucursalDestino, 
 			Sucursal sucursalOrigen, Cliente cliente,
 			String tipoEncomienda, Date fechaCreacion,
 			Date fechaEstimadaEntrega, String estado)//, boolean tercerizado,
@@ -214,15 +210,6 @@ public class Encomienda implements java.io.Serializable {
 			Sucursal sucursalDestino) {
 		this.sucursalDestno = sucursalDestino;
 	}
-
-	public Envio getEnvio() {
-		return this.envio;
-	}
-
-	public void setEnvio(Envio envio) {
-		this.envio = envio;
-	}
-
 
 	public Sucursal getSucursalOrigen() {
 		return this.sucursalOrigen;

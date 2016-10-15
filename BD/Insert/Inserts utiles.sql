@@ -53,7 +53,7 @@ INSERT INTO Seguro VALUES('Seguro aloja',23422,432,'Todo riesgo',3)
 INSERT INTO Proveedor VALUES(1,'22222','ss@mail.com','Servicio Seguridad','234343',2)
 INSERT INTO ServicioSeguridad VALUES('SS aloja',432,4)
 
-INSERT INTO MapaDeRuta VALUES(1000,48,1,2,100)
+INSERT INTO MapaDeRuta VALUES(1000,48,2,1,100)
 
 
 

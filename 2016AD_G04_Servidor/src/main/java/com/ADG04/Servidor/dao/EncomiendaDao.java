@@ -36,17 +36,25 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 
 	public List<Encomienda> obtenerEncomiendasColocadasPorVencerHoy() {
 		/*TODO */
-		Date hoy = new Date();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(hoy);
-	//	calendar.add(Calendar.HOUR, (int) mr.getDuracion());
+		
+		/*
+		 * select * 
+from encomienda enc
+join EncomiendaEnvio ee
+on ee.idEncomienda=enc.IdEncomienda
+join envio env
+on env.idEnvio=ee.idEnvio
+join MapaDeRuta mr
+on mr.IdMapaDeRuta=env.IdMapaDeRuta
+where enc.FechaEstimadaEntrega>=(DATEADD(hour,mr.Duracion,enc.FechaCreacion))
+		 * */
 		
 		@SuppressWarnings("unchecked")
-		List<Encomienda> encomiendas = entityManager.createQuery("select e from Envio e "
-																+ " join e.encomiendas enc"
-																+ " where e.fechaYHoraLlegadaEstimada == :fecha"
-																+ " and enc.estado='Colocada'")
-																.setParameter("fecha", calendar.getTime())
+		List<Encomienda> encomiendas = entityManager.createQuery("select enc from Encomienda enc "
+																+ " join enc.envios env"
+																+ " join env.mapaDeRuta mr"
+																+ " where enc.fechaEstimadaEntrega <="
+																+ " addhours(mr.duracion,enc.fechaCreacion)")
 																.getResultList();
 		return encomiendas;
 	}

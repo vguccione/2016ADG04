@@ -723,8 +723,9 @@ public class App
 		EncomiendaDao.getInstancia().remove(enc8);
 		
 		/* TODO
-		 * Crear metodo que tome todas las encomiendas no asignadas y las asigne lo antes posible
-		 Este metodo debera ser llamado previo a asignar una encomienda a un envio*/
+		 * 1. Metodo para cambiar de estados encomiendas y sus envios
+		 * 
+		 * */
 		
 		}
 	

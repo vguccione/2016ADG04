@@ -34,28 +34,21 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 		return instancia;
 	}
 
-	public List<Encomienda> obtenerEncomiendasColocadasPorVencerHoy() {
-		/*TODO */
-		
-		/*
-		 * select * 
-from encomienda enc
-join EncomiendaEnvio ee
-on ee.idEncomienda=enc.IdEncomienda
-join envio env
-on env.idEnvio=ee.idEnvio
-join MapaDeRuta mr
-on mr.IdMapaDeRuta=env.IdMapaDeRuta
-where enc.FechaEstimadaEntrega>=(DATEADD(hour,mr.Duracion,enc.FechaCreacion))
-		 * */
-		
-		@SuppressWarnings("unchecked")
-		List<Encomienda> encomiendas = entityManager.createQuery("select enc from Encomienda enc "
-																+ " join enc.envios env"
-																+ " join env.mapaDeRuta mr"
-																+ " where enc.fechaEstimadaEntrega <="
-																+ " addhours(mr.duracion,enc.fechaCreacion)")
-																.getResultList();
+	@SuppressWarnings("unchecked")
+	public List<Encomienda> obtenerEncomiendasColocadasPorVencerHoy() {		
+		List<Encomienda> encomiendas = new ArrayList<Encomienda>();
+		try{
+			encomiendas = entityManager.createQuery("select enc from Encomienda enc "
+																	+ " join enc.envios env"
+																	+ " join env.mapaDeRuta mr"
+																	+ " where enc.estado='Colocada'"
+																	+ " and enc.fechaEstimadaEntrega <="
+																	+ " addhours((mr.duracion-24),enc.fechaCreacion)")
+																	.getResultList();
+		}
+		catch(Exception e){
+			System.out.println("No existen encomiendas por vencer");
+		}
 		return encomiendas;
 	}
 

@@ -934,15 +934,13 @@ public class GestionEncomienda {
 		for(Encomienda enc : encomiendasColocadasPorVencer){
 		      enc.setEstado(EncomiendaEstado.EnViaje.toString());
 		      Envio envio = EnvioDao.getInstancia().getByEncomiendaColocada(enc.getIdEncomienda());
-		      envio.setEstado(EnvioEstado.EnViaje.toString());
-		      
-			  EncomiendaDao.getInstancia().saveOrUpdate(enc);
-			  EnvioDao.getInstancia().saveOrUpdate(envio);
+		      if(envio!=null){
+			      envio.setEstado(EnvioEstado.EnViaje.toString());
+			      
+				  EncomiendaDao.getInstancia().saveOrUpdate(enc);
+				  EnvioDao.getInstancia().saveOrUpdate(envio);
+		      }
 		}
 	}
-	
-	public void asignarEncomiendasNoColocadasAVencer(){
-		
-	}
-	
+
 }

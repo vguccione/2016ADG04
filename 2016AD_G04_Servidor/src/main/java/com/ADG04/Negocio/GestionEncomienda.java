@@ -954,5 +954,18 @@ public class GestionEncomienda {
 		env.setEstado(estado.toString());
 		EnvioDao.getInstancia().saveOrUpdate(env);
 	}
+	
+	public void pagarEncomienda(int idEncomienda){
+		try{
+			Encomienda enc = EncomiendaDao.getInstancia().getById(idEncomienda);
+			Factura factura = enc.getFactura();
+			factura.setPagada(true);
+			FacturaDao.getInstancia().saveOrUpdate(factura);
+		}
+		catch(Exception e){
+			System.out.println("Error al pagar encomienda");
+			e.printStackTrace();
+		}
+	}
 
 }

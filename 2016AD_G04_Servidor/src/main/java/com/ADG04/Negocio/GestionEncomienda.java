@@ -803,7 +803,8 @@ public class GestionEncomienda {
 				List<Encomienda> lista = new ArrayList<Encomienda>();
 				lista.add(e);
 				envioTercerizado.setEncomiendas(lista);
-							
+				
+				
 				Envio envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
 				
 				idEnvio = envio.getIdEnvio();
@@ -845,7 +846,7 @@ public class GestionEncomienda {
 							if(peso70 > 0.7 || volumen70 > 0.7){
 								envProp.setEstado("Listo");
 							}
-							
+						
 							e.setEstado(EncomiendaEstado.Colocada.toString());
 							
 							EnvioDao.getInstancia().saveOrUpdate(envProp);

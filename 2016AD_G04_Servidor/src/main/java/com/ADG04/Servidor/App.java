@@ -557,8 +557,9 @@ public class App
 			System.out.println("estado envio:  "+ envio.getEstado());
 			System.out.println("Encomienda tiene estado :  "+ enc.getEstado());
 			//System.out.println(envio.toString());
-			EncomiendaDao.getInstancia().remove(enc);
+			
 			EnvioDao.getInstancia().remove(envio);
+			EncomiendaDao.getInstancia().remove(enc);
 		}
 		else{
 			System.out.println("No se pudo asignar la encomienda a un envio.");
@@ -581,8 +582,9 @@ public class App
 			System.out.println("estado envio:  "+ envio2.getEstado());
 			System.out.println("Encomienda tiene estado :  "+ enc2.getEstado());
 			//System.out.println(envio.toString());
-			EncomiendaDao.getInstancia().remove(enc2);
+			
 			EnvioDao.getInstancia().remove(envio2);
+			EncomiendaDao.getInstancia().remove(enc2);
 		}
 		else{
 			System.out.println("No se pudo asignar la encomienda a un envio.");
@@ -670,9 +672,10 @@ public class App
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 			}
 		
-		EncomiendaDao.getInstancia().remove(enc3);
+		
 		EnvioDao.getInstancia().remove(envio3);
 		EnvioDao.getInstancia().remove(envio6);
+		EncomiendaDao.getInstancia().remove(enc3);
 		EncomiendaDao.getInstancia().remove(enc4);
 		EncomiendaDao.getInstancia().remove(enc5);
 		EncomiendaDao.getInstancia().remove(enc6);
@@ -699,8 +702,9 @@ public class App
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 			}
 		
-		EncomiendaDao.getInstancia().remove(enc7);
+		
 		EnvioDao.getInstancia().remove(envio7);
+		EncomiendaDao.getInstancia().remove(enc7);
 		
 		Encomienda enc8 = testEncomienda(1,2,1,100,100f,200f,100f,200f,1);
 		Envio envio8 = new Envio();
@@ -717,8 +721,9 @@ public class App
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 			}
 		
-		EncomiendaDao.getInstancia().remove(enc8);
+		
 		EnvioDao.getInstancia().remove(envio8);
+		EncomiendaDao.getInstancia().remove(enc8);
 		
 		/* TODO
 		 * Crear metodo que tome todas las encomiendas no asignadas y las asigne lo antes posible

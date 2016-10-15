@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -150,6 +151,9 @@ public class Encomienda implements java.io.Serializable {
 	
 	@Column(name="Internacional")
 	private boolean internacional;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "encomiendas")
+	private List<Envio> envios;
 	
 
 	public Encomienda() {
@@ -501,6 +505,14 @@ public class Encomienda implements java.io.Serializable {
 
 	public void setInternacional(boolean internacional) {
 		this.internacional = internacional;
+	}
+
+	public List<Envio> getEnvios() {
+		return envios;
+	}
+
+	public void setEnvios(List<Envio> envios) {
+		this.envios = envios;
 	}
 
 	@Override

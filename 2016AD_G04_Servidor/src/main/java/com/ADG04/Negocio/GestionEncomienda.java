@@ -909,7 +909,7 @@ public class GestionEncomienda {
 								
 								if(peso70 > 0.7 || volumen70 > 0.7){
 									e.setEstado(EncomiendaEstado.Colocada.toString());
-									envioPropio.setEstado("Listo");
+									envioPropio.setEstado(EnvioEstado.Pendiente.toString());
 								}
 								
 								Envio envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
@@ -941,6 +941,18 @@ public class GestionEncomienda {
 				  EnvioDao.getInstancia().saveOrUpdate(envio);
 		      }
 		}
+	}
+	
+	public void cambiarEstadoEncomienda(int idEncomienda, EncomiendaEstado estado){
+		Encomienda enc = EncomiendaDao.getInstancia().getById(idEncomienda);
+		enc.setEstado(estado.toString());
+		EncomiendaDao.getInstancia().saveOrUpdate(enc);
+	}
+	
+	public void cambiarEstadoEnvio(int idEnvio, EnvioEstado estado){
+		Envio env = EnvioDao.getInstancia().getById(idEnvio);
+		env.setEstado(estado.toString());
+		EnvioDao.getInstancia().saveOrUpdate(env);
 	}
 
 }

@@ -9,15 +9,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import com.ADG04.Servidor.dao.CoordenadaDao;
+import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.Coordenada;
+import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
 import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
@@ -60,13 +64,7 @@ public class GestionControlViajes {
 		}
 		
 		hr.setCoordenadas(lista);
-		
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
 		MapaDeRutaDao.getInstancia().persist(hr);
-
-		tx.commit();
 	}
 	
 	public void modificarMapaDeRuta(DTO_MapaDeRuta mapa){
@@ -92,8 +90,6 @@ public class GestionControlViajes {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		MapaDeRutaDao.getInstancia().saveOrUpdate(hr);
-
-		tx.commit();
 	}
 	
 	
@@ -102,16 +98,12 @@ public class GestionControlViajes {
 	 * La coordenadaActual sera obtenida del XML provisto por los vehiculos
 	 */
 	public void actualizarEstadoVehiculo(int idEnvio, Coordenada coordActual){
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		
 		Envio e = EnvioDao.getInstancia().getById(idEnvio);
 		MapaDeRuta mr = e.getMapaDeRuta();
 		List<Coordenada> lista = mr.getCoordenadas();
 		Boolean encontrado = false;
 		for(Coordenada coord: mr.getCoordenadas()){
-			if(coordActual.getLatitud()==coord.getLatitud() && coordActual.getLongitud()==coord.getLongitud()){
+			if(coordActual.getLatitud().equals(coord.getLatitud()) && coordActual.getLongitud().equals(coord.getLongitud())){
 				encontrado=true;
 			}
 		}
@@ -126,9 +118,8 @@ public class GestionControlViajes {
 				}
 			}
 		}
-		e.setPosicionActual(coordActual);
+		e.setPosicionActual(CoordenadaDao.getInstancia().getById(coordActual.getIdCoordenada()));
 		EnvioDao.getInstancia().saveOrUpdate(e);
-		tx.commit();
 	}
 	
 	public void estaEnvioDemorado(int idEnvio){
@@ -136,22 +127,24 @@ public class GestionControlViajes {
 		Date hoy = new Date();
 		if(e.getFechaYHoraLlegadaEstimada().compareTo(hoy)<0){
 			e.setEstado(EnvioEstado.Demorado.toString());
-			EntityManager em = factory.createEntityManager();
-			EntityTransaction tx = em.getTransaction();
-			tx.begin();
 			EnvioDao.getInstancia().saveOrUpdate(e);
-			tx.commit();
 		}
 	}
 	
 	public void concluirEnvio(int idEnvio){
 		Envio e = EnvioDao.getInstancia().getById(idEnvio);
-		e.setEstado(EnvioEstado.Concluido.toString());
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		EnvioDao.getInstancia().saveOrUpdate(e);
-		tx.commit();
+		Encomienda enc = EncomiendaDao.getInstancia().getByEnvio(idEnvio);
+		try{
+			enc.setEstado(EncomiendaEstado.EnSucursalDestino.toString());
+			EncomiendaDao.getInstancia().saveOrUpdate(enc);
+			e.setEstado(EnvioEstado.Concluido.toString());
+			EnvioDao.getInstancia().saveOrUpdate(e);
+		}
+		catch(Exception exc){
+			System.out.println("Error al concluir envio");
+			exc.printStackTrace();
+		}
+		
 	}
 		
 }

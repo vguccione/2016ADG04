@@ -84,9 +84,9 @@ public class App
     	//TestGetPlanes();    	
     	//crearPaisesYProvincias();
     	//TestAltaCliente();
-    	//testControlViajes();
+    	testControlViajes();
     	//TestEncomienda();
-    	testAsignarEnvios();
+    	//testAsignarEnvios();
     	//TestFacturaEncomiendaParticular();
     	
     	//TestSucursal("Sucursal Origen");
@@ -395,147 +395,53 @@ public class App
 	}
 	
 	public static void testControlViajes(){	
-		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		
-		//Creo vehiculo
-		tx.begin();
-		Vehiculo v = new Vehiculo();
-		v.setAlto(100f);
-		v.setAncho(100f);
-		v.setAnio("2016");
-		v.setEstado("");
-		v.setKmRecorridos(1000);
-		v.setLargo(1000f);
-		v.setMarca("Ford");
-		v.setModelo("Ka");
-		v.setPatente("ADJ000");
-		v.setPeso(560f);
-		v.setTara(20);	
-		v.setRefrigerado(false);
-		v.setVolumen(3333f);
-		
-		VehiculoDao.getInstancia().persist(v);	
-		tx.commit();
-		
-		//Creo sucursal origen
-		tx.begin();
-		
-		Direccion dirOrigen = new Direccion();
-		dirOrigen.setCalle("Calle a");
-		dirOrigen.setCodigoPostal(123);
-		dirOrigen.setLocalidad("localidad");
-		dirOrigen.setNro(123);
-		dirOrigen.setPais(PaisDao.getInstancia().getById(1));
-		dirOrigen.setProvincia(ProvinciaDao.getInstancia().getById(1));
-		
-		Sucursal so = new Sucursal();
-		so.setDescripcion("A");
-		so.setTelefono("767676767");
-		so.setDireccion(dirOrigen);
-		
-		SucursalDao.getInstancia().persist(so);
-		tx.commit();	
-		
-		//Creo Sucursal destino
-		tx.begin();
 
-		Direccion dirDestino = new Direccion();
-		dirDestino.setCalle("Calle bbb");
-		dirDestino.setCodigoPostal(123);
-		dirDestino.setLocalidad("localidad");
-		dirDestino.setNro(123);
-		dirDestino.setPais(PaisDao.getInstancia().getById(1));
-		dirDestino.setProvincia(ProvinciaDao.getInstancia().getById(2));
+		Encomienda enc = testEncomienda(1,2,1,100,100f,430f,100f,0f,0);
+		Integer idEnvio = GestionEncomienda.getInstancia().asignarEnvio(enc.getIdEncomienda(), null);
+		Envio envio = EnvioDao.getInstancia().getById(idEnvio);
+		System.out.println("Estado Inicial del Envio: "+envio.getEstado());
 		
-		Sucursal sd = new Sucursal();
-		sd.setDescripcion("B");
-		sd.setTelefono("34343");
-		sd.setDireccion(dirDestino);
-		
-		SucursalDao.getInstancia().persist(sd);
-		tx.commit();	
-		
-		//Creo lista de coordenadas para asociar a un mapa de rutas
-		
-		List<Coordenada> listaCoord = new ArrayList<Coordenada>();
-		listaCoord.add(new Coordenada("34°35′59″S","58°22′55″O﻿"));
-		listaCoord.add(new Coordenada("37°35′59″S","54°22′55″O﻿"));
-		listaCoord.add(new Coordenada("14°25′59″S","28°22′55″O﻿"));
-		listaCoord.add(new Coordenada("18°25′39″S","29°26′55″O﻿"));
-		for(Coordenada c:listaCoord){
-			tx.begin();
-			Coordenada coord = new Coordenada();
-			coord.setLatitud(c.getLatitud());
-			coord.setLongitud(c.getLongitud());
-			CoordenadaDao.getInstancia().persist(coord);
-			tx.commit();
-		}
-		
-		
-		//Creo mapa de ruta
-		tx.begin();
-
-		MapaDeRuta mp = new MapaDeRuta();
-		mp.setCantKm(150f);
-		mp.setDuracion(8f);
-		mp.setSucursalDestino(SucursalDao.getInstancia().getById(2));
-		mp.setSucursalOrigen(SucursalDao.getInstancia().getById(1));
-		mp.setCoordenadas(listaCoord);
-
-		MapaDeRutaDao.getInstancia().persist(mp);
-		tx.commit();	
-		
-		//Creo envio
-		tx.begin();
-		
-		Envio e = new Envio();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		try {
-			Date date = sdf.parse("2016-09-21T12:08:56.235-0700");
-			e.setFechaYHoraLlegadaEstimada(date);
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		e.setEstado(EnvioEstado.EnViaje.toString());
-		e.setFechaYHoraSalida(new Date());
-		e.setPropio(true);
-		e.setMapaDeRuta(MapaDeRutaDao.getInstancia().getById(1));
-		e.setSucursalDestino(SucursalDao.getInstancia().getById(2));
-		e.setSucursalOrigen(SucursalDao.getInstancia().getById(1));
-		e.setVehiculo(VehiculoDao.getInstancia().getById(1));
-		
-		Coordenada coordActual = new Coordenada();
-		coordActual.setLatitud("34°35′59″S");
-		coordActual.setLongitud("58°22′55″O﻿");
-		
-		e.setPosicionActual(coordActual);
-		
-		EnvioDao.getInstancia().persist(e);
-		
-		tx.commit();	
-		
-
 		/*Seguira en viaje*/
-		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(1, CoordenadaDao.getInstancia().getById(1));
-		Envio envio = EnvioDao.getInstancia().getById(1);
+		System.out.println("Estado del envio cuando sigue en curso");
+		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), CoordenadaDao.getInstancia().getById(3));
 		System.out.println(envio.getEstado());
+		
+		System.out.println("");
 		
 		/*Se indicara desviado*/
 		Coordenada coordAct = new Coordenada();
 		coordAct.setLatitud("54°35′59″S");
 		coordAct.setLongitud("48°22′55″O﻿");
+		Coordenada coord = CoordenadaDao.getInstancia().saveOrUpdate(coordAct);
 		
-		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(1, coordAct);
-		Envio envio2 = EnvioDao.getInstancia().getById(1);
-		System.out.println(envio2.getEstado());	
+		System.out.println("Estado del envio cuando se pasan coordenadas fuera de su mapa de ruta:");
+		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), coord);
+		System.out.println(envio.getEstado());	
+		
+		System.out.println("");
 		
 		/*Se indicara demorado*/
-		GestionControlViajes.getInstancia().estaEnvioDemorado(1);
-		Envio envio3 = EnvioDao.getInstancia().getById(1);
-		System.out.println(envio3.getEstado());	
+		System.out.println("Estado del envio cuando se chequea la fecha de llegada y la actual:");
+		GestionControlViajes.getInstancia().estaEnvioDemorado(envio.getIdEnvio());
+		System.out.println("Envio llegando tarde: "+envio.getEstado());	
+		
+		System.out.println("");
+		
+		Encomienda enc2 = testEncomienda(1,2,1,100,100f,430f,100f,0f,10);
+		Integer idEnvio2 = GestionEncomienda.getInstancia().asignarEnvio(enc2.getIdEncomienda(), null);
+		Envio envio2 = EnvioDao.getInstancia().getById(idEnvio2);
+		
+		/*Se indicara concluido*/
+		System.out.println("Estado del envio y su encomienda cuando llega a destino");
+		GestionControlViajes.getInstancia().concluirEnvio(envio2.getIdEnvio());
+		System.out.println("Estado del envio " + envio2.getEstado());
+		System.out.println("Estado de la encomienda: " + EncomiendaDao.getInstancia().getById(enc2.getIdEncomienda()).getEstado());
+		
+		EnvioDao.getInstancia().remove(envio);
+		EnvioDao.getInstancia().remove(envio2);
+		EncomiendaDao.getInstancia().remove(enc);
+		EncomiendaDao.getInstancia().remove(enc2);
+
 	}
 	
 	public static void testAsignarEnvios(){
@@ -721,12 +627,6 @@ public class App
 		
 		EnvioDao.getInstancia().remove(envio8);
 		EncomiendaDao.getInstancia().remove(enc8);
-		
-		/* TODO
-		 * 1. Metodo para cambiar de estados encomiendas y sus envios
-		 * 
-		 * */
-		
 		}
 	
 	

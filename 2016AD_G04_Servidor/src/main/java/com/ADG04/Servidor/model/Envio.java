@@ -42,7 +42,7 @@ public class Envio implements java.io.Serializable {
 	@JoinColumn(name="IdMapaDeRuta")
 	private MapaDeRuta mapaDeRuta;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdCoordenadaActual", nullable = false)
 	private Coordenada posicionActual;
 

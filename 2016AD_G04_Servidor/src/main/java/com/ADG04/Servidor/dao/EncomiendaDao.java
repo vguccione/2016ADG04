@@ -52,4 +52,17 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 		return encomiendas;
 	}
 
+	public Encomienda getByEnvio(int idEnvio) {
+		Encomienda enc = null;
+		try{
+			enc = (Encomienda) entityManager.createQuery("select enc from Encomienda enc"
+					+ " join enc.envios env"
+					+ " where env.idEnvio =:idEnvio").setParameter("idEnvio", idEnvio).getSingleResult();
+		}
+		catch(Exception e){
+			return null;
+		}
+		return enc;
+	}
+
 }

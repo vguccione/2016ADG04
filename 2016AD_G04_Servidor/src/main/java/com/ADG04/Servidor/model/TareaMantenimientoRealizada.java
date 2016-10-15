@@ -40,14 +40,14 @@ public class TareaMantenimientoRealizada implements java.io.Serializable {
 	@Column(name = "FechaRealizada", nullable = false, length = 23)
 	private Date fechaRealizada;
 
-	@Column(name = "CantidadKilometros", nullable = true, precision = 53, scale = 0)
-	private double cantidadKilometros;
+	@Column(name = "CantidadKilometros", nullable = true)
+	private float cantidadKilometros;
 
 	public TareaMantenimientoRealizada() {
 	}
 
 	public TareaMantenimientoRealizada(TareaMantenimiento tareaMantenimiento, Proveedor proveedor,
-			Vehiculo vehiculo, Date fechaRealizada, double cantidadKilometros) {
+			Vehiculo vehiculo, Date fechaRealizada, float cantidadKilometros) {
 		this.tareaMantenimiento = tareaMantenimiento;
 		this.proveedor = proveedor;
 		this.vehiculo = vehiculo;
@@ -98,12 +98,12 @@ public class TareaMantenimientoRealizada implements java.io.Serializable {
 	public void setFechaRealizada(Date fechaRealizada) {
 		this.fechaRealizada = fechaRealizada;
 	}
-	public double getCantidadKilometros() {
+	public float getCantidadKilometros() {
 		
 		return this.cantidadKilometros;
 	}
 
-	public void setCantidadKilometros(double cantidadKilometros) {
+	public void setCantidadKilometros(float cantidadKilometros) {
 		this.cantidadKilometros = cantidadKilometros;
 	}
 

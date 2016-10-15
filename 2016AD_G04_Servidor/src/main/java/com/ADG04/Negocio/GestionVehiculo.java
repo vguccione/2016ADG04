@@ -152,7 +152,7 @@ public class GestionVehiculo {
 		tmr.setVehiculo(v);
 		
 		tmr.setFechaRealizada(tareaMantenimientoRealizada.getFecha());
-		tmr.setCantidadKilometros(tareaMantenimientoRealizada.getCantidadKilometros());
+		tmr.setCantidadKilometros(v.getKmRecorridos());
 		
 		int idProveedor = tareaMantenimientoRealizada.getIdProveedor();
 		Proveedor p = ProveedorDao.getInstancia().getById(idProveedor);
@@ -245,7 +245,7 @@ public class GestionVehiculo {
 	}*/
 	
 		
-	public void altaVehiculo(DTO_Vehiculo vehiculo) {
+	public int altaVehiculo(DTO_Vehiculo vehiculo) {
 	
 		Vehiculo v = new Vehiculo();
 		v.setAnio(vehiculo.getAnio());
@@ -278,6 +278,8 @@ public class GestionVehiculo {
 		v.setPlanMantenimiento(pm);
 				
 		VehiculoDao.getInstancia().persist(v);
+		
+		return v.getIdVehiculo();
 	}
 /*
 	public void modificarVehiculo(DTO_Vehiculo vehiculo) {
@@ -449,5 +451,14 @@ public class GestionVehiculo {
 			}
 		}
 		return vecs;
+	}
+
+	public List<TareaMantenimiento> getTareasVencidas(int idVehiculo) {
+		
+		List<TareaMantenimiento> tareas = new ArrayList<TareaMantenimiento>(); 
+		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorKm(idVehiculo));
+		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(idVehiculo));
+		
+		return tareas;
 	}
 }

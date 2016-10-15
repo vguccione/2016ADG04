@@ -37,7 +37,7 @@ public class MapaDeRuta implements java.io.Serializable {
 	private List<Coordenada> coordenadas;
 	
 	@Column(name="Duracion")
-	private float duracion;
+	private float duracion; //en horas
 	
 	@Column(name="CantKm")
 	private float cantKm;

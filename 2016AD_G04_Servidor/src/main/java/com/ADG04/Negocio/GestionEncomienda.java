@@ -30,6 +30,7 @@ import com.ADG04.Servidor.model.ItemFactura;
 import com.ADG04.Servidor.model.ItemManifiesto;
 import com.ADG04.Servidor.model.ItemRemito;
 import com.ADG04.Servidor.model.Manifiesto;
+import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.Producto;
 import com.ADG04.Servidor.model.Remito;
 import com.ADG04.Servidor.model.Seguro;
@@ -719,12 +720,74 @@ public class GestionEncomienda {
 		tx.commit();
 	}
 	
+	public boolean esEnvioTercerizado(Encomienda encomienda){
+		if(encomienda.getVolumenGranel()!=0){
+			return true;
+		}
+		MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(encomienda.getSucursalOrigen().getIdSucursal(), encomienda.getSucursalDestino().getIdSucursal());
+		if(mr!=null){
+			Date hoy = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(hoy);
+			calendar.add(Calendar.HOUR, (int) mr.getDuracion());
+			
+			//Si tengo que enviarlo si o si hoy para que llegue y no hay vehiculos disponibles
+			if(encomienda.getFechaEstimadaEntrega().compareTo(calendar.getTime())==0 ){
+				if(!hayVehiculosDisponibles(encomienda)){
+					return true;
+				}
+				else
+					return false;
+			}
+		}
+		return false;
+	}
+	
+	
+	public boolean hayVehiculosDisponibles(Encomienda encomienda){
+		List<Vehiculo> vehiculosDisponibles = VehiculoDao.getInstancia().listarVehiculosDisponibles(encomienda.getSucursalOrigen().getIdSucursal(),  encomienda.getVolumen(), encomienda.getPeso());
+		boolean pesoOK = false;
+		boolean volumenOK = false;
+		
+		for(Vehiculo v: vehiculosDisponibles){
+			//Sumo los pesos y los volumenes
+			if(!pesoOK || !volumenOK){ //si aun no se  encontro ya vehiculo
+				float pesoTotal = v.getPeso() - v.getTara();
+				float volumenTotal = v.getVolumen();
+				float peso = 0;
+				float volumen = 0;
+				
+				Envio envio = (Envio) EnvioDao.getInstancia().getByVehiculo(v.getIdVehiculo());
+				if(envio!=null){
+					if(envio.getEstado()==EnvioEstado.Pendiente.toString()){
+						for(Encomienda enc: envio.getEncomiendas()){
+							peso = (float) (peso + enc.getPeso());
+							volumen = (float) (volumen + enc.getVolumen());
+						}
+					}
+				}		
+				//Verifico si entra el  pedido
+				if(pesoTotal >= peso + encomienda.getPeso()){
+					pesoOK = true;
+				}
+				if(volumenTotal >= volumen + encomienda.getVolumen()){
+					volumenOK = true;
+				}
+
+				if(pesoOK && volumenOK){ 
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 	public Integer asignarEnvio(Integer idEncomienda, Integer idCarrier){
 		Encomienda e = EncomiendaDao.getInstancia().getById(idEncomienda);
 		System.out.println(e.toString());
+		Integer idEnvio = null;
 		if(e != null){
-			if(e.isTercerizado()){ 
+			if(esEnvioTercerizado(e)){ 
 				Envio envioTercerizado = new Envio();
 				if(e.isInternacional()){
 					Carrier prov = CarrierDao.getInstancia().getById(idCarrier);
@@ -735,13 +798,15 @@ public class GestionEncomienda {
 				envioTercerizado.setNroTracking(2000);
 				envioTercerizado.setSucursalOrigen(e.getSucursalOrigen());
 				envioTercerizado.setSucursalDestino(e.getSucursalDestino());
+				envioTercerizado.setFechaYHoraSalida(new Date());
+				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
 				List<Encomienda> lista = new ArrayList<Encomienda>();
 				lista.add(e);
 				envioTercerizado.setEncomiendas(lista);
 							
 				Envio envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
 				
-				return envio.getIdEnvio();
+				idEnvio = envio.getIdEnvio();
 			} else {
 				//Busco si ya hay algun envio que vaya a la misma ciudad
 				boolean nuevoEnvio = true;
@@ -788,14 +853,14 @@ public class GestionEncomienda {
 							nuevoEnvio = false;
 							
 							
-							return envProp.getIdEnvio();
+							idEnvio =  envProp.getIdEnvio();
 						} 
 					}
 				}//End loop
 				
 				//Es un nuevo envio por que no se encontro camion disponible
 				if (nuevoEnvio){
-					//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<> Concluido)
+					//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<>Pendiente)
 					List<Vehiculo> vehiculosDisponibles = VehiculoDao.getInstancia().listarVehiculosDisponibles(e.getSucursalOrigen().getIdSucursal(),  e.getVolumen(), e.getPeso());
 					boolean pesoNuevoOK = false;
 					boolean volumenNuevoOK = false;
@@ -838,7 +903,7 @@ public class GestionEncomienda {
 								
 								Envio envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
 								EncomiendaDao.getInstancia().saveOrUpdate(e);
-								return envio.getIdEnvio();
+								idEnvio =  envio.getIdEnvio();
 							}
 						}
 					}//End for
@@ -846,15 +911,15 @@ public class GestionEncomienda {
 			}//End if else envio propio/tercerizado
 		}//End if no encontro encomienda
 		
-		
-		
-		/*Coloco el vehiculo como completo y listo para salir si hay encomiendas por vencer*/
-		List<Encomienda> encomiendasColocadasPorVencer = EncomiendaDao.getInstancia().obtenerEncomiendasColocadasPorVencerHoy();
+
+		/*Coloco el vehiculo como completo y listo para salir si hay encomiendas por vencer
+		 * TODO */
+		/*List<Encomienda> encomiendasColocadasPorVencer = EncomiendaDao.getInstancia().obtenerEncomiendasColocadasPorVencerHoy();
 		for(Encomienda enc : encomiendasColocadasPorVencer){
 		      enc.setEstado(EncomiendaEstado.EnViaje.toString());
 		      enc.getEnvio().setEstado(EnvioEstado.VehiculoCompleto.toString());    
-		}
-		return null;
+		}*/
+		return idEnvio;
 	}
 	
 	public void asignarEncomiendasNoColocadasAVencer(){

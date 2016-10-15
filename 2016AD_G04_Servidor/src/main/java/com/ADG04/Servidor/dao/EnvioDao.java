@@ -59,7 +59,7 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		@SuppressWarnings("unchecked")
 		List<Envio> envios = entityManager.createQuery("from Envio e"
 				+ " where e.sucursalDestino.idSucursal=:idSucursal"
-				+ " and e.estado!='Concluido'"
+				+ " and e.estado='Pendiente'"
 				+ " and e.fechaYHoraLlegadaEstimada >=:fecha"
 				+ " ORDER BY e.fechaYHoraLlegadaEstimada ASC")
 				.setParameter("idSucursal", idSucursalDestino)

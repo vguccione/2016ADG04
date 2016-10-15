@@ -87,6 +87,7 @@ public class Vehiculo implements java.io.Serializable {
 
 	@Column(name="FechaIngreso", nullable=false)
 	private Date FechaIngreso;
+	
 
 	public Vehiculo() {
 	}

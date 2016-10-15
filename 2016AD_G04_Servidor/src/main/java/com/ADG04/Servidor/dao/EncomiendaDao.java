@@ -9,11 +9,11 @@ import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,15 +35,18 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 	}
 
 	public List<Encomienda> obtenerEncomiendasColocadasPorVencerHoy() {
-		LocalDateTime timePoint = LocalDateTime.now();
-		LocalDateTime fminus1day = timePoint.minusDays(1);
-		Timestamp fecha = Timestamp.valueOf(fminus1day);
+		/*TODO */
+		Date hoy = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(hoy);
+	//	calendar.add(Calendar.HOUR, (int) mr.getDuracion());
 		
 		@SuppressWarnings("unchecked")
-		List<Encomienda> encomiendas = entityManager.createQuery("select e from Encomienda e"
-																+ " where e.fechaEstimadaEntrega = :fecha"
-																+ " and e.estado='Colocada'")
-																.setParameter("fecha", fecha)
+		List<Encomienda> encomiendas = entityManager.createQuery("select e from Envio e "
+																+ " join e.encomiendas enc"
+																+ " where e.fechaYHoraLlegadaEstimada == :fecha"
+																+ " and enc.estado='Colocada'")
+																.setParameter("fecha", calendar.getTime())
 																.getResultList();
 		return encomiendas;
 	}

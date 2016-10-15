@@ -74,21 +74,22 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 
 	private boolean estaAsignado(Vehiculo v) {
 		try{
-			Vehiculo ve = (Vehiculo) entityManager.createQuery("select e.vehiculo from Envio e "
+			long asignado = 0;
+			asignado = (long) entityManager.createQuery("select count(*) from Envio e "
 					+ " where e.vehiculo.idVehiculo =:idVehiculo"
-					+ " and e.estado!=:concluido")
+					+ " and e.estado!=:pendiente")
 					.setParameter("idVehiculo", v.getIdVehiculo())
-					.setParameter("concluido", EnvioEstado.Concluido.toString())
+					.setParameter("pendiente", EnvioEstado.Pendiente.toString())
 					.getSingleResult();
-			if(ve!=null)
-				return true;
-			else
+			if(asignado == 0)
 				return false;
+			else
+				return true;
 		}
 		catch(Exception e){
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	public List<Vehiculo> listarVehiculosEnvios(int idSucursalDestino, float peso, float volumen) {

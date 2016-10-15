@@ -44,12 +44,16 @@ INSERT INTO TallerMecanico VALUES(2124,'lubricentro',2)
 INSERT INTO TareaMantenimientoRealizada VALUES(1000,GETDATE(),1,1,1)
 INSERT INTO TareaMantenimientoRealizada VALUES(null,GETDATE(),1,2,1)
 INSERT INTO TareaMantenimientoRealizada VALUES(1500,GETDATE(),2,3,2)
+INSERT INTO TareaMantenimientoRealizada VALUES(1000,GETDATE(),1,3,3)
+INSERT INTO TareaMantenimientoRealizada VALUES(null,GETDATE(),1,4,3)
 
 INSERT INTO Proveedor VALUES(1,'111111','seguro@mail.com','Seguro','234343',1)
 INSERT INTO Seguro VALUES('Seguro aloja',23422,432,'Todo riesgo',3)
 
 INSERT INTO Proveedor VALUES(1,'22222','ss@mail.com','Servicio Seguridad','234343',2)
 INSERT INTO ServicioSeguridad VALUES('SS aloja',432,4)
+
+INSERT INTO MapaDeRuta VALUES(1000,48,1,2,100)
 
 
 

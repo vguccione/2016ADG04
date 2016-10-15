@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -74,14 +75,15 @@ public class Envio implements java.io.Serializable {
 	@Column(name = "NroTracking")
 	private Integer nroTracking;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "envio")
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "EncomiendaEnvio", joinColumns = {
+			@JoinColumn(name = "idEnvio", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "idEncomienda",
+					nullable = false, updatable = false) })
 	private List<Encomienda> encomiendas;
 
 	public Envio() {
 	}
-
-	
-
 
 	public Envio(Vehiculo vehiculo, String estado,
 			Date fechaYHoraLlegadaEstimada, Date fechaYHoraSalida,

@@ -2,7 +2,7 @@ package com.ADG04.bean.Vehiculo;
 
 import java.io.Serializable;
 
-public abstract class DTO_TareaMantenimiento implements Serializable{
+public  class DTO_TareaMantenimiento implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;

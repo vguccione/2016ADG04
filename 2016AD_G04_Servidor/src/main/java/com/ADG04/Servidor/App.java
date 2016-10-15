@@ -37,6 +37,7 @@ import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.Pais;
 import com.ADG04.Servidor.model.Provincia;
 import com.ADG04.Servidor.model.Sucursal;
+import com.ADG04.Servidor.model.TareaMantenimiento;
 import com.ADG04.Servidor.model.TareaMantenimientoPorKm;
 import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.Servidor.util.EntityManagerProvider;
@@ -70,23 +71,23 @@ public class App
 {
     public static void main( String[] args )
     {
-    	//TestTareasVencidas();
+    	//TestTareasVencidas(20);
     	
-    	//TestRealizarTareaPorKm();
-    	//TestRealizarTareaPorTiempo();
-    	//generarVehiculoTest("Mercedez Benz", "Camion1", "2010", "AAA001",1);   	
-    	//generarVehiculoTest("Mercedez Benz", "Camion2", "2011", "AAA002",2);
-    	//generarVehiculoTest("Mercedez Benz", "Camion3", "2012", "AAA003",1);
-    	//generarVehiculoTest("Mercedez Benz", "Camion4", "2013", "AAA004",2);
+    	//TestCrearPlanesYTareasYVehiculos();
+
+    //	TestRealizarTareas();
+    	generarVehiculoTest("Toyota", "Toyota 1", "2016", "AAA010", 10);
     	
-    	//TestCrearPlanesYTareas();
-    	
+    	Vehiculo v = VehiculoDao.getInstancia().getById(23);
+    	System.out.println(v.getFechaIngreso().getYear()); 
+    	System.out.println(v.getFechaIngreso().getMonth());
+    	System.out.println(v.getFechaIngreso().getDay());
     	//TestGetPlanes();    	
     	//crearPaisesYProvincias();
     	//TestAltaCliente();
     	//testControlViajes();
     	//TestEncomienda();
-    	testAsignarEnvios();
+    	//testAsignarEnvios();
     	//TestFacturaEncomiendaParticular();
     	
     	//TestSucursal("Sucursal Origen");
@@ -96,20 +97,45 @@ public class App
     //	TestUsuario();
     }
     
-    private static void TestTareasVencidas(){
-    	PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(6);
-    }
-    
-    private static void TestCrearPlanesYTareas(){
-    	int idPm = TestAddPlanMantenimiento("Mantenimiento de un Mercedes 1");
-    	TestAddTareasToPlan("Cambiar ruedas 1", 123, "Cambiar aceite 1", 230,idPm);
-    	idPm = TestAddPlanMantenimiento("Mantenimiento de un Mercedes 2");
-    	TestAddTareasToPlan("Cambiar ruedas 2", 678, "Cambiar aceite 2", 1230,idPm);
-    }
-    
-    private static void TestGetPlanes() {
+    private static void TestRealizarTareas() {
+		
+    	TestRealizarTareaPorKm(20,1,19);
+    	TestRealizarTareaPorTiempo(20,1,20);
+		
+	}
 
-    	int idVehiculo = 6;
+	private static void TestTareasVencidas(int idVehiculo){
+    	
+		List<TareaMantenimiento> tareas = GestionVehiculo.getInstancia().getTareasVencidas(idVehiculo); 
+		System.out.println("\n----------------Tareas que deben realizarse:-----------------------------");		    	
+    	for(TareaMantenimiento t :tareas){
+    		System.out.println(t.getTarea());
+    	}
+    	System.out.println("---------------------------------------------------\n");
+    }
+    
+    private static void TestCrearPlanesYTareasYVehiculos(){
+    	int idPm1 = TestAddPlanMantenimiento("Mantenimiento de un Mercedes 1");
+    	TestAddTareasToPlan("Cambiar ruedas 1", 123, "Cambiar aceite 1", 230,idPm1);
+    	int idPm2 = TestAddPlanMantenimiento("Mantenimiento de un Mercedes 2");
+    	TestAddTareasToPlan("Cambiar ruedas 2", 678, "Cambiar aceite 2", 1230,idPm2);
+    	    	
+    	int idVeh1 = generarVehiculoTest("Mercedez Benz", "Camion1", "2010", "AAA001",idPm1);   	
+    	int idVeh2 =generarVehiculoTest("Mercedez Benz", "Camion2", "2011", "AAA002",idPm2);
+    	int idVeh3 =generarVehiculoTest("Mercedez Benz", "Camion3", "2012", "AAA003",idPm1);
+    	int idVeh4 =generarVehiculoTest("Mercedez Benz", "Camion4", "2013", "AAA004",idPm2);
+    	
+    	TestGetPlanes(idVeh1);
+    	TestGetPlanes(idVeh2);
+    	TestGetPlanes(idVeh3);
+    	TestGetPlanes(idVeh4);
+    }
+    
+    
+    private static void TestGetPlanes(int idVehiculo) {
+   	
+    	System.out.println("---------------------------Planes de mantenimiento - Vehiculo: " + idVehiculo + "---------------------");
+    	
     	DTO_PlanMantenimiento planDTO = GestionVehiculo.getInstancia().getPlanByVehiculo(idVehiculo);
     	System.out.println(planDTO.getDescripcion());
     	System.out.println("------------------------------------------------------------");
@@ -185,11 +211,7 @@ public class App
     	int idTarea = GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXTiempo);
     }
 
-    private static void TestRealizarTareaPorKm(){
-
-    	int idVehiculo = 3;
-    	int idProveedor = 1;
-    	int idTarea = 3;
+    private static void TestRealizarTareaPorKm(int idVehiculo, int idProveedor, int idTarea){
     	
     	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
     	tRealizada.setFecha(new Date());
@@ -199,12 +221,8 @@ public class App
     	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
     }
     
-    private static void TestRealizarTareaPorTiempo(){
+    private static void TestRealizarTareaPorTiempo(int idVehiculo, int idProveedor, int idTarea){
 
-    	int idVehiculo = 3;
-    	int idProveedor = 1;
-    	int idTarea = 4;
-    	
     	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
     	tRealizada.setFecha(new Date());
     	tRealizada.setIdProveedor(idProveedor);
@@ -361,7 +379,7 @@ public class App
     	GestionEncomienda.getInstancia().altaEncomiendaParticular(encomienda);
     }
     
-	public static void generarVehiculoTest(String marca, String modelo, String anio, String patente, int idPm){
+	public static int generarVehiculoTest(String marca, String modelo, String anio, String patente, int idPm){
 		
 		//buscar el plan
 			
@@ -380,7 +398,11 @@ public class App
 		v.setTara(20);	
 		v.setRefrigerado(false);
 		v.setVolumen(3333f);
-		v.setFechaIngreso(new Date(2016,01,01));
+		Date date = new Date();
+		date.setYear(2016);
+		date.setMonth(01);
+		date.setDate(1);
+		v.setFechaIngreso(new Date("01/01/2016"));
 		
 		DTO_PlanMantenimiento plan = new DTO_PlanMantenimiento();
 		plan.setId(idPm);
@@ -390,7 +412,7 @@ public class App
 		su.setId(1);
 		v.setSucursal(su);
 		
-		GestionVehiculo.getInstancia().altaVehiculo(v);
+		return GestionVehiculo.getInstancia().altaVehiculo(v);
 		
 	}
 	
@@ -556,8 +578,8 @@ public class App
 			System.out.println("Encomienda tiene estado :  "+ enc.getEstado());
 			//System.out.println(envio.toString());
 			
-			EnvioDao.getInstancia().remove(envio);
-			EncomiendaDao.getInstancia().remove(enc);
+			//EnvioDao.getInstancia().remove(envio);
+			//EncomiendaDao.getInstancia().remove(enc);
 		}
 		else{
 			System.out.println("No se pudo asignar la encomienda a un envio.");
@@ -581,8 +603,8 @@ public class App
 			System.out.println("Encomienda tiene estado :  "+ enc2.getEstado());
 			//System.out.println(envio.toString());
 			
-			EnvioDao.getInstancia().remove(envio2);
-			EncomiendaDao.getInstancia().remove(enc2);
+			//EnvioDao.getInstancia().remove(envio2);
+			//EncomiendaDao.getInstancia().remove(enc2);
 		}
 		else{
 			System.out.println("No se pudo asignar la encomienda a un envio.");
@@ -671,13 +693,13 @@ public class App
 			}
 		
 		
-		EnvioDao.getInstancia().remove(envio3);
+		/*EnvioDao.getInstancia().remove(envio3);
 		EnvioDao.getInstancia().remove(envio6);
 		EncomiendaDao.getInstancia().remove(enc3);
 		EncomiendaDao.getInstancia().remove(enc4);
 		EncomiendaDao.getInstancia().remove(enc5);
 		EncomiendaDao.getInstancia().remove(enc6);
-		
+		/*
 		
 		
 		
@@ -701,8 +723,8 @@ public class App
 			}
 		
 		
-		EnvioDao.getInstancia().remove(envio7);
-		EncomiendaDao.getInstancia().remove(enc7);
+		//EnvioDao.getInstancia().remove(envio7);
+		//EncomiendaDao.getInstancia().remove(enc7);
 		
 		Encomienda enc8 = testEncomienda(1,2,1,100,100f,200f,100f,200f,1);
 		Envio envio8 = new Envio();
@@ -719,8 +741,8 @@ public class App
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 			}
 		
-		EnvioDao.getInstancia().remove(envio8);
-		EncomiendaDao.getInstancia().remove(enc8);
+		//EnvioDao.getInstancia().remove(envio8);
+		//EncomiendaDao.getInstancia().remove(enc8);
 		
 		/* TODO
 		 * 1. Metodo para cambiar de estados encomiendas y sus envios

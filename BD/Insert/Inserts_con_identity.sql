@@ -1,4 +1,4 @@
-﻿--USE [distribucionPaquetes]
+--USE [distribucionPaquetes]
 --GO
 
 use ad2016_new
@@ -35,6 +35,8 @@ INSERT INTO provincia (IdProvincia, Descripcion, IdPais) VALUES(1,'Buenos Aires'
 INSERT INTO provincia (IdProvincia, Descripcion, IdPais) VALUES(2,'Mendoza',1)
 INSERT INTO provincia (IdProvincia, Descripcion, IdPais) VALUES(3,'Cordoba',1)
 INSERT INTO provincia (IdProvincia, Descripcion, IdPais) VALUES(4,'La Pampa',1)
+INSERT INTO provincia (IdProvincia, Descripcion, IdPais) VALUES(5,'Santa Fe',1)
+INSERT INTO provincia (IdProvincia, Descripcion, IdPais) VALUES(6,'Capital Federal',1)
 
 SET IDENTITY_INSERT dbo.provincia off;  
 GO  
@@ -45,6 +47,29 @@ GO
 
 INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(1,'Calle prueba a', 1231,'Capital Federal', 222, 1, 1)
 INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(2,'Calle prueba b', 1231,'Rosario', 222, 1, 3)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(3,'Calle prueba c', 3466,'San Rafael', 222, 1, 2)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(4,'Calle prueba 4', 4444,'Lanus', 444, 1, 1)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(5,'Calle prueba 5', 5555,'Mar del Plata', 555, 1, 1)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(6,'Calle prueba 6', 6666,'Campana', 666, 1, 1)
+
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(7,'Calle prueba 7', 7777,'Cordoba', 777, 1, 3)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(8,'Calle prueba 8', 8888,'Villa Gral Belgrano', 888, 1, 3)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(9,'Calle prueba 9', 9999,'Rio Cuarto', 999, 1, 3)
+
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(10,'Calle prueba 10', 1010,'Mendoza', 101, 1, 2)INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(4,'Calle prueba 4', 4444,'Lanus', 444, 1, 1)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(5,'Calle prueba 5', 5555,'Mar del Plata', 555, 1, 1)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(6,'Calle prueba 6', 6666,'Campana', 666, 1, 1)
+
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(7,'Calle prueba 7', 7777,'Cordoba', 777, 1, 3)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(8,'Calle prueba 8', 8888,'Villa Gral Belgrano', 888, 1, 3)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(9,'Calle prueba 9', 9999,'Rio Cuarto', 999, 1, 3)
+
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(10,'Calle prueba 10', 1010,'Mendoza', 101, 1, 2)
+INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(11,'Calle prueba 11', 1111,'Capital Federal', 110, 1, 6)
+
+update direccion set calle = 'Calle prueba ' + cast(IdDireccion as varchar)
+update Direccion set Localidad='La Plata' where IdDireccion=1
+update Direccion set IdProvincia=5 where IdDireccion=2
 
 SET IDENTITY_INSERT dbo.direccion off;  
 GO  
@@ -64,9 +89,29 @@ GO
 
 SET IDENTITY_INSERT dbo.cliente ON;  
 GO  
-INSERT INTO Cliente ([IdCliente],[TipoCliente],[Email],[Estado],[Telefono],[Cuit],[RazonSocial],[Apellido],[Dni],[Nombre],[IdDireccion],[IdCuentaCorriente]) 
-VALUES(1,'p','email@email.com',1,'1231231','13123122','','Lopez','34242342', 'Pepe',2,null)
 
+INSERT INTO Cliente ([IdCliente],[TipoCliente],[Email],[Estado],[Telefono],[Cuit],[RazonSocial],[Apellido],[Dni],[Nombre],[IdDireccion],[IdCuentaCorriente]) 
+VALUES(1,'p','email@email.com',1,'1231231','13123122','','Lopez','34242342', 'Pepe',1,null)
+
+INSERT INTO Cliente ([IdCliente],[TipoCliente],[Email],[Estado],[Telefono],[Cuit],[RazonSocial],[Apellido],[Dni],[Nombre],[IdDireccion],[IdCuentaCorriente]) 
+VALUES(2,'e','empresa2@empresa2.com',1,'22222222','22222222222','Empresa 2',null,null, null,2,null)
+
+INSERT INTO Cliente ([IdCliente],[TipoCliente],[Email],[Estado],[Telefono],[Cuit],[RazonSocial],[Apellido],[Dni],[Nombre],[IdDireccion],[IdCuentaCorriente]) 
+VALUES(3,'e','empresa3@empresa3.com',1,'33333333','22222222222','Empresa 3',null,null, null,3,null)
+
+INSERT INTO Cliente ([IdCliente],[TipoCliente],[Email],[Estado],[Telefono],[Cuit],[RazonSocial],[Apellido],[Dni],[Nombre],[IdDireccion],[IdCuentaCorriente]) 
+VALUES(4,'e','empresa4@empresa4.com',1,'44444444','22222222222','Empresa 4',null,null, null,4,null)
+
+INSERT INTO Cliente ([IdCliente],[TipoCliente],[Email],[Estado],[Telefono],[Cuit],[RazonSocial],[Apellido],[Dni],[Nombre],[IdDireccion],[IdCuentaCorriente]) 
+VALUES(5,'p','emailCliente5@cliente5.com',1,'55555555',null,null,null,'55555555', 3,5,null)
+
+update Cliente set RazonSocial='Empresa'+ cast(idcliente as varchar), Apellido=null,Nombre=null, dni=null, 
+email = 'emailEmpresa' + cast(idcliente as varchar) + '@empresa' + cast(idcliente as varchar)+'.com' where  TipoCliente='e'
+
+update Cliente set Nombre='Nombre'+ cast(idcliente as varchar), Apellido='Apellido'+ cast(idcliente as varchar), cuit=null,RazonSocial=null,
+email = 'emailCliente' + cast(idcliente as varchar) + '@cliente' + cast(idcliente as varchar)+'.com' where  TipoCliente='p'
+
+update Cliente set IdDireccion = IdCliente
 
 SET IDENTITY_INSERT dbo.cliente off;  
 GO  

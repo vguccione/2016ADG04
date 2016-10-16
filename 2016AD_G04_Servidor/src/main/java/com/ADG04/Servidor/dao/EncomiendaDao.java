@@ -65,4 +65,25 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 		return enc;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Encomienda> getEncomiendasPendientesBySucursal(int idSucursal) {
+		
+		//Tengo que buscar las encomiendas que no tienen envios asignados, en la sucursal determinada
+		/*select * from Encomienda e 
+		left outer join  Encomiendaenvio ee on ee.idEncomienda=e.IdEncomienda
+		where ee.idEncomienda is null*/
+		
+		List<Encomienda> encs = (List<Encomienda>)entityManager.createQuery("select enc from Encomienda enc where "
+				+ "enc.sucursalOrigen.idSucursal =:idSuc").setParameter("idSuc", idSucursal).getResultList();
+		
+		List<Encomienda> encsPendientes = new ArrayList<Encomienda>();
+    	for(Encomienda e:encs){
+    		if(e.getEnvios() == null || e.getEnvios().isEmpty()){
+    			encsPendientes.add(e);
+    		}
+    	}
+				 
+		return encsPendientes;
+	}
+
 }

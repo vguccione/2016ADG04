@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
@@ -23,12 +24,30 @@ public class EncomiendasTest {
 		String ok = getStringFromConsole("Agregar otra encomienda (si/no)?");
 		
 		while(ok.equals("si")){
-			System.out.println("dddddddddddd");
 			AltaEncomiendaParticular();
+			ok = getStringFromConsole("Agregar otra encomienda (si/no)?");
 		}
-		
-		System.out.println("ponerEnViajeEncomiendasPorVencer");
-		ponerEnViajeEncomiendasPorVencer();
+
+		System.out.println("----------------------------------------------");
+		int idSucursal = getIntFromConsole("Buscar encomiendas pendientes. Ingrese id sucursal:  ");
+	
+		//busco encomiendas pendientes y las asigno a envios
+
+    	List<Encomienda> es = EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
+    	for(Encomienda e:es){
+    		System.out.println(e.getIdEncomienda());
+    	}
+    	
+    	int idEncomienda = getIntFromConsole("Ingrese Id encomienda para asignar envio: ");
+		asignarEnvios(idSucursal, idEncomienda);
+		ok = getStringFromConsole("Asignar envío a otra encomienda (si/no)?");
+    	while(ok.equals("si")){
+    		idEncomienda = getIntFromConsole("Ingrese Id encomienda para asignar envio: ");
+    		asignarEnvios(idSucursal, idEncomienda);
+    		ok = getStringFromConsole("Asignar envío a otra encomienda (si/no)?");
+    	}
+    	System.out.println("----------------------------------------------");
+		//ponerEnViajeEncomiendasPorVencer();
 		//Armar los envios
 		/*
 		testControlViajes();
@@ -45,6 +64,32 @@ public class EncomiendasTest {
 		
 	}
 	
+
+	private static void asignarEnvios(int idSucursal, int idEncomienda) throws RemoteException {
+
+		DistribucionPaquetesRMI bDelegate = new DistribucionPaquetesRMI();
+		
+		System.out.println("----------Encomienda: "+idEncomienda+"--------------------------------");
+		Integer idenvio = bDelegate.gestionarEnvioEncomienda(idEncomienda);			
+		if(idenvio == null){
+			System.out.println("----------La encomienda no se pudo asignar a un envío--------------------------------");
+		}
+		else
+		{
+			System.out.println("----------La encomienda saldrá por el envío: "+ idenvio + "--------------------------------");
+			System.out.println("Info del envío: ");
+			DTO_EnvioPropio envio = bDelegate.getInfoEnvioPropio(idenvio);
+			System.out.println("Id envio: "+envio.getId());
+			System.out.println("Fecha y  hora de llegada: "+ envio.getFechaYHoraLlegada());
+			System.out.println("Vehiculo: "+envio.getIdVehiculo());
+			System.out.println("Estado envío: "+envio.getEstado());
+			
+			System.out.println(envio.toString());
+		}
+		
+		
+	}
+
 
 	private static String getStringFromConsole(String msg) throws IOException{
 		System.out.print(msg);

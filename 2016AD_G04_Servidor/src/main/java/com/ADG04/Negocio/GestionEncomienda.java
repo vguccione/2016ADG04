@@ -987,4 +987,12 @@ public class GestionEncomienda {
 			return null;
 	}
 
+	/**
+	 * Encomiendas que aun no se asignaron a un envío
+	 * @return
+	 */
+	public List<Encomienda> getEncomiendasPendientesBySucursal(int idSucursal){
+		//TODO: hacer
+		return EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
+	}
 }

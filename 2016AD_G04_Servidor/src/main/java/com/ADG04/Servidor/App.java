@@ -73,8 +73,8 @@ public class App
 
     public static void main( String[] args ) throws IOException
     {
-    	
-    	EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
+    	VehiculosTest.TestVehiculos();
+    	//EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
     	//TestTareasVencidas(20);
     	
     	//TestCrearPlanesYTareasYVehiculos();
@@ -96,74 +96,10 @@ public class App
     	
  //   	TestPaisDao();
     //	TestUsuario();
+    	
+    	System.exit(0);
     }
     
-    private static void TestRealizarTareas() {
-		
-    	TestRealizarTareaPorKm(20,1,19);
-    	TestRealizarTareaPorTiempo(20,1,20);
-		
-	}
-
-	private static void TestTareasVencidas(int idVehiculo){
-    	
-		List<TareaMantenimiento> tareas = GestionVehiculo.getInstancia().getTareasVencidas(idVehiculo); 
-		System.out.println("\n----------------Tareas que deben realizarse:-----------------------------");		    	
-    	for(TareaMantenimiento t :tareas){
-    		System.out.println(t.getTarea());
-    	}
-    	System.out.println("---------------------------------------------------\n");
-    }
-    
-    private static void TestCrearPlanesYTareasYVehiculos(){
-    	int idPm1 = TestAddPlanMantenimiento("Mantenimiento de un Mercedes 1");
-    	TestAddTareasToPlan("Cambiar ruedas 1", 123, "Cambiar aceite 1", 230,idPm1);
-    	int idPm2 = TestAddPlanMantenimiento("Mantenimiento de un Mercedes 2");
-    	TestAddTareasToPlan("Cambiar ruedas 2", 678, "Cambiar aceite 2", 1230,idPm2);
-    	    	
-    	int idVeh1 = generarVehiculoTest("Mercedez Benz", "Camion1", "2010", "AAA001",idPm1);   	
-    	int idVeh2 =generarVehiculoTest("Mercedez Benz", "Camion2", "2011", "AAA002",idPm2);
-    	int idVeh3 =generarVehiculoTest("Mercedez Benz", "Camion3", "2012", "AAA003",idPm1);
-    	int idVeh4 =generarVehiculoTest("Mercedez Benz", "Camion4", "2013", "AAA004",idPm2);
-    	
-    	TestGetPlanes(idVeh1);
-    	TestGetPlanes(idVeh2);
-    	TestGetPlanes(idVeh3);
-    	TestGetPlanes(idVeh4);
-    }
-    
-    
-    private static void TestGetPlanes(int idVehiculo) {
-   	
-    	System.out.println("---------------------------Planes de mantenimiento - Vehiculo: " + idVehiculo + "---------------------");
-    	
-    	DTO_PlanMantenimiento planDTO = GestionVehiculo.getInstancia().getPlanByVehiculo(idVehiculo);
-    	System.out.println(planDTO.getDescripcion());
-    	System.out.println("------------------------------------------------------------");
-    	System.out.println("------------------------------------------------------------");
-    	System.out.println("Plan de mantenimiento del vehiculo " + idVehiculo);
-    	System.out.println(planDTO.getDescripcion());
-    	System.out.println(planDTO.getId());
-    	
-    	System.out.println("------------------------------------------------------------");
-    	System.out.println("Tareas por KMs:");
-    	for(DTO_TareasPorKilometro t:planDTO.getTareasPorKM()){
-    		System.out.println(t.getTarea());
-    		System.out.println(t.getCantidadKilometros());
-    		System.out.println(t.getId());
-    	}
-    	System.out.println("------------------------------------------------------------");
-    	System.out.println("Tareas por Tiempo:");
-    	for(DTO_TareasPorTiempo t:planDTO.getTareasPorTiempo()){
-    		System.out.println(t.getTarea());
-    		System.out.println(t.getCantidadDias());
-    		System.out.println(t.getId());
-    	}
-    	
-    	System.out.println("------------------------------------------------------------");
-    	System.out.println("------------------------------------------------------------");
-	}
-
 	private static void crearPaisesYProvincias(){
     	DTO_Pais pais = new DTO_Pais();
     	pais.setDescripcion("Argentina");
@@ -181,58 +117,7 @@ public class App
     	pais.setDescripcion("Peru");
     	GestionAdministracion.getInstancia().altaPais(pais);
     }
-    /**
-     * Alta de 1 plan de mantenimiento, con una tarea de km y una por tiempo.
-     */
-    private static int TestAddPlanMantenimiento(String descPlan) {
-		
-    	DTO_PlanMantenimiento pm = new DTO_PlanMantenimiento();
-    	pm.setComentarios("Comentarios: " + descPlan);
-    	pm.setDescripcion(descPlan);
-    	pm.setTolerancia(123);
-    	
-    	int idPm = GestionVehiculo.getInstancia().altaPlanMantenimiento(pm);
-    	System.out.println("Plan nro " + idPm + " creado.");
-    	return idPm;
-	}
-    
-    private static void TestAddTareasToPlan(String tareaKm, float kms, String tareaTiempo, int dias, int idPlanMantenimiento){
-
-    	DTO_TareasPorKilometro tareaXKM = new DTO_TareasPorKilometro();
-    	tareaXKM.setCantidadKilometros(kms);
-    	tareaXKM.setIdPlanMantenimiento(idPlanMantenimiento);
-    	tareaXKM.setTarea(tareaKm);
-    	
-    	GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXKM);
-    	
-    	DTO_TareasPorTiempo tareaXTiempo = new DTO_TareasPorTiempo();
-    	tareaXTiempo.setCantidadDias(dias);
-    	tareaXTiempo.setIdPlanMantenimiento(idPlanMantenimiento);
-    	tareaXTiempo.setTarea(tareaTiempo);
-    	int idTarea = GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXTiempo);
-    }
-
-    private static void TestRealizarTareaPorKm(int idVehiculo, int idProveedor, int idTarea){
-    	
-    	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
-    	tRealizada.setFecha(new Date());
-    	tRealizada.setIdProveedor(idProveedor);
-    	tRealizada.setIdVehiculo(idVehiculo);
-    	tRealizada.setIdTareaMantenimiento(idTarea);
-    	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
-    }
-    
-    private static void TestRealizarTareaPorTiempo(int idVehiculo, int idProveedor, int idTarea){
-
-    	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
-    	tRealizada.setFecha(new Date());
-    	tRealizada.setIdProveedor(idProveedor);
-    	tRealizada.setIdVehiculo(idVehiculo);
-    	tRealizada.setIdTareaMantenimiento(idTarea);
-    	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
-    }
-    
-	private static void TestAltaCliente() {  	
+    	private static void TestAltaCliente() {  	
     	DTO_Direccion dir = new DTO_Direccion();
     	
     	Pais pais = (Pais) PaisDao.getInstancia().getById(1);
@@ -380,43 +265,6 @@ public class App
     	GestionEncomienda.getInstancia().altaEncomiendaParticular(encomienda);
     }
     
-	public static int generarVehiculoTest(String marca, String modelo, String anio, String patente, int idPm){
-		
-		//buscar el plan
-			
-		//Creo vehiculo
-		DTO_Vehiculo v = new DTO_Vehiculo();
-		v.setAlto(100f);
-		v.setAncho(100f);
-		v.setAnio(anio);
-		v.setEstado(null);
-		v.setKmsRecorridos(13400);
-		v.setLargo(1000f);
-		v.setMarca(marca);
-		v.setModelo(modelo);
-		v.setPatente(patente);
-		v.setPeso(560f);
-		v.setTara(20);	
-		v.setRefrigerado(false);
-		v.setVolumen(3333f);
-		Date date = new Date();
-		date.setYear(2016);
-		date.setMonth(01);
-		date.setDate(1);
-		v.setFechaIngreso(new Date("01/01/2016"));
-		
-		DTO_PlanMantenimiento plan = new DTO_PlanMantenimiento();
-		plan.setId(idPm);
-		v.setPlanMantenimiento(plan);
-		
-		DTO_Sucursal su  = new DTO_Sucursal();
-		su.setId(1);
-		v.setSucursal(su);
-		
-		return GestionVehiculo.getInstancia().altaVehiculo(v);
-		
-	}
-	
 	public static void testEncomienda1() throws IOException{
 	}
 	

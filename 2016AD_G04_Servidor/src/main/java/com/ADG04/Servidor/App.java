@@ -85,7 +85,7 @@ public class App
     	//TestGetPlanes();    	
     	//crearPaisesYProvincias();
     	//TestAltaCliente();
-    	testControlViajes();
+    	//testControlViajes();
     	//TestEncomienda();
     	//testAsignarEnvios();
     	//TestFacturaEncomiendaParticular();
@@ -337,7 +337,8 @@ public class App
 		encomienda.setDniReceptor("99876543"); 
 		encomienda.setVolumenGranel(0f); 
 		encomienda.setUnidadGranel(null);
-		encomienda.setCargaGranel(null);		
+		encomienda.setCargaGranel(null);	
+		encomienda.setFechaEstimadaEntrega(GestionEncomienda.getInstancia().calcularFechaEstimadaDeEntrega(sucursalOrigen.getId(), sucursalDestino.getId()));
 		
 		DTO_Manifiesto manifiesto = new DTO_Manifiesto();
 		manifiesto.setFecha(new Date());

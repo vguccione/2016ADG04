@@ -99,6 +99,7 @@ public class GestionEncomienda {
 		encomienda.setTercerizado(dtoEncomienda.isTercerizada());
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
 		encomienda.setFechaCreacion(new Date());
+		encomienda.setFechaEstimadaEntrega(dtoEncomienda.getFechaEstimadaEntrega());
 					
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -966,6 +967,19 @@ public class GestionEncomienda {
 			System.out.println("Error al pagar encomienda");
 			e.printStackTrace();
 		}
+	}
+	
+	public Date calcularFechaEstimadaDeEntrega(int idSucursalOrigen, int idSucursalDestino){
+		MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(idSucursalOrigen, idSucursalDestino);
+		if(mr!=null){
+			Date hoy = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(hoy);
+			calendar.add(Calendar.HOUR, (int) mr.getDuracion());
+			return calendar.getTime();
+		}
+		else
+			return null;
 	}
 
 }

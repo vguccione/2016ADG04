@@ -1,5 +1,6 @@
 package com.ADG04.Servidor;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,25 +70,24 @@ import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
  */
 public class App 
 {
-    public static void main( String[] args )
+
+    public static void main( String[] args ) throws IOException
     {
+    	EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
     	//TestTareasVencidas(20);
     	
     	//TestCrearPlanesYTareasYVehiculos();
 
     //	TestRealizarTareas();
-    	generarVehiculoTest("Toyota", "Toyota 1", "2016", "AAA010", 10);
+    	//generarVehiculoTest("Toyota", "Toyota 1", "2016", "AAA010", 10);
     	
-    	Vehiculo v = VehiculoDao.getInstancia().getById(23);
-    	System.out.println(v.getFechaIngreso().getYear()); 
-    	System.out.println(v.getFechaIngreso().getMonth());
-    	System.out.println(v.getFechaIngreso().getDay());
+    	//Vehiculo v = VehiculoDao.getInstancia().getById(23);
     	//TestGetPlanes();    	
     	//crearPaisesYProvincias();
     	//TestAltaCliente();
     	//testControlViajes();
     	//TestEncomienda();
-    	//testAsignarEnvios();
+    //	testAsignarEnvios();
     	//TestFacturaEncomiendaParticular();
     	
     	//TestSucursal("Sucursal Origen");
@@ -230,7 +230,6 @@ public class App
     	tRealizada.setIdTareaMantenimiento(idTarea);
     	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
     }
-
     
 	private static void TestAltaCliente() {  	
     	DTO_Direccion dir = new DTO_Direccion();
@@ -417,63 +416,110 @@ public class App
 		
 	}
 	
-	public static void testControlViajes(){	
+	public static void testEncomienda1() throws IOException{
+	}
+	
+	//vanesa
+	public static void testControlViajes() throws IOException{	
 
+
+		//Creo una encomienda particular
 		Encomienda enc = testEncomienda(1,2,1,100,100f,430f,100f,0f,0);
+		System.out.println("Press key");
+		System.in.read();
+		
+		//Intento asignarla a un envío.
+		System.out.println("-------Asignar la encomienda "+enc.getIdEncomienda()+" a un envío------------");
 		Integer idEnvio = GestionEncomienda.getInstancia().asignarEnvio(enc.getIdEncomienda(), null);
 		Envio envio = EnvioDao.getInstancia().getById(idEnvio);
-		System.out.println("Estado Inicial del Envio: "+envio.getEstado());
+		System.out.println("Estado Inicial del Envio: "+envio.getEstado()+". Envío " + idEnvio);
+		System.in.read();
 		
 		/*Seguira en viaje*/
+		System.out.println("---------Seguira en viaje----------");
 		System.out.println("Estado del envio cuando sigue en curso");
 		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), CoordenadaDao.getInstancia().getById(3));
 		System.out.println(envio.getEstado());
-		
-		System.out.println("");
+		System.out.println("----------------------------------------");
+		System.in.read();
 		
 		/*Se indicara desviado*/
+		System.out.println("---------------------------------------------------------------");
 		Coordenada coordAct = new Coordenada();
 		coordAct.setLatitud("54°35′59″S");
 		coordAct.setLongitud("48°22′55″O﻿");
 		Coordenada coord = CoordenadaDao.getInstancia().saveOrUpdate(coordAct);
+		System.out.println("---------Nueva coordenada: "+coord.getIdCoordenada()+"-------------------");
+		System.in.read();
 		
+		System.out.println("-----------------------------------------");
 		System.out.println("Estado del envio cuando se pasan coordenadas fuera de su mapa de ruta:");
 		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), coord);
 		System.out.println(envio.getEstado());	
-		
+		System.out.println("-------------------");
+		System.in.read();		
 		System.out.println("");
 		
 		/*Se indicara demorado*/
+		System.out.println("-------Se indicara demorado------------");
 		System.out.println("Estado del envio cuando se chequea la fecha de llegada y la actual:");
 		GestionControlViajes.getInstancia().estaEnvioDemorado(envio.getIdEnvio());
 		System.out.println("Envio llegando tarde: "+envio.getEstado());	
 		
 		System.out.println("");
-		
+		System.out.println("-------------------------------------");
+		System.in.read();
+
+		System.out.println("----------------Otra encomienda---------------------");
 		Encomienda enc2 = testEncomienda(1,2,1,100,100f,430f,100f,0f,10);
+		System.out.println("-------------Encomienda:"+enc2.getIdEncomienda()+"------------------------");
+		System.in.read();
+
+		System.out.println("---------------Le asigno envío----------------------");
 		Integer idEnvio2 = GestionEncomienda.getInstancia().asignarEnvio(enc2.getIdEncomienda(), null);
 		Envio envio2 = EnvioDao.getInstancia().getById(idEnvio2);
+		System.out.println("-----------------Envío: "+idEnvio2+"--------------------");
+		System.in.read();
+
 		
 		/*Se indicara concluido*/
+		System.out.println("--------------Se indicara concluido-----------------------");
 		System.out.println("Estado del envio y su encomienda cuando llega a destino");
 		GestionControlViajes.getInstancia().concluirEnvio(envio2.getIdEnvio());
 		System.out.println("Estado del envio " + envio2.getEstado());
 		System.out.println("Estado de la encomienda: " + EncomiendaDao.getInstancia().getById(enc2.getIdEncomienda()).getEstado());
-		
+
+
+		System.out.println("------------------------Test finalizado!!!!-------------");
+		System.in.read();
+
 		EnvioDao.getInstancia().remove(envio);
 		EnvioDao.getInstancia().remove(envio2);
 		EncomiendaDao.getInstancia().remove(enc);
 		EncomiendaDao.getInstancia().remove(enc2);
 
+
 	}
 	
-	public static void testAsignarEnvios(){
-		/*encomienda con 70% peso de posible vehiculo 1 (unico con tareas de mantenimiento realizadas) */
+	/*
+	 * Test varias encomiendas y tratar de asignarlas a envios.
+	 */
+	public static void testAsignarEnvios() throws IOException{
 		
+		/*encomienda con 70% peso de posible vehiculo 1 (unico con tareas de mantenimiento realizadas) */
+				
+		System.out.println("encomienda con 70% peso de posible - vehiculo 1 - (unico con tareas de mantenimiento realizadas)");
 		Encomienda enc = testEncomienda(1,2,1,100,100f,430f,100f,0f,10);
+		System.out.println("----Nueva encomienda: "+enc.getIdEncomienda()+". Se intentará asignar a un envío----------");
+		System.in.read();
+		
 		Envio envio = new Envio();
 		Integer idEnvio = GestionEncomienda.getInstancia().asignarEnvio(enc.getIdEncomienda(), null);
-		if(idEnvio!=null){
+		
+		if(idEnvio != null) {
+			System.out.println("----Asignada al envío : "+idEnvio+"----------");
+			System.in.read();
+			
 			envio = (Envio) EnvioDao.getInstancia().getById(idEnvio);
 			System.out.println("Encomienda con 70% del peso del vehiculo 1 que esta disponible");
 			System.out.println("Peso del Vehiculo: " + (envio.getVehiculo().getPeso() - envio.getVehiculo().getTara()));
@@ -483,22 +529,34 @@ public class App
 			System.out.println("sucursal destino:  "+ envio.getSucursalDestino().getDescripcion());
 			System.out.println("estado envio:  "+ envio.getEstado());
 			System.out.println("Encomienda tiene estado :  "+ enc.getEstado());
-			//System.out.println(envio.toString());
+			System.out.println(envio.toString());
+			System.out.println("------------------------------------");
 			
-			EnvioDao.getInstancia().remove(envio);
-			EncomiendaDao.getInstancia().remove(enc);
+			//EnvioDao.getInstancia().remove(envio);
+			//EncomiendaDao.getInstancia().remove(enc);
 		}
 		else{
 			System.out.println("No se pudo asignar la encomienda a un envio.");
+			System.out.println("---------------------------------------------------");
+		
 		}
 		
 		System.out.println("-----------------------------------------------------------------------------");
-	
+		System.in.read();
+		
 		/*Encomienda con 70% volumen de posible vehiculo 1 (unico con tareas de mantenimiento realizadas) */
+		System.out.println("Encomienda con 70% volumen de posible vehiculo 1 (unico con tareas de mantenimiento realizadas)");
+		System.in.read();		
 		Encomienda enc2 = testEncomienda(1,2,1,100,100f,100f,2264f,0f,10);
+		System.out.println("----Nueva encomienda: "+enc2.getIdEncomienda()+". Se intentará asignar a un envío----------");
+		System.in.read();		
+		
 		Envio envio2 = new Envio();
 		Integer idEnvio2 = GestionEncomienda.getInstancia().asignarEnvio(enc2.getIdEncomienda(), null);
 		if(idEnvio2!=null){
+			System.out.println("----Asignada al envío : "+idEnvio2+"----------");
+			System.in.read();
+		
 			envio2 = (Envio) EnvioDao.getInstancia().getById(idEnvio2);
 			System.out.println("Encomienda con 70% del volumen del vehiculo 1 que esta disponible");
 			System.out.println("Volumen del Vehiculo: " + envio2.getVehiculo().getVolumen());
@@ -517,14 +575,22 @@ public class App
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 		}
 		
-		
 		System.out.println("-----------------------------------------------------------------------------");
+		System.in.read();		
 		
 		/*Varias encomiendas asignadas hasta ocupar maximo peso*/
+		System.out.println("Varias encomiendas asignadas hasta ocupar maximo peso");
 		Encomienda enc3 = testEncomienda(1,2,1,100,100f,100f,100f,0f,10);
+		System.out.println("----Nueva encomienda: "+enc3.getIdEncomienda()+". Se intentará asignar a un envío----------");
+		System.in.read();
+		
 		Envio envio3 = new Envio();
 		Integer idEnvio3 = GestionEncomienda.getInstancia().asignarEnvio(enc3.getIdEncomienda(), null);
+		
 		if(idEnvio3!=null){
+			System.out.println("----Asignada al envío : "+idEnvio3+"----------");
+			System.in.read();
+
 			envio3 = (Envio) EnvioDao.getInstancia().getById(idEnvio3);
 			System.out.println("Encomienda con peso = 100");
 			System.out.println("Peso del Vehiculo: " + (envio3.getVehiculo().getPeso() - envio3.getVehiculo().getTara()));
@@ -538,12 +604,20 @@ public class App
 		else{
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 		}
-			
+					
+		System.out.println("--------------------------------------------------------------------");
+		System.in.read();
 		
 		Encomienda enc4 = testEncomienda(1,2,1,100,100f,200f,100f,0f,10);
+		System.out.println("----Nueva encomienda: "+enc4.getIdEncomienda()+". Se intentará asignar a un envío----------");
+		System.in.read();
+
 		Envio envio4 = new Envio();
 		Integer idEnvio4 = GestionEncomienda.getInstancia().asignarEnvio(enc4.getIdEncomienda(), null);
 		if(idEnvio4!=null){
+			System.out.println("----Asignada al envío : "+idEnvio4+"----------");
+			System.in.read();
+
 			envio4 = (Envio) EnvioDao.getInstancia().getById(idEnvio4);
 			System.out.println("Encomienda con peso = 200");
 			System.out.println("Peso del Vehiculo: " + (envio4.getVehiculo().getPeso() - envio4.getVehiculo().getTara()));
@@ -558,12 +632,20 @@ public class App
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 		}
 		
+			
+		System.out.println("--------------------------------------------------------------------");
+		System.in.read();		
 		
 		Encomienda enc5 = testEncomienda(1,2,1,100,100f,300f,100f,0f,10);
-		//System.out.println(enc.toString());
+		System.out.println("----Nueva encomienda: "+enc5.getIdEncomienda()+". Se intentará asignar a un envío----------");
+		System.in.read();
+
 		Integer idEnvio5 = GestionEncomienda.getInstancia().asignarEnvio(enc5.getIdEncomienda(), null);
 		Envio envio5 = new Envio();
 		if(idEnvio5!=null){
+			System.out.println("----Asignada al envío : "+idEnvio5+"----------");
+			System.in.read();
+
 			envio5 = (Envio) EnvioDao.getInstancia().getById(idEnvio5);
 			System.out.println("Encomienda con peso = 300");
 			System.out.println("Peso del Vehiculo: " + (envio5.getVehiculo().getPeso() - envio5.getVehiculo().getTara()));
@@ -578,12 +660,20 @@ public class App
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 		}
 		
-		
+		System.out.println("--------------------------------------------------------------------");
+		System.in.read();		
 		
 		Encomienda enc6 = testEncomienda(1,2,1,100,100f,200f,100f,0f,10);
+		System.out.println("----Nueva encomienda: "+enc6.getIdEncomienda()+". Se intentará asignar a un envío----------");
+		System.in.read();
+
 		Envio envio6 = new Envio();
 		Integer idEnvio6 = GestionEncomienda.getInstancia().asignarEnvio(enc6.getIdEncomienda(), null);
 		if(idEnvio6 != null){
+			System.out.println("----Asignada al envío : "+idEnvio6+"----------");
+			System.in.read();
+
+
 			envio6 = (Envio) EnvioDao.getInstancia().getById(idEnvio6);
 			System.out.println("Encomienda con peso = 200");
 			System.out.println("Peso del Vehiculo: " + (envio6.getVehiculo().getPeso() - envio6.getVehiculo().getTara()));
@@ -599,25 +689,36 @@ public class App
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 			}
 		
-		
+		System.out.println("-----------------------------------------------------------------------------------");
+		System.in.read();		
+		/*
 		EnvioDao.getInstancia().remove(envio3);
 		EnvioDao.getInstancia().remove(envio6);
 		EncomiendaDao.getInstancia().remove(enc3);
 		EncomiendaDao.getInstancia().remove(enc4);
 		EncomiendaDao.getInstancia().remove(enc5);
 		EncomiendaDao.getInstancia().remove(enc6);
-		
-		
+		*/	
 		
 		
 		/*verificar metodo esEnvioTercerizado
 		 * para encomienda con volumen granel
 		 * y para encomienda que vence si no se manda ya*/
 		
+		System.out.println("-----------------------------------------------------------------------------------");
+		System.out.println("verificar metodo esEnvioTercerizado");
+		System.out.println("para encomienda con volumen granel");
+		System.out.println("y para encomienda que vence si no se manda ya");
 		Encomienda enc7 = testEncomienda(1,2,1,100,100f,200f,100f,200f,10);
+		System.out.println("----Nueva encomienda: "+enc7.getIdEncomienda()+". Se intentará asignar a un envío----------");
+		System.in.read();
+		
 		Envio envio7 = new Envio();
 		Integer idEnvio7 = GestionEncomienda.getInstancia().asignarEnvio(enc7.getIdEncomienda(), null);
 		if(idEnvio7 != null){
+			System.out.println("----Asignada al envío : "+idEnvio7+"----------");
+			System.in.read();
+
 			envio7 = (Envio) EnvioDao.getInstancia().getById(idEnvio7);
 			System.out.println("Encomienda Tercerizada, con volumen granel "+ enc7.getVolumenGranel());
 			System.out.println("sucursal origen:  "+ envio7.getSucursalOrigen().getDescripcion());
@@ -627,16 +728,25 @@ public class App
 		}
 		else{
 			System.out.println("No se pudo asignar la encomienda a un envio.");
-			}
-		
-		
-		EnvioDao.getInstancia().remove(envio7);
-		EncomiendaDao.getInstancia().remove(enc7);
-		
+		}
+				
+		System.out.println("-----------------------------------------------------------------------------------");
+		System.in.read();		
+
+		//EnvioDao.getInstancia().remove(envio7);
+		//EncomiendaDao.getInstancia().remove(enc7);
+
+
 		Encomienda enc8 = testEncomienda(1,2,1,100,100f,200f,100f,200f,1);
+
+		System.out.println("----Nueva encomienda: "+enc8.getIdEncomienda()+". Se intentará asignar a un envío----------");
+		System.in.read();
 		Envio envio8 = new Envio();
 		Integer idEnvio8 = GestionEncomienda.getInstancia().asignarEnvio(enc8.getIdEncomienda(), null);
 		if(idEnvio8 != null){
+			System.out.println("----Asignada al envío : "+idEnvio8+"----------");
+			System.in.read();
+
 			envio8 = (Envio) EnvioDao.getInstancia().getById(idEnvio8);
 			System.out.println("Encomienda Tercerizada con fecha estimada de entrega: "+ enc8.getFechaEstimadaEntrega());
 			System.out.println("sucursal origen:  "+ envio8.getSucursalOrigen().getDescripcion());
@@ -647,16 +757,24 @@ public class App
 		else{
 			System.out.println("No se pudo asignar la encomienda a un envio.");
 			}
+		System.out.println("-----------------------------------------------------------------------------------");
+		System.in.read();		
+
+	//	EnvioDao.getInstancia().remove(envio8);
+	//	EncomiendaDao.getInstancia().remove(enc8);
 		
-		EnvioDao.getInstancia().remove(envio8);
-		EncomiendaDao.getInstancia().remove(enc8);
-		
-		}
+	}
 	
 	
-	
+	/*
+	 * Crear encomienda particular.
+	 * Fecha de recepcion: hoy + días por parámtro.
+	 */
 	public static Encomienda testEncomienda(int idSucursalOrigen, int idSucursalDestino, int idCliente, int nmro, float alto
 			,float peso, float volumen, float carga, int dias){
+		
+		
+		
 		float nro = nmro;
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();
 		cli.setId(idCliente);

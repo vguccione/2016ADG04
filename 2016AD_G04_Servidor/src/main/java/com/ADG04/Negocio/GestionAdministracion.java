@@ -8,11 +8,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolUsuarioDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
+import com.ADG04.Servidor.model.ClienteParticular;
 import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.Pais;
 import com.ADG04.Servidor.model.Provincia;
@@ -298,6 +300,12 @@ private static GestionAdministracion instancia;
 		tx.begin();
 		ProvinciaDao.getInstancia().persist(p);
 		tx.commit();
+	}
+
+	public ClienteParticular getClienteByDni(String dniCliente) {
+		
+		return ClienteParticularDao.getInstancia().getByDni(dniCliente);
+		
 	}
 	
 }

@@ -66,6 +66,10 @@ public class GestionEncomienda {
 		return instancia;
 	}
 
+	public Envio getInfoEnvio(int idEnvio){
+		return EnvioDao.getInstancia().getById(idEnvio);
+	}
+	
 	public void altaEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
 		Sucursal origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
 		Sucursal destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
@@ -192,8 +196,9 @@ public class GestionEncomienda {
 		encomienda.setUnidadGranel(dtoEncomienda.getUnidadGranel());
 		encomienda.setCargaGranel(dtoEncomienda.getCargaGranel());		
 		encomienda.setTipoEncomienda("P");
-		encomienda.setFechaEstimadaEntrega(dtoEncomienda.getFechaEstimadaEntrega());
-		
+		//encomienda.setFechaEstimadaEntrega(dtoEncomienda.getFechaEstimadaEntrega());
+		encomienda.setFechaEstimadaEntrega(calcularFechaEstimadaDeEntrega(
+				dtoEncomienda.getSucursalOrigen().getId(),	dtoEncomienda.getSucursalDestino().getId()));
 		encomienda.setTercerizado(dtoEncomienda.isTercerizada());
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
 		encomienda.setFechaCreacion(new Date());

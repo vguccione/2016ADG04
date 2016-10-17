@@ -73,23 +73,18 @@ public class App
 
     public static void main( String[] args ) throws IOException
     {
-    //	VehiculosTest.TestVehiculos();
-    	EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
     	//VehiculosTest.TestVehiculos();
     	//EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
-    	//EncomiendasTest.testControlViajes();
-    	//TestTareasVencidas(20);
-    	
-    	//TestCrearPlanesYTareasYVehiculos();
+    	//testControlViajes();
 
-        //TestRealizarTareas();
-    	//generarVehiculoTest("Toyota", "Toyota 1", "2016", "AAA010", 10);
     	
-    	//Vehiculo v = VehiculoDao.getInstancia().getById(23);
+    	//TestTareasVencidas(20);
+    	//TestCrearPlanesYTareasYVehiculos();
+        //TestRealizarTareas();
+    	
     	//TestGetPlanes();    	
     	//crearPaisesYProvincias();
     	//TestAltaCliente();
-    	//testControlViajes();
     	//TestEncomienda();
         //testAsignarEnvios();
     	//TestFacturaEncomiendaParticular();
@@ -271,7 +266,6 @@ public class App
 	public static void testEncomienda1() throws IOException{
 	}
 	
-	//vanesa
 	public static void testControlViajes() throws IOException{	
 
 

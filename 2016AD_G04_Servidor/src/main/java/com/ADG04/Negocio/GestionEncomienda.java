@@ -197,8 +197,9 @@ public class GestionEncomienda {
 		encomienda.setCargaGranel(dtoEncomienda.getCargaGranel());		
 		encomienda.setTipoEncomienda("P");
 		//encomienda.setFechaEstimadaEntrega(dtoEncomienda.getFechaEstimadaEntrega());
-		encomienda.setFechaEstimadaEntrega(calcularFechaEstimadaDeEntrega(
-				dtoEncomienda.getSucursalOrigen().getId(),	dtoEncomienda.getSucursalDestino().getId()));
+		encomienda.setFechaEstimadaEntrega(dtoEncomienda.getFechaEstimadaEntrega());
+		//encomienda.setFechaEstimadaEntrega(calcularFechaEstimadaDeEntrega(
+		//		dtoEncomienda.getSucursalOrigen().getId(),	dtoEncomienda.getSucursalDestino().getId()));
 		encomienda.setTercerizado(dtoEncomienda.isTercerizada());
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
 		encomienda.setFechaCreacion(new Date());

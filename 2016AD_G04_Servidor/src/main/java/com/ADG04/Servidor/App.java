@@ -77,7 +77,7 @@ public class App
     	EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
     	//VehiculosTest.TestVehiculos();
     	//EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
-    	EncomiendasTest.testControlViajes();
+    	//EncomiendasTest.testControlViajes();
     	//TestTareasVencidas(20);
     	
     	//TestCrearPlanesYTareasYVehiculos();
@@ -282,6 +282,7 @@ public class App
 		
 		//Intento asignarla a un envío.
 		System.out.println("-------Asignar la encomienda "+enc.getIdEncomienda()+" a un envío------------");
+
 		Integer idEnvio = GestionEncomienda.getInstancia().asignarEnvio(enc.getIdEncomienda(), null);
 		Envio envio = EnvioDao.getInstancia().getById(idEnvio);
 		System.out.println("Estado Inicial del Envio: "+envio.getEstado()+". Envío " + idEnvio);

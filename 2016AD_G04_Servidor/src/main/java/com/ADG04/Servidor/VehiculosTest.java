@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.ADG04.Negocio.GestionVehiculo;
+import com.ADG04.Servidor.dao.TareaMantenimientoDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.TareaMantenimiento;
 import com.ADG04.Servidor.model.Vehiculo;
@@ -30,6 +31,15 @@ public class VehiculosTest {
 				TestCrearPlanesYTareasYVehiculos();
 				ok = getStringFromConsole("Agregar otro Plan de Mantenimiento (si/no)?");
 			}
+		}
+		
+		ok = getStringFromConsole("Buscar tareas vencidas (si/no)?");
+		while(ok.equals("si")){
+			
+			int idVehiculo = getIntFromConsole("Id Vehiculo: ");
+			List<TareaMantenimiento> tareasVencidas= GestionVehiculo.getInstancia().getTareasVencidas(idVehiculo);
+			
+			ok = getStringFromConsole("Buscar tareas vencidas de otro vehículo (si/no)?");
 		}
 		
 		ok = getStringFromConsole("Agregar Tareas realizadas (si/no)?");

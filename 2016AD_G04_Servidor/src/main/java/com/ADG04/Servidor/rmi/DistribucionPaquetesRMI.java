@@ -550,7 +550,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 
-	@Override
+//	@Override
 	public void nuevaEncomiedaParticular(String arg0, DTO_Direccion arg1,
 			DTO_Direccion arg2, DTO_Sucursal arg3, DTO_Sucursal arg4,
 			double arg5, double arg6, double arg7, double arg8, double arg9,

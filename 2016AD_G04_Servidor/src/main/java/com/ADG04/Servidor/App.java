@@ -75,11 +75,14 @@ public class App
     {
     //	VehiculosTest.TestVehiculos();
     	EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
+    	//VehiculosTest.TestVehiculos();
+    	//EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
+    	EncomiendasTest.testControlViajes();
     	//TestTareasVencidas(20);
     	
     	//TestCrearPlanesYTareasYVehiculos();
 
-    //	TestRealizarTareas();
+        //TestRealizarTareas();
     	//generarVehiculoTest("Toyota", "Toyota 1", "2016", "AAA010", 10);
     	
     	//Vehiculo v = VehiculoDao.getInstancia().getById(23);
@@ -88,14 +91,14 @@ public class App
     	//TestAltaCliente();
     	//testControlViajes();
     	//TestEncomienda();
-    //	testAsignarEnvios();
+        //testAsignarEnvios();
     	//TestFacturaEncomiendaParticular();
     	
     	//TestSucursal("Sucursal Origen");
     	//TestSucursal("Sucursal Destino");
     	
- //   	TestPaisDao();
-    //	TestUsuario();
+    	//TestPaisDao();
+    	//TestUsuario();
     	
     	System.exit(0);
     }

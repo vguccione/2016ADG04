@@ -152,7 +152,7 @@ GO
 
 INSERT INTO Vehiculo ([IdVehiculo],[FechaIngreso],[Alto],[Ancho],[Anio],[CondicionTransporte],[Estado],[KmRecorridos],[Largo],[Marca],[Modelo],[Patente],[Peso],[Refrigerado],[Tara],[Volumen],[IdPlanMantenimiento],[idSucursal]) VALUES(1,'2010-01-01', 100, 200, 300, '', null, 1000, 1000, 'Mercedes Benz', 'Camion1', 'AAA0001', 2934, 0, 2334, 3234, 1, 1)
 INSERT INTO Vehiculo ([IdVehiculo],[FechaIngreso],[Alto],[Ancho],[Anio],[CondicionTransporte],[Estado],[KmRecorridos],[Largo],[Marca],[Modelo],[Patente],[Peso],[Refrigerado],[Tara],[Volumen],[IdPlanMantenimiento],[idSucursal]) VALUES(2,'2010-01-01', 200, 400, 600, '', null, 1550, 1200, 'Mercedes Benz', 'Camion2', 'AAA0002', 2955, 0, 2334, 3234, 1, 1)
-INSERT INTO Vehiculo ([IdVehiculo],[FechaIngreso],[Alto],[Ancho],[Anio],[CondicionTransporte],[Estado],[KmRecorridos],[Largo],[Marca],[Modelo],[Patente],[Peso],[Refrigerado],[Tara],[Volumen],[IdPlanMantenimiento],[idSucursal]) VALUES(3,'2010-01-01', 300, 600, 400, '', null, 1340, 1040, 'Mercedes Benz', 'Camion3', 'AAA0003', 3434, 0, 2334, 3234, 2, 2)
+INSERT INTO Vehiculo ([IdVehiculo],[FechaIngreso],[Alto],[Ancho],[Anio],[CondicionTransporte],[Estado],[KmRecorridos],[Largo],[Marca],[Modelo],[Patente],[Peso],[Refrigerado],[Tara],[Volumen],[IdPlanMantenimiento],[idSucursal]) VALUES(3,'2010-01-01', 300, 600, 400, '', null, 1340, 1040, 'Mercedes Benz', 'Camion3', 'AAA0003', 3434, 0, 2334, 3234, 2, 1)
 INSERT INTO Vehiculo ([IdVehiculo],[FechaIngreso],[Alto],[Ancho],[Anio],[CondicionTransporte],[Estado],[KmRecorridos],[Largo],[Marca],[Modelo],[Patente],[Peso],[Refrigerado],[Tara],[Volumen],[IdPlanMantenimiento],[idSucursal]) VALUES(4,'2010-01-01', 400, 400, 200, '', null, 1020, 1230, 'Mercedes Benz', 'Camion4', 'AAA0004', 2934, 0, 2334, 3234, 2, 2)
 
 

@@ -332,7 +332,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		//calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
 		//Date fecha = calendar.getTime();
 		
-		//encomienda.setFechaEstimadaEntrega(new Date());
+		encomienda.setFechaEstimadaEntrega(GestionEncomienda.getInstancia().calcularFechaEstimadaDeEntrega(
+		sucursalOrigen.getId(),	sucursalDestino.getId()));
 		
 		encomienda.setAlto(alto);
 		encomienda.setPeso(peso);

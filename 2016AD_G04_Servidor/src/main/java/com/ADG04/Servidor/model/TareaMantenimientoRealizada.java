@@ -41,7 +41,7 @@ public class TareaMantenimientoRealizada implements java.io.Serializable {
 	private Date fechaRealizada;
 
 	@Column(name = "CantidadKilometros", nullable = true)
-	private float cantidadKilometros;
+	private Float cantidadKilometros;
 
 	public TareaMantenimientoRealizada() {
 	}

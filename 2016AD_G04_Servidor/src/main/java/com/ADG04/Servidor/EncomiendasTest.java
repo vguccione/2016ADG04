@@ -13,6 +13,8 @@ import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
 import com.ADG04.Servidor.rmi.DistribucionPaquetesRMI;
+import com.ADG04.Servidor.util.EncomiendaEstado;
+import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 
@@ -154,7 +156,6 @@ public class EncomiendasTest {
 		
 	}
 
-
 	private static String getStringFromConsole(String msg) throws IOException{
 		System.out.print(msg);
 		BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
@@ -236,70 +237,6 @@ public class EncomiendasTest {
 	}
 	
 	
-	public static void testControlViajes() throws IOException{	
-
-		DistribucionPaquetesRMI business = new DistribucionPaquetesRMI();
-		
-		int idEncomienda = getIntFromConsole("Id encomienda: ");
-		int idEnvio = getIntFromConsole("Id envio: ");
-		
-		//Intento asignarla a un envío.
-		//System.out.println("-------Asignar la encomienda "+idEncomienda+" a un envío------------");
-		//Integer idEnvio = GestionEncomienda.getInstancia().asignarEnvio(idEncomienda, null);
-		DTO_EnvioPropio envio =  business.getInfoEnvioPropio(idEnvio);
-		System.out.println("Estado Inicial del Envio: "+envio.getEstado()+". Envío " + idEnvio);
-		
-		/*Seguira en viaje*/
-		System.out.println("---------Seguira en viaje----------");
-		System.out.println("Estado del envio cuando sigue en curso");
-		DTO_Coordenada c = new DTO_Coordenada();
-		int idcoord = getIntFromConsole("Id Coordenadas: ");
-		c.setId(idcoord);
-		business.modificarCoordenadas(idEnvio, c);
-		//GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), CoordenadaDao.getInstancia().getById(3));
-		Envio env = EnvioDao.getInstancia().getById(idEnvio);
-		System.out.println(env.getEstado());
-		System.out.println("----------------------------------------");
-		
-		/*Se indicara desviado*/
-		/*System.out.println("------------------------ Se crea una nueva coordenada para las pruebas ---------------------------------------");
-		Coordenada coordAct = new Coordenada();
-		coordAct.setLatitud("54°35′59″S");
-		coordAct.setLongitud("48°22′55″O﻿");
-		Coordenada coord = CoordenadaDao.getInstancia().saveOrUpdate(coordAct);
-		System.out.println("---------Nueva coordenada: "+coord.getIdCoordenada()+"-------------------");
-		
-		*/
-		System.out.println("-----------------------------------------");
-		System.out.println("Estado del envio cuando se pasan coordenadas fuera de su mapa de ruta:");
-		idcoord = getIntFromConsole("Id Coordenadas: ");
-		c.setId(idcoord);
-		business.modificarCoordenadas(idEnvio, c); 		//GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getId(), coord);
-		
-		System.out.println(envio.getEstado());	
-		System.out.println("-------------------");
-				
-		System.out.println("");
-		
-		/*Se indicara demorado*/
-		System.out.println("-------Se indicara demorado------------");
-		System.out.println("Estado del envio cuando se chequea la fecha de llegada y la actual:");
-		
-		business.marcarEnvioDemorado(idEnvio);
-
-		System.out.println("Envio llegando tarde: "+envio.getEstado());	
-		
-		System.out.println("");
-		System.out.println("-------------------------------------");
-		
-/*
-		EnvioDao.getInstancia().remove(envio);
-		EnvioDao.getInstancia().remove(envio2);
-		EncomiendaDao.getInstancia().remove(enc);
-		EncomiendaDao.getInstancia().remove(enc2);
-*/
-	}
-
 	private static void testMarcarEnvio(){
 		
 	}

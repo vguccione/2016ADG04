@@ -20,32 +20,96 @@ public class EncomiendasTest {
 
 	public static void TestCrearEncomiendaYAsignaleElEnvio() throws IOException{
 
-		AltaEncomiendaParticular();
-		String ok = getStringFromConsole("Agregar otra encomienda (si/no)?");
-		
+		String ok = getStringFromConsole("Agregar encomiendas (si/no)?");
 		while(ok.equals("si")){
 			AltaEncomiendaParticular();
 			ok = getStringFromConsole("Agregar otra encomienda (si/no)?");
+			
+			while(ok.equals("si")){
+				AltaEncomiendaParticular();
+				ok = getStringFromConsole("Agregar otra encomienda (si/no)?");
+			}
 		}
-
+		
 		System.out.println("----------------------------------------------");
-		int idSucursal = getIntFromConsole("Buscar encomiendas pendientes. Ingrese id sucursal:  ");
+		ok = getStringFromConsole("Buscar encomiendas pendientes, que no hayan sido asignadas a ningún envío (si/no)?");
+		
+		if(ok.equals("si")){
+			int idSucursal = getIntFromConsole("Buscar encomiendas pendientes (que no hayan sido asignadas a ningún envío). Ingrese id sucursal:  ");
+		
+			//busco encomiendas pendientes y las asigno a envios
 	
-		//busco encomiendas pendientes y las asigno a envios
-
-    	List<Encomienda> es = EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
-    	for(Encomienda e:es){
-    		System.out.println(e.getIdEncomienda());
-    	}
+	    	List<Encomienda> es = EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
+	    	for(Encomienda e:es){
+	    		System.out.println(e.getIdEncomienda());
+	    	}
+		}
     	
-    	int idEncomienda = getIntFromConsole("Ingrese Id encomienda para asignar envio: ");
-		asignarEnvios(idSucursal, idEncomienda);
-		ok = getStringFromConsole("Asignar envío a otra encomienda (si/no)?");
-    	while(ok.equals("si")){
-    		idEncomienda = getIntFromConsole("Ingrese Id encomienda para asignar envio: ");
+		ok = getStringFromConsole("Asignar envíos a encomiendas? (si/no)?");
+		while(ok.equals("si")){
+    		int idSucursal = getIntFromConsole("Ingrese Id sucursal donde está la encomienda: ");
+			int idEncomienda = getIntFromConsole("Ingrese Id encomienda para asignar envio: ");
     		asignarEnvios(idSucursal, idEncomienda);
     		ok = getStringFromConsole("Asignar envío a otra encomienda (si/no)?");
     	}
+				
+		ok = getStringFromConsole("Listar envios? (si/no)?");
+		if(ok.equals("si")){
+
+			List<Envio> envios = EnvioDao.getInstancia().getAll();
+			for(Envio e:envios){
+				System.out.println(e.toString());
+			}
+		}
+		/*
+		ok = getStringFromConsole("Actualizar estado de envios? (si/no)?");
+		if(ok.equals("si")){
+
+			int idEnvio = getIntFromConsole("Id Envio");
+			int idCoordenada = getIntFromConsole("Id coordenada: ");
+			GestionControlViajes.getInstancia()
+		}**/
+		
+		ok = getStringFromConsole("Actualizar ruta de envio? (si/no)?");
+		while(ok.equals("si")){
+		
+			int idEnvio = getIntFromConsole("Id Envio");
+			int idCoordenada = getIntFromConsole("Id coordenada: ");
+			GestionControlViajes.getInstancia().actualizarEstadoVehiculo(idEnvio, CoordenadaDao.getInstancia().getById(idCoordenada));
+			
+			Envio envio = EnvioDao.getInstancia().getById(idEnvio);
+			System.out.println(envio.toString());
+			
+			ok = getStringFromConsole("Actualizar ruta de otro envio? (si/no)?");
+		}
+		
+		ok = getStringFromConsole("Revisar estado de envios? (si/no)?");
+		while(ok.equals("si")){
+		
+			int idEnvio = getIntFromConsole("Id Envio");
+			//int idCoordenada = getIntFromConsole("Id coordenada: ");
+			GestionControlViajes.getInstancia().estaEnvioDemorado(idEnvio);
+			
+			Envio envio = EnvioDao.getInstancia().getById(idEnvio);
+			System.out.println(envio.toString());
+			
+			ok = getStringFromConsole("Revisar estado de otro envio? (si/no)?");
+		}
+		
+		/*ok = getStringFromConsole("Revisar estado de envios? (si/no)?");
+		while(ok.equals("si")){
+		
+			int idEnvio = getIntFromConsole("Id Envio");
+			//int idCoordenada = getIntFromConsole("Id coordenada: ");
+			GestionEncomienda.getInstancia().cambiarEstadoEnvio(idEnvio, estado);
+			
+			Envio envio = EnvioDao.getInstancia().getById(idEnvio);
+			System.out.println(envio.toString());
+			
+			ok = getStringFromConsole("Revisar estado de otro envio? (si/no)?");
+		}*/
+		
+		
     	System.out.println("----------------------------------------------");
 		//ponerEnViajeEncomiendasPorVencer();
 		//Armar los envios

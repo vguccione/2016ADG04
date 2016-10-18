@@ -461,4 +461,16 @@ public class GestionVehiculo {
 		
 		return tareas;
 	}
+	
+	public boolean tieneTareasVencidas(int idVehiculo) {
+		
+		List<TareaMantenimiento> tareas = new ArrayList<TareaMantenimiento>(); 
+		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorKm(idVehiculo));
+		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(idVehiculo));
+	
+		if(tareas.size()!=0)
+			return true;
+		else
+			return false;
+	}
 }

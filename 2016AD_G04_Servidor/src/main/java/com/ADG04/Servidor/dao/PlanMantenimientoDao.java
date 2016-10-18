@@ -82,7 +82,7 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 						+ " from TareaMantenimientoRealizada tr"
 						+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea")
 						.setParameter("idTarea", tarea.getIdTareaMantenimiento())
-						.getSingleResult();
+						.getSingleResult(); 
 				
 				if(tRealizada != null){
 					

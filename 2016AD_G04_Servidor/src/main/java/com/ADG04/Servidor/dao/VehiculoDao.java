@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
@@ -63,7 +64,7 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 		
 		for(int id: idsVehiculos){
 			Vehiculo v = this.getById(id);
-			if(this.estaUtilizable(v) && !this.estaAsignado(v)){
+			if(this.estaUtilizable(v) && !this.estaAsignado(v) && !GestionVehiculo.getInstancia().tieneTareasVencidas(v.getIdVehiculo())){
 				vehiculos.add(v);
 			}
 		}

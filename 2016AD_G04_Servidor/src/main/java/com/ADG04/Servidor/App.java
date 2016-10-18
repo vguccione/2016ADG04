@@ -75,12 +75,11 @@ public class App
     {
 
     	//VehiculosTest.TestVehiculos();
-    	EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
+       EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
 
     	//VehiculosTest.TestVehiculos();
     	//EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
     	//testControlViajes();
-
     	
     	//TestTareasVencidas(20);
     	//TestCrearPlanesYTareasYVehiculos();
@@ -305,6 +304,14 @@ public class App
 		
 		System.out.println("-----------------------------------------");
 		System.out.println("Estado del envio cuando se pasan coordenadas fuera de su mapa de ruta:");
+		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), coord);
+		System.out.println(envio.getEstado());	
+		System.out.println("-------------------");
+		System.in.read();		
+		System.out.println("");
+		
+		System.out.println("-----------------------------------------");
+		System.out.println("Estado del envio cuando se pasan nuevamente coordenadas fuera de su mapa de ruta:");
 		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), coord);
 		System.out.println(envio.getEstado());	
 		System.out.println("-------------------");

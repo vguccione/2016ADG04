@@ -731,6 +731,9 @@ public class GestionEncomienda {
 		if(encomienda.getVolumenGranel()!=0){
 			return true;
 		}
+		if(encomienda.isInternacional()){
+			return true;
+		}
 		MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(encomienda.getSucursalOrigen().getIdSucursal(), encomienda.getSucursalDestino().getIdSucursal());
 		if(mr!=null){
 			Date hoy = new Date();

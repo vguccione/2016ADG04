@@ -220,3 +220,15 @@ insert into MapaDeRutaCoordenada VALUES(1,3)
 insert into MapaDeRutaCoordenada VALUES(1,4)
 insert into MapaDeRutaCoordenada VALUES(1,5)
 insert into MapaDeRutaCoordenada VALUES(1,6)
+
+/*Roles usuario*/
+
+Insert into RolUsuario VALUES('ADMINISTRACION')
+Insert into RolUsuario VALUES('VEHICULOS')
+Insert into RolUsuario VALUES('ENVIO')
+Insert into RolUsuario VALUES('ENCOMIENDA')
+
+/*usuario administrador*/
+
+INSERT INTO [dbo].[Usuario]    VALUES ('Administrador','123456',getDate(),'Admin','admin',getDate(),'admin',1,1)
+GO

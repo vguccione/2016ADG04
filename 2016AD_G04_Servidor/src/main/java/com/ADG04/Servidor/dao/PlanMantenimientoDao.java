@@ -45,9 +45,6 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 	@SuppressWarnings("unchecked")
 	public List<TareaMantenimientoPorKm> getTareasVencidasPorKm(Integer idVehiculo){
 		
-		//TODO: se puede optimizar trayendo solamente las por tiempo directamente.	
-		//List<TareaMantenimiento> tareas = this.getPlanByIdVehiculo(idVehiculo).getTareaMantenimientos();
-		
 		//Me quedo con las tareas que son por tiempo
 		List<TareaMantenimientoPorKm> tareasVencidas = new ArrayList<TareaMantenimientoPorKm>();
 		
@@ -77,32 +74,35 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 				
 				//Cuantos kms tenia el vehiculo la ultima vez que se realizó la tarea??
 				
-				//Tengo que fijarme cuando se realizó por última vez esta tarea.
-				TareaMantenimientoRealizada tRealizada = (TareaMantenimientoRealizada)entityManager.createQuery("select tr "
+				//Tengo que fijarme cuando se realizó por última vez cada tarea
+				List<TareaMantenimientoRealizada> tRealizadas = (List<TareaMantenimientoRealizada>)entityManager.createQuery("select tr "
 						+ " from TareaMantenimientoRealizada tr"
 						+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea")
 						.setParameter("idTarea", tarea.getIdTareaMantenimiento())
-						.getSingleResult(); 
+						.getResultList(); 
 				
-				if(tRealizada != null){
-					
-					float kmCuandoSeRealizoTarea = tRealizada.getCantidadKilometros();
-					System.out.println("La tarea se realizo cuando el Vehículo tenía " + kmCuandoSeRealizoTarea);
-					//Si: (kmRecorridos - kmCuandoSeRealizoTarea) > frecuencia ----> esta vencida							
-					float kmExcedidos = (kmRecorridos - kmCuandoSeRealizoTarea) - frecuenciaKm;
-					if(kmExcedidos > 0){
-						System.out.println("Tarea vencida, el vehículo está sobrepasado por " + kmExcedidos +" kms.");
-						estaVencida = true;
-						tareasVencidas.add(tarea);
+				for(TareaMantenimientoRealizada tRealizada:tRealizadas){
+				
+					if(tRealizada != null){
+						
+						float kmCuandoSeRealizoTarea = tRealizada.getCantidadKilometros();
+						System.out.println("La tarea se realizo cuando el Vehículo tenía " + kmCuandoSeRealizoTarea);
+						//Si: (kmRecorridos - kmCuandoSeRealizoTarea) > frecuencia ----> esta vencida							
+						float kmExcedidos = (kmRecorridos - kmCuandoSeRealizoTarea) - frecuenciaKm;
+						if(kmExcedidos > 0){
+							System.out.println("Tarea vencida, el vehículo está sobrepasado por " + kmExcedidos +" kms.");
+							estaVencida = true;
+							tareasVencidas.add(tarea);
+						}
+						else{
+							System.out.println("Le quedan " + kmExcedidos + " para realizar la tarea.");
+						}
 					}
 					else{
-						System.out.println("Le quedan " + kmExcedidos + " para realizar la tarea.");
-					}
+						estaVencida = true;
+						tareasVencidas.add(tarea);
+					}						
 				}
-				else{
-					estaVencida = true;
-					tareasVencidas.add(tarea);
-				}						
 				
 				System.out.println("---------------------------");
 			}
@@ -154,30 +154,32 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 					System.out.println("Id tarea: " + tarea.getIdTareaMantenimiento());
 					
 					//Tengo que fijarme cuando se realizó por última vez esta tarea.
-					TareaMantenimientoRealizada tRealizada = (TareaMantenimientoRealizada)entityManager.createQuery("select tr "
+					List<TareaMantenimientoRealizada> tRealizadas = (List<TareaMantenimientoRealizada>)entityManager.createQuery("select tr "
 							+ " from TareaMantenimientoRealizada tr"
 							+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea")
 							.setParameter("idTarea", tarea.getIdTareaMantenimiento())
-							.getSingleResult();
+							.getResultList();
 				
-					if(tRealizada != null){
+					for(TareaMantenimientoRealizada tRealizada:tRealizadas){
 						
-						Calendar cal2 = Calendar.getInstance();
-						cal2.setTime(tRealizada.getFechaRealizada());
-						//Sumo la cantidad de días, si es mayor a la fecha de hoy, no esta vencida. Caso contrario, está vencida.
-						cal2.add(Calendar.DATE, (cantDias));	 
-						System.out.println("La tarea se realizo el día: " + tRealizada.getFechaRealizada());	
-						if(cal2.getTime().before(new Date())){
-							System.out.println("Tarea vencida, debería haberse realizado el " + fechaIdealTareaRealizada);
+						if(tRealizada != null){
+							
+							Calendar cal2 = Calendar.getInstance();
+							cal2.setTime(tRealizada.getFechaRealizada());
+							//Sumo la cantidad de días, si es mayor a la fecha de hoy, no esta vencida. Caso contrario, está vencida.
+							cal2.add(Calendar.DATE, (cantDias));	 
+							System.out.println("La tarea se realizo el día: " + tRealizada.getFechaRealizada());	
+							if(cal2.getTime().before(new Date())){
+								System.out.println("Tarea vencida, debería haberse realizado el " + fechaIdealTareaRealizada);
+								estaVencida = true;
+								tareasVencidas.add(tarea);
+							}
+						}
+						else{
 							estaVencida = true;
 							tareasVencidas.add(tarea);
 						}
-					}
-					else{
-						estaVencida = true;
-						tareasVencidas.add(tarea);
-					}
-					
+					}	
 				}
 				
 				System.out.println("---------------------------");

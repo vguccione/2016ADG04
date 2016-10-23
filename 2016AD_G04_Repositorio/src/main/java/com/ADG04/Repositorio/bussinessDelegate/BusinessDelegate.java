@@ -19,6 +19,7 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
@@ -112,8 +113,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 
 	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.getSucursal(idSucursal);
 	}
 
 
@@ -259,14 +259,13 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 
 	public DTO_Producto getProducto(Integer idProducto) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.getProducto(idProducto);
 	}
 
 
 	public DTO_Producto getProducto(Integer idCliente, String codigoProducto)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		//this.businessService.getProducto(idProducto, codigoProducto);
 		return null;
 	}
 
@@ -315,15 +314,14 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public DTO_Factura getFacturaClienteByCuit(String cuitCliente)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.getFacturaClienteByCuit(cuitCliente);
 	}
 
 
 	public DTO_Factura getFacturaClienteByDni(String dni)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return this.businessService.getFacturaClienteByDni(dni);
 	}
 
 
@@ -342,15 +340,13 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public List<DTO_Factura> getFacturasPendientesByCuit(String cuit)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.getFacturasPendientesByCuit(cuit);
 	}
 
 
 	public List<DTO_Factura> getFacturasPendientesByDni(String dni)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.getFacturasPendientesByDni(dni);
 	}
 
 
@@ -444,5 +440,55 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void ingresarEncomiendaEnvio(Integer idEnvio) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void egresarEncomiendaEnvio(Integer idEnvio) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Integer asignarEnvio(Integer idEncomienda) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer cobrarEncomiendaEmpresa(List<Integer> lista) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer cobrarEncomiendaParticular(Integer idFactura) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer nuevaEncomiendaParticular(Integer idSucursal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer nuevaEncomiendaEmpresa(Integer idSucursal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public DTO_Usuario validarUsuario(String usuario, String contrasena) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

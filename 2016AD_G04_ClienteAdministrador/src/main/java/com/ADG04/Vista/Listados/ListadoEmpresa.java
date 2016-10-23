@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Cliente.DTO_Cliente;
+import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 
 
@@ -28,14 +29,14 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 @SuppressWarnings("serial")
-public class ListadoCliente extends javax.swing.JFrame {
+public class ListadoEmpresa extends javax.swing.JFrame {
 	private JLabel jLabelTitulo;
 	private JScrollPane jScrollPaneListadoClientes;
 	private JTable jTableListado;
 
 
 	
-	public ListadoCliente() {
+	public ListadoEmpresa() {
 		super();
 		initGUI();
 	}
@@ -58,14 +59,12 @@ public class ListadoCliente extends javax.swing.JFrame {
 				jScrollPaneListadoClientes.setBounds(12, 53, 799, 311);
 				{
 					
-					List<DTO_ClienteParticular> clienteDTO = Controlador.getInstancia().listarClientes();
+					List<DTO_ClienteEmpresa> clienteDTO = Controlador.getInstancia().listarClientesEmpresa();
 					
 					DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			
 					jTableListadoModel.addColumn("ID");
-					jTableListadoModel.addColumn("Nombre");
-					jTableListadoModel.addColumn("Apellido");
-					jTableListadoModel.addColumn("DNI");
+					jTableListadoModel.addColumn("Razon Social");
 					jTableListadoModel.addColumn("Estado");
 					jTableListadoModel.addColumn("Direccion");
 					jTableListadoModel.addColumn("Codigo Postal");
@@ -75,7 +74,7 @@ public class ListadoCliente extends javax.swing.JFrame {
 					jTableListadoModel.addColumn("Telefono");
 					
 					
-					for (DTO_ClienteParticular c :clienteDTO){
+					for (DTO_ClienteEmpresa c :clienteDTO){
 						
 						String estado=null;
 						if (c.isEstado())
@@ -85,9 +84,7 @@ public class ListadoCliente extends javax.swing.JFrame {
 						
 						DTO_Direccion direccion = c.getDireccion();
 						jTableListadoModel.addRow(new Object[] { c.getId(), 
-																c.getNombre(),
-																c.getApellido(),
-																c.getDni(),
+																c.getRazonSocial(),
 																estado,
 																direccion.getCalle(),
 																direccion.getCodigoPostal(), 

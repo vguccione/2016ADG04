@@ -7,9 +7,10 @@ import java.util.Collection;
 import java.util.List;
 
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
-import com.ADG04.bean.Administracion.DTO_RolUsuario;
+import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_Cliente;
+import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 
 
@@ -63,6 +64,17 @@ public class Controlador {
 	public List<DTO_ClienteParticular> listarClientes() {
 		try{
 			return bd.getClientesParticular();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar clientes");
+	        }   
+	        return null;
+	}
+
+	public List<DTO_ClienteEmpresa> listarClientesEmpresa() {
+		try{
+			return bd.getClientesEmpresa();
 		}
 		catch(RemoteException e) {
 	       	 System.out.println(e);

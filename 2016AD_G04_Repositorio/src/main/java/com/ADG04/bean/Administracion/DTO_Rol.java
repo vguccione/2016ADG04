@@ -1,15 +1,17 @@
 package com.ADG04.bean.Administracion;
 
-public class DTO_RolUsuario {
+import java.io.Serializable;
+
+public class DTO_Rol implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	private String descripcion;
 
-	public DTO_RolUsuario(){}
+	public DTO_Rol(){}
 	
-	public DTO_RolUsuario(int idRolUsuario, String descripcionRol)
+	public DTO_Rol(int idRolUsuario, String descripcionRol)
 	{
 		this.id = idRolUsuario;
 		this.descripcion = descripcionRol;

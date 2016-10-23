@@ -222,27 +222,30 @@ insert into MapaDeRutaCoordenada VALUES(1,5)
 insert into MapaDeRutaCoordenada VALUES(1,6)
 
 /*Roles usuario*/
-
-SET IDENTITY_INSERT dbo.RolUsuario off;  
+SET IDENTITY_INSERT dbo.Rol on;  
 GO  
 
-Insert into RolUsuario (IdRolUsuario,Descripcion) VALUES('ADMINISTRACION')
-Insert into RolUsuario (IdRolUsuario,Descripcion) VALUES('VEHICULOS')
-Insert into RolUsuario (IdRolUsuario,Descripcion) VALUES('ENVIO')
-Insert into RolUsuario (IdRolUsuario,Descripcion) VALUES('ENCOMIENDA')
+Insert into Rol (IdRol,Descripcion) VALUES(1,'ADMINISTRACION')
+Insert into Rol (IdRol,Descripcion) VALUES(2,'VEHICULOS')
+Insert into Rol (IdRol,Descripcion) VALUES(3,'ENVIO')
+Insert into Rol (IdRol,Descripcion) VALUES(4,'ENCOMIENDA')
 
-SET IDENTITY_INSERT dbo.RolUsuario off;  
-GO  
+SET IDENTITY_INSERT dbo.Rol off;  
+GO
 
 /*usuario administrador*/
 
 SET IDENTITY_INSERT dbo.[Usuario] on;  
 GO  
 
-INSERT INTO [dbo].[Usuario]  (IdUsuario, Apellido, dni, fechaCreacion, Nombre, Password, UltimoAcceso, usuario, IdRolUsuario, IdSucursal, rolUsuario) 
-VALUES (1,'Administrador','123456',getDate(),'Admin','admin',getDate(),'admin',1,1,1)
+INSERT INTO [dbo].[Usuario]  (IdUsuario, Apellido, dni, fechaCreacion, Nombre, Password, UltimoAcceso, usuario, IdSucursal) 
+VALUES (1,'Administrador','123456',getDate(),'Admin','admin',getDate(),'admin',1)
 GO
 
 
 SET IDENTITY_INSERT dbo.[Usuario] off;  
 GO
+
+/*UsuarioRol*/
+INSERT INTO UsuarioRol VALUES(1,1)
+INSERT INTO UsuarioRol VALUES(1,2)

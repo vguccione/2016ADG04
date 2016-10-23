@@ -10,7 +10,7 @@ import java.util.Set;
 
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.bean.Administracion.DTO_Direccion;
-import com.ADG04.bean.Administracion.DTO_RolUsuario;
+import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_Cliente;
@@ -211,8 +211,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public List<DTO_ClienteEmpresa> getClientesEmpresa()
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.getClientesEmpresa();
 	}
 
 
@@ -220,7 +219,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 			throws RemoteException {
 		return this.businessService.getClientesParticular();
 	}
-
+	
 
 	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente)
 			throws RemoteException {

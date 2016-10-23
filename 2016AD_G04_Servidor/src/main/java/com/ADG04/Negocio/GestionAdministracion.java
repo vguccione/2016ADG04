@@ -11,21 +11,21 @@ import javax.persistence.EntityTransaction;
 import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
-import com.ADG04.Servidor.dao.RolUsuarioDao;
+import com.ADG04.Servidor.dao.RolDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.model.ClienteParticular;
 import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.Pais;
 import com.ADG04.Servidor.model.Provincia;
-import com.ADG04.Servidor.model.RolUsuario;
+import com.ADG04.Servidor.model.Rol;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
-import com.ADG04.bean.Administracion.DTO_RolUsuario;
+import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
@@ -51,7 +51,7 @@ private static GestionAdministracion instancia;
 	
 	public void altaUsuario(DTO_Usuario usuario) {
 		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
-		RolUsuario rol = (RolUsuario) RolUsuarioDao.getInstancia().getById(usuario.getIdRolUsuario());
+		List<Rol> roles = (List<Rol>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
 		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -64,7 +64,7 @@ private static GestionAdministracion instancia;
 		u.setUltimoAcceso(usuario.getUltimoAcceso());
 		u.setFechaCreacion(usuario.getFechaCreacion());
 		u.setSucursal(suc);
-		u.setRolUsuario(rol);
+		u.setRoles(roles);
 		u.setUsuario(usuario.getNombreUsuario());
 		u.setPassword(usuario.getPassword());
 		
@@ -74,7 +74,7 @@ private static GestionAdministracion instancia;
 	
 	public void modificarUsuario(DTO_Usuario usuario) {
 		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
-		RolUsuario rol = (RolUsuario) RolUsuarioDao.getInstancia().getById(usuario.getIdRolUsuario());
+		List<Rol> roles = (List<Rol>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
 		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -87,7 +87,7 @@ private static GestionAdministracion instancia;
 		u.setUltimoAcceso(usuario.getUltimoAcceso());
 		u.setFechaCreacion(usuario.getFechaCreacion());
 		u.setSucursal(suc);
-		u.setRolUsuario(rol);
+		u.setRoles(roles);
 		u.setUsuario(usuario.getNombreUsuario());
 		u.setPassword(usuario.getPassword());
 		
@@ -145,10 +145,10 @@ private static GestionAdministracion instancia;
 	 }
 	 
 	 //Roles
-	 public List<DTO_RolUsuario> listarRoles(){
-		 List<RolUsuario> lista = RolUsuarioDao.getInstancia().getAll();
-		 List<DTO_RolUsuario> listaDTO = new ArrayList<DTO_RolUsuario>();
-         for(RolUsuario p: lista)
+	 public List<DTO_Rol> listarRoles(){
+		 List<Rol> lista = RolDao.getInstancia().getAll();
+		 List<DTO_Rol> listaDTO = new ArrayList<DTO_Rol>();
+         for(Rol p: lista)
          	listaDTO.add(p.toDTO());
          
 		 return listaDTO;
@@ -156,11 +156,11 @@ private static GestionAdministracion instancia;
 	 
 	 
 	 public List<String> buscarRolesUsuario(String usuario){
-		 List<RolUsuario> roles = RolUsuarioDao.getInstancia().buscarRolesUsuario(usuario);
+		 List<Rol> roles = RolDao.getInstancia().buscarRolesUsuario(usuario);
 		 List<String> dtoRoles = new ArrayList<String>();
-	    	for(RolUsuario rol : roles){
-	    		DTO_RolUsuario dto = new DTO_RolUsuario();
-	    		dto.setId(rol.getIdRolUsuario());
+	    	for(Rol rol : roles){
+	    		DTO_Rol dto = new DTO_Rol();
+	    		dto.setId(rol.getIdRol());
 	    		dto.setdescripcion(rol.getDescripcion());
 	    		dtoRoles.add(dto.getdescripcion());	    		
 	    	}

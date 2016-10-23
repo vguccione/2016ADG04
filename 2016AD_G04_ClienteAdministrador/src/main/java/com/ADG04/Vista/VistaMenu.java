@@ -10,7 +10,8 @@ import javax.swing.*;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.Vista.Listados.ListadoCliente;
-import com.ADG04.bean.Administracion.DTO_RolUsuario;
+import com.ADG04.Vista.Listados.ListadoEmpresa;
+import com.ADG04.bean.Administracion.DTO_Rol;
 
 
 /**
@@ -858,7 +859,7 @@ public class VistaMenu extends javax.swing.JFrame {
 						{
 							JMenuItem13 = new JMenuItem();
 							JMenuConsultasClientes.add(JMenuItem13);
-							JMenuItem13.setText("Clientes");
+							JMenuItem13.setText("Clientes Particulares");
 							if (roles.contains("ADMINISTRACION")) {
 								JMenuItem13.setVisible(true);
 							} else {
@@ -868,6 +869,24 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem13.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									ListadoCliente inst = new ListadoCliente();
+									inst.setLocationRelativeTo(null);
+									inst.setVisible(true);
+								}
+							});
+						}
+						{
+							JMenuItem13 = new JMenuItem();
+							JMenuConsultasClientes.add(JMenuItem13);
+							JMenuItem13.setText("Empresas");
+							if (roles.contains("ADMINISTRACION")) {
+								JMenuItem13.setVisible(true);
+							} else {
+								JMenuItem13.setVisible(false);
+								JMenuItem13.setBounds(0, 21, 80, 21);
+							}
+							JMenuItem13.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									ListadoEmpresa inst = new ListadoEmpresa();
 									inst.setLocationRelativeTo(null);
 									inst.setVisible(true);
 								}

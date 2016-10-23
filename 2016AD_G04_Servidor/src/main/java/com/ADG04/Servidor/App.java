@@ -18,6 +18,7 @@ import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionVehiculo;
+import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
@@ -27,6 +28,7 @@ import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
+import com.ADG04.Servidor.dao.RolDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.Cliente;
@@ -37,6 +39,7 @@ import com.ADG04.Servidor.model.Envio;
 import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.Pais;
 import com.ADG04.Servidor.model.Provincia;
+import com.ADG04.Servidor.model.Rol;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.TareaMantenimiento;
 import com.ADG04.Servidor.model.TareaMantenimientoPorKm;
@@ -46,6 +49,7 @@ import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
+import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
@@ -73,8 +77,14 @@ public class App
 
     public static void main( String[] args ) throws IOException
     {
-
-    	VehiculosTest.TestVehiculos();
+    	try{
+    		BusinessDelegate bd = new BusinessDelegate();
+    		bd.login("admin", "admin");
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	//VehiculosTest.TestVehiculos();
        //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
 
     	//VehiculosTest.TestVehiculos();
@@ -153,7 +163,14 @@ public class App
     	usuario.setPassword("xxxxxx");
     	usuario.setUltimoAcceso(new Date());
     	usuario.setIdSucursal(1);
-    	usuario.setIdRolUsuario(1);
+    	
+    	Rol rol = RolDao.getInstancia().getById(1);
+    	
+    	List<DTO_Rol> roles = new ArrayList<DTO_Rol>();
+    	DTO_Rol drol = rol.toDTO();
+    	roles.add(drol);
+    	
+    	usuario.setRoles(roles);
     	
     	GestionAdministracion.getInstancia().altaUsuario(usuario);
     }

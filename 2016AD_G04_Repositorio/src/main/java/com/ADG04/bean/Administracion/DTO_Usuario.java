@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 
+
 public class DTO_Usuario implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -14,11 +15,11 @@ public class DTO_Usuario implements Serializable{
 	private String password;
 	private Date ultimoAcceso;
 	private Date fechaCreacion;
-	private int idRolUsuario;  
 	private int idSucursal;
 	private String nombre;
 	private String apellido;
 	private String dni;
+	private List<DTO_Rol> roles; 
 	
 	public DTO_Usuario() {
 	
@@ -79,13 +80,13 @@ public class DTO_Usuario implements Serializable{
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
-	
-	public int getIdRolUsuario() {
-		return this.idRolUsuario;
+
+	public List<DTO_Rol> getRoles() {
+		return roles;
 	}
 
-	public void setIdRolUsuario(int idRol) {
-		this.idRolUsuario = idRol;
+	public void setRoles(List<DTO_Rol> roles) {
+		this.roles = roles;
 	}
 
 	public Integer getId() {

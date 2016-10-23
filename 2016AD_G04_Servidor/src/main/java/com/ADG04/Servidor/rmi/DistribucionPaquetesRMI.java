@@ -18,7 +18,7 @@ import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
 import com.ADG04.bean.Administracion.DTO_Direccion;
-import com.ADG04.bean.Administracion.DTO_RolUsuario;
+import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;

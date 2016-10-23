@@ -2,25 +2,19 @@ package com.ADG04.Servidor.model;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import com.ADG04.Negocio.GestionAdministracion;
-import com.ADG04.bean.Administracion.DTO_RolUsuario;
+import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
+
+
 @Entity
-@Table(name = "Usuario")
+@Table(name="Usuario")
 public class Usuario implements java.io.Serializable {
 
 	@Id
@@ -34,7 +28,7 @@ public class Usuario implements java.io.Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdRolUsuario")
-	private RolUsuario rolUsuario;
+	private Rol rolUsuario;
 
 	@Column(name = "Nombre", nullable = false, length = 100)
 	private String nombre;
@@ -57,6 +51,13 @@ public class Usuario implements java.io.Serializable {
 	@Column(name = "fechaCreacion")
 	private Date fechaCreacion;
 
+	@ManyToMany
+	@JoinTable(name="UsuarioRol",
+        joinColumns=
+            @JoinColumn(name="Usuario"),
+        inverseJoinColumns=
+            @JoinColumn(name="IdRol"))	
+	private List<Rol> roles;
 	
 	public Usuario() {
 	}
@@ -99,11 +100,11 @@ public class Usuario implements java.io.Serializable {
 		this.sucursal = sucursal;
 	}
 
-	public RolUsuario getRolUsuario() {
+	public Rol getRolUsuario() {
 		return this.rolUsuario;
 	}
 
-	public void setRolUsuario(RolUsuario rolUsuario) {
+	public void setRolUsuario(Rol rolUsuario) {
 		this.rolUsuario = rolUsuario;
 	}
 
@@ -163,6 +164,16 @@ public class Usuario implements java.io.Serializable {
 				+ ultimoAcceso + ", fechaCreacion=" + fechaCreacion + "]";
 	}
 	
+	
+	
+	public List<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
+	}
+
 	public DTO_Usuario toDTO(){
 		DTO_Usuario u = new DTO_Usuario();
 		u.setDni(this.getDni());
@@ -171,8 +182,14 @@ public class Usuario implements java.io.Serializable {
 		u.setPassword(this.getPassword());
 		u.setFechaCreacion(this.getFechaCreacion());
 		u.setUltimoAcceso(this.getUltimoAcceso());
-		u.setIdRolUsuario(this.rolUsuario.getIdRolUsuario());	
 		u.setIdUsuario(this.getIdUsuario());
+		
+		List<DTO_Rol> roles = new ArrayList<DTO_Rol>();
+		for(Rol r: this.getRoles()){
+			roles.add(r.toDTO());
+		}
+		u.setRoles(roles);
+		
 		return u;
 	}
 

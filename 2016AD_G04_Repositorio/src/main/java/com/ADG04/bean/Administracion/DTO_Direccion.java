@@ -1,6 +1,8 @@
 package com.ADG04.bean.Administracion;
 
-public class DTO_Direccion {
+import java.io.Serializable;
+
+public class DTO_Direccion implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

@@ -98,11 +98,14 @@ public class ClienteEmpresa extends Cliente implements java.io.Serializable {
 
 	public DTO_ClienteEmpresa toDTO(){
 		DTO_ClienteEmpresa cli = new DTO_ClienteEmpresa();
+		cli.setId(this.getIdCliente());
 		cli.setRazonSocial(this.razonSocial);
 		cli.setCuit(this.cuit);
 		cli.setEmail(this.getEmail());	
 		cli.setEstado(this.getEstado());
 		cli.setTelefono(this.getTelefono());
+			
+		cli.setDireccion(this.getDireccion().toDTO());
 		
 		return cli;
 	}

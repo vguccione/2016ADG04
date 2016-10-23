@@ -22,6 +22,7 @@ import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.model.ItemFactura;
 import com.ADG04.Servidor.model.Producto;
 import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
@@ -156,7 +157,14 @@ public class GestionCliente {
 		tx.commit();
 	}
 	
-	
+	public List<DTO_Cliente> getClientes(){
+		List<Cliente> clientes = ClienteDao.getInstancia().getAll();
+		List<DTO_Cliente> clientesDTO = new ArrayList<DTO_Cliente>();
+		for(Cliente cliente : clientes){
+			clientesDTO.add(cliente.toDTO());
+		}
+		return clientesDTO;
+	}
 	
 	public List<DTO_ClienteParticular> getClientesParticular(){
 		List<ClienteParticular> clientes = ClienteParticularDao.getInstancia().listarClientes();

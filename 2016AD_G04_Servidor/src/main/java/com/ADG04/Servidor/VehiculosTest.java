@@ -38,7 +38,7 @@ public class VehiculosTest {
 			
 			int idVehiculo = getIntFromConsole("Id Vehiculo: ");
 			List<TareaMantenimiento> tareasVencidas= GestionVehiculo.getInstancia().getTareasVencidas(idVehiculo);
-			
+			if(tareasVencidas == null || tareasVencidas.isEmpty()) { System.out.println("No hay tareas vencidas."); }
 			ok = getStringFromConsole("Buscar tareas vencidas de otro vehículo (si/no)?");
 		}
 		

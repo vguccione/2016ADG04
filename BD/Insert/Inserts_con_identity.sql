@@ -223,12 +223,26 @@ insert into MapaDeRutaCoordenada VALUES(1,6)
 
 /*Roles usuario*/
 
-Insert into RolUsuario VALUES('ADMINISTRACION')
-Insert into RolUsuario VALUES('VEHICULOS')
-Insert into RolUsuario VALUES('ENVIO')
-Insert into RolUsuario VALUES('ENCOMIENDA')
+SET IDENTITY_INSERT dbo.RolUsuario off;  
+GO  
+
+Insert into RolUsuario (IdRolUsuario,Descripcion) VALUES('ADMINISTRACION')
+Insert into RolUsuario (IdRolUsuario,Descripcion) VALUES('VEHICULOS')
+Insert into RolUsuario (IdRolUsuario,Descripcion) VALUES('ENVIO')
+Insert into RolUsuario (IdRolUsuario,Descripcion) VALUES('ENCOMIENDA')
+
+SET IDENTITY_INSERT dbo.RolUsuario off;  
+GO  
 
 /*usuario administrador*/
 
-INSERT INTO [dbo].[Usuario]    VALUES ('Administrador','123456',getDate(),'Admin','admin',getDate(),'admin',1,1)
+SET IDENTITY_INSERT dbo.[Usuario] on;  
+GO  
+
+INSERT INTO [dbo].[Usuario]  (IdUsuario, Apellido, dni, fechaCreacion, Nombre, Password, UltimoAcceso, usuario, IdRolUsuario, IdSucursal, rolUsuario) 
+VALUES (1,'Administrador','123456',getDate(),'Admin','admin',getDate(),'admin',1,1,1)
+GO
+
+
+SET IDENTITY_INSERT dbo.[Usuario] off;  
 GO

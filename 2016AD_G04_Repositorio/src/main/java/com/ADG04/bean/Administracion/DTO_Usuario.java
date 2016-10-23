@@ -19,6 +19,7 @@ public class DTO_Usuario implements Serializable{
 	private String nombre;
 	private String apellido;
 	private String dni;
+	private String usuario;
 	
 	public DTO_Usuario() {
 	
@@ -107,7 +108,13 @@ public class DTO_Usuario implements Serializable{
 	public int getIdUsuario() {
 		return idUsuario;
 	}
+
+	public String getUsuario() {
+		return usuario;
+	}
 	
-	
+	public void setUsuario(String usuario){
+		this.usuario = usuario;
+	}
 
 }

@@ -26,6 +26,7 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
@@ -564,6 +565,66 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public List<String> buscarRolesUsuario(int usuario)
 			throws RemoteException {
 		return GestionAdministracion.getInstancia().buscarRolesUsuario(String.valueOf(usuario));
+	}
+
+	@Override
+	public void ingresarEncomiendaEnvio(Integer idEnvio) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void egresarEncomiendaEnvio(Integer idEnvio) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer asignarEnvio(Integer idEncomienda) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer cobrarEncomiendaEmpresa(List<Integer> lista) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer cobrarEncomiendaParticular(Integer idFactura) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer nuevaEncomiendaParticular(Integer idSucursal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer nuevaEncomiendaEmpresa(Integer idSucursal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Usuario validarUsuario(String usuario, String contrasena) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

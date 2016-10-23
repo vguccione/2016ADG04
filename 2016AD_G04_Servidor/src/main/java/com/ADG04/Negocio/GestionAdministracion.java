@@ -155,14 +155,14 @@ private static GestionAdministracion instancia;
 	 }
 	 
 	 
-	 public List<DTO_RolUsuario> buscarRolesUsuario(String usuario){
+	 public List<String> buscarRolesUsuario(String usuario){
 		 List<RolUsuario> roles = RolUsuarioDao.getInstancia().buscarRolesUsuario(usuario);
-		 List<DTO_RolUsuario> dtoRoles = new ArrayList<DTO_RolUsuario>();
+		 List<String> dtoRoles = new ArrayList<String>();
 	    	for(RolUsuario rol : roles){
 	    		DTO_RolUsuario dto = new DTO_RolUsuario();
 	    		dto.setId(rol.getIdRolUsuario());
 	    		dto.setdescripcion(rol.getDescripcion());
-	    		dtoRoles.add(dto);	    		
+	    		dtoRoles.add(dto.getdescripcion());	    		
 	    	}
 		return dtoRoles;
 	 }

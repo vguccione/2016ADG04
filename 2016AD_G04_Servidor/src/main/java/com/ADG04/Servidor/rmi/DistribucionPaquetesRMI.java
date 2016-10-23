@@ -18,6 +18,7 @@ import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_RolUsuario;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
@@ -125,15 +126,13 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	
-	public List<DTO_ClienteParticular> getClientesEmpresa() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<DTO_ClienteEmpresa> getClientesEmpresa() throws RemoteException {
+		return GestionCliente.getInstancia().getClientesEmpresa();
 	}
 
 	
 	public List<DTO_ClienteParticular> getClientesParticular() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return GestionCliente.getInstancia().getClientesParticular();
 	}
 
 	
@@ -512,7 +511,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public DTO_Usuario login(String usuario, String password) throws RemoteException{
-		return null;
+		return GestionAdministracion.getInstancia().login(usuario, password);
 	}
 	
 	public Integer gestionarEnvioEncomienda(int idEncomienda){
@@ -559,6 +558,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<String> buscarRolesUsuario(int usuario)
+			throws RemoteException {
+		return GestionAdministracion.getInstancia().buscarRolesUsuario(String.valueOf(usuario));
 	}
 	
 }

@@ -27,8 +27,7 @@ public class RolUsuario implements java.io.Serializable {
 	@Column(name = "Descripcion", nullable = false, length = 50)
 	private String descripcion;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "rolUsuario")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="rolUsuario")
 	private List<Usuario> usuarios;
 
 	public RolUsuario() {

@@ -3,6 +3,7 @@ package com.ADG04.Repositorio.Interfaces;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import com.ADG04.bean.Administracion.DTO_RolUsuario;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
@@ -20,6 +21,7 @@ public interface IAdministracionRemote {
 	public DTO_Usuario getUsuario(Integer idUsuario) throws RemoteException;
 	public DTO_Usuario getUsuario(String dni) throws RemoteException;
 	public DTO_Usuario login(String usuario, String password) throws RemoteException;
+	public List<String> buscarRolesUsuario(int usuario) throws RemoteException;
 	
 	/*************************** Sucursal *************************************/
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException;

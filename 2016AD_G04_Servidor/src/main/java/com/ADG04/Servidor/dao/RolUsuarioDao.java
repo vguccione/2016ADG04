@@ -34,8 +34,8 @@ public class RolUsuarioDao extends GenericDao<RolUsuario, Integer> {
 	@SuppressWarnings("unchecked")
 	public List<RolUsuario> buscarRolesUsuario(String usuario) {
 		try{
-		return entityManager.createQuery("from Usuario where idUsuario=:usuario")
-				            .setParameter("usuario", usuario)
+		return entityManager.createQuery("select ru from RolUsuario ru join ru.usuarios u where u.idUsuario=:usuario")
+				            .setParameter("usuario", Integer.valueOf(usuario))
 				            .getResultList();
 		}catch(Exception e){
             System.out.println(e);

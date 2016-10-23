@@ -98,7 +98,7 @@ public class GestionCliente {
 		c.setCuit(clienteEmpresa.getCuit());
 		c.setEmail(clienteEmpresa.getEmail());
 		c.setRazonSocial(clienteEmpresa.getRazonSocial());
-		c.setEstado(clienteEmpresa.getEstado());
+		c.setEstado(clienteEmpresa.isEstado());
 		c.setTelefono(clienteEmpresa.getTelefono());
 		
 		CuentaCorriente cc = new CuentaCorriente();
@@ -129,7 +129,7 @@ public class GestionCliente {
 		c.setCuit(clienteEmpresa.getCuit());
 		c.setEmail(clienteEmpresa.getEmail());
 		c.setRazonSocial(clienteEmpresa.getRazonSocial());
-		c.setEstado(clienteEmpresa.getEstado());
+		c.setEstado(clienteEmpresa.isEstado());
 		c.setTelefono(clienteEmpresa.getTelefono());
 		
 		EntityManager em = factory.createEntityManager();
@@ -175,6 +175,7 @@ public class GestionCliente {
 		}
 		return clientesDTO;
 	}
+	
 	
 	public DTO_ClienteParticular getClienteParticularByDni(String dniCliente) {
 		return ClienteParticularDao.getInstancia().getByDni(dniCliente).toDTO();

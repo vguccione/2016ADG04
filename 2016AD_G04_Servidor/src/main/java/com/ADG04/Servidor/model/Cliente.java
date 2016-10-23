@@ -52,7 +52,7 @@ public class Cliente implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
 	private List <Encomienda> encomiendas;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL,orphanRemoval=true)
 	@JoinColumn(name="IdDireccion")
 	private Direccion direccion;
 

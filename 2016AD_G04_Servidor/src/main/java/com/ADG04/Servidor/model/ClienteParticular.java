@@ -24,6 +24,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_RolUsuario;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
@@ -88,6 +89,8 @@ public class ClienteParticular extends Cliente implements java.io.Serializable {
 		cli.setEmail(this.getEmail());	
 		cli.setEstado(this.getEstado());
 		cli.setTelefono(this.getTelefono());
+		
+		cli.setDireccion(this.getDireccion().toDTO());
 		
 		return cli;
 	}

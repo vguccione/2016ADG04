@@ -43,9 +43,10 @@ public class ClienteParticularDao extends GenericDao<ClienteParticular, Integer>
 	@SuppressWarnings("unchecked")
 	public List<ClienteParticular> listarClientes() {
 		try{
-			return entityManager
+			List<ClienteParticular> lista = entityManager
 	                .createQuery("from Cliente c where c.class = 'p'")
 	                .getResultList();
+			return lista;
         }catch(Exception e){
                 System.out.println(e);
                 System.out.println("ErrorDAO: Listar clientes particulares");

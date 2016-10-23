@@ -10,8 +10,10 @@ import java.util.Set;
 
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_RolUsuario;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
+import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
@@ -84,10 +86,12 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public DTO_Usuario login(String usuario, String password)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.login(usuario, password);
 	}
 
+	public List<String> buscarRolesUsuario(int usuario) throws RemoteException{
+		return this.businessService.buscarRolesUsuario(usuario);
+	}
 
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
 		// TODO Auto-generated method stub
@@ -205,7 +209,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	}
 
 
-	public List<DTO_ClienteParticular> getClientesEmpresa()
+	public List<DTO_ClienteEmpresa> getClientesEmpresa()
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
@@ -214,22 +218,19 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public List<DTO_ClienteParticular> getClientesParticular()
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.getClientesParticular();
 	}
 
 
 	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.getClienteEmpresaById(idCliente);
 	}
 
 
 	public DTO_ClienteEmpresa getClienteEmpresaByCuit(String cuit)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.getClienteEmpresaByCuit(cuit);
 	}
 
 

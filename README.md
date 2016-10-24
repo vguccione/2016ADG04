@@ -2,6 +2,15 @@
 Trabajo Práctico grupo 04 de Aplicaciones Distribuidas , 2016
 
 
+Tests en el proyecto 2016AD_G04_Servidor:
+- /src/main/java/com/ADG04/Servidor/App.java  (test control viajes)
+- /src/main/java/com/ADG04/Servidor/EncomiendasTest.java
+- /src/main/java/com/ADG04/Servidor/VehiculosTest.java  (tareas mantenimiento)
+
+Scripts de Base de datos en carpeta BD (fullDB.sql y en carpeta Insert: Inserts_con_identity.sql)
+
+
+
 Instrucciones para levantar el servidor
 -----------------------------------------
 

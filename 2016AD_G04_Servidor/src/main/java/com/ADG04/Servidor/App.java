@@ -77,19 +77,9 @@ public class App
 
     public static void main( String[] args ) throws IOException
     {
-    	try{
-    		BusinessDelegate bd = new BusinessDelegate();
-    		bd.login("admin", "admin");
-    	}
-    	catch(Exception e){
-    		e.printStackTrace();
-    	}
-    	//VehiculosTest.TestVehiculos();
-       //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
-
-    	//VehiculosTest.TestVehiculos();
-    	//EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
-    	//testControlViajes();
+	testControlViajes();
+     	//VehiculosTest.TestVehiculos();
+        //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
     	
     	//TestTareasVencidas(20);
     	//TestCrearPlanesYTareasYVehiculos();

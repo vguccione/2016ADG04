@@ -5,30 +5,269 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
+import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
+import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 public class TestClient {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		
-		AltaEncomiendaParticular();
+/*		AltaEncomiendaParticular();
 		System.out.println("Para finalizar escriba Exit, si no escriba Continuar.");
 		
 		while(getStringFromConsole("") != "Continuar"){
 			
 			AltaEncomiendaParticular();
 		}
-		
+	*/	
 		//AltaEncomiendaParticular();
 		//TestBusinesDelegate();
+		//TestVehiculo();
+		
+		String ok = getStringFromConsole("Agregar Plan de Mantenimiento (si/no)?");
+		if(ok.equals("si")){
+			TestCrearPlanesYTareasYVehiculos();	
+			ok = getStringFromConsole("Agregar otro Plan de Mantenimiento (si/no)?");
+			
+			while(ok.equals("si")){
+				TestCrearPlanesYTareasYVehiculos();
+				ok = getStringFromConsole("Agregar otro Plan de Mantenimiento (si/no)?");
+			}
+		}
+		BusinessDelegate bDelegate = new BusinessDelegate();
+		ok = getStringFromConsole("Buscar tareas vencidas (si/no)?");
+		while(ok.equals("si")){
+			
+			int idVehiculo = getIntFromConsole("Id Vehiculo: ");
+			List<DTO_TareaMantenimiento> tareasVencidas= bDelegate.getTareasVencidas(idVehiculo);
+			if(tareasVencidas == null || tareasVencidas.isEmpty()) { System.out.println("No hay tareas vencidas."); }
+			
+			for(DTO_TareaMantenimiento t:tareasVencidas){
+				System.out.println("La tarea : " + t.getTarea() + " ("+t.getId()+") está vencida.");
+			}
+			
+			ok = getStringFromConsole("Buscar tareas vencidas de otro vehículo (si/no)?");
+		}
+		
 
 	}
 
+	
+	public static void TestVehiculos() throws Exception{
+		
+		BusinessDelegate bd = new BusinessDelegate();
+		
+		String ok = getStringFromConsole("Agregar Plan de Mantenimiento (si/no)?");
+		if(ok.equals("si")){
+			TestCrearPlanesYTareasYVehiculos();	
+			ok = getStringFromConsole("Agregar otro Plan de Mantenimiento (si/no)?");
+			
+			while(ok.equals("si")){
+				TestCrearPlanesYTareasYVehiculos();
+				ok = getStringFromConsole("Agregar otro Plan de Mantenimiento (si/no)?");
+			}
+		}
+		
+		ok = getStringFromConsole("Buscar tareas vencidas (si/no)?");
+		while(ok.equals("si")){
+			
+			int idVehiculo = getIntFromConsole("Id Vehiculo: ");
+			List<DTO_TareaMantenimiento> tareasVencidas = bd.getTareasVencidas(idVehiculo);
+			if(tareasVencidas == null || tareasVencidas.isEmpty()) { System.out.println("No hay tareas vencidas."); }
+			else{
+				
+				for(DTO_TareaMantenimiento t:tareasVencidas){
+					System.out.println("La tarea : " + t.getTarea() + " ("+t.getId()+") está vencida.");
+				}
+			
+			}
+			ok = getStringFromConsole("Buscar tareas vencidas de otro vehículo (si/no)?");
+		}
+		/*
+		List<Vehiculo> vhs = VehiculoDao.getInstancia().getAll();
+		for(Vehiculo veh:vhs){
+			TestGetPlanes(veh.getIdVehiculo());	
+		}
+		*/
+	}
+
+	 private static void TestCrearPlanesYTareasYVehiculos() throws Exception{
+	    	
+	    	String ok = getStringFromConsole("Agregar vehículo(si/no)?");
+	    	
+	    	if(ok.equals("si")){
+		    	//System.out.println("Agregar vehículo con este plan");
+		    	String marca = getStringFromConsole("Marca: ");
+		    	String modelo = getStringFromConsole("Modelo: ");
+		    	String anio = getStringFromConsole("Anio: ");
+		    	String patente = getStringFromConsole("Patente: ");
+		    	int idVeh1 = generarVehiculoTest(marca, modelo, anio, patente);   	
+		    	System.out.println("Vehiculo generado: " + idVeh1);
+		    	System.out.println("Agregar plan");
+		    	
+		    	String plan = getStringFromConsole("Plan descripcion: ");
+		    	String tareaKm = getStringFromConsole("Tarea por Km: ");
+		    	int frecKm = getIntFromConsole("Frecuencia tarea por Km: ");
+		    	String tareaTiempo = getStringFromConsole("Tarea por Tiempo: ");
+		    	int frecTiempo = getIntFromConsole("Frecuencia tarea por Tiempo: ");
+		    	
+		    	int idPm1 = TestAddPlanMantenimiento(plan, idVeh1);
+		    	TestAddTareasToPlan(tareaTiempo, frecKm, tareaTiempo, frecTiempo,idPm1, idVeh1);
+		    	System.out.println("Plan generado. Id plan: " + idPm1);
+		    	
+	    	}
+	    	
+	    	
+	    }
+	    
+
+	
+	/*
+    private static void TestCrearPlanesYTareasYVehiculos() throws IOException, NotBoundException{
+
+    	BusinessDelegate bDelegate = new BusinessDelegate();
+    	
+    	String plan = getStringFromConsole("Plan descripcion: ");
+    	String tareaKm = getStringFromConsole("Tarea por Km: ");
+    	int frecKm = getIntFromConsole("Frecuencia tarea por Km: ");
+    	String tareaTiempo = getStringFromConsole("Tarea por Tiempo: ");
+    	int frecTiempo = getIntFromConsole("Frecuencia tarea por Tiempo: ");
+    	
+    	int idPm1 = TestAddPlanMantenimiento(plan);
+    	TestAddTareasToPlan(tareaTiempo, frecKm, tareaTiempo, frecTiempo,idPm1);
+    	System.out.println("Plan generado. Id plan: " + idPm1);
+    	
+    	String ok = getStringFromConsole("Agregar vehículo con este plan(si/no)?");
+    	
+    	if(ok.equals("si")){
+	    	System.out.println("Agregar vehículo con este plan");
+	    	String marca = getStringFromConsole("Marca: ");
+	    	String modelo = getStringFromConsole("Modelo: ");
+	    	String anio = getStringFromConsole("Anio: ");
+	    	String patente = getStringFromConsole("Patente: ");
+	    	int idVeh1 = generarVehiculoTest(marca, modelo, anio, patente,idPm1);   	
+	    	System.out.println("Vehiculo generado: " + idVeh1);
+	    	ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
+	    	
+	    	while(ok.equals("si")){
+	    	
+	    		System.out.println("Agregar vehículo con este plan");
+	        	marca = getStringFromConsole("Marca: ");
+	        	modelo = getStringFromConsole("Modelo: ");
+	        	anio = getStringFromConsole("Anio: ");
+	        	patente = getStringFromConsole("Patente: ");
+	        	idVeh1 = generarVehiculoTest(marca, modelo, anio, patente,idPm1);   	
+	        	System.out.println("Vehiculo generado: " + idVeh1);
+	        	ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
+	    	}
+    	}
+    }
+*/
+    private static int TestAddPlanMantenimiento(String descPlan, int idVehiculo) throws Exception {
+	
+    	BusinessDelegate bDelegate = new BusinessDelegate();
+    	
+    	DTO_PlanMantenimiento pm = new DTO_PlanMantenimiento();
+    	pm.setComentarios("Comentarios: " + descPlan);
+    	pm.setDescripcion(descPlan);
+    	pm.setTolerancia(123);
+    	
+    	Integer idPm = bDelegate.altaPlanMantenimiento(pm, idVehiculo);
+    	System.out.println("Plan nro " + idPm + " creado.");
+    	return idPm;
+	}
+    
+    private static void TestAddTareasToPlan(String tareaKm, float kms, String tareaTiempo, int dias, int idPlanMantenimiento, Integer idVehiculo) throws Exception{
+
+    	BusinessDelegate bDelegate = new BusinessDelegate();
+    	DTO_TareasPorKilometro tareaXKM = new DTO_TareasPorKilometro();
+    	tareaXKM.setCantidadKilometros(kms);
+    	tareaXKM.setIdPlanMantenimiento(idPlanMantenimiento);
+    	tareaXKM.setTarea(tareaKm);
+    	
+    	bDelegate.altaTareaMantenimiento(tareaXKM, idVehiculo);
+    	
+    	DTO_TareasPorTiempo tareaXTiempo = new DTO_TareasPorTiempo();
+    	tareaXTiempo.setCantidadDias(dias);
+    	tareaXTiempo.setIdPlanMantenimiento(idPlanMantenimiento);
+    	tareaXTiempo.setTarea(tareaTiempo);
+    	
+    	Integer idTarea = bDelegate.altaTareaMantenimiento(tareaXTiempo, idVehiculo);
+    }
+
+
+	
+	private static void TestVehiculo() throws IOException, NotBoundException{
+		System.out.println("Agregar vehículo con este plan");
+		String marca = getStringFromConsole("Marca: ");
+		String modelo = getStringFromConsole("Modelo: ");
+		String anio = getStringFromConsole("Anio: ");
+		String patente = getStringFromConsole("Patente: ");
+		int idVeh1 = generarVehiculoTest(marca, modelo, anio, patente);   	
+		System.out.println("Vehiculo generado: " + idVeh1);
+		String ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
+		
+		while(ok.equals("si")){
+		
+			System.out.println("Agregar vehículo con este plan");
+	    	marca = getStringFromConsole("Marca: ");
+	    	modelo = getStringFromConsole("Modelo: ");
+	    	anio = getStringFromConsole("Anio: ");
+	    	patente = getStringFromConsole("Patente: ");
+	    	idVeh1 = generarVehiculoTest(marca, modelo, anio, patente);   	
+	    	System.out.println("Vehiculo generado: " + idVeh1);
+	    	ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
+		}
+	}
+	
+
+	public static int generarVehiculoTest(String marca, String modelo, String anio, String patente) throws MalformedURLException, RemoteException, NotBoundException{
+		
+		//buscar el plan
+			
+		//Creo vehiculo
+		DTO_Vehiculo v = new DTO_Vehiculo();
+		v.setAlto(100f);
+		v.setAncho(100f);
+		v.setAnio(anio);
+		v.setEstado(null);
+		v.setKmsRecorridos(13400);
+		v.setLargo(1000f);
+		v.setMarca(marca);
+		v.setModelo(modelo);
+		v.setPatente(patente);
+		v.setPeso(560f);
+		v.setTara(20);	
+		v.setRefrigerado(false);
+		v.setVolumen(3333f);
+		Date date = new Date();
+		date.setYear(2016);
+		date.setMonth(01);
+		date.setDate(1);
+		v.setFechaIngreso(new Date("01/01/2016"));
+		
+		DTO_Sucursal su  = new DTO_Sucursal();
+		su.setId(1);
+		v.setSucursal(su);
+		
+		BusinessDelegate bDelegate = new BusinessDelegate();
+		return bDelegate.altaVehiculo(v);
+		
+	}
+
+
+	
 
 	private static String getStringFromConsole(String msg) throws IOException{
 		System.out.print(msg);

@@ -64,7 +64,7 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 		
 		for(int id: idsVehiculos){
 			Vehiculo v = this.getById(id);
-			if(this.estaUtilizable(v) && !this.estaAsignado(v) && !GestionVehiculo.getInstancia().tieneTareasVencidas(v.getIdVehiculo())){
+			if(this.estaUtilizable(v) && !this.estaAsignado(v) && !new GestionVehiculo(v.getIdVehiculo()).tieneTareasVencidas()){
 				vehiculos.add(v);
 			}
 		}

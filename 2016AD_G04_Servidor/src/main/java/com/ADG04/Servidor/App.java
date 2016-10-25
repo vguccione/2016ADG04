@@ -77,9 +77,18 @@ public class App
 
     public static void main( String[] args ) throws IOException
     {
+
 	testControlViajes();
      	//VehiculosTest.TestVehiculos();
         //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
+
+    	//VehiculosTest.TestVehiculos();
+       //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
+
+    	//VehiculosTest.TestVehiculos();
+    	//EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
+    	//testControlViajes();
+
     	
     	//TestTareasVencidas(20);
     	//TestCrearPlanesYTareasYVehiculos();

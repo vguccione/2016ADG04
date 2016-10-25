@@ -11,6 +11,7 @@ import com.ADG04.Negocio.GestionAdministracion;
 import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
+import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.SucursalDao;
@@ -26,6 +27,7 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
@@ -34,6 +36,11 @@ import com.ADG04.bean.Proveedor.DTO_Carrier;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
+import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
+import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 
@@ -566,4 +573,114 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		return GestionAdministracion.getInstancia().buscarRolesUsuario(String.valueOf(usuario));
 	}
 	
+	public Integer altaVehiculo(DTO_Vehiculo v) throws RemoteException {
+		return new GestionVehiculo().altaVehiculo(v);
+	}
+
+	@Override
+	public void altaTareaMantenimiento(DTO_TareasPorKilometro tareaXKM, Integer idVehiculo)
+			throws RemoteException, Exception {
+		try {
+			new GestionVehiculo(idVehiculo).altaTareaMantenimiento(tareaXKM);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public Integer altaPlanMantenimiento(DTO_PlanMantenimiento pm, Integer idVehiculo)	throws RemoteException, Exception {
+				
+		GestionVehiculo v = new GestionVehiculo(idVehiculo);
+		return v.altaPlanMantenimiento(pm);
+	}
+
+	@Override
+	public Integer altaTareaMantenimiento(DTO_TareasPorTiempo tareaXTiempo, Integer idVehiculo)
+			throws RemoteException, Exception {
+		return new GestionVehiculo(idVehiculo).altaTareaMantenimiento(tareaXTiempo);
+	}
+
+	@Override
+	public List<DTO_TareaMantenimiento> getTareasVencidas(int idVehiculo)
+			throws RemoteException {
+		return new GestionVehiculo(idVehiculo).getTareasVencidas2();
+	}
+	
+/*
+	@Override
+	public void ingresarEncomiendaEnvio(Integer idEnvio) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void egresarEncomiendaEnvio(Integer idEnvio) {
+		// TODO Auto-generated method stub
+		
+	}*/
+/*
+	@Override
+	public void ingresarEncomiendaEnvio(Integer idEnvio) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void egresarEncomiendaEnvio(Integer idEnvio) {
+		// TODO Auto-generated method stub
+		
+	}
+*/
+	//@Override
+	/*public Integer asignarEnvio(Integer idEncomienda) {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
+	/*
+	@Override
+	public Integer cobrarEncomiendaEmpresa(List<Integer> lista) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer cobrarEncomiendaParticular(Integer idFactura) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer nuevaEncomiendaParticular(Integer idSucursal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer nuevaEncomiendaEmpresa(Integer idSucursal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public DTO_Usuario validarUsuario(String usuario, String contrasena) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+*/	
 }

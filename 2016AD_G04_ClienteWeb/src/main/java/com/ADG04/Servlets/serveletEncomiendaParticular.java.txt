@@ -1,0 +1,257 @@
+package com.ADG04.Servlets;
+
+import com.ADG04.bean.Encomienda.*;
+import com.ADG04.Controller.BusinessDelegate;
+
+import java.io.IOException;
+import java.util.*;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.ADG04.Controller.BusinessDelegate;
+
+//import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+@WebServlet(asyncSupported = true, urlPatterns = { "/serveletEncomiendaParticular" })
+public class serveletEncomiendaParticular extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+ 
+    public serveletEncomiendaParticular() {
+        super();
+    }
+ 
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try { 	
+			String action = request.getParameter("action");
+			String jspPage = "mostrarMensaje.jsp";
+				
+			if ((action==null) || (action.length() < 1) )
+			{
+				action = "default";
+			}
+			else
+			{
+				if ("altaEncomiendaParticular_paso_1".equals(action)) {
+
+					Integer sucursal;
+					String sucursalNombre;
+					Integer idEncomienda;
+					idEncomienda = 0;
+					String destinos = "";
+					String destinoOtp = "";
+					String estado = "";
+					
+					HttpSession sesionIntento = request.getSession();
+					if(sesionIntento.getAttribute("sucursal") != null){
+						
+						sucursal = Integer.parseInt((String)sesionIntento.getAttribute("sucursal"));
+						sucursalNombre = BusinessDelegate.getInstancia().getSucursalNombre(sucursal);
+						idEncomienda = BusinessDelegate.getInstancia().nuevaEncomienda(sucursal);
+						estado = "En elaboraci�n";
+						
+						//sucursal = 1;
+						//sucursalNombre = "jose";
+						//idEncomienda = 22;
+					
+						
+					/*	List<DTO_Destino> destinosList = BusinessDelegate.getInstancia().listarDestinoNacional(sucursal);
+						
+						if(destinosList != null){
+						
+							for(DTO_Destino d: destinosList)
+							{
+								destinoOtp = destinoOtp + "<option value='"+ d.getId().toString() +"'>" + d.getCiudad() + "</option>";
+							}
+							
+							destinos = "<li><label>Destinos:</label>"
+				 						+ "<select name='idDestino' class='select-field' id='idDestino' style='line-height:15px' title='Destinos'>"
+				 						+ destinoOtp
+				 						+ "</select></li>";
+						}
+						else
+						{
+							destinos = "<li><label>Destinos:</label>"
+			 						+ "<select name='idDestino' class='select-field' id='idAseguradora' style='line-height:15px' title='Aseguradora'>"
+			 						+ "<option>Error de carga</option>"
+			 						+ "</select></li>";
+						}
+				 		
+				*/
+						if (idEncomienda != null){
+							jspPage = "altaEncomiendaParticular.jsp";
+							request.setAttribute("idEncomienda", Integer.toString(idEncomienda));
+							request.setAttribute("sucursalNombre", sucursalNombre);
+						    request.setAttribute("destinos", destinos);
+						    request.setAttribute("estado", estado);
+						}
+						else
+						{
+							jspPage = "mostrarMensaje.jsp";
+							request.setAttribute("mensaje", "Ha ocurrido un error con la encomienda");								
+						}
+					}
+					else
+					{
+						jspPage = "mostrarMensaje.jsp";
+						request.setAttribute("mensaje", "Ha ocurrido un error con la sucursal");	
+					}
+				}
+				else
+				{
+					if ("altaEncomiendaParticular".equals(action)) {
+
+						DTO_EncomiendaParticular e = new DTO_EncomiendaParticular();
+						DTO_Manifiesto m = new DTO_Manifiesto();
+						
+						m.setDescripcion((String)request.getParameter("manifiesto"));
+						
+						e.setId(Integer.parseInt((String)request.getParameter("idEncomienda")));
+						e.setIdSucursalOrigen(Integer.parseInt((String)request.getParameter("idSucursalOrigen")));
+						e.setIdDestino(Integer.parseInt((String)request.getParameter("idDestino")));
+						e.setIdSucursalActual(Integer.parseInt((String)request.getParameter("idSucursalOrigen")));
+						e.setFechaRecepcion(new Date());
+						e.setFechaMaxima(new Date());
+						e.setLargo((float)Float.parseFloat((String)request.getParameter("largo")));
+						e.setAlto((float)Float.parseFloat((String)request.getParameter("alto")));
+						e.setAncho((float)Float.parseFloat((String)request.getParameter("ancho")));
+						e.setPeso((float)Float.parseFloat((String)request.getParameter("peso")));
+						e.setVolumen((float)Float.parseFloat((String)request.getParameter("ancho"))/100 * (float)Float.parseFloat((String)request.getParameter("largo"))/100 * (float)Float.parseFloat((String)request.getParameter("alto"))/100);
+						e.setTratamiento((String)request.getParameter("tratamiento"));
+						if(request.getParameter("Apilable").equals("true"))
+							e.setApilable(true);
+						else
+							e.setApilable(false);
+
+						e.setCantApilable(Integer.parseInt((String)request.getParameter("cantApilable")));
+						
+						if(request.getParameter("Refrigerado").equals("true"))
+							e.setRefrigerado(true);
+						else
+							e.setRefrigerado(false);
+
+						e.setCondicionTransporte((String)request.getParameter("condicionTransporte"));
+						e.setIndicacionesManipulacion((String)request.getParameter("indicacionesManipulacion"));
+						e.setFragilidad((String)request.getParameter("fragilidad"));
+						
+						
+						if(request.getParameter("tercerizado").equals("true"))
+							e.setTercerizado(true);
+						else
+							e.setTercerizado(false);
+
+						e.setKilometrosRecorridos(0);
+						e.setFacturado(false);
+						e.setValorEstimado((float)Float.parseFloat((String)request.getParameter("valorEstimado")));
+						e.setDistanciaEstimadaKM((float)Float.parseFloat((String)request.getParameter("distanciaEstimadaKM")));
+
+						e.setNombreParticular((String)request.getParameter("nombreParticular"));
+						e.setApellidoParticular((String)request.getParameter("apellidoParticular"));
+						e.setDniParticular((String)request.getParameter("dniParticular"));
+						e.setDireccionDestino((String)request.getParameter("direccionDestino"));
+						e.setCodigoPostalDestino((String)request.getParameter("codigoPostalDestino"));
+						e.setLocalidadDestino((String)request.getParameter("localidadDestino"));
+						e.setProvinciaDestino((String)request.getParameter("provinciaDestino"));
+						e.setPaisDestino((String)request.getParameter("paisDestino"));
+						
+						Integer factura = BusinessDelegate.getInstancia().confirmarEncomiendaParticular(e);
+
+						jspPage = "mostrarMensaje.jsp";
+						request.setAttribute("mensaje", "La encomienda se ha generado correctamente y se a factura con el numero: " + Integer.toString(factura));	
+
+					}
+					else
+					{
+						jspPage = "mostrarMensaje.jsp";
+						request.setAttribute("mensaje", "Ha ocurrido un error con la encomienda");	
+						/*
+						if ("altaEncomiendaEnStock".equals(action)){
+							DTO_EncomiendaEnStock es = new DTO_EncomiendaEnStock();
+							es.setIdEncomienda(Integer.parseInt((String)request.getParameter("idEncomienda")));
+							es.setIdStock(Integer.parseInt((String)request.getParameter("idStock")));
+							es.setEstante(Integer.parseInt((String)request.getParameter("estante")));
+							es.setPasillo(Integer.parseInt((String)request.getParameter("pasillo")));
+							es.setUbicacion((String)request.getParameter("ubicacion"));
+							
+							Integer reciboStock = 0;
+							
+							if(request.getParameter("tipoEncomienda").equals("Particular")){
+								//Particular
+								reciboStock = BusinessDelegate.getInstancia().ingresarEncomiendaParticularAStock(es);
+							} else {
+								//Empresa
+								reciboStock = BusinessDelegate.getInstancia().ingresarEncomiendaEmpresaAStock(es);
+							}
+							
+							
+							Integer envio = BusinessDelegate.getInstancia().asignarEnvio(Integer.parseInt((String)request.getParameter("idEncomienda")));
+							jspPage = "mostrarMensaje.jsp";
+							request.setAttribute("mensaje", "La encomienda se ha ingresado al stock. El numero de recibo comprobante es : " + Integer.toString(reciboStock) + " Se le ha asignado el envio:" + envio);	
+							
+						}
+						else
+						{
+							jspPage = "mostrarMensaje.jsp";
+							request.setAttribute("mensaje", "Ha ocurrido un error con el stock");	
+							
+							if ("egresarEncomiendaEnStock".equals(action)){
+								
+								Integer stock = Integer.parseInt((String)request.getParameter("idStock"));
+								Integer fact = Integer.parseInt((String)request.getParameter("idEncomienda"));
+								
+								
+								Integer remitoStock = BusinessDelegate.getInstancia().egresarEncomiendaParticularDeStock(stock,fact);
+								if(remitoStock == null)
+									remitoStock = BusinessDelegate.getInstancia().egresarEncomiendaEmpresaDeStock(stock,fact); //Es empresa
+								
+								
+								
+								jspPage = "mostrarMensaje.jsp";
+								request.setAttribute("mensaje", "La encomienda se ha egresado del stock. El numero de remito es : " + Integer.toString(remitoStock));	
+								
+							}
+							else
+							{
+								jspPage = "mostrarMensaje.jsp";
+								request.setAttribute("mensaje", "Ha ocurrido un error con el stock");	
+							
+							}						
+						}
+										*/
+					}
+				}
+
+			}
+	
+		
+			dispatch(jspPage, request, response);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	protected void dispatch(String jsp, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		if(jsp != null)
+		{
+			RequestDispatcher rd = request.getRequestDispatcher(jsp);
+			rd.forward(request, response);
+		}
+	}
+	
+}

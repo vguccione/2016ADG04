@@ -1,0 +1,173 @@
+package com.ADG04.Servlets;
+
+import com.ADG04.bean.Encomienda.*;
+
+import java.io.IOException;
+//import java.util.Formatter;
+//import java.sql.Date;
+//import java.text.DateFormat;
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.ADG04.Controller.BusinessDelegate;
+
+//import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+@WebServlet(asyncSupported = true, urlPatterns = { "/ServletEncomiendaEmpresa" })
+public class ServletEncomiendaEmpresa_old extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    public ServletEncomiendaEmpresa_old() {
+        super();
+    }
+ 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try { 	
+			String action = request.getParameter("action");
+			String jspPage = "mostrarMensaje.jsp";
+				
+			if ((action==null) || (action.length() < 1) )
+			{
+				action = "default";
+			}
+			else
+			{
+				if ("altaEncomiendaEmpresa_paso_1".equals(action)) {
+
+					Integer sucursal;
+					Integer idEncomienda;
+					idEncomienda = 0;
+					
+					HttpSession sesionIntento = request.getSession();
+					if(sesionIntento.getAttribute("sucursal") != null){
+						sucursal = Integer.parseInt((String)sesionIntento.getAttribute("sucursal"));
+						idEncomienda = BusinessDelegate.getInstancia().nuevaEncomienda(sucursal);
+				
+						if (idEncomienda != null){
+							jspPage = "altaEncomiendaEmpresa.jsp";
+							request.setAttribute("idEncomienda", idEncomienda);
+						}
+						else
+						{
+							jspPage = "mostrarMensaje.jsp";
+							request.setAttribute("mensaje", "Ha ocurrido un error con la encomienda");								
+						}
+					}
+					else
+					{
+						jspPage = "mostrarMensaje.jsp";
+						request.setAttribute("mensaje", "Ha ocurrido un error con la sucursal");	
+					}
+				}
+				else
+				{
+					if ("altaEncomiendaEmpresa".equals(action)) {
+
+				//		DTO_EncomiendaEmpresa e = new DTO_EncomiendaEmpresa();
+						DTO_Manifiesto m = new DTO_Manifiesto();
+						
+						m.setDescripcion((String)request.getParameter("manifiesto"));
+						
+						
+						System.out.println((String)request.getParameter("cantidad"));
+						
+				//		Integer idManifiesto = BusinessDelegate.getInstancia().altaManifiesto(m);
+						
+						//e.setIdManifiesto(idManifiesto);
+						
+			//			String a = (String)request.getParameter("estado");
+								
+						
+						String FechaRecepcion = (String)request.getParameter("fechaRecepcion");
+						
+						FechaRecepcion = FechaRecepcion.split("/")[2]+"-"+FechaRecepcion.split("/")[0]+"-"+FechaRecepcion.split("/")[1];
+
+					
+						String FechaMaxima = (String)request.getParameter("fechaMaxima");
+						
+						FechaMaxima = FechaMaxima.split("/")[2]+"-"+FechaMaxima.split("/")[0]+"-"+FechaMaxima.split("/")[1];
+						
+						/*
+						e.setId(Integer.parseInt((String)request.getParameter("idEncomienda")));
+						e.setIdSucursalOrigen(Integer.parseInt((String)request.getParameter("idSucursalOrigen")));
+						e.setIdDestino(Integer.parseInt((String)request.getParameter("idSucursalOrigen")));
+						e.setIdSucursalActual(Integer.parseInt((String)request.getParameter("idSucursalOrigen")));
+						e.setFechaRecepcion(Date.valueOf(FechaRecepcion));
+						e.setFechaMaxima(Date.valueOf(FechaMaxima));
+						e.setEstado((String)request.getParameter("estado"));
+						e.setIdAseguradora(1);
+						e.setLargo((float)Float.parseFloat((String)request.getParameter("largo")));
+						e.setAlto((float)Float.parseFloat((String)request.getParameter("alto")));
+						e.setAncho((float)Float.parseFloat((String)request.getParameter("ancho")));
+						e.setPeso((float)Float.parseFloat((String)request.getParameter("peso")));
+						e.setVolumen((float)Float.parseFloat((String)request.getParameter("volumen")));
+						e.setTratamiento((String)request.getParameter("tratamiento"));
+						e.setApilable((boolean)request.getParameter("apilable")); //!!!!
+						e.setCantApilable(Integer.parseInt((String)request.getParameter("cantApilable")));
+						e.setRefrigerado((boolean)request.getParameter("refrigerado")); //!!!
+						e.setCondicionTransporte((String)request.getParameter("condicionTransporte"));
+						e.setIndicacionesManipulacion((String)request.getParameter("indicacionesManipulacion"));
+						e.setFragilidad((String)request.getParameter("fragilidad"));
+						e.setTercerizado((boolean)request.getParameter("tercerizado")); //!!!
+						e.setKilometrosRecorridos(0);
+						e.setFacturado(false);
+						e.setValorEstimado((float)Float.parseFloat((String)request.getParameter("valorEstimado")));
+						e.setDistanciaEstimadaKM((float)Float.parseFloat((String)request.getParameter("distanciaEstimadaKM")));
+
+						e.setNombre((String)request.getParameter("nombreEmpresa"));
+						e.setApellido((String)request.getParameter("apellidoEmpresa"));
+						e.setDni((String)request.getParameter("dniEmpresa"));
+						e.setDireccionDestino((String)request.getParameter("direccionDestino"));
+						e.setCodigoPostalDestino((String)request.getParameter("codigoPostalDestino"));
+						e.setLocalidadDestino((String)request.getParameter("localidadDestino"));
+						e.setProvinciaDestino((String)request.getParameter("provinciaDestino"));
+						e.setPaisDestino((String)request.getParameter("paisDestino"));
+						
+						BusinessDelegate.getInstancia().confirmarEncomiendaEmpresa(e);
+*/
+						jspPage = "mostrarMensaje.jsp";
+						request.setAttribute("mensaje", "La encomienda se ha generado correctamente");	
+						
+					}
+					else
+					{
+						jspPage = "mostrarMensaje.jsp";
+						request.setAttribute("mensaje", "Ha ocurrido un error con la encomienda");	
+					}
+				}
+
+			}
+	
+		
+			dispatch(jspPage, request, response);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	protected void dispatch(String jsp, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		if(jsp != null)
+		{
+			RequestDispatcher rd = request.getRequestDispatcher(jsp);
+			rd.forward(request, response);
+		}
+	}
+	
+}

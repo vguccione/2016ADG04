@@ -674,6 +674,13 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		// TODO Auto-generated method stub
 		return null;
 	}
-*/
-	
+
+
+
+	@Override
+	public DTO_Usuario validarUsuario(String usuario, String contrasena) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+*/	
 }

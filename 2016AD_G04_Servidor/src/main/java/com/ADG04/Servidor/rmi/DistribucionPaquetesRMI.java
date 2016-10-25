@@ -11,13 +11,16 @@ import com.ADG04.Negocio.GestionAdministracion;
 import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
+import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.CoordenadaDao;
+import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
+import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
@@ -490,10 +493,26 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public void altaSeguro(DTO_Seguro seguro) throws RemoteException {
+		Proveedor prov = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
+		GestionProveedor gp = new GestionProveedor(prov);
+		gp.altaSeguro(seguro);
+		
+		/*  Utilizando el que tiene herencia
+		 * _GestionProveedor gp = ProveedorDao.getInstancia.getById(seguro.getIdProveedor());
+			gp.altaSeguro(seguro);
+		 * */
 		
 	}
 	public void modificarSeguro(DTO_Seguro seguro) throws RemoteException{
-		
+		Proveedor prov = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
+		GestionProveedor gp = new GestionProveedor(prov);
+		gp.modificarSeguro(seguro);
+		/*
+		 * Usando el que tiene herencia 
+		 * _GestionProveedor gp = ProveedorDao.getInstancia.getById(seguro.getIdProveedor());
+			gp.altaSeguro(seguro);
+		 * 
+		 * */
 	}
 	public void altaServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad) throws RemoteException{
 		

@@ -30,38 +30,29 @@ import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
 
 
-public class GestionProveedor {
+public class _GestionProveedor extends Proveedor {
 
 	private EntityManagerFactory factory;
-	private Proveedor proveedor;
-	private Seguro seguro;
-	private Carrier carrier;
-	private TallerMecanico tm;
-	private ServicioSeguridad ss;
 	
-	public GestionProveedor(Proveedor prov){
+	public _GestionProveedor(Proveedor prov){
+		super();
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
-		proveedor = prov;
-		seguro = new Seguro();
-		carrier = new Carrier();
-		tm = new TallerMecanico();
-		ss = new ServicioSeguridad();
 	}
 	
 	
 	public void altaSeguro(DTO_Seguro dtoSeguro) {
-		
-		//this.proveedor = ProveedorDao.getInstancia().getById(dtoSeguro.getIdProveedor());
-		seguro.setActivo(proveedor.getActivo());
-		seguro.setRazonSocial(proveedor.getRazonSocial());
-		seguro.setCuit(proveedor.getCuit());
-		seguro.setEmail(proveedor.getEmail());
-		seguro.setTelefono(proveedor.getTelefono());	
+
+		Seguro seguro = new Seguro();
+		seguro.setActivo(this.getActivo());
+		seguro.setRazonSocial(this.getRazonSocial());
+		seguro.setCuit(this.getCuit());
+		seguro.setEmail(this.getEmail());
+		seguro.setTelefono(this.getTelefono());	
 		seguro.setTarifa(dtoSeguro.getTarifa());
 		seguro.setTarifaPorKm(dtoSeguro.getTarifaPorKm());
 		seguro.setDescripcion(dtoSeguro.getDescripcion());
 		
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(proveedor.getDireccion().toDTO());
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(this.getDireccion().toDTO());
 		
 		seguro.setDireccion(dir);
 		
@@ -76,17 +67,17 @@ public class GestionProveedor {
 	public void altaCarrier(DTO_Carrier dtoCarrier) {
 		
 		
-		//proveedor = ProveedorDao.getInstancia().getById(dtoCarrier.getIdProveedor());
-		carrier.setActivo(proveedor.getActivo());
-		carrier.setRazonSocial(proveedor.getRazonSocial());
-		carrier.setCuit(proveedor.getCuit());
-		carrier.setEmail(proveedor.getEmail());
-		carrier.setTelefono(proveedor.getTelefono());	
+		Carrier carrier = new Carrier();
+		carrier.setActivo(this.getActivo());
+		carrier.setRazonSocial(this.getRazonSocial());
+		carrier.setCuit(this.getCuit());
+		carrier.setEmail(this.getEmail());
+		carrier.setTelefono(this.getTelefono());	
 		carrier.setTarifa(dtoCarrier.getTarifa());
 		carrier.setComentarios(dtoCarrier.getComentarios());
 		
 		
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(proveedor.getDireccion().toDTO());
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(this.getDireccion().toDTO());
 		
 		carrier.setDireccion(dir);
 		
@@ -100,17 +91,17 @@ public class GestionProveedor {
 	
 	public void altaTallerMecanico(DTO_TallerMecanico taller) {
 		
-		//Proveedor proveedor = ProveedorDao.getInstancia().getById(taller.getIdProveedor());
-		tm.setActivo(proveedor.getActivo());
-		tm.setRazonSocial(proveedor.getRazonSocial());
-		tm.setCuit(proveedor.getCuit());
-		tm.setEmail(proveedor.getEmail());
-		tm.setTelefono(proveedor.getTelefono());	
+		TallerMecanico tm = new TallerMecanico();
+		tm.setActivo(this.getActivo());
+		tm.setRazonSocial(this.getRazonSocial());
+		tm.setCuit(this.getCuit());
+		tm.setEmail(this.getEmail());
+		tm.setTelefono(this.getTelefono());	
 		tm.setTarifa(taller.getTarifa());
 		tm.setTipoTaller(taller.getTipoTaller());
 		
 		
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(proveedor.getDireccion().toDTO());
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(this.getDireccion().toDTO());
 		
 		tm.setDireccion(dir);
 		
@@ -124,18 +115,18 @@ public class GestionProveedor {
 	
 	public void altaServicioSeguridad(DTO_ServicioSeguridad seg) {
 		
-		//ServicioSeguridad ss = new ServicioSeguridad();
+		ServicioSeguridad ss = new ServicioSeguridad();
 		//Proveedor proveedor = ProveedorDao.getInstancia().getById(seg.getIdProveedor());
-		ss.setActivo(proveedor.getActivo());
-		ss.setRazonSocial(proveedor.getRazonSocial());
-		ss.setCuit(proveedor.getCuit());
-		ss.setEmail(proveedor.getEmail());
-		ss.setTelefono(proveedor.getTelefono());	
+		ss.setActivo(this.getActivo());
+		ss.setRazonSocial(this.getRazonSocial());
+		ss.setCuit(this.getCuit());
+		ss.setEmail(this.getEmail());
+		ss.setTelefono(this.getTelefono());	
 		ss.setTarifa(seg.getTarifa());
 		ss.setDescripcion(seg.getDescripcion());
 		
 		
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(proveedor.getDireccion().toDTO());
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(this.getDireccion().toDTO());
 		
 		ss.setDireccion(dir);
 		
@@ -150,19 +141,19 @@ public class GestionProveedor {
 	
 	
 	public void modificarSeguro(DTO_Seguro dtoseguro){
-		//Seguro s = new Seguro();
+		Seguro seguro = new Seguro();
 		//Proveedor proveedor = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
 		seguro.setIdProveedor(dtoseguro.getIdProveedor());
-		seguro.setActivo(proveedor.getActivo());
-		seguro.setRazonSocial(proveedor.getRazonSocial());
-		seguro.setCuit(proveedor.getCuit());
-		seguro.setEmail(proveedor.getEmail());
-		seguro.setTelefono(proveedor.getTelefono());	
+		seguro.setActivo(this.getActivo());
+		seguro.setRazonSocial(this.getRazonSocial());
+		seguro.setCuit(this.getCuit());
+		seguro.setEmail(this.getEmail());
+		seguro.setTelefono(this.getTelefono());	
 		seguro.setTarifa(dtoseguro.getTarifa());
 		seguro.setTarifaPorKm(dtoseguro.getTarifaPorKm());
 		seguro.setDescripcion(dtoseguro.getDescripcion());
 		
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(proveedor.getDireccion().toDTO());
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(this.getDireccion().toDTO());
 		
 		seguro.setDireccion(dir);
 		
@@ -177,19 +168,19 @@ public class GestionProveedor {
 	
 	public void modificarCarrier(DTO_Carrier dtocarrier) {
 		
-		//Carrier c = new Carrier();
+		Carrier carrier = new Carrier();
 		//Proveedor proveedor = ProveedorDao.getInstancia().getById(carrier.getIdProveedor());
 		carrier.setIdProveedor(dtocarrier.getIdProveedor());
-		carrier.setActivo(proveedor.getActivo());
-		carrier.setRazonSocial(proveedor.getRazonSocial());
-		carrier.setCuit(proveedor.getCuit());
-		carrier.setEmail(proveedor.getEmail());
-		carrier.setTelefono(proveedor.getTelefono());	
+		carrier.setActivo(this.getActivo());
+		carrier.setRazonSocial(this.getRazonSocial());
+		carrier.setCuit(this.getCuit());
+		carrier.setEmail(this.getEmail());
+		carrier.setTelefono(this.getTelefono());	
 		carrier.setTarifa(dtocarrier.getTarifa());
 		carrier.setComentarios(dtocarrier.getComentarios());
 		
 		
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(proveedor.getDireccion().toDTO());
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(this.getDireccion().toDTO());
 		
 		carrier.setDireccion(dir);
 		
@@ -203,19 +194,19 @@ public class GestionProveedor {
 	
 	public void modificarTallerMecanico(DTO_TallerMecanico taller) {
 		
-		//TallerMecanico tm = new TallerMecanico();
+		TallerMecanico tm = new TallerMecanico();
 		//Proveedor proveedor = ProveedorDao.getInstancia().getById(taller.getIdProveedor());
 		tm.setIdProveedor(taller.getIdProveedor());
-		tm.setActivo(proveedor.getActivo());
-		tm.setRazonSocial(proveedor.getRazonSocial());
-		tm.setCuit(proveedor.getCuit());
-		tm.setEmail(proveedor.getEmail());
-		tm.setTelefono(proveedor.getTelefono());	
+		tm.setActivo(this.getActivo());
+		tm.setRazonSocial(this.getRazonSocial());
+		tm.setCuit(this.getCuit());
+		tm.setEmail(this.getEmail());
+		tm.setTelefono(this.getTelefono());	
 		tm.setTarifa(taller.getTarifa());
 		tm.setTipoTaller(taller.getTipoTaller());
 		
 		
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(proveedor.getDireccion().toDTO());
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(this.getDireccion().toDTO());
 		
 		tm.setDireccion(dir);
 		
@@ -229,19 +220,19 @@ public class GestionProveedor {
 	
 	public void modificarServicioSeguridad(DTO_ServicioSeguridad seg) {
 		
-		//ServicioSeguridad ss = new ServicioSeguridad();
+		ServicioSeguridad ss = new ServicioSeguridad();
 		//Proveedor proveedor = ProveedorDao.getInstancia().getById(seg.getIdProveedor());
 		ss.setIdProveedor(seg.getIdProveedor());
-		ss.setActivo(proveedor.getActivo());
-		ss.setRazonSocial(proveedor.getRazonSocial());
-		ss.setCuit(proveedor.getCuit());
-		ss.setEmail(proveedor.getEmail());
-		ss.setTelefono(proveedor.getTelefono());	
+		ss.setActivo(this.getActivo());
+		ss.setRazonSocial(this.getRazonSocial());
+		ss.setCuit(this.getCuit());
+		ss.setEmail(this.getEmail());
+		ss.setTelefono(this.getTelefono());	
 		ss.setTarifa(seg.getTarifa());
 		ss.setDescripcion(seg.getDescripcion());
 		
 		
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(proveedor.getDireccion().toDTO());
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(this.getDireccion().toDTO());
 		
 		ss.setDireccion(dir);
 		
@@ -255,10 +246,8 @@ public class GestionProveedor {
 
 	
 	public void bajaProveedor(Integer id) {
-		//Proveedor p = ProveedorDao.getInstancia().getById(id);
-		if (proveedor != null){
-			ProveedorDao.getInstancia().remove(proveedor);
-		}
+		ProveedorDao.getInstancia().remove(this);
+
 	}
 
 	public DTO_ServicioSeguridad buscarServicioSeguridad(String cuit) {

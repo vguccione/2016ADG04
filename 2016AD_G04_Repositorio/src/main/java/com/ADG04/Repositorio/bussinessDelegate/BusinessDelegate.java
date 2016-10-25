@@ -28,6 +28,10 @@ import com.ADG04.bean.Proveedor.DTO_Carrier;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
+import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
+import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 {
@@ -490,5 +494,25 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public DTO_Usuario validarUsuario(String usuario, String contrasena) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Integer altaVehiculo(DTO_Vehiculo v) throws RemoteException {
+		return this.businessService.altaVehiculo(v);
+	}
+
+	public void altaTareaMantenimiento(DTO_TareasPorKilometro tareaXKM, Integer idVehiculo) throws RemoteException, Exception  {
+		this.businessService.altaTareaMantenimiento(tareaXKM, idVehiculo);		
+	}
+
+	public Integer altaPlanMantenimiento(DTO_PlanMantenimiento pm, Integer idVehiculo)throws RemoteException , Exception {
+		return this.businessService.altaPlanMantenimiento(pm, idVehiculo);
+	}
+
+	public Integer altaTareaMantenimiento(DTO_TareasPorTiempo tareaXTiempo, Integer idVehiculo) throws RemoteException, Exception   {
+		return this.businessService.altaTareaMantenimiento(tareaXTiempo, idVehiculo);
+	}
+
+	public List<com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento> getTareasVencidas(int idVehiculo) throws RemoteException   {
+		return this.businessService.getTareasVencidas(idVehiculo);
 	}
 }

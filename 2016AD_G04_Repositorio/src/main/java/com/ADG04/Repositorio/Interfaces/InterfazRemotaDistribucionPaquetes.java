@@ -14,18 +14,24 @@ import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
+import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 
 public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministracionRemote, IClienteRemote, IFacturaRemote, IEncomiendaRemote{
 	
 	public static final String url = "localhost/DistribucionPaquetesRMI";
 
-	void ingresarEncomiendaEnvio(Integer idEnvio);
 
-	void egresarEncomiendaEnvio(Integer idEnvio);
+//	void ingresarEncomiendaEnvio(Integer idEnvio);
 
-	Integer asignarEnvio(Integer idEncomienda);
+//	void egresarEncomiendaEnvio(Integer idEnvio);
 
+	//Integer asignarEnvio(Integer idEncomienda);
+/*
 	Integer cobrarEncomiendaEmpresa(List<Integer> lista);
 
 	Integer cobrarEncomiendaParticular(Integer idFactura);
@@ -37,8 +43,8 @@ public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministrac
 	Integer nuevaEncomiendaParticular(Integer idSucursal);
 
 	Integer nuevaEncomiendaEmpresa(Integer idSucursal);
-
-	DTO_Usuario validarUsuario(String usuario, String contrasena);
+*/
+	//DTO_Usuario validarUsuario(String usuario, String contrasena);
 
 
 }

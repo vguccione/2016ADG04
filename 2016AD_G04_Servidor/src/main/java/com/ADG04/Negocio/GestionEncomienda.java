@@ -51,6 +51,8 @@ import com.ADG04.bean.Encomienda.DTO_Remito;
 //Gestion Encomienda	
 public class GestionEncomienda {
 	
+	private int idEncomienda;
+	
 	private static GestionEncomienda instancia;
 		
 	private EntityManagerFactory factory;

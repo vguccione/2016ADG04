@@ -20,7 +20,7 @@ import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 public class VehiculosTest {
 
-	public static void TestVehiculos() throws IOException{
+	public static void TestVehiculos() throws Exception{
 		
 		String ok = getStringFromConsole("Agregar Plan de Mantenimiento (si/no)?");
 		if(ok.equals("si")){
@@ -37,7 +37,7 @@ public class VehiculosTest {
 		while(ok.equals("si")){
 			
 			int idVehiculo = getIntFromConsole("Id Vehiculo: ");
-			List<TareaMantenimiento> tareasVencidas= GestionVehiculo.getInstancia().getTareasVencidas(idVehiculo);
+			List<TareaMantenimiento> tareasVencidas= new GestionVehiculo(idVehiculo).getTareasVencidas();
 			if(tareasVencidas == null || tareasVencidas.isEmpty()) { System.out.println("No hay tareas vencidas."); }
 			ok = getStringFromConsole("Buscar tareas vencidas de otro vehículo (si/no)?");
 		}
@@ -75,7 +75,7 @@ public class VehiculosTest {
 
 	private static void TestTareasVencidas(int idVehiculo){
     	
-		List<TareaMantenimiento> tareas = GestionVehiculo.getInstancia().getTareasVencidas(idVehiculo); 
+		List<TareaMantenimiento> tareas = new GestionVehiculo(idVehiculo).getTareasVencidas(); 
 		System.out.println("\n----------------Tareas que deben realizarse:-----------------------------");		    	
     	for(TareaMantenimiento t :tareas){
     		System.out.println(t.getTarea());
@@ -84,7 +84,7 @@ public class VehiculosTest {
     }
     
 
-	public static int generarVehiculoTest(String marca, String modelo, String anio, String patente, int idPm){
+	public static int generarVehiculoTest(String marca, String modelo, String anio, String patente){
 		
 		//buscar el plan
 			
@@ -108,64 +108,52 @@ public class VehiculosTest {
 		date.setMonth(01);
 		date.setDate(1);
 		v.setFechaIngreso(new Date("01/01/2016"));
-		
-		DTO_PlanMantenimiento plan = new DTO_PlanMantenimiento();
-		plan.setId(idPm);
-		v.setPlanMantenimiento(plan);
-		
+				
 		DTO_Sucursal su  = new DTO_Sucursal();
 		su.setId(1);
 		v.setSucursal(su);
 		
-		return GestionVehiculo.getInstancia().altaVehiculo(v);
+		//le paso el DTO vehiculo
+		return new GestionVehiculo().altaVehiculo(v);
 		
 	}
 	
 	
-    private static void TestCrearPlanesYTareasYVehiculos() throws IOException{
+    private static void TestCrearPlanesYTareasYVehiculos() throws Exception{
     	
-    	String plan = getStringFromConsole("Plan descripcion: ");
-    	String tareaKm = getStringFromConsole("Tarea por Km: ");
-    	int frecKm = getIntFromConsole("Frecuencia tarea por Km: ");
-    	String tareaTiempo = getStringFromConsole("Tarea por Tiempo: ");
-    	int frecTiempo = getIntFromConsole("Frecuencia tarea por Tiempo: ");
-    	
-    	int idPm1 = TestAddPlanMantenimiento(plan);
-    	TestAddTareasToPlan(tareaTiempo, frecKm, tareaTiempo, frecTiempo,idPm1);
-    	System.out.println("Plan generado. Id plan: " + idPm1);
-    	
-    	String ok = getStringFromConsole("Agregar vehículo con este plan(si/no)?");
+    	String ok = getStringFromConsole("Agregar vehículo(si/no)?");
     	
     	if(ok.equals("si")){
-	    	System.out.println("Agregar vehículo con este plan");
+	    	//System.out.println("Agregar vehículo con este plan");
 	    	String marca = getStringFromConsole("Marca: ");
 	    	String modelo = getStringFromConsole("Modelo: ");
 	    	String anio = getStringFromConsole("Anio: ");
 	    	String patente = getStringFromConsole("Patente: ");
-	    	int idVeh1 = generarVehiculoTest(marca, modelo, anio, patente,idPm1);   	
+	    	int idVeh1 = generarVehiculoTest(marca, modelo, anio, patente);   	
 	    	System.out.println("Vehiculo generado: " + idVeh1);
-	    	ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
+	    	System.out.println("Agregar plan");
 	    	
-	    	while(ok.equals("si")){
+	    	String plan = getStringFromConsole("Plan descripcion: ");
+	    	String tareaKm = getStringFromConsole("Tarea por Km: ");
+	    	int frecKm = getIntFromConsole("Frecuencia tarea por Km: ");
+	    	String tareaTiempo = getStringFromConsole("Tarea por Tiempo: ");
+	    	int frecTiempo = getIntFromConsole("Frecuencia tarea por Tiempo: ");
 	    	
-	    		System.out.println("Agregar vehículo con este plan");
-	        	marca = getStringFromConsole("Marca: ");
-	        	modelo = getStringFromConsole("Modelo: ");
-	        	anio = getStringFromConsole("Anio: ");
-	        	patente = getStringFromConsole("Patente: ");
-	        	idVeh1 = generarVehiculoTest(marca, modelo, anio, patente,idPm1);   	
-	        	System.out.println("Vehiculo generado: " + idVeh1);
-	        	ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
-	    	}
+	    	int idPm1 = TestAddPlanMantenimiento(plan, idVeh1);
+	    	TestAddTareasToPlan(tareaTiempo, frecKm, tareaTiempo, frecTiempo,idPm1, idVeh1);
+	    	System.out.println("Plan generado. Id plan: " + idPm1);
+	    	
     	}
+    	
+    	
     }
     
     
-    private static void TestGetPlanes(int idVehiculo) {
+    private static void TestGetPlanes(int idVehiculo) throws Exception {
    	
     	System.out.println("---------------------------Planes de mantenimiento - Vehiculo: " + idVehiculo + "---------------------");
     	
-    	DTO_PlanMantenimiento planDTO = GestionVehiculo.getInstancia().getPlanByVehiculo(idVehiculo);
+    	DTO_PlanMantenimiento planDTO = new GestionVehiculo(idVehiculo).getPlan();
     	System.out.println(planDTO.getDescripcion());
     	System.out.println("------------------------------------------------------------");
     	System.out.println("Plan de mantenimiento del vehiculo " + idVehiculo);
@@ -185,53 +173,55 @@ public class VehiculosTest {
 	}
     /**
      * Alta de 1 plan de mantenimiento, con una tarea de km y una por tiempo.
+     * @throws Exception 
      */
-    private static int TestAddPlanMantenimiento(String descPlan) {
+    private static int TestAddPlanMantenimiento(String descPlan, int idVehiculo) throws Exception {
 		
     	DTO_PlanMantenimiento pm = new DTO_PlanMantenimiento();
     	pm.setComentarios("Comentarios: " + descPlan);
     	pm.setDescripcion(descPlan);
     	pm.setTolerancia(123);
     	
-    	int idPm = GestionVehiculo.getInstancia().altaPlanMantenimiento(pm);
+    	int idPm = new GestionVehiculo(idVehiculo).altaPlanMantenimiento(pm);
     	System.out.println("Plan nro " + idPm + " creado.");
     	return idPm;
 	}
     
-    private static void TestAddTareasToPlan(String tareaKm, float kms, String tareaTiempo, int dias, int idPlanMantenimiento){
+    private static void TestAddTareasToPlan(String tareaKm, float kms, String tareaTiempo, int dias, int idPlanMantenimiento, int idVehiculo) throws Exception{
 
     	DTO_TareasPorKilometro tareaXKM = new DTO_TareasPorKilometro();
     	tareaXKM.setCantidadKilometros(kms);
     	tareaXKM.setIdPlanMantenimiento(idPlanMantenimiento);
     	tareaXKM.setTarea(tareaKm);
     	
-    	GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXKM);
+    	GestionVehiculo gestion = new GestionVehiculo(idVehiculo);
+    	gestion.altaTareaMantenimiento(tareaXKM);
     	
     	DTO_TareasPorTiempo tareaXTiempo = new DTO_TareasPorTiempo();
     	tareaXTiempo.setCantidadDias(dias);
     	tareaXTiempo.setIdPlanMantenimiento(idPlanMantenimiento);
     	tareaXTiempo.setTarea(tareaTiempo);
-    	int idTarea = GestionVehiculo.getInstancia().altaTareaMantenimiento(tareaXTiempo);
+    	gestion.altaTareaMantenimiento(tareaXTiempo);
     }
 
-    private static void TestRealizarTareaPorKm(int idVehiculo, int idProveedor, int idTarea){
+    private static void TestRealizarTareaPorKm(int idVehiculo, int idProveedor, int idTarea) throws Exception{
     	
     	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
     	tRealizada.setFecha(new Date());
     	tRealizada.setIdProveedor(idProveedor);
     	tRealizada.setIdVehiculo(idVehiculo);
     	tRealizada.setIdTareaMantenimiento(idTarea);
-    	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
+    	new GestionVehiculo(idVehiculo).realizarTareaMantenimiento(tRealizada);
     }
     
-    private static void TestRealizarTareaPorTiempo(int idVehiculo, int idProveedor, int idTarea, Date fechaRealizada){
+    private static void TestRealizarTareaPorTiempo(int idVehiculo, int idProveedor, int idTarea, Date fechaRealizada) throws Exception{
 
     	DTO_TareaMantenimientoRealizada tRealizada = new DTO_TareaMantenimientoRealizada();
     	tRealizada.setFecha(fechaRealizada);
     	tRealizada.setIdProveedor(idProveedor);
     	tRealizada.setIdVehiculo(idVehiculo);
     	tRealizada.setIdTareaMantenimiento(idTarea);
-    	GestionVehiculo.getInstancia().realizarTareaMantenimiento(tRealizada);
+    	new GestionVehiculo(idVehiculo).realizarTareaMantenimiento(tRealizada);
     }
     	
 	private static String getStringFromConsole(String msg) throws IOException{

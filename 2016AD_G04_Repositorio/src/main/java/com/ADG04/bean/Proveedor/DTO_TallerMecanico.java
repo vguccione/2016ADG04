@@ -3,7 +3,7 @@ package com.ADG04.bean.Proveedor;
 import java.io.Serializable;
 
 
-public class DTO_TallerMecanico implements Serializable{
+public class DTO_TallerMecanico extends DTO_Proveedor implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer idProveedor;

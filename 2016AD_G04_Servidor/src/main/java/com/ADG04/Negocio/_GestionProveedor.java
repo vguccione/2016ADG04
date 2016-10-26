@@ -39,6 +39,16 @@ public class _GestionProveedor extends Proveedor {
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
 	}
 	
+	public void altaProveedor(){
+		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		ProveedorDao.getInstancia().persist(this);
+		tx.commit();
+		
+	}
 	
 	public void altaSeguro(DTO_Seguro dtoSeguro) {
 

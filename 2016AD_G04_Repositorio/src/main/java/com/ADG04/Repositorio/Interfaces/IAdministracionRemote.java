@@ -8,6 +8,7 @@ import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
@@ -36,6 +37,7 @@ public interface IAdministracionRemote {
 	
 	
 	/*************************** Proveedores *************************************/
+	public void altaProveedor(DTO_Proveedor prov) throws RemoteException;
 	public void altaSeguro(DTO_Seguro seguro) throws RemoteException;
 	public void modificarSeguro(DTO_Seguro seguro) throws RemoteException;
 	public void altaServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad) throws RemoteException;

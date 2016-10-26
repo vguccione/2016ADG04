@@ -25,6 +25,7 @@ import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
@@ -122,93 +123,91 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 
 	public void altaSeguro(DTO_Seguro seguro) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		this.businessService.altaSeguro(seguro);
 	}
 
 
 	public void modificarSeguro(DTO_Seguro seguro) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.modificarSeguro(seguro);
 		
 	}
 
 
 	public void altaServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.altaServicioSeguridad(servicioSeguridad);
 		
 	}
 
 
 	public void modificarServicioSeguridad(
 			DTO_ServicioSeguridad servicioSeguridad) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.modificarServicioSeguridad(servicioSeguridad);
 		
 	}
 
 
 	public void altaTallerMecanico(DTO_TallerMecanico taller)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.altaTallerMecanico(taller);
 		
 	}
 
 
 	public void modificarTallerMecanico(DTO_TallerMecanico taller)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.modificarTallerMecanico(taller);
 		
 	}
 
 
 	public void altaCarrier(DTO_Carrier carrier) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.altaCarrier(carrier);
 		
 	}
 
 
 	public void modificarCarrier(DTO_Carrier carrier) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.modificarCarrier(carrier);
 		
 	}
 
 
 	public void bajaProveedor(Integer idProveedor) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.bajaProveedor(idProveedor);
 		
 	}
 
 
 	public void altaClienteParticular(DTO_ClienteParticular cliente)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.altaClienteParticular(cliente);
 		
 	}
 
 
 	public void modificarClienteParticular(DTO_ClienteParticular cliente)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.modificarClienteParticular(cliente);
 		
 	}
 
 
 	public void altaClienteEmpresa(DTO_ClienteEmpresa empresa)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.altaClienteEmpresa(empresa);
 		
 	}
 
 
 	public void modificarClienteEmpresa(DTO_ClienteEmpresa empresa)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		this.businessService.modificarClienteEmpresa(empresa);
 	}
 
 
 	public void eliminarCliente(Integer idCliente) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.eliminarCliente(idCliente);
 		
 	}
 
@@ -238,19 +237,18 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 
 	public void altaProducto(DTO_Producto producto) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.altaProducto(producto);
 		
 	}
 
 
 	public void modificarProducto(DTO_Producto producto) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		this.businessService.modificarProducto(producto);
 	}
 
 
 	public void eliminarProducto(Integer idProducto) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.eliminarProducto(idProducto);
 		
 	}
 
@@ -269,8 +267,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public DTO_Producto getProducto(Integer idCliente, String codigoProducto)
 			throws RemoteException {
-		//this.businessService.getProducto(idProducto, codigoProducto);
-		return null;
+		return this.businessService.getProducto(idCliente, codigoProducto);
 	}
 
 
@@ -514,5 +511,10 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public List<com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento> getTareasVencidas(int idVehiculo) throws RemoteException   {
 		return this.businessService.getTareasVencidas(idVehiculo);
+	}
+
+	public void altaProveedor(DTO_Proveedor prov) throws RemoteException {
+		this.businessService.altaProveedor(prov);
+		
 	}
 }

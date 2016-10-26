@@ -2,7 +2,7 @@ package com.ADG04.bean.Proveedor;
 
 import java.io.Serializable;
 
-public class DTO_ServicioSeguridad implements Serializable{
+public class DTO_ServicioSeguridad extends DTO_Proveedor  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String descripcion;

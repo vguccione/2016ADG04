@@ -49,7 +49,19 @@ public class GestionProveedor {
 	}
 	
 	
+	public void altaProveedor(){
+				
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		ProveedorDao.getInstancia().saveOrUpdate(proveedor);
+		tx.commit();
+		
+	}
+	
 	public void altaSeguro(DTO_Seguro dtoSeguro) {
+		
 		
 		//this.proveedor = ProveedorDao.getInstancia().getById(dtoSeguro.getIdProveedor());
 		seguro.setActivo(proveedor.getActivo());

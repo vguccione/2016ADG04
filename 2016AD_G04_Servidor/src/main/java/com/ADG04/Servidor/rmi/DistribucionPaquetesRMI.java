@@ -18,6 +18,7 @@ import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.model.Coordenada;
+import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
 import com.ADG04.Servidor.model.Proveedor;
@@ -36,6 +37,7 @@ import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
@@ -492,13 +494,43 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 	
+	public void altaProveedor(DTO_Proveedor prov) throws RemoteException {
+		Proveedor p = new Proveedor();
+		p.setActivo(prov.getActivo());
+	    p.setCuit(prov.getCuit());
+	   
+	    p.setEmail(prov.getEmail());
+	    p.setRazonSocial(prov.getRazonSocial());
+	    p.setTelefono(prov.getTelefono());
+	    Direccion dir = GestionAdministracion.getInstancia().crearDireccion(prov.getDireccion());
+		
+		p.setDireccion(dir);
+		
+		GestionProveedor gp = new GestionProveedor(p);
+		gp.altaProveedor();
+		
+		/*  Utilizando el que tiene herencia
+		 * _GestionProveedor gp = p;
+			gp.altaProveedor();
+		 * */
+		
+	}
+	
 	public void altaSeguro(DTO_Seguro seguro) throws RemoteException {
-		Proveedor prov = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
+		Proveedor prov = new Proveedor();
+		prov.setActivo(seguro.getActivo());
+		prov.setCuit(seguro.getCuit());
+		prov.setEmail(seguro.getEmail());
+		prov.setRazonSocial(seguro.getRazonSocial());
+		prov.setTelefono(seguro.getTelefono());
+		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(seguro.getDireccion());
+		prov.setDireccion(dir);
+		
 		GestionProveedor gp = new GestionProveedor(prov);
 		gp.altaSeguro(seguro);
 		
 		/*  Utilizando el que tiene herencia
-		 * _GestionProveedor gp = ProveedorDao.getInstancia.getById(seguro.getIdProveedor());
+		 * _GestionProveedor gp = prov;
 			gp.altaSeguro(seguro);
 		 * */
 		

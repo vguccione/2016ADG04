@@ -1,6 +1,7 @@
 package com.ADG04.Servidor;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,8 +18,10 @@ import com.ADG04.Negocio.GestionAdministracion;
 import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
+import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
+import com.ADG04.Servidor.dao.CarrierDao;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
@@ -31,6 +34,7 @@ import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.Carrier;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Direccion;
@@ -38,8 +42,10 @@ import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
 import com.ADG04.Servidor.model.MapaDeRuta;
 import com.ADG04.Servidor.model.Pais;
+import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.Provincia;
 import com.ADG04.Servidor.model.Rol;
+import com.ADG04.Servidor.model.Seguro;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.TareaMantenimiento;
 import com.ADG04.Servidor.model.TareaMantenimientoPorKm;
@@ -59,6 +65,8 @@ import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.bean.Encomienda.DTO_Remito;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
+import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
@@ -75,11 +83,45 @@ import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 public class App 
 {
 
-    public static void main( String[] args ) throws IOException
+    public static void main( String[] args ) throws IOException, NotBoundException
     {
-
-
-	testControlViajes();
+ /*   
+    DTO_Proveedor p = new DTO_Proveedor();
+    p.setActivo("1");
+    p.setCuit("12345");
+    DTO_Direccion dir = new DTO_Direccion();
+    dir.setCalle("calle");
+    dir.setCodigoPostal(123);
+    dir.setLocalidad("cap");
+    dir.setNro(12);
+    Pais pais = PaisDao.getInstancia().getById(1);
+    Provincia prov = ProvinciaDao.getInstancia().getById(1);
+    dir.setPais(pais.toDTO());
+    dir.setProvincia(prov.toDTO());
+    
+    p.setDireccion(dir);
+    p.setEmail("dana@dana.com");
+    p.setRazonSocial("Dana");
+    p.setTelefono("1231233");
+    
+    BusinessDelegate bd = new BusinessDelegate();
+    bd.altaProveedor(p);*/
+    	
+    	DTO_Seguro c = new DTO_Seguro();
+    	c.setActivo("1");
+    	c.setCuit("123213");
+    	c.setEmail("dana@dana.cm");
+	    c.setDescripcion("descripcion");
+	    c.setTarifaPorKm(100f);
+    	c.setRazonSocial("Razon social");
+    	c.setTarifa(100f);
+    	c.setTelefono("1231231");
+    	c.setDireccion(DireccionDao.getInstancia().getById(1).toDTO());
+    	
+    	BusinessDelegate bd = new BusinessDelegate();
+    	bd.altaSeguro(c);
+    
+	//testControlViajes();
      	//VehiculosTest.TestVehiculos();
         //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
 

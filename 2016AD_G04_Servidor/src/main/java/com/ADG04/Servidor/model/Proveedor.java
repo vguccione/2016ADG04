@@ -35,7 +35,7 @@ public class Proveedor implements java.io.Serializable {
 	@Column(name = "IdProveedor", unique = true, nullable = false)
 	private int idProveedor;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL,orphanRemoval=true)
 	@JoinColumn(name = "IdDireccion")
 	private Direccion direccion;
 

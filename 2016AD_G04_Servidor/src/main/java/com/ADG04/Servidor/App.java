@@ -21,7 +21,7 @@ import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
-import com.ADG04.Servidor.dao.CarrierDao;
+import com.ADG04.Servidor.dao.TarifasCarrierDao;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
@@ -34,7 +34,7 @@ import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
-import com.ADG04.Servidor.model.Carrier;
+import com.ADG04.Servidor.model.TarifasCarrier;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Direccion;
@@ -107,19 +107,6 @@ public class App
     BusinessDelegate bd = new BusinessDelegate();
     bd.altaProveedor(p);*/
     	
-    	DTO_Seguro c = new DTO_Seguro();
-    	c.setActivo("1");
-    	c.setCuit("123213");
-    	c.setEmail("dana@dana.cm");
-	    c.setDescripcion("descripcion");
-	    c.setTarifaPorKm(100f);
-    	c.setRazonSocial("Razon social");
-    	c.setTarifa(100f);
-    	c.setTelefono("1231231");
-    	c.setDireccion(DireccionDao.getInstancia().getById(1).toDTO());
-    	
-    	BusinessDelegate bd = new BusinessDelegate();
-    	bd.altaSeguro(c);
     
 	//testControlViajes();
      	//VehiculosTest.TestVehiculos();

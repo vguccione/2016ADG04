@@ -15,14 +15,14 @@ import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
-import com.ADG04.Servidor.dao.CarrierDao;
+import com.ADG04.Servidor.dao.TarifasCarrierDao;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.Servidor.dao.SeguroDao;
 import com.ADG04.Servidor.dao.ServicioSeguridadDao;
 import com.ADG04.Servidor.dao.SucursalDao;
-import com.ADG04.Servidor.dao.TallerMecanicoDao;
-import com.ADG04.Servidor.model.Carrier;
+import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.model.TarifasCarrier;
 import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.Encomienda;
@@ -30,7 +30,7 @@ import com.ADG04.Servidor.model.Envio;
 import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.Seguro;
 import com.ADG04.Servidor.model.ServicioSeguridad;
-import com.ADG04.Servidor.model.TallerMecanico;
+import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
@@ -45,11 +45,11 @@ import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_Remito;
-import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
-import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
@@ -526,14 +526,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public void altaSeguro(DTO_Seguro seguro) throws RemoteException {
-		Proveedor prov = new Proveedor();
-		prov.setActivo(seguro.getActivo());
-		prov.setCuit(seguro.getCuit());
-		prov.setEmail(seguro.getEmail());
-		prov.setRazonSocial(seguro.getRazonSocial());
-		prov.setTelefono(seguro.getTelefono());
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(seguro.getDireccion());
-		prov.setDireccion(dir);
+		Proveedor prov = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
 		
 		GestionProveedor gp = new GestionProveedor(prov);
 		gp.altaSeguro(seguro);
@@ -554,27 +547,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			gp.altaSeguro(seguro);
 		 * 
 		 * */
-	}
-	public void altaServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad) throws RemoteException{
-		
-	}
-	public void modificarServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad) throws RemoteException{
-		
-	}
-	public void altaTallerMecanico(DTO_TallerMecanico taller) throws RemoteException{
-		
-	}
-	public void modificarTallerMecanico(DTO_TallerMecanico taller) throws RemoteException{
-		
-	}
-	public void altaCarrier(DTO_Carrier carrier) throws RemoteException{
-		
-	}
-	public void modificarCarrier(DTO_Carrier carrier) throws RemoteException{
-		
-	}
-	public void bajaProveedor(Integer idProveedor) throws RemoteException{
-		
 	}
 	
 	public DTO_Usuario login(String usuario, String password) throws RemoteException{
@@ -674,72 +646,136 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		return null;
 	}
 
-	
-	public DTO_ServicioSeguridad buscarServicioSeguridad(String cuit) {
-		return ServicioSeguridadDao.getInstancia().getByCuit(cuit).toDTO();
-	}
-	
-	public DTO_ServicioSeguridad getServicioSeguridad(Integer id) {
-		return ServicioSeguridadDao.getInstancia().getById(id).toDTO();
-	}
-	
-	public DTO_Seguro buscarSeguro(String cuit) {
-		return SeguroDao.getInstancia().getByCuit(cuit).toDTO();
-	}
-	
-	public DTO_Seguro getSeguro(Integer id) {
-		return SeguroDao.getInstancia().getById(id).toDTO();
-	}
-	
-	public DTO_TallerMecanico buscarTaller(String cuit) {
-		return TallerMecanicoDao.getInstancia().getByCuit(cuit).toDTO();
-	}
-	
-	public DTO_TallerMecanico getTallerMecanico(Integer id) {
-		return TallerMecanicoDao.getInstancia().getById(id).toDTO();
-	}
-	
-	public DTO_Carrier buscarCarrier(String cuit) {
-		return CarrierDao.getInstancia().getByCuit(cuit).toDTO();
-	}
-	
-	public DTO_Carrier getCarrier(Integer id) {
-		return CarrierDao.getInstancia().getById(id).toDTO();
-	}
-	
-	public List<DTO_Seguro> getSeguros(){
-		List<Seguro> seguros = SeguroDao.getInstancia().getAll();
-		List<DTO_Seguro> segurosDTO = new ArrayList<DTO_Seguro>();
-		for(Seguro seguro : seguros){
-			segurosDTO.add(seguro.toDTO());
-		}
-		return segurosDTO;
-	}
-	
-	public List<DTO_Carrier> getCarriers(){
-		List<Carrier> carriers = CarrierDao.getInstancia().getAll();
-		List<DTO_Carrier> carriersDTO = new ArrayList<DTO_Carrier>();
-		for(Carrier carrier : carriers){
-			carriersDTO.add(carrier.toDTO());
-		}
-		return carriersDTO;
-	}
-	
-	public List<DTO_ServicioSeguridad> getServicioSeguridad(){
-		List<ServicioSeguridad> ss = ServicioSeguridadDao.getInstancia().getAll();
-		List<DTO_ServicioSeguridad> ssDTO = new ArrayList<DTO_ServicioSeguridad>();
-		for(ServicioSeguridad s : ss){
-			ssDTO.add(s.toDTO());
-		}
-		return ssDTO;
-	}
-	
-	public List<DTO_TallerMecanico> getTalleresMecanicos(){
-		List<TallerMecanico> tallers = TallerMecanicoDao.getInstancia().getAll();
-		List<DTO_TallerMecanico> talleresDTO = new ArrayList<DTO_TallerMecanico>();
-		for(TallerMecanico taller : tallers){
+
+	public List<DTO_Proveedor> getTalleresMecanicos(){
+		
+		List<Proveedor> tallers = ProveedorDao.getInstancia().getByTipo('T');
+		List<DTO_Proveedor> talleresDTO = new ArrayList<DTO_Proveedor>();
+		for(Proveedor taller : tallers){
+		
 			talleresDTO.add(taller.toDTO());
 		}
 		return talleresDTO;
+	}
+
+	@Override
+	public void altaServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modificarServicioSeguridad(
+			DTO_ServicioSeguridad servicioSeguridad) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void altaTallerMecanico(DTO_Proveedor taller) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modificarTallerMecanico(DTO_Proveedor taller)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void altaCarrier(DTO_TarifasCarrier carrier) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modificarCarrier(DTO_TarifasCarrier carrier)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void bajaProveedor(Integer idProveedor) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<DTO_Seguro> getSeguros() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_TarifasCarrier> getTarifasCarriers() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_ServicioSeguridad> getServicioSeguridad()
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Proveedor> getAseguradoras() throws RemoteException {
+		List<DTO_Proveedor> lista = new ArrayList<DTO_Proveedor>();
+		List<Proveedor> listp = ProveedorDao.getInstancia().getByTipo('A');
+		if(listp!=null){
+			for(Proveedor p: listp){
+				lista.add(p.toDTO());
+			}
+			return lista;
+		}
+		else
+			return null;
+	}
+
+	@Override
+	public List<DTO_Proveedor> getEmpresasServiciosSeguridad()
+			throws RemoteException {
+		List<DTO_Proveedor> lista = new ArrayList<DTO_Proveedor>();
+		List<Proveedor> listp = ProveedorDao.getInstancia().getByTipo('S');
+		if(listp!=null){
+			for(Proveedor p: listp){
+				lista.add(p.toDTO());
+			}
+			return lista;
+		}
+		else
+			return null;
+	}
+
+	@Override
+	public List<DTO_Proveedor> getCarriers() throws RemoteException {
+		List<DTO_Proveedor> lista = new ArrayList<DTO_Proveedor>();
+		List<Proveedor> listp = ProveedorDao.getInstancia().getByTipo('C');
+		if(listp!=null){
+			for(Proveedor p: listp){
+				lista.add(p.toDTO());
+			}
+			return lista;
+		}
+		else
+			return null;
+	}
+	
+	public List<DTO_Proveedor> getTalleres() throws RemoteException {
+		List<DTO_Proveedor> lista = new ArrayList<DTO_Proveedor>();
+		List<Proveedor> listp = ProveedorDao.getInstancia().getByTipo('T');
+		if(listp!=null){
+			for(Proveedor p: listp){
+				lista.add(p.toDTO());
+			}
+			return lista;
+		}
+		else
+			return null;
 	}
 }

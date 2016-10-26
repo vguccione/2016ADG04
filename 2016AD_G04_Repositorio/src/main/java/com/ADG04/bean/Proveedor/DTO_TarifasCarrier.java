@@ -3,7 +3,7 @@ package com.ADG04.bean.Proveedor;
 import java.io.Serializable;
 
 
-public class DTO_Carrier extends DTO_Proveedor implements Serializable{
+public class DTO_TarifasCarrier implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
@@ -14,7 +14,7 @@ public class DTO_Carrier extends DTO_Proveedor implements Serializable{
 	private float precioKMExtra;
 	private float tarifa;
 
-	public DTO_Carrier() {
+	public DTO_TarifasCarrier() {
 		
 	}
 

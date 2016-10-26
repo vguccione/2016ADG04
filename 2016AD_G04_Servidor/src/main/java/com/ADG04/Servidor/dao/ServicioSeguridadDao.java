@@ -3,7 +3,7 @@ package com.ADG04.Servidor.dao;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Carrier;
+import com.ADG04.Servidor.model.TarifasCarrier;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.Seguro;
 import com.ADG04.Servidor.model.ServicioSeguridad;

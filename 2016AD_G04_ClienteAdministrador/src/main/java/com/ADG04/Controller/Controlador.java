@@ -12,11 +12,10 @@ import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
-import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
-import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 
@@ -100,7 +99,18 @@ public class Controlador {
 	        return null;
 	}
 
-	public List<DTO_Carrier> listarCarriers() {
+	public List<DTO_TarifasCarrier> listarTarifasCarriers() {
+		try{
+			return bd.getTarifasCarriers();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Carriers");
+	        }   
+	        return null;
+	}
+	
+	public List<DTO_Proveedor> listarCarriers() {
 		try{
 			return bd.getCarriers();
 		}
@@ -133,7 +143,7 @@ public class Controlador {
 	        return null;
 	}
 
-	public List<DTO_TallerMecanico> listarTalleres() {
+	public List<DTO_Proveedor> listarTalleres() {
 		try{
 			return bd.getTalleresMecanicos();
 		}
@@ -144,9 +154,9 @@ public class Controlador {
 	        return null;
 	}
 
-	public List<DTO_Seguro> listarAseguradoras() {
+	public List<DTO_Proveedor> listarAseguradoras() {
 		try{
-			return bd.getSeguros();
+			return bd.getAseguradoras();
 		}
 		catch(RemoteException e) {
 	       	 System.out.println(e);
@@ -155,9 +165,9 @@ public class Controlador {
 	        return null;
 	}
 
-	public List<DTO_ServicioSeguridad> listarEmpresasSeguridad() {
+	public List<DTO_Proveedor> listarEmpresasSeguridad() {
 		try{
-			return bd.getServicioSeguridad();
+			return bd.getEmpresasServiciosSeguridad();
 		}
 		catch(RemoteException e) {
 	       	 System.out.println(e);

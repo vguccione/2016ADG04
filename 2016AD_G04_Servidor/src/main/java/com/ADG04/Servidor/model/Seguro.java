@@ -7,8 +7,12 @@ import com.ADG04.bean.Proveedor.DTO_Seguro;
 
 @Entity
 @Table(name="Seguro")
-@PrimaryKeyJoinColumn(name="idProveedor") 
-public class Seguro extends Proveedor implements java.io.Serializable{
+public class Seguro implements java.io.Serializable{
+	
+	@Id
+	@GeneratedValue
+	@Column(name="IdSeguro")
+	private int idSeguro;
 
 	@Column(name="TipoSeguro")
 	private String tipoSeguro;
@@ -21,10 +25,26 @@ public class Seguro extends Proveedor implements java.io.Serializable{
 
 	@Column(name="TarifaPorKm")
 	private float tarifaPorKm;
+	
+	@ManyToOne
+	@JoinColumn(name="idProveedor")
+	private Proveedor proveedor;
 
 	public Seguro() {
 		
 	}
+
+	public int getIdSeguro() {
+		return idSeguro;
+	}
+
+
+
+	public void setIdSeguro(int idSeguro) {
+		this.idSeguro = idSeguro;
+	}
+
+
 
 	public String getTipoSeguro() {
 		return tipoSeguro;
@@ -58,10 +78,21 @@ public class Seguro extends Proveedor implements java.io.Serializable{
 	public void setTarifaPorKm(float tarifaPorKm) {
 		this.tarifaPorKm = tarifaPorKm;
 	}
+	
+	
+
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
+	}
 
 	public DTO_Seguro toDTO() {
 		DTO_Seguro s = new DTO_Seguro();
-		s.setIdProveedor(this.getIdProveedor());
+		s.setId(this.getIdSeguro());
+		s.setIdProveedor(this.getProveedor().getIdProveedor());
 		s.setTipoSeguro(this.getTipoSeguro());
 		s.setDescripcion(this.descripcion);
 		s.setTarifa(this.getTarifa());

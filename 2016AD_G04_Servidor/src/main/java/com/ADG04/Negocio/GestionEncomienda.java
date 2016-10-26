@@ -9,7 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
-import com.ADG04.Servidor.dao.CarrierDao;
+import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.TarifasCarrierDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.DireccionDao;
@@ -20,7 +21,8 @@ import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
-import com.ADG04.Servidor.model.Carrier;
+import com.ADG04.Servidor.model.Proveedor;
+import com.ADG04.Servidor.model.TarifasCarrier;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.Encomienda;
@@ -806,7 +808,7 @@ public class GestionEncomienda {
 			if(esEnvioTercerizado(e)){ 
 				Envio envioTercerizado = new Envio();
 				if(e.isInternacional()){
-					Carrier prov = CarrierDao.getInstancia().getById(idCarrier);
+					Proveedor prov = ProveedorDao.getInstancia().getById(idCarrier);
 					envioTercerizado.setProveedor(prov);
 				}
 				MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());

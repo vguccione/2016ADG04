@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Administracion.DTO_Direccion;
-import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 
 
@@ -59,7 +59,7 @@ public class ListadoCarriers extends javax.swing.JFrame {
 				jScrollPaneListadoProveedores.setBounds(12, 55, 799, 310);
 				{
 					
-					List<DTO_Carrier> proveedorDTO = Controlador.getInstancia().listarCarriers();
+					List<DTO_Proveedor> proveedorDTO = Controlador.getInstancia().listarCarriers();
 					
 					DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			
@@ -74,12 +74,8 @@ public class ListadoCarriers extends javax.swing.JFrame {
 					jTableListadoModel.addColumn("Pais");
 					jTableListadoModel.addColumn("Email");
 					jTableListadoModel.addColumn("Telefono");
-					jTableListadoModel.addColumn("Metodo de Pago");
-					jTableListadoModel.addColumn("Tipo");
-					jTableListadoModel.addColumn("Taller Oficial");
-					jTableListadoModel.addColumn("Especialidad");
 
-					
+					if(proveedorDTO!=null){
 					for (DTO_Proveedor p :proveedorDTO){
 						DTO_Direccion direccion = p.getDireccion();
 						String calle = "";
@@ -104,14 +100,10 @@ public class ListadoCarriers extends javax.swing.JFrame {
 																	prov,
 																	pais,
 																	p.getEmail(),
-																	p.getTelefono(),
-																	p.getMetodoPago(),
-																	p.getTipo(),
-																	p.getTallerOficial(),
-																	p.getEspecialidad()
+																	p.getTelefono()
 						});
 																
-						
+					}
 						
 					}
 					jTableListado = new JTable(jTableListadoModel);

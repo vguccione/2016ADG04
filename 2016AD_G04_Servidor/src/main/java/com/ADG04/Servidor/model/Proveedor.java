@@ -24,10 +24,10 @@ import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
+import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 
 @Entity
 @Table(name = "Proveedor")
-@Inheritance(strategy=InheritanceType.JOINED)
 public class Proveedor implements java.io.Serializable {
 
 	@Id
@@ -54,14 +54,12 @@ public class Proveedor implements java.io.Serializable {
 	@Column(name = "Telefono", nullable = false, length = 50)
 	private String telefono;
 
-/*
-	@Column(name = "TipoTaller", length = 20)
-	private String tipoTaller;
+	@Column(name="EsTallerOficial")
+	private boolean tallerOficial;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
-	private List<TareaMantenimientoRealizada> tareaMantenimientoRealizadas;
+	@Column(name="Tipo")
+	private char tipo;
 
-*/
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
 	private List<Envio> envios;
 	
@@ -140,6 +138,39 @@ public class Proveedor implements java.io.Serializable {
 
 	public void setEnvios(List<Envio> envios) {
 		this.envios = envios;
+	}
+	
+	
+
+	public boolean isTallerOficial() {
+		return tallerOficial;
+	}
+
+	public void setTallerOficial(boolean tallerOficial) {
+		this.tallerOficial = tallerOficial;
+	}
+
+	public char getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(char tipo) {
+		this.tipo = tipo;
+	}
+
+	public DTO_Proveedor toDTO() {
+		DTO_Proveedor prov = new DTO_Proveedor();
+		prov.setId(this.getIdProveedor());
+		prov.setActivo(this.getActivo());
+		prov.setCuit(this.getCuit());
+		prov.setDireccion(this.getDireccion().toDTO());
+		prov.setEmail(this.getEmail());
+		prov.setRazonSocial(this.getRazonSocial());
+		prov.setTallerOficial(this.isTallerOficial());
+		prov.setTipo(this.getTipo());
+		prov.setTelefono(this.getTelefono());
+		
+		return prov;
 	}
 	
 

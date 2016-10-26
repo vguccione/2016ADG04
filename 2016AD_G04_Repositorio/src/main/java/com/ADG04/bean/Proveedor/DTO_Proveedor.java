@@ -14,10 +14,8 @@ public class DTO_Proveedor implements Serializable{
 	private DTO_Direccion direccion;
 	private String email;
 	private String telefono;
-	private String metodoPago;
-	private String tipo;
-	private String especialidad;
-	private String tallerOficial;
+	private char tipo;
+	private boolean TallerOficial;
 	private List<DTO_FacturaProveedor> facturas;
 
 	public DTO_Proveedor() {
@@ -95,47 +93,26 @@ public class DTO_Proveedor implements Serializable{
 	}
 
 
-
-	public String getMetodoPago() {
-		return metodoPago;
-	}
-
-
-
-	public void setMetodoPago(String metodoPago) {
-		this.metodoPago = metodoPago;
-	}
-
-	public String getTipo() {
+	public char getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(char tipo) {
 		this.tipo = tipo;
 	}
-
-	public String getEspecialidad() {
-		return especialidad;
-	}
-
-	public void setEspecialidad(String especialidad) {
-		this.especialidad = especialidad;
-	}
-
-	public String getTallerOficial() {
-		return tallerOficial;
-	}
-
-	public void setTallerOficial(String tallerOficial) {
-		this.tallerOficial = tallerOficial;
-	}
-
 
 	public List<DTO_FacturaProveedor> getFacturas() {
 		return facturas;
 	}
 
 
+	public boolean isTallerOficial() {
+		return TallerOficial;
+	}
+
+	public void setTallerOficial(boolean tallerOficial) {
+		TallerOficial = tallerOficial;
+	}
 
 	public void setFacturas(List<DTO_FacturaProveedor> facturas) {
 		this.facturas = facturas;

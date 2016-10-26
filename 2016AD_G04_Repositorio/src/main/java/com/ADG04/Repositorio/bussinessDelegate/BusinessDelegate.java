@@ -24,11 +24,10 @@ import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_Remito;
-import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
-import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
@@ -147,27 +146,13 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	}
 
 
-	public void altaTallerMecanico(DTO_TallerMecanico taller)
-			throws RemoteException {
-		this.businessService.altaTallerMecanico(taller);
-		
-	}
-
-
-	public void modificarTallerMecanico(DTO_TallerMecanico taller)
-			throws RemoteException {
-		this.businessService.modificarTallerMecanico(taller);
-		
-	}
-
-
-	public void altaCarrier(DTO_Carrier carrier) throws RemoteException {
+	public void altaCarrier(DTO_TarifasCarrier carrier) throws RemoteException {
 		this.businessService.altaCarrier(carrier);
 		
 	}
 
 
-	public void modificarCarrier(DTO_Carrier carrier) throws RemoteException {
+	public void modificarCarrier(DTO_TarifasCarrier carrier) throws RemoteException {
 		this.businessService.modificarCarrier(carrier);
 		
 	}
@@ -522,8 +507,8 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.getSeguros();
 	}
 
-	public List<DTO_Carrier> getCarriers() throws RemoteException {
-		return this.businessService.getCarriers();
+	public List<DTO_TarifasCarrier> getTarifasCarriers() throws RemoteException {
+		return this.businessService.getTarifasCarriers();
 	}
 
 	public List<DTO_ServicioSeguridad> getServicioSeguridad()
@@ -531,12 +516,40 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.getServicioSeguridad();
 	}
 
-	public List<DTO_TallerMecanico> getTalleresMecanicos()
+	public List<DTO_Proveedor> getTalleresMecanicos()
 			throws RemoteException {
 		return this.businessService.getTalleresMecanicos();
 	}
+	
+	public List<DTO_Proveedor> getAseguradoras()
+			throws RemoteException {
+		return this.businessService.getAseguradoras();
+	}
+	
+	public List<DTO_Proveedor> getEmpresasServiciosSeguridad()
+			throws RemoteException {
+		return this.businessService.getEmpresasServiciosSeguridad();
+	}
 
+	public List<DTO_Proveedor> getCarriers()
+			throws RemoteException {
+		return this.businessService.getCarriers();
+	}
+	
 	public List<DTO_Vehiculo> listarVehiculos() throws RemoteException {
 		return null;
 	}
+
+	public void altaTallerMecanico(DTO_Proveedor taller) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void modificarTallerMecanico(DTO_Proveedor taller)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
 }

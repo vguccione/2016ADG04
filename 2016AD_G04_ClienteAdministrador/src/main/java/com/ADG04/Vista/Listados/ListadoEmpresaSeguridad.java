@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 
 
@@ -58,7 +59,7 @@ public class ListadoEmpresaSeguridad extends javax.swing.JFrame {
 				jScrollPaneListadoProveedores.setBounds(12, 55, 799, 310);
 				{
 					
-					List<DTO_ServicioSeguridad> proveedorDTO = Controlador.getInstancia().listarEmpresasSeguridad();
+					List<DTO_Proveedor> proveedorDTO = Controlador.getInstancia().listarEmpresasSeguridad();
 					
 					DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			
@@ -73,13 +74,10 @@ public class ListadoEmpresaSeguridad extends javax.swing.JFrame {
 					jTableListadoModel.addColumn("Pais");
 					jTableListadoModel.addColumn("Email");
 					jTableListadoModel.addColumn("Telefono");
-					jTableListadoModel.addColumn("Metodo de Pago");
-					jTableListadoModel.addColumn("Tipo");
-					jTableListadoModel.addColumn("Taller Oficial");
-					jTableListadoModel.addColumn("Especialidad");
 
 					
-					for (DTO_ServicioSeguridad p :proveedorDTO){
+					if(proveedorDTO!=null){
+					for (DTO_Proveedor p :proveedorDTO){
 						DTO_Direccion direccion = p.getDireccion();
 						String calle = "";
 						int codPostal=0;
@@ -104,15 +102,11 @@ public class ListadoEmpresaSeguridad extends javax.swing.JFrame {
 																	prov,
 																	pais,
 																	p.getEmail(),
-																	p.getTelefono(),
-																	p.getMetodoPago(),
-																	p.getTipo(),
-																	p.getTallerOficial(),
-																	p.getEspecialidad()
+																	p.getTelefono()
 						});
 																
 						
-						
+					}
 					}
 					jTableListado = new JTable(jTableListadoModel);
 					jScrollPaneListadoProveedores.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

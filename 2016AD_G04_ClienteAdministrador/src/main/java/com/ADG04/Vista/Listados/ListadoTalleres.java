@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Administracion.DTO_Direccion;
-import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 
 
 
@@ -60,7 +60,7 @@ public class ListadoTalleres extends javax.swing.JFrame {
 				jScrollPaneListadoProveedores.setBounds(12, 55, 799, 310);
 				{
 					
-					List<DTO_TallerMecanico> proveedorDTO = Controlador.getInstancia().listarTalleres();
+					List<DTO_Proveedor> proveedorDTO = Controlador.getInstancia().listarTalleres();
 					
 					DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			
@@ -76,13 +76,10 @@ public class ListadoTalleres extends javax.swing.JFrame {
 					jTableListadoModel.addColumn("Pais");
 					jTableListadoModel.addColumn("Email");
 					jTableListadoModel.addColumn("Telefono");
-					jTableListadoModel.addColumn("Metodo de Pago");
-					jTableListadoModel.addColumn("Tipo");
-					jTableListadoModel.addColumn("Taller Oficial");
-					jTableListadoModel.addColumn("Especialidad");
 
 					
-					for (DTO_TallerMecanico p :proveedorDTO){
+					if(proveedorDTO!=null){
+					for (DTO_Proveedor p :proveedorDTO){
 						
 						DTO_Direccion direccion = p.getDireccion();
 						String calle = "";
@@ -107,14 +104,10 @@ public class ListadoTalleres extends javax.swing.JFrame {
 																	prov,
 																	pais,
 																	p.getEmail(),
-																	p.getTelefono(),
-																	p.getMetodoPago(),
-																	p.getTipo(),
-																	p.getTallerOficial(),
-																	p.getEspecialidad()
+																	p.getTelefono()
 						});
 																
-						
+					}
 						
 					}
 					jTableListado = new JTable(jTableListadoModel);

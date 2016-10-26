@@ -2,12 +2,17 @@ package com.ADG04.Servidor.model;
 
 import javax.persistence.*;
 
-import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 
 @Entity
-@Table(name="Carrier")
-@PrimaryKeyJoinColumn(name="idProveedor") 
-public class Carrier extends Proveedor implements java.io.Serializable{	
+@Table(name="TarifasCarrier")
+public class TarifasCarrier implements java.io.Serializable{	
+	
+	@Id
+	@GeneratedValue
+	@Column(name="IdTarifasCarrier")
+	private int idTarifasCarrier;
+	
 	@Column(name="Comentarios")
 	private String comentarios;
 	
@@ -19,8 +24,12 @@ public class Carrier extends Proveedor implements java.io.Serializable{
 	
 	@Column(name="Tarifa")
 	private float tarifa;
+	
+	@ManyToOne
+	@JoinColumn(name="idProveedor")
+	private Proveedor proveedor;
 
-	public Carrier() {
+	public TarifasCarrier() {
 		
 	}
 	
@@ -55,11 +64,30 @@ public class Carrier extends Proveedor implements java.io.Serializable{
 	public void setTarifa(float tarifa) {
 		this.tarifa = tarifa;
 	}
+	
+	
 
-	public DTO_Carrier toDTO() {
-		DTO_Carrier pc = new DTO_Carrier();
-		pc.setIdProveedor(this.getIdProveedor());
-		pc.setIdDireccion(this.getDireccion().getIdDireccion());
+	public int getIdTarifasCarrier() {
+		return idTarifasCarrier;
+	}
+
+	public void setIdTarifasCarrier(int idTarifasCarrier) {
+		this.idTarifasCarrier = idTarifasCarrier;
+	}
+
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
+	}
+
+	public DTO_TarifasCarrier toDTO() {
+		DTO_TarifasCarrier pc = new DTO_TarifasCarrier();
+		pc.setIdProveedor(this.getProveedor().getIdProveedor());
+		pc.setId(this.getIdTarifasCarrier());
+		
 		pc.setComentarios(this.getComentarios());
 		pc.setPrioridad(this.getPrioridad());
 		pc.setPrecioKMExtra(this.getPrecioKMExtra());

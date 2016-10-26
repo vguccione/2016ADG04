@@ -23,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.ADG04.Servidor.dao.ProveedorDao;
+
 @Entity
 @Table(name = "Encomienda")
 public class Encomienda implements java.io.Serializable {
@@ -442,7 +444,7 @@ public class Encomienda implements java.io.Serializable {
 		Seguro p = new Seguro();
 		p.setTarifa(123.0F);
 		p.setTarifaPorKm(456.0F);
-		p.setIdProveedor(1);
+		p.setProveedor(ProveedorDao.getInstancia().getById(1));
 		return p;
 	}
 

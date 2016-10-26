@@ -163,11 +163,14 @@ GO
 SET IDENTITY_INSERT dbo.proveedor on;  
 GO  
 --vane
-INSERT INTO Proveedor (IdProveedor, Activo, Cuit, Email, RazonSocial, Telefono, IdDireccion) VALUES(1,1,'23434343','mail@mail.com','Proveedor A','234343',1)
-INSERT INTO Proveedor (IdProveedor, Activo, Cuit, Email, RazonSocial, Telefono, IdDireccion) VALUES(2,1,'12323223','mailB@mail.com','Proveedor B','234343',2)
+INSERT INTO Proveedor (IdProveedor, Activo, Cuit, Email, RazonSocial, Telefono, IdDireccion,EsTallerOficial,Tipo) VALUES(1,1,'23434343','mail@mail.com','Proveedor Taller A','234343',1,0,'T')
+INSERT INTO Proveedor (IdProveedor, Activo, Cuit, Email, RazonSocial, Telefono, IdDireccion,EsTallerOficial,Tipo) VALUES(2,1,'12323223','mailB@mail.com','Proveedor Taller B','234343',2,0,'T')
+INSERT INTO Proveedor (IdProveedor, Activo, Cuit, Email, RazonSocial, Telefono, IdDireccion,EsTallerOficial,Tipo) VALUES(3,1,'12323223','mailB@mail.com','Proveedor Seguridad','234343',2,0,'S')
+INSERT INTO Proveedor (IdProveedor, Activo, Cuit, Email, RazonSocial, Telefono, IdDireccion,EsTallerOficial,Tipo) VALUES(4,1,'12323223','mailB@mail.com','Proveedor Aseguradora','234343',2,0,'A')
+INSERT INTO Proveedor (IdProveedor, Activo, Cuit, Email, RazonSocial, Telefono, IdDireccion,EsTallerOficial,Tipo) VALUES(5,1,'12323223','mailB@mail.com','Proveedor Carrier','234343',2,0,'C')
 
 SET IDENTITY_INSERT dbo.proveedor off;  
-GO  
+GO 
 
 
 INSERT INTO TallerMecanico VALUES(234,'oficial',1)
@@ -186,26 +189,12 @@ INSERT INTO TareaMantenimientoRealizada  (IdTareaMantenimientoRealizada, Cantida
 SET IDENTITY_INSERT dbo.TareaMantenimientoRealizada off;  
 GO  
 
-SET IDENTITY_INSERT dbo.proveedor on;  
-GO  
---vane
-INSERT INTO Proveedor (IdProveedor, Activo, Cuit, Email, RazonSocial, Telefono, IdDireccion)  VALUES(3,1,'111111','seguro@mail.com','Seguro','234343',1)
 
-SET IDENTITY_INSERT dbo.proveedor off;  
-GO  
-
-INSERT INTO Seguro VALUES('Seguro aloja',23422,432,'Todo riesgo',3)
-GO  
-
-SET IDENTITY_INSERT dbo.Proveedor on;  
-GO  
-INSERT INTO Proveedor (IdProveedor, Activo, Cuit, Email, RazonSocial, Telefono, IdDireccion)  VALUES(4,1,'22222','ss@mail.com','Servicio Seguridad','234343',2)
-
-SET IDENTITY_INSERT dbo.proveedor off;  
+INSERT INTO Seguro VALUES('Seguro aloja',23422,432,'Todo riesgo',4)
 GO  
 
 
-INSERT INTO ServicioSeguridad VALUES('SS aloja',432,4)
+INSERT INTO ServicioSeguridad VALUES('SS aloja',432,3)
 go
 
 SET IDENTITY_INSERT dbo.MapaDeRuta on;  

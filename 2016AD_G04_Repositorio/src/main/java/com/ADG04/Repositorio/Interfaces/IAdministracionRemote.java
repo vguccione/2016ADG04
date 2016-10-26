@@ -47,15 +47,8 @@ public interface IAdministracionRemote {
 	public void altaCarrier(DTO_Carrier carrier) throws RemoteException;
 	public void modificarCarrier(DTO_Carrier carrier) throws RemoteException;
 	public void bajaProveedor(Integer idProveedor) throws RemoteException;
-	
-	
-	public Integer altaVehiculo(DTO_Vehiculo v) throws RemoteException;
-
-	void altaTareaMantenimiento(DTO_TareasPorKilometro tareaXKM, Integer idVehiculo) throws RemoteException, Exception  ;
-
-	Integer altaPlanMantenimiento(DTO_PlanMantenimiento pm, Integer idVehiculo)	throws RemoteException, Exception;
-
-	Integer altaTareaMantenimiento(DTO_TareasPorTiempo tareaXTiempo, Integer idVehiculo) throws RemoteException, Exception  ;
-	List<DTO_TareaMantenimiento> getTareasVencidas(int idVehiculo)throws RemoteException  ;
-
+	public List<DTO_Seguro> getSeguros() throws RemoteException;
+	public List<DTO_Carrier> getCarriers() throws RemoteException;
+	public List<DTO_ServicioSeguridad> getServicioSeguridad() throws RemoteException;
+	public List<DTO_TallerMecanico> getTalleresMecanicos() throws RemoteException;
 }

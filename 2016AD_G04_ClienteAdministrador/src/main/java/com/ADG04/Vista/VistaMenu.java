@@ -9,8 +9,12 @@ import java.util.Collection;
 import javax.swing.*;
 
 import com.ADG04.Controller.Controlador;
+import com.ADG04.Vista.Listados.ListadoAseguradoras;
+import com.ADG04.Vista.Listados.ListadoCarriers;
 import com.ADG04.Vista.Listados.ListadoCliente;
 import com.ADG04.Vista.Listados.ListadoEmpresa;
+import com.ADG04.Vista.Listados.ListadoEmpresaSeguridad;
+import com.ADG04.Vista.Listados.ListadoTalleres;
 import com.ADG04.bean.Administracion.DTO_Rol;
 
 
@@ -966,9 +970,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem10.setText("Aseguradoras");
 							JMenuItem10.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-								/*	ListadoAseguradoras inst = new ListadoAseguradoras();
+									ListadoAseguradoras inst = new ListadoAseguradoras();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -978,9 +982,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem18.setText("Carriers");
 							JMenuItem18.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoCarriers inst = new ListadoCarriers();
+									ListadoCarriers inst = new ListadoCarriers();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -990,9 +994,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem17.setText("Empresas Seguridad");
 							JMenuItem17.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoEmpresaSeguridad inst = new ListadoEmpresaSeguridad();
+									ListadoEmpresaSeguridad inst = new ListadoEmpresaSeguridad();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -1002,9 +1006,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem9.setText("Talleres");
 							JMenuItem9.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoTalleres inst = new ListadoTalleres();
+									ListadoTalleres inst = new ListadoTalleres();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

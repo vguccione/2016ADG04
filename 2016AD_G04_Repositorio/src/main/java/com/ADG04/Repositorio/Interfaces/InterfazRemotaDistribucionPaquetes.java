@@ -21,30 +21,8 @@ import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 
-public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministracionRemote, IClienteRemote, IFacturaRemote, IEncomiendaRemote{
+public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministracionRemote, IClienteRemote, IFacturaRemote, IEncomiendaRemote, IVehiculo{
 	
 	public static final String url = "localhost/DistribucionPaquetesRMI";
-
-
-//	void ingresarEncomiendaEnvio(Integer idEnvio);
-
-//	void egresarEncomiendaEnvio(Integer idEnvio);
-
-	//Integer asignarEnvio(Integer idEncomienda);
-/*
-	Integer cobrarEncomiendaEmpresa(List<Integer> lista);
-
-	Integer cobrarEncomiendaParticular(Integer idFactura);
-
-	Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc);
-
-	Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc);
-
-	Integer nuevaEncomiendaParticular(Integer idSucursal);
-
-	Integer nuevaEncomiendaEmpresa(Integer idSucursal);
-*/
-	//DTO_Usuario validarUsuario(String usuario, String contrasena);
-
 
 }

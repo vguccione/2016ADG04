@@ -517,4 +517,26 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		this.businessService.altaProveedor(prov);
 		
 	}
+
+	public List<DTO_Seguro> getSeguros() throws RemoteException {
+		return this.businessService.getSeguros();
+	}
+
+	public List<DTO_Carrier> getCarriers() throws RemoteException {
+		return this.businessService.getCarriers();
+	}
+
+	public List<DTO_ServicioSeguridad> getServicioSeguridad()
+			throws RemoteException {
+		return this.businessService.getServicioSeguridad();
+	}
+
+	public List<DTO_TallerMecanico> getTalleresMecanicos()
+			throws RemoteException {
+		return this.businessService.getTalleresMecanicos();
+	}
+
+	public List<DTO_Vehiculo> listarVehiculos() throws RemoteException {
+		return null;
+	}
 }

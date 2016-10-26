@@ -12,6 +12,12 @@ import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Proveedor.DTO_Carrier;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
+import com.ADG04.bean.Proveedor.DTO_Seguro;
+import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
+import com.ADG04.bean.Proveedor.DTO_TallerMecanico;
+import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 
 public class Controlador {
@@ -81,6 +87,83 @@ public class Controlador {
 	            System.out.println("Error al listar clientes");
 	        }   
 	        return null;
+	}
+
+	public List<DTO_Vehiculo> listarVehiculos() {
+		try{
+			return bd.listarVehiculos();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Vehiculos");
+	        }   
+	        return null;
+	}
+
+	public List<DTO_Carrier> listarCarriers() {
+		try{
+			return bd.getCarriers();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Carriers");
+	        }   
+	        return null;
+	}
+
+	public List<DTO_Seguro> listarSeguros() {
+		try{
+			return bd.getSeguros();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Seguros");
+	        }   
+	        return null;
+	}
+
+	public List<DTO_ServicioSeguridad> listarServicioSeguridad() {
+		try{
+			return bd.getServicioSeguridad();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Servicios de Seguridad");
+	        }   
+	        return null;
+	}
+
+	public List<DTO_TallerMecanico> listarTalleres() {
+		try{
+			return bd.getTalleresMecanicos();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Talleres Mecanicos");
+	        }   
+	        return null;
+	}
+
+	public List<DTO_Seguro> listarAseguradoras() {
+		try{
+			return bd.getSeguros();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Aseguradoras");
+	        }   
+	        return null;
+	}
+
+	public List<DTO_ServicioSeguridad> listarEmpresasSeguridad() {
+		try{
+			return bd.getServicioSeguridad();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Servicios de Seguridad");
+	      }   
+	    return null;
 	}
 
 

@@ -273,73 +273,7 @@ public class GestionProveedor {
 		}
 	}
 
-	public DTO_ServicioSeguridad buscarServicioSeguridad(String cuit) {
-		return ServicioSeguridadDao.getInstancia().getByCuit(cuit).toDTO();
-	}
-	
-	public DTO_ServicioSeguridad getServicioSeguridad(Integer id) {
-		return ServicioSeguridadDao.getInstancia().getById(id).toDTO();
-	}
-	
-	public DTO_Seguro buscarSeguro(String cuit) {
-		return SeguroDao.getInstancia().getByCuit(cuit).toDTO();
-	}
-	
-	public DTO_Seguro getSeguro(Integer id) {
-		return SeguroDao.getInstancia().getById(id).toDTO();
-	}
-	
-	public DTO_TallerMecanico buscarTaller(String cuit) {
-		return TallerMecanicoDao.getInstancia().getByCuit(cuit).toDTO();
-	}
-	
-	public DTO_TallerMecanico getTallerMecanico(Integer id) {
-		return TallerMecanicoDao.getInstancia().getById(id).toDTO();
-	}
-	
-	public DTO_Carrier buscarCarrier(String cuit) {
-		return CarrierDao.getInstancia().getByCuit(cuit).toDTO();
-	}
-	
-	public DTO_Carrier getCarrier(Integer id) {
-		return CarrierDao.getInstancia().getById(id).toDTO();
-	}
-	
-	public List<DTO_Seguro> getSeguros(){
-		List<Seguro> seguros = SeguroDao.getInstancia().getAll();
-		List<DTO_Seguro> segurosDTO = new ArrayList<DTO_Seguro>();
-		for(Seguro seguro : seguros){
-			segurosDTO.add(seguro.toDTO());
-		}
-		return segurosDTO;
-	}
-	
-	public List<DTO_Carrier> getCarriers(){
-		List<Carrier> carriers = CarrierDao.getInstancia().getAll();
-		List<DTO_Carrier> carriersDTO = new ArrayList<DTO_Carrier>();
-		for(Carrier carrier : carriers){
-			carriersDTO.add(carrier.toDTO());
-		}
-		return carriersDTO;
-	}
-	
-	public List<DTO_ServicioSeguridad> getServicioSeguridad(){
-		List<ServicioSeguridad> ss = ServicioSeguridadDao.getInstancia().getAll();
-		List<DTO_ServicioSeguridad> ssDTO = new ArrayList<DTO_ServicioSeguridad>();
-		for(ServicioSeguridad s : ss){
-			ssDTO.add(s.toDTO());
-		}
-		return ssDTO;
-	}
-	
-	public List<DTO_TallerMecanico> getDTO_TalleresMecanicos(){
-		List<TallerMecanico> tallers = TallerMecanicoDao.getInstancia().getAll();
-		List<DTO_TallerMecanico> talleresDTO = new ArrayList<DTO_TallerMecanico>();
-		for(TallerMecanico taller : tallers){
-			talleresDTO.add(taller.toDTO());
-		}
-		return talleresDTO;
-	}
+
 	
 
 }

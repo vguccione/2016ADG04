@@ -1,5 +1,7 @@
 package com.ADG04.Servidor.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -39,5 +41,6 @@ public class TallerMecanicoDao extends GenericDao<TallerMecanico, Integer> {
 	            return null;
 	        }
 	}
+
 	
 }

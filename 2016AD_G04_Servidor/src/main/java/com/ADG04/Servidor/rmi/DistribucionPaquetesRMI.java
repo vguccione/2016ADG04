@@ -3,6 +3,7 @@ package com.ADG04.Servidor.rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -14,14 +15,22 @@ import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
+import com.ADG04.Servidor.dao.CarrierDao;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.SeguroDao;
+import com.ADG04.Servidor.dao.ServicioSeguridadDao;
 import com.ADG04.Servidor.dao.SucursalDao;
+import com.ADG04.Servidor.dao.TallerMecanicoDao;
+import com.ADG04.Servidor.model.Carrier;
 import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Direccion;
 import com.ADG04.Servidor.model.Encomienda;
 import com.ADG04.Servidor.model.Envio;
 import com.ADG04.Servidor.model.Proveedor;
+import com.ADG04.Servidor.model.Seguro;
+import com.ADG04.Servidor.model.ServicioSeguridad;
+import com.ADG04.Servidor.model.TallerMecanico;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
@@ -658,80 +667,79 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		return new GestionVehiculo(idVehiculo).getTareasVencidas2();
 	}
+
+	@Override
+	public List<DTO_Vehiculo> listarVehiculos() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
-/*
-	@Override
-	public void ingresarEncomiendaEnvio(Integer idEnvio) {
-		// TODO Auto-generated method stub
-		
+	public DTO_ServicioSeguridad buscarServicioSeguridad(String cuit) {
+		return ServicioSeguridadDao.getInstancia().getByCuit(cuit).toDTO();
 	}
-
-	@Override
-	public void egresarEncomiendaEnvio(Integer idEnvio) {
-		// TODO Auto-generated method stub
-		
-	}*/
-/*
-	@Override
-	public void ingresarEncomiendaEnvio(Integer idEnvio) {
-		// TODO Auto-generated method stub
-		
+	
+	public DTO_ServicioSeguridad getServicioSeguridad(Integer id) {
+		return ServicioSeguridadDao.getInstancia().getById(id).toDTO();
 	}
-
-	@Override
-	public void egresarEncomiendaEnvio(Integer idEnvio) {
-		// TODO Auto-generated method stub
-		
+	
+	public DTO_Seguro buscarSeguro(String cuit) {
+		return SeguroDao.getInstancia().getByCuit(cuit).toDTO();
 	}
-*/
-	//@Override
-	/*public Integer asignarEnvio(Integer idEncomienda) {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
-	/*
-	@Override
-	public Integer cobrarEncomiendaEmpresa(List<Integer> lista) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public DTO_Seguro getSeguro(Integer id) {
+		return SeguroDao.getInstancia().getById(id).toDTO();
 	}
-
-	@Override
-	public Integer cobrarEncomiendaParticular(Integer idFactura) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public DTO_TallerMecanico buscarTaller(String cuit) {
+		return TallerMecanicoDao.getInstancia().getByCuit(cuit).toDTO();
 	}
-
-	@Override
-	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public DTO_TallerMecanico getTallerMecanico(Integer id) {
+		return TallerMecanicoDao.getInstancia().getById(id).toDTO();
 	}
-
-	@Override
-	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public DTO_Carrier buscarCarrier(String cuit) {
+		return CarrierDao.getInstancia().getByCuit(cuit).toDTO();
 	}
-
-	@Override
-	public Integer nuevaEncomiendaParticular(Integer idSucursal) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public DTO_Carrier getCarrier(Integer id) {
+		return CarrierDao.getInstancia().getById(id).toDTO();
 	}
-
-	@Override
-	public Integer nuevaEncomiendaEmpresa(Integer idSucursal) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public List<DTO_Seguro> getSeguros(){
+		List<Seguro> seguros = SeguroDao.getInstancia().getAll();
+		List<DTO_Seguro> segurosDTO = new ArrayList<DTO_Seguro>();
+		for(Seguro seguro : seguros){
+			segurosDTO.add(seguro.toDTO());
+		}
+		return segurosDTO;
 	}
-
-
-
-	@Override
-	public DTO_Usuario validarUsuario(String usuario, String contrasena) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public List<DTO_Carrier> getCarriers(){
+		List<Carrier> carriers = CarrierDao.getInstancia().getAll();
+		List<DTO_Carrier> carriersDTO = new ArrayList<DTO_Carrier>();
+		for(Carrier carrier : carriers){
+			carriersDTO.add(carrier.toDTO());
+		}
+		return carriersDTO;
 	}
-*/	
+	
+	public List<DTO_ServicioSeguridad> getServicioSeguridad(){
+		List<ServicioSeguridad> ss = ServicioSeguridadDao.getInstancia().getAll();
+		List<DTO_ServicioSeguridad> ssDTO = new ArrayList<DTO_ServicioSeguridad>();
+		for(ServicioSeguridad s : ss){
+			ssDTO.add(s.toDTO());
+		}
+		return ssDTO;
+	}
+	
+	public List<DTO_TallerMecanico> getTalleresMecanicos(){
+		List<TallerMecanico> tallers = TallerMecanicoDao.getInstancia().getAll();
+		List<DTO_TallerMecanico> talleresDTO = new ArrayList<DTO_TallerMecanico>();
+		for(TallerMecanico taller : tallers){
+			talleresDTO.add(taller.toDTO());
+		}
+		return talleresDTO;
+	}
 }

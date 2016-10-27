@@ -176,5 +176,27 @@ public class Controlador {
 	    return null;
 	}
 
+	public List<DTO_Proveedor> listarProveedores() {
+		try{
+			return bd.getProveedores();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Proveedores");
+	      }   
+	    return null;
+	}
+
+	public DTO_Proveedor getProveedor(Integer idProveedor) {
+		try{
+			return bd.getProveedor(idProveedor);
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Proveedores");
+	      }   
+	    return null;
+	}
+
 
 }

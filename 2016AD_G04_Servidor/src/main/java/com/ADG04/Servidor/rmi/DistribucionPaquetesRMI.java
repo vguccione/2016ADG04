@@ -518,7 +518,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		p.setDireccion(dir);
 		
 		GestionProveedor gp = new GestionProveedor(p);
-		gp.altaProveedor();
+		gp.saveOrUpdate();
 		
 		/*  Utilizando el que tiene herencia
 		 * _GestionProveedor gp = p;
@@ -531,7 +531,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		Proveedor prov = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
 		
 		GestionProveedor gp = new GestionProveedor(prov);
-		gp.altaSeguro(seguro);
+		gp.altaSeguro(seguro.getTipoSeguro(), seguro.getDescripcion(), seguro.getTarifa(), seguro.getTarifaPorKm());
 		
 		/*  Utilizando el que tiene herencia
 		 * _GestionProveedor gp = prov;
@@ -542,7 +542,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public void modificarSeguro(DTO_Seguro seguro) throws RemoteException{
 		Proveedor prov = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
 		GestionProveedor gp = new GestionProveedor(prov);
-		gp.modificarSeguro(seguro);
+		gp.modificarSeguro(seguro.getId(), seguro.getTipoSeguro(), seguro.getDescripcion(), seguro.getTarifa(), seguro.getTarifaPorKm());
 		/*
 		 * Usando el que tiene herencia 
 		 * _GestionProveedor gp = ProveedorDao.getInstancia.getById(seguro.getIdProveedor());
@@ -672,66 +672,82 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public void altaServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		Proveedor prov = ProveedorDao.getInstancia().getById(servicioSeguridad.getIdProveedor());
+		
+		GestionProveedor gp = new GestionProveedor(prov);
+		gp.altaServicioSeguridad(servicioSeguridad.getDescripcion(), servicioSeguridad.getTarifa());
 		
 	}
 
 	@Override
 	public void modificarServicioSeguridad(
 			DTO_ServicioSeguridad servicioSeguridad) throws RemoteException {
-		// TODO Auto-generated method stub
+		Proveedor prov = ProveedorDao.getInstancia().getById(servicioSeguridad.getIdProveedor());
+		
+		GestionProveedor gp = new GestionProveedor(prov);
+		gp.modificarServicioSeguridad(servicioSeguridad.getId(),servicioSeguridad.getDescripcion(), servicioSeguridad.getTarifa());
 		
 	}
+	
 
 	@Override
-	public void altaTallerMecanico(DTO_Proveedor taller) throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void modificarTallerMecanico(DTO_Proveedor taller)
+	public void altaTarifasCarrier(DTO_TarifasCarrier tarifasCarrier)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		Proveedor prov = ProveedorDao.getInstancia().getById(tarifasCarrier.getIdProveedor());
+		
+		GestionProveedor gp = new GestionProveedor(prov);
+		gp.altaTarifasCarrier(tarifasCarrier.getComentarios(), tarifasCarrier.getPrioridad(),
+								tarifasCarrier.getPrecioKMExtra(), tarifasCarrier.getTarifa());
 		
 	}
 
 	@Override
-	public void altaCarrier(DTO_TarifasCarrier carrier) throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void modificarCarrier(DTO_TarifasCarrier carrier)
+	public void modificarTarifasCarrier(DTO_TarifasCarrier tarifasCarrier)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		Proveedor prov = ProveedorDao.getInstancia().getById(tarifasCarrier.getIdProveedor());
+		
+		GestionProveedor gp = new GestionProveedor(prov);
+		gp.modificarTarifasCarrier(tarifasCarrier.getId(), tarifasCarrier.getComentarios(), tarifasCarrier.getPrioridad(),
+								tarifasCarrier.getPrecioKMExtra(), tarifasCarrier.getTarifa());
 		
 	}
 
 	@Override
 	public void bajaProveedor(Integer idProveedor) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		Proveedor prov = ProveedorDao.getInstancia().getById(idProveedor);
+		GestionProveedor gp = new GestionProveedor(prov);
+		gp.remove();
 	}
 
 	@Override
 	public List<DTO_Seguro> getSeguros() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		List<DTO_Seguro> listadto= new ArrayList<DTO_Seguro>();
+		List<Seguro> lista = SeguroDao.getInstancia().getAll();
+		for(Seguro seg: lista){
+			listadto.add(seg.toDTO());
+		}
+		return listadto;
 	}
 
 	@Override
 	public List<DTO_TarifasCarrier> getTarifasCarriers() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		List<DTO_TarifasCarrier> listadto= new ArrayList<DTO_TarifasCarrier>();
+		List<TarifasCarrier> lista = TarifasCarrierDao.getInstancia().getAll();
+		for(TarifasCarrier tc: lista){
+			listadto.add(tc.toDTO());
+		}
+		return listadto;
 	}
 
 	@Override
 	public List<DTO_ServicioSeguridad> getServicioSeguridad()
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		List<DTO_ServicioSeguridad> listadto= new ArrayList<DTO_ServicioSeguridad>();
+		List<ServicioSeguridad> lista = ServicioSeguridadDao.getInstancia().getAll();
+		for(ServicioSeguridad ss: lista){
+			listadto.add(ss.toDTO());
+		}
+		return listadto;
 	}
 
 	@Override
@@ -789,4 +805,26 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		else
 			return null;
 	}
+
+	@Override
+	public List<DTO_Proveedor> getProveedores() throws RemoteException {
+		List<DTO_Proveedor> lista = new ArrayList<DTO_Proveedor>();
+		List<Proveedor> listp = ProveedorDao.getInstancia().getAll();
+		if(listp!=null){
+			for(Proveedor p: listp){
+				lista.add(p.toDTO());
+			}
+			return lista;
+		}
+		else
+			return null;
+	}
+
+	@Override
+	public DTO_Proveedor getProveedor(Integer idProveedor)
+			throws RemoteException {
+		Proveedor prov = ProveedorDao.getInstancia().getById(idProveedor);
+		return prov.toDTO();
+	}
+
 }

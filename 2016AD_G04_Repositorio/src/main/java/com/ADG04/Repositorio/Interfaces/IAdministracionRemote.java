@@ -39,13 +39,12 @@ public interface IAdministracionRemote {
 	public void altaProveedor(DTO_Proveedor prov) throws RemoteException;
 	public void altaSeguro(DTO_Seguro seguro) throws RemoteException;
 	public void modificarSeguro(DTO_Seguro seguro) throws RemoteException;
+	public void altaTarifasCarrier(DTO_TarifasCarrier tarifasCarrier) throws RemoteException;
+	public void modificarTarifasCarrier(DTO_TarifasCarrier tarifasCarrier) throws RemoteException;
 	public void altaServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad) throws RemoteException;
 	public void modificarServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad) throws RemoteException;
-	public void altaTallerMecanico(DTO_Proveedor taller) throws RemoteException;
-	public void modificarTallerMecanico(DTO_Proveedor taller) throws RemoteException;
-	public void altaCarrier(DTO_TarifasCarrier carrier) throws RemoteException;
-	public void modificarCarrier(DTO_TarifasCarrier carrier) throws RemoteException;
 	public void bajaProveedor(Integer idProveedor) throws RemoteException;
+	public DTO_Proveedor getProveedor(Integer idProveedor) throws RemoteException;
 	public List<DTO_Seguro> getSeguros() throws RemoteException;
 	public List<DTO_TarifasCarrier> getTarifasCarriers() throws RemoteException;
 	public List<DTO_ServicioSeguridad> getServicioSeguridad() throws RemoteException;
@@ -53,4 +52,5 @@ public interface IAdministracionRemote {
 	public List<DTO_Proveedor> getAseguradoras() throws RemoteException;
 	public List<DTO_Proveedor> getEmpresasServiciosSeguridad() throws RemoteException;
 	public List<DTO_Proveedor> getCarriers() throws RemoteException;
+	public List<DTO_Proveedor> getProveedores() throws RemoteException;
 }

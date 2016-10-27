@@ -33,6 +33,28 @@ public class TarifasCarrier implements java.io.Serializable{
 		
 	}
 	
+	public TarifasCarrier(String comentarios, String prioridad,
+			float precioKMExtra, float tarifa, Proveedor proveedor) {
+		super();
+		this.comentarios = comentarios;
+		this.prioridad = prioridad;
+		this.precioKMExtra = precioKMExtra;
+		this.tarifa = tarifa;
+		this.proveedor = proveedor;
+	}
+
+	public TarifasCarrier(int idTarifasCarrier, String comentarios,
+			String prioridad, float precioKMExtra, float tarifa,
+			Proveedor proveedor) {
+		super();
+		this.idTarifasCarrier = idTarifasCarrier;
+		this.comentarios = comentarios;
+		this.prioridad = prioridad;
+		this.precioKMExtra = precioKMExtra;
+		this.tarifa = tarifa;
+		this.proveedor = proveedor;
+	}
+
 	public String getComentarios() {
 		return comentarios;
 	}

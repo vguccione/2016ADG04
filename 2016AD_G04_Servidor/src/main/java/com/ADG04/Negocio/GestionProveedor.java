@@ -32,19 +32,19 @@ public class GestionProveedor {
 	private EntityManagerFactory factory;
 	private Proveedor proveedor;
 	private Seguro seguro;
-	private TarifasCarrier carrier;
+	private TarifasCarrier tarifaCarrier;
 	private ServicioSeguridad ss;
 	
 	public GestionProveedor(Proveedor prov){
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
 		proveedor = prov;
 		seguro = new Seguro();
-		carrier = new TarifasCarrier();
+		tarifaCarrier = new TarifasCarrier();
 		ss = new ServicioSeguridad();
 	}
 	
 	
-	public void altaProveedor(){
+	public void saveOrUpdate() {
 				
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -55,13 +55,9 @@ public class GestionProveedor {
 		
 	}
 	
-	public void altaSeguro(DTO_Seguro dtoSeguro) {
+	public void altaSeguro(String tipoSeguro, String descripcion, float tarifa,float tarifaPorKm) {
 		
-		//this.proveedor = ProveedorDao.getInstancia().getById(dtoSeguro.getIdProveedor());
-		seguro.setTarifa(dtoSeguro.getTarifa());
-		seguro.setTarifaPorKm(dtoSeguro.getTarifaPorKm());
-		seguro.setDescripcion(dtoSeguro.getDescripcion());
-		seguro.setProveedor(proveedor);
+		seguro = new Seguro(tipoSeguro, descripcion, tarifa,tarifaPorKm, proveedor);
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -70,30 +66,22 @@ public class GestionProveedor {
 		tx.commit();
 	}
 	
-	public void altaTarifasCarrier(DTO_TarifasCarrier dtoCarrier) {	
-		//proveedor = ProveedorDao.getInstancia().getById(dtoCarrier.getIdProveedor());
-		carrier.setTarifa(dtoCarrier.getTarifa());
-		carrier.setComentarios(dtoCarrier.getComentarios());
-		carrier.setPrecioKMExtra(dtoCarrier.getPrecioKMExtra());
-		carrier.setPrioridad(dtoCarrier.getPrioridad());
-		carrier.setProveedor(proveedor);
+	public void altaTarifasCarrier(String comentarios, String prioridad,float precioKMExtra, float tarifa){	
+	
+		tarifaCarrier =  new TarifasCarrier(comentarios, prioridad, precioKMExtra, tarifa, proveedor);
 		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
-		TarifasCarrierDao.getInstancia().persist(carrier);
+		TarifasCarrierDao.getInstancia().persist(tarifaCarrier);
 		tx.commit();
 	}
 	
 		
-	public void altaServicioSeguridad(DTO_ServicioSeguridad seg) {
+	public void altaServicioSeguridad(String descripcion, float tarifa) {
 		
-		//ServicioSeguridad ss = new ServicioSeguridad();
-		//Proveedor proveedor = ProveedorDao.getInstancia().getById(seg.getIdProveedor());
-		ss.setTarifa(seg.getTarifa());
-		ss.setDescripcion(seg.getDescripcion());
-		ss.setProveedor(proveedor);
+		ss = new ServicioSeguridad(descripcion, tarifa, proveedor);
 		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -105,14 +93,8 @@ public class GestionProveedor {
 
 	
 	
-	public void modificarSeguro(DTO_Seguro dtoseguro){
-		//Seguro s = new Seguro();
-		//Proveedor proveedor = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
-		seguro.setTarifa(dtoseguro.getTarifa());
-		seguro.setTarifaPorKm(dtoseguro.getTarifaPorKm());
-		seguro.setDescripcion(dtoseguro.getDescripcion());
-		seguro.setProveedor(proveedor);
-		seguro.setIdSeguro(dtoseguro.getId());
+	public void modificarSeguro(int idSeguro, String tipoSeguro, String descripcion, float tarifa,float tarifaPorKm){
+		Seguro seguro = new Seguro(idSeguro, tipoSeguro, descripcion, tarifa,tarifaPorKm, proveedor);
 
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -123,36 +105,23 @@ public class GestionProveedor {
 	}
 
 	
-	public void modificarTarifasCarrier(DTO_TarifasCarrier dtocarrier) {
+	public void modificarTarifasCarrier(int idTarifaCarrier, String comentarios, String prioridad,float precioKMExtra, float tarifa) {
 		
-		//Carrier c = new Carrier();
-		//Proveedor proveedor = ProveedorDao.getInstancia().getById(carrier.getIdProveedor());
-		carrier.setTarifa(dtocarrier.getTarifa());
-		carrier.setComentarios(dtocarrier.getComentarios());
-		carrier.setPrecioKMExtra(dtocarrier.getPrecioKMExtra());
-		carrier.setPrioridad(dtocarrier.getPrioridad());
-		carrier.setProveedor(proveedor);
-		carrier.setIdTarifasCarrier(dtocarrier.getId());
-		
+		tarifaCarrier = new TarifasCarrier(idTarifaCarrier, comentarios, prioridad, precioKMExtra,tarifa, proveedor);		
 		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
-		TarifasCarrierDao.getInstancia().saveOrUpdate(carrier);
+		TarifasCarrierDao.getInstancia().saveOrUpdate(tarifaCarrier);
 		tx.commit();
 	}
 	
 	
 	
-	public void modificarServicioSeguridad(DTO_ServicioSeguridad seg) {
+	public void modificarServicioSeguridad(int idServicioSeguridad, String descripcion, float tarifa) {
 		
-		//ServicioSeguridad ss = new ServicioSeguridad();
-		//Proveedor proveedor = ProveedorDao.getInstancia().getById(seg.getIdProveedor());
-		ss.setTarifa(seg.getTarifa());
-		ss.setDescripcion(seg.getDescripcion());
-		ss.setProveedor(proveedor);
-		ss.setIdServicioSeguridad(seg.getId());
+		ss = new ServicioSeguridad(idServicioSeguridad, descripcion, tarifa, proveedor);
 		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -163,7 +132,7 @@ public class GestionProveedor {
 	}
 
 	
-	public void bajaProveedor(Integer id) {
+	public void remove() {
 		//Proveedor p = ProveedorDao.getInstancia().getById(id);
 		if (proveedor != null){
 			ProveedorDao.getInstancia().remove(proveedor);

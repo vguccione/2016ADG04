@@ -33,6 +33,31 @@ public class Seguro implements java.io.Serializable{
 	public Seguro() {
 		
 	}
+	
+	public Seguro(int idSeguro, String tipoSeguro, String descripcion,
+			float tarifa, float tarifaPorKm, Proveedor proveedor) {
+		super();
+		this.idSeguro = idSeguro;
+		this.tipoSeguro = tipoSeguro;
+		this.descripcion = descripcion;
+		this.tarifa = tarifa;
+		this.tarifaPorKm = tarifaPorKm;
+		this.proveedor = proveedor;
+	}
+
+
+
+	public Seguro(String tipoSeguro, String descripcion, float tarifa,
+			float tarifaPorKm, Proveedor proveedor) {
+		super();
+		this.tipoSeguro = tipoSeguro;
+		this.descripcion = descripcion;
+		this.tarifa = tarifa;
+		this.tarifaPorKm = tarifaPorKm;
+		this.proveedor = proveedor;
+	}
+
+
 
 	public int getIdSeguro() {
 		return idSeguro;

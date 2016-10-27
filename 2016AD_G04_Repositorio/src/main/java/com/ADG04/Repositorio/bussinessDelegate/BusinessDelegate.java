@@ -144,16 +144,16 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		this.businessService.modificarServicioSeguridad(servicioSeguridad);
 		
 	}
-
-
-	public void altaCarrier(DTO_TarifasCarrier carrier) throws RemoteException {
-		this.businessService.altaCarrier(carrier);
+	
+	public void altaTarifasCarrier(DTO_TarifasCarrier tarifasCarrier)
+			throws RemoteException {
+		this.businessService.altaTarifasCarrier(tarifasCarrier);
 		
 	}
 
 
-	public void modificarCarrier(DTO_TarifasCarrier carrier) throws RemoteException {
-		this.businessService.modificarCarrier(carrier);
+	public void modificarTarifasCarrier(DTO_TarifasCarrier tarifasCarrier) throws RemoteException {
+		this.businessService.modificarTarifasCarrier(tarifasCarrier);
 		
 	}
 
@@ -548,6 +548,16 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public void modificarTallerMecanico(DTO_Proveedor taller)
 			throws RemoteException {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public List<DTO_Proveedor> getProveedores() throws RemoteException {
+		// TODO Auto-generated method stub
+		return this.businessService.getProveedores();
+	}
+
+	public DTO_Proveedor getProveedor(Integer idProveedor) throws RemoteException {
+		return this.businessService.getProveedor(idProveedor);
 		
 	}
 	

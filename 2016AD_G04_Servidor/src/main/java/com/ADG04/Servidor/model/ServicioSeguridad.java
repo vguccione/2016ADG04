@@ -26,8 +26,30 @@ public class ServicioSeguridad implements java.io.Serializable{
     public ServicioSeguridad() {
             
     }
+    
 
-    public String getDescripcion() {
+    public ServicioSeguridad(String descripcion, float tarifa,
+			Proveedor proveedor) {
+		super();
+		this.descripcion = descripcion;
+		this.tarifa = tarifa;
+		this.proveedor = proveedor;
+	}
+
+
+
+	public ServicioSeguridad(int idServicioSeguridad, String descripcion,
+			float tarifa, Proveedor proveedor) {
+		super();
+		this.idServicioSeguridad = idServicioSeguridad;
+		this.descripcion = descripcion;
+		this.tarifa = tarifa;
+		this.proveedor = proveedor;
+	}
+
+
+
+	public String getDescripcion() {
             return descripcion;
     }
 

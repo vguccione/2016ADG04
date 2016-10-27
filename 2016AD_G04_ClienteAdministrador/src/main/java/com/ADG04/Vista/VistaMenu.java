@@ -14,6 +14,9 @@ import com.ADG04.Vista.Listados.ListadoCarriers;
 import com.ADG04.Vista.Listados.ListadoCliente;
 import com.ADG04.Vista.Listados.ListadoEmpresa;
 import com.ADG04.Vista.Listados.ListadoEmpresaSeguridad;
+import com.ADG04.Vista.Listados.ListadoProveedores;
+import com.ADG04.Vista.Listados.ListadoSeguros;
+import com.ADG04.Vista.Listados.ListadoServicioSeguridad;
 import com.ADG04.Vista.Listados.ListadoTalleres;
 import com.ADG04.bean.Administracion.DTO_Rol;
 
@@ -954,9 +957,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							}
 							JMenuItem14.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoProveedores inst = new ListadoProveedores();
+									ListadoProveedores inst = new ListadoProveedores();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -1024,9 +1027,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem20.setText("Servicios Seguridad");
 							JMenuItem20.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoServicioSeguridad inst = new ListadoServicioSeguridad();
+									ListadoServicioSeguridad inst = new ListadoServicioSeguridad();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -1036,9 +1039,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem21.setText("Seguros");
 							JMenuItem21.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-								/*	ListadoSeguros inst = new ListadoSeguros();
+									ListadoSeguros inst = new ListadoSeguros();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

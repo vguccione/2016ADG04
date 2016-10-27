@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+
 @Entity
 @Table(name = "PlanMantenimiento")
 public class PlanMantenimiento implements java.io.Serializable {
@@ -92,5 +94,12 @@ public class PlanMantenimiento implements java.io.Serializable {
 			this.tareaMantenimientos = new ArrayList<TareaMantenimiento>();
 		
 		this.tareaMantenimientos.add(tarea);
+	}
+
+	public DTO_PlanMantenimiento toDTO() {
+		DTO_PlanMantenimiento dto = new DTO_PlanMantenimiento();
+		dto.setComentarios(this.getComentarios());
+		dto.setDescripcion(this.getDescripcion());
+		return dto;
 	}
 }

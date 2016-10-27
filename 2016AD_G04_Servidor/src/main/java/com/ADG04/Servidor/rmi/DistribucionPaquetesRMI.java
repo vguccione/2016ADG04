@@ -15,6 +15,11 @@ import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
+import com.ADG04.Servidor.dao.FacturaDao;
+import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.dao.RolDao;
+import com.ADG04.Servidor.dao.TareaMantenimientoDao;
+import com.ADG04.Servidor.dao.TareaMantenimientoRealizadaDao;
 import com.ADG04.Servidor.dao.TarifasCarrierDao;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
@@ -22,7 +27,13 @@ import com.ADG04.Servidor.dao.SeguroDao;
 import com.ADG04.Servidor.dao.ServicioSeguridadDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.Factura;
+import com.ADG04.Servidor.model.PlanMantenimiento;
+import com.ADG04.Servidor.model.Rol;
+import com.ADG04.Servidor.model.Sucursal;
+import com.ADG04.Servidor.model.TareaMantenimientoRealizada;
 import com.ADG04.Servidor.model.TarifasCarrier;
 import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Direccion;
@@ -32,6 +43,7 @@ import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.Seguro;
 import com.ADG04.Servidor.model.ServicioSeguridad;
 import com.ADG04.Servidor.model.Proveedor;
+import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Rol;
@@ -54,6 +66,7 @@ import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
@@ -84,10 +97,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 
-	public DTO_Usuario getUsuario(Integer idUsuario) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
@@ -269,13 +278,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	
 	public DTO_ClienteParticular getClienteParticular(Integer idCliente)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
@@ -551,10 +553,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		 * */
 	}
 	
-	public DTO_Usuario login(String usuario, String password) throws RemoteException{
-		return GestionAdministracion.getInstancia().login(usuario, password);
-	}
-	
 	public Integer gestionarEnvioEncomienda(int idEncomienda){
 		
 		return GestionEncomienda.getInstancia().asignarEnvio(idEncomienda, null);		
@@ -601,11 +599,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 
-	@Override
-	public List<String> buscarRolesUsuario(int usuario)
-			throws RemoteException {
-		return GestionAdministracion.getInstancia().buscarRolesUsuario(String.valueOf(usuario));
-	}
 	
 	public Integer altaVehiculo(DTO_Vehiculo v) throws RemoteException {
 		
@@ -653,8 +646,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	@Override
 	public List<DTO_Vehiculo> listarVehiculos() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Vehiculo> lista = VehiculoDao.getInstancia().getAll();
+		List<DTO_Vehiculo> listadto = new ArrayList<DTO_Vehiculo>();
+		for(Vehiculo v:lista){
+			listadto.add(v.toDTO());
+		}
+		return listadto;
 	}
 
 
@@ -825,6 +822,149 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		Proveedor prov = ProveedorDao.getInstancia().getById(idProveedor);
 		return prov.toDTO();
+	}
+
+	@Override
+	public List<DTO_Usuario> getUsuarios() throws RemoteException {
+		List<DTO_Usuario> lista = new ArrayList<DTO_Usuario>();
+		List<Usuario> listu = UsuarioDao.getInstancia().getAll();
+		if(listu!=null){
+			for(Usuario u: listu){
+				lista.add(u.toDTO());
+			}
+			return lista;
+		}
+		else
+			return null;
+	}
+	
+	@Override
+	public DTO_Usuario getUsuario(Integer idUsuario) {
+		return UsuarioDao.getInstancia().getById(idUsuario).toDTO();
+	}
+	
+	 @Override
+	public DTO_Usuario getUsuarioPorDni(String dni) {
+		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
+	}
+	
+	 @Override
+	 public DTO_Usuario login(String usuario, String password){
+		 Usuario u = UsuarioDao.getInstancia().buscarUsuario(usuario);
+		 if (u.getPassword().equals(password))
+			 return u.toDTO();
+		 else
+			 return null;
+	 }
+	 
+	 @Override
+	 public List<DTO_Usuario> listarEmpleados(){
+		 List<Usuario> empleados = UsuarioDao.getInstancia().getAll();
+		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
+	    for(Usuario empleado : empleados){
+	    	empleadosDTO.add(empleado.toDTO());	    		
+	    }
+		return empleadosDTO;
+	 }
+	 
+	 @Override
+	 public List<DTO_Usuario> listarEmpleados(Integer idSucursal){
+		 List<Usuario> empleados = UsuarioDao.getInstancia().listarEmpleados(idSucursal);
+		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
+	    for(Usuario empleado : empleados){
+	    	empleadosDTO.add(empleado.toDTO());	    		
+	    }
+		return empleadosDTO;
+	 }
+	 
+	 @Override
+	 public List<DTO_Rol> listarRoles(){
+		 List<Rol> lista = RolDao.getInstancia().getAll();
+		 List<DTO_Rol> listaDTO = new ArrayList<DTO_Rol>();
+         for(Rol p: lista)
+         	listaDTO.add(p.toDTO());
+         
+		 return listaDTO;
+	 }
+	 
+	 @Override
+	 public List<String> buscarRolesUsuario(int usuario){
+		 List<Rol> roles = RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario));
+		 List<String> dtoRoles = new ArrayList<String>();
+	    	for(Rol rol : roles){
+	    		DTO_Rol dto = new DTO_Rol();
+	    		dto.setId(rol.getIdRol());
+	    		dto.setdescripcion(rol.getDescripcion());
+	    		dtoRoles.add(dto.getdescripcion());	    		
+	    	}
+		return dtoRoles;
+	 }
+
+
+	@Override
+	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_PlanMantenimiento> listarPlanesMantenimiento()
+			throws RemoteException {
+		 List<DTO_PlanMantenimiento> listaDTO = new ArrayList<DTO_PlanMantenimiento>();
+		 List<PlanMantenimiento> lista = PlanMantenimientoDao.getInstancia().getAll();
+         for(PlanMantenimiento p: lista)
+         	listaDTO.add(p.toDTO());
+         
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Sucursal> listarSucursales() throws RemoteException {
+		List<DTO_Sucursal> listaDTO = new ArrayList<DTO_Sucursal>();
+		List<Sucursal> lista = SucursalDao.getInstancia().getAll();
+        for(Sucursal suc: lista)
+        	listaDTO.add(suc.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Factura> listarFacturasCliente() throws RemoteException {
+		List<DTO_Factura> listaDTO = new ArrayList<DTO_Factura>();
+		List<Factura> lista = FacturaDao.getInstancia().getAll();
+        for(Factura fac: lista)
+        	listaDTO.add(fac.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Factura> listarFacturasClientePendientes()
+			throws RemoteException {
+		List<DTO_Factura> listaDTO = new ArrayList<DTO_Factura>();
+		List<Factura> lista = FacturaDao.getInstancia().listarFacturasClientePendientes();
+        for(Factura fac: lista)
+        	listaDTO.add(fac.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_TareaMantenimientoRealizada> listarTareaMantenimientoRealizada()
+			throws RemoteException {
+		List<DTO_TareaMantenimientoRealizada> listaDTO = new ArrayList<DTO_TareaMantenimientoRealizada>();
+		List<TareaMantenimientoRealizada> lista = TareaMantenimientoRealizadaDao.getInstancia().getAll();
+        for(TareaMantenimientoRealizada tarea: lista)
+        	listaDTO.add(tarea.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public DTO_TareaMantenimiento getTareaMantenimiento(
+			Integer idTareaMantenimiento) throws RemoteException {
+		return TareaMantenimientoDao.getInstancia().getById(idTareaMantenimiento).toDTO();
 	}
 
 }

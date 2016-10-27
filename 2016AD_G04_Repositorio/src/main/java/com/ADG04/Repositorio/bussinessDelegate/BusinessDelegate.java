@@ -29,6 +29,8 @@ import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
@@ -537,7 +539,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	}
 	
 	public List<DTO_Vehiculo> listarVehiculos() throws RemoteException {
-		return null;
+		return this.businessService.listarVehiculos();
 	}
 
 	public void altaTallerMecanico(DTO_Proveedor taller) throws RemoteException {
@@ -559,6 +561,57 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public DTO_Proveedor getProveedor(Integer idProveedor) throws RemoteException {
 		return this.businessService.getProveedor(idProveedor);
 		
+	}
+
+	public List<DTO_Usuario> getUsuarios() throws RemoteException {
+		return this.businessService.getUsuarios();
+	}
+
+	public DTO_Usuario getUsuarioPorDni(String dni) throws RemoteException {
+		return this.businessService.getUsuarioPorDni(dni);
+	}
+
+	public List<DTO_Usuario> listarEmpleados() throws RemoteException {
+		return this.businessService.listarEmpleados();
+	}
+
+	public List<DTO_Rol> listarRoles() throws RemoteException {
+		return this.businessService.listarRoles();
+	}
+
+	public List<DTO_Usuario> listarEmpleados(Integer idSucursal)
+			throws RemoteException {
+		return this.businessService.listarEmpleados();
+	}
+
+	public List<DTO_PlanMantenimiento> listarPlanesMantenimiento() throws RemoteException {
+		return this.businessService.listarPlanesMantenimiento();
+	}
+
+	public List<DTO_Sucursal> listarSucursales() throws RemoteException {
+		return this.businessService.listarSucursales();
+	}
+
+	public DTO_Usuario getUsuarioById(Integer idGerente) throws RemoteException {
+		return this.businessService.getUsuario(idGerente);
+	}
+
+	public List<DTO_Factura> listarFacturasCliente() throws RemoteException {
+		return this.businessService.listarFacturasCliente();
+	}
+
+	public List<DTO_Factura> listarFacturasClientePendientes()
+			throws RemoteException {
+		return this.businessService.listarFacturasClientePendientes();
+	}
+
+	public List<DTO_TareaMantenimientoRealizada> listarTareaMantenimientoRealizada() throws RemoteException {
+		return this.businessService.listarTareaMantenimientoRealizada();
+	}
+
+	public DTO_TareaMantenimiento getTareaMantenimiento(
+			Integer idTareaMantenimiento) throws RemoteException {
+		return this.businessService.getTareaMantenimiento(idTareaMantenimiento);
 	}
 	
 

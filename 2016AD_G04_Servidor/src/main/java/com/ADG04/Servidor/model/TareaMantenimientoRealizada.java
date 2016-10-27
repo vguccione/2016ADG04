@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
+
 @Entity
 @Table(name = "TareaMantenimientoRealizada")
 public class TareaMantenimientoRealizada implements java.io.Serializable {
@@ -99,12 +101,26 @@ public class TareaMantenimientoRealizada implements java.io.Serializable {
 		this.fechaRealizada = fechaRealizada;
 	}
 	public float getCantidadKilometros() {
-		
-		return this.cantidadKilometros;
+		if(this.cantidadKilometros==null){
+			return 0;
+		}
+		else
+			return this.cantidadKilometros;
 	}
 
 	public void setCantidadKilometros(float cantidadKilometros) {
 		this.cantidadKilometros = cantidadKilometros;
+	}
+
+	public DTO_TareaMantenimientoRealizada toDTO() {
+		DTO_TareaMantenimientoRealizada dto = new DTO_TareaMantenimientoRealizada();
+		dto.setCantidadKilometros(this.getCantidadKilometros());
+		dto.setFecha(this.getFechaRealizada());
+		dto.setId(this.getIdTareaMantenimientoRealizada());
+		dto.setIdProveedor(this.getProveedor().getIdProveedor());
+		dto.setIdVehiculo(this.getVehiculo().getIdVehiculo());
+		dto.setIdTareaMantenimiento(this.getTareaMantenimiento().getIdTareaMantenimiento());
+		return dto;
 	}
 
 }

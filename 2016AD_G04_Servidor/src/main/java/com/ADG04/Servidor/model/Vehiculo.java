@@ -287,6 +287,9 @@ public class Vehiculo implements java.io.Serializable {
 
 	public DTO_Vehiculo toDTO() {
 		DTO_Vehiculo v = new DTO_Vehiculo();
+		v.setEstado(this.estado);
+		v.setSucursal(this.getSucursal().toDTO());
+		v.setId(this.getIdVehiculo());
 		v.setAlto(alto);
 		v.setAncho(ancho);
 		v.setKmsRecorridos(this.getKmRecorridos());
@@ -295,9 +298,14 @@ public class Vehiculo implements java.io.Serializable {
 		v.setModelo(modelo);
 		v.setPatente(patente);
 		v.setPeso(peso);
+		if(refrigerado==null)
+			refrigerado = false;
+		else
+			refrigerado=true;
 		v.setRefrigerado(refrigerado);
 		v.setTara(tara);
 		v.setVolumen(volumen);
+		v.setFechaIngreso(this.getFechaIngreso());
 		return v;
 	}
 

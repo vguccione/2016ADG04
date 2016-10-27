@@ -43,7 +43,7 @@ public class ListadoTarifasCarriers extends javax.swing.JFrame {
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 10");
+			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 
 			getContentPane().setLayout(null);
 			{

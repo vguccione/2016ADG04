@@ -22,6 +22,7 @@ import com.ADG04.Servidor.dao.SeguroDao;
 import com.ADG04.Servidor.dao.ServicioSeguridadDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.TarifasCarrier;
 import com.ADG04.Servidor.model.Coordenada;
 import com.ADG04.Servidor.model.Direccion;
@@ -31,6 +32,7 @@ import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.Seguro;
 import com.ADG04.Servidor.model.ServicioSeguridad;
 import com.ADG04.Servidor.model.Proveedor;
+import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
@@ -606,14 +608,23 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public Integer altaVehiculo(DTO_Vehiculo v) throws RemoteException {
-		return new GestionVehiculo().altaVehiculo(v);
+		
+		Vehiculo veh = new Vehiculo(v.getEstado(), v.getLargo(), v.getAlto(), v.getAncho(), v.getPeso(), v.getVolumen(), 
+				v.getRefrigerado(), v.getCondicionTransporte(), v.getKmsRecorridos(), v.getMarca(), v.getModelo(), v.getPatente(), 
+				v.getAnio(), v.getTara(),v.getFechaIngreso());
+		
+		GestionVehiculo gVehiculo = new GestionVehiculo(veh);
+		gVehiculo.setSucursal(SucursalDao.getInstancia().getById(v.getSucursal().getId()));
+		
+		return (Integer)gVehiculo.saveOrUpdate();
 	}
 
 	@Override
 	public void altaTareaMantenimiento(DTO_TareasPorKilometro tareaXKM, Integer idVehiculo)
 			throws RemoteException, Exception {
 		try {
-			new GestionVehiculo(idVehiculo).altaTareaMantenimiento(tareaXKM);
+			new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo))
+			.altaTareaMantenimientoPorKm(tareaXKM.getTarea(), tareaXKM.getCantidadKilometros());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -624,20 +635,20 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public Integer altaPlanMantenimiento(DTO_PlanMantenimiento pm, Integer idVehiculo)	throws RemoteException, Exception {
 				
-		GestionVehiculo v = new GestionVehiculo(idVehiculo);
-		return v.altaPlanMantenimiento(pm);
+		GestionVehiculo v = new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo));
+		return v.altaPlanMantenimiento(pm.getDescripcion(), pm.getComentarios());
 	}
 
 	@Override
 	public Integer altaTareaMantenimiento(DTO_TareasPorTiempo tareaXTiempo, Integer idVehiculo)
 			throws RemoteException, Exception {
-		return new GestionVehiculo(idVehiculo).altaTareaMantenimiento(tareaXTiempo);
+		return new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).altaTareaMantenimientoPorTiempo(tareaXTiempo.getTarea(), tareaXTiempo.getCantidadDias());
 	}
 
 	@Override
 	public List<DTO_TareaMantenimiento> getTareasVencidas(int idVehiculo)
 			throws RemoteException {
-		return new GestionVehiculo(idVehiculo).getTareasVencidas2();
+		return new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).getTareasVencidas2();
 	}
 
 	@Override

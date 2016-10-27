@@ -96,7 +96,7 @@ public class Vehiculo implements java.io.Serializable {
 			float peso, float volumen, Boolean refrigerado,
 			String condicionTransporte, float kmRecorridos, String marca,
 			String modelo, String patente, String anio, float tara,
-			List<CondicionesEspecialesVehiculo> condicionesEspecialesVehiculos,
+			//List<CondicionesEspecialesVehiculo> condicionesEspecialesVehiculos,
 			Date fechaIngreso) {
 		super();
 		this.estado = estado;
@@ -113,7 +113,7 @@ public class Vehiculo implements java.io.Serializable {
 		this.patente = patente;
 		this.anio = anio;
 		this.tara = tara;
-		this.condicionesEspecialesVehiculos = condicionesEspecialesVehiculos;
+		//this.condicionesEspecialesVehiculos = condicionesEspecialesVehiculos;
 		FechaIngreso = fechaIngreso;
 	}
 

@@ -759,7 +759,8 @@ public class GestionEncomienda {
 	
 	
 	public boolean hayVehiculosDisponibles(Encomienda encomienda){
-		List<Vehiculo> vehiculosDisponibles = VehiculoDao.getInstancia().listarVehiculosDisponibles(encomienda.getSucursalOrigen().getIdSucursal(),  encomienda.getVolumen(), encomienda.getPeso());
+		
+		List<Vehiculo> vehiculosDisponibles = this.listarVehiculosDisponibles(encomienda.getSucursalOrigen().getIdSucursal(),  encomienda.getVolumen(), encomienda.getPeso());
 		boolean pesoOK = false;
 		boolean volumenOK = false;
 		
@@ -883,7 +884,7 @@ public class GestionEncomienda {
 				//Es un nuevo envio por que no se encontro camion disponible
 				if (nuevoEnvio){
 					//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<>Pendiente)
-					List<Vehiculo> vehiculosDisponibles = VehiculoDao.getInstancia().listarVehiculosDisponibles(e.getSucursalOrigen().getIdSucursal(),  e.getVolumen(), e.getPeso());
+					List<Vehiculo> vehiculosDisponibles = this.listarVehiculosDisponibles(e.getSucursalOrigen().getIdSucursal(),  e.getVolumen(), e.getPeso());
 					boolean pesoNuevoOK = false;
 					boolean volumenNuevoOK = false;
 					
@@ -1003,4 +1004,19 @@ public class GestionEncomienda {
 		//TODO: hacer
 		return EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
 	}
+	
+	private List<Vehiculo> listarVehiculosDisponibles(int idSucursalOrigen, float volumen, float peso){
+
+		List<Vehiculo> vehiculos = VehiculoDao.getInstancia().getPorVolumenPesoSucursalTareasRealizadas(idSucursalOrigen, peso, volumen);
+				
+		for(Vehiculo vehiculo: vehiculos){
+			GestionVehiculo gVehiculo = new GestionVehiculo(vehiculo);
+			if(gVehiculo.estaUtilizable() && !gVehiculo.estaAsignado() && !gVehiculo.tieneTareasVencidas()){
+				vehiculos.add(gVehiculo.getVehiculo());
+			}
+		}
+		return vehiculos;
+		
+	}
+
 }

@@ -8,14 +8,19 @@ import java.util.List;
 
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
 import com.ADG04.bean.Administracion.DTO_Rol;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
+import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 
@@ -194,6 +199,95 @@ public class Controlador {
 		catch(RemoteException e) {
 	       	 System.out.println(e);
 	            System.out.println("Error al listar Proveedores");
+	      }   
+	    return null;
+	}
+
+	public List<DTO_Usuario> listarUsuarios() {
+		try{
+			return bd.getUsuarios();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Usuarios");
+	      }   
+	    return null;
+	}
+
+	public List<DTO_PlanMantenimiento> listarPlanMantenimiento() {
+		try{
+			return bd.listarPlanesMantenimiento();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Planes de Mantenimiento");
+	      }   
+	    return null;
+	}
+
+	public List<DTO_Sucursal> listarSucursales() {
+		try{
+			return bd.listarSucursales();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Sucursales");
+	      }   
+	    return null;
+	}
+
+	public DTO_Usuario getUsuarioById(Integer idGerente) {
+		try{
+			return bd.getUsuarioById(idGerente);
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al buscar Usuario");
+	      }   
+	    return null;
+	}
+
+	public List<DTO_Factura> listarFacturasCliente() {
+		try{
+			return bd.listarFacturasCliente();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Facturas");
+	      }   
+	    return null;
+	}
+
+	public List<DTO_Factura> listarFacturasClientePendientes() {
+		try{
+			return bd.listarFacturasClientePendientes();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Facturas");
+	      }   
+	    return null;
+	}
+
+	public List<DTO_TareaMantenimientoRealizada> listarTareaMantenimientoRealizada() {
+		try{
+			return bd.listarTareaMantenimientoRealizada();
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar Tareas Realizadas");
+	      }   
+	    return null;
+	}
+
+	public DTO_TareaMantenimiento getTareaMantenimiento(
+			Integer idTareaMantenimiento) {
+		try{
+			return bd.getTareaMantenimiento(idTareaMantenimiento);
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al buscar Tarea de Mantenimiento");
 	      }   
 	    return null;
 	}

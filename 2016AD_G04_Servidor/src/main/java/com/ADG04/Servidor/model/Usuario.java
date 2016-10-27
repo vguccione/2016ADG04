@@ -180,6 +180,7 @@ public class Usuario implements java.io.Serializable {
 		u.setNombre(this.getNombre());
 		u.setApellido(this.getApellido());
 		u.setPassword(this.getPassword());
+		u.setUsuario(this.getUsuario());
 		u.setFechaCreacion(this.getFechaCreacion());
 		u.setUltimoAcceso(this.getUltimoAcceso());
 		u.setIdUsuario(this.getIdUsuario());

@@ -9,8 +9,8 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.ADG04.Controller.Controlador;
-import com.ADG04.bean.Proveedor.DTO_Proveedor;
-import com.ADG04.bean.Proveedor.DTO_Seguro;
+import com.ADG04.bean.Cliente.DTO_Factura;
+import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
 
 /**
@@ -25,7 +25,7 @@ import com.ADG04.bean.Proveedor.DTO_Seguro;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class ListadoSeguros extends javax.swing.JFrame {
+public class ListadoFacturasClientes extends javax.swing.JFrame {
 	/**
 	 * 
 	 */
@@ -34,7 +34,7 @@ public class ListadoSeguros extends javax.swing.JFrame {
 	private JScrollPane jScrollPaneListadoVehiculos;
 	private JTable jTableListado;
 
-	public  ListadoSeguros() {
+	public  ListadoFacturasClientes() {
 		super();
 		initGUI();
 	}
@@ -47,9 +47,9 @@ public class ListadoSeguros extends javax.swing.JFrame {
 			{
 				jLabelTitulo = new JLabel();
 				getContentPane().add(jLabelTitulo);
-				jLabelTitulo.setText("Listado Seguros");
+				jLabelTitulo.setText("Listado Facturas Clientes");
 				jLabelTitulo.setFont(new java.awt.Font("Verdana",1,20));
-				jLabelTitulo.setBounds(12, 12, 247, 36);
+				jLabelTitulo.setBounds(12, 12, 400, 36);
 			}
 			{
 				jScrollPaneListadoVehiculos = new JScrollPane();
@@ -57,31 +57,42 @@ public class ListadoSeguros extends javax.swing.JFrame {
 				jScrollPaneListadoVehiculos.setBounds(12, 60, 799, 305);
 				{
 					
-					List<DTO_Seguro> listaDTO = Controlador.getInstancia().listarSeguros();
+					List<DTO_Factura> listaDTO = Controlador.getInstancia().listarFacturasCliente();
 					
 					DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			
-					jTableListadoModel.addColumn("Proveedor");
+					jTableListadoModel.addColumn("Numero");
 					jTableListadoModel.addColumn("Tipo");
-					jTableListadoModel.addColumn("Descripcion");
-					jTableListadoModel.addColumn("Tarifa");
+					jTableListadoModel.addColumn("Fecha");
+					jTableListadoModel.addColumn("Vencimiento");
+					jTableListadoModel.addColumn("Total");
+					jTableListadoModel.addColumn("Pago");
 	
+					
 					if(listaDTO!=null){
-					for (DTO_Seguro item :listaDTO){
+					for (DTO_Factura item :listaDTO){
+						String pagado ="";
 						
-						String text = "";
-						if(item.getIdProveedor() != null){
-							DTO_Proveedor p = Controlador.getInstancia().getProveedor(item.getIdProveedor());
-							if(p!=null)
-								text = p.getRazonSocial();
+						if (item.isPagado())
+							pagado = "Pagado";
+						else
+							pagado ="Pendiente";
+						
+						float total=0f;
+						for(DTO_ItemFactura it:item.getItems()){
+							total += it.getValor();
 						}
 						
-						jTableListadoModel.addRow(new Object[] { text,
-																item.getTipoSeguro(),
-																item.getDescripcion(),
-																Float.toString(item.getTarifa())				
+						jTableListadoModel.addRow(new Object[] { item.getId(), 
+																	item.getTipo(),
+																	item.getFecha().toString(),
+																	item.getFechaVencimiento().toString(),
+																	Float.toString(total),
+																	pagado																			
 						});
-					}
+																
+					}	
+						
 					}
 					jTableListado = new JTable(jTableListadoModel);
 					jScrollPaneListadoVehiculos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

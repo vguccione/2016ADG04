@@ -14,10 +14,17 @@ import com.ADG04.Vista.Listados.ListadoCarriers;
 import com.ADG04.Vista.Listados.ListadoCliente;
 import com.ADG04.Vista.Listados.ListadoEmpresa;
 import com.ADG04.Vista.Listados.ListadoEmpresaSeguridad;
+import com.ADG04.Vista.Listados.ListadoFacturasClientes;
+import com.ADG04.Vista.Listados.ListadoPlanMantenimiento;
 import com.ADG04.Vista.Listados.ListadoProveedores;
 import com.ADG04.Vista.Listados.ListadoSeguros;
 import com.ADG04.Vista.Listados.ListadoServicioSeguridad;
+import com.ADG04.Vista.Listados.ListadoSucursales;
 import com.ADG04.Vista.Listados.ListadoTalleres;
+import com.ADG04.Vista.Listados.ListadoTareasRealizadas;
+import com.ADG04.Vista.Listados.ListadoTarifasCarriers;
+import com.ADG04.Vista.Listados.ListadoUsuarios;
+import com.ADG04.Vista.Listados.ListadoVehiculos;
 import com.ADG04.bean.Administracion.DTO_Rol;
 
 
@@ -132,6 +139,8 @@ public class VistaMenu extends javax.swing.JFrame {
 	private JMenuItem JMenuItem17;
 	private JMenuItem JMenuItem10;
 	private JMenuItem JMenuItem9;
+	private JMenuItem jMenuItem24;
+	private JMenuItem jMenuItem23;
 	private JMenu JMenuProveedores;
 	private JMenu JMenuConsultasClientes;
 	private JMenu JMenuConsultasVehiculos;
@@ -813,29 +822,7 @@ public class VistaMenu extends javax.swing.JFrame {
 							});
 						}
 					}
-					{
-						JMenuConsultasEmpleados = new JMenu();
-						JMenu6.add(JMenuConsultasEmpleados);
-						JMenuConsultasEmpleados.setText("Empleados");
-						{
-							JMenuItem11 = new JMenuItem();
-							JMenuConsultasEmpleados.add(JMenuItem11);
-							JMenuItem11.setText("Empleados");
-							if (roles.contains("ADMINISTRACION")) {
-								JMenuItem11.setVisible(true);
-							} else {
-								JMenuItem11.setVisible(false);
-								JMenuItem11.setBounds(0, 42, 80, 21);
-							}
-							JMenuItem11.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-								/*	ListadoEmpleados inst = new ListadoEmpleados();
-									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
-								}
-							});
-						}
-					}
+					
 					{
 						JMenuConsultasSucursales = new JMenu();
 						JMenu6.add(JMenuConsultasSucursales);
@@ -852,9 +839,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							}
 							JMenuItem12.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoSucursales inst = new ListadoSucursales();
+									ListadoSucursales inst = new ListadoSucursales();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -906,7 +893,33 @@ public class VistaMenu extends javax.swing.JFrame {
 						{
 							JMenu1 = new JMenu();
 							JMenuConsultasClientes.add(JMenu1);
-							JMenu1.setText("Facturas");							
+							JMenu1.setText("Facturas");		
+							{
+								jMenuItem23 = new JMenuItem();
+								JMenu1.add(jMenuItem23);
+								jMenuItem23.setText("Facturas");
+								jMenuItem23.setBounds(0, -21, 70, 21);
+								jMenuItem23.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										ListadoFacturasClientes inst = new ListadoFacturasClientes();
+										inst.setLocationRelativeTo(null);
+										inst.setVisible(true);
+									}
+								});
+								
+							}
+							{
+								jMenuItem24 = new JMenuItem();
+								JMenu1.add(jMenuItem24);
+								jMenuItem24.setText("Facturas Pendientes");
+								jMenuItem24.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										ListadoFacturasClientes inst = new ListadoFacturasClientes();
+										inst.setLocationRelativeTo(null);
+										inst.setVisible(true);
+									}
+								});
+							}
 						}
 						{
 							jSeparator6 = new JSeparator();
@@ -1045,6 +1058,18 @@ public class VistaMenu extends javax.swing.JFrame {
 								}
 							});
 						}
+						{
+							JMenuItem21 = new JMenuItem();
+							JMenuProveedores.add(JMenuItem21);
+							JMenuItem21.setText("Tarifas Carriers");
+							JMenuItem21.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									ListadoTarifasCarriers inst = new ListadoTarifasCarriers();
+									inst.setLocationRelativeTo(null);
+									inst.setVisible(true);
+								}
+							});
+						}
 					}
 					{
 						JMenuConsultasUsuarios = new JMenu();
@@ -1062,9 +1087,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							}
 							JMenuItem15.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoUsuarios inst = new ListadoUsuarios();
+									ListadoUsuarios inst = new ListadoUsuarios();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -1086,9 +1111,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							}
 							JMenuItem16.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-								/*	ListadoVehiculos inst = new ListadoVehiculos();
+									ListadoVehiculos inst = new ListadoVehiculos();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -1102,9 +1127,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem30.setText("Plan Mantenimiento");
 							JMenuItem30.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-							/*		ListadoPlanMantenimiento inst = new ListadoPlanMantenimiento();
+									ListadoPlanMantenimiento inst = new ListadoPlanMantenimiento();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -1114,9 +1139,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem31.setText("Tareas Realizadas");
 							JMenuItem31.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-								/*	ListadoTareasRealizadas inst = new ListadoTareasRealizadas();
+									ListadoTareasRealizadas inst = new ListadoTareasRealizadas();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

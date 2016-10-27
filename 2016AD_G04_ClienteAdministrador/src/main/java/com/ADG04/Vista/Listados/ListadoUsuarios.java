@@ -9,9 +9,9 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.ADG04.Controller.Controlador;
-import com.ADG04.bean.Administracion.DTO_Direccion;
-import com.ADG04.bean.Cliente.DTO_Cliente;
-import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Administracion.DTO_Rol;
+import com.ADG04.bean.Administracion.DTO_Usuario;
+
 
 
 
@@ -28,14 +28,18 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 @SuppressWarnings("serial")
-public class ListadoCliente extends javax.swing.JFrame {
+public class ListadoUsuarios extends javax.swing.JFrame {
 	private JLabel jLabelTitulo;
 	private JScrollPane jScrollPaneListadoClientes;
 	private JTable jTableListado;
-
+	private DTO_Usuario empleado;
+	private String txt;
+	private String roles;
+	private String ultimoAcceso;
 
 	
-	public ListadoCliente() {
+	
+	public ListadoUsuarios() {
 		super();
 		initGUI();
 	}
@@ -48,7 +52,7 @@ public class ListadoCliente extends javax.swing.JFrame {
 			{
 				jLabelTitulo = new JLabel();
 				getContentPane().add(jLabelTitulo);
-				jLabelTitulo.setText("Listado Clientes");
+				jLabelTitulo.setText("Listado Usuarios");
 				jLabelTitulo.setFont(new java.awt.Font("Verdana",1,20));
 				jLabelTitulo.setBounds(12, 12, 245, 35);
 			}
@@ -58,43 +62,40 @@ public class ListadoCliente extends javax.swing.JFrame {
 				jScrollPaneListadoClientes.setBounds(12, 53, 799, 311);
 				{
 					
-					List<DTO_ClienteParticular> clienteDTO = Controlador.getInstancia().listarClientes();
+					List<DTO_Usuario> usuarioDTO = Controlador.getInstancia().listarUsuarios();
 					
 					DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			
-					jTableListadoModel.addColumn("ID");
-					jTableListadoModel.addColumn("Nombre");
-					jTableListadoModel.addColumn("Apellido");
-					jTableListadoModel.addColumn("DNI");
-					jTableListadoModel.addColumn("Estado");
-					jTableListadoModel.addColumn("Direccion");
-					jTableListadoModel.addColumn("Codigo Postal");
-					jTableListadoModel.addColumn("Provincia");
-					jTableListadoModel.addColumn("Pais");
-					jTableListadoModel.addColumn("Email");
-					jTableListadoModel.addColumn("Telefono");
-					
-					
-					for (DTO_ClienteParticular c :clienteDTO){
+					jTableListadoModel.addColumn("Id Usuario");
+					jTableListadoModel.addColumn("Empleado");
+					jTableListadoModel.addColumn("Dni");
+					jTableListadoModel.addColumn("usuario");
+					jTableListadoModel.addColumn("Roles");
+					jTableListadoModel.addColumn("Ultimo Acceso");
+
+					if(usuarioDTO!=null){
+					for (DTO_Usuario u :usuarioDTO){
 						
-						String estado=null;
-						if (c.isEstado())
-							estado = "Activo";
+						roles = "";
+						List<DTO_Rol> listaRoles = u.getRoles();
+						for (DTO_Rol r : listaRoles){
+							roles = roles  + r.getdescripcion() + " ";
+						}
+						
+						if(u.getUltimoAcceso() != null)
+							ultimoAcceso = u.getUltimoAcceso().toString();
 						else
-							estado = "Inactivo";
+							ultimoAcceso = "";
 						
-						DTO_Direccion direccion = c.getDireccion();
-						jTableListadoModel.addRow(new Object[] { c.getId(), 
-																c.getNombre(),
-																c.getApellido(),
-																c.getDni(),
-																estado,
-																direccion.getCalle(),
-																direccion.getCodigoPostal(), 
-																direccion.getProvincia().getDescripcion(),
-																direccion.getPais().getDescripcion(),
-																c.getEmail(),
-																c.getTelefono()});
+						
+						
+						jTableListadoModel.addRow(new Object[] { u.getIdUsuario(), 
+																u.getNombre() + ' ' +u.getApellido() ,
+																u.getDni(),
+																u.getUsuario(),
+																roles,
+																ultimoAcceso
+																});
 						
 						
 					}
@@ -103,6 +104,7 @@ public class ListadoCliente extends javax.swing.JFrame {
 					
 					jScrollPaneListadoClientes.setViewportView(jTableListado);
 					jTableListado.setModel(jTableListadoModel);
+					}
 				}
 			}
 			pack();

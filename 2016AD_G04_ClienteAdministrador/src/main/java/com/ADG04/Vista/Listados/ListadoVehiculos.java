@@ -9,9 +9,8 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.ADG04.Controller.Controlador;
-import com.ADG04.bean.Proveedor.DTO_Proveedor;
-import com.ADG04.bean.Proveedor.DTO_Seguro;
-
+import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -25,7 +24,7 @@ import com.ADG04.bean.Proveedor.DTO_Seguro;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class ListadoSeguros extends javax.swing.JFrame {
+public class ListadoVehiculos extends javax.swing.JFrame {
 	/**
 	 * 
 	 */
@@ -34,7 +33,7 @@ public class ListadoSeguros extends javax.swing.JFrame {
 	private JScrollPane jScrollPaneListadoVehiculos;
 	private JTable jTableListado;
 
-	public  ListadoSeguros() {
+	public  ListadoVehiculos() {
 		super();
 		initGUI();
 	}
@@ -47,7 +46,7 @@ public class ListadoSeguros extends javax.swing.JFrame {
 			{
 				jLabelTitulo = new JLabel();
 				getContentPane().add(jLabelTitulo);
-				jLabelTitulo.setText("Listado Seguros");
+				jLabelTitulo.setText("Listado Vehiculos");
 				jLabelTitulo.setFont(new java.awt.Font("Verdana",1,20));
 				jLabelTitulo.setBounds(12, 12, 247, 36);
 			}
@@ -57,30 +56,38 @@ public class ListadoSeguros extends javax.swing.JFrame {
 				jScrollPaneListadoVehiculos.setBounds(12, 60, 799, 305);
 				{
 					
-					List<DTO_Seguro> listaDTO = Controlador.getInstancia().listarSeguros();
+					List<DTO_Vehiculo> vehiculoDTO = Controlador.getInstancia().listarVehiculos();
 					
 					DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			
-					jTableListadoModel.addColumn("Proveedor");
-					jTableListadoModel.addColumn("Tipo");
-					jTableListadoModel.addColumn("Descripcion");
-					jTableListadoModel.addColumn("Tarifa");
+					jTableListadoModel.addColumn("ID");
+					jTableListadoModel.addColumn("Patente");
+					jTableListadoModel.addColumn("Marca");
+					jTableListadoModel.addColumn("Modelo");
+					jTableListadoModel.addColumn("Kilometros");
+					jTableListadoModel.addColumn("Volumen");
+					jTableListadoModel.addColumn("Fecha Ingreso");
+					jTableListadoModel.addColumn("Sucursal");
 	
-					if(listaDTO!=null){
-					for (DTO_Seguro item :listaDTO){
-						
-						String text = "";
-						if(item.getIdProveedor() != null){
-							DTO_Proveedor p = Controlador.getInstancia().getProveedor(item.getIdProveedor());
-							if(p!=null)
-								text = p.getRazonSocial();
+					if(vehiculoDTO!=null){
+					for (DTO_Vehiculo v :vehiculoDTO){
+						DTO_Sucursal suc = null;
+						String sucursal = "";
+						if(v.getSucursal()!= null){
+							suc = v.getSucursal();
+							if (suc != null)
+								sucursal = suc.getDescripcion();
 						}
 						
-						jTableListadoModel.addRow(new Object[] { text,
-																item.getTipoSeguro(),
-																item.getDescripcion(),
-																Float.toString(item.getTarifa())				
-						});
+						jTableListadoModel.addRow(new Object[] { v.getId(), 
+																	v.getPatente(),
+																	v.getMarca(),
+																	v.getModelo(),
+																	v.getKmsRecorridos(),
+																	v.getVolumen(),
+																    v.getFechaIngreso(),
+																	sucursal																	
+						});	
 					}
 					}
 					jTableListado = new JTable(jTableListadoModel);

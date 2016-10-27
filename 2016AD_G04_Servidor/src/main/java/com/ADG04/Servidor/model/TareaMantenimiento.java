@@ -18,6 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
     
 @Entity
 @Table(name = "TareaMantenimiento")
@@ -82,6 +84,14 @@ public abstract class TareaMantenimiento implements java.io.Serializable {
 	public void setTareasMantenimientoRealizadas(
 			List<TareaMantenimientoRealizada> tareasMantenimientoRealizadas) {
 		this.tareasMantenimientoRealizadas = tareasMantenimientoRealizadas;
+	}
+
+	public DTO_TareaMantenimiento toDTO() {
+		DTO_TareaMantenimiento dto = new DTO_TareaMantenimiento();
+		dto.setId(this.getIdTareaMantenimiento());
+		dto.setIdPlanMantenimiento(this.getPlanMantenimiento().getIdPlanMantenimiento());
+		dto.setTarea(this.getTarea());
+		return dto;
 	}
 
 }

@@ -110,62 +110,7 @@ private static GestionAdministracion instancia;
 	}
 	
 	
-	public DTO_Usuario getUsuario(Integer idUsuario) {
-		return UsuarioDao.getInstancia().getById(idUsuario).toDTO();
-	}
-	
-	public DTO_Usuario getUsuario(String dni) {
-		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
-	}
-	
-	
-	 public DTO_Usuario login(String usuario, String password){
-		 Usuario u = UsuarioDao.getInstancia().buscarUsuario(usuario);
-		 if (u.getPassword().equals(password))
-			 return u.toDTO();
-		 else
-			 return null;
-	 }
-	 
-	 public List<DTO_Usuario> listarEmpleados(){
-		 List<Usuario> empleados = UsuarioDao.getInstancia().getAll();
-		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
-	    for(Usuario empleado : empleados){
-	    	empleadosDTO.add(empleado.toDTO());	    		
-	    }
-		return empleadosDTO;
-	 }
-	 public List<DTO_Usuario> listarEmpleados(Integer idSucursal){
-		 List<Usuario> empleados = UsuarioDao.getInstancia().listarEmpleados(idSucursal);
-		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
-	    for(Usuario empleado : empleados){
-	    	empleadosDTO.add(empleado.toDTO());	    		
-	    }
-		return empleadosDTO;
-	 }
-	 
-	 //Roles
-	 public List<DTO_Rol> listarRoles(){
-		 List<Rol> lista = RolDao.getInstancia().getAll();
-		 List<DTO_Rol> listaDTO = new ArrayList<DTO_Rol>();
-         for(Rol p: lista)
-         	listaDTO.add(p.toDTO());
-         
-		 return listaDTO;
-	 }
-	 
-	 
-	 public List<String> buscarRolesUsuario(String usuario){
-		 List<Rol> roles = RolDao.getInstancia().buscarRolesUsuario(usuario);
-		 List<String> dtoRoles = new ArrayList<String>();
-	    	for(Rol rol : roles){
-	    		DTO_Rol dto = new DTO_Rol();
-	    		dto.setId(rol.getIdRol());
-	    		dto.setdescripcion(rol.getDescripcion());
-	    		dtoRoles.add(dto.getdescripcion());	    		
-	    	}
-		return dtoRoles;
-	 }
+
 	 
 		
 	/*Sucursal*/

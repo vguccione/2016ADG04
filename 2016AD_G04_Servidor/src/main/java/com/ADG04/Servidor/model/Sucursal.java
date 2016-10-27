@@ -189,6 +189,7 @@ public class Sucursal implements java.io.Serializable {
 		s.setId(this.idSucursal);
 		s.setDescripcion(this.descripcion);
 		s.setTelefono(this.telefono);
+		s.setDireccion(this.getDireccion().toDTO());
 		return s;
 	}
 

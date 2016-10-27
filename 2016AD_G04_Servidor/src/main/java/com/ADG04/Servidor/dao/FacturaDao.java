@@ -76,4 +76,17 @@ public class FacturaDao extends GenericDao<Factura, Integer> {
 	        }
 	}
 
+	public List<Factura> listarFacturasClientePendientes() {
+		try {
+			  Query query = entityManager.createQuery("from Factura where  pagada=false" );
+			  List<Factura> f = (List<Factura>) query.getResultList();
+			  return f;
+			       
+	        } catch (Exception e){
+	            System.out.println(e);
+	            System.out.println("Error en listar facturas pendientes");
+	            return null;
+	        }
+	}
+
 }

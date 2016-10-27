@@ -7,6 +7,7 @@ import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
@@ -26,13 +27,21 @@ public interface IAdministracionRemote {
 	public DTO_Usuario getUsuario(Integer idUsuario) throws RemoteException;
 	public DTO_Usuario getUsuario(String dni) throws RemoteException;
 	public DTO_Usuario login(String usuario, String password) throws RemoteException;
+	public DTO_Usuario getUsuarioPorDni(String dni) throws RemoteException;
+	public List<DTO_Usuario> listarEmpleados() throws RemoteException;
+	public List<DTO_Rol> listarRoles() throws RemoteException;
+	public List<DTO_Usuario> listarEmpleados(Integer idSucursal) throws RemoteException;
+	public List<DTO_Usuario> getUsuarios() throws RemoteException;
 	public List<String> buscarRolesUsuario(int usuario) throws RemoteException;
+	public List<DTO_Factura> listarFacturasCliente() throws RemoteException;
+	public List<DTO_Factura> listarFacturasClientePendientes() throws RemoteException;
 	
 	/*************************** Sucursal *************************************/
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException;
 	public void modificarSucursal(DTO_Sucursal sucursal) throws RemoteException;
 	public void bajaSucursal(Integer idSucursal) throws RemoteException;
 	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException;
+	public List<DTO_Sucursal> listarSucursales() throws RemoteException;
 	
 	
 	/*************************** Proveedores *************************************/

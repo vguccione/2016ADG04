@@ -3,6 +3,7 @@ package com.ADG04.Controller;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -290,6 +291,26 @@ public class Controlador {
 	            System.out.println("Error al buscar Tarea de Mantenimiento");
 	      }   
 	    return null;
+	}
+
+	public List<DTO_ClienteParticular> buscarClientesByNombreApellidoDni(String filtro) {
+		try{
+			List<DTO_ClienteParticular> lista = new ArrayList<DTO_ClienteParticular>();
+			List<DTO_ClienteParticular> listaCliente = bd.getClientesParticular();
+			for(DTO_ClienteParticular cli:listaCliente){
+				if(cli.getApellido().contains(filtro) || cli.getNombre().contains(filtro) || cli.getDni().contains(filtro)){
+					lista.add(cli);
+				}
+			}
+			if(lista!=null)
+				return lista;
+			else
+				return null;
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar clientes");
+		}
+		return null;
 	}
 
 

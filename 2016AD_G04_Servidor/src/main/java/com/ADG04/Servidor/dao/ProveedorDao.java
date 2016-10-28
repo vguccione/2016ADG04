@@ -46,4 +46,18 @@ public class ProveedorDao extends GenericDao<Proveedor, Integer> {
 	        }
 		}
 
+	public List<Proveedor> getProveedorByRazonSocial(String filtro) {
+		try{
+			String f= filtro+"%";
+			return entityManager
+	                .createQuery("from Proveedor c where razonSocial like :filtro")
+	                .setParameter("filtro", f)
+	                .getResultList();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: Listar proveedores por razon social");
+        }
+        return null;
+	}
+
 }

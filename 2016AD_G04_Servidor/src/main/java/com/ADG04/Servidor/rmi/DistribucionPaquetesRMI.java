@@ -15,6 +15,8 @@ import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
+import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.RolDao;
@@ -29,6 +31,8 @@ import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.Cliente;
+import com.ADG04.Servidor.model.ClienteEmpresa;
 import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.model.PlanMantenimiento;
 import com.ADG04.Servidor.model.Rol;
@@ -49,6 +53,7 @@ import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
+import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
@@ -1000,6 +1005,87 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		return null;
 
 
+	}
+	
+	@Override
+	public List<DTO_ClienteParticular> buscarClientesByNombreApellidoDni (String filtro){
+		List<DTO_ClienteParticular> listaDTO = new ArrayList<DTO_ClienteParticular>();
+		List<Cliente> lista = ClienteDao.getInstancia().getClientesByNombreApellidoDni(filtro);
+        for(Cliente cli: lista)
+        	listaDTO.add((DTO_ClienteParticular) cli.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Sucursal> buscarSucursalesByNombre(String filtro)
+			throws RemoteException {
+		List<DTO_Sucursal> listaDTO = new ArrayList<DTO_Sucursal>();
+		List<Sucursal> lista = SucursalDao.getInstancia().getSucursalesByNombre(filtro);
+        for(Sucursal suc: lista)
+        	listaDTO.add((DTO_Sucursal) suc.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_ClienteEmpresa> buscarClientesEmpresaByRazonSocial(
+			String filtro) throws RemoteException {
+		List<DTO_ClienteEmpresa> listaDTO = new ArrayList<DTO_ClienteEmpresa>();
+		List<ClienteEmpresa> lista = ClienteEmpresaDao.getInstancia().getEmpresaByRazonSocial(filtro);
+        for(ClienteEmpresa cli: lista)
+        	listaDTO.add((DTO_ClienteEmpresa) cli.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Proveedor> buscarProveedorByRazonSocial(String filtro)
+			throws RemoteException {
+		List<DTO_Proveedor> listaDTO = new ArrayList<DTO_Proveedor>();
+		List<Proveedor> lista = ProveedorDao.getInstancia().getProveedorByRazonSocial(filtro);
+        for(Proveedor prov: lista)
+        	listaDTO.add( prov.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Usuario> buscarUsuariosByNombreApellidoOUsuario(String filtro) throws RemoteException {
+		List<DTO_Usuario> listaDTO = new ArrayList<DTO_Usuario>();
+		List<Usuario> lista = UsuarioDao.getInstancia().getUsuariosByNombreApellidoOUsuario(filtro);
+        for(Usuario usu: lista)
+        	listaDTO.add( usu.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Vehiculo> buscarVehiculoByModeloMarcaOPatente(String filtro)
+			throws RemoteException {
+		List<DTO_Vehiculo> listaDTO = new ArrayList<DTO_Vehiculo>();
+		List<Vehiculo> lista = VehiculoDao.getInstancia().getVehiculosByModelMarcaPatente(filtro);
+        for(Vehiculo veh: lista)
+        	listaDTO.add( veh.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public DTO_Vehiculo buscarVehiculoById(Integer idVehiculo)
+			throws RemoteException {
+		return VehiculoDao.getInstancia().getById(idVehiculo).toDTO();
+	}
+
+	@Override
+	public List<DTO_TareaMantenimientoRealizada> buscarTareasMantenimientoRealizadasPorVehiculo(String filtro) throws RemoteException {
+		List<DTO_TareaMantenimientoRealizada> listaDTO = new ArrayList<DTO_TareaMantenimientoRealizada>();
+		List<TareaMantenimientoRealizada> lista = TareaMantenimientoRealizadaDao.getInstancia().getByPatenteVehiculo(filtro);
+        for(TareaMantenimientoRealizada tr: lista)
+        	listaDTO.add( tr.toDTO());
+        
+		 return listaDTO;
+		
 	}
 
 }

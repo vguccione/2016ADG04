@@ -72,14 +72,28 @@ public class ListadoCliente extends javax.swing.JFrame {
 				txtBusqueda.setColumns(10);
 				JButton buscar = new JButton("Buscar");
 				buscar.setBounds(440, 45, 89, 23);
+				JLabel info = new JLabel();
+				getContentPane().add(info);
+				info.setText("Ingrese nombre, apellido o dni. Vacio indica todos");
+				info.setFont(new java.awt.Font("Verdana",1,8));
+				info.setBounds(80, 60, 500, 23);
+				
 				buscar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						List<DTO_ClienteParticular> clienteDTO = Controlador.getInstancia().buscarClientesByNombreApellidoDni(txtBusqueda.getText());
-
-						
-						for(int i=0;i<=jTableListadoModel.getRowCount();i++){
-							jTableListadoModel.removeRow(0);
+						List<DTO_ClienteParticular> clienteDTO = null;
+						if(txtBusqueda.getText()!=null){
+							clienteDTO = Controlador.getInstancia().buscarClientesByNombreApellidoDni(txtBusqueda.getText());
+							int j = jTableListadoModel.getRowCount();
+							if(jTableListadoModel.getRowCount()>0){
+								for(int i=0;i<j;i++){
+									jTableListadoModel.removeRow(0);
+								}
+							}
 						}
+						else{
+							clienteDTO = Controlador.getInstancia().listarClientes();
+						}
+						
 						
 						if(clienteDTO!=null){
 							for (DTO_ClienteParticular c :clienteDTO){
@@ -106,6 +120,7 @@ public class ListadoCliente extends javax.swing.JFrame {
 						}
 						jTableListadoModel.fireTableDataChanged();
 					}
+					
 				});
 				
 				getContentPane().add(buscar);

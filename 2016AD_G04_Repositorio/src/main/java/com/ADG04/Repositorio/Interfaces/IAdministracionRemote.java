@@ -35,6 +35,7 @@ public interface IAdministracionRemote {
 	public List<String> buscarRolesUsuario(int usuario) throws RemoteException;
 	public List<DTO_Factura> listarFacturasCliente() throws RemoteException;
 	public List<DTO_Factura> listarFacturasClientePendientes() throws RemoteException;
+	public List<DTO_Usuario> buscarUsuariosByNombreApellidoOUsuario(String filtro) throws RemoteException;
 	
 	/*************************** Sucursal *************************************/
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException;
@@ -42,6 +43,7 @@ public interface IAdministracionRemote {
 	public void bajaSucursal(Integer idSucursal) throws RemoteException;
 	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException;
 	public List<DTO_Sucursal> listarSucursales() throws RemoteException;
+	public List<DTO_Sucursal> buscarSucursalesByNombre(String filtro) throws RemoteException;
 	
 	
 	/*************************** Proveedores *************************************/
@@ -62,4 +64,6 @@ public interface IAdministracionRemote {
 	public List<DTO_Proveedor> getEmpresasServiciosSeguridad() throws RemoteException;
 	public List<DTO_Proveedor> getCarriers() throws RemoteException;
 	public List<DTO_Proveedor> getProveedores() throws RemoteException;
+	public List<DTO_Proveedor> buscarProveedorByRazonSocial(String filtro)  throws RemoteException;
+	
 }

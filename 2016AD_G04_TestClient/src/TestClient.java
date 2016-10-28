@@ -35,6 +35,11 @@ public class TestClient {
 		//TestBusinesDelegate();
 		//TestVehiculo();
 		
+		BusinessDelegate bDelegate = new BusinessDelegate();
+		DTO_Usuario usuario = bDelegate.login("vanesa", "vanesa");
+		
+		System.out.println(usuario.getDni());
+		
 		String ok = getStringFromConsole("Agregar Plan de Mantenimiento (si/no)?");
 		if(ok.equals("si")){
 			TestCrearPlanesYTareasYVehiculos();	
@@ -45,7 +50,7 @@ public class TestClient {
 				ok = getStringFromConsole("Agregar otro Plan de Mantenimiento (si/no)?");
 			}
 		}
-		BusinessDelegate bDelegate = new BusinessDelegate();
+		
 		ok = getStringFromConsole("Buscar tareas vencidas (si/no)?");
 		while(ok.equals("si")){
 			

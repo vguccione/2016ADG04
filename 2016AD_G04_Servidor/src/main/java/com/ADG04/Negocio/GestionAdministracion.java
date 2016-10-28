@@ -252,5 +252,13 @@ private static GestionAdministracion instancia;
 		return ClienteParticularDao.getInstancia().getByDni(dniCliente);
 		
 	}
+
+	public DTO_Usuario getUsuario(Integer idUsuario) {
+		return UsuarioDao.getInstancia().getById(idUsuario).toDTO();
+	}
+
+	public DTO_Usuario getUsuarioByDni(String dni) {
+		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
+	}
 	
 }

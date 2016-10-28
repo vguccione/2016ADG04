@@ -455,14 +455,13 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return null;
 	}
 
-	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc) {
+	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return this.businessService.confirmarEncomiendaEmpresa(enc);
 	}
 
-	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc) throws RemoteException {
+		return this.businessService.confirmarEncomiendaParticular(enc);
 	}
 
 	public Integer nuevaEncomiendaParticular(Integer idSucursal) {
@@ -563,6 +562,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		
 	}
 
+
 	public List<DTO_Usuario> getUsuarios() throws RemoteException {
 		return this.businessService.getUsuarios();
 	}
@@ -612,6 +612,31 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public DTO_TareaMantenimiento getTareaMantenimiento(
 			Integer idTareaMantenimiento) throws RemoteException {
 		return this.businessService.getTareaMantenimiento(idTareaMantenimiento);
+	}
+	
+
+	public Integer facturarEncomiendaEmpresa(int idEncomienda)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer cobrarEncomiendaEmpresa(Integer idFactura)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public DTO_Usuario getEmpleado(Integer idEmpleado) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer facturarEncomiendaParticular(DTO_EncomiendaParticular enc)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+
 	}
 	
 

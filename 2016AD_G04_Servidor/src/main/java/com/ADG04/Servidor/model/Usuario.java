@@ -184,7 +184,7 @@ public class Usuario implements java.io.Serializable {
 		u.setFechaCreacion(this.getFechaCreacion());
 		u.setUltimoAcceso(this.getUltimoAcceso());
 		u.setIdUsuario(this.getIdUsuario());
-		
+		u.setIdSucursal(this.sucursal.getIdSucursal());
 		List<DTO_Rol> roles = new ArrayList<DTO_Rol>();
 		for(Rol r: this.getRoles()){
 			roles.add(r.toDTO());

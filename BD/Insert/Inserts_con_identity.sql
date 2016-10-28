@@ -1,7 +1,7 @@
 --USE [distribucionPaquetes]
 --GO
 
-use ad2016_new
+use ad2016
 go
 
 
@@ -56,15 +56,8 @@ INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais,
 INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(8,'Calle prueba 8', 8888,'Villa Gral Belgrano', 888, 1, 3)
 INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(9,'Calle prueba 9', 9999,'Rio Cuarto', 999, 1, 3)
 
-INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(10,'Calle prueba 10', 1010,'Mendoza', 101, 1, 2)INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(4,'Calle prueba 4', 4444,'Lanus', 444, 1, 1)
-INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(5,'Calle prueba 5', 5555,'Mar del Plata', 555, 1, 1)
-INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(6,'Calle prueba 6', 6666,'Campana', 666, 1, 1)
-
-INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(7,'Calle prueba 7', 7777,'Cordoba', 777, 1, 3)
-INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(8,'Calle prueba 8', 8888,'Villa Gral Belgrano', 888, 1, 3)
-INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(9,'Calle prueba 9', 9999,'Rio Cuarto', 999, 1, 3)
-
 INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(10,'Calle prueba 10', 1010,'Mendoza', 101, 1, 2)
+
 INSERT INTO Direccion (IdDireccion, calle, codigoPostal, Localidad, nro, IdPais, IdProvincia) VALUES(11,'Calle prueba 11', 1111,'Capital Federal', 110, 1, 6)
 
 update direccion set calle = 'Calle prueba ' + cast(IdDireccion as varchar)
@@ -173,9 +166,9 @@ SET IDENTITY_INSERT dbo.proveedor off;
 GO 
 
 
-INSERT INTO TallerMecanico VALUES(234,'oficial',1)
-INSERT INTO TallerMecanico VALUES(2124,'lubricentro',2)
-go
+--INSERT INTO TallerMecanico VALUES(234,'oficial',1)
+--INSERT INTO TallerMecanico VALUES(2124,'lubricentro',2)
+--go
 
 SET IDENTITY_INSERT dbo.TareaMantenimientoRealizada on;  
 GO  

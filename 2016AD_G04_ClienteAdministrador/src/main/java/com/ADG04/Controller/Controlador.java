@@ -295,17 +295,7 @@ public class Controlador {
 
 	public List<DTO_ClienteParticular> buscarClientesByNombreApellidoDni(String filtro) {
 		try{
-			List<DTO_ClienteParticular> lista = new ArrayList<DTO_ClienteParticular>();
-			List<DTO_ClienteParticular> listaCliente = bd.getClientesParticular();
-			for(DTO_ClienteParticular cli:listaCliente){
-				if(cli.getApellido().contains(filtro) || cli.getNombre().contains(filtro) || cli.getDni().contains(filtro)){
-					lista.add(cli);
-				}
-			}
-			if(lista!=null)
-				return lista;
-			else
-				return null;
+			return  bd.buscarClientesByNombreApellidoDni(filtro);
 		}
 		catch(Exception e){
 			System.out.println("Error al buscar clientes");
@@ -313,5 +303,75 @@ public class Controlador {
 		return null;
 	}
 
+	public List<DTO_Sucursal> buscarSucursalByNombre(String filtro) {
+		try{
+			return  bd.buscarSucursalesByNombre(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar sucursales");
+		}
+		return null;
+	}
 
+	public List<DTO_ClienteEmpresa> buscarClientesEmpresaByRazonSocial(String filtro) {
+		try{
+			return  bd.buscarClientesEmpresaByRazonSocial(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar clientes empresas");
+		}
+		return null;
+	}
+
+	public List<DTO_Proveedor> buscarProveedorByRazonSocial(String filtro) {
+		try{
+			return  bd.buscarProveedorByRazonSocial(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar proveedores");
+		}
+		return null;
+	}
+
+	public List<DTO_Usuario> buscarUsuariosByNombreApellidoOUsuario(String filtro) {
+		try{
+			return  bd.buscarUsuariosByNombreApellidoOUsuario(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar usuarios");
+		}
+		return null;
+	}
+
+	public List<DTO_Vehiculo> buscarVehiculoByModeloMarcaOPatente(String filtro) {
+		try{
+			return  bd.buscarVehiculoByModeloMarcaOPatente(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar vehiculos");
+		}
+		return null;
+	}
+
+	public DTO_Vehiculo getVehiculoById(Integer idVehiculo) {
+		try{
+			return  bd.buscarVehiculoById(idVehiculo);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar vehiculo");
+		}
+		return null;
+	}
+
+	public List<DTO_TareaMantenimientoRealizada> buscarTareasMantenimientoRealizadasPorVehiculo(String filtro) {
+		try{
+			return  bd.buscarTareasMantenimientoRealizadasPorVehiculo(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar tareas realizadas por vehiculo");
+		}
+		return null;
+	}
+
+	
 }

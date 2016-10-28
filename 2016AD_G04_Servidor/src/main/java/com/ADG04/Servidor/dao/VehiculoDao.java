@@ -89,5 +89,19 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 
 	}
 
+	public List<Vehiculo> getVehiculosByModelMarcaPatente(String filtro) {
+		try{
+			String f= filtro+"%";
+			return entityManager
+	                .createQuery("from Vehiculo v where (modelo like :filtro OR marca like :filtro OR patente like :filtro)")
+	                .setParameter("filtro", f)
+	                .getResultList();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: Listar vehiculos por modelo, marca o patente");
+        }
+        return null;
+	}
+
 
 }

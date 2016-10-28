@@ -27,6 +27,8 @@ public interface IClienteRemote {
 	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente) throws RemoteException;
 	public DTO_ClienteEmpresa getClienteEmpresaByCuit(String cuit) throws RemoteException;
 	
+	public List<DTO_ClienteParticular> buscarClientesByNombreApellidoDni (String filtro) throws RemoteException;
+	public List<DTO_ClienteEmpresa> buscarClientesEmpresaByRazonSocial(String filtro) throws RemoteException;
 	
 	/************************ Producto ***********************************/
 	public void altaProducto(DTO_Producto producto) throws RemoteException;

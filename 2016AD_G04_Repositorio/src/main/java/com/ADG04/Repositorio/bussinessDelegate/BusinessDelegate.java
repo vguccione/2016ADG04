@@ -638,6 +638,40 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return null;
 
 	}
+
+	public List<DTO_ClienteParticular> buscarClientesByNombreApellidoDni(String filtro)
+			throws RemoteException {
+		return this.businessService.buscarClientesByNombreApellidoDni(filtro);
+	}
+
+	public List<DTO_Sucursal> buscarSucursalesByNombre(String filtro) throws RemoteException {
+		return this.businessService.buscarSucursalesByNombre(filtro);
+	}
+
+	public List<DTO_ClienteEmpresa> buscarClientesEmpresaByRazonSocial(String filtro) throws RemoteException {
+		return this.businessService.buscarClientesEmpresaByRazonSocial(filtro);
+	}
+
+	public List<DTO_Proveedor> buscarProveedorByRazonSocial(String filtro) throws RemoteException {
+		
+		return this.businessService.buscarProveedorByRazonSocial(filtro);
+	}
+
+	public List<DTO_Usuario> buscarUsuariosByNombreApellidoOUsuario(String filtro) throws RemoteException {
+		return this.businessService.buscarUsuariosByNombreApellidoOUsuario(filtro);
+	}
+
+	public List<DTO_Vehiculo> buscarVehiculoByModeloMarcaOPatente(String filtro) throws RemoteException {
+		return this.businessService.buscarVehiculoByModeloMarcaOPatente(filtro);
+	}
+
+	public DTO_Vehiculo buscarVehiculoById(Integer idVehiculo) throws RemoteException{
+		return this.businessService.buscarVehiculoById(idVehiculo);
+	}
+	
+	public List<DTO_TareaMantenimientoRealizada> buscarTareasMantenimientoRealizadasPorVehiculo(String filtro) throws RemoteException{
+		return this.businessService.buscarTareasMantenimientoRealizadasPorVehiculo(filtro);
+	}
 	
 
 }

@@ -1,12 +1,16 @@
 package com.ADG04.Vista.Listados;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JButton;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Administracion.DTO_Direccion;
@@ -33,7 +37,7 @@ public class ListadoEmpresa extends javax.swing.JFrame {
 	private JLabel jLabelTitulo;
 	private JScrollPane jScrollPaneListadoClientes;
 	private JTable jTableListado;
-
+	private JTextField txtBusqueda;
 
 	
 	public ListadoEmpresa() {
@@ -43,26 +47,91 @@ public class ListadoEmpresa extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			final DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 			getContentPane().setLayout(null);
 			{
 				jLabelTitulo = new JLabel();
 				getContentPane().add(jLabelTitulo);
-				jLabelTitulo.setText("Listado Clientes");
+				jLabelTitulo.setText("Listado Empresas");
 				jLabelTitulo.setFont(new java.awt.Font("Verdana",1,20));
 				jLabelTitulo.setBounds(12, 12, 245, 35);
+			}
+			getContentPane().setLayout(null);
+			{
+				jLabelTitulo = new JLabel();
+				getContentPane().add(jLabelTitulo);
+				jLabelTitulo.setText("Buscar:");
+				jLabelTitulo.setFont(new java.awt.Font("Verdana",1,12));
+				jLabelTitulo.setBounds(12, 42, 245, 35);
+				txtBusqueda = new JTextField();
+				txtBusqueda.setBounds(80, 48, 324, 20);
+				getContentPane().add(txtBusqueda);
+				txtBusqueda.setColumns(10);
+				JButton buscar = new JButton("Buscar");
+				buscar.setBounds(440, 45, 89, 23);
+				JLabel info = new JLabel();
+				getContentPane().add(info);
+				info.setText("Ingrese razon social. Vacio indica todos");
+				info.setFont(new java.awt.Font("Verdana",1,8));
+				info.setBounds(80, 60, 500, 23);
+				
+				buscar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						List<DTO_ClienteEmpresa> clienteDTO = null;
+						if(txtBusqueda.getText()!=null){
+							clienteDTO = Controlador.getInstancia().buscarClientesEmpresaByRazonSocial(txtBusqueda.getText());
+							int j = jTableListadoModel.getRowCount();
+							if(jTableListadoModel.getRowCount()>0){
+								for(int i=0;i<j;i++){
+									jTableListadoModel.removeRow(0);
+								}
+							}
+						}
+						else{
+							clienteDTO = Controlador.getInstancia().listarClientesEmpresa();
+						}
+						
+						
+						if(clienteDTO!=null){
+							for (DTO_ClienteEmpresa c :clienteDTO){
+								
+								String estado=null;
+								if (c.isEstado())
+									estado = "Activo";
+								else
+									estado = "Inactivo";
+								
+								DTO_Direccion direccion = c.getDireccion();
+								jTableListadoModel.addRow(new Object[] { c.getId(), 
+										c.getRazonSocial(),
+										estado,
+										direccion.getCalle(),
+										direccion.getCodigoPostal(), 
+										direccion.getProvincia().getDescripcion(),
+										direccion.getPais().getDescripcion(),
+										c.getEmail(),
+										c.getTelefono()});
+
+
+								}
+						}
+						jTableListadoModel.fireTableDataChanged();
+					}
+					
+				});
+				
+				getContentPane().add(buscar);
 			}
 			{
 				jScrollPaneListadoClientes = new JScrollPane();
 				getContentPane().add(jScrollPaneListadoClientes);
-				jScrollPaneListadoClientes.setBounds(12, 53, 799, 311);
+				jScrollPaneListadoClientes.setBounds(12, 83, 799, 311);
 				{
 					
 					List<DTO_ClienteEmpresa> clienteDTO = Controlador.getInstancia().listarClientesEmpresa();
 					
-					DefaultTableModel jTableListadoModel = new DefaultTableModel();
-			
 					jTableListadoModel.addColumn("ID");
 					jTableListadoModel.addColumn("Razon Social");
 					jTableListadoModel.addColumn("Estado");

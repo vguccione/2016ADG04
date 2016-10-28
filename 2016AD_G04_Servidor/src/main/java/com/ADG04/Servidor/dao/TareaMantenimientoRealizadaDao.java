@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import com.ADG04.Servidor.model.TareaMantenimientoRealizada;
 import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -27,6 +28,21 @@ public class TareaMantenimientoRealizadaDao extends GenericDao<TareaMantenimient
 			instancia = new TareaMantenimientoRealizadaDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
 		} 
 		return instancia;
+	}
+
+	public List<TareaMantenimientoRealizada> getByPatenteVehiculo(String filtro) {
+		try{
+			String f= filtro+"%";
+			return entityManager
+	                .createQuery("from TareaMantenimientoRealizada tr where "
+	                		+ " tr.vehiculo.patente like :filtro")
+	                .setParameter("filtro", f)
+	                .getResultList();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: Listar tareas por vehiculo");
+        }
+        return null;
 	}
 
 }

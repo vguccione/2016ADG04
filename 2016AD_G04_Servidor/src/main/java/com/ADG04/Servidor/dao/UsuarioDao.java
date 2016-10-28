@@ -76,4 +76,18 @@ public class UsuarioDao extends GenericDao<Usuario, Integer> {
 	        }
 	}
 
+	public List<Usuario> getUsuariosByNombreApellidoOUsuario(String filtro) {
+		try{
+			String f= filtro+"%";
+			return entityManager
+	                .createQuery("from Usuario  where (nombre like :filtro OR apellido like :filtro OR usuario like :filtro)")
+	                .setParameter("filtro", f)
+	                .getResultList();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: Listar usuarios por nombre, apellido o usuario");
+        }
+        return null;
+	}
+
 }

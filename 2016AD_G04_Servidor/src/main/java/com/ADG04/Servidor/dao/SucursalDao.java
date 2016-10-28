@@ -30,4 +30,18 @@ public class SucursalDao extends GenericDao<Sucursal, Integer> {
 		return instancia;
 	}
 
+	public List<Sucursal> getSucursalesByNombre(String filtro) {
+		try {
+			  String f = filtro+'%';
+			  Query query = entityManager.createQuery("from Sucursal where (descripcion like :filtro ) ");
+			  query.setParameter("filtro", f);
+			  return query.getResultList();
+			       
+	        } catch (Exception e){
+	            System.out.println(e);
+	            System.out.println("Error al buscar sucursales");
+	            return null;
+	        }
+	}
+
 }

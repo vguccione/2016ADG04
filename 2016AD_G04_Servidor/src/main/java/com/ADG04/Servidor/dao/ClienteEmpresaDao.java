@@ -50,5 +50,19 @@ public class ClienteEmpresaDao extends GenericDao<ClienteEmpresa, Integer> {
         }
         return null;
 	}
+
+	public List<ClienteEmpresa> getEmpresaByRazonSocial(String filtro) {
+		try{
+			String f= filtro+"%";
+			return entityManager
+	                .createQuery("from Cliente c where c.class = 'e' and razonSocial like :filtro")
+	                .setParameter("filtro", f)
+	                .getResultList();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: Listar clientes empresas por razon social");
+        }
+        return null;
+	}
 	
 }

@@ -85,8 +85,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	public DTO_Usuario getUsuario(Integer idUsuario) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return GestionAdministracion.getInstancia().getUsuario(idUsuario);
 	}
 
 	
@@ -825,6 +824,53 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		Proveedor prov = ProveedorDao.getInstancia().getById(idProveedor);
 		return prov.toDTO();
+	}
+
+	@Override
+	public Integer cobrarEncomiendaParticular(Integer idFactura)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer facturarEncomiendaEmpresa(int idEncomienda)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer cobrarEncomiendaEmpresa(Integer idFactura)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Usuario getEmpleado(Integer idEmpleado) throws RemoteException {
+		return this.getUsuario(idEmpleado);
+	}
+
+	@Override
+	public Integer facturarEncomiendaParticular(DTO_EncomiendaParticular enc)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

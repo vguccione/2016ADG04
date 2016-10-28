@@ -150,6 +150,8 @@ public class Factura implements java.io.Serializable {
 
 	public DTO_Factura toDTO(){
 		DTO_Factura f = new DTO_Factura();
+		f.setId(this.getIdFactura());
+		f.setEncomienda(this.getEncomienda().toDTO());
     	f.setFecha(this.fecha);
     	f.setIdCuentaCorriente(this.cuentaCorriente.getIdCtaCte());
     	f.setPagado(this.pagada);

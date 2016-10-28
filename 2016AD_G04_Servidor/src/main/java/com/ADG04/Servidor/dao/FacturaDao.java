@@ -89,4 +89,24 @@ public class FacturaDao extends GenericDao<Factura, Integer> {
 	        }
 	}
 
+	public List<Factura> getFacturasByCliente(String filtro, boolean pendientes) {
+		try {
+			  Query query;
+			  String f = filtro+'%';
+			  if(pendientes)
+				  query = entityManager.createQuery("from Factura f where f.encomienda.cliente.dni like :filtro and pagada=false" );
+			  else{
+				  query = entityManager.createQuery("from Factura f where f.encomienda.cliente.dni like :filtro" );
+			  }
+			  query.setParameter("filtro", f);
+			  List<Factura> facturas = (List<Factura>) query.getResultList();
+			  return facturas;
+			       
+	        } catch (Exception e){
+	            System.out.println(e);
+	            System.out.println("Error en listar facturas por cliente");
+	            return null;
+	        }
+	}
+
 }

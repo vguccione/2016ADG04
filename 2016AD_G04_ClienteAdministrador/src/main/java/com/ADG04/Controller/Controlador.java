@@ -264,7 +264,7 @@ public class Controlador {
 			return bd.listarFacturasClientePendientes();
 		}
 		catch(RemoteException e) {
-	       	 System.out.println(e);
+	       	   e.printStackTrace();
 	            System.out.println("Error al listar Facturas");
 	      }   
 	    return null;
@@ -369,6 +369,26 @@ public class Controlador {
 		}
 		catch(Exception e){
 			System.out.println("Error al buscar tareas realizadas por vehiculo");
+		}
+		return null;
+	}
+
+	public List<DTO_Factura> buscarFacturasByDniCliente(String filtro) {
+		try{
+			return  bd.buscarFacturasByDniCliente(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar facturas por cliente");
+		}
+		return null;
+	}
+
+	public DTO_ClienteParticular getClienteById(int idCliente) {
+		try{
+			return  bd.getClienteParticularById(idCliente);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar cliente por id");
 		}
 		return null;
 	}

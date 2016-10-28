@@ -21,15 +21,14 @@ public interface IFacturaRemote {
 	public void setLimiteCreditoByIdCliente(int idCliente, float limiteCredito) throws RemoteException;
 	
 	/************************** Facturas Cliente **************************************/
-	//TODO: estos metodos, no van, las facturas se generan cuando se genera una nueva encomiendaa ???
-	//No podemos dar de alta una factura si no hay una encmienda de por meido. ¿?¿?
-	//public void altaFacturaCliente(DTO_Factura factura) throws RemoteException;
-	//public void modificarFacturaCliente(DTO_Factura factura) throws RemoteException;
+
 	public DTO_Factura getFacturaClienteByCuit(String cuitCliente) throws RemoteException;
 	public DTO_Factura getFacturaClienteByDni(String dni) throws RemoteException;
+	public List<DTO_Factura> buscarFacturasByDniCliente(String filtro)  throws RemoteException;
+	public List<DTO_Factura> listarFacturasCliente() throws RemoteException;
+	public List<DTO_Factura> listarFacturasClientePendientes() throws RemoteException;
 	
-	//Items de factura - una vez que tenes generada una factura, le podés agregar items ¡???
-	//o solo se agrega a partir de la encomienda?????
+
 	public void addItem(int idFactura, int cantidad, float valor, String descripcion) throws RemoteException;
 	public void deleteItem(int idFactura, int idItem) throws RemoteException;
 	

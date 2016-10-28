@@ -9,7 +9,7 @@ import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
-public  class DTO_EncomiendaParticular extends DTO_Encomienda {
+public  class DTO_EncomiendaParticular extends DTO_Encomienda implements Serializable {
 
 	private DTO_ClienteParticular cliente;
 	

@@ -1,14 +1,16 @@
 package com.ADG04.bean.Encomienda;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
-public class DTO_Encomienda {
+public class DTO_Encomienda implements Serializable{
 
 	private int idEncomienda;
 	private DTO_ItemFactura itemFactura;
@@ -16,6 +18,8 @@ public class DTO_Encomienda {
 	private DTO_Direccion direccionDestino;
 
 	private DTO_Envio envio;
+	
+	private DTO_Cliente cliente;
 	
 	private DTO_Sucursal sucursalOrigen;
 	private DTO_Sucursal sucursalActual;
@@ -260,7 +264,12 @@ public class DTO_Encomienda {
 	public void setInternacional(boolean internacional) {
 		this.internacional = internacional;
 	}
-	
-	
+	public DTO_Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(DTO_Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	
 }

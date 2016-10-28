@@ -24,6 +24,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
 
 @Entity
 @Table(name = "Encomienda")
@@ -523,6 +524,41 @@ public class Encomienda implements java.io.Serializable {
 				+ ", cargaGranel=" + cargaGranel + ", productoEncomiendas="
 				+ productoEncomiendas + ", terciarizado=" + terciarizado +""
 						+ " internacional +" + internacional + "]";
+	}
+
+	public DTO_Encomienda toDTO() {
+		DTO_Encomienda dto = new DTO_Encomienda();
+		dto.setAlto(this.getAlto());
+		dto.setAncho(this.getAncho());
+		dto.setApellidoReceptor(this.getApellidoReceptor());
+		dto.setApilable(this.getApilable());
+		dto.setCantApilable(this.getCantApilable());
+		dto.setCargaGranel(this.getCargaGranel());
+		dto.setCondicionTransporte(this.getCondicionTransporte());
+		
+		dto.setDniReceptor(this.getDniReceptor());
+		dto.setEstado(this.getEstado());
+		dto.setFactura(this.getFactura().toDTO());
+		dto.setFechaCreacion(this.getFechaCreacion());
+		dto.setFragilidad(this.getFragilidad());
+		dto.setIdEncomienda(this.getIdEncomienda());
+		dto.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
+		dto.setInternacional(this.internacional);
+		dto.setLargo(this.getLargo());
+		dto.setManifiesto(this.getManifiesto().toDTO());
+		dto.setNombreReceptor(this.getNombreReceptor());
+		dto.setPeso(this.getPeso());
+		dto.setRefrigerado(this.refrigerado);
+		dto.setSucursalActual(this.getSucursalActual().toDTO());
+		dto.setSucursalDestino(this.getSucursalDestino().toDTO());
+		dto.setSucursalOrigen(this.getSucursalOrigen().toDTO());
+		dto.setTercerizada(this.tercerizado);
+		dto.setTratamiento(this.getTratamiento());
+		dto.setUnidadGranel(this.getUnidadGranel());
+		dto.setVolumen(this.getVolumen());
+		dto.setVolumenGranel(this.getVolumenGranel());
+		dto.setCliente(this.getCliente().toDTO());
+		return dto;
 	}
 
 	

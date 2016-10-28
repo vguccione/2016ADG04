@@ -17,6 +17,7 @@ import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
+import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.RolDao;
@@ -485,16 +486,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public DTO_ClienteParticular getClienteParticularByDni(String dni)throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return (DTO_ClienteParticular) ClienteDao.getInstancia().getByDni(dni).toDTO();
 	}
 	
 	public DTO_ClienteParticular getClienteParticularById(Integer idCliente) throws RemoteException {
-		return null;
+		return ClienteParticularDao.getInstancia().getById(idCliente).toDTO();
 	}
 	
 	public void eliminarCliente(Integer idCliente) throws RemoteException {
-		
+		ClienteDao.getInstancia().remove(ClienteDao.getInstancia().getById(idCliente));
 	}
 
 	public void altaClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException{
@@ -1086,6 +1086,17 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
         
 		 return listaDTO;
 		
+	}
+
+	@Override
+	public List<DTO_Factura> buscarFacturasByDniCliente(String filtro)
+			throws RemoteException {
+		List<DTO_Factura> listaDTO = new ArrayList<DTO_Factura>();
+		List<Factura> lista = FacturaDao.getInstancia().getFacturasByCliente(filtro,false);
+        for(Factura fac: lista)
+        	listaDTO.add( fac.toDTO());
+        
+		 return listaDTO;
 	}
 
 }

@@ -129,8 +129,7 @@ public class Cliente implements java.io.Serializable {
 		cli.setId(this.getIdCliente());
 		cli.setEmail(this.getEmail());	
 		cli.setEstado(this.getEstado());
-		cli.setTelefono(this.getTelefono());
-		
+		cli.setTelefono(this.getTelefono());		
 		cli.setDireccion(this.getDireccion().toDTO());
 		
 		return cli;

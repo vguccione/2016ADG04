@@ -33,8 +33,6 @@ public interface IAdministracionRemote {
 	public List<DTO_Usuario> listarEmpleados(Integer idSucursal) throws RemoteException;
 	public List<DTO_Usuario> getUsuarios() throws RemoteException;
 	public List<String> buscarRolesUsuario(int usuario) throws RemoteException;
-	public List<DTO_Factura> listarFacturasCliente() throws RemoteException;
-	public List<DTO_Factura> listarFacturasClientePendientes() throws RemoteException;
 	public List<DTO_Usuario> buscarUsuariosByNombreApellidoOUsuario(String filtro) throws RemoteException;
 	
 	/*************************** Sucursal *************************************/

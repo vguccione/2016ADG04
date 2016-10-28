@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
+
 
 public class DTO_Factura implements Serializable{
 
@@ -19,7 +21,7 @@ public class DTO_Factura implements Serializable{
 	//TODO: private List<DTO_DetalleReciboPago> detalleRecibo;
 	private boolean pagado;
 	private Integer idCuentaCorriente;
-	//private Integer idEncomienda;
+	private DTO_Encomienda Encomienda;
 	
 	public DTO_Factura(){
 	}
@@ -63,15 +65,28 @@ public class DTO_Factura implements Serializable{
 		
 		return false;
 	}
-/*
-	public float getTotal() {
-		return total;
+
+	
+	public List<DTO_ItemFactura> getDetalle() {
+		return detalle;
 	}
 
-	public void setTotal(float total) {
-		this.total = total;
+	public void setDetalle(List<DTO_ItemFactura> detalle) {
+		this.detalle = detalle;
 	}
-*/
+
+	public DTO_Encomienda getEncomienda() {
+		return Encomienda;
+	}
+
+	public void setEncomienda(DTO_Encomienda encomienda) {
+		Encomienda = encomienda;
+	}
+
+	public void setFechaVencimiento(Date fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
+	}
+
 	public List<DTO_ItemFactura> getItems() {
 		return detalle;
 	}

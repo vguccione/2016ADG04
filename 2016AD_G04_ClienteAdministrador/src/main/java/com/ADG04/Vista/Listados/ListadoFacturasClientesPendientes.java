@@ -63,7 +63,6 @@ public class ListadoFacturasClientesPendientes extends javax.swing.JFrame {
 					jTableListadoModel.addColumn("Numero");
 					jTableListadoModel.addColumn("Tipo");
 					jTableListadoModel.addColumn("Fecha");
-					jTableListadoModel.addColumn("Vencimiento");
 					jTableListadoModel.addColumn("Total");
 					if(listaDTO!=null){
 					for (DTO_Factura l :listaDTO){
@@ -75,7 +74,6 @@ public class ListadoFacturasClientesPendientes extends javax.swing.JFrame {
 						jTableListadoModel.addRow(new Object[] { 	l.getId(),
 																	l.getTipo(), 
 																	l.getFecha().toString(),
-																	l.getFechaVencimiento().toString(),
 																	Float.toString(total)			
 						});
 																

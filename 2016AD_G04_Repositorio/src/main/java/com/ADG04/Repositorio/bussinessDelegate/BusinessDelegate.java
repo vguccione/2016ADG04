@@ -672,6 +672,10 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public List<DTO_TareaMantenimientoRealizada> buscarTareasMantenimientoRealizadasPorVehiculo(String filtro) throws RemoteException{
 		return this.businessService.buscarTareasMantenimientoRealizadasPorVehiculo(filtro);
 	}
+
+	public List<DTO_Factura> buscarFacturasByDniCliente(String filtro)  throws RemoteException{
+		return this.businessService.buscarFacturasByDniCliente(filtro);
+	}
 	
 
 }

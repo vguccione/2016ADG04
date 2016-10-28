@@ -614,6 +614,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.getTareaMantenimiento(idTareaMantenimiento);
 	}
 	
+
 	public Integer facturarEncomiendaEmpresa(int idEncomienda)
 			throws RemoteException {
 		// TODO Auto-generated method stub

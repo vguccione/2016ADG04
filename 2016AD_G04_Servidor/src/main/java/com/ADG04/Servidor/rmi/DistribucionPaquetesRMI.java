@@ -817,6 +817,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	@Override
+
 	public List<DTO_Usuario> getUsuarios() throws RemoteException {
 		List<DTO_Usuario> lista = new ArrayList<DTO_Usuario>();
 		List<Usuario> listu = UsuarioDao.getInstancia().getAll();
@@ -895,7 +896,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public Integer cobrarEncomiendaParticular(Integer idFactura) throws RemoteException {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
@@ -957,6 +958,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			Integer idTareaMantenimiento) throws RemoteException {
 
 		return TareaMantenimientoDao.getInstancia().getById(idTareaMantenimiento).toDTO();
+	}
+
+	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 
 	}
 
@@ -992,13 +999,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		// TODO Auto-generated method stub
 		return null;
 
-	}
 
-	@Override
-	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

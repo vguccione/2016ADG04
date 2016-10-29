@@ -28,6 +28,7 @@ public class DTO_Encomienda implements Serializable{
 	private Date fechaCreacion;
 	private Date fechaEstimadaEntrega;
 	private String estado;
+	private String tipoEncomienda;
 
 	private float largo;
 	private float alto;
@@ -270,6 +271,13 @@ public class DTO_Encomienda implements Serializable{
 	public void setCliente(DTO_Cliente cliente) {
 		this.cliente = cliente;
 	}
+	public String getTipoEncomienda() {
+		return tipoEncomienda;
+	}
+	public void setTipoEncomienda(String tipoEncomienda) {
+		this.tipoEncomienda = tipoEncomienda;
+	}
+	
 
 	
 }

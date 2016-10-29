@@ -17,6 +17,7 @@ import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
 
 
 /**
@@ -36,10 +37,9 @@ public class ListadoFacturasClientes extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel jLabelTitulo;
+	public JLabel jLabelTitulo;
 	private JScrollPane jScrollPaneListadoVehiculos;
 	private JTable jTableListado;
-
 	private JTextField txtBusqueda;
 
 	public  ListadoFacturasClientes() {
@@ -47,6 +47,45 @@ public class ListadoFacturasClientes extends javax.swing.JFrame {
 		initGUI();
 	}
 	
+	public JLabel getJLabelTitulo(){
+		return this.jLabelTitulo;
+	}
+	
+	
+	
+	public JLabel getjLabelTitulo() {
+		return jLabelTitulo;
+	}
+
+	public void setjLabelTitulo(JLabel jLabelTitulo) {
+		this.jLabelTitulo = jLabelTitulo;
+	}
+
+	public JScrollPane getjScrollPaneListadoVehiculos() {
+		return jScrollPaneListadoVehiculos;
+	}
+
+	public void setjScrollPaneListadoVehiculos(
+			JScrollPane jScrollPaneListadoVehiculos) {
+		this.jScrollPaneListadoVehiculos = jScrollPaneListadoVehiculos;
+	}
+
+	public JTable getjTableListado() {
+		return jTableListado;
+	}
+
+	public void setjTableListado(JTable jTableListado) {
+		this.jTableListado = jTableListado;
+	}
+
+	public JTextField getTxtBusqueda() {
+		return txtBusqueda;
+	}
+
+	public void setTxtBusqueda(JTextField txtBusqueda) {
+		this.txtBusqueda = txtBusqueda;
+	}
+
 	private void initGUI() {
 		try {
 
@@ -77,7 +116,7 @@ public class ListadoFacturasClientes extends javax.swing.JFrame {
 				buscar.setBounds(440, 45, 89, 23);
 				JLabel info = new JLabel();
 				getContentPane().add(info);
-				info.setText("Ingrese nombre, apellido o dni. Vacio indica todos");
+				info.setText("Ingrese DNI del Cliente. Vacio indica todos");
 				info.setFont(new java.awt.Font("Verdana",1,8));
 				info.setBounds(80, 60, 500, 23);
 				
@@ -111,7 +150,15 @@ public class ListadoFacturasClientes extends javax.swing.JFrame {
 									total += it.getValor();
 								}
 								
-								jTableListadoModel.addRow(new Object[] { item.getId(), 
+								String dni = "";
+								DTO_Encomienda enc = Controlador.getInstancia().getEncomiendaParticular(item.getIdEncomienda());
+								if(enc==null)
+									enc = Controlador.getInstancia().getEncomiendaEmpresa(item.getIdEncomienda());
+								if(enc!=null){
+									int idCliente = enc.getCliente().getId();
+									dni = Controlador.getInstancia().getClienteById(idCliente).getDni();
+								}
+								jTableListadoModel.addRow(new Object[] { item.getId(), dni,
 																			item.getTipo(),
 																			item.getFecha().toString(),
 																			Float.toString(total),
@@ -156,10 +203,16 @@ public class ListadoFacturasClientes extends javax.swing.JFrame {
 						for(DTO_ItemFactura it:item.getItems()){
 							total += it.getValor();
 						}
-						int idCliente = item.getEncomienda().getCliente().getId();
+
 						String dni = "";
-						dni = Controlador.getInstancia().getClienteById(idCliente).getDni();
-								
+						DTO_Encomienda enc = Controlador.getInstancia().getEncomiendaParticular(item.getIdEncomienda());
+						if(enc==null)
+							enc = Controlador.getInstancia().getEncomiendaEmpresa(item.getIdEncomienda());
+						if(enc!=null){
+							int idCliente = enc.getCliente().getId();
+							dni = Controlador.getInstancia().getClienteById(idCliente).getDni();
+						}
+						
 						jTableListadoModel.addRow(new Object[] { item.getId(),
 																	dni,
 																	item.getTipo(),

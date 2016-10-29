@@ -18,6 +18,7 @@ import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.dao.ClienteParticularDao;
+import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.RolDao;
@@ -60,6 +61,7 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
@@ -79,9 +81,6 @@ import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public DistribucionPaquetesRMI() throws RemoteException {
@@ -897,7 +896,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente)
 	{
-		return null;
+		return ClienteEmpresaDao.getInstancia().getById(idCliente).toDTO();
 	}
 	
 	public Integer cobrarEncomiendaParticular(Integer idFactura) throws RemoteException {
@@ -1095,6 +1094,92 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<Factura> lista = FacturaDao.getInstancia().getFacturasByCliente(filtro,false);
         for(Factura fac: lista)
         	listaDTO.add( fac.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Seguro> buscarSegurosByProveedor(String filtro)
+			throws RemoteException {
+		List<DTO_Seguro> listaDTO = new ArrayList<DTO_Seguro>();
+		List<Seguro> lista = SeguroDao.getInstancia().getSegurosByProveedor(filtro);
+        for(Seguro sec: lista)
+        	listaDTO.add( sec.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_ServicioSeguridad> buscarServicioSeguridadByProveedor(
+			String filtro) throws RemoteException {
+		List<DTO_ServicioSeguridad> listaDTO = new ArrayList<DTO_ServicioSeguridad>();
+		List<ServicioSeguridad> lista = ServicioSeguridadDao.getInstancia().getServiciosSeguridadByProveedor(filtro);
+        for(ServicioSeguridad seg: lista)
+        	listaDTO.add( seg.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_TarifasCarrier> buscarTarifasCarrierByProveedor(
+			String filtro) throws RemoteException {
+		List<DTO_TarifasCarrier> listaDTO = new ArrayList<DTO_TarifasCarrier>();
+		List<TarifasCarrier> lista = TarifasCarrierDao.getInstancia().getTarifasCarrierByProveedor(filtro);
+        for(TarifasCarrier tc: lista)
+        	listaDTO.add( tc.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Factura> buscarFacturasPendientesByDniCliente(String filtro)
+			throws RemoteException {
+		List<DTO_Factura> listaDTO = new ArrayList<DTO_Factura>();
+		List<Factura> lista = FacturaDao.getInstancia().getFacturasByCliente(filtro,true);
+        for(Factura fac: lista)
+        	listaDTO.add( fac.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public DTO_Encomienda getEncomiendaParticular(Integer id)
+			throws RemoteException {
+		DTO_Encomienda enc = EncomiendaDao.getInstancia().getById(id).toDTO();
+		if(enc.getTipoEncomienda().contains("P"))
+			return enc;
+		else
+			return null;
+	}
+
+	@Override
+	public DTO_Encomienda getEncomiendaEmpresa(Integer id)
+			throws RemoteException {
+		DTO_Encomienda enc = EncomiendaDao.getInstancia().getById(id).toDTO();
+		if(enc.getTipoEncomienda().contains("E"))
+			return enc;
+		else
+			return null;
+	}
+
+	@Override
+	public List<DTO_Encomienda> listarEncomiendasParticulares()
+			throws RemoteException {
+		List<DTO_Encomienda> listaDTO = new ArrayList<DTO_Encomienda>();
+		List<Encomienda> lista = EncomiendaDao.getInstancia().getAllParticulares();
+        for(Encomienda enc: lista)
+        	listaDTO.add( enc.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Encomienda> listarEncomiendasEmpresas()
+			throws RemoteException {
+		List<DTO_Encomienda> listaDTO = new ArrayList<DTO_Encomienda>();
+		List<Encomienda> lista = EncomiendaDao.getInstancia().getAllEmpresas();
+        for(Encomienda enc: lista)
+        	listaDTO.add( enc.toDTO());
         
 		 return listaDTO;
 	}

@@ -21,6 +21,8 @@ import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
+import com.ADG04.Servidor.dao.FacturaDao;
+import com.ADG04.Servidor.dao.SeguroDao;
 import com.ADG04.Servidor.dao.TarifasCarrierDao;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.DireccionDao;
@@ -34,6 +36,7 @@ import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.model.TarifasCarrier;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.Coordenada;
@@ -59,7 +62,9 @@ import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_ItemRemito;
@@ -85,6 +90,12 @@ public class App
 
     public static void main( String[] args ) throws IOException, NotBoundException
     {
+    List<Encomienda> list = EncomiendaDao.getInstancia().getAllParticulares();
+    List<DTO_Encomienda> dtolist = new ArrayList<DTO_Encomienda>();
+    for(Encomienda enc:list){
+    	dtolist.add(enc.toDTO());
+    }
+    
  /*   
     DTO_Proveedor p = new DTO_Proveedor();
     p.setActivo("1");

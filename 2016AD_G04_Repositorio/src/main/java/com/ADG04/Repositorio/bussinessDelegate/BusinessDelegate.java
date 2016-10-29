@@ -19,6 +19,7 @@ import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
@@ -675,6 +676,41 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public List<DTO_Factura> buscarFacturasByDniCliente(String filtro)  throws RemoteException{
 		return this.businessService.buscarFacturasByDniCliente(filtro);
+	}
+
+	public List<DTO_Seguro> buscarSegurosByProveedor(String filtro) throws RemoteException {
+		return this.businessService.buscarSegurosByProveedor(filtro);
+	}
+
+	public List<DTO_ServicioSeguridad> buscarServicioSeguridadByProveedor(
+			String filtro) throws RemoteException {
+		return this.businessService.buscarServicioSeguridadByProveedor(filtro);
+	}
+
+	public List<DTO_TarifasCarrier> buscarTarifasCarrierByProveedor(
+			String filtro) throws RemoteException {
+		return this.businessService.buscarTarifasCarrierByProveedor(filtro);
+	}
+
+	public List<DTO_Factura> buscarFacturasPendientesByDniCliente(String filtro) throws RemoteException {
+		return this.businessService.buscarFacturasPendientesByDniCliente(filtro);
+	}
+
+	public DTO_Encomienda getEncomiendaParticular(Integer id)throws RemoteException {
+		return this.businessService.getEncomiendaParticular(id);
+	}
+
+	public DTO_Encomienda getEncomiendaEmpresa(Integer id)throws RemoteException {
+		return this.businessService.getEncomiendaEmpresa(id);
+	}
+
+	public List<DTO_Encomienda> listarEncomiendasParticulares()throws RemoteException {
+		return this.businessService.listarEncomiendasParticulares();
+	}
+
+	public List<DTO_Encomienda> listarEncomiendasEmpresas()
+			throws RemoteException {
+		return this.businessService.listarEncomiendasEmpresas();
 	}
 	
 

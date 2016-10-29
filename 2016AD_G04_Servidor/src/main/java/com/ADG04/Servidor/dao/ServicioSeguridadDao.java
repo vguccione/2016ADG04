@@ -1,5 +1,7 @@
 package com.ADG04.Servidor.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -27,16 +29,17 @@ public class ServicioSeguridadDao extends GenericDao<ServicioSeguridad, Integer>
 		return instancia;
 	}
 	
-	public ServicioSeguridad getByCuit(String cuit){
+	@SuppressWarnings("unchecked")
+	public List<ServicioSeguridad> getServiciosSeguridadByProveedor(String filtro) {
 		try {
-			  Query query = entityManager.createQuery("from ServicioSeguridad where cuit =:cuit");
-			  query.setParameter("cuit", cuit);
-			  ServicioSeguridad ss = (ServicioSeguridad) query.getSingleResult();
-			  return ss;
+			  String f = filtro + '%';
+			  Query query = entityManager.createQuery("from ServicioSeguridad s where s.proveedor.razonSocial like :filtro");
+			  query.setParameter("filtro", f);
+			  return query.getResultList();
 			       
 	        } catch (Exception e){
 	            System.out.println(e);
-	            System.out.println("Error en traer proveedor por cuit");
+	            System.out.println("Error en traer servicios seguridad por proveedor");
 	            return null;
 	        }
 	}

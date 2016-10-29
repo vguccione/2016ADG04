@@ -27,7 +27,7 @@ public interface IFacturaRemote {
 	public List<DTO_Factura> buscarFacturasByDniCliente(String filtro)  throws RemoteException;
 	public List<DTO_Factura> listarFacturasCliente() throws RemoteException;
 	public List<DTO_Factura> listarFacturasClientePendientes() throws RemoteException;
-	
+	public List<DTO_Factura> buscarFacturasPendientesByDniCliente(String filtro) throws RemoteException;	
 
 	public void addItem(int idFactura, int cantidad, float valor, String descripcion) throws RemoteException;
 	public void deleteItem(int idFactura, int idItem) throws RemoteException;

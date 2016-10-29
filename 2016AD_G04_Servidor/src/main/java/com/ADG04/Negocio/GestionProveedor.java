@@ -139,17 +139,10 @@ public class GestionProveedor {
 		}
 	}
 
-	
-	public DTO_ServicioSeguridad buscarServicioSeguridad(String cuit) {
-		return ServicioSeguridadDao.getInstancia().getByCuit(cuit).toDTO();
-	}
+
 	
 	public DTO_ServicioSeguridad getServicioSeguridad(Integer id) {
 		return ServicioSeguridadDao.getInstancia().getById(id).toDTO();
-	}
-	
-	public DTO_Seguro buscarSeguro(String cuit) {
-		return SeguroDao.getInstancia().getByCuit(cuit).toDTO();
 	}
 	
 	public DTO_Seguro getSeguro(Integer id) {
@@ -160,9 +153,6 @@ public class GestionProveedor {
 		return ProveedorDao.getInstancia().getById(id).toDTO();
 	}
 	
-	public DTO_TarifasCarrier buscarCarrier(String cuit) {
-		return TarifasCarrierDao.getInstancia().getByCuit(cuit).toDTO();
-	}
 	
 	public DTO_TarifasCarrier getCarrier(Integer id) {
 		return TarifasCarrierDao.getInstancia().getById(id).toDTO();

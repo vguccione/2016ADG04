@@ -21,7 +21,7 @@ public class DTO_Factura implements Serializable{
 	//TODO: private List<DTO_DetalleReciboPago> detalleRecibo;
 	private boolean pagado;
 	private Integer idCuentaCorriente;
-	private DTO_Encomienda Encomienda;
+	private Integer idEncomienda;
 	
 	public DTO_Factura(){
 	}
@@ -75,12 +75,13 @@ public class DTO_Factura implements Serializable{
 		this.detalle = detalle;
 	}
 
-	public DTO_Encomienda getEncomienda() {
-		return Encomienda;
+	
+	public Integer getIdEncomienda() {
+		return idEncomienda;
 	}
 
-	public void setEncomienda(DTO_Encomienda encomienda) {
-		Encomienda = encomienda;
+	public void setIdEncomienda(Integer idEncomienda) {
+		this.idEncomienda = idEncomienda;
 	}
 
 	public void setFechaVencimiento(Date fechaVencimiento) {

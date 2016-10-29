@@ -63,5 +63,8 @@ public interface IAdministracionRemote {
 	public List<DTO_Proveedor> getCarriers() throws RemoteException;
 	public List<DTO_Proveedor> getProveedores() throws RemoteException;
 	public List<DTO_Proveedor> buscarProveedorByRazonSocial(String filtro)  throws RemoteException;
+	public List<DTO_Seguro> buscarSegurosByProveedor(String filtro) throws RemoteException;
+	public List<DTO_ServicioSeguridad> buscarServicioSeguridadByProveedor(String filtro) throws RemoteException;
+	public List<DTO_TarifasCarrier> buscarTarifasCarrierByProveedor(String filtro) throws RemoteException;
 	
 }

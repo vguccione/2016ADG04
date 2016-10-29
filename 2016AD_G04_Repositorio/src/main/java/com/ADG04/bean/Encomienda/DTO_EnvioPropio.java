@@ -14,8 +14,6 @@ public class DTO_EnvioPropio extends DTO_Envio{
 		super();
 	}
 
-
-
 	public Integer getIdVehiculo() {
 		return idVehiculo;
 	}

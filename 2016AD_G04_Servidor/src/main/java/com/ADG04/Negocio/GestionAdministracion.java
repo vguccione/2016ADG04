@@ -120,6 +120,9 @@ private static GestionAdministracion instancia;
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
+
+		Usuario gerente = UsuarioDao.getInstancia().getById(sucursal.getIdGerente());
+				
 		/*Crear Direccion*/
 		Direccion dir = crearDireccion(sucursal.getDireccion());
 			
@@ -128,6 +131,7 @@ private static GestionAdministracion instancia;
 		s.setDescripcion(sucursal.getDescripcion());
 		s.setTelefono(sucursal.getTelefono());
 		s.setDireccion(dir);
+		s.setGerente(gerente);
 		
 		SucursalDao.getInstancia().persist(s);
 		

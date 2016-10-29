@@ -15,6 +15,7 @@ import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
@@ -386,6 +387,95 @@ public class Controlador {
 	public DTO_ClienteParticular getClienteById(int idCliente) {
 		try{
 			return  bd.getClienteParticularById(idCliente);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar cliente por id");
+		}
+		return null;
+	}
+
+	public List<DTO_Seguro> buscarSegurosPorProveedor(String filtro) {
+		try{
+			return  bd.buscarSegurosByProveedor(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar seguros por proveedor");
+		}
+		return null;
+	}
+	public List<DTO_ServicioSeguridad> buscarServiciosSeguridadPorProveedor(String filtro) {
+		try{
+			return  bd.buscarServicioSeguridadByProveedor(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar servicios seguridad por proveedor");
+		}
+		return null;
+	}
+	public List<DTO_TarifasCarrier> buscarTarifasCarrierPorProveedor(String filtro) {
+		try{
+			return  bd.buscarTarifasCarrierByProveedor(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar tarifas carrier por proveedor");
+		}
+		return null;
+	}
+
+	public List<DTO_Factura> buscarFacturasPendientesByDniCliente(String filtro) {
+		try{
+			return  bd.buscarFacturasPendientesByDniCliente(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar facturas por cliente");
+		}
+		return null;
+	}
+
+	public DTO_Encomienda getEncomiendaParticular(Integer id) {
+		try{
+			return bd.getEncomiendaParticular(id);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar encomienda");
+		}
+		return null;
+	}
+
+
+	public DTO_Encomienda getEncomiendaEmpresa(Integer id) {
+		try{
+			return bd.getEncomiendaEmpresa(id);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar encomienda");
+		}
+		return null;
+	}
+
+	public List<DTO_Encomienda> listarEncomiendasParticulares() {
+		try{
+			return  bd.listarEncomiendasParticulares();
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar encomiendas particulares");
+		}
+		return null;
+	}
+
+	public List<DTO_Encomienda> listarEncomiendasEmpresa() {
+		try{
+			return  bd.listarEncomiendasEmpresas();
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar encomiendas empresa");
+		}
+		return null;
+	}
+
+	public DTO_ClienteEmpresa getEmpresaById(Integer id) {
+		try{
+			return  bd.getClienteEmpresaById(id);
 		}
 		catch(Exception e){
 			System.out.println("Error al buscar cliente por id");

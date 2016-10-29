@@ -9,12 +9,16 @@ import java.util.Collection;
 import javax.swing.*;
 
 import com.ADG04.Controller.Controlador;
+import com.ADG04.Vista.Listados.BusquedaEncomienda;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
 import com.ADG04.Vista.Listados.ListadoCarriers;
 import com.ADG04.Vista.Listados.ListadoCliente;
 import com.ADG04.Vista.Listados.ListadoEmpresa;
 import com.ADG04.Vista.Listados.ListadoEmpresaSeguridad;
+import com.ADG04.Vista.Listados.ListadoEncomiendasEmpresa;
+import com.ADG04.Vista.Listados.ListadoEncomiendasParticular;
 import com.ADG04.Vista.Listados.ListadoFacturasClientes;
+import com.ADG04.Vista.Listados.ListadoFacturasClientesPendientes;
 import com.ADG04.Vista.Listados.ListadoPlanMantenimiento;
 import com.ADG04.Vista.Listados.ListadoProveedores;
 import com.ADG04.Vista.Listados.ListadoSeguros;
@@ -768,9 +772,21 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem28.setText("Busqueda");
 							JMenuItem28.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*BusquedaEncomienda inst = new BusquedaEncomienda();
+									BusquedaEncomienda inst = new BusquedaEncomienda();
 									inst.getFrame().setLocationRelativeTo(null);
-									inst.getFrame().setVisible(true);*/
+									inst.getFrame().setVisible(true);
+								}
+							});
+						}
+						{
+							JMenuItem29 = new JMenuItem();
+							JMenu2.add(JMenuItem29);
+							JMenuItem29.setText("Particulares");
+							JMenuItem29.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									ListadoEncomiendasParticular inst = new ListadoEncomiendasParticular();
+									inst.setLocationRelativeTo(null);
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -780,9 +796,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem29.setText("Empresa");
 							JMenuItem29.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoEncomiendasEmpresa inst = new ListadoEncomiendasEmpresa();
+									ListadoEncomiendasEmpresa inst = new ListadoEncomiendasEmpresa();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -914,7 +930,7 @@ public class VistaMenu extends javax.swing.JFrame {
 								jMenuItem24.setText("Facturas Pendientes");
 								jMenuItem24.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										ListadoFacturasClientes inst = new ListadoFacturasClientes();
+										ListadoFacturasClientesPendientes inst = new ListadoFacturasClientesPendientes();
 										inst.setLocationRelativeTo(null);
 										inst.setVisible(true);
 									}

@@ -86,4 +86,26 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 		return encsPendientes;
 	}
 
+	public List<Encomienda> getAllParticulares() {
+		List<Encomienda> encomiendas = new ArrayList<Encomienda>();
+		try{
+			encomiendas = entityManager.createQuery("select enc from Encomienda enc where tipoEncomienda='P'").getResultList();
+		}
+		catch(Exception e){
+			System.out.println("No existen encomiendas particulares");
+		}
+		return encomiendas;
+	}
+
+	public List<Encomienda> getAllEmpresas() {
+		List<Encomienda> encomiendas = new ArrayList<Encomienda>();
+		try{
+			encomiendas = entityManager.createQuery("select enc from Encomienda enc where tipoEncomienda='E'").getResultList();
+		}
+		catch(Exception e){
+			System.out.println("No existen encomiendas particulares");
+		}
+		return encomiendas;
+	}
+
 }

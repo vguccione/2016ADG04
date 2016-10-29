@@ -8,6 +8,7 @@ import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
@@ -50,4 +51,9 @@ public interface IEncomiendaRemote {
 	public void eliminarProducto(int idProducto, int idEncomienda) throws RemoteException;
 
 	public 	DTO_EnvioPropio getInfoEnvioPropio(int idEnvio)  throws RemoteException;
+
+	public DTO_Encomienda getEncomiendaParticular(Integer id)throws RemoteException;
+	public DTO_Encomienda getEncomiendaEmpresa(Integer id)throws RemoteException;
+	public List<DTO_Encomienda> listarEncomiendasParticulares()throws RemoteException;
+	public List<DTO_Encomienda> listarEncomiendasEmpresas()throws RemoteException;
 }

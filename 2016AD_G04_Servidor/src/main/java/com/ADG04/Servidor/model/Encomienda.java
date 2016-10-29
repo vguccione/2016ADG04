@@ -535,17 +535,21 @@ public class Encomienda implements java.io.Serializable {
 		dto.setCantApilable(this.getCantApilable());
 		dto.setCargaGranel(this.getCargaGranel());
 		dto.setCondicionTransporte(this.getCondicionTransporte());
+		dto.setTipoEncomienda(this.getTipoEncomienda());
+		if(this.getFactura()!=null)
+			dto.setFactura(this.getFactura().toDTO());
 		
 		dto.setDniReceptor(this.getDniReceptor());
 		dto.setEstado(this.getEstado());
-		dto.setFactura(this.getFactura().toDTO());
 		dto.setFechaCreacion(this.getFechaCreacion());
 		dto.setFragilidad(this.getFragilidad());
 		dto.setIdEncomienda(this.getIdEncomienda());
 		dto.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
 		dto.setInternacional(this.internacional);
 		dto.setLargo(this.getLargo());
-		dto.setManifiesto(this.getManifiesto().toDTO());
+		if(this.getManifiesto()!=null)
+			dto.setManifiesto(this.getManifiesto().toDTO());
+		
 		dto.setNombreReceptor(this.getNombreReceptor());
 		dto.setPeso(this.getPeso());
 		dto.setRefrigerado(this.refrigerado);

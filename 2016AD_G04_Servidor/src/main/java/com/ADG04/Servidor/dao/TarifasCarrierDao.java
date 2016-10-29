@@ -1,8 +1,11 @@
 package com.ADG04.Servidor.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.ADG04.Servidor.model.ServicioSeguridad;
 import com.ADG04.Servidor.model.TarifasCarrier;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.ClienteParticular;
@@ -26,16 +29,17 @@ public class TarifasCarrierDao extends GenericDao<TarifasCarrier, Integer> {
 		return instancia;
 	}
 	
-	public TarifasCarrier getByCuit(String cuit){
+	@SuppressWarnings("unchecked")
+	public List<TarifasCarrier> getTarifasCarrierByProveedor(String filtro) {
 		try {
-			  Query query = entityManager.createQuery("from Carrier where cuit =:cuit");
-			  query.setParameter("cuit", cuit);
-			  TarifasCarrier c = (TarifasCarrier) query.getSingleResult();
-			  return c;
+			  String f = filtro + '%';
+			  Query query = entityManager.createQuery("from TarifasCarrier t where t.proveedor.razonSocial like :filtro");
+			  query.setParameter("filtro", f);
+			  return query.getResultList();
 			       
 	        } catch (Exception e){
 	            System.out.println(e);
-	            System.out.println("Error en traer proveedor por cuit");
+	            System.out.println("Error en traer tarifas carrier por proveedor");
 	            return null;
 	        }
 	}

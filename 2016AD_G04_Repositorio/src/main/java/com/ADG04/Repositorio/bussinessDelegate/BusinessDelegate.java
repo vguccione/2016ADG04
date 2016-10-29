@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
@@ -24,6 +25,7 @@ import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
+import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
@@ -102,8 +104,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	}
 
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		this.businessService.altaSucursal(sucursal);
 	}
 
 
@@ -711,6 +712,34 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public List<DTO_Encomienda> listarEncomiendasEmpresas()
 			throws RemoteException {
 		return this.businessService.listarEncomiendasEmpresas();
+	}
+
+	public DTO_Coordenada getCoordenadasById(int id)throws RemoteException {
+		return this.businessService.getCoordenadasById(id);
+	}
+
+	public List<DTO_EnvioPropio> listarEnviosPropios()throws RemoteException {
+		return this.businessService.listarEnviosPropios();
+	}
+
+	public List<DTO_EnvioTercerizado> listarEnviosTercerizados() throws RemoteException {
+		return this.businessService.listarEnviosTercerizados();
+	}
+
+	public List<DTO_EnvioTercerizado> buscarEnviosByEstado(String filtro) throws RemoteException {
+		return this.businessService.buscarEnviosByEstado(filtro);
+	}
+	
+	public List<DTO_EnvioPropio> buscarEnviosPropiosByEstado(String filtro) throws RemoteException {
+		return this.businessService.buscarEnviosPropiosByEstado(filtro);
+	}
+
+	public List<DTO_Provincia> listarProvinciasByPais(String pais) throws RemoteException {
+		return this.businessService.listarProvinciasByPais(pais);
+	}
+
+	public DTO_Provincia buscarProvinciaByNombre(String prov) throws RemoteException {
+		return this.businessService.buscarProvinciaByNombre(prov);
 	}
 	
 

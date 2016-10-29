@@ -36,6 +36,10 @@ public class Sucursal implements java.io.Serializable {
 	@Column(name = "Telefono")
 	private String telefono;
 	
+	@OneToOne
+	@JoinColumn(name = "IdGerente", nullable = true)
+	private Usuario gerente;
+	
 	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "IdDireccion", nullable = false)
 	private Direccion direccion;
@@ -116,6 +120,14 @@ public class Sucursal implements java.io.Serializable {
 		this.enviosSucursalOrigen = enviosSucursalOrigen;
 	}
 
+	public Usuario getGerente() {
+		return gerente;
+	}
+
+	public void setGerente(Usuario gerente) {
+		this.gerente = gerente;
+	}
+
 	public List<Encomienda> getEncomiendasSucursalDestino() {
 		return encomiendasSucursalDestino;
 	}
@@ -190,6 +202,7 @@ public class Sucursal implements java.io.Serializable {
 		s.setDescripcion(this.descripcion);
 		s.setTelefono(this.telefono);
 		s.setDireccion(this.getDireccion().toDTO());
+		s.setIdGerente(this.getGerente().getIdUsuario());
 		return s;
 	}
 

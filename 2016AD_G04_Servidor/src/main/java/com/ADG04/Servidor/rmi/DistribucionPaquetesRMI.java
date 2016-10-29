@@ -19,8 +19,10 @@ import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
+import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoRealizadaDao;
@@ -37,6 +39,7 @@ import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.ClienteEmpresa;
 import com.ADG04.Servidor.model.Factura;
 import com.ADG04.Servidor.model.PlanMantenimiento;
+import com.ADG04.Servidor.model.Provincia;
 import com.ADG04.Servidor.model.Rol;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.TareaMantenimientoRealizada;
@@ -52,6 +55,7 @@ import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
@@ -66,6 +70,7 @@ import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
+import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
@@ -111,8 +116,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		GestionAdministracion.getInstancia().altaSucursal(sucursal);
 	}
 
 	
@@ -920,8 +924,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<DTO_Sucursal> listaDTO = new ArrayList<DTO_Sucursal>();
 		List<Sucursal> lista = SucursalDao.getInstancia().getAll();
         for(Sucursal suc: lista)
-        	listaDTO.add(suc.toDTO());
-        
+        	listaDTO.add(suc.toDTO()); 
 		 return listaDTO;
 	}
 
@@ -1182,6 +1185,71 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
         	listaDTO.add( enc.toDTO());
         
 		 return listaDTO;
+	}
+
+	@Override
+	public DTO_Coordenada getCoordenadasById(int id) throws RemoteException {
+		return CoordenadaDao.getInstancia().getById(id).toDTO();
+	}
+
+	@Override
+	public List<DTO_EnvioPropio> listarEnviosPropios() throws RemoteException {
+		List<DTO_EnvioPropio> listaDTO = new ArrayList<DTO_EnvioPropio>();
+		List<Envio> lista = EnvioDao.getInstancia().getEnviosPropios();
+        for(Envio env: lista)
+        	listaDTO.add( (DTO_EnvioPropio) env.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_EnvioTercerizado> listarEnviosTercerizados()
+			throws RemoteException {
+		List<DTO_EnvioTercerizado> listaDTO = new ArrayList<DTO_EnvioTercerizado>();
+		List<Envio> lista = EnvioDao.getInstancia().getEnviosTercerizados();
+        for(Envio env: lista)
+        	listaDTO.add( (DTO_EnvioTercerizado) env.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_EnvioTercerizado> buscarEnviosByEstado(String filtro)
+			throws RemoteException {
+		List<DTO_EnvioTercerizado> listaDTO = new ArrayList<DTO_EnvioTercerizado>();
+		List<Envio> lista = EnvioDao.getInstancia().getEnviosTercerizadosByEstado(filtro);
+        for(Envio env: lista)
+        	listaDTO.add( (DTO_EnvioTercerizado) env.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_EnvioPropio> buscarEnviosPropiosByEstado(String filtro)
+			throws RemoteException {
+		List<DTO_EnvioPropio> listaDTO = new ArrayList<DTO_EnvioPropio>();
+		List<Envio> lista = EnvioDao.getInstancia().getEnviosPropiosByEstado(filtro);
+        for(Envio env: lista)
+        	listaDTO.add( (DTO_EnvioPropio) env.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public List<DTO_Provincia> listarProvinciasByPais(String pais)
+			throws RemoteException {
+		List<DTO_Provincia> listaDTO = new ArrayList<DTO_Provincia>();
+		List<Provincia> lista = ProvinciaDao.getInstancia().getByPais(pais);
+        for(Provincia pr: lista)
+        	listaDTO.add( (DTO_Provincia) pr.toDTO());
+        
+		 return listaDTO;
+	}
+
+	@Override
+	public DTO_Provincia buscarProvinciaByNombre(String prov)
+			throws RemoteException {
+		return ProvinciaDao.getInstancia().getByNombre(prov).toDTO();
 	}
 
 }

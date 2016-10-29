@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
+
 
 @Entity
 @Table(name = "MapaDeRuta")
@@ -124,6 +126,17 @@ public class MapaDeRuta implements java.io.Serializable {
 
 	public void setCosto(float costo) {
 		this.costo = costo;
+	}
+
+	public DTO_MapaDeRuta toDTO() {
+		DTO_MapaDeRuta dto = new DTO_MapaDeRuta();
+		dto.setCantKm(this.getCantKm());
+		dto.setCosto(this.getCosto());
+		dto.setDuracion(this.getDuracion());
+		dto.setId(this.getIdMapaDeRuta());
+		dto.setIdSucursalDestino(this.getSucursalDestino().getIdSucursal());
+		dto.setIdSucursalOrigen(this.getSucursalOrigen().getIdSucursal());
+		return dto;
 	}
 	
 	

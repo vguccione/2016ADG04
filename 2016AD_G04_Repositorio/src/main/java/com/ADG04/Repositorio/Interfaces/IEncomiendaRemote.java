@@ -12,6 +12,7 @@ import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
+import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 
 public interface IEncomiendaRemote {
@@ -56,4 +57,10 @@ public interface IEncomiendaRemote {
 	public DTO_Encomienda getEncomiendaEmpresa(Integer id)throws RemoteException;
 	public List<DTO_Encomienda> listarEncomiendasParticulares()throws RemoteException;
 	public List<DTO_Encomienda> listarEncomiendasEmpresas()throws RemoteException;
+	public DTO_Coordenada getCoordenadasById(int id)throws RemoteException;
+	public List<DTO_EnvioPropio> listarEnviosPropios()throws RemoteException;
+	public List<DTO_EnvioTercerizado> listarEnviosTercerizados()throws RemoteException;
+	public List<DTO_EnvioTercerizado> buscarEnviosByEstado(String filtro) throws RemoteException;
+	public List<DTO_EnvioPropio> buscarEnviosPropiosByEstado(String filtro) throws RemoteException;
+
 }

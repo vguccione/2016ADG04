@@ -13,6 +13,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.bean.Encomienda.DTO_Coordenada;
+
 
 @Entity
 @Table(name = "Coordenada")
@@ -73,5 +75,12 @@ public class Coordenada implements java.io.Serializable {
 		this.rutas = rutas;
 	}
 
+	public DTO_Coordenada toDTO(){
+		DTO_Coordenada dto = new DTO_Coordenada();
+		dto.setId(this.getIdCoordenada());
+		dto.setLatitud(this.getLatitud());
+		dto.setLongitud(this.getLongitud());
+		return dto;
+	}
 
 }

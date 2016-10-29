@@ -6,8 +6,11 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
+import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
@@ -15,7 +18,11 @@ import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
+import com.ADG04.bean.Encomienda.DTO_Coordenada;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
+import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
+import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
@@ -479,6 +486,111 @@ public class Controlador {
 		}
 		catch(Exception e){
 			System.out.println("Error al buscar cliente por id");
+		}
+		return null;
+	}
+
+	public List<DTO_EnvioPropio> listarEnviosPropios() {
+		try{
+			return  bd.listarEnviosPropios();
+		}
+		catch(Exception e){
+			System.out.println("Error al listar envios");
+		}
+		return null;
+	}
+
+	public DTO_Coordenada getCoordenadaById(int id) {
+		try{
+			return  bd.getCoordenadasById(id);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar coordenadas por id");
+		}
+		return null;
+	}
+
+	public List<DTO_EnvioTercerizado> listarEnviosTercerizados() {
+		try{
+			return  bd.listarEnviosTercerizados();
+		}
+		catch(Exception e){
+			System.out.println("Error al listar envios");
+		}
+		return null;
+	}
+
+	public List<DTO_EnvioTercerizado> buscarEnviosByEstado(String filtro) {
+		try{
+			return  bd.buscarEnviosByEstado(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al listar envios");
+		}
+		return null;
+	}
+	
+	public List<DTO_EnvioPropio> buscarEnviosPropiosByEstado(String filtro) {
+		try{
+			return  bd.buscarEnviosPropiosByEstado(filtro);
+		}
+		catch(Exception e){
+			System.out.println("Error al listar envios");
+		}
+		return null;
+	}
+
+	public boolean altaSucursal(String text, String text2, String string,
+			String text3, String text4, String text5, DTO_Usuario gerente) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public List<DTO_Provincia> listarProvincias(String pais) {
+		try{
+			return  bd.listarProvinciasByPais(pais);
+		}
+		catch(Exception e){
+			System.out.println("Error al listar provincias");
+		}
+		return null;
+	}
+
+	public void altaSucursal(String desc, String calle, String prov,
+			String loc, String codPostal, String telefono, String dniGerente) {
+		try{
+			DTO_Sucursal sucursal = new DTO_Sucursal();
+			sucursal.setDescripcion(desc);
+			sucursal.setTelefono(telefono);
+			
+			DTO_Provincia provincia = buscarProvinciaByNombre(prov);
+			
+			DTO_Direccion dir = new DTO_Direccion();
+			dir.setCalle(calle);
+			dir.setCodigoPostal(Integer.valueOf(codPostal));
+			dir.setLocalidad(loc);
+			dir.setProvincia(provincia);
+			dir.setPais(provincia.getPais());
+			
+			DTO_Usuario gerente =bd.getUsuarioPorDni(dniGerente);
+			
+			sucursal.setDireccion(dir);
+			sucursal.setIdGerente(gerente.getId());
+			
+			bd.altaSucursal(sucursal);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al dar de alta la sucursal");
+		}}
+
+
+	private DTO_Provincia buscarProvinciaByNombre(String prov) {
+		try{
+			return  bd.buscarProvinciaByNombre(prov);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar provincia");
 		}
 		return null;
 	}

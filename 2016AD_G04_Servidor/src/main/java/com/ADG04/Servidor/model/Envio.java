@@ -24,6 +24,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
+import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
+
 
 @Entity
 @Table(name = "Envio")
@@ -208,9 +212,6 @@ public class Envio implements java.io.Serializable {
 		this.encomiendas = encomiendas;
 	}
 
-
-
-
 	@Override
 	public String toString() {
 		return "Envio [idEnvio=" + idEnvio 
@@ -220,6 +221,30 @@ public class Envio implements java.io.Serializable {
 				+ ", fechaYHoraLlegadaEstimada=" + fechaYHoraLlegadaEstimada
 				+ ", fechaYHoraSalida=" + fechaYHoraSalida + ", propio="
 				+ propio + ", nroTracking=" + nroTracking + "]";
+	}
+	
+	public DTO_Envio toDTO(){
+		if(this.propio){
+			DTO_EnvioPropio dto = new DTO_EnvioPropio();
+			dto.setId(this.getIdEnvio());
+			dto.setEstado(this.getEstado());
+			dto.setPosicionActual(this.getPosicionActual().toDTO());
+			dto.setFechaYHoraLlegada(this.getFechaYHoraLlegadaEstimada());
+			dto.setFechaYHoraSalida(this.getFechaYHoraSalida());
+			dto.setIdHojaDeRuta(this.getMapaDeRuta().getIdMapaDeRuta());
+			dto.setIdVehiculo(this.getVehiculo().getIdVehiculo());
+			return dto;
+		}
+		else{
+			DTO_EnvioTercerizado dto = new DTO_EnvioTercerizado();
+			dto.setId(this.getIdEnvio());
+			dto.setEstado(this.getEstado());
+			dto.setPosicionActual(this.getPosicionActual().toDTO());
+			dto.setIdProveedor(this.getProveedor().getIdProveedor());
+			dto.setNumeroTracking(String.valueOf(this.getNroTracking()));
+			return dto;
+		}
+		
 	}
 	
 	

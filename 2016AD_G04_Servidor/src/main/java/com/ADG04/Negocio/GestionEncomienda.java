@@ -821,6 +821,7 @@ public class GestionEncomienda {
 				envioTercerizado.setFechaYHoraSalida(new Date());
 				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
 				envioTercerizado.setMapaDeRuta(mr);
+				envioTercerizado.setPropio(false);
 				List<Encomienda> lista = new ArrayList<Encomienda>();
 				lista.add(e);
 				envioTercerizado.setEncomiendas(lista);
@@ -861,6 +862,7 @@ public class GestionEncomienda {
 							List<Encomienda> encomiendas = envProp.getEncomiendas();
 							encomiendas.add(e);
 							envProp.setEncomiendas(encomiendas);
+							envProp.setPropio(true);
 					
 							float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
 							float peso70 = (float)(peso + e.getPeso()/pesoTotal);
@@ -913,6 +915,7 @@ public class GestionEncomienda {
 								envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
 								envioPropio.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
 								envioPropio.setVehiculo(v);
+								envioPropio.setPropio(true);
 								envioPropio.setSucursalOrigen(e.getSucursalActual());
 								envioPropio.setSucursalDestino(e.getSucursalDestino());
 								envioPropio.setMapaDeRuta(mr);

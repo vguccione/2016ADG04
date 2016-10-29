@@ -9,6 +9,7 @@ import java.util.Collection;
 import javax.swing.*;
 
 import com.ADG04.Controller.Controlador;
+import com.ADG04.Vista.Administrativos.AltaSucursal;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
 import com.ADG04.Vista.Listados.ListadoCarriers;
@@ -17,6 +18,8 @@ import com.ADG04.Vista.Listados.ListadoEmpresa;
 import com.ADG04.Vista.Listados.ListadoEmpresaSeguridad;
 import com.ADG04.Vista.Listados.ListadoEncomiendasEmpresa;
 import com.ADG04.Vista.Listados.ListadoEncomiendasParticular;
+import com.ADG04.Vista.Listados.ListadoEnviosPropios;
+import com.ADG04.Vista.Listados.ListadoEnviosTercerizados;
 import com.ADG04.Vista.Listados.ListadoFacturasClientes;
 import com.ADG04.Vista.Listados.ListadoFacturasClientesPendientes;
 import com.ADG04.Vista.Listados.ListadoPlanMantenimiento;
@@ -503,9 +506,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem3.setText("Alta Sucursal");
 							JMenuItem3.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaAltaSucursal inst = new VistaAltaSucursal();
+									AltaSucursal inst = new AltaSucursal();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -819,9 +822,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem26.setText("Propios");
 							JMenuItem26.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoEnviosPropios inst = new ListadoEnviosPropios();
+									ListadoEnviosPropios inst = new ListadoEnviosPropios();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -831,9 +834,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem27.setText("Tercerizados");
 							JMenuItem27.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoEnviosTercerizados inst = new ListadoEnviosTercerizados();
+									ListadoEnviosTercerizados inst = new ListadoEnviosTercerizados();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

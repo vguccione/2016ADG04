@@ -90,12 +90,30 @@ public class App
 
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-    List<Encomienda> list = EncomiendaDao.getInstancia().getAllParticulares();
-    List<DTO_Encomienda> dtolist = new ArrayList<DTO_Encomienda>();
-    for(Encomienda enc:list){
-    	dtolist.add(enc.toDTO());
-    }
-    
+   
+    	DTO_Direccion dir = new DTO_Direccion();
+    	DTO_Sucursal sucursal = new DTO_Sucursal();
+    	Pais pais = (Pais) PaisDao.getInstancia().getById(1);
+    	Provincia prov = (Provincia) ProvinciaDao.getInstancia().getById(1);
+    	
+    	dir.setCalle("peperulo calle");
+    	dir.setCodigoPostal(1234);
+    	dir.setLocalidad("Capital Federal");
+    	dir.setNro(123);
+    	dir.setPais(pais.toDTO());
+    	dir.setProvincia(prov.toDTO());
+    	
+    	sucursal.setDescripcion("asdfsa");
+    	
+    	sucursal.setTelefono("123456");
+    	sucursal.setDireccion(dir);
+    	
+    	//GestionAdministracion.getInstancia().altaSucursal(sucursal);
+    	
+    	BusinessDelegate bd = new BusinessDelegate();
+    	bd.altaSucursal(sucursal);
+    	
+    	
  /*   
     DTO_Proveedor p = new DTO_Proveedor();
     p.setActivo("1");

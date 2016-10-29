@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.Provincia;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
@@ -41,6 +42,32 @@ public class ProvinciaDao extends GenericDao<Provincia, Integer> {
             System.out.println("ErrorDAO: Listar provincias");
 		}
 		return null;
+	}
+
+	public List<Provincia> getByPais(String pais) {
+		String p = pais +'%';
+		try{
+			return entityManager.createQuery("from Provincia where pais.descripcion like :pais")
+					            .setParameter("pais", p)
+					            .getResultList();
+			}catch(Exception e){
+	            System.out.println(e);
+	            System.out.println("ErrorDAO: Listar provincias");
+			}
+			return null;
+	}
+
+	public Provincia getByNombre(String prov) {
+		String p = prov +'%';
+		try{
+			return (Provincia) entityManager.createQuery("from Provincia where descripcion like :prov")
+					            .setParameter("prov", p)
+					            .getSingleResult();
+			}catch(Exception e){
+	            System.out.println(e);
+	            System.out.println("ErrorDAO: Listar provincias");
+			}
+			return null;
 	}
 
 }

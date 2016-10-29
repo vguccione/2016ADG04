@@ -88,6 +88,68 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		}
 		return envio;
 	}
+
+	public List<Envio> getEnviosPropios() {
+		try{
+			List<Envio> envios = entityManager.createQuery("from Envio e where propio=1 "
+					+ "ORDER BY idEnvio DESC ")
+				.getResultList();
+			return envios;
+		}
+		catch(Exception e){
+			System.out.println("No hay envios propios");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<Envio> getEnviosTercerizados() {
+		try{
+			List<Envio> envios = entityManager.createQuery("from Envio e where propio=0"
+					+ " ORDER BY idEnvio DESC")
+				.getResultList();
+			return envios;
+		}
+		catch(Exception e){
+			System.out.println("No hay envios propios");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public List<Envio> getEnviosTercerizadosByEstado(String filtro) {
+		String f = filtro+'%';
+		try{
+			@SuppressWarnings("unchecked")
+			List<Envio> envios = entityManager.createQuery("from Envio e where propio=0"
+					+ " AND estado like :filtro "
+					+ " ORDER BY idEnvio DESC").setParameter("filtro", f)
+				.getResultList();
+			return envios;
+		}
+		catch(Exception e){
+			System.out.println("No hay envios tercerizados con ese estado");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<Envio> getEnviosPropiosByEstado(String filtro) {
+		String f = filtro+'%';
+		try{
+			@SuppressWarnings("unchecked")
+			List<Envio> envios = entityManager.createQuery("from Envio e where propio=1"
+					+ " AND estado like :filtro"
+					+ " ORDER BY idEnvio DESC").setParameter("filtro", f)
+				.getResultList();
+			return envios;
+		}
+		catch(Exception e){
+			System.out.println("No hay envios propios con ese estado");
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 
 }

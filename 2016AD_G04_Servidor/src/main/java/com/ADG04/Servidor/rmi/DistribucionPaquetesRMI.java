@@ -18,9 +18,11 @@ import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.dao.ClienteParticularDao;
+import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.FacturaDao;
+import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolDao;
@@ -37,7 +39,9 @@ import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.Cliente;
 import com.ADG04.Servidor.model.ClienteEmpresa;
+import com.ADG04.Servidor.model.ClienteParticular;
 import com.ADG04.Servidor.model.Factura;
+import com.ADG04.Servidor.model.Pais;
 import com.ADG04.Servidor.model.PlanMantenimiento;
 import com.ADG04.Servidor.model.Provincia;
 import com.ADG04.Servidor.model.Rol;
@@ -55,6 +59,7 @@ import com.ADG04.Servidor.model.Proveedor;
 import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
@@ -91,50 +96,94 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public DistribucionPaquetesRMI() throws RemoteException {
 		super();
 	}
+	
+	/*Direccion*/
 
-	public void altaUsuario(DTO_Usuario Usuario) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void altaUsuario(DTO_Usuario usuario) throws RemoteException {
+		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
+		List<Rol> roles = (List<Rol>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
+	
+		Usuario u= new Usuario();
+		u.setNombre(usuario.getNombre());
+		u.setApellido(usuario.getApellido());
+		u.setDni(usuario.getDni());
+		u.setUltimoAcceso(usuario.getUltimoAcceso());
+		u.setFechaCreacion(usuario.getFechaCreacion());
+		u.setSucursal(suc);
+		u.setRoles(roles);
+		u.setUsuario(usuario.getNombreUsuario());
+		u.setPassword(usuario.getPassword());
 		
+		GestionAdministracion ga = new GestionAdministracion(u, new Sucursal(), new Pais(), new Provincia(), new Direccion());
+		ga.guardarUsuario();
 	}
 
-	public void modificarUsuario(DTO_Usuario Usuario) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void modificarUsuario(DTO_Usuario usuario) throws RemoteException {
+		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
+		List<Rol> roles = (List<Rol>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
+	
+		Usuario u= new Usuario();
+		u.setNombre(usuario.getNombre());
+		u.setApellido(usuario.getApellido());
+		u.setDni(usuario.getDni());
+		u.setUltimoAcceso(usuario.getUltimoAcceso());
+		u.setFechaCreacion(usuario.getFechaCreacion());
+		u.setSucursal(suc);
+		u.setRoles(roles);
+		u.setIdUsuario(usuario.getIdUsuario());
+		u.setUsuario(usuario.getNombreUsuario());
+		u.setPassword(usuario.getPassword());
 		
+		GestionAdministracion ga = new GestionAdministracion(u, new Sucursal(), new Pais(), new Provincia(), new Direccion());
+		ga.modificarUsuario();
 	}
 
 	public void bajaUsuario(Integer idUsuario) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		UsuarioDao.getInstancia().removeById(idUsuario);
 	}
 
 	public DTO_Usuario getUsuario(Integer idUsuario) throws RemoteException {
-		return GestionAdministracion.getInstancia().getUsuario(idUsuario);
+		return UsuarioDao.getInstancia().getById(idUsuario).toDTO();
 	}
 
 	public DTO_Usuario getUsuario(String dni) throws RemoteException {
-		return GestionAdministracion.getInstancia().getUsuarioByDni(dni);
+		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
 	}
 	
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
-		GestionAdministracion.getInstancia().altaSucursal(sucursal);
+		Sucursal suc = new Sucursal();
+		suc.setDescripcion(sucursal.getDescripcion());
+		suc.setGerente(UsuarioDao.getInstancia().getById(sucursal.getIdGerente()));
+		suc.setTelefono(sucursal.getTelefono());
+		Direccion dir = DireccionDao.getInstancia().getById(sucursal.getDireccion().getIdDireccion());
+		suc.setDireccion(dir);
+		
+		GestionAdministracion ga = new GestionAdministracion(new Usuario(),suc, new Pais(), new Provincia(), new Direccion() );
+		ga.guardarSucursal();
 	}
 
 	
 	public void modificarSucursal(DTO_Sucursal sucursal) throws RemoteException {
-		// TODO Auto-generated method stub
+		Sucursal suc = new Sucursal();
+		suc.setIdSucursal(sucursal.getId());
+		suc.setDescripcion(sucursal.getDescripcion());
+		suc.setGerente(UsuarioDao.getInstancia().getById(sucursal.getIdGerente()));
+		suc.setTelefono(sucursal.getTelefono());
+		Direccion dir = DireccionDao.getInstancia().getById(sucursal.getDireccion().getIdDireccion());
+		suc.setDireccion(dir);
+		
+		GestionAdministracion ga = new GestionAdministracion(new Usuario(),suc, new Pais(), new Provincia(), new Direccion() );
+		ga.modificarSucursal();
 		
 	}
 
 	
 	public void bajaSucursal(Integer idSucursal) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		SucursalDao.getInstancia().removeById(idSucursal);	
 	}
 
-	
 	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		 return SucursalDao.getInstancia().getById(idSucursal).toDTO();
 	}
 
 	
@@ -157,6 +206,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 
+	public ClienteParticular getClienteByDni(String dniCliente) {
+		
+		return ClienteParticularDao.getInstancia().getByDni(dniCliente);
+		
+	}
 
 	
 	public DTO_ClienteParticular getClienteParticular(String dni) throws RemoteException {
@@ -336,7 +390,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			String fragilidad, String nombreReceptor, String apellidoReceptor, String dniReceptor, float volumenGranel, 
 			String unidadGranel) throws RemoteException {
 		
-		int idCliente = GestionAdministracion.getInstancia().getClienteByDni(dniCliente).getIdCliente();
+		int idCliente = ClienteDao.getInstancia().getByDni(dniCliente).getIdCliente();
 		
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();
 		cli.setId(idCliente);
@@ -351,12 +405,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		encomienda.setSucursalDestino(sucursalDestino);
 		encomienda.setLargo(largo);
 		encomienda.setAncho(ancho);
-			
-		//Calendar calendar = Calendar.getInstance();
-		//calendar.setTime(new Date()); // Configuramos la fecha que se recibe
-		//calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
-		//Date fecha = calendar.getTime();
-		
+				
 		encomienda.setFechaEstimadaEntrega(GestionEncomienda.getInstancia().calcularFechaEstimadaDeEntrega(
 		sucursalOrigen.getId(),	sucursalDestino.getId()));
 		
@@ -515,7 +564,9 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	    p.setEmail(prov.getEmail());
 	    p.setRazonSocial(prov.getRazonSocial());
 	    p.setTelefono(prov.getTelefono());
-	    Direccion dir = GestionAdministracion.getInstancia().crearDireccion(prov.getDireccion());
+	    
+	    GestionAdministracion ga = new GestionAdministracion();
+	    Direccion dir = ga.crearDireccion(prov.getDireccion());
 		
 		p.setDireccion(dir);
 		
@@ -1252,4 +1303,21 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		return ProvinciaDao.getInstancia().getByNombre(prov).toDTO();
 	}
 
+	public List<DTO_Pais> listarPaises(){
+		List<Pais> paises = PaisDao.getInstancia().getAll();
+		List<DTO_Pais> paisesDTO = new ArrayList<DTO_Pais>();
+	    for(Pais pais : paises){
+	    	paisesDTO.add(pais.toDTO());	    		
+	    }
+		return paisesDTO;
+	}
+	
+	public List<DTO_Provincia> listarProvincias(int idPais){
+		List<Provincia> provincias = ProvinciaDao.getInstancia().getByPais(idPais);
+		List<DTO_Provincia> provinciasDTO = new ArrayList<DTO_Provincia>();
+	    for(Provincia prov : provincias){
+	    	provinciasDTO.add(prov.toDTO());	    		
+	    }
+		return provinciasDTO;
+	}
 }

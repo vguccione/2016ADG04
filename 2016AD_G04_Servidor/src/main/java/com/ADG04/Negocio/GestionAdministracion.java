@@ -32,159 +32,88 @@ import com.ADG04.bean.Administracion.DTO_Usuario;
 
 public class GestionAdministracion {
 
-private static GestionAdministracion instancia;
-	
+
 	private EntityManagerFactory factory;
 	
-	private GestionAdministracion(){
+	private Usuario usuario;
+	private Sucursal sucursal;
+	private Pais pais;
+	private Provincia provincia;
+	private Direccion direccion;
+	
+	public GestionAdministracion(Usuario usuario, Sucursal sucursal, Pais pais,
+			Provincia provincia, Direccion direccion) {
+		super();
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
+		this.usuario = usuario;
+		this.sucursal = sucursal;
+		this.pais = pais;
+		this.provincia = provincia;
+		this.direccion = direccion;
 	}
-	
-	public static GestionAdministracion getInstancia(){
-		if(instancia == null){
-			instancia = new GestionAdministracion();
-		} 
-		return instancia;
-	}
-	
-	/*Usuario*/
-	
-	public void altaUsuario(DTO_Usuario usuario) {
-		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
-		List<Rol> roles = (List<Rol>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
-		
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		
-		Usuario u= new Usuario();
-		u.setNombre(usuario.getNombre());
-		u.setApellido(usuario.getApellido());
-		u.setDni(usuario.getDni());
-		u.setUltimoAcceso(usuario.getUltimoAcceso());
-		u.setFechaCreacion(usuario.getFechaCreacion());
-		u.setSucursal(suc);
-		u.setRoles(roles);
-		u.setUsuario(usuario.getNombreUsuario());
-		u.setPassword(usuario.getPassword());
-		
-		UsuarioDao.getInstancia().persist(u);
-		tx.commit();
-	}
-	
-	public void modificarUsuario(DTO_Usuario usuario) {
-		Sucursal suc = (Sucursal) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
-		List<Rol> roles = (List<Rol>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
-		
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		
-		Usuario u= new Usuario();
-		u.setNombre(usuario.getNombre());
-		u.setApellido(usuario.getApellido());
-		u.setDni(usuario.getDni());
-		u.setUltimoAcceso(usuario.getUltimoAcceso());
-		u.setFechaCreacion(usuario.getFechaCreacion());
-		u.setSucursal(suc);
-		u.setRoles(roles);
-		u.setUsuario(usuario.getNombreUsuario());
-		u.setPassword(usuario.getPassword());
-		
-		UsuarioDao.getInstancia().saveOrUpdate(u);
-		tx.commit();
-	}
-	
-	
-	public void bajaUsuario(Integer idUsuario){	
-		EntityManager em = factory.createEntityManager();	
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		
-		Usuario u = UsuarioDao.getInstancia().getById(idUsuario);
-		
-		if (u != null)
-			UsuarioDao.getInstancia().remove(u); //baja logica o total?
-		
-		tx.commit();
-	}
-	
-	
 
+	public GestionAdministracion() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	/*Usuario*/	
+
+	public void guardarUsuario() {
+		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		UsuarioDao.getInstancia().persist(usuario);
+		tx.commit();
+	}
+	
+	public void modificarUsuario() {
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();		
+		UsuarioDao.getInstancia().saveOrUpdate(usuario);
+		tx.commit();
+	}
 	 
 		
 	/*Sucursal*/
-
-	public int altaSucursal(DTO_Sucursal sucursal) {	
+	public void guardarSucursal() {	
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		
-
-		Usuario gerente = UsuarioDao.getInstancia().getById(sucursal.getIdGerente());
 				
-		/*Crear Direccion*/
-		Direccion dir = crearDireccion(sucursal.getDireccion());
-			
-		/*Crear Sucursal*/		
-		Sucursal s = new Sucursal();
-		s.setDescripcion(sucursal.getDescripcion());
-		s.setTelefono(sucursal.getTelefono());
-		s.setDireccion(dir);
-		s.setGerente(gerente);
-		
-		SucursalDao.getInstancia().persist(s);
+		SucursalDao.getInstancia().persist(sucursal);
 		
 		tx.commit();
-		
-		return s.getIdSucursal();
 	}
 
-	public void modificarSucursal(DTO_Sucursal sucursal) {
+	public void modificarSucursal() {
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		
-		/*Crear Direccion*/
-		Direccion dir = crearDireccion(sucursal.getDireccion());
-		
-		Sucursal s = new Sucursal();
-		s.setDescripcion(sucursal.getDescripcion());
-		s.setTelefono(sucursal.getTelefono());
-		s.setDireccion(dir);
-		
-		SucursalDao.getInstancia().saveOrUpdate(s);
+		SucursalDao.getInstancia().saveOrUpdate(sucursal);
 		tx.commit();
 	}
-
-	public void bajaSucursal(Integer idSucursal){
+	
+	
+	public void guardarPais(){
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		
-		Sucursal s = SucursalDao.getInstancia().getById(idSucursal);
-		
-		if (s != null)
-			SucursalDao.getInstancia().remove(s); //baja logica o total?
-		
+		PaisDao.getInstancia().persist(pais);
 		tx.commit();
 	}
-
-	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException {
-		 return SucursalDao.getInstancia().getById(idSucursal).toDTO();
+	
+	public void guardarProvincia(){
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		ProvinciaDao.getInstancia().persist(provincia);
+		tx.commit();
 	}
 	
-
-	 public List<DTO_Sucursal> listarSucursales(){
-		 List<Sucursal> sucursales = SucursalDao.getInstancia().getAll();
-		 List<DTO_Sucursal> sucursalesDTO = new ArrayList<DTO_Sucursal>();
-		 for(Sucursal sucursal : sucursales){
-	    	sucursalesDTO.add(sucursal.toDTO());	    		
-	    }
-		return sucursalesDTO;
-	 }
-	
-	/*Direccion*/
 	
 	public Direccion crearDireccion(DTO_Direccion direccion) {
 		
@@ -207,62 +136,5 @@ private static GestionAdministracion instancia;
 		
 		return dir;
 	}
-	
-	public List<DTO_Pais> listarPaises(){
-		List<Pais> paises = PaisDao.getInstancia().getAll();
-		List<DTO_Pais> paisesDTO = new ArrayList<DTO_Pais>();
-	    for(Pais pais : paises){
-	    	paisesDTO.add(pais.toDTO());	    		
-	    }
-		return paisesDTO;
-	}
-	
-	public List<DTO_Provincia> listarProvincias(int idPais){
-		List<Provincia> provincias = ProvinciaDao.getInstancia().getByPais(idPais);
-		List<DTO_Provincia> provinciasDTO = new ArrayList<DTO_Provincia>();
-	    for(Provincia prov : provincias){
-	    	provinciasDTO.add(prov.toDTO());	    		
-	    }
-		return provinciasDTO;
-	}
-		
-	
-	public void altaPais(DTO_Pais pais){
-		Pais p = new Pais();
-		p.setDescripcion(pais.getDescripcion());
-		
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		PaisDao.getInstancia().persist(p);
-		tx.commit();
-	}
-	
-	public void altaProvincia(DTO_Provincia prov){
-		Provincia p = new Provincia();
-		System.out.println(PaisDao.getInstancia().getById(prov.getPais().getId()));
-		p.setPais(PaisDao.getInstancia().getById(prov.getPais().getId()));
-		p.setDescripcion(prov.getDescripcion());
-		
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		ProvinciaDao.getInstancia().persist(p);
-		tx.commit();
-	}
 
-	public ClienteParticular getClienteByDni(String dniCliente) {
-		
-		return ClienteParticularDao.getInstancia().getByDni(dniCliente);
-		
-	}
-
-	public DTO_Usuario getUsuario(Integer idUsuario) {
-		return UsuarioDao.getInstancia().getById(idUsuario).toDTO();
-	}
-
-	public DTO_Usuario getUsuarioByDni(String dni) {
-		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
-	}
-	
 }

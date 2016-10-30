@@ -62,7 +62,8 @@ public class GestionCliente {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(clienteParticular.getDireccion());
+		GestionAdministracion ga = new GestionAdministracion();
+		Direccion dir = ga.crearDireccion(clienteParticular.getDireccion());
 		c.setDireccion(dir);
 		ClienteDao.getInstancia().persist(c);
 		
@@ -85,7 +86,8 @@ public class GestionCliente {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(clienteParticular.getDireccion());
+		GestionAdministracion ga = new GestionAdministracion();
+		Direccion dir = ga.crearDireccion(clienteParticular.getDireccion());
 		c.setDireccion(dir);
 		ClienteDao.getInstancia().saveOrUpdate(c);
 		
@@ -109,7 +111,8 @@ public class GestionCliente {
 		
 		c.setCuentaCorrientes(cc);
 		
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(clienteEmpresa.getDireccion());
+		GestionAdministracion ga = new GestionAdministracion();
+		Direccion dir = ga.crearDireccion(clienteEmpresa.getDireccion());
 		c.setDireccion(dir);
 		
 		
@@ -137,7 +140,8 @@ public class GestionCliente {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 
-		Direccion dir = GestionAdministracion.getInstancia().crearDireccion(clienteEmpresa.getDireccion());
+		GestionAdministracion ga = new GestionAdministracion();
+		Direccion dir = ga.crearDireccion(clienteEmpresa.getDireccion());
 		c.setDireccion(dir);
 		ClienteDao.getInstancia().saveOrUpdate(c);
 		

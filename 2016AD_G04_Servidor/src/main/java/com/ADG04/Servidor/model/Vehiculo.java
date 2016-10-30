@@ -68,12 +68,21 @@ public class Vehiculo implements java.io.Serializable {
 
 	@Column(name = "Patente", nullable = false, length = 15)
 	private String patente;
+	
+	@Column(name="TemperaturaMin", nullable=true)
+	private Float temperaturaMin;
+	
+	@Column(name="TemperaturaMax", nullable=true)
+	private Float temperaturaMax;
 
 	@Column(name = "Anio", nullable = false)
 	private String anio;
 
 	@Column(name = "Tara", nullable = false, precision = 53, scale = 0)
 	private float tara;
+	
+	@Column(name="Tipo")
+	private String tipo;
 	
 	@ManyToOne
 	@JoinColumn(name="idSucursal")
@@ -92,11 +101,11 @@ public class Vehiculo implements java.io.Serializable {
 	public Vehiculo() {
 	}
 
-	public Vehiculo(String estado, float largo, float alto, float ancho,
+  	public Vehiculo(String estado, float largo, float alto, float ancho,
 			float peso, float volumen, Boolean refrigerado,
 			String condicionTransporte, float kmRecorridos, String marca,
-			String modelo, String patente, String anio, float tara,
-			//List<CondicionesEspecialesVehiculo> condicionesEspecialesVehiculos,
+			String modelo, String patente, Float temperaturaMin,
+			Float temperaturaMax, String anio, float tara, String tipo,
 			Date fechaIngreso) {
 		super();
 		this.estado = estado;
@@ -111,11 +120,14 @@ public class Vehiculo implements java.io.Serializable {
 		this.marca = marca;
 		this.modelo = modelo;
 		this.patente = patente;
+		this.temperaturaMin = temperaturaMin;
+		this.temperaturaMax = temperaturaMax;
 		this.anio = anio;
 		this.tara = tara;
-		//this.condicionesEspecialesVehiculos = condicionesEspecialesVehiculos;
+		this.tipo = tipo;
 		FechaIngreso = fechaIngreso;
 	}
+
 
 
 
@@ -284,6 +296,33 @@ public class Vehiculo implements java.io.Serializable {
 			List<CondicionesEspecialesVehiculo> condicionesEspecialesVehiculos) {
 		this.condicionesEspecialesVehiculos = condicionesEspecialesVehiculos;
 	}
+	
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
+	
+
+	public Float getTemperaturaMin() {
+		return temperaturaMin;
+	}
+
+	public void setTemperaturaMin(Float temperaturaMin) {
+		this.temperaturaMin = temperaturaMin;
+	}
+
+	public Float getTemperaturaMax() {
+		return temperaturaMax;
+	}
+
+	public void setTemperaturaMax(Float temperaturaMax) {
+		this.temperaturaMax = temperaturaMax;
+	}
 
 	public DTO_Vehiculo toDTO() {
 		DTO_Vehiculo v = new DTO_Vehiculo();
@@ -298,6 +337,9 @@ public class Vehiculo implements java.io.Serializable {
 		v.setModelo(modelo);
 		v.setPatente(patente);
 		v.setPeso(peso);
+		v.setTipo(tipo);
+		v.setTemperaturaMax(temperaturaMax);
+		v.setTemperaturaMin(temperaturaMin);
 		if(refrigerado==null)
 			refrigerado = false;
 		else

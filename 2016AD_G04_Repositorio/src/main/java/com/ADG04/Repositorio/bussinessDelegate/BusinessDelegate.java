@@ -70,21 +70,18 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	}
 
 
-	public void altaUsuario(DTO_Usuario Usuario) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+	public void altaUsuario(DTO_Usuario usuario) throws RemoteException {
+		this.businessService.altaUsuario(usuario);
 	}
 
 
-	public void modificarUsuario(DTO_Usuario Usuario) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+	public void modificarUsuario(DTO_Usuario usuario) throws RemoteException {
+		this.businessService.modificarUsuario(usuario);
 	}
 
 
 	public void bajaUsuario(Integer idUsuario) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		this.businessService.bajaUsuario(idUsuario);
 	}
 
 
@@ -109,13 +106,13 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 
 	public void modificarSucursal(DTO_Sucursal sucursal) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.modificarSucursal(sucursal);
 		
 	}
 
 
 	public void bajaSucursal(Integer idSucursal) throws RemoteException {
-		// TODO Auto-generated method stub
+		this.businessService.bajaSucursal(idSucursal);
 		
 	}
 
@@ -184,8 +181,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public void altaClienteEmpresa(DTO_ClienteEmpresa empresa)
 			throws RemoteException {
-		this.businessService.altaClienteEmpresa(empresa);
-		
+		this.businessService.altaClienteEmpresa(empresa);	
 	}
 
 
@@ -740,6 +736,10 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public DTO_Provincia buscarProvinciaByNombre(String prov) throws RemoteException {
 		return this.businessService.buscarProvinciaByNombre(prov);
+	}
+
+	public DTO_PlanMantenimiento getPlanMantenimiento(Integer id) throws RemoteException{
+		return this.businessService.getPlanMantenimiento(id);
 	}
 	
 

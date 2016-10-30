@@ -11,6 +11,7 @@ public class DTO_Vehiculo implements Serializable{
 	
 	private Integer id;
 	private Date fechaIngreso;
+	private String tipo;
 
 	private float largo;
 	private float ancho;
@@ -20,6 +21,9 @@ public class DTO_Vehiculo implements Serializable{
 	private boolean refrigerado;
 	private String condicionTransporte;
 	private float kmsRecorridos;
+	private Float temperaturaMin;
+	private Float temperaturaMax;
+	
 
 	private String patente;
 	private String modelo;
@@ -244,7 +248,7 @@ public class DTO_Vehiculo implements Serializable{
 	public void setSucursal(DTO_Sucursal sucursal) {
 		this.sucursal = sucursal;
 	}
-/*
+
 	public Float getTemperaturaMin() {
 		return temperaturaMin;
 	}
@@ -260,7 +264,7 @@ public class DTO_Vehiculo implements Serializable{
 	public void setTemperaturaMax(Float temperaturaMax) {
 		this.temperaturaMax = temperaturaMax;
 	}
-*/
+
 	public DTO_PlanMantenimiento getPlanMantenimiento() {
 		return planMantenimiento;
 	}
@@ -272,6 +276,16 @@ public class DTO_Vehiculo implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
+	
 /*
 	public Integer getIdEnvio() {
 		return idEnvio;

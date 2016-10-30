@@ -550,10 +550,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	public void altaClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException{
-		
+		GestionCliente gCliente = GestionCliente.getInstancia();
+		gCliente.altaClienteEmpresa(empresa);
 	}
 	public void modificarClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException{
-		
+		GestionCliente gCliente = GestionCliente.getInstancia();
+		gCliente.modificarClienteEmpresa(empresa);
 	}
 	
 	public void altaProveedor(DTO_Proveedor prov) throws RemoteException {
@@ -655,7 +657,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		Vehiculo veh = new Vehiculo(v.getEstado(), v.getLargo(), v.getAlto(), v.getAncho(), v.getPeso(), v.getVolumen(), 
 				v.getRefrigerado(), v.getCondicionTransporte(), v.getKmsRecorridos(), v.getMarca(), v.getModelo(), v.getPatente(), 
-				v.getAnio(), v.getTara(),v.getFechaIngreso());
+				v.getTemperaturaMin(), v.getTemperaturaMax(), v.getAnio(), v.getTara(), v.getTipo(), v.getFechaIngreso());
 		
 		GestionVehiculo gVehiculo = new GestionVehiculo(veh);
 		gVehiculo.setSucursal(SucursalDao.getInstancia().getById(v.getSucursal().getId()));
@@ -1319,5 +1321,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	    	provinciasDTO.add(prov.toDTO());	    		
 	    }
 		return provinciasDTO;
+	}
+
+	@Override
+	public DTO_PlanMantenimiento getPlanMantenimiento(Integer id)
+			throws RemoteException {
+		return PlanMantenimientoDao.getInstancia().getById(id).toDTO();
 	}
 }

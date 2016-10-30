@@ -52,6 +52,7 @@ import com.ADG04.Servidor.model.Seguro;
 import com.ADG04.Servidor.model.Sucursal;
 import com.ADG04.Servidor.model.TareaMantenimiento;
 import com.ADG04.Servidor.model.TareaMantenimientoPorKm;
+import com.ADG04.Servidor.model.Usuario;
 import com.ADG04.Servidor.model.Vehiculo;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
@@ -169,23 +170,6 @@ public class App
     	System.exit(0);
     }
     
-	private static void crearPaisesYProvincias(){
-    	DTO_Pais pais = new DTO_Pais();
-    	pais.setDescripcion("Argentina");
-    	GestionAdministracion.getInstancia().altaPais(pais);
-    	
-    	DTO_Provincia prov = new DTO_Provincia();
-    	prov.setDescripcion("Mendoza");
-    	prov.setPais(PaisDao.getInstancia().getById(1).toDTO());
-    	GestionAdministracion.getInstancia().altaProvincia(prov);
-    	
-    	prov.setDescripcion("Cordoba");
-    	prov.setPais(PaisDao.getInstancia().getById(1).toDTO());
-    	GestionAdministracion.getInstancia().altaProvincia(prov);
-    	
-    	pais.setDescripcion("Peru");
-    	GestionAdministracion.getInstancia().altaPais(pais);
-    }
     	private static void TestAltaCliente() {  	
     	DTO_Direccion dir = new DTO_Direccion();
     	
@@ -211,49 +195,7 @@ public class App
 		
 		GestionCliente.getInstancia().altaClienteParticular(cliParticular);
     }
-
-	public static void TestUsuario(){
-    	DTO_Usuario usuario = new DTO_Usuario();
-    	usuario.setApellido("Pepe");
-    	usuario.setDni("212328");
-    	usuario.setFechaCreacion(new Date());
-    	usuario.setNombre("pepepe");
-    	usuario.setPassword("xxxxxx");
-    	usuario.setUltimoAcceso(new Date());
-    	usuario.setIdSucursal(1);
-    	
-    	Rol rol = RolDao.getInstancia().getById(1);
-    	
-    	List<DTO_Rol> roles = new ArrayList<DTO_Rol>();
-    	DTO_Rol drol = rol.toDTO();
-    	roles.add(drol);
-    	
-    	usuario.setRoles(roles);
-    	
-    	GestionAdministracion.getInstancia().altaUsuario(usuario);
-    }
-    
-	public static void TestSucursal(String descripcion){
-		
-		DTO_Direccion dir = new DTO_Direccion();
-    	DTO_Sucursal sucursal = new DTO_Sucursal();
-    	Pais pais = (Pais) PaisDao.getInstancia().getById(1);
-    	Provincia prov = (Provincia) ProvinciaDao.getInstancia().getById(1);
-    	
-    	dir.setCalle("peperulo calle");
-    	dir.setCodigoPostal(1234);
-    	dir.setLocalidad("Capital Federal");
-    	dir.setNro(123);
-    	dir.setPais(pais.toDTO());
-    	dir.setProvincia(prov.toDTO());
-    	
-    	sucursal.setDescripcion(descripcion);
-    	sucursal.setTelefono("123456");
-    	sucursal.setDireccion(dir);
-    	    	
-    	GestionAdministracion.getInstancia().altaSucursal(sucursal);
-    }
-		
+	
 	public static void TestFacturaEncomiendaParticular(){
 		
 		System.out.println("---------------TestFacturaEncomiendaParticular--------------------");

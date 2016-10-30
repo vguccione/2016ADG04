@@ -20,5 +20,10 @@
        <scope>system</scope>
        <systemPath>${basedir}/../2016AD_G04_Repositorio/target/2016AD_G04_Repositorio-0.0.1-SNAPSHOT.jar</systemPath>
     </dependency>
+    <dependency>
+    <groupId>com.toedter</groupId>
+    <artifactId>jcalendar</artifactId>
+    <version>1.4</version>
+</dependency>
   </dependencies>
 </project>

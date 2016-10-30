@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -17,6 +18,7 @@ import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
+import com.ADG04.bean.Cliente.DTO_CuentaCorriente;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
@@ -595,5 +597,110 @@ public class Controlador {
 		return null;
 	}
 
+	public Vector armarComboProvincias(String pais){
+		List<DTO_Provincia> lista = listarProvincias(pais);
+		Vector v =new Vector();
+		int i=0;
+		for(DTO_Provincia p:lista){
+			v.add(i,p.getDescripcion());
+			i++;
+		}
+		return v;
+	}
+
+	public void altaCliente(String razonSocial, String cuit, boolean activa, String calle,
+			String codPostal, String loc, String prov, String pais, String email,
+			 String telefono, float limiteCredito, String formaPago) {
+		try{
+			DTO_ClienteEmpresa cliente = new DTO_ClienteEmpresa();
+			cliente.setCuit(cuit);
+			cliente.setRazonSocial(razonSocial);
+			cliente.setTelefono(telefono);
+			cliente.setEstado(activa);
+			cliente.setEmail(email);
+	
+			DTO_CuentaCorriente cte = new DTO_CuentaCorriente();
+			cte.setFormaPago(formaPago);
+			cte.setLimiteCredito(limiteCredito);
+			cliente.setCuentaCorriente(cte);
+			
+			DTO_Provincia provincia = buscarProvinciaByNombre(prov);
+			DTO_Direccion dir = new DTO_Direccion();
+			dir.setCalle(calle);
+			dir.setCodigoPostal(Integer.valueOf(codPostal));
+			dir.setLocalidad(loc);
+			dir.setProvincia(provincia);
+			dir.setPais(provincia.getPais());
+			
+			cliente.setDireccion(dir);
+			
+			bd.altaClienteEmpresa(cliente);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al guardar cliente empresa");
+		}
+	}
+
+	public boolean altaVehiculo(String tipo, String patente, String marca,
+			String modelo, Float km, Float ancho, Float alto,
+			Float largo, Float peso, Float tara, Float volumen,
+			Date fechaIngreso, Date fechaUltMant, Integer idSucursal,
+			Integer idSucursalActual, float temperaturaMin,
+			float temperaturaMax, Integer idPlan) {
+		 try {
+				DTO_Vehiculo v = new DTO_Vehiculo();
+				v.setTipo(tipo);
+				v.setPatente(patente);
+				v.setMarca(marca);
+				v.setModelo(modelo);
+				v.setKmsRecorridos(km);
+				v.setAncho(ancho);
+				v.setAlto(alto);
+				v.setLargo(largo);
+				v.setPeso(peso);
+				v.setTara(tara);
+				v.setVolumen(volumen);
+				v.setFechaIngreso(fechaIngreso);
+			/*	v.setUltimoMantenimiento(fechaUltMant);
+				v.setUltimoUso(fechaUltUso);
+				v.setVencimientoGarantia(vencimientoGarantia); */
+				v.setSucursal(this.getSucursal(idSucursal));
+				//v.setIdSucursalActual(idSucursalActual);
+				//v.setTemperaturaMin(temperaturaMin);
+				//v.setTemperaturaMax(temperaturaMax);
+				v.setPlanMantenimiento(this.getPlanMantenimiento(idPlan));
+					
+				bd.altaVehiculo(v);
+				return true;
+			 } catch (RemoteException e) {
+				 System.out.println(e);
+				 System.out.println("Error al crear vehiculo");
+			 }   
+			 return false;
+	}
+
+	public DTO_PlanMantenimiento getPlanMantenimiento(Integer id) {
+		try{
+			return  bd.getPlanMantenimiento(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar plan de mantenimiento");
+		}
+		return null;
+	}
+
+	public DTO_Sucursal getSucursal(Integer id) {
+		try{
+			return  bd.getSucursal(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar sucursal");
+		}
+		return null;
+	}
+	
 	
 }

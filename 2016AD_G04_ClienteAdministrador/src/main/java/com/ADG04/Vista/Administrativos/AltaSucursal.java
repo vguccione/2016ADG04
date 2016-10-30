@@ -342,15 +342,8 @@ public class AltaSucursal extends javax.swing.JFrame {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JComboBox getJComboBox1() {
 		if(jComboBoxProvincias == null) {
-			List<DTO_Provincia> lista = Controlador.getInstancia().listarProvincias("Argentina");
-			Vector v =new Vector();
-			int i=0;
-			for(DTO_Provincia p:lista){
-				v.add(i,p.getDescripcion());
-				i++;
-			}
 			ComboBoxModel jComboBoxProvinciasModel = 
-					new DefaultComboBoxModel(v);
+					new DefaultComboBoxModel(Controlador.getInstancia().armarComboProvincias("Argentina"));
 			jComboBoxProvincias = new JComboBox();
 			jComboBoxProvincias.setModel(jComboBoxProvinciasModel);
 			jComboBoxProvincias.setBounds(94, 79, 354, 20);

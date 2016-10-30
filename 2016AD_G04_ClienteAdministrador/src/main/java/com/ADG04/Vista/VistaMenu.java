@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.Vista.Administrativos.AltaSucursal;
+import com.ADG04.Vista.Clientes.AltaClienteEmpresa;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
 import com.ADG04.Vista.Listados.ListadoCarriers;
@@ -32,6 +33,7 @@ import com.ADG04.Vista.Listados.ListadoTareasRealizadas;
 import com.ADG04.Vista.Listados.ListadoTarifasCarriers;
 import com.ADG04.Vista.Listados.ListadoUsuarios;
 import com.ADG04.Vista.Listados.ListadoVehiculos;
+import com.ADG04.Vista.Vehiculos.AltaVehiculo;
 import com.ADG04.bean.Administracion.DTO_Rol;
 
 
@@ -239,11 +241,11 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem5 = new JMenuItem();
 							JMenuCliente.add(JMenuItem5);
 							JMenuItem5.setLayout(null);
-							JMenuItem5.setText("Alta Cliente");
+							JMenuItem5.setText("Alta Empresa");
 							JMenuItem5.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaAltaCliente inst = new VistaAltaCliente();
-									inst.getFrmAplicacionesDistribuidas().setVisible(true);*/
+									AltaClienteEmpresa inst = new AltaClienteEmpresa();
+									inst.getFrmAplicacionesDistribuidas().setVisible(true);
 								}
 							});
 						}
@@ -604,9 +606,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemAltaVehiculo.setText("Alta Vehiculo");
 							JMenuItemAltaVehiculo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaAltaVehiculo inst = new VistaAltaVehiculo();
+									AltaVehiculo inst = new AltaVehiculo();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

@@ -45,6 +45,7 @@ public class AltaVehiculo extends javax.swing.JFrame {
 	private JLabel anchoLabel;
 	private JLabel largoLabel;
 	private JLabel tempMinimaLabel;
+	private JLabel anioLabel;
 	private JRadioButton CamionetaRadioButton;
 	private JRadioButton TractorRadioButton;
 	private JRadioButton CamionConCajaRadioButton;
@@ -74,6 +75,7 @@ public class AltaVehiculo extends javax.swing.JFrame {
 	private JLabel marcaLabel;
 	private JLabel tipoLabel;
 	private JTextField patenteTextField;
+	private JTextField anioTextField;
 	private JLabel pesoLabel;
 	private JButton jButton2;
 	private JFormattedTextField jFormattedTextField1;
@@ -142,6 +144,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 					jPanel1.add(getTractorRadioButton());
 					jPanel1.add(getCamionetaRadioButton());
 					jPanel1.add(getOtroRadioButton());
+					jPanel1.add(getAnioLabel());
+					jPanel1.add(getAnioTextField());
 					tipoLabel.setText("Tipo");
 					tipoLabel.setBounds(5, 55, 31, 36);
 					tipoLabel.setFont(new java.awt.Font("Verdana",0,11));
@@ -184,6 +188,24 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		return modeloLabel;
 	}
 	
+	private JLabel getAnioLabel() {
+		if(anioLabel == null) {
+			anioLabel = new JLabel();
+			anioLabel.setText("Anio");
+			anioLabel.setFont(new java.awt.Font("Verdana",0,11));
+			anioLabel.setBounds(350, 144, 59, 21);
+		}
+		return anioLabel;
+	}
+	
+	private JTextField getAnioTextField() {
+		if(anioTextField == null) {
+			anioTextField = new JTextField();
+			anioTextField.setBounds(385 ,  144, 59, 21);
+		}
+		return anioTextField;
+	}
+	
 	private JFormattedTextField getModeloTextField() {
 		if(modeloTextField == null) {
 			modeloTextField = new JFormattedTextField();
@@ -196,7 +218,7 @@ public class AltaVehiculo extends javax.swing.JFrame {
 	private JLabel getKmLabel() {
 		if(kmLabel == null) {
 			kmLabel = new JLabel();
-			kmLabel.setText("Kil�metros");
+			kmLabel.setText("Kilometros");
 			kmLabel.setFont(new java.awt.Font("Verdana",0,11));
 			kmLabel.setBounds(187, 147, 66, 14);
 		}
@@ -216,7 +238,7 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(jPanel2 == null) {
 			jPanel2 = new JPanel();
 			jPanel2.setLayout(null);
-			jPanel2.setBorder(BorderFactory.createTitledBorder("Caracter�sticas del vehiculo"));
+			jPanel2.setBorder(BorderFactory.createTitledBorder("Caracteristicas del vehiculo"));
 			jPanel2.setBounds(12, 238, 490, 380);
 			jPanel2.add(getAnchoLabel());
 			jPanel2.add(getJLabel1());
@@ -340,7 +362,7 @@ public class AltaVehiculo extends javax.swing.JFrame {
 	private JLabel getVolumenLabel() {
 		if(volumenLabel == null) {
 			volumenLabel = new JLabel();
-			volumenLabel.setText("Volumen [m�]");
+			volumenLabel.setText("Volumen [mt]");
 			volumenLabel.setFont(new java.awt.Font("Verdana",0,11));
 			volumenLabel.setBounds(5, 75, 89, 14);
 		}
@@ -378,7 +400,7 @@ public class AltaVehiculo extends javax.swing.JFrame {
 	private JLabel getUMantenimientoLabel() {
 		if(uMantenimientoLabel == null) {
 			uMantenimientoLabel = new JLabel();
-			uMantenimientoLabel.setText("�ltimo Mantenimiento");
+			uMantenimientoLabel.setText("ultimo Mantenimiento");
 			uMantenimientoLabel.setFont(new java.awt.Font("Verdana",0,11));
 			uMantenimientoLabel.setBounds(5, 229, 130, 23);
 		}
@@ -527,7 +549,7 @@ public class AltaVehiculo extends javax.swing.JFrame {
 						
 						boolean flag = Controlador.getInstancia().altaVehiculo(tipo, patenteTextField.getText(),
 								marcaTextField.getText(),String.valueOf(modeloTextField.getValue()), (Float)kmTextField.getValue(),
-								(Float)Ancho.getValue(), (Float)altoTextField.getValue(), (Float)largoTextField.getValue(),
+								anioTextField.getText(),(Float)Ancho.getValue(), (Float)altoTextField.getValue(), (Float)largoTextField.getValue(),
 								(Float)pesoTextField.getValue(), (Float)taraTextField.getValue(), (Float)volumenTextField.getValue(), 
 								jDateChooserFechaIngreso.getDate(),
 								jDateChooserUMAntenimiento.getDate(),(Integer)sucursalTextField.getValue(), (Integer)sucursalTextField.getValue(), (Float)tempMinimaTextField.getValue(), 

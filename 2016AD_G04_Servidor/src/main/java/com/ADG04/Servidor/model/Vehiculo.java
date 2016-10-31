@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
@@ -348,6 +349,8 @@ public class Vehiculo implements java.io.Serializable {
 		v.setTara(tara);
 		v.setVolumen(volumen);
 		v.setFechaIngreso(this.getFechaIngreso());
+		PlanMantenimiento pm = PlanMantenimientoDao.getInstancia().getById(this.getPlanMantenimiento().getIdPlanMantenimiento());
+		v.setPlanMantenimiento(pm.toDTO());
 		return v;
 	}
 

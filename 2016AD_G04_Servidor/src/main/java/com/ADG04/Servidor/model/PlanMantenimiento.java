@@ -98,6 +98,7 @@ public class PlanMantenimiento implements java.io.Serializable {
 
 	public DTO_PlanMantenimiento toDTO() {
 		DTO_PlanMantenimiento dto = new DTO_PlanMantenimiento();
+		dto.setId(this.getIdPlanMantenimiento());
 		dto.setComentarios(this.getComentarios());
 		dto.setDescripcion(this.getDescripcion());
 		return dto;

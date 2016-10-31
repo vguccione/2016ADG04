@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Pais;
+import com.ADG04.Servidor.model.PaisE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PaisDao extends GenericDao<Pais, Integer> {
+public class PaisDao extends GenericDao<PaisE, Integer> {
 
 	
 	private static PaisDao instancia;

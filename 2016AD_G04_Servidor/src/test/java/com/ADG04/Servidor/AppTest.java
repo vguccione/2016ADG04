@@ -3,7 +3,7 @@ package com.ADG04.Servidor;
 import java.util.List;
 
 import com.ADG04.Servidor.dao.VehiculoDao;
-import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.model.VehiculoE;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

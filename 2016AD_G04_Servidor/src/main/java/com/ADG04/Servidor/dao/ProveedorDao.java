@@ -4,9 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Cliente;
-import com.ADG04.Servidor.model.Proveedor;
-import com.ADG04.Servidor.model.TarifasCarrier;
+import com.ADG04.Servidor.model.ClienteE;
+import com.ADG04.Servidor.model.ProveedorE;
+import com.ADG04.Servidor.model.TarifasCarrierE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProveedorDao extends GenericDao<Proveedor, Integer> {
+public class ProveedorDao extends GenericDao<ProveedorE, Integer> {
 
 	private static ProveedorDao instancia;
 
@@ -32,11 +32,11 @@ public class ProveedorDao extends GenericDao<Proveedor, Integer> {
 		return instancia;
 	}
 
-	public List<Proveedor> getByTipo(char tipo) {
+	public List<ProveedorE> getByTipo(char tipo) {
 		try {
 			  Query query = entityManager.createQuery("from Proveedor where tipo =:tipo");
 			  query.setParameter("tipo", tipo);
-			  List<Proveedor> lista = query.getResultList();
+			  List<ProveedorE> lista = query.getResultList();
 			  return lista;
 			       
 	        } catch (Exception e){
@@ -46,7 +46,7 @@ public class ProveedorDao extends GenericDao<Proveedor, Integer> {
 	        }
 		}
 
-	public List<Proveedor> getProveedorByRazonSocial(String filtro) {
+	public List<ProveedorE> getProveedorByRazonSocial(String filtro) {
 		try{
 			String f= filtro+"%";
 			return entityManager

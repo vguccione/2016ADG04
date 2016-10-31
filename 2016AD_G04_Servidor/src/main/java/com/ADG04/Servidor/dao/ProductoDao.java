@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Producto;
+import com.ADG04.Servidor.model.ProductoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProductoDao extends GenericDao<Producto, Integer> {
+public class ProductoDao extends GenericDao<ProductoE, Integer> {
 
 	private static ProductoDao instancia;
 
@@ -30,8 +30,8 @@ public class ProductoDao extends GenericDao<Producto, Integer> {
 		return instancia;
 	}
 
-	public Producto getByClienteCodigo(Integer idCliente, String codigoProducto) {
-		return (Producto) entityManager.createQuery("select p from Producto p where p.idCliente=:idCliente and p.codigoProducto=:codigoProducto")
+	public ProductoE getByClienteCodigo(Integer idCliente, String codigoProducto) {
+		return (ProductoE) entityManager.createQuery("select p from Producto p where p.idCliente=:idCliente and p.codigoProducto=:codigoProducto")
 						    .setParameter("idCliente", idCliente)
 						    .setParameter("codigoProducto", codigoProducto)
 						    .getSingleResult();

@@ -608,7 +608,7 @@ public class Controlador {
 		return v;
 	}
 
-	public void altaCliente(String razonSocial, String cuit, boolean activa, String calle,
+	public void altaClienteEmpresa(String razonSocial, String cuit, boolean activa, String calle,
 			String codPostal, String loc, String prov, String pais, String email,
 			 String telefono, float limiteCredito, String formaPago) {
 		try{
@@ -642,6 +642,37 @@ public class Controlador {
 		}
 	}
 
+	public void altaClienteParticular(String nombre, String apellido, boolean activa, String calle,
+			String codPostal, String loc, String prov, String pais, String email,
+			 String telefono, String dni) {
+		try{
+			DTO_ClienteParticular cliente = new DTO_ClienteParticular();
+			cliente.setNombre(nombre);
+			cliente.setApellido(apellido);
+			cliente.setTelefono(telefono);
+			cliente.setEstado(activa);
+			cliente.setEmail(email);
+			cliente.setDni(dni);
+			
+			DTO_Provincia provincia = buscarProvinciaByNombre(prov);
+			DTO_Direccion dir = new DTO_Direccion();
+			dir.setCalle(calle);
+			dir.setCodigoPostal(Integer.valueOf(codPostal));
+			dir.setLocalidad(loc);
+			dir.setProvincia(provincia);
+			dir.setPais(provincia.getPais());
+			
+			cliente.setDireccion(dir);
+			
+			bd.altaClienteParticular(cliente);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al guardar cliente particular");
+		}
+		
+	}
+	
 	public boolean altaVehiculo(String tipo, String patente, String marca,
 			String modelo, Float km, String anio, Float ancho, Float alto,
 			Float largo, Float peso, Float tara, Float volumen,
@@ -702,6 +733,8 @@ public class Controlador {
 		}
 		return null;
 	}
+
+
 	
 	
 }

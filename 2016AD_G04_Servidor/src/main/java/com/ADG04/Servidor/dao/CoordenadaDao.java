@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Coordenada;
+import com.ADG04.Servidor.model.CoordenadaE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CoordenadaDao extends GenericDao<Coordenada, Integer> {
+public class CoordenadaDao extends GenericDao<CoordenadaE, Integer> {
 
 	
 	private static CoordenadaDao instancia;

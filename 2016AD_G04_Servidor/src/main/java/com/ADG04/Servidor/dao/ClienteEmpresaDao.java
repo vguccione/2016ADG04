@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import com.ADG04.Servidor.model.ClienteEmpresa;
+import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
-public class ClienteEmpresaDao extends GenericDao<ClienteEmpresa, Integer> {
+public class ClienteEmpresaDao extends GenericDao<ClienteEmpresaE, Integer> {
 
 	private static ClienteEmpresaDao instancia;
 
@@ -26,7 +26,7 @@ public class ClienteEmpresaDao extends GenericDao<ClienteEmpresa, Integer> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ClienteEmpresa> listarClientes() {
+	public List<ClienteEmpresaE> listarClientes() {
 		try{
 			return entityManager
 	                .createQuery("from Cliente c where c.class = 'e'")
@@ -38,9 +38,9 @@ public class ClienteEmpresaDao extends GenericDao<ClienteEmpresa, Integer> {
         return null;
 	}
 
-	public ClienteEmpresa getByCuit(String cuit) {
+	public ClienteEmpresaE getByCuit(String cuit) {
 		try{
-			return (ClienteEmpresa) entityManager
+			return (ClienteEmpresaE) entityManager
 	                .createQuery("from Cliente c where c.class = 'e' and cuit = :cuit")
 	                .setParameter("cuit", cuit)
 	                .getSingleResult();
@@ -51,7 +51,7 @@ public class ClienteEmpresaDao extends GenericDao<ClienteEmpresa, Integer> {
         return null;
 	}
 
-	public List<ClienteEmpresa> getEmpresaByRazonSocial(String filtro) {
+	public List<ClienteEmpresaE> getEmpresaByRazonSocial(String filtro) {
 		try{
 			String f= filtro+"%";
 			return entityManager

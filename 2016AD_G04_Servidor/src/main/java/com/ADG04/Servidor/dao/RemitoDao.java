@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Remito;
+import com.ADG04.Servidor.model.RemitoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RemitoDao extends GenericDao<Remito, Integer> {
+public class RemitoDao extends GenericDao<RemitoE, Integer> {
 
 	
 	private static RemitoDao instancia;

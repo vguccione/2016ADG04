@@ -14,13 +14,13 @@ import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
-import com.ADG04.Servidor.model.ClienteParticular;
-import com.ADG04.Servidor.model.Direccion;
-import com.ADG04.Servidor.model.Pais;
-import com.ADG04.Servidor.model.Provincia;
-import com.ADG04.Servidor.model.Rol;
-import com.ADG04.Servidor.model.Sucursal;
-import com.ADG04.Servidor.model.Usuario;
+import com.ADG04.Servidor.model.ClienteParticularE;
+import com.ADG04.Servidor.model.DireccionE;
+import com.ADG04.Servidor.model.PaisE;
+import com.ADG04.Servidor.model.ProvinciaE;
+import com.ADG04.Servidor.model.RolE;
+import com.ADG04.Servidor.model.SucursalE;
+import com.ADG04.Servidor.model.UsuarioE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
@@ -35,14 +35,14 @@ public class GestionAdministracion {
 
 	private EntityManagerFactory factory;
 	
-	private Usuario usuario;
-	private Sucursal sucursal;
-	private Pais pais;
-	private Provincia provincia;
-	private Direccion direccion;
+	private UsuarioE usuario;
+	private SucursalE sucursal;
+	private PaisE pais;
+	private ProvinciaE provincia;
+	private DireccionE direccion;
 	
-	public GestionAdministracion(Usuario usuario, Sucursal sucursal, Pais pais,
-			Provincia provincia, Direccion direccion) {
+	public GestionAdministracion(UsuarioE usuario, SucursalE sucursal, PaisE pais,
+			ProvinciaE provincia, DireccionE direccion) {
 		super();
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
 		this.usuario = usuario;
@@ -80,13 +80,11 @@ public class GestionAdministracion {
 		
 	/*Sucursal*/
 	public void guardarSucursal() {	
-		EntityManager em = factory.createEntityManager();
+	/*	EntityManager em =  EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
 		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-				
+		tx.begin();	*/
 		SucursalDao.getInstancia().persist(sucursal);
-		
-		tx.commit();
+	//	tx.commit();
 	}
 
 	public void modificarSucursal() {
@@ -115,22 +113,22 @@ public class GestionAdministracion {
 	}
 	
 	
-	public Direccion crearDireccion(DTO_Direccion direccion) {
+	public DireccionE crearDireccion(DTO_Direccion direccion) {
 		
 		/*Crear Direccion*/
-		Direccion dir = new Direccion();
+		DireccionE dir = new DireccionE();
 		dir.setCalle(direccion.getCalle());
 		dir.setCodigoPostal(direccion.getCodigoPostal());
 		dir.setLocalidad(direccion.getLocalidad());
 		dir.setNro(direccion.getNro());
 		
 		ProvinciaDao provDao = ProvinciaDao.getInstancia();
-		Provincia prov = (Provincia) provDao.getById(direccion.getProvincia().getId());
+		ProvinciaE prov = (ProvinciaE) provDao.getById(direccion.getProvincia().getId());
 		
 		dir.setProvincia(prov);
 		
 		PaisDao paisDao = PaisDao.getInstancia();
-		Pais pais = (Pais) paisDao.getById(direccion.getPais().getId());
+		PaisE pais = (PaisE) paisDao.getById(direccion.getPais().getId());
 		
 		dir.setPais(pais);
 		

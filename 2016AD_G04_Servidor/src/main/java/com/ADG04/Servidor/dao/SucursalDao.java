@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Sucursal;
+import com.ADG04.Servidor.model.SucursalE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SucursalDao extends GenericDao<Sucursal, Integer> {
+public class SucursalDao extends GenericDao<SucursalE, Integer> {
 
 	private static SucursalDao instancia;
 
@@ -30,7 +30,7 @@ public class SucursalDao extends GenericDao<Sucursal, Integer> {
 		return instancia;
 	}
 
-	public List<Sucursal> getSucursalesByNombre(String filtro) {
+	public List<SucursalE> getSucursalesByNombre(String filtro) {
 		try {
 			  String f = filtro+'%';
 			  Query query = entityManager.createQuery("from Sucursal where (descripcion like :filtro ) ");

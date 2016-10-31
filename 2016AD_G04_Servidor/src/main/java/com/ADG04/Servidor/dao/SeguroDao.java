@@ -5,13 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.TarifasCarrier;
-import com.ADG04.Servidor.model.Cliente;
-import com.ADG04.Servidor.model.Seguro;
+import com.ADG04.Servidor.model.TarifasCarrierE;
+import com.ADG04.Servidor.model.ClienteE;
+import com.ADG04.Servidor.model.SeguroE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
-public class SeguroDao extends GenericDao<Seguro, Integer> {
+public class SeguroDao extends GenericDao<SeguroE, Integer> {
 
 	private static SeguroDao instancia;
 
@@ -30,7 +30,7 @@ public class SeguroDao extends GenericDao<Seguro, Integer> {
 	
 
 	@SuppressWarnings("unchecked")
-	public List<Seguro> getSegurosByProveedor(String filtro) {
+	public List<SeguroE> getSegurosByProveedor(String filtro) {
 		try {
 			  String f = filtro + '%';
 			  Query query = entityManager.createQuery("from Seguro s where s.proveedor.razonSocial like :filtro");

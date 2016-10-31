@@ -9,9 +9,9 @@ import java.util.List;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Servidor.dao.*;
-import com.ADG04.Servidor.model.Coordenada;
-import com.ADG04.Servidor.model.Encomienda;
-import com.ADG04.Servidor.model.Envio;
+import com.ADG04.Servidor.model.CoordenadaE;
+import com.ADG04.Servidor.model.EncomiendaE;
+import com.ADG04.Servidor.model.EnvioE;
 import com.ADG04.Servidor.rmi.DistribucionPaquetesRMI;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EnvioEstado;
@@ -41,8 +41,8 @@ public class EncomiendasTest {
 		
 			//busco encomiendas pendientes y las asigno a envios
 	
-	    	List<Encomienda> es = EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
-	    	for(Encomienda e:es){
+	    	List<EncomiendaE> es = EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
+	    	for(EncomiendaE e:es){
 	    		System.out.println(e.getIdEncomienda());
 	    	}
 		}
@@ -58,8 +58,8 @@ public class EncomiendasTest {
 		ok = getStringFromConsole("Listar envios? (si/no)?");
 		if(ok.equals("si")){
 
-			List<Envio> envios = EnvioDao.getInstancia().getAll();
-			for(Envio e:envios){
+			List<EnvioE> envios = EnvioDao.getInstancia().getAll();
+			for(EnvioE e:envios){
 				System.out.println(e.toString());
 			}
 		}
@@ -79,7 +79,7 @@ public class EncomiendasTest {
 			int idCoordenada = getIntFromConsole("Id coordenada: ");
 			GestionControlViajes.getInstancia().actualizarEstadoVehiculo(idEnvio, CoordenadaDao.getInstancia().getById(idCoordenada));
 			
-			Envio envio = EnvioDao.getInstancia().getById(idEnvio);
+			EnvioE envio = EnvioDao.getInstancia().getById(idEnvio);
 			System.out.println(envio.toString());
 			
 			ok = getStringFromConsole("Actualizar ruta de otro envio? (si/no)?");
@@ -92,7 +92,7 @@ public class EncomiendasTest {
 			//int idCoordenada = getIntFromConsole("Id coordenada: ");
 			GestionControlViajes.getInstancia().estaEnvioDemorado(idEnvio);
 			
-			Envio envio = EnvioDao.getInstancia().getById(idEnvio);
+			EnvioE envio = EnvioDao.getInstancia().getById(idEnvio);
 			System.out.println(envio.toString());
 			
 			ok = getStringFromConsole("Revisar estado de otro envio? (si/no)?");

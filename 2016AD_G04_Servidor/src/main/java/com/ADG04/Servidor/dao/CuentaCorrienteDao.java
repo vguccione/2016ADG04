@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.CuentaCorriente;
+import com.ADG04.Servidor.model.CuentaCorrienteE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CuentaCorrienteDao extends GenericDao<CuentaCorriente, Integer> {
+public class CuentaCorrienteDao extends GenericDao<CuentaCorrienteE, Integer> {
 
 	
 	private static CuentaCorrienteDao instancia;

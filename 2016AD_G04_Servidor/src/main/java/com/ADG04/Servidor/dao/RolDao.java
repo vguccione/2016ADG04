@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Rol;
+import com.ADG04.Servidor.model.RolE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RolDao extends GenericDao<Rol, Integer> {
+public class RolDao extends GenericDao<RolE, Integer> {
 
 	
 	private static RolDao instancia;
@@ -32,7 +32,7 @@ public class RolDao extends GenericDao<Rol, Integer> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Rol> buscarRolesUsuario(String usuario) {
+	public List<RolE> buscarRolesUsuario(String usuario) {
 		try{
 		return entityManager.createQuery("select r from Rol r join r.usuarios ru"
 				+ " where ru.idUsuario=:usuario")

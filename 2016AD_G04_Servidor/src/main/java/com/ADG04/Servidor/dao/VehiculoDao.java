@@ -5,7 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.ADG04.Negocio.GestionVehiculo;
-import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
+public class VehiculoDao extends GenericDao<VehiculoE, Integer> {
 
 	private static VehiculoDao instancia;
 
@@ -33,7 +33,7 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 	}
 	
 	
-	public long getEstadoAsignacion(Vehiculo v) {
+	public long getEstadoAsignacion(VehiculoE v) {
 
 		long asignado = 0;
 		asignado = (long) entityManager.createQuery("select count(*) from Envio e "
@@ -73,9 +73,9 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 	/**
 	 * Busca vehículos que se estén disponibles en la sucursal indicada, que puedan cargar el peso y el volumen indicado.
 	 * */
-	public List<Vehiculo> getPorVolumenPesoSucursalTareasRealizadas(int idSucursal, float peso, float volumen) {
+	public List<VehiculoE> getPorVolumenPesoSucursalTareasRealizadas(int idSucursal, float peso, float volumen) {
 			
-		return (List<Vehiculo>)entityManager.createQuery("Select tmr.vehiculo "
+		return (List<VehiculoE>)entityManager.createQuery("Select tmr.vehiculo "
 				+ " from TareaMantenimientoRealizada tmr "
 				+ " join tmr.tareaMantenimiento t"
 				+ " where tmr.vehiculo.sucursal.idSucursal =:idSucursal "
@@ -89,7 +89,7 @@ public class VehiculoDao extends GenericDao<Vehiculo, Integer> {
 
 	}
 
-	public List<Vehiculo> getVehiculosByModelMarcaPatente(String filtro) {
+	public List<VehiculoE> getVehiculosByModelMarcaPatente(String filtro) {
 		try{
 			String f= filtro+"%";
 			return entityManager

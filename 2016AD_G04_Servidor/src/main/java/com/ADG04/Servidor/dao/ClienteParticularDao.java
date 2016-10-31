@@ -5,11 +5,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.ClienteParticular;
+import com.ADG04.Servidor.model.ClienteParticularE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
-public class ClienteParticularDao extends GenericDao<ClienteParticular, Integer> {
+public class ClienteParticularDao extends GenericDao<ClienteParticularE, Integer> {
 
 	private static ClienteParticularDao instancia;
 
@@ -26,11 +26,11 @@ public class ClienteParticularDao extends GenericDao<ClienteParticular, Integer>
 		return instancia;
 	}
 	
-	public ClienteParticular getByDni(String dni) {
+	public ClienteParticularE getByDni(String dni) {
 		try {
 		  Query query = entityManager.createQuery("from Cliente where dni =:dni");
 		  query.setParameter("dni", dni);
-		  ClienteParticular c = (ClienteParticular) query.getSingleResult();
+		  ClienteParticularE c = (ClienteParticularE) query.getSingleResult();
 		  return c;
 		       
         } catch (Exception e){
@@ -41,9 +41,9 @@ public class ClienteParticularDao extends GenericDao<ClienteParticular, Integer>
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ClienteParticular> listarClientes() {
+	public List<ClienteParticularE> listarClientes() {
 		try{
-			List<ClienteParticular> lista = entityManager
+			List<ClienteParticularE> lista = entityManager
 	                .createQuery("from Cliente c where c.class = 'p'")
 	                .getResultList();
 			return lista;

@@ -21,24 +21,24 @@ import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
-import com.ADG04.Servidor.model.Proveedor;
-import com.ADG04.Servidor.model.TarifasCarrier;
-import com.ADG04.Servidor.model.Cliente;
-import com.ADG04.Servidor.model.Direccion;
-import com.ADG04.Servidor.model.Encomienda;
-import com.ADG04.Servidor.model.Envio;
-import com.ADG04.Servidor.model.Factura;
-import com.ADG04.Servidor.model.ItemFactura;
-import com.ADG04.Servidor.model.ItemManifiesto;
-import com.ADG04.Servidor.model.ItemRemito;
-import com.ADG04.Servidor.model.Manifiesto;
-import com.ADG04.Servidor.model.MapaDeRuta;
-import com.ADG04.Servidor.model.Producto;
-import com.ADG04.Servidor.model.Remito;
-import com.ADG04.Servidor.model.Seguro;
-import com.ADG04.Servidor.model.ServicioSeguridad;
-import com.ADG04.Servidor.model.Sucursal;
-import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.model.ProveedorE;
+import com.ADG04.Servidor.model.TarifasCarrierE;
+import com.ADG04.Servidor.model.ClienteE;
+import com.ADG04.Servidor.model.DireccionE;
+import com.ADG04.Servidor.model.EncomiendaE;
+import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.FacturaE;
+import com.ADG04.Servidor.model.ItemFacturaE;
+import com.ADG04.Servidor.model.ItemManifiestoE;
+import com.ADG04.Servidor.model.ItemRemitoE;
+import com.ADG04.Servidor.model.ManifiestoE;
+import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.model.ProductoE;
+import com.ADG04.Servidor.model.RemitoE;
+import com.ADG04.Servidor.model.SeguroE;
+import com.ADG04.Servidor.model.ServicioSeguridadE;
+import com.ADG04.Servidor.model.SucursalE;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
@@ -70,16 +70,16 @@ public class GestionEncomienda {
 		return instancia;
 	}
 
-	public Envio getInfoEnvio(int idEnvio){
+	public EnvioE getInfoEnvio(int idEnvio){
 		return EnvioDao.getInstancia().getById(idEnvio);
 	}
 	
 	public void altaEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
-		Sucursal origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
-		Sucursal destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
-		Cliente cli = ClienteParticularDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
+		SucursalE origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
+		SucursalE destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
+		ClienteE cli = ClienteParticularDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
 				
-		Encomienda encomienda = new Encomienda();
+		EncomiendaE encomienda = new EncomiendaE();
 		encomienda.setCliente(cli);
 		encomienda.setSucursalOrigen(origen);
 		encomienda.setSucursalDestino(destino);
@@ -115,18 +115,18 @@ public class GestionEncomienda {
 		
 		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
 		if(dtoM != null){
-			Manifiesto m = new Manifiesto();
+			ManifiestoE m = new ManifiestoE();
 			m.setEncomienda(encomienda);
 			m.setFecha(new Date());		
 			m.setEncomienda(encomienda);
 		
-			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
 			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
 				if(item!=null){
-					ItemManifiesto im = new ItemManifiesto();
+					ItemManifiestoE im = new ItemManifiestoE();
 					im.setCantidad(item.getCantidad());
 					im.setDescripcion(item.getDescripcion());
-					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 					im.setProducto(prod);
 					im.setManifiesto(m);
 					itemsManifiesto.add(im);
@@ -139,7 +139,7 @@ public class GestionEncomienda {
 		
 		DTO_Remito dtoR = dtoEncomienda.getRemito();
 		if(dtoR != null){
-			Remito remito = new Remito();
+			RemitoE remito = new RemitoE();
 			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
 			remito.setConformado(dtoR.isConformado());
 			remito.setDniReceptor(dtoR.getDniReceptor());
@@ -149,12 +149,12 @@ public class GestionEncomienda {
 			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
 			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
 			
-			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
 			for(DTO_ItemRemito item:dtoR.getDetalle()){
-				ItemRemito ir = new ItemRemito();
+				ItemRemitoE ir = new ItemRemitoE();
 				ir.setCantidad(item.getCantidad());
 				ir.setDescripcion(item.getDescripcion());
-				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 				ir.setProducto(prod);
 				ir.setRemito(remito);
 				itemsRemito.add(ir);
@@ -169,13 +169,13 @@ public class GestionEncomienda {
 		tx.commit();
 	}
 	
-	public Encomienda crearEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
-		Sucursal actual = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalActual().getId());
-		Sucursal origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
-		Sucursal destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
-		Cliente cli = ClienteParticularDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
+	public EncomiendaE crearEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
+		SucursalE actual = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalActual().getId());
+		SucursalE origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
+		SucursalE destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
+		ClienteE cli = ClienteParticularDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
 				
-		Encomienda encomienda = new Encomienda();
+		EncomiendaE encomienda = new EncomiendaE();
 		encomienda.setCliente(cli);
 		encomienda.setSucursalActual(actual);
 		encomienda.setSucursalOrigen(origen);
@@ -214,18 +214,18 @@ public class GestionEncomienda {
 		
 		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
 		if(dtoM != null){
-			Manifiesto m = new Manifiesto();
+			ManifiestoE m = new ManifiestoE();
 			m.setEncomienda(encomienda);
 			m.setFecha(new Date());		
 			m.setEncomienda(encomienda);
 		
-			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
 			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
 				if(item!=null){
-					ItemManifiesto im = new ItemManifiesto();
+					ItemManifiestoE im = new ItemManifiestoE();
 					im.setCantidad(item.getCantidad());
 					im.setDescripcion(item.getDescripcion());
-					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 					im.setProducto(prod);
 					im.setManifiesto(m);
 					itemsManifiesto.add(im);
@@ -238,7 +238,7 @@ public class GestionEncomienda {
 		
 		DTO_Remito dtoR = dtoEncomienda.getRemito();
 		if(dtoR != null){
-			Remito remito = new Remito();
+			RemitoE remito = new RemitoE();
 			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
 			remito.setConformado(dtoR.isConformado());
 			remito.setDniReceptor(dtoR.getDniReceptor());
@@ -248,12 +248,12 @@ public class GestionEncomienda {
 			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
 			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
 			
-			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
 			for(DTO_ItemRemito item:dtoR.getDetalle()){
-				ItemRemito ir = new ItemRemito();
+				ItemRemitoE ir = new ItemRemitoE();
 				ir.setCantidad(item.getCantidad());
 				ir.setDescripcion(item.getDescripcion());
-				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 				ir.setProducto(prod);
 				ir.setRemito(remito);
 				itemsRemito.add(ir);
@@ -264,18 +264,18 @@ public class GestionEncomienda {
 		}
 
 		/*Deberia persistir en cascada*/
-		Encomienda enc = EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
+		EncomiendaE enc = EncomiendaDao.getInstancia().saveOrUpdate(encomienda);
 		tx.commit();
 		return enc;
 		
 	}
 
 	public void modificarEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
-		Sucursal origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
-		Sucursal destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
-		Cliente cli = ClienteParticularDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
+		SucursalE origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
+		SucursalE destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
+		ClienteE cli = ClienteParticularDao.getInstancia().getById(dtoEncomienda.getCliente().getId());
 				
-		Encomienda encomienda = new Encomienda();
+		EncomiendaE encomienda = new EncomiendaE();
 		
 		encomienda.setIdEncomienda(dtoEncomienda.getIdEncomienda());
 		
@@ -313,18 +313,18 @@ public class GestionEncomienda {
 		
 		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
 		if(dtoM != null){
-			Manifiesto m = new Manifiesto();
+			ManifiestoE m = new ManifiestoE();
 			m.setEncomienda(encomienda);
 			m.setFecha(new Date());		
 			m.setEncomienda(encomienda);
 		
-			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
 			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
 				if(item!=null){
-					ItemManifiesto im = new ItemManifiesto();
+					ItemManifiestoE im = new ItemManifiestoE();
 					im.setCantidad(item.getCantidad());
 					im.setDescripcion(item.getDescripcion());
-					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 					im.setProducto(prod);
 					im.setManifiesto(m);
 					itemsManifiesto.add(im);
@@ -337,7 +337,7 @@ public class GestionEncomienda {
 		
 		DTO_Remito dtoR = dtoEncomienda.getRemito();
 		if(dtoR != null){
-			Remito remito = new Remito();
+			RemitoE remito = new RemitoE();
 			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
 			remito.setConformado(dtoR.isConformado());
 			remito.setDniReceptor(dtoR.getDniReceptor());
@@ -347,12 +347,12 @@ public class GestionEncomienda {
 			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
 			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
 			
-			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
 			for(DTO_ItemRemito item:dtoR.getDetalle()){
-				ItemRemito ir = new ItemRemito();
+				ItemRemitoE ir = new ItemRemitoE();
 				ir.setCantidad(item.getCantidad());
 				ir.setDescripcion(item.getDescripcion());
-				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 				ir.setProducto(prod);
 				ir.setRemito(remito);
 				itemsRemito.add(ir);
@@ -369,28 +369,28 @@ public class GestionEncomienda {
 	
 	public void facturarEncomiendaParticular(int idEncomienda){
 		
-		Encomienda encomienda = EncomiendaDao.getInstancia().getById(idEncomienda);
+		EncomiendaE encomienda = EncomiendaDao.getInstancia().getById(idEncomienda);
 		
 		//Calculo la primer linea de la factura - El valor del transporte lo define la cantidad de km y el costo
 		//que se obtiene del mapa de ruta. 
-		Sucursal sucursalOrigen =encomienda.getSucursalOrigen();
-		Sucursal sucursalDestino=encomienda.getSucursalDestino();
+		SucursalE sucursalOrigen =encomienda.getSucursalOrigen();
+		SucursalE sucursalDestino=encomienda.getSucursalDestino();
 		float kilometros =MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCantKm();
 		float costo = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCosto();
 
-		List<ItemFactura> items = new ArrayList<ItemFactura>();
+		List<ItemFacturaE> items = new ArrayList<ItemFacturaE>();
 
 		//Costo por Km
-		ItemFactura itemTransporte = new ItemFactura();
+		ItemFacturaE itemTransporte = new ItemFacturaE();
 		itemTransporte.setDescripcion("Transporte: " + encomienda.getCliente().getEmail() + "-" + encomienda.getSucursalOrigen().getDescripcion() + "-" + encomienda.getSucursalDestino().getDescripcion());
 		itemTransporte.setCantidad(1);
 		itemTransporte.setValor(costo);
 		items.add(itemTransporte);
 						
 		//Segunda Linea Seguros
-		Seguro pSeguro = encomienda.getSeguro();
+		SeguroE pSeguro = encomienda.getSeguro();
 		if(pSeguro != null){
-			ItemFactura itemSeguro = new ItemFactura();
+			ItemFacturaE itemSeguro = new ItemFacturaE();
 			itemSeguro.setDescripcion("Seguro: " + encomienda.getCliente().getEmail() + "-" + encomienda.getSucursalOrigen().getDescripcion() + "-" + encomienda.getSucursalDestino().getDescripcion());
 			itemSeguro.setCantidad(1);
 			itemSeguro.setValor((float)(pSeguro.getTarifa() + (pSeguro.getTarifaPorKm() * kilometros)));
@@ -398,9 +398,9 @@ public class GestionEncomienda {
 		}
 				
 		//Tercer Linea Servicio Seguridad
-		ServicioSeguridad ss = encomienda.getServicioSeguridad();
+		ServicioSeguridadE ss = encomienda.getServicioSeguridad();
 		if(ss != null){
-			ItemFactura itemSeguridad = new ItemFactura();
+			ItemFacturaE itemSeguridad = new ItemFacturaE();
 			itemSeguridad.setDescripcion("Servicio de Seguridad: " + ss.getDescripcion());
 			itemSeguridad.setCantidad(1);
 			itemSeguridad.setValor((float)(ss.getTarifa()));
@@ -408,14 +408,14 @@ public class GestionEncomienda {
 		}
 	
 		//Cuarta Linea Impueestos
-		ItemFactura itemImpuesto = new ItemFactura();
+		ItemFacturaE itemImpuesto = new ItemFacturaE();
 		itemImpuesto.setDescripcion("IVA 21%");
 		itemImpuesto.setCantidad(1);
 		float costoTotal = (float) (this.calcularPrecioTotal(encomienda) * 0.21);
 		itemImpuesto.setValor(costoTotal);
 		items.add(itemImpuesto);
 		
-		Factura factura = new Factura();
+		FacturaE factura = new FacturaE();
 		factura.setFecha(new Date());
 		factura.setPagada(false);
 		
@@ -426,7 +426,7 @@ public class GestionEncomienda {
 		
 		
 		//almaceno los items
-		for(ItemFactura item:items){
+		for(ItemFacturaE item:items){
 			item.setFactura(factura);
 		}
 		
@@ -443,10 +443,10 @@ public class GestionEncomienda {
 		tx.commit();
 	}
 	
-	private float calcularPrecioTotal(Encomienda encomienda) {
-		Factura factura = FacturaDao.getInstancia().getById(encomienda.getFactura().getIdFactura());
+	private float calcularPrecioTotal(EncomiendaE encomienda) {
+		FacturaE factura = FacturaDao.getInstancia().getById(encomienda.getFactura().getIdFactura());
 		float costoTotal=0;
-		for(ItemFactura item: factura.getItemsFactura()){
+		for(ItemFacturaE item: factura.getItemsFactura()){
 			costoTotal =+ item.getValor();
 		}
 		return costoTotal;
@@ -461,12 +461,12 @@ public class GestionEncomienda {
 	
 	
 	public void altaEncomiendaEmpresa(DTO_EncomiendaEmpresa dtoEncomienda) {
-		Direccion origen = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionOrigen().getIdDireccion());
-		Direccion destino = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionDestino().getIdDireccion());
+		DireccionE origen = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionOrigen().getIdDireccion());
+		DireccionE destino = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionDestino().getIdDireccion());
 		
-		Cliente cli = ClienteEmpresaDao.getInstancia().getById(dtoEncomienda.getEmpresa().getId());
+		ClienteE cli = ClienteEmpresaDao.getInstancia().getById(dtoEncomienda.getEmpresa().getId());
 				
-		Encomienda encomienda = new Encomienda();
+		EncomiendaE encomienda = new EncomiendaE();
 		encomienda.setCliente(cli);
 		encomienda.setDireccionDestino(destino);
 		encomienda.setDireccionOrigen(origen);
@@ -502,18 +502,18 @@ public class GestionEncomienda {
 		
 		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
 		if(dtoM != null){
-			Manifiesto m = new Manifiesto();
+			ManifiestoE m = new ManifiestoE();
 			m.setEncomienda(encomienda);
 			m.setFecha(new Date());		
 			m.setEncomienda(encomienda);
 		
-			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
 			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
 				if(item!=null){
-					ItemManifiesto im = new ItemManifiesto();
+					ItemManifiestoE im = new ItemManifiestoE();
 					im.setCantidad(item.getCantidad());
 					im.setDescripcion(item.getDescripcion());
-					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 					im.setProducto(prod);
 					im.setManifiesto(m);
 					itemsManifiesto.add(im);
@@ -526,7 +526,7 @@ public class GestionEncomienda {
 		
 		DTO_Remito dtoR = dtoEncomienda.getRemito();
 		if(dtoR != null){
-			Remito remito = new Remito();
+			RemitoE remito = new RemitoE();
 			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
 			remito.setConformado(dtoR.isConformado());
 			remito.setDniReceptor(dtoR.getDniReceptor());
@@ -536,12 +536,12 @@ public class GestionEncomienda {
 			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
 			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
 			
-			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
 			for(DTO_ItemRemito item:dtoR.getDetalle()){
-				ItemRemito ir = new ItemRemito();
+				ItemRemitoE ir = new ItemRemitoE();
 				ir.setCantidad(item.getCantidad());
 				ir.setDescripcion(item.getDescripcion());
-				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 				ir.setProducto(prod);
 				ir.setRemito(remito);
 				itemsRemito.add(ir);
@@ -558,11 +558,11 @@ public class GestionEncomienda {
 	
 	
 	public void modificarEncomiendaEmpresa(DTO_EncomiendaEmpresa dtoEncomienda) {
-		Direccion origen = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionOrigen().getIdDireccion());
-		Direccion destino = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionDestino().getIdDireccion());
-		Cliente cli = ClienteEmpresaDao.getInstancia().getById(dtoEncomienda.getEmpresa().getId());
+		DireccionE origen = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionOrigen().getIdDireccion());
+		DireccionE destino = DireccionDao.getInstancia().getById(dtoEncomienda.getDireccionDestino().getIdDireccion());
+		ClienteE cli = ClienteEmpresaDao.getInstancia().getById(dtoEncomienda.getEmpresa().getId());
 				
-		Encomienda encomienda = new Encomienda();
+		EncomiendaE encomienda = new EncomiendaE();
 	
 		encomienda.setIdEncomienda(dtoEncomienda.getIdEncomienda());
 	
@@ -601,18 +601,18 @@ public class GestionEncomienda {
 		
 		DTO_Manifiesto dtoM = dtoEncomienda.getManifiesto();
 		if(dtoM != null){
-			Manifiesto m = new Manifiesto();
+			ManifiestoE m = new ManifiestoE();
 			m.setEncomienda(encomienda);
 			m.setFecha(new Date());		
 			m.setEncomienda(encomienda);
 		
-			List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+			List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
 			for(DTO_ItemManifiesto item:dtoM.getDetalle()){
 				if(item!=null){
-					ItemManifiesto im = new ItemManifiesto();
+					ItemManifiestoE im = new ItemManifiestoE();
 					im.setCantidad(item.getCantidad());
 					im.setDescripcion(item.getDescripcion());
-					Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 					im.setProducto(prod);
 					im.setManifiesto(m);
 					itemsManifiesto.add(im);
@@ -625,7 +625,7 @@ public class GestionEncomienda {
 		
 		DTO_Remito dtoR = dtoEncomienda.getRemito();
 		if(dtoR != null){
-			Remito remito = new Remito();
+			RemitoE remito = new RemitoE();
 			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
 			remito.setConformado(dtoR.isConformado());
 			remito.setDniReceptor(dtoR.getDniReceptor());
@@ -635,12 +635,12 @@ public class GestionEncomienda {
 			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
 			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
 			
-			List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
+			List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
 			for(DTO_ItemRemito item:dtoR.getDetalle()){
-				ItemRemito ir = new ItemRemito();
+				ItemRemitoE ir = new ItemRemitoE();
 				ir.setCantidad(item.getCantidad());
 				ir.setDescripcion(item.getDescripcion());
-				Producto prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
 				ir.setProducto(prod);
 				ir.setRemito(remito);
 				itemsRemito.add(ir);
@@ -657,28 +657,28 @@ public class GestionEncomienda {
 	
 	
 	public void facturarEncomiendaEmpresa(int idEncomienda){
-		Encomienda encomienda = EncomiendaDao.getInstancia().getById(idEncomienda);
+		EncomiendaE encomienda = EncomiendaDao.getInstancia().getById(idEncomienda);
 		
 		//Calculo la primer linea de la factura - El valor del transporte lo define la cantidad de km y el costo
 		//que se obtiene del mapa de ruta. 
-		Sucursal sucursalOrigen =encomienda.getSucursalOrigen();
-		Sucursal sucursalDestino=encomienda.getSucursalDestino();
+		SucursalE sucursalOrigen =encomienda.getSucursalOrigen();
+		SucursalE sucursalDestino=encomienda.getSucursalDestino();
 		float kilometros =MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCantKm();
 		float costo = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCosto();
 
-		List<ItemFactura> items = new ArrayList<ItemFactura>();
+		List<ItemFacturaE> items = new ArrayList<ItemFacturaE>();
 
 		//Costo por Km
-		ItemFactura itemTransporte = new ItemFactura();
+		ItemFacturaE itemTransporte = new ItemFacturaE();
 		itemTransporte.setDescripcion("Transporte: " + encomienda.getCliente().getEmail() + "-" + encomienda.getSucursalOrigen().getDescripcion() + "-" + encomienda.getSucursalDestino().getDescripcion());
 		itemTransporte.setCantidad(1);
 		itemTransporte.setValor(costo);
 		items.add(itemTransporte);
 						
 		//Segunda Linea Seguros
-		Seguro pSeguro = encomienda.getSeguro();
+		SeguroE pSeguro = encomienda.getSeguro();
 		if(pSeguro != null){
-			ItemFactura itemSeguro = new ItemFactura();
+			ItemFacturaE itemSeguro = new ItemFacturaE();
 			itemSeguro.setDescripcion("Seguro: " + encomienda.getCliente().getEmail() + "-" + encomienda.getSucursalOrigen().getDescripcion() + "-" + encomienda.getSucursalDestino().getDescripcion());
 			itemSeguro.setCantidad(1);
 			itemSeguro.setValor((float)(pSeguro.getTarifa() + (pSeguro.getTarifaPorKm() * kilometros)));
@@ -686,9 +686,9 @@ public class GestionEncomienda {
 		}
 				
 		//Tercer Linea Servicio Seguridad
-		ServicioSeguridad ss = encomienda.getServicioSeguridad();
+		ServicioSeguridadE ss = encomienda.getServicioSeguridad();
 		if(ss != null){
-			ItemFactura itemSeguridad = new ItemFactura();
+			ItemFacturaE itemSeguridad = new ItemFacturaE();
 			itemSeguridad.setDescripcion("Servicio de Seguridad: " + ss.getDescripcion());
 			itemSeguridad.setCantidad(1);
 			itemSeguridad.setValor((float)(ss.getTarifa()));
@@ -696,14 +696,14 @@ public class GestionEncomienda {
 		}
 	
 		//Cuarta Linea Impuestos
-		ItemFactura itemImpuesto = new ItemFactura();
+		ItemFacturaE itemImpuesto = new ItemFacturaE();
 		itemImpuesto.setDescripcion("IVA 21%");
 		itemImpuesto.setCantidad(1);
 		float costoTotal = (float) (this.calcularPrecioTotal(encomienda) * 0.21);
 		itemImpuesto.setValor(costoTotal);
 		items.add(itemImpuesto);
 		
-		Factura factura = new Factura();
+		FacturaE factura = new FacturaE();
 		factura.setFecha(new Date());
 		factura.setPagada(false);
 		
@@ -714,7 +714,7 @@ public class GestionEncomienda {
 		
 		
 		//almaceno los items
-		for(ItemFactura item:items){
+		for(ItemFacturaE item:items){
 			item.setFactura(factura);
 		}
 		
@@ -731,14 +731,14 @@ public class GestionEncomienda {
 		tx.commit();
 	}
 	
-	public boolean esEnvioTercerizado(Encomienda encomienda){
+	public boolean esEnvioTercerizado(EncomiendaE encomienda){
 		if(encomienda.getVolumenGranel()!=0){
 			return true;
 		}
 		if(encomienda.isInternacional()){
 			return true;
 		}
-		MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(encomienda.getSucursalOrigen().getIdSucursal(), encomienda.getSucursalDestino().getIdSucursal());
+		MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(encomienda.getSucursalOrigen().getIdSucursal(), encomienda.getSucursalDestino().getIdSucursal());
 		if(mr!=null){
 			Date hoy = new Date();
 			Calendar calendar = Calendar.getInstance();
@@ -758,13 +758,13 @@ public class GestionEncomienda {
 	}
 	
 	
-	public boolean hayVehiculosDisponibles(Encomienda encomienda){
+	public boolean hayVehiculosDisponibles(EncomiendaE encomienda){
 		
-		List<Vehiculo> vehiculosDisponibles = this.listarVehiculosDisponibles(encomienda.getSucursalOrigen().getIdSucursal(),  encomienda.getVolumen(), encomienda.getPeso());
+		List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(encomienda.getSucursalOrigen().getIdSucursal(),  encomienda.getVolumen(), encomienda.getPeso());
 		boolean pesoOK = false;
 		boolean volumenOK = false;
 		
-		for(Vehiculo v: vehiculosDisponibles){
+		for(VehiculoE v: vehiculosDisponibles){
 			//Sumo los pesos y los volumenes
 			if(!pesoOK || !volumenOK){ //si aun no se  encontro ya vehiculo
 				float pesoTotal = v.getPeso() - v.getTara();
@@ -772,10 +772,10 @@ public class GestionEncomienda {
 				float peso = 0;
 				float volumen = 0;
 				
-				Envio envio = (Envio) EnvioDao.getInstancia().getByVehiculo(v.getIdVehiculo());
+				EnvioE envio = (EnvioE) EnvioDao.getInstancia().getByVehiculo(v.getIdVehiculo());
 				if(envio!=null){
 					if(envio.getEstado()==EnvioEstado.Pendiente.toString()){
-						for(Encomienda enc: envio.getEncomiendas()){
+						for(EncomiendaE enc: envio.getEncomiendas()){
 							peso = (float) (peso + enc.getPeso());
 							volumen = (float) (volumen + enc.getVolumen());
 						}
@@ -802,17 +802,17 @@ public class GestionEncomienda {
 		 * y asi marco esos envios y vehiculos como no disponibles*/
 		ponerEnViajeEncomiendasPorVencer();
 		
-		Encomienda e = EncomiendaDao.getInstancia().getById(idEncomienda);
+		EncomiendaE e = EncomiendaDao.getInstancia().getById(idEncomienda);
 		System.out.println(e.toString());
 		Integer idEnvio = null;
 		if(e != null){
 			if(esEnvioTercerizado(e)){ 
-				Envio envioTercerizado = new Envio();
+				EnvioE envioTercerizado = new EnvioE();
 				if(e.isInternacional()){
-					Proveedor prov = ProveedorDao.getInstancia().getById(idCarrier);
+					ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
 					envioTercerizado.setProveedor(prov);
 				}
-				MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
 				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
 				envioTercerizado.setNroTracking(2000);
@@ -822,29 +822,29 @@ public class GestionEncomienda {
 				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
 				envioTercerizado.setMapaDeRuta(mr);
 				envioTercerizado.setPropio(false);
-				List<Encomienda> lista = new ArrayList<Encomienda>();
+				List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
 				lista.add(e);
 				envioTercerizado.setEncomiendas(lista);
 				e.setEstado(EncomiendaEstado.Colocada.toString());
 				
-				Envio envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
+				EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
 				EncomiendaDao.getInstancia().saveOrUpdate(e);
 				
 				idEnvio = envio.getIdEnvio();
 			} else {
 				//Busco si ya hay algun envio que vaya a la misma ciudad y pendientes
 				boolean nuevoEnvio = true;
-				List<Envio> envios = EnvioDao.getInstancia().listarEnviosPorSucursalDestino(e.getSucursalDestino().getIdSucursal(), e.getFechaEstimadaEntrega());
+				List<EnvioE> envios = EnvioDao.getInstancia().listarEnviosPorSucursalDestino(e.getSucursalDestino().getIdSucursal(), e.getFechaEstimadaEntrega());
 				boolean pesoOK = false;
 				boolean volumenOK = false;
-				for(Envio envProp: envios){
+				for(EnvioE envProp: envios){
 					if(!pesoOK || !volumenOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
 						//Sumo los pesos y los volumenes
 						float peso = 0;
 						float volumen = 0;
 						float pesoTotal = envProp.getVehiculo().getPeso() - envProp.getVehiculo().getTara();
 						float volumenTotal = envProp.getVehiculo().getVolumen();
-						for(Encomienda enc: envProp.getEncomiendas()){
+						for(EncomiendaE enc: envProp.getEncomiendas()){
 							peso = (float) (peso + enc.getPeso());
 							volumen = (float) (volumen + enc.getVolumen());
 						}
@@ -859,7 +859,7 @@ public class GestionEncomienda {
 	
 						if(pesoOK && volumenOK){ //lo asigno a este envio
 							
-							List<Encomienda> encomiendas = envProp.getEncomiendas();
+							List<EncomiendaE> encomiendas = envProp.getEncomiendas();
 							encomiendas.add(e);
 							envProp.setEncomiendas(encomiendas);
 							envProp.setPropio(true);
@@ -886,11 +886,11 @@ public class GestionEncomienda {
 				//Es un nuevo envio por que no se encontro camion disponible
 				if (nuevoEnvio){
 					//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<>Pendiente)
-					List<Vehiculo> vehiculosDisponibles = this.listarVehiculosDisponibles(e.getSucursalOrigen().getIdSucursal(),  e.getVolumen(), e.getPeso());
+					List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(e.getSucursalOrigen().getIdSucursal(),  e.getVolumen(), e.getPeso());
 					boolean pesoNuevoOK = false;
 					boolean volumenNuevoOK = false;
 					
-					for(Vehiculo v: vehiculosDisponibles){
+					for(VehiculoE v: vehiculosDisponibles){
 						//Sumo los pesos y los volumenes
 						if(!pesoNuevoOK || !volumenNuevoOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
 							float pesoTotal = v.getPeso() - v.getTara();
@@ -907,9 +907,9 @@ public class GestionEncomienda {
 							if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
 								//Genero el envio
 								
-								MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+								MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 								
-								Envio envioPropio = new Envio();
+								EnvioE envioPropio = new EnvioE();
 								envioPropio.setEstado(EnvioEstado.Pendiente.toString());
 								envioPropio.setFechaYHoraSalida(new Date());
 								envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
@@ -919,7 +919,7 @@ public class GestionEncomienda {
 								envioPropio.setSucursalOrigen(e.getSucursalActual());
 								envioPropio.setSucursalDestino(e.getSucursalDestino());
 								envioPropio.setMapaDeRuta(mr);
-								List<Encomienda> lista = new ArrayList<Encomienda>();
+								List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
 								lista.add(e);
 								envioPropio.setEncomiendas(lista);
 								float volumen70 = (float)(e.getVolumen()/volumenTotal);
@@ -930,7 +930,7 @@ public class GestionEncomienda {
 									envioPropio.setEstado(EnvioEstado.Pendiente.toString());
 								}
 								
-								Envio envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
+								EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
 								EncomiendaDao.getInstancia().saveOrUpdate(e);
 								idEnvio =  envio.getIdEnvio();
 							}
@@ -948,10 +948,10 @@ public class GestionEncomienda {
 	}
 	
 	public void ponerEnViajeEncomiendasPorVencer(){
-		List<Encomienda> encomiendasColocadasPorVencer = EncomiendaDao.getInstancia().obtenerEncomiendasColocadasPorVencerHoy();
-		for(Encomienda enc : encomiendasColocadasPorVencer){
+		List<EncomiendaE> encomiendasColocadasPorVencer = EncomiendaDao.getInstancia().obtenerEncomiendasColocadasPorVencerHoy();
+		for(EncomiendaE enc : encomiendasColocadasPorVencer){
 		      enc.setEstado(EncomiendaEstado.EnViaje.toString());
-		      Envio envio = EnvioDao.getInstancia().getByEncomiendaColocada(enc.getIdEncomienda());
+		      EnvioE envio = EnvioDao.getInstancia().getByEncomiendaColocada(enc.getIdEncomienda());
 		      if(envio!=null){
 			      envio.setEstado(EnvioEstado.EnViaje.toString());
 			      
@@ -962,21 +962,21 @@ public class GestionEncomienda {
 	}
 	
 	public void cambiarEstadoEncomienda(int idEncomienda, EncomiendaEstado estado){
-		Encomienda enc = EncomiendaDao.getInstancia().getById(idEncomienda);
+		EncomiendaE enc = EncomiendaDao.getInstancia().getById(idEncomienda);
 		enc.setEstado(estado.toString());
 		EncomiendaDao.getInstancia().saveOrUpdate(enc);
 	}
 	
 	public void cambiarEstadoEnvio(int idEnvio, EnvioEstado estado){
-		Envio env = EnvioDao.getInstancia().getById(idEnvio);
+		EnvioE env = EnvioDao.getInstancia().getById(idEnvio);
 		env.setEstado(estado.toString());
 		EnvioDao.getInstancia().saveOrUpdate(env);
 	}
 	
 	public void pagarEncomienda(int idEncomienda){
 		try{
-			Encomienda enc = EncomiendaDao.getInstancia().getById(idEncomienda);
-			Factura factura = enc.getFactura();
+			EncomiendaE enc = EncomiendaDao.getInstancia().getById(idEncomienda);
+			FacturaE factura = enc.getFactura();
 			factura.setPagada(true);
 			FacturaDao.getInstancia().saveOrUpdate(factura);
 		}
@@ -987,7 +987,7 @@ public class GestionEncomienda {
 	}
 	
 	public Date calcularFechaEstimadaDeEntrega(int idSucursalOrigen, int idSucursalDestino){
-		MapaDeRuta mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(idSucursalOrigen, idSucursalDestino);
+		MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(idSucursalOrigen, idSucursalDestino);
 		if(mr!=null){
 			Date hoy = new Date();
 			Calendar calendar = Calendar.getInstance();
@@ -1003,16 +1003,16 @@ public class GestionEncomienda {
 	 * Encomiendas que aun no se asignaron a un envío
 	 * @return
 	 */
-	public List<Encomienda> getEncomiendasPendientesBySucursal(int idSucursal){
+	public List<EncomiendaE> getEncomiendasPendientesBySucursal(int idSucursal){
 		//TODO: hacer
 		return EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
 	}
 	
-	private List<Vehiculo> listarVehiculosDisponibles(int idSucursalOrigen, float volumen, float peso){
+	private List<VehiculoE> listarVehiculosDisponibles(int idSucursalOrigen, float volumen, float peso){
 
-		List<Vehiculo> vehiculos = VehiculoDao.getInstancia().getPorVolumenPesoSucursalTareasRealizadas(idSucursalOrigen, peso, volumen);
+		List<VehiculoE> vehiculos = VehiculoDao.getInstancia().getPorVolumenPesoSucursalTareasRealizadas(idSucursalOrigen, peso, volumen);
 				
-		for(Vehiculo vehiculo: vehiculos){
+		for(VehiculoE vehiculo: vehiculos){
 			GestionVehiculo gVehiculo = new GestionVehiculo(vehiculo);
 			if(gVehiculo.estaUtilizable() && !gVehiculo.estaAsignado() && !gVehiculo.tieneTareasVencidas()){
 				vehiculos.add(gVehiculo.getVehiculo());

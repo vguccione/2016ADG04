@@ -4,9 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.ClienteEmpresa;
-import com.ADG04.Servidor.model.ClienteParticular;
-import com.ADG04.Servidor.model.Factura;
+import com.ADG04.Servidor.model.ClienteEmpresaE;
+import com.ADG04.Servidor.model.ClienteParticularE;
+import com.ADG04.Servidor.model.FacturaE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FacturaDao extends GenericDao<Factura, Integer> {
+public class FacturaDao extends GenericDao<FacturaE, Integer> {
 
-	private static final Factura Factura = null;
+	private static final FacturaE Factura = null;
 	private static FacturaDao instancia;
 
 
@@ -33,11 +33,11 @@ public class FacturaDao extends GenericDao<Factura, Integer> {
 		return instancia;
 	}
 
-	public Factura getFacturaCliente(Integer idCliente) {
+	public FacturaE getFacturaCliente(Integer idCliente) {
 		try {
 			  Query query = entityManager.createQuery("from Factura where cliente =:cliente");
 			  query.setParameter("cliente", idCliente);
-			  Factura f = (Factura) query.getSingleResult();
+			  FacturaE f = (FacturaE) query.getSingleResult();
 			  return f;
 			       
 	        } catch (Exception e){
@@ -47,11 +47,11 @@ public class FacturaDao extends GenericDao<Factura, Integer> {
 	        }
 	}
 
-	public List<Factura> listarFacturasClientePendientes(Integer idCliente) {
+	public List<FacturaE> listarFacturasClientePendientes(Integer idCliente) {
 		try {
 			  Query query = entityManager.createQuery("from Factura where cliente =:cliente and pagada=false" );
 			  query.setParameter("cliente", idCliente);
-			  List<Factura> f = (List<Factura>) query.getResultList();
+			  List<FacturaE> f = (List<FacturaE>) query.getResultList();
 			  return f;
 			       
 	        } catch (Exception e){
@@ -62,11 +62,11 @@ public class FacturaDao extends GenericDao<Factura, Integer> {
 	        
 	}
 
-	public List<Factura> listarFacturasCliente(Integer idCliente) {
+	public List<FacturaE> listarFacturasCliente(Integer idCliente) {
 		try {
 			  Query query = entityManager.createQuery("from Factura where cliente =:cliente");
 			  query.setParameter("cliente", idCliente);
-			  List<Factura> f = (List<Factura>) query.getResultList();
+			  List<FacturaE> f = (List<FacturaE>) query.getResultList();
 			  return f;
 			       
 	        } catch (Exception e){
@@ -76,10 +76,10 @@ public class FacturaDao extends GenericDao<Factura, Integer> {
 	        }
 	}
 
-	public List<Factura> listarFacturasClientePendientes() {
+	public List<FacturaE> listarFacturasClientePendientes() {
 		try {
 			  Query query = entityManager.createQuery("from Factura where  pagada=false" );
-			  List<Factura> f = (List<Factura>) query.getResultList();
+			  List<FacturaE> f = (List<FacturaE>) query.getResultList();
 			  return f;
 			       
 	        } catch (Exception e){
@@ -89,7 +89,7 @@ public class FacturaDao extends GenericDao<Factura, Integer> {
 	        }
 	}
 
-	public List<Factura> getFacturasByCliente(String filtro, boolean pendientes) {
+	public List<FacturaE> getFacturasByCliente(String filtro, boolean pendientes) {
 		try {
 			  Query query;
 			  String f = filtro+'%';
@@ -99,7 +99,7 @@ public class FacturaDao extends GenericDao<Factura, Integer> {
 				  query = entityManager.createQuery("from Factura f where f.encomienda.cliente.dni like :filtro" );
 			  }
 			  query.setParameter("filtro", f);
-			  List<Factura> facturas = (List<Factura>) query.getResultList();
+			  List<FacturaE> facturas = (List<FacturaE>) query.getResultList();
 			  return facturas;
 			       
 	        } catch (Exception e){

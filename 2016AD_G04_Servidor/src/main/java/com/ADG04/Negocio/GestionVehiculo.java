@@ -15,15 +15,15 @@ import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoRealizadaDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
-import com.ADG04.Servidor.model.CondicionesEspecialesVehiculo;
-import com.ADG04.Servidor.model.PlanMantenimiento;
-import com.ADG04.Servidor.model.Proveedor;
-import com.ADG04.Servidor.model.Sucursal;
-import com.ADG04.Servidor.model.TareaMantenimiento;
-import com.ADG04.Servidor.model.TareaMantenimientoPorKm;
-import com.ADG04.Servidor.model.TareaMantenimientoPorTiempo;
-import com.ADG04.Servidor.model.TareaMantenimientoRealizada;
-import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.model.CondicionesEspecialesVehiculoE;
+import com.ADG04.Servidor.model.PlanMantenimientoE;
+import com.ADG04.Servidor.model.ProveedorE;
+import com.ADG04.Servidor.model.SucursalE;
+import com.ADG04.Servidor.model.TareaMantenimientoE;
+import com.ADG04.Servidor.model.TareaMantenimientoPorKmE;
+import com.ADG04.Servidor.model.TareaMantenimientoPorTiempoE;
+import com.ADG04.Servidor.model.TareaMantenimientoRealizadaE;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
@@ -35,27 +35,27 @@ import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 public class GestionVehiculo {
 
-	private PlanMantenimiento planMantenimiento;
-	private Vehiculo vehiculo;
-	private List<TareaMantenimientoRealizada> tareasRealizadas = new ArrayList<TareaMantenimientoRealizada>();
+	private PlanMantenimientoE planMantenimiento;
+	private VehiculoE vehiculo;
+	private List<TareaMantenimientoRealizadaE> tareasRealizadas = new ArrayList<TareaMantenimientoRealizadaE>();
 	private EntityManagerFactory factory;
 			
 	public GestionVehiculo(){
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
 	}
 	
-	public GestionVehiculo(Vehiculo vehiculo){
+	public GestionVehiculo(VehiculoE vehiculo){
 		
 		this.vehiculo = vehiculo;
-		this.tareasRealizadas = new ArrayList<TareaMantenimientoRealizada>();
-		this.planMantenimiento = new PlanMantenimiento();
+		this.tareasRealizadas = new ArrayList<TareaMantenimientoRealizadaE>();
+		this.planMantenimiento = new PlanMantenimientoE();
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
 		
 	}
 	
 	public int altaPlanMantenimiento(String desc, String comentarios) {
 
-		this.planMantenimiento = new PlanMantenimiento();
+		this.planMantenimiento = new PlanMantenimientoE();
 		this.planMantenimiento.setDescripcion(desc);
 		this.planMantenimiento.setComentarios(comentarios);
 	
@@ -79,7 +79,7 @@ public class GestionVehiculo {
 
 	public DTO_PlanMantenimiento getPlanMantenimiento() throws Exception{
 		
-		PlanMantenimiento pm = PlanMantenimientoDao.getInstancia().getPlanByIdVehiculo(this.vehiculo.getIdVehiculo());
+		PlanMantenimientoE pm = PlanMantenimientoDao.getInstancia().getPlanByIdVehiculo(this.vehiculo.getIdVehiculo());
 		
 		DTO_PlanMantenimiento pmDTO = new DTO_PlanMantenimiento();
 		pmDTO.setComentarios(pm.getComentarios());
@@ -89,7 +89,7 @@ public class GestionVehiculo {
 	
 	public int altaTareaMantenimientoPorKm(String tarea, float frecuenciaKm) {
 		
-		TareaMantenimientoPorKm tm = new TareaMantenimientoPorKm();
+		TareaMantenimientoPorKmE tm = new TareaMantenimientoPorKmE();
 		tm.setTarea(tarea);
 		tm.setCantidadKilometros(frecuenciaKm);
 		if(this.planMantenimiento == null)
@@ -110,7 +110,7 @@ public class GestionVehiculo {
 	
 	public int altaTareaMantenimientoPorTiempo(String tarea, int frecuenciaDias) {
 
-		TareaMantenimientoPorTiempo tm = new TareaMantenimientoPorTiempo();
+		TareaMantenimientoPorTiempoE tm = new TareaMantenimientoPorTiempoE();
 		tm.setTarea(tarea);
 		tm.setCantidadDias(frecuenciaDias);
 		if(this.planMantenimiento == null)
@@ -133,18 +133,18 @@ public class GestionVehiculo {
 		
 		
 		
-		TareaMantenimientoRealizada tmr = new TareaMantenimientoRealizada();
-		TareaMantenimiento tareaMantenimiento = TareaMantenimientoDao.getInstancia().getById(tareaMantenimientoRealizada.getIdTareaMantenimiento());
+		TareaMantenimientoRealizadaE tmr = new TareaMantenimientoRealizadaE();
+		TareaMantenimientoE tareaMantenimiento = TareaMantenimientoDao.getInstancia().getById(tareaMantenimientoRealizada.getIdTareaMantenimiento());
 		tmr.setTareaMantenimiento(tareaMantenimiento);
 
-		Vehiculo v = VehiculoDao.getInstancia().getById(this.vehiculo.getIdVehiculo());
+		VehiculoE v = VehiculoDao.getInstancia().getById(this.vehiculo.getIdVehiculo());
 		tmr.setVehiculo(v);
 		
 		tmr.setFechaRealizada(tareaMantenimientoRealizada.getFecha());
 		tmr.setCantidadKilometros(v.getKmRecorridos());
 		
 		int idProveedor = tareaMantenimientoRealizada.getIdProveedor();
-		Proveedor p = ProveedorDao.getInstancia().getById(idProveedor);
+		ProveedorE p = ProveedorDao.getInstancia().getById(idProveedor);
 		tmr.setProveedor(p);
 		
 		TareaMantenimientoRealizadaDao.getInstancia().persist(tmr);
@@ -153,18 +153,18 @@ public class GestionVehiculo {
 
 	public DTO_PlanMantenimiento getPlan() throws Exception{
 		
-		PlanMantenimiento plan = PlanMantenimientoDao.getInstancia().getPlanByIdVehiculo(this.vehiculo.getIdVehiculo());
+		PlanMantenimientoE plan = PlanMantenimientoDao.getInstancia().getPlanByIdVehiculo(this.vehiculo.getIdVehiculo());
 			DTO_PlanMantenimiento planDTO = new DTO_PlanMantenimiento();
 			planDTO.setComentarios(plan.getComentarios());
 			planDTO.setDescripcion(plan.getDescripcion());
 			planDTO.setId(plan.getIdPlanMantenimiento());
 			
-			List<TareaMantenimiento> tareas = plan.getTareaMantenimientos();
+			List<TareaMantenimientoE> tareas = plan.getTareaMantenimientos();
 			System.out.println("Cantidad de tareas del plan: "+tareas.size());
-			for(TareaMantenimiento t:tareas){
-				if(t.getClass().equals(TareaMantenimientoPorKm.class)){
+			for(TareaMantenimientoE t:tareas){
+				if(t.getClass().equals(TareaMantenimientoPorKmE.class)){
 					DTO_TareasPorKilometro dtokm = new DTO_TareasPorKilometro();
-					TareaMantenimientoPorKm tk = (TareaMantenimientoPorKm)t;
+					TareaMantenimientoPorKmE tk = (TareaMantenimientoPorKmE)t;
 					dtokm.setCantidadKilometros(tk.getCantidadKilometros());
 					dtokm.setId(tk.getIdTareaMantenimiento());
 					dtokm.setIdPlanMantenimiento(plan.getIdPlanMantenimiento());
@@ -174,7 +174,7 @@ public class GestionVehiculo {
 				}
 				else{
 					DTO_TareasPorTiempo dtokm = new DTO_TareasPorTiempo();
-					TareaMantenimientoPorTiempo tk = (TareaMantenimientoPorTiempo)t;
+					TareaMantenimientoPorTiempoE tk = (TareaMantenimientoPorTiempoE)t;
 					dtokm.setCantidadDias(tk.getCantidadDias());
 					dtokm.setId(tk.getIdTareaMantenimiento());
 					dtokm.setIdPlanMantenimiento(plan.getIdPlanMantenimiento());
@@ -233,10 +233,10 @@ public class GestionVehiculo {
 		return this.vehiculo.getIdVehiculo();
 	}
 	
-	public List<Vehiculo>  buscarVehiculoConCondicion(List<Vehiculo> vehiculos, String condicion){
-		List<Vehiculo> vecs = new ArrayList<Vehiculo>();
-		for(Vehiculo v: vehiculos){
-			for(CondicionesEspecialesVehiculo ce: v.getCondicionesEspecialesVehiculos()){
+	public List<VehiculoE>  buscarVehiculoConCondicion(List<VehiculoE> vehiculos, String condicion){
+		List<VehiculoE> vecs = new ArrayList<VehiculoE>();
+		for(VehiculoE v: vehiculos){
+			for(CondicionesEspecialesVehiculoE ce: v.getCondicionesEspecialesVehiculos()){
 				if(ce.getDescripcion()==condicion){
 					vecs.add(v);
 				}
@@ -245,9 +245,9 @@ public class GestionVehiculo {
 		return vecs;
 	}
 
-	public List<TareaMantenimiento> getTareasVencidas() {
+	public List<TareaMantenimientoE> getTareasVencidas() {
 		
-		List<TareaMantenimiento> tareas = new ArrayList<TareaMantenimiento>(); 
+		List<TareaMantenimientoE> tareas = new ArrayList<TareaMantenimientoE>(); 
 		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorKm(this.vehiculo.getIdVehiculo()));
 		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(this.vehiculo.getIdVehiculo()));
 		
@@ -261,16 +261,16 @@ public class GestionVehiculo {
 		
 		List<DTO_TareaMantenimiento> tareas = new ArrayList<DTO_TareaMantenimiento>();
 		
-		List<TareaMantenimientoPorKm> tKms = PlanMantenimientoDao.getInstancia().getTareasVencidasPorKm(this.vehiculo.getIdVehiculo());
-		List<TareaMantenimientoPorTiempo> tTiempos = PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(this.vehiculo.getIdVehiculo());
+		List<TareaMantenimientoPorKmE> tKms = PlanMantenimientoDao.getInstancia().getTareasVencidasPorKm(this.vehiculo.getIdVehiculo());
+		List<TareaMantenimientoPorTiempoE> tTiempos = PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(this.vehiculo.getIdVehiculo());
 				
-		List<TareaMantenimientoPorKm> tareasVencidasKm = new ArrayList<TareaMantenimientoPorKm>();
-		List<TareaMantenimientoPorTiempo> tareasVencidasTiempo = new ArrayList<TareaMantenimientoPorTiempo>();
+		List<TareaMantenimientoPorKmE> tareasVencidasKm = new ArrayList<TareaMantenimientoPorKmE>();
+		List<TareaMantenimientoPorTiempoE> tareasVencidasTiempo = new ArrayList<TareaMantenimientoPorTiempoE>();
 		
 		tareasVencidasKm.addAll(tKms);
 		tareasVencidasTiempo.addAll(tTiempos);
 		
-		for(TareaMantenimientoPorTiempo tt:tTiempos){
+		for(TareaMantenimientoPorTiempoE tt:tTiempos){
 			
 			DTO_TareasPorTiempo tDto = new DTO_TareasPorTiempo();
 			tDto.setCantidadDias(tt.getCantidadDias());
@@ -281,7 +281,7 @@ public class GestionVehiculo {
 			tareas.add(tDto);
 		}
 		
-		for(TareaMantenimientoPorKm tt:tKms){
+		for(TareaMantenimientoPorKmE tt:tKms){
 			
 			DTO_TareasPorKilometro tDto = new DTO_TareasPorKilometro();
 			tDto.setCantidadKilometros(tt.getCantidadKilometros());
@@ -297,7 +297,7 @@ public class GestionVehiculo {
 	
 	public boolean tieneTareasVencidas() {
 		
-		List<TareaMantenimiento> tareas = new ArrayList<TareaMantenimiento>(); 
+		List<TareaMantenimientoE> tareas = new ArrayList<TareaMantenimientoE>(); 
 		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorKm(this.vehiculo.getIdVehiculo()));
 		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(this.vehiculo.getIdVehiculo()));
 	
@@ -307,7 +307,7 @@ public class GestionVehiculo {
 			return false;
 	}
 
-	public void setSucursal(Sucursal sucursal) {
+	public void setSucursal(SucursalE sucursal) {
 		this.vehiculo.setSucursal(sucursal);
 	}
 
@@ -332,7 +332,7 @@ public class GestionVehiculo {
 			return true;	
 	}
 
-	public Vehiculo getVehiculo() {
+	public VehiculoE getVehiculo() {
 		return this.vehiculo;
 	}
 }

@@ -15,12 +15,12 @@ import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
-import com.ADG04.Servidor.model.Coordenada;
-import com.ADG04.Servidor.model.Encomienda;
-import com.ADG04.Servidor.model.Envio;
-import com.ADG04.Servidor.model.MapaDeRuta;
-import com.ADG04.Servidor.model.MapaDeRuta;
-import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.model.CoordenadaE;
+import com.ADG04.Servidor.model.EncomiendaE;
+import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
@@ -48,15 +48,15 @@ public class GestionControlViajes {
 	
 	
 	public void altaMapaDeRuta(DTO_MapaDeRuta mapa){
-		MapaDeRuta hr = new MapaDeRuta();
+		MapaDeRutaE hr = new MapaDeRutaE();
 		hr.setCantKm(mapa.getCantKm());
 		hr.setDuracion(mapa.getDuracion());
 		hr.setSucursalDestino(SucursalDao.getInstancia().getById(mapa.getIdSucursalDestino()));
 		hr.setSucursalOrigen(SucursalDao.getInstancia().getById(mapa.getIdSucursalOrigen()));
 		
-		List<Coordenada> lista  = new ArrayList<Coordenada>();
+		List<CoordenadaE> lista  = new ArrayList<CoordenadaE>();
 		for(DTO_Coordenada coord : mapa.getCoordenadas()){
-			Coordenada c = new Coordenada();
+			CoordenadaE c = new CoordenadaE();
 			c.setIdCoordenada(coord.getId());
 			c.setLatitud(coord.getLatitud());
 			c.setLongitud(coord.getLongitud());
@@ -68,16 +68,16 @@ public class GestionControlViajes {
 	}
 	
 	public void modificarMapaDeRuta(DTO_MapaDeRuta mapa){
-		MapaDeRuta hr = new MapaDeRuta();
+		MapaDeRutaE hr = new MapaDeRutaE();
 		hr.setIdMapaDeRuta(mapa.getId());
 		hr.setCantKm(mapa.getCantKm());
 		hr.setDuracion(mapa.getDuracion());
 		hr.setSucursalDestino(SucursalDao.getInstancia().getById(mapa.getIdSucursalDestino()));
 		hr.setSucursalOrigen(SucursalDao.getInstancia().getById(mapa.getIdSucursalOrigen()));
 		
-		List<Coordenada> lista  = new ArrayList<Coordenada>();
+		List<CoordenadaE> lista  = new ArrayList<CoordenadaE>();
 		for(DTO_Coordenada coord : mapa.getCoordenadas()){
-			Coordenada c = new Coordenada();
+			CoordenadaE c = new CoordenadaE();
 			c.setIdCoordenada(coord.getId());
 			c.setLatitud(coord.getLatitud());
 			c.setLongitud(coord.getLongitud());
@@ -97,12 +97,12 @@ public class GestionControlViajes {
 	 * el estado del envio
 	 * La coordenadaActual sera obtenida del XML provisto por los vehiculos
 	 */
-	public void actualizarEstadoVehiculo(int idEnvio, Coordenada coordActual){
-		Envio e = EnvioDao.getInstancia().getById(idEnvio);
-		MapaDeRuta mr = e.getMapaDeRuta();
-		List<Coordenada> lista = mr.getCoordenadas();
+	public void actualizarEstadoVehiculo(int idEnvio, CoordenadaE coordActual){
+		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
+		MapaDeRutaE mr = e.getMapaDeRuta();
+		List<CoordenadaE> lista = mr.getCoordenadas();
 		Boolean encontrado = false;
-		for(Coordenada coord: mr.getCoordenadas()){
+		for(CoordenadaE coord: mr.getCoordenadas()){
 			if(coordActual.getLatitud().equals(coord.getLatitud()) && coordActual.getLongitud().equals(coord.getLongitud())){
 				encontrado=true;
 			}
@@ -123,7 +123,7 @@ public class GestionControlViajes {
 	}
 	
 	public void estaEnvioDemorado(int idEnvio){
-		Envio e = EnvioDao.getInstancia().getById(idEnvio);
+		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
 		Date hoy = new Date();
 		if(e.getFechaYHoraLlegadaEstimada().compareTo(hoy)<0){
 			e.setEstado(EnvioEstado.Demorado.toString());
@@ -132,8 +132,8 @@ public class GestionControlViajes {
 	}
 	
 	public void concluirEnvio(int idEnvio){
-		Envio e = EnvioDao.getInstancia().getById(idEnvio);
-		Encomienda enc = EncomiendaDao.getInstancia().getByEnvio(idEnvio);
+		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
+		EncomiendaE enc = EncomiendaDao.getInstancia().getByEnvio(idEnvio);
 		try{
 			enc.setEstado(EncomiendaEstado.EnSucursalDestino.toString());
 			EncomiendaDao.getInstancia().saveOrUpdate(enc);

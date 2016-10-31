@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.TareaMantenimientoRealizada;
+import com.ADG04.Servidor.model.TareaMantenimientoRealizadaE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TareaMantenimientoRealizadaDao extends GenericDao<TareaMantenimientoRealizada, Integer> {
+public class TareaMantenimientoRealizadaDao extends GenericDao<TareaMantenimientoRealizadaE, Integer> {
 	private static TareaMantenimientoRealizadaDao instancia;
 
 
@@ -30,7 +30,7 @@ public class TareaMantenimientoRealizadaDao extends GenericDao<TareaMantenimient
 		return instancia;
 	}
 
-	public List<TareaMantenimientoRealizada> getByPatenteVehiculo(String filtro) {
+	public List<TareaMantenimientoRealizadaE> getByPatenteVehiculo(String filtro) {
 		try{
 			String f= filtro+"%";
 			return entityManager

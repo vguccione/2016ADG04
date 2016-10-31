@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.TareaMantenimiento;
+import com.ADG04.Servidor.model.TareaMantenimientoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TareaMantenimientoDao extends GenericDao<TareaMantenimiento, Integer> {
+public class TareaMantenimientoDao extends GenericDao<TareaMantenimientoE, Integer> {
 
 
 	private static TareaMantenimientoDao instancia;

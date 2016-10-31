@@ -4,12 +4,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.PlanMantenimiento;
-import com.ADG04.Servidor.model.TareaMantenimiento;
-import com.ADG04.Servidor.model.TareaMantenimientoPorKm;
-import com.ADG04.Servidor.model.TareaMantenimientoPorTiempo;
-import com.ADG04.Servidor.model.TareaMantenimientoRealizada;
-import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.model.PlanMantenimientoE;
+import com.ADG04.Servidor.model.TareaMantenimientoE;
+import com.ADG04.Servidor.model.TareaMantenimientoPorKmE;
+import com.ADG04.Servidor.model.TareaMantenimientoPorTiempoE;
+import com.ADG04.Servidor.model.TareaMantenimientoRealizadaE;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer> {
+public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer> {
 	private static PlanMantenimientoDao instancia;
 
 
@@ -43,10 +43,10 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 	
 	//Obtener las tareas que ya deberían haberse realizado, xq ya e paso el tiempo
 	@SuppressWarnings("unchecked")
-	public List<TareaMantenimientoPorKm> getTareasVencidasPorKm(Integer idVehiculo){
+	public List<TareaMantenimientoPorKmE> getTareasVencidasPorKm(Integer idVehiculo){
 		
 		//Me quedo con las tareas que son por tiempo
-		List<TareaMantenimientoPorKm> tareasVencidas = new ArrayList<TareaMantenimientoPorKm>();
+		List<TareaMantenimientoPorKmE> tareasVencidas = new ArrayList<TareaMantenimientoPorKmE>();
 		
 		//Por cada una de estas tareas, tengo que buscar cuando fue la ultima vez que se realizo.
 		List<Object[]> lista = (List<Object[]>)entityManager.createQuery("select tt, v.kmRecorridos "
@@ -60,9 +60,9 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 		for(Object[] o :lista){
 			
 			//Si la tarea es de kms, me tengo que fijar cuatos kms tenia la ultima vez que se hizo
-			if(o[0].getClass().equals(TareaMantenimientoPorKm.class)){
+			if(o[0].getClass().equals(TareaMantenimientoPorKmE.class)){
 				
-				TareaMantenimientoPorKm tarea = (TareaMantenimientoPorKm) o[0];
+				TareaMantenimientoPorKmE tarea = (TareaMantenimientoPorKmE) o[0];
 				System.out.println(tarea.getTarea() + " Cantidad de Kms: " + tarea.getCantidadKilometros());
 													
 				float kmRecorridos = (float)o[1];
@@ -75,13 +75,13 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 				//Cuantos kms tenia el vehiculo la ultima vez que se realizó la tarea??
 				
 				//Tengo que fijarme cuando se realizó por última vez cada tarea
-				List<TareaMantenimientoRealizada> tRealizadas = (List<TareaMantenimientoRealizada>)entityManager.createQuery("select tr "
+				List<TareaMantenimientoRealizadaE> tRealizadas = (List<TareaMantenimientoRealizadaE>)entityManager.createQuery("select tr "
 						+ " from TareaMantenimientoRealizada tr"
 						+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea")
 						.setParameter("idTarea", tarea.getIdTareaMantenimiento())
 						.getResultList(); 
 				
-				for(TareaMantenimientoRealizada tRealizada:tRealizadas){
+				for(TareaMantenimientoRealizadaE tRealizada:tRealizadas){
 				
 					if(tRealizada != null){
 						
@@ -114,10 +114,10 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 	
 	//Obtener las tareas que ya deberían haberse realizado, xq ya e paso el tiempo
 	@SuppressWarnings("unchecked")
-	public List<TareaMantenimientoPorTiempo> getTareasVencidasPorTiempo(Integer idVehiculo){
+	public List<TareaMantenimientoPorTiempoE> getTareasVencidasPorTiempo(Integer idVehiculo){
 			
 		//Me quedo con las tareas que son por tiempo
-		List<TareaMantenimientoPorTiempo> tareasVencidas = new ArrayList<TareaMantenimientoPorTiempo>();
+		List<TareaMantenimientoPorTiempoE> tareasVencidas = new ArrayList<TareaMantenimientoPorTiempoE>();
 
 		List<Object[]> lista = (List<Object[]>)entityManager.createQuery("select tt, v.FechaIngreso "
 				+ " from PlanMantenimiento p"
@@ -130,9 +130,9 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 		for(Object[] o :lista){
 			
 			//Si la tarea es de tiempo, me tengo que fijar cuanto paso de la ultima vez.
-			if(o[0].getClass().equals(TareaMantenimientoPorTiempo.class)){
+			if(o[0].getClass().equals(TareaMantenimientoPorTiempoE.class)){
 				
-				TareaMantenimientoPorTiempo tarea = (TareaMantenimientoPorTiempo) o[0];
+				TareaMantenimientoPorTiempoE tarea = (TareaMantenimientoPorTiempoE) o[0];
 				System.out.println(tarea.getTarea() + " Cantidad de días: " + tarea.getCantidadDias());
 													
 				Date fhIngreso = (Date)o[1];
@@ -154,13 +154,13 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 					System.out.println("Id tarea: " + tarea.getIdTareaMantenimiento());
 					
 					//Tengo que fijarme cuando se realizó por última vez esta tarea.
-					List<TareaMantenimientoRealizada> tRealizadas = (List<TareaMantenimientoRealizada>)entityManager.createQuery("select tr "
+					List<TareaMantenimientoRealizadaE> tRealizadas = (List<TareaMantenimientoRealizadaE>)entityManager.createQuery("select tr "
 							+ " from TareaMantenimientoRealizada tr"
 							+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea")
 							.setParameter("idTarea", tarea.getIdTareaMantenimiento())
 							.getResultList();
 				
-					for(TareaMantenimientoRealizada tRealizada:tRealizadas){
+					for(TareaMantenimientoRealizadaE tRealizada:tRealizadas){
 						
 						if(tRealizada != null){
 							
@@ -192,9 +192,9 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 
 	
 	@SuppressWarnings("unchecked")
-	public PlanMantenimiento getPlanByIdVehiculo(int idVehiculo) {
+	public PlanMantenimientoE getPlanByIdVehiculo(int idVehiculo) {
 			
-		PlanMantenimiento plan = (PlanMantenimiento)entityManager.createQuery("select p "
+		PlanMantenimientoE plan = (PlanMantenimientoE)entityManager.createQuery("select p "
 				+ " from PlanMantenimiento p"
 				+ " join p.vehiculos v"
 				+ " where v.idVehiculo=:idVeh").setParameter("idVeh", idVehiculo)
@@ -209,7 +209,7 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimiento, Integer>
 			//plan.setIdPlanMantenimiento(c.getIdPlanMantenimiento());
 			
 			//Busco las tareas de Mantenimiento
-			List<TareaMantenimiento> tareas = (List<TareaMantenimiento>)entityManager.createQuery("select ts"
+			List<TareaMantenimientoE> tareas = (List<TareaMantenimientoE>)entityManager.createQuery("select ts"
 					+ " from PlanMantenimiento p"
 					+ " join p.tareaMantenimientos ts"
 					+ " where p.idPlanMantenimiento=:idPlan").setParameter("idPlan", plan.getIdPlanMantenimiento())

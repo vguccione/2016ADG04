@@ -4,8 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Cliente;
-import com.ADG04.Servidor.model.Provincia;
+import com.ADG04.Servidor.model.ClienteE;
+import com.ADG04.Servidor.model.ProvinciaE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProvinciaDao extends GenericDao<Provincia, Integer> {
+public class ProvinciaDao extends GenericDao<ProvinciaE, Integer> {
 
 	private static ProvinciaDao instancia;
 
@@ -32,7 +32,7 @@ public class ProvinciaDao extends GenericDao<Provincia, Integer> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Provincia> getByPais(int idPais) {
+	public List<ProvinciaE> getByPais(int idPais) {
 		try{
 		return entityManager.createQuery("from Provincia where pais=:pais")
 				            .setParameter("pais", idPais)
@@ -44,7 +44,7 @@ public class ProvinciaDao extends GenericDao<Provincia, Integer> {
 		return null;
 	}
 
-	public List<Provincia> getByPais(String pais) {
+	public List<ProvinciaE> getByPais(String pais) {
 		String p = pais +'%';
 		try{
 			return entityManager.createQuery("from Provincia where pais.descripcion like :pais")
@@ -57,10 +57,10 @@ public class ProvinciaDao extends GenericDao<Provincia, Integer> {
 			return null;
 	}
 
-	public Provincia getByNombre(String prov) {
+	public ProvinciaE getByNombre(String prov) {
 		String p = prov +'%';
 		try{
-			return (Provincia) entityManager.createQuery("from Provincia where descripcion like :prov")
+			return (ProvinciaE) entityManager.createQuery("from Provincia where descripcion like :prov")
 					            .setParameter("prov", p)
 					            .getSingleResult();
 			}catch(Exception e){

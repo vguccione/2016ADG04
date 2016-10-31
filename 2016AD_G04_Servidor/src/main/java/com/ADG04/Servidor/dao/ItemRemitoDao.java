@@ -1,12 +1,12 @@
 package com.ADG04.Servidor.dao;
 
 import javax.persistence.EntityManager;
-import com.ADG04.Servidor.model.ItemRemito;
+import com.ADG04.Servidor.model.ItemRemitoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
 
-public class ItemRemitoDao extends GenericDao<ItemRemito, Integer> {
+public class ItemRemitoDao extends GenericDao<ItemRemitoE, Integer> {
 
 	private static ItemRemitoDao instancia;
 

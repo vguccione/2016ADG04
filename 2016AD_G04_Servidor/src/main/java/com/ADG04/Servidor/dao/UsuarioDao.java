@@ -6,7 +6,7 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 
-import com.ADG04.Servidor.model.Usuario;
+import com.ADG04.Servidor.model.UsuarioE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UsuarioDao extends GenericDao<Usuario, Integer> {
+public class UsuarioDao extends GenericDao<UsuarioE, Integer> {
 
 	
 	private static UsuarioDao instancia;
@@ -33,11 +33,11 @@ public class UsuarioDao extends GenericDao<Usuario, Integer> {
 		return instancia;
 	}
 
-	public Usuario getByDni(String dni) {
+	public UsuarioE getByDni(String dni) {
 		try {
 		  Query query = entityManager.createQuery("from Usuario where dni =:dni");
 		  query.setParameter("dni", dni);
-		  Usuario u = (Usuario) query.getSingleResult();
+		  UsuarioE u = (UsuarioE) query.getSingleResult();
 		  return u;
 		       
         } catch (Exception e){
@@ -49,7 +49,7 @@ public class UsuarioDao extends GenericDao<Usuario, Integer> {
 
 
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarEmpleados(Integer idSucursal) {
+	public List<UsuarioE> listarEmpleados(Integer idSucursal) {
 		try{
 			return entityManager
 	                .createQuery("from Usuario e where e.sucursal.idSucursal = :idSucursal ")
@@ -62,11 +62,11 @@ public class UsuarioDao extends GenericDao<Usuario, Integer> {
         return null;
 	}
 
-	public Usuario buscarUsuario(String usuario) {
+	public UsuarioE buscarUsuario(String usuario) {
 		try {
 			  Query query = entityManager.createQuery("from Usuario where usuario =:usuario");
 			  query.setParameter("usuario", usuario);
-			  Usuario u = (Usuario) query.getSingleResult();
+			  UsuarioE u = (UsuarioE) query.getSingleResult();
 			  return u;
 			       
 	        } catch (Exception e){
@@ -76,7 +76,7 @@ public class UsuarioDao extends GenericDao<Usuario, Integer> {
 	        }
 	}
 
-	public List<Usuario> getUsuariosByNombreApellidoOUsuario(String filtro) {
+	public List<UsuarioE> getUsuariosByNombreApellidoOUsuario(String filtro) {
 		try{
 			String f= filtro+"%";
 			return entityManager

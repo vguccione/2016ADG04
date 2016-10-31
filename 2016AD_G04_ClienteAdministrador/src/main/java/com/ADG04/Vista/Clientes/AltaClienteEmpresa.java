@@ -192,7 +192,7 @@ public class AltaClienteEmpresa extends javax.swing.JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				if (validacion()) {
 					try{
-						Controlador.getInstancia().altaCliente(txtRazonSocial.getText(), 
+						Controlador.getInstancia().altaClienteEmpresa(txtRazonSocial.getText(), 
 																				txtCUIT.getText(), 
 																				true,
 																				txtDireccion.getText(),

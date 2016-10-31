@@ -5,11 +5,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Cliente;
+import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
-public class ClienteDao extends GenericDao<Cliente, Integer> {
+public class ClienteDao extends GenericDao<ClienteE, Integer> {
 
 	private static ClienteDao instancia;
 
@@ -26,11 +26,11 @@ public class ClienteDao extends GenericDao<Cliente, Integer> {
 		return instancia;
 	}
 	
-	public Cliente getByDni(String dni) {
+	public ClienteE getByDni(String dni) {
 		try {
 		  Query query = entityManager.createQuery("from Cliente where dni =:dni");
 		  query.setParameter("dni", dni);
-		  Cliente c = (Cliente) query.getSingleResult();
+		  ClienteE c = (ClienteE) query.getSingleResult();
 		  return c;
 		       
         } catch (Exception e){
@@ -40,7 +40,7 @@ public class ClienteDao extends GenericDao<Cliente, Integer> {
         }
 	}
 	
-	public List<Cliente> getClientesByNombreApellidoDni(String filtro){
+	public List<ClienteE> getClientesByNombreApellidoDni(String filtro){
 		try {
 			  String f = filtro+'%';
 			  Query query = entityManager.createQuery("from Cliente c where (nombre like :filtro OR "

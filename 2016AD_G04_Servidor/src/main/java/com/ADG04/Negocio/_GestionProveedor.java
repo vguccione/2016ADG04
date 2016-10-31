@@ -12,12 +12,12 @@ import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.Servidor.dao.SeguroDao;
 import com.ADG04.Servidor.dao.ServicioSeguridadDao;
-import com.ADG04.Servidor.model.TarifasCarrier;
-import com.ADG04.Servidor.model.Direccion;
-import com.ADG04.Servidor.model.Factura;
-import com.ADG04.Servidor.model.Proveedor;
-import com.ADG04.Servidor.model.Seguro;
-import com.ADG04.Servidor.model.ServicioSeguridad;
+import com.ADG04.Servidor.model.TarifasCarrierE;
+import com.ADG04.Servidor.model.DireccionE;
+import com.ADG04.Servidor.model.FacturaE;
+import com.ADG04.Servidor.model.ProveedorE;
+import com.ADG04.Servidor.model.SeguroE;
+import com.ADG04.Servidor.model.ServicioSeguridadE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Cliente.DTO_Factura;
@@ -27,20 +27,20 @@ import com.ADG04.bean.Proveedor.DTO_Seguro;
 import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 
 
-public class _GestionProveedor extends Proveedor{
+public class _GestionProveedor extends ProveedorE{
 
 	private EntityManagerFactory factory;
 
-	private Seguro seguro;
-	private TarifasCarrier carrier;
-	private ServicioSeguridad ss;
+	private SeguroE seguro;
+	private TarifasCarrierE carrier;
+	private ServicioSeguridadE ss;
 	
 	public _GestionProveedor(){
 		super();
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
-		seguro = new Seguro();
-		carrier = new TarifasCarrier();
-		ss = new ServicioSeguridad();
+		seguro = new SeguroE();
+		carrier = new TarifasCarrierE();
+		ss = new ServicioSeguridadE();
 	}
 	
 	
@@ -185,28 +185,28 @@ public class _GestionProveedor extends Proveedor{
 	}
 	
 	public List<DTO_Seguro> getSeguros(){
-		List<Seguro> seguros = SeguroDao.getInstancia().getAll();
+		List<SeguroE> seguros = SeguroDao.getInstancia().getAll();
 		List<DTO_Seguro> segurosDTO = new ArrayList<DTO_Seguro>();
-		for(Seguro seguro : seguros){
+		for(SeguroE seguro : seguros){
 			segurosDTO.add(seguro.toDTO());
 		}
 		return segurosDTO;
 	}
 	
 	public List<DTO_TarifasCarrier> getCarriers(){
-		List<TarifasCarrier> carriers = TarifasCarrierDao.getInstancia().getAll();
+		List<TarifasCarrierE> carriers = TarifasCarrierDao.getInstancia().getAll();
 		List<DTO_TarifasCarrier> carriersDTO = new ArrayList<DTO_TarifasCarrier>();
 
-		for(TarifasCarrier carrier : carriers){	
+		for(TarifasCarrierE carrier : carriers){	
 			carriersDTO.add(carrier.toDTO());
 		}
 		return carriersDTO;
 	}
 	
 	public List<DTO_ServicioSeguridad> getServicioSeguridad(){
-		List<ServicioSeguridad> ss = ServicioSeguridadDao.getInstancia().getAll();
+		List<ServicioSeguridadE> ss = ServicioSeguridadDao.getInstancia().getAll();
 		List<DTO_ServicioSeguridad> ssDTO = new ArrayList<DTO_ServicioSeguridad>();
-		for(ServicioSeguridad s : ss){
+		for(ServicioSeguridadE s : ss){
 			ssDTO.add(s.toDTO());
 		}
 		return ssDTO;

@@ -4,8 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Envio;
-import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class EnvioDao extends GenericDao<Envio, Integer> {
+public class EnvioDao extends GenericDao<EnvioE, Integer> {
 
 	private static EnvioDao instancia;
 
@@ -32,8 +32,8 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		return instancia;
 	}
 	
-	public List<Envio> getByVehiculo(int idVehiculo){
-		List<Envio> envios = entityManager.createQuery("from Envio e where e.vehiculo.idVehiculo=:idVehiculo")
+	public List<EnvioE> getByVehiculo(int idVehiculo){
+		List<EnvioE> envios = entityManager.createQuery("from Envio e where e.vehiculo.idVehiculo=:idVehiculo")
 										.setParameter("idVehiculo", idVehiculo)
 										.getResultList();
 		
@@ -42,7 +42,7 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 
 	public Object getByVehiculoYSucursal(int idVehiculo, int idSucursalDestino) {
 		try{
-			Envio e = (Envio) entityManager.createQuery("from Envio e where e.vehiculo.idVehiculo=:idVehiculo"
+			EnvioE e = (EnvioE) entityManager.createQuery("from Envio e where e.vehiculo.idVehiculo=:idVehiculo"
 					+ " and e.sucursalDestino.idSucursal=:idSucursal")
 					.setParameter("idVehiculo", idVehiculo)
 					.setParameter("idSucursal", idSucursalDestino)
@@ -55,9 +55,9 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		}
 	}
 
-	public List<Envio> listarEnviosPorSucursalDestino(int idSucursalDestino, Date fecha) {
+	public List<EnvioE> listarEnviosPorSucursalDestino(int idSucursalDestino, Date fecha) {
 		@SuppressWarnings("unchecked")
-		List<Envio> envios = entityManager.createQuery("from Envio e"
+		List<EnvioE> envios = entityManager.createQuery("from Envio e"
 				+ " where e.sucursalDestino.idSucursal=:idSucursal"
 				+ " and e.estado='Pendiente'"
 				+ " and e.fechaYHoraLlegadaEstimada >=:fecha"
@@ -70,10 +70,10 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		
 	}
 
-	public Envio getByEncomiendaColocada(int idEncomienda) {
-		Envio envio = null;
+	public EnvioE getByEncomiendaColocada(int idEncomienda) {
+		EnvioE envio = null;
 		try{
-			envio = (Envio) entityManager.createQuery("select e from Envio e "
+			envio = (EnvioE) entityManager.createQuery("select e from Envio e "
 					+ " join e.encomiendas enc"
 					+ " where enc.estado='Colocada'"
 					+ " and e.estado='Pendiente'"
@@ -89,9 +89,9 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		return envio;
 	}
 
-	public List<Envio> getEnviosPropios() {
+	public List<EnvioE> getEnviosPropios() {
 		try{
-			List<Envio> envios = entityManager.createQuery("from Envio e where propio=1 "
+			List<EnvioE> envios = entityManager.createQuery("from Envio e where propio=1 "
 					+ "ORDER BY idEnvio DESC ")
 				.getResultList();
 			return envios;
@@ -103,9 +103,9 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		}
 	}
 	
-	public List<Envio> getEnviosTercerizados() {
+	public List<EnvioE> getEnviosTercerizados() {
 		try{
-			List<Envio> envios = entityManager.createQuery("from Envio e where propio=0"
+			List<EnvioE> envios = entityManager.createQuery("from Envio e where propio=0"
 					+ " ORDER BY idEnvio DESC")
 				.getResultList();
 			return envios;
@@ -117,11 +117,11 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		}
 	}
 
-	public List<Envio> getEnviosTercerizadosByEstado(String filtro) {
+	public List<EnvioE> getEnviosTercerizadosByEstado(String filtro) {
 		String f = filtro+'%';
 		try{
 			@SuppressWarnings("unchecked")
-			List<Envio> envios = entityManager.createQuery("from Envio e where propio=0"
+			List<EnvioE> envios = entityManager.createQuery("from Envio e where propio=0"
 					+ " AND estado like :filtro "
 					+ " ORDER BY idEnvio DESC").setParameter("filtro", f)
 				.getResultList();
@@ -134,11 +134,11 @@ public class EnvioDao extends GenericDao<Envio, Integer> {
 		}
 	}
 	
-	public List<Envio> getEnviosPropiosByEstado(String filtro) {
+	public List<EnvioE> getEnviosPropiosByEstado(String filtro) {
 		String f = filtro+'%';
 		try{
 			@SuppressWarnings("unchecked")
-			List<Envio> envios = entityManager.createQuery("from Envio e where propio=1"
+			List<EnvioE> envios = entityManager.createQuery("from Envio e where propio=1"
 					+ " AND estado like :filtro"
 					+ " ORDER BY idEnvio DESC").setParameter("filtro", f)
 				.getResultList();

@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.Encomienda;
+import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
+public class EncomiendaDao extends GenericDao<EncomiendaE, Integer> {
 
 	private static EncomiendaDao instancia;
 
@@ -35,8 +35,8 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Encomienda> obtenerEncomiendasColocadasPorVencerHoy() {		
-		List<Encomienda> encomiendas = new ArrayList<Encomienda>();
+	public List<EncomiendaE> obtenerEncomiendasColocadasPorVencerHoy() {		
+		List<EncomiendaE> encomiendas = new ArrayList<EncomiendaE>();
 		try{
 			encomiendas = entityManager.createQuery("select enc from Encomienda enc "
 																	+ " join enc.envios env"
@@ -52,10 +52,10 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 		return encomiendas;
 	}
 
-	public Encomienda getByEnvio(int idEnvio) {
-		Encomienda enc = null;
+	public EncomiendaE getByEnvio(int idEnvio) {
+		EncomiendaE enc = null;
 		try{
-			enc = (Encomienda) entityManager.createQuery("select enc from Encomienda enc"
+			enc = (EncomiendaE) entityManager.createQuery("select enc from Encomienda enc"
 					+ " join enc.envios env"
 					+ " where env.idEnvio =:idEnvio").setParameter("idEnvio", idEnvio).getSingleResult();
 		}
@@ -66,18 +66,18 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Encomienda> getEncomiendasPendientesBySucursal(int idSucursal) {
+	public List<EncomiendaE> getEncomiendasPendientesBySucursal(int idSucursal) {
 		
 		//Tengo que buscar las encomiendas que no tienen envios asignados, en la sucursal determinada
 		/*select * from Encomienda e 
 		left outer join  Encomiendaenvio ee on ee.idEncomienda=e.IdEncomienda
 		where ee.idEncomienda is null*/
 		
-		List<Encomienda> encs = (List<Encomienda>)entityManager.createQuery("select enc from Encomienda enc where "
+		List<EncomiendaE> encs = (List<EncomiendaE>)entityManager.createQuery("select enc from Encomienda enc where "
 				+ "enc.sucursalOrigen.idSucursal =:idSuc").setParameter("idSuc", idSucursal).getResultList();
 		
-		List<Encomienda> encsPendientes = new ArrayList<Encomienda>();
-    	for(Encomienda e:encs){
+		List<EncomiendaE> encsPendientes = new ArrayList<EncomiendaE>();
+    	for(EncomiendaE e:encs){
     		if(e.getEnvios() == null || e.getEnvios().isEmpty()){
     			encsPendientes.add(e);
     		}
@@ -87,8 +87,8 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Encomienda> getAllParticulares() {
-		List<Encomienda> encomiendas = new ArrayList<Encomienda>();
+	public List<EncomiendaE> getAllParticulares() {
+		List<EncomiendaE> encomiendas = new ArrayList<EncomiendaE>();
 		try{
 			encomiendas = entityManager.createQuery("select enc from Encomienda enc "
 					+ " where tipoEncomienda='P'"
@@ -101,8 +101,8 @@ public class EncomiendaDao extends GenericDao<Encomienda, Integer> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Encomienda> getAllEmpresas() {
-		List<Encomienda> encomiendas = new ArrayList<Encomienda>();
+	public List<EncomiendaE> getAllEmpresas() {
+		List<EncomiendaE> encomiendas = new ArrayList<EncomiendaE>();
 		try{
 			encomiendas = entityManager.createQuery("select enc from Encomienda enc "
 					+ " where tipoEncomienda='E'"

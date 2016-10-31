@@ -13,8 +13,8 @@ import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
 import com.ADG04.Servidor.dao.TareaMantenimientoDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
-import com.ADG04.Servidor.model.TareaMantenimiento;
-import com.ADG04.Servidor.model.Vehiculo;
+import com.ADG04.Servidor.model.TareaMantenimientoE;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
@@ -41,8 +41,8 @@ public class VehiculosTest {
 		while(ok.equals("si")){
 			
 			int idVehiculo = getIntFromConsole("Id Vehiculo: ");
-			Vehiculo vehiculo = VehiculoDao.getInstancia().getById(idVehiculo);
-			List<TareaMantenimiento> tareasVencidas= new GestionVehiculo(vehiculo).getTareasVencidas();
+			VehiculoE vehiculo = VehiculoDao.getInstancia().getById(idVehiculo);
+			List<TareaMantenimientoE> tareasVencidas= new GestionVehiculo(vehiculo).getTareasVencidas();
 			if(tareasVencidas == null || tareasVencidas.isEmpty()) { System.out.println("No hay tareas vencidas."); }
 			ok = getStringFromConsole("Buscar tareas vencidas de otro vehículo (si/no)?");
 		}
@@ -51,8 +51,8 @@ public class VehiculosTest {
 		if(ok.equals("si")){
 			
 			System.out.println("Lista de vehículos:");
-			List<Vehiculo> vhs = VehiculoDao.getInstancia().getAll();
-			for(Vehiculo veh:vhs){
+			List<VehiculoE> vhs = VehiculoDao.getInstancia().getAll();
+			for(VehiculoE veh:vhs){
 				System.out.println(veh.getIdVehiculo());	
 			}
 			
@@ -80,9 +80,9 @@ public class VehiculosTest {
 
 	private static void TestTareasVencidas(int idVehiculo){
     	
-		List<TareaMantenimiento> tareas = new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).getTareasVencidas(); 
+		List<TareaMantenimientoE> tareas = new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).getTareasVencidas(); 
 		System.out.println("\n----------------Tareas que deben realizarse:-----------------------------");		    	
-    	for(TareaMantenimiento t :tareas){
+    	for(TareaMantenimientoE t :tareas){
     		System.out.println(t.getTarea());
     	}
     	System.out.println("---------------------------------------------------\n");

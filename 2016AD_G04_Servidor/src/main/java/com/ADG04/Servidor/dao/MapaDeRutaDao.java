@@ -4,8 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.ADG04.Servidor.model.MapaDeRuta;
-import com.ADG04.Servidor.model.Sucursal;
+import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.model.SucursalE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MapaDeRutaDao extends GenericDao<MapaDeRuta, Integer> {
+public class MapaDeRutaDao extends GenericDao<MapaDeRutaE, Integer> {
 
 	
 	private static MapaDeRutaDao instancia;
@@ -32,9 +32,9 @@ public class MapaDeRutaDao extends GenericDao<MapaDeRuta, Integer> {
 		return instancia;
 	}
 
-	public MapaDeRuta getBySucursalOrigenyDestino(int idSucursalOrigen, int idSucursalDestino) {
+	public MapaDeRutaE getBySucursalOrigenyDestino(int idSucursalOrigen, int idSucursalDestino) {
 		try{
-			return (MapaDeRuta) entityManager.createQuery("from MapaDeRuta mr where mr.sucursalOrigen.idSucursal=:idSucursalOrigen"
+			return (MapaDeRutaE) entityManager.createQuery("from MapaDeRuta mr where mr.sucursalOrigen.idSucursal=:idSucursalOrigen"
 												+ " and mr.sucursalDestino.idSucursal=:idSucursalDestino")
 												.setParameter("idSucursalOrigen", idSucursalOrigen)
 												.setParameter("idSucursalDestino", idSucursalDestino).getSingleResult();

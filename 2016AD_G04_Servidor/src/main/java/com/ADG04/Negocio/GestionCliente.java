@@ -13,14 +13,14 @@ import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.CuentaCorrienteDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
-import com.ADG04.Servidor.model.Cliente;
-import com.ADG04.Servidor.model.ClienteEmpresa;
-import com.ADG04.Servidor.model.ClienteParticular;
-import com.ADG04.Servidor.model.CuentaCorriente;
-import com.ADG04.Servidor.model.Direccion;
-import com.ADG04.Servidor.model.Factura;
-import com.ADG04.Servidor.model.ItemFactura;
-import com.ADG04.Servidor.model.Producto;
+import com.ADG04.Servidor.model.ClienteE;
+import com.ADG04.Servidor.model.ClienteEmpresaE;
+import com.ADG04.Servidor.model.ClienteParticularE;
+import com.ADG04.Servidor.model.CuentaCorrienteE;
+import com.ADG04.Servidor.model.DireccionE;
+import com.ADG04.Servidor.model.FacturaE;
+import com.ADG04.Servidor.model.ItemFacturaE;
+import com.ADG04.Servidor.model.ProductoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
@@ -49,7 +49,7 @@ public class GestionCliente {
 	
 	public void altaClienteParticular(DTO_ClienteParticular clienteParticular) 
 	{
-		ClienteParticular c = new ClienteParticular();
+		ClienteParticularE c = new ClienteParticularE();
 		
 		c.setNombre(clienteParticular.getNombre());
 		c.setApellido(clienteParticular.getApellido());
@@ -63,7 +63,7 @@ public class GestionCliente {
 		tx.begin();
 
 		GestionAdministracion ga = new GestionAdministracion();
-		Direccion dir = ga.crearDireccion(clienteParticular.getDireccion());
+		DireccionE dir = ga.crearDireccion(clienteParticular.getDireccion());
 		c.setDireccion(dir);
 		ClienteDao.getInstancia().persist(c);
 		
@@ -72,7 +72,7 @@ public class GestionCliente {
 	}
 	
 	public void modificarClienteParticular(DTO_ClienteParticular clienteParticular) {
-		ClienteParticular c = new ClienteParticular();
+		ClienteParticularE c = new ClienteParticularE();
 		
 		c.setIdCliente(clienteParticular.getId());
 		c.setNombre(clienteParticular.getNombre());
@@ -87,7 +87,7 @@ public class GestionCliente {
 		tx.begin();
 
 		GestionAdministracion ga = new GestionAdministracion();
-		Direccion dir = ga.crearDireccion(clienteParticular.getDireccion());
+		DireccionE dir = ga.crearDireccion(clienteParticular.getDireccion());
 		c.setDireccion(dir);
 		ClienteDao.getInstancia().saveOrUpdate(c);
 		
@@ -96,7 +96,7 @@ public class GestionCliente {
 	
 	public void altaClienteEmpresa(DTO_ClienteEmpresa clienteEmpresa) 
 	{
-		ClienteEmpresa c = new ClienteEmpresa();
+		ClienteEmpresaE c = new ClienteEmpresaE();
 		
 		c.setCuit(clienteEmpresa.getCuit());
 		c.setEmail(clienteEmpresa.getEmail());
@@ -104,7 +104,7 @@ public class GestionCliente {
 		c.setEstado(clienteEmpresa.isEstado());
 		c.setTelefono(clienteEmpresa.getTelefono());
 		
-		CuentaCorriente cc = new CuentaCorriente();
+		CuentaCorrienteE cc = new CuentaCorrienteE();
 		cc.setLimiteCredito(clienteEmpresa.getCuentaCorriente().getLimiteCredito());
 		cc.setCredito(clienteEmpresa.getCuentaCorriente().getCredito());
 		cc.setFormaPago(clienteEmpresa.getCuentaCorriente().getFormaPago());
@@ -112,7 +112,7 @@ public class GestionCliente {
 		c.setCuentaCorrientes(cc);
 		
 		GestionAdministracion ga = new GestionAdministracion();
-		Direccion dir = ga.crearDireccion(clienteEmpresa.getDireccion());
+		DireccionE dir = ga.crearDireccion(clienteEmpresa.getDireccion());
 		c.setDireccion(dir);
 		
 		
@@ -127,7 +127,7 @@ public class GestionCliente {
 	}
 	
 	public void modificarClienteEmpresa(DTO_ClienteEmpresa clienteEmpresa) {
-		ClienteEmpresa c = new ClienteEmpresa();
+		ClienteEmpresaE c = new ClienteEmpresaE();
 		
 		c.setIdCliente(clienteEmpresa.getId());
 		c.setCuit(clienteEmpresa.getCuit());
@@ -141,7 +141,7 @@ public class GestionCliente {
 		tx.begin();
 
 		GestionAdministracion ga = new GestionAdministracion();
-		Direccion dir = ga.crearDireccion(clienteEmpresa.getDireccion());
+		DireccionE dir = ga.crearDireccion(clienteEmpresa.getDireccion());
 		c.setDireccion(dir);
 		ClienteDao.getInstancia().saveOrUpdate(c);
 		
@@ -153,7 +153,7 @@ public class GestionCliente {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
-		Cliente c = ClienteDao.getInstancia().getById(idCliente);
+		ClienteE c = ClienteDao.getInstancia().getById(idCliente);
 		
 		if (c != null)
 			ClienteDao.getInstancia().remove(c); 
@@ -162,27 +162,27 @@ public class GestionCliente {
 	}
 	
 	public List<DTO_Cliente> getClientes(){
-		List<Cliente> clientes = ClienteDao.getInstancia().getAll();
+		List<ClienteE> clientes = ClienteDao.getInstancia().getAll();
 		List<DTO_Cliente> clientesDTO = new ArrayList<DTO_Cliente>();
-		for(Cliente cliente : clientes){
+		for(ClienteE cliente : clientes){
 			clientesDTO.add(cliente.toDTO());
 		}
 		return clientesDTO;
 	}
 	
 	public List<DTO_ClienteParticular> getClientesParticular(){
-		List<ClienteParticular> clientes = ClienteParticularDao.getInstancia().listarClientes();
+		List<ClienteParticularE> clientes = ClienteParticularDao.getInstancia().listarClientes();
 		List<DTO_ClienteParticular> clientesDTO = new ArrayList<DTO_ClienteParticular>();
-		for(ClienteParticular cliente : clientes){
+		for(ClienteParticularE cliente : clientes){
 			clientesDTO.add(cliente.toDTO());
 		}
 		return clientesDTO;
 	}
 	
 	public List<DTO_ClienteEmpresa> getClientesEmpresa(){
-		List<ClienteEmpresa> clientes = ClienteEmpresaDao.getInstancia().listarClientes();
+		List<ClienteEmpresaE> clientes = ClienteEmpresaDao.getInstancia().listarClientes();
 		List<DTO_ClienteEmpresa> clientesDTO = new ArrayList<DTO_ClienteEmpresa>();
-		for(ClienteEmpresa cliente : clientes){
+		for(ClienteEmpresaE cliente : clientes){
 			clientesDTO.add(cliente.toDTO());
 		}
 		return clientesDTO;
@@ -208,7 +208,7 @@ public class GestionCliente {
 	
 	public void altaProducto(DTO_Producto producto){
 
-		Producto p = new Producto();
+		ProductoE p = new ProductoE();
 		
 		p.setCliente(ClienteDao.getInstancia().getById(producto.getIdCliente()));
 		p.setCodigoProducto(producto.getCodigo());
@@ -225,7 +225,7 @@ public class GestionCliente {
 	}
 	
 	public void modificarProducto(DTO_Producto producto){
-		Producto p = new Producto();
+		ProductoE p = new ProductoE();
 		
 		p.setCliente(ClienteDao.getInstancia().getById(producto.getIdCliente()));
 		p.setCodigoProducto(producto.getCodigo());
@@ -245,7 +245,7 @@ public class GestionCliente {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
-		Producto p = ProductoDao.getInstancia().getById(idProducto);
+		ProductoE p = ProductoDao.getInstancia().getById(idProducto);
 		
 		if (p != null)
 			ProductoDao.getInstancia().remove(p); 
@@ -260,7 +260,7 @@ public class GestionCliente {
 		
 		DTO_Producto prod= ProductoDao.getInstancia().getByClienteCodigo(idCliente, codigoProducto).toDTO();
 		
-		Producto p = ProductoDao.getInstancia().getById(prod.getId());
+		ProductoE p = ProductoDao.getInstancia().getById(prod.getId());
 		
 		if (p != null)
 			ProductoDao.getInstancia().remove(p); 
@@ -281,12 +281,12 @@ public class GestionCliente {
 	
 	/*Factura*/
 	public void altaFactura(DTO_Factura factura){
-		CuentaCorriente cc  = CuentaCorrienteDao.getInstancia().getById(factura.getIdCuentaCorriente());
-		Factura fc = new Factura();
+		CuentaCorrienteE cc  = CuentaCorrienteDao.getInstancia().getById(factura.getIdCuentaCorriente());
+		FacturaE fc = new FacturaE();
 
-		List<ItemFactura> detalleFactura = new ArrayList<ItemFactura>();
+		List<ItemFacturaE> detalleFactura = new ArrayList<ItemFacturaE>();
 		for(DTO_ItemFactura it: factura.getItems()){
-			ItemFactura item = new ItemFactura();
+			ItemFacturaE item = new ItemFacturaE();
 			item.setCantidad(it.getCantidad());
 			item.setDescripcion(it.getDescripcion());
 			item.setValor(it.getValor());
@@ -308,12 +308,12 @@ public class GestionCliente {
 		tx.commit();
 	}
 	public void modificarFacturaCliente(DTO_Factura factura){
-		CuentaCorriente cc  = CuentaCorrienteDao.getInstancia().getById(factura.getIdCuentaCorriente());
-		Factura fc = new Factura();
+		CuentaCorrienteE cc  = CuentaCorrienteDao.getInstancia().getById(factura.getIdCuentaCorriente());
+		FacturaE fc = new FacturaE();
 
-		List<ItemFactura> detalleFactura = new ArrayList<ItemFactura>();
+		List<ItemFacturaE> detalleFactura = new ArrayList<ItemFacturaE>();
 		for(DTO_ItemFactura it: factura.getItems()){
-			ItemFactura item = new ItemFactura();
+			ItemFacturaE item = new ItemFacturaE();
 			item.setCantidad(it.getCantidad());
 			item.setDescripcion(it.getDescripcion());
 			item.setValor(it.getValor());
@@ -341,27 +341,27 @@ public class GestionCliente {
 	}
 	
 	public List<DTO_Factura> listarFacturas(){
-		List<Factura> facturas = FacturaDao.getInstancia().getAll();
+		List<FacturaE> facturas = FacturaDao.getInstancia().getAll();
 		List<DTO_Factura> facturasDTO = new ArrayList<DTO_Factura>();
-		for(Factura factura : facturas){
+		for(FacturaE factura : facturas){
 			facturasDTO.add(factura.toDTO());
 		}
 		return facturasDTO;
 	}
 	
 	public List<DTO_Factura> listarFacturasClientePendientes(Integer idCliente){
-		List<Factura> facturas = FacturaDao.getInstancia().listarFacturasClientePendientes(idCliente);
+		List<FacturaE> facturas = FacturaDao.getInstancia().listarFacturasClientePendientes(idCliente);
 		List<DTO_Factura> facturasDTO = new ArrayList<DTO_Factura>();
-		for(Factura factura : facturas){
+		for(FacturaE factura : facturas){
 			facturasDTO.add(factura.toDTO());
 		}
 		return facturasDTO;
 	}
 	
 	public List<DTO_Factura> listarFacturasCliente(Integer idCliente){
-		List<Factura> facturas = FacturaDao.getInstancia().listarFacturasCliente(idCliente);
+		List<FacturaE> facturas = FacturaDao.getInstancia().listarFacturasCliente(idCliente);
 		List<DTO_Factura> facturasDTO = new ArrayList<DTO_Factura>();
-		for(Factura factura : facturas){
+		for(FacturaE factura : facturas){
 			facturasDTO.add(factura.toDTO());
 		}
 		return facturasDTO;

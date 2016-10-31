@@ -95,9 +95,10 @@ public class VistaAcercaDe extends javax.swing.JFrame {
 				}
 				{
 					jLabelLogo = new JLabel();
-					jLabelLogo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("com/ADG04/Images/logoUade.jpg")));
+				//	jLabelLogo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("com/ADG04/Images/logoUade.jpg")));
 					jLabelLogo.setLayout(null);
 				}
+				
 				{
 					jLabelSubtitulo = new JLabel();
 					jLabelSubtitulo.setText("Trabajo Practico Obligatorio");

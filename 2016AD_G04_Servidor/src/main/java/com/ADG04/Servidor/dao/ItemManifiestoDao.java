@@ -2,12 +2,12 @@ package com.ADG04.Servidor.dao;
 
 import javax.persistence.EntityManager;
 
-import com.ADG04.Servidor.model.ItemManifiesto;
+import com.ADG04.Servidor.model.ItemManifiestoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
 
-public class ItemManifiestoDao extends GenericDao<ItemManifiesto, Integer> {
+public class ItemManifiestoDao extends GenericDao<ItemManifiestoE, Integer> {
 
 	private static ItemManifiestoDao instancia;
 

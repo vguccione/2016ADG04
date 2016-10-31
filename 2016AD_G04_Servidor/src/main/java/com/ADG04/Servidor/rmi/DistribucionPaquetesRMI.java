@@ -659,6 +659,9 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 				v.getRefrigerado(), v.getCondicionTransporte(), v.getKmsRecorridos(), v.getMarca(), v.getModelo(), v.getPatente(), 
 				v.getTemperaturaMin(), v.getTemperaturaMax(), v.getAnio(), v.getTara(), v.getTipo(), v.getFechaIngreso());
 		
+		PlanMantenimiento pm = PlanMantenimientoDao.getInstancia().getById(v.getPlanMantenimiento().getId());
+		veh.setPlanMantenimiento(pm);
+		
 		GestionVehiculo gVehiculo = new GestionVehiculo(veh);
 		gVehiculo.setSucursal(SucursalDao.getInstancia().getById(v.getSucursal().getId()));
 		

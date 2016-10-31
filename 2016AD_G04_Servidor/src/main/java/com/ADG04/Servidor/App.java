@@ -91,30 +91,33 @@ public class App
 
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-   
-    	DTO_Direccion dir = new DTO_Direccion();
-    	DTO_Sucursal sucursal = new DTO_Sucursal();
-    	Pais pais = (Pais) PaisDao.getInstancia().getById(1);
-    	Provincia prov = (Provincia) ProvinciaDao.getInstancia().getById(1);
-    	
-    	dir.setCalle("peperulo calle");
-    	dir.setCodigoPostal(1234);
-    	dir.setLocalidad("Capital Federal");
-    	dir.setNro(123);
-    	dir.setPais(pais.toDTO());
-    	dir.setProvincia(prov.toDTO());
-    	
-    	sucursal.setDescripcion("asdfsa");
-    	
-    	sucursal.setTelefono("123456");
-    	sucursal.setDireccion(dir);
-    	
-    	//GestionAdministracion.getInstancia().altaSucursal(sucursal);
-    	
+   	
     	BusinessDelegate bd = new BusinessDelegate();
-    	bd.altaSucursal(sucursal);
     	
-    	
+    	DTO_Vehiculo v = new DTO_Vehiculo();
+		v.setTipo("Camion");
+		v.setPatente("ADK");
+		v.setMarca("A");
+		v.setModelo("B");
+		v.setKmsRecorridos(100f);
+		v.setAncho(100f);
+		v.setAlto(250f);
+		v.setLargo(230f);
+		v.setPeso(140f);
+		v.setTara(200f);
+		v.setVolumen(350f);
+		v.setAnio("");
+		v.setFechaIngreso(new Date());
+	/*	v.setUltimoMantenimiento(fechaUltMant);
+		v.setUltimoUso(fechaUltUso);
+		v.setVencimientoGarantia(vencimientoGarantia); */
+		v.setSucursal(bd.getSucursal(1));
+		//v.setIdSucursalActual(idSucursalActual);
+		//v.setTemperaturaMin(temperaturaMin);
+		//v.setTemperaturaMax(temperaturaMax);
+		v.setPlanMantenimiento(bd.getPlanMantenimiento(1));
+		
+		bd.altaVehiculo(v);
  /*   
     DTO_Proveedor p = new DTO_Proveedor();
     p.setActivo("1");

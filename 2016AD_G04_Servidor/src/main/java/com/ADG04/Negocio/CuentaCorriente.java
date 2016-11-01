@@ -14,7 +14,7 @@ import java.util.List;
 
 
 
-public class CuentaCorriente implements java.io.Serializable {
+public class CuentaCorriente{
 	private int idCtaCte;
 	private Cliente cliente;
 	private double credito;

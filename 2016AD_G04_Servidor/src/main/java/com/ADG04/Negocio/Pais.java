@@ -14,7 +14,7 @@ import java.util.List;
 
 import com.ADG04.bean.Administracion.DTO_Pais;
 
-public class Pais implements java.io.Serializable {
+public class Pais{
  
 	private int idPais;
 	private String descripcion;

@@ -26,7 +26,7 @@ import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 
 
-public class Manifiesto implements java.io.Serializable {
+public class Manifiesto{
 	
 	private int idManifiesto;
 	private Encomienda encomienda;
@@ -41,6 +41,7 @@ public class Manifiesto implements java.io.Serializable {
 		super();
 		this.idManifiesto = idManifiesto;
 		this.fecha = fecha;
+		this.itemsManifiesto = new ArrayList<ItemManifiesto>();
 	}
 
 
@@ -98,5 +99,10 @@ public class Manifiesto implements java.io.Serializable {
     	
     	return m;
     }
+
+
+	public void addItem(ItemManifiesto itemManifiesto) {
+		this.itemsManifiesto.add(itemManifiesto);		
+	}
 
 }

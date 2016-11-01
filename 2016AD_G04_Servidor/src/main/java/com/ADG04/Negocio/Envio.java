@@ -24,13 +24,23 @@ import java.util.Set;
 
 
 
+
+
+
+
+import com.ADG04.Servidor.dao.CoordenadaDao;
+import com.ADG04.Servidor.dao.EnvioDao;
+import com.ADG04.Servidor.model.CoordenadaE;
+import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 
 
 
-public class Envio implements java.io.Serializable {
+public class Envio{
 
 	
 	private int idEnvio;
@@ -39,30 +49,29 @@ public class Envio implements java.io.Serializable {
 	private MapaDeRuta mapaDeRuta;
 	private Coordenada posicionActual;
 	private Sucursal sucursalDestino;
-
-
 	private Sucursal sucursalOrigen;
-
 	private Vehiculo vehiculo;
-
 	private String estado;
-
 	private Date fechaYHoraLlegadaEstimada;
 	private Date fechaYHoraSalida;
-
 	private boolean propio;
-
 	private Integer nroTracking;
-
 	private List<Encomienda> encomiendas;
 
 	public Envio() {
 	}
 
-	public Envio(Vehiculo vehiculo, String estado,
+	public Envio(Proveedor proveedor, MapaDeRuta mapaDeRuta,
+			Coordenada posicionActual, Sucursal sucursalDestino,
+			Sucursal sucursalOrigen, Vehiculo vehiculo, String estado,
 			Date fechaYHoraLlegadaEstimada, Date fechaYHoraSalida,
 			boolean propio, Integer nroTracking) {
 		super();
+		this.proveedor = proveedor;
+		this.mapaDeRuta = mapaDeRuta;
+		this.posicionActual = posicionActual;
+		this.sucursalDestino = sucursalDestino;
+		this.sucursalOrigen = sucursalOrigen;
 		this.vehiculo = vehiculo;
 		this.estado = estado;
 		this.fechaYHoraLlegadaEstimada = fechaYHoraLlegadaEstimada;
@@ -70,7 +79,6 @@ public class Envio implements java.io.Serializable {
 		this.propio = propio;
 		this.nroTracking = nroTracking;
 	}
-
 
 
 
@@ -98,6 +106,20 @@ public class Envio implements java.io.Serializable {
 		this.posicionActual = posicionActual;
 	}
 
+	public void setPosicionActual(String latitud, String longitud){
+		
+		//Busco si hay una coordenada que coincide con esta latitud y longitud. Si esta, la uso. si no, la creo
+		CoordenadaE coord = CoordenadaDao.getInstancia().getByLatitudLongitud(latitud, longitud);
+		
+		if(coord == null){
+			coord = new CoordenadaE(latitud, longitud);
+			CoordenadaDao.getInstancia().saveOrUpdate(coord);
+		}
+				
+		this.posicionActual = new Coordenada(latitud, longitud);
+		this.posicionActual.setIdCoordenada(coord.getIdCoordenada());
+	}
+	
 	public MapaDeRuta getMapaDeRuta() {
 		return mapaDeRuta;
 	}
@@ -216,6 +238,59 @@ public class Envio implements java.io.Serializable {
 		}
 		
 	}
+
+	
+	/*Actualiza la posicion con latitud y longitud, y actualiza el estado: 
+	*   Pendiente,	//por salir en viaje
+	* 	VehiculoCompleto, //se lleno la capacidad del vehiculo
+	* 	EnViaje,	//esta en viaje
+	* 	Desviado,   //el vehiculo asignado al envio no esta siguiendo la ruta acordada
+	* 	Alerta,     //el vehiculo asignado hace 10 minutos que esta en otra ruta
+	* 	Demorado,   //el envio llego mas tarde de lo pautado
+	* 	Concluido   //llego a destino
+	* La idea es llamar este metodo cada 5 minutos desde la web para actualizar el estado del envio. 
+	* La coordenadaActual sera obtenida del XML provisto por los vehiculos.
+	*/
+	public void actualizarEstadoVehiculo(String latitud, String longitud) {
+			
+		this.setPosicionActual(latitud, longitud);
+		
+		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
+		MapaDeRutaE mr = e.getMapaDeRuta();
+		
+		List<CoordenadaE> lista = mr.getCoordenadas();
+		Boolean encontrado = false;
+		
+		for(CoordenadaE coord: mr.getCoordenadas()){
+			if(posicionActual.getLatitud().equals(coord.getLatitud()) && posicionActual.getLongitud().equals(coord.getLongitud())){
+				encontrado=true;
+			}
+		}
+		
+		if(!encontrado){
+			if(e.getEstado()==EnvioEstado.EnViaje.toString()){
+				e.setEstado(EnvioEstado.Desviado.toString());
+			}
+			else {
+				if(e.getEstado()==EnvioEstado.Desviado.toString()){
+					e.setEstado(EnvioEstado.Alerta.toString());
+				}
+			}
+		}
+		e.setPosicionActual(CoordenadaDao.getInstancia().getById(posicionActual.getIdCoordenada()));
+		EnvioDao.getInstancia().saveOrUpdate(e);
+	}
+	
+	public void estaEnvioDemorado(){
+		
+		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
+		Date hoy = new Date();
+		if(e.getFechaYHoraLlegadaEstimada().compareTo(hoy)<0){
+			e.setEstado(EnvioEstado.Demorado.toString());
+			EnvioDao.getInstancia().saveOrUpdate(e);
+		}
+	}
+
 	
 	
 }

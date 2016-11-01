@@ -1,4 +1,4 @@
-﻿use AD2016_new2
+﻿use AD2016
 go
 
 SET IDENTITY_INSERT Coordenada ON;  
@@ -244,6 +244,14 @@ GO
 SET IDENTITY_INSERT dbo.[Usuario] off;  
 GO
 
-/*UsuarioRol*/
---INSERT INTO UsuarioRol VALUES(1,1)
---INSERT INTO UsuarioRol VALUES(1,2)
+SET IDENTITY_INSERT dbo.[Rol] on;  
+GO
+insert into Rol (IdRol, Descripcion) values (1,'Administrador')
+insert into Rol (IdRol, Descripcion) values (2,'Empleado')
+SET IDENTITY_INSERT dbo.[Rol] off;  
+GO
+
+
+INSERT INTO UsuarioRol VALUES(1,1)
+INSERT INTO UsuarioRol VALUES(1,2)
+

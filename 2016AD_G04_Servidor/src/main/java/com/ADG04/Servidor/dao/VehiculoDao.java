@@ -36,7 +36,7 @@ public class VehiculoDao extends GenericDao<VehiculoE, Integer> {
 	public long getEstadoAsignacion(VehiculoE v) {
 
 		long asignado = 0;
-		asignado = (long) entityManager.createQuery("select count(*) from Envio e "
+		asignado = (long) entityManager.createQuery("select count(*) from EnvioE e "
 				+ " where e.vehiculo.idVehiculo =:idVehiculo"
 				+ " and e.estado!=:pendiente")
 				.setParameter("idVehiculo", v.getIdVehiculo())
@@ -75,15 +75,18 @@ public class VehiculoDao extends GenericDao<VehiculoE, Integer> {
 	 * */
 	public List<VehiculoE> getPorVolumenPesoSucursalTareasRealizadas(int idSucursal, float peso, float volumen) {
 			
+		System.out.println("getPorVolumenPesoSucursalTareasRealizadas("+idSucursal+", "+peso+", "+volumen+")");
+		
 		return (List<VehiculoE>)entityManager.createQuery("Select tmr.vehiculo "
-				+ " from TareaMantenimientoRealizada tmr "
+				+ " from TareaMantenimientoRealizadaE tmr "
 				+ " join tmr.tareaMantenimiento t"
 				+ " where tmr.vehiculo.sucursal.idSucursal =:idSucursal "
-				+ " and tmr.vehiculo.volumen >= :volumen and (tmr.vehiculo.peso - tmr.vehiculo.tara) >= :peso"
-				+ " group by tmr.vehiculo, t.planMantenimiento"
-				+ " having count(*) >= (Select count(*) from "
-				+ " TareaMantenimiento tm where tm.planMantenimiento ="
-				+ " t.planMantenimiento)").setParameter("idSucursal", idSucursal)
+				+ " and tmr.vehiculo.volumen >= :volumen and (tmr.vehiculo.peso - tmr.vehiculo.tara) >= :peso")
+		//		+ " group by tmr.vehiculo, t.planMantenimiento"
+		//		+ " having count(*) >= (Select count(*) from "
+			//	+ " TareaMantenimientoE tm where tm.planMantenimiento ="
+				//+ " t.planMantenimiento)")
+				.setParameter("idSucursal", idSucursal)
 				.setParameter("volumen", volumen).setParameter("peso", peso)
 				.getResultList();
 
@@ -93,7 +96,7 @@ public class VehiculoDao extends GenericDao<VehiculoE, Integer> {
 		try{
 			String f= filtro+"%";
 			return entityManager
-	                .createQuery("from Vehiculo v where (modelo like :filtro OR marca like :filtro OR patente like :filtro)")
+	                .createQuery("from VehiculoE v where (modelo like :filtro OR marca like :filtro OR patente like :filtro)")
 	                .setParameter("filtro", f)
 	                .getResultList();
         }catch(Exception e){

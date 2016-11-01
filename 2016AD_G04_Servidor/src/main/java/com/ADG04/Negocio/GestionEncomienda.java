@@ -34,10 +34,6 @@ public class GestionEncomienda {
 		return instancia;
 	}
 
-	public EnvioE getInfoEnvio(int idEnvio){
-		return EnvioDao.getInstancia().getById(idEnvio);
-	}
-	
 	public void altaEncomiendaParticular(DTO_EncomiendaParticular dtoEncomienda) {
 		SucursalE origen = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalOrigen().getId());
 		SucursalE destino = SucursalDao.getInstancia().getById(dtoEncomienda.getSucursalDestino().getId());
@@ -985,5 +981,6 @@ public class GestionEncomienda {
 		return vehiculos;
 		
 	}
+
 
 }

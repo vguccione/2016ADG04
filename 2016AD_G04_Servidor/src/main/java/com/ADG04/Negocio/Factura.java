@@ -9,7 +9,7 @@ import java.util.Set;
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
-public class Factura implements java.io.Serializable {
+public class Factura{
 		
 	private int idFactura;
 	

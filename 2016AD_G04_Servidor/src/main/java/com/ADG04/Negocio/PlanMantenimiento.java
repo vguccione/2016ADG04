@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 
-public class PlanMantenimiento implements java.io.Serializable {
+public class PlanMantenimiento{
  
 	private int idPlanMantenimiento;
 	private String descripcion;

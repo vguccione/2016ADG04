@@ -5,7 +5,7 @@ import java.util.List;
 import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 
-public class Cliente implements java.io.Serializable {
+public class Cliente{
 
 	private int idCliente;
 	private boolean estado;

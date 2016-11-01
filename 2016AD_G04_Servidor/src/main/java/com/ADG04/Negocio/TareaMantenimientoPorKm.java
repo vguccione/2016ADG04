@@ -4,7 +4,7 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
-public class TareaMantenimientoPorKm extends TareaMantenimiento implements java.io.Serializable {
+public class TareaMantenimientoPorKm extends TareaMantenimiento{
 
 	private float cantidadKilometros;
 

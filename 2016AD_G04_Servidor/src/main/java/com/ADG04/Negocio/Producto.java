@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.ADG04.bean.Cliente.DTO_Producto;
 
-public class Producto implements java.io.Serializable {
+public class Producto{
 
 	private int idProducto;
 	private Cliente cliente;

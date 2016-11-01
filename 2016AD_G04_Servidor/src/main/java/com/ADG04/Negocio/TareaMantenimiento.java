@@ -22,7 +22,7 @@ import java.util.List;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
     
 
-public abstract class TareaMantenimiento implements java.io.Serializable {
+public abstract class TareaMantenimiento{
 
 	private int idTareaMantenimiento;
 	private PlanMantenimiento planMantenimiento;

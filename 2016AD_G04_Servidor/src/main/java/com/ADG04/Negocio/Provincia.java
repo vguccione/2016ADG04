@@ -20,7 +20,7 @@ import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
 
 
-public class Provincia implements java.io.Serializable {
+public class Provincia{
 
 	private int idProvincia;
 	private String descripcion;

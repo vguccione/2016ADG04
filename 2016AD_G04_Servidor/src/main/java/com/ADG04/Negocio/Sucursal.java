@@ -3,6 +3,8 @@ package com.ADG04.Negocio;
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,12 +19,15 @@ import java.util.List;
 
 
 
+
+import com.ADG04.Servidor.dao.MapaDeRutaDao;
+import com.ADG04.Servidor.model.MapaDeRutaE;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
 
-public class Sucursal implements java.io.Serializable {
+public class Sucursal{
 
 	private int idSucursal;
 	private String descripcion;

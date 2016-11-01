@@ -7,3 +7,4 @@ target/
 .project
 pom.xml
 src/main/resources/
+*.class

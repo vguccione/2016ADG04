@@ -12,6 +12,8 @@ import com.ADG04.bean.Encomienda.DTO_Encomienda;
 
 public class Encomienda implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int idEncomienda;
 	private Direccion direccionDestino;
 	private Sucursal sucursalDestno;

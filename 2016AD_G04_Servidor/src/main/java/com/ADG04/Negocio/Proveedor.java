@@ -4,19 +4,19 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.PaisDao;
@@ -27,40 +27,17 @@ import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 
 
-@Table(name = "Proveedor")
 public class Proveedor implements java.io.Serializable {
-
-	
-	
-	@Column(name = "IdProveedor", unique = true, nullable = false)
+ 
 	private int idProveedor;
-
-	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL,orphanRemoval=true)
-	@JoinColumn(name = "IdDireccion")
 	private Direccion direccion;
-
-	@Column(name = "Activo", nullable = false, length = 1)
 	private String activo;
-
-	@Column(name = "Cuit", nullable = false, length = 10)
 	private String cuit;
-
-	@Column(name = "RazonSocial", nullable = false, length = 50)
 	private String razonSocial;
-	
-	@Column(name = "Email", nullable = false, length = 50)
 	private String email;
-
-	@Column(name = "Telefono", nullable = false, length = 50)
 	private String telefono;
-
-	@Column(name="EsTallerOficial")
 	private boolean tallerOficial;
-	
-	@Column(name="Tipo")
 	private char tipo;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
 	private List<Envio> envios;
 	
 	public Proveedor() {
@@ -107,6 +84,11 @@ public class Proveedor implements java.io.Serializable {
 		this.email = email;
 		this.telefono = telefono;
 	}
+
+	public Proveedor(int idProveedor) {
+		this.idProveedor = idProveedor;
+	}
+
 
 	public int getIdProveedor() {
 		return this.idProveedor;

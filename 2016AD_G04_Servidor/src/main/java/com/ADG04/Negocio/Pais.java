@@ -4,29 +4,20 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+
+
+
+
+
+
 
 import com.ADG04.bean.Administracion.DTO_Pais;
 
-
-@Table(name = "Pais")
 public class Pais implements java.io.Serializable {
-
-	
-	
-	@Column(name = "IdPais", unique = true, nullable = false)
+ 
 	private int idPais;
-	
-	@Column(name = "Descripcion", nullable = false, length = 100)
 	private String descripcion;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pais")
 	private List<Direccion> direcciones;
 
 	public Pais() {

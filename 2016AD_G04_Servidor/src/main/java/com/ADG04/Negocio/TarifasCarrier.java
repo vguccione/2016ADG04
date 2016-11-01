@@ -1,32 +1,19 @@
 package com.ADG04.Negocio;
 
-import javax.persistence.*;
-
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 
-
-@Table(name="TarifasCarrier")
 public class TarifasCarrier implements java.io.Serializable{	
 	
-	
-	
-	@Column(name="IdTarifasCarrier")
 	private int idTarifasCarrier;
 	
-	@Column(name="Comentarios")
 	private String comentarios;
 	
-	@Column(name="Prioridad")
 	private String prioridad;
 	
-	@Column(name="PrecioKMExtra")
 	private float precioKMExtra;
 	
-	@Column(name="Tarifa")
 	private float tarifa;
 	
-	@ManyToOne
-	@JoinColumn(name="idProveedor")
 	private Proveedor proveedor;
 
 	public TarifasCarrier() {

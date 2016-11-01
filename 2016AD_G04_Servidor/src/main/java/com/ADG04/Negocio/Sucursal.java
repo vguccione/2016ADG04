@@ -5,69 +5,37 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+
+
+
+
+
+
+
+
+
+
 
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
 
-@Table(name = "Sucursal")
 public class Sucursal implements java.io.Serializable {
 
-	
-	
-	@Column(name = "IdSucursal", unique = true, nullable = false)
 	private int idSucursal;
-	
-	@Column(name="Descripcion")
 	private String descripcion;
-	
-	@Column(name = "Telefono")
 	private String telefono;
-	
-	@OneToOne
-	@JoinColumn(name = "IdGerente", nullable = true)
 	private Usuario gerente;
-	
-	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-	@JoinColumn(name = "IdDireccion", nullable = false)
 	private Direccion direccion;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalOrigen")
 	private List<Envio> enviosSucursalDestino;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalDestino")
 	private List<Envio> enviosSucursalOrigen;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalDestno")
 	private List<Encomienda> encomiendasSucursalDestino;
-
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalOrigen")
 	private List<Encomienda> encomiendasSucursalOrigen;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursalActual")
 	private List<Encomienda> encomiendasSucursalActual;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursal")
 	private List<Usuario> usuarios; 
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursal")
 	private List<Vehiculo> vehiculos;
-	
-	@OneToOne
-	@JoinColumn(name="Coordenada")
 	private Coordenada coordenadas;
 
 	public Sucursal() {

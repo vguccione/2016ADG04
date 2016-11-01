@@ -1,45 +1,17 @@
 package com.ADG04.Negocio;
-// default package
-// Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
-
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 
-
-@Table(name = "ItemRemito")
 public class ItemRemito implements java.io.Serializable {
-
 	
-	
-	@Column(name = "IdItemFactura", unique = true, nullable = false)
 	private int idItemRemito;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdRemito")
 	private Remito remito;
-
-	@Column(name="Descripcion")
 	private String descripcion;
-	
-	@Column(name = "Cantidad", nullable = false)
 	private int cantidad;
-	
-	@ManyToOne
-	@JoinColumn(name="IdProducto")
 	private Producto producto;
 
 	public ItemRemito() {

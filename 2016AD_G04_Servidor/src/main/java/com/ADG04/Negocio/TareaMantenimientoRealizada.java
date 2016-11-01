@@ -4,45 +4,26 @@ package com.ADG04.Negocio;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+
+
+
+
+
+
+
+
+
 
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 
-
-@Table(name = "TareaMantenimientoRealizada")
 public class TareaMantenimientoRealizada implements java.io.Serializable {
-
 	
-	
-	@Column(name = "IdTareaMantenimientoRealizada", unique = true, nullable = false)
 	private int idTareaMantenimientoRealizada;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdTareaMantenimiento", nullable = false)
 	private TareaMantenimiento tareaMantenimiento;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdProveedor", nullable = false)
 	private Proveedor proveedor;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdVehiculo", nullable = false)
 	private Vehiculo vehiculo;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "FechaRealizada", nullable = false, length = 23)
 	private Date fechaRealizada;
-
-	@Column(name = "CantidadKilometros", nullable = true)
 	private Float cantidadKilometros;
 
 	public TareaMantenimientoRealizada() {

@@ -1,6 +1,4 @@
 package com.ADG04.Negocio;
-// default package
-// Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,57 +6,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
-
-@Table(name = "Factura")
 public class Factura implements java.io.Serializable {
-	
-	
-	@Column(name = "IdFactura", unique = true, nullable = false)
+		
 	private int idFactura;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdCtaCte")
 	private CuentaCorriente cuentaCorriente;
 	
-	@Column(name = "TipoFactura", nullable = false, length = 1)
 	private String tipoFactura;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Fecha", nullable = false, length = 23)
 	private Date fecha;
 	
-	@Column(name = "Pagada", nullable = false)
 	private boolean pagada;
 	
-	@Column(name="FechaVencimiento")
 	private Date fechaVencimiento;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Vencimiento", nullable = false, length = 23)
 	private Date vencimiento;
 	
-	@OneToOne
-	@JoinColumn(name="IdEncomienda")
 	private Encomienda encomienda;	
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<ItemFactura> itemsFactura;
 
 	public Factura() {
@@ -72,7 +40,6 @@ public class Factura implements java.io.Serializable {
 		this.pagada = pagada;
 		this.vencimiento = vencimiento;
 	}
-
 	
 	public int getIdFactura() {
 		return this.idFactura;
@@ -81,7 +48,6 @@ public class Factura implements java.io.Serializable {
 	public void setIdFactura(int idFactura) {
 		this.idFactura = idFactura;
 	}
-
 	
 	public CuentaCorriente getCuentaCorriente() {
 		return this.cuentaCorriente;

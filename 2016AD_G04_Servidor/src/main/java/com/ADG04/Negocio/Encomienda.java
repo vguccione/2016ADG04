@@ -1,160 +1,56 @@
 package com.ADG04.Negocio;
-// default package
-// Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 
 
-@Table(name = "Encomienda")
 public class Encomienda implements java.io.Serializable {
 
-	
-	(strategy=GenerationType.AUTO)
-	@Column(name = "IdEncomienda", unique = true, nullable = false)
 	private int idEncomienda;
-
-	@OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name = "IdDireccionDestino")
 	private Direccion direccionDestino;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdSucursalDestino", nullable = false)
 	private Sucursal sucursalDestno;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdSucursalOrigen", nullable = false)
 	private Sucursal sucursalOrigen;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name = "IdDireccionOrigen")
 	private Direccion direccionOrigen;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdSucursalActual")
 	private Sucursal sucursalActual;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdCliente", nullable = false)
 	private Cliente cliente;
-
-	@Column(name = "TipoEncomienda", nullable = false, length = 2)
 	private String tipoEncomienda;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "FechaCreacion", nullable = false, length = 23)
 	private Date fechaCreacion;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "FechaEstimadaEntrega", nullable = true, length = 23)
 	private Date fechaEstimadaEntrega;
-
-	@Column(name = "Estado", nullable = false, length = 50)
 	private String estado;
-
-	@Column(name = "Tercerizado", nullable = false)
 	private boolean tercerizado;
-
-	@Column(name = "Largo", precision = 53, scale = 0)
 	private float largo;
-
-	@Column(name = "Alto", precision = 53, scale = 0)
 	private float alto;
-
-	@Column(name = "Ancho", precision = 53, scale = 0)
 	private float ancho;
-
-	@Column(name = "Peso", precision = 53, scale = 0)
 	private float peso;
-
-	@Column(name = "Volumen", precision = 53, scale = 0)
 	private float volumen;
-
-	@Column(name = "Tratamiento", length = 50)
 	private String tratamiento;
-
-	@Column(name = "Apilable")
 	private Boolean apilable;
-
-	@Column(name = "CantApilable")
 	private Short cantApilable;
-
-	@Column(name = "Refrigerado")
 	private Boolean refrigerado;
-
-	@Column(name = "CondicionTransporte", length = 50)
 	private String condicionTransporte;
-
-	@Column(name = "IndicacionesManipulacion", length = 1000)
 	private String indicacionesManipulacion;
-
-	@Column(name = "Fragilidad", length = 20)
 	private String fragilidad;
-
-	@Column(name = "NombreReceptor", nullable = false, length = 100)
 	private String nombreReceptor;
-
-	@Column(name = "ApellidoReceptor", nullable = false, length = 100)
 	private String apellidoReceptor;
-
-	@Column(name = "DniReceptor", nullable = false, length = 8)
 	private String dniReceptor;
-
-	@Column(name = "VolumenGranel", precision = 53, scale = 0)
 	private float volumenGranel;
-
-	@Column(name = "UnidadGranel", length = 25)
 	private String unidadGranel;
-
-	@Column(name = "CargaGranel", length = 100)
 	private String cargaGranel;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "encomienda")
 	private List<ProductoEncomienda> productoEncomiendas;
-	
-	@Column(name="EsTerciarizado")
 	private boolean terciarizado;
-	
-	@Column(name="ServicioSeguridad")
 	private ServicioSeguridad servicioSeguridad;
-	
-	@OneToOne(mappedBy="encomienda", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Manifiesto manifiesto;
-	
-	@OneToOne(mappedBy="encomienda", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Factura factura;
-	
-	@OneToOne(mappedBy="encomienda", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Remito remito;
-	
-	@Column(name="Internacional")
 	private boolean internacional;
-	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "encomiendas")
 	private List<Envio> envios;
 	
-
 	public Encomienda() {
 	}
 
@@ -445,7 +341,9 @@ public class Encomienda implements java.io.Serializable {
 		Seguro p = new Seguro();
 		p.setTarifa(123.0F);
 		p.setTarifaPorKm(456.0F);
-		p.setProveedor(ProveedorDao.getInstancia().getById(1));
+		//TODO: revisar
+		//p.setProveedor(ProveedorDao.getInstancia().getById(1));
+		p.setProveedor(new Proveedor(1));
 		return p;
 	}
 

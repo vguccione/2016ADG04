@@ -1,31 +1,9 @@
 package com.ADG04.Negocio;
-// default package
-// Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-
-@Table(name = "ProductoEncomienda")
 public class ProductoEncomienda implements java.io.Serializable {
 
-	
-	
-	@Column(name = "IdProductoEncomienda", unique = true, nullable = false)
 	private int idProductoEncomienda;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdEncomienda", nullable = false)
 	private Encomienda encomienda;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdProducto", nullable = false)
 	private Producto producto;
 
 	public ProductoEncomienda() {

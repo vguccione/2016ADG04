@@ -4,7 +4,7 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
-public class TareaMantenimientoPorTiempo extends TareaMantenimiento implements java.io.Serializable {
+public class TareaMantenimientoPorTiempo extends TareaMantenimiento{
 
 	private int cantidadDias;
 

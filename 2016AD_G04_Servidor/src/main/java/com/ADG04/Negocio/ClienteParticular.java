@@ -29,7 +29,7 @@ import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
   
-public class ClienteParticular extends Cliente implements java.io.Serializable {
+public class ClienteParticular extends Cliente{
 
 	private String nombre;
 	private String apellido;

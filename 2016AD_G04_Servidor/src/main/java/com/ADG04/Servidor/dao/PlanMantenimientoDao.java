@@ -50,7 +50,7 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 		
 		//Por cada una de estas tareas, tengo que buscar cuando fue la ultima vez que se realizo.
 		List<Object[]> lista = (List<Object[]>)entityManager.createQuery("select tt, v.kmRecorridos "
-				+ " from PlanMantenimiento p"
+				+ " from PlanMantenimientoE p"
 				+ " join p.tareaMantenimientos tt"
 				+ " join p.vehiculos v"
 				//+ " left outer join v.tareasMantenimientoRealizadas ts"
@@ -76,7 +76,7 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 				
 				//Tengo que fijarme cuando se realizó por última vez cada tarea
 				List<TareaMantenimientoRealizadaE> tRealizadas = (List<TareaMantenimientoRealizadaE>)entityManager.createQuery("select tr "
-						+ " from TareaMantenimientoRealizada tr"
+						+ " from TareaMantenimientoRealizadaE tr"
 						+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea")
 						.setParameter("idTarea", tarea.getIdTareaMantenimiento())
 						.getResultList(); 
@@ -120,7 +120,7 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 		List<TareaMantenimientoPorTiempoE> tareasVencidas = new ArrayList<TareaMantenimientoPorTiempoE>();
 
 		List<Object[]> lista = (List<Object[]>)entityManager.createQuery("select tt, v.FechaIngreso "
-				+ " from PlanMantenimiento p"
+				+ " from PlanMantenimientoE p"
 				+ " join p.tareaMantenimientos tt"
 				+ " join p.vehiculos v"
 				//+ " left outer join v.tareasMantenimientoRealizadas ts"
@@ -155,7 +155,7 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 					
 					//Tengo que fijarme cuando se realizó por última vez esta tarea.
 					List<TareaMantenimientoRealizadaE> tRealizadas = (List<TareaMantenimientoRealizadaE>)entityManager.createQuery("select tr "
-							+ " from TareaMantenimientoRealizada tr"
+							+ " from TareaMantenimientoRealizadaE tr"
 							+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea")
 							.setParameter("idTarea", tarea.getIdTareaMantenimiento())
 							.getResultList();
@@ -195,7 +195,7 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 	public PlanMantenimientoE getPlanByIdVehiculo(int idVehiculo) {
 			
 		PlanMantenimientoE plan = (PlanMantenimientoE)entityManager.createQuery("select p "
-				+ " from PlanMantenimiento p"
+				+ " from PlanMantenimientoE p"
 				+ " join p.vehiculos v"
 				+ " where v.idVehiculo=:idVeh").setParameter("idVeh", idVehiculo)
 				.getSingleResult();
@@ -210,7 +210,7 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 			
 			//Busco las tareas de Mantenimiento
 			List<TareaMantenimientoE> tareas = (List<TareaMantenimientoE>)entityManager.createQuery("select ts"
-					+ " from PlanMantenimiento p"
+					+ " from PlanMantenimientoE p"
 					+ " join p.tareaMantenimientos ts"
 					+ " where p.idPlanMantenimiento=:idPlan").setParameter("idPlan", plan.getIdPlanMantenimiento())
 					.getResultList();

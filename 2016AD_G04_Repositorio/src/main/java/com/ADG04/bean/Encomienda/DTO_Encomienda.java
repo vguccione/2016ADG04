@@ -16,7 +16,6 @@ public class DTO_Encomienda implements Serializable{
 	private DTO_ItemFactura itemFactura;
 	private DTO_Direccion direccionOrigen;
 	private DTO_Direccion direccionDestino;
-
 	private DTO_Envio envio;
 	
 	private DTO_Cliente cliente;
@@ -55,11 +54,27 @@ public class DTO_Encomienda implements Serializable{
 	private DTO_Factura factura;
 	private boolean tercerizada;
 	private boolean internacional;
-	
+	private int idServicioSeguridad;
+
 			
 	public DTO_Encomienda() {
 		super();
 	}
+	
+	
+	
+	public int getIdServicioSeguridad() {
+		return idServicioSeguridad;
+	}
+
+
+
+	public void setIdServicioSeguridad(int idServicioSeguridad) {
+		this.idServicioSeguridad = idServicioSeguridad;
+	}
+
+
+
 	public int getIdEncomienda() {
 		return idEncomienda;
 	}

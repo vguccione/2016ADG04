@@ -1,6 +1,6 @@
 package com.ADG04.Negocio;
 
-public class ProductoEncomienda implements java.io.Serializable {
+public class ProductoEncomienda{
 
 	private int idProductoEncomienda;
 	private Encomienda encomienda;

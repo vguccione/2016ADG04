@@ -2,10 +2,15 @@ package com.ADG04.Negocio;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import com.ADG04.Servidor.dao.MapaDeRutaDao;
+import com.ADG04.Servidor.model.MapaDeRutaE;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 
-public class MapaDeRuta implements java.io.Serializable {
+public class MapaDeRuta{
 
 	private int idMapaDeRuta;
 	private List<Envio> envios;
@@ -100,6 +105,20 @@ public class MapaDeRuta implements java.io.Serializable {
 		return dto;
 	}
 	
-	
+	public Date calcularFechaEstimadaDeEntrega() {//(int idSucursalOrigen, int idSucursalDestino){
+		
+		//MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(idSucursalOrigen, idSucursalDestino);
+		MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getById(this.idMapaDeRuta);
+		System.out.println("calcularFechaEstimadaDeEntrega , mapa de ruta id " + mr.getIdMapaDeRuta());
+		if(mr!=null){
+			Date hoy = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(hoy);
+			calendar.add(Calendar.HOUR, (int) mr.getDuracion());
+			return calendar.getTime();
+		}
+		else
+			return null;
+	}
 
 }

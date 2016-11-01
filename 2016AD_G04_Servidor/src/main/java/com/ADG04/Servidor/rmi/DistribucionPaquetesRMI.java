@@ -6,14 +6,24 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import com.ADG04.Negocio.Cliente;
+import com.ADG04.Negocio.Direccion;
+import com.ADG04.Negocio.Encomienda;
+import com.ADG04.Negocio.EncomiendaParticular;
 import com.ADG04.Negocio.GestionAdministracion;
 import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
+import com.ADG04.Negocio.ItemManifiesto;
+import com.ADG04.Negocio.Manifiesto;
+import com.ADG04.Negocio.Producto;
+import com.ADG04.Negocio.ServicioSeguridad;
+import com.ADG04.Negocio.Sucursal;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
@@ -76,6 +86,7 @@ import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
+import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
@@ -469,14 +480,55 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	
-	public void nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) {
+	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encP) {
 		
-		GestionEncomienda gEnc = GestionEncomienda.getInstancia();
+		//Cuando creo la encomienda, la sucursal actual es la misma que la de origen
+		Sucursal sucursalActual = new Sucursal();
+		sucursalActual.setIdSucursal(encP.getSucursalOrigen().getId());
 		
-		gEnc.altaEncomiendaParticular(encomiendaParticular);
+		Sucursal sucursalOrigen = new Sucursal();
+		sucursalOrigen.setIdSucursal(encP.getSucursalOrigen().getId());
+		
+		Sucursal sucursalDestino = new Sucursal();
+		sucursalDestino.setIdSucursal(encP.getSucursalDestino().getId());
+		
+		//Direccion direccionDestino = new Direccion();
+	//	direccionDestino.setIdDireccion(encP.getDireccionDestino().getIdDireccion());
+
+		//Direccion direccionOrigen = new Direccion();
+		//direccionOrigen.setIdDireccion(encP.getDireccionOrigen().getIdDireccion());
+
+		Cliente cliente = new Cliente();
+		cliente.setIdCliente(encP.getCliente().getId());
+		
+		ServicioSeguridad servicioSeg = new ServicioSeguridad();
+		servicioSeg.setIdServicioSeguridad(encP.getIdServicioSeguridad());
+		
+		Manifiesto manifiesto = new Manifiesto(encP.getManifiesto().getId(), encP.getManifiesto().getFecha());
+		
+		for (DTO_ItemManifiesto item : encP.getManifiesto().getDetalle()) {
+			Producto producto = null;
+			
+			if(item.getProducto() != null){
+					producto = new Producto();
+					producto.setIdProducto(item.getProducto().getId());
+			}
+			
+			manifiesto.addItem(new ItemManifiesto(item.getDescripcion(), item.getCantidad(), producto)); 
+		}
+		
+		EncomiendaParticular nuevaEncomienda = 		
+		new EncomiendaParticular(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
+				encP.getFechaCreacion(), encP.getFechaEstimadaEntrega(), encP.getEstado(), encP.isTercerizada(), 
+				encP.getLargo(), encP.getAlto(), encP.getAncho(), encP.getPeso(), encP.getVolumen(), encP.getTratamiento(), 
+				encP.getApilable(), encP.getCantApilable(), encP.getRefrigerado(), encP.getCondicionTransporte(), 
+				encP.getIndicacionesManipulacion(), encP.getFragilidad(), encP.getNombreReceptor(), 
+				encP.getApellidoReceptor(), encP.getDniReceptor(), encP.getVolumenGranel(), encP.getUnidadGranel(), 
+				encP.getCargaGranel(), servicioSeg, manifiesto, encP.isInternacional());
+		
+		return nuevaEncomienda.saveOrUpdate();
 	}
 			
-	
 	public void nuevaEncomiedaParticular(
 			String dniCliente, 
 			DTO_Sucursal sucursalOrigen,
@@ -485,9 +537,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			String nombreReceptor, String apellidoReceptor,String dniReceptor){
 	
 	}
-								
-
-	
+			
 	public void nuevaEncomiedaEmpresa(String dniCliente,
 			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
 			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
@@ -622,7 +672,9 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public DTO_EnvioPropio getInfoEnvioPropio(int idEnvio){
 		
 		DTO_EnvioPropio envio = new DTO_EnvioPropio();
-		EnvioE env = GestionEncomienda.getInstancia().getInfoEnvio(idEnvio);
+		
+		//TODO: esto lo puedo hacer aca porque es un controlador.
+		EnvioE env = EnvioDao.getInstancia().getById(idEnvio);
 		
 		envio.setEstado(env.getEstado());
 		envio.setId(env.getIdEnvio());

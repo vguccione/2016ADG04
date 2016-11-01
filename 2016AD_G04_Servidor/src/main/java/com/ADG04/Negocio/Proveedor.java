@@ -27,7 +27,7 @@ import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 
 
-public class Proveedor implements java.io.Serializable {
+public class Proveedor{
  
 	private int idProveedor;
 	private Direccion direccion;

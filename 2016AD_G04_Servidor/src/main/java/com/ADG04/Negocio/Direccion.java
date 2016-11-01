@@ -1,6 +1,4 @@
 package com.ADG04.Negocio;
-// default package
-// Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +8,8 @@ import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 
-public class Direccion implements java.io.Serializable {
+public class Direccion{
+
 	private int idDireccion;
 	private Pais pais;
 	private Provincia provincia;

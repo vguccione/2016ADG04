@@ -15,7 +15,7 @@ import java.util.List;
 
 import com.ADG04.bean.Administracion.DTO_Rol;
 
-public class Rol implements java.io.Serializable {
+public class Rol{
 
 	private int idRol;
 	private String descripcion;

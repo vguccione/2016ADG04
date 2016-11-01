@@ -23,7 +23,7 @@ import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 
 
-public class Remito implements java.io.Serializable {
+public class Remito{
  
 	private int idRemito;
 	private String nombreReceptor;

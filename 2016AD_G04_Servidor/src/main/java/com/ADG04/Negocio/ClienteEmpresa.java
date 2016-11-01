@@ -16,7 +16,7 @@ import java.util.List;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 
 
-public class ClienteEmpresa extends Cliente implements java.io.Serializable {
+public class ClienteEmpresa extends Cliente{
 
 	private String razonSocial;
 	private String cuit;

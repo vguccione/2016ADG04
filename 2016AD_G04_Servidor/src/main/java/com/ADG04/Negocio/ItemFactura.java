@@ -2,7 +2,7 @@ package com.ADG04.Negocio;
 
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
-public class ItemFactura implements java.io.Serializable {
+public class ItemFactura{
 	private int idItemFactura;
 	private Factura factura;
 	private String descripcion;

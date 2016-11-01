@@ -1,66 +1,133 @@
 package com.ADG04.Negocio;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
+
+
+
+
+import com.ADG04.Servidor.dao.EncomiendaDao;
+import com.ADG04.Servidor.dao.EnvioDao;
+import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.EncomiendaE;
+import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.model.ProveedorE;
+import com.ADG04.Servidor.model.VehiculoE;
+import com.ADG04.Servidor.util.EncomiendaEstado;
+import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 
 
-public class Encomienda implements java.io.Serializable {
+public abstract class Encomienda{
 
-	private static final long serialVersionUID = 1L;
-	
-	private int idEncomienda;
-	private Direccion direccionDestino;
-	private Sucursal sucursalDestno;
-	private Sucursal sucursalOrigen;
-	private Direccion direccionOrigen;
-	private Sucursal sucursalActual;
-	private Cliente cliente;
-	private String tipoEncomienda;
-	private Date fechaCreacion;
-	private Date fechaEstimadaEntrega;
-	private String estado;
-	private boolean tercerizado;
-	private float largo;
-	private float alto;
-	private float ancho;
-	private float peso;
-	private float volumen;
-	private String tratamiento;
-	private Boolean apilable;
-	private Short cantApilable;
-	private Boolean refrigerado;
-	private String condicionTransporte;
-	private String indicacionesManipulacion;
-	private String fragilidad;
-	private String nombreReceptor;
-	private String apellidoReceptor;
-	private String dniReceptor;
-	private float volumenGranel;
-	private String unidadGranel;
-	private String cargaGranel;
-	private List<ProductoEncomienda> productoEncomiendas;
-	private boolean terciarizado;
-	private ServicioSeguridad servicioSeguridad;
-	private Manifiesto manifiesto;
-	private Factura factura;
-	private Remito remito;
-	private boolean internacional;
-	private List<Envio> envios;
+	protected int idEncomienda;
+	protected Direccion direccionDestino;
+	protected Sucursal sucursalDestno;
+	protected Sucursal sucursalOrigen;
+	protected Direccion direccionOrigen;
+	protected Sucursal sucursalActual;
+	protected Cliente cliente;
+
+	protected Date fechaCreacion;
+	protected Date fechaEstimadaEntrega;
+	protected String estado;
+	protected boolean tercerizado;
+	protected float largo;
+	protected float alto;
+	protected float ancho;
+	protected float peso;
+	protected float volumen;
+	protected String tratamiento;
+	protected Boolean apilable;
+	protected Short cantApilable;
+	protected Boolean refrigerado;
+	protected String condicionTransporte;
+	protected String indicacionesManipulacion;
+	protected String fragilidad;
+	protected String nombreReceptor;
+	protected String apellidoReceptor;
+	protected String dniReceptor;
+	protected float volumenGranel;
+	protected String unidadGranel;
+	protected String cargaGranel;
+
+	protected ServicioSeguridad servicioSeguridad;
+	protected Manifiesto manifiesto;
+	protected Factura factura;
+	protected Remito remito;
+	protected boolean internacional;
+	protected List<Envio> envios;
 	
 	public Encomienda() {
 	}
 
+	
+	
+	protected Encomienda(Direccion direccionDestino, Sucursal sucursalDestno,
+			Sucursal sucursalOrigen, Direccion direccionOrigen,
+			Sucursal sucursalActual, Cliente cliente, Date fechaCreacion,
+			Date fechaEstimadaEntrega, String estado, boolean tercerizado,
+			float largo, float alto, float ancho, float peso, float volumen,
+			String tratamiento, Boolean apilable, Short cantApilable,
+			Boolean refrigerado, String condicionTransporte,
+			String indicacionesManipulacion, String fragilidad,
+			String nombreReceptor, String apellidoReceptor, String dniReceptor,
+			float volumenGranel, String unidadGranel, String cargaGranel,
+			ServicioSeguridad servicioSeguridad,
+			Manifiesto manifiesto, 
+			//Factura factura, Remito remito,
+			boolean internacional) {
+		super();
+		this.direccionDestino = direccionDestino;
+		this.sucursalDestno = sucursalDestno;
+		this.sucursalOrigen = sucursalOrigen;
+		this.direccionOrigen = direccionOrigen;
+		this.sucursalActual = sucursalActual;
+		this.cliente = cliente;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaEstimadaEntrega = fechaEstimadaEntrega;
+		this.estado = estado;
+		this.tercerizado = tercerizado;
+		this.largo = largo;
+		this.alto = alto;
+		this.ancho = ancho;
+		this.peso = peso;
+		this.volumen = volumen;
+		this.tratamiento = tratamiento;
+		this.apilable = apilable;
+		this.cantApilable = cantApilable;
+		this.refrigerado = refrigerado;
+		this.condicionTransporte = condicionTransporte;
+		this.indicacionesManipulacion = indicacionesManipulacion;
+		this.fragilidad = fragilidad;
+		this.nombreReceptor = nombreReceptor;
+		this.apellidoReceptor = apellidoReceptor;
+		this.dniReceptor = dniReceptor;
+		this.volumenGranel = volumenGranel;
+		this.unidadGranel = unidadGranel;
+		this.cargaGranel = cargaGranel;
+		this.servicioSeguridad = servicioSeguridad;
+		this.manifiesto = manifiesto;
+		this.factura = factura;
+		this.remito = remito;
+		this.internacional = internacional;
+	}
+
+
+
 	public Encomienda(//ItemFactura itemFactura,
 			Sucursal sucursalDestino, 
 			Sucursal sucursalOrigen, Cliente cliente,
-			String tipoEncomienda, Date fechaCreacion,
-			Date fechaEstimadaEntrega, String estado)//, boolean tercerizado,
+			Date fechaCreacion, Date fechaEstimadaEntrega, String estado)//, boolean tercerizado,
 			//String nombreReceptor, String apellidoReceptor, String dniReceptor) 
 			{
 	//	this.itemFactura = itemFactura;
@@ -68,7 +135,6 @@ public class Encomienda implements java.io.Serializable {
 		//this.envio = envio;
 		this.sucursalOrigen = sucursalOrigen;
 		this.cliente = cliente;
-		this.tipoEncomienda = tipoEncomienda;
 		this.fechaCreacion = fechaCreacion;
 		this.fechaEstimadaEntrega = fechaEstimadaEntrega;
 		this.estado = estado;
@@ -78,6 +144,160 @@ public class Encomienda implements java.io.Serializable {
 	//	this.dniReceptor = dniReceptor;
 	}
 
+	public Integer asignarEnvio(Integer idCarrier) {
+		
+		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
+		 * y asi marco esos envios y vehiculos como no disponibles*/
+		//ponerEnViajeEncomiendasPorVencer();
+		
+		EncomiendaE e = EncomiendaDao.getInstancia().getById(idEncomienda);
+		System.out.println(e.toString());
+		Integer idEnvio = null;
+		if(e != null){
+			if(esEnvioTercerizado()){ 
+				EnvioE envioTercerizado = new EnvioE();
+				if(e.isInternacional()){
+					ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
+					envioTercerizado.setProveedor(prov);
+				}
+				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
+				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
+				envioTercerizado.setNroTracking(2000);
+				envioTercerizado.setSucursalOrigen(e.getSucursalOrigen());
+				envioTercerizado.setSucursalDestino(e.getSucursalDestino());
+				envioTercerizado.setFechaYHoraSalida(new Date());
+				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+				envioTercerizado.setMapaDeRuta(mr);
+				envioTercerizado.setPropio(false);
+				List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
+				lista.add(e);
+				envioTercerizado.setEncomiendas(lista);
+				e.setEstado(EncomiendaEstado.Colocada.toString());
+				
+				EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
+				EncomiendaDao.getInstancia().saveOrUpdate(e);
+				
+				idEnvio = envio.getIdEnvio();
+			} else {
+				//Busco si ya hay algun envio que vaya a la misma ciudad y pendientes
+				boolean nuevoEnvio = true;
+				List<EnvioE> envios = EnvioDao.getInstancia().listarEnviosPorSucursalDestino(e.getSucursalDestino().getIdSucursal(), e.getFechaEstimadaEntrega());
+				boolean pesoOK = false;
+				boolean volumenOK = false;
+				for(EnvioE envProp: envios){
+					if(!pesoOK || !volumenOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
+						//Sumo los pesos y los volumenes
+						float peso = 0;
+						float volumen = 0;
+						float pesoTotal = envProp.getVehiculo().getPeso() - envProp.getVehiculo().getTara();
+						float volumenTotal = envProp.getVehiculo().getVolumen();
+						for(EncomiendaE enc: envProp.getEncomiendas()){
+							peso = (float) (peso + enc.getPeso());
+							volumen = (float) (volumen + enc.getVolumen());
+						}
+						
+						//Verifico si entra el nuevo pedido
+						if(pesoTotal >= peso + e.getPeso()){
+							pesoOK = true;
+						}
+						if(volumenTotal >= volumen + e.getVolumen()){
+							volumenOK = true;
+						}
+	
+						if(pesoOK && volumenOK){ //lo asigno a este envio
+							
+							List<EncomiendaE> encomiendas = envProp.getEncomiendas();
+							encomiendas.add(e);
+							envProp.setEncomiendas(encomiendas);
+							envProp.setPropio(true);
+					
+							float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
+							float peso70 = (float)(peso + e.getPeso()/pesoTotal);
+							
+							if(peso70 > 0.7 || volumen70 > 0.7){
+								envProp.setEstado("Listo");
+							}
+						
+							e.setEstado(EncomiendaEstado.Colocada.toString());
+							
+							EnvioDao.getInstancia().saveOrUpdate(envProp);
+							EncomiendaDao.getInstancia().saveOrUpdate(e);
+							nuevoEnvio = false;
+							
+							
+							idEnvio =  envProp.getIdEnvio();
+						} 
+					}
+				}//End loop
+				
+				//Es un nuevo envio por que no se encontro camion disponible
+				if (nuevoEnvio){
+					//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<>Pendiente)
+					List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(e.getSucursalOrigen().getIdSucursal(),  e.getVolumen(), e.getPeso());
+					boolean pesoNuevoOK = false;
+					boolean volumenNuevoOK = false;
+					
+					for(VehiculoE v: vehiculosDisponibles){
+						//Sumo los pesos y los volumenes
+						if(!pesoNuevoOK || !volumenNuevoOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
+							float pesoTotal = v.getPeso() - v.getTara();
+							float volumenTotal = v.getVolumen();
+							
+							
+							//Verifico si entra el nuevo pedido
+							if(pesoTotal >= e.getPeso()){
+								pesoNuevoOK = true;
+							}
+							if(volumenTotal >= e.getVolumen()){
+								volumenNuevoOK = true;
+							}
+							if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
+								//Genero el envio
+								
+								MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+								
+								EnvioE envioPropio = new EnvioE();
+								envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+								envioPropio.setFechaYHoraSalida(new Date());
+								
+								envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
+								envioPropio.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+								envioPropio.setVehiculo(v);
+								envioPropio.setPropio(true);
+							
+								envioPropio.setSucursalOrigen(e.getSucursalActual());
+								envioPropio.setSucursalDestino(e.getSucursalDestino());
+								envioPropio.setMapaDeRuta(mr);
+								List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
+								lista.add(e);
+								envioPropio.setEncomiendas(lista);
+								float volumen70 = (float)(e.getVolumen()/volumenTotal);
+								float peso70 = (float)(e.getPeso()/pesoTotal);
+								
+								if(peso70 > 0.7 || volumen70 > 0.7){
+									e.setEstado(EncomiendaEstado.Colocada.toString());
+									envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+								}
+								
+								EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
+								EncomiendaDao.getInstancia().saveOrUpdate(e);
+								idEnvio =  envio.getIdEnvio();
+							}
+						}
+					}//End for
+				}//End Nuevo Envio
+			}//End if else envio propio/tercerizado
+		}//End if no encontro encomienda
+		
+
+		/*Coloco las encomiendas en viaje y envio en viaje si hay encomiendas por vencer*/
+//		ponerEnViajeEncomiendasPorVencer();
+		
+		return idEnvio;
+	}
+	
+	
 	public int getIdEncomienda() {
 		return this.idEncomienda;
 	}
@@ -145,14 +365,6 @@ public class Encomienda implements java.io.Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}
-
-	public String getTipoEncomienda() {
-		return this.tipoEncomienda;
-	}
-
-	public void setTipoEncomienda(String tipoEncomienda) {
-		this.tipoEncomienda = tipoEncomienda;
 	}
 
 	public Date getFechaCreacion() {
@@ -331,14 +543,6 @@ public class Encomienda implements java.io.Serializable {
 		this.cargaGranel = cargaGranel;
 	}
 
-	public List<ProductoEncomienda> getProductoEncomiendas() {
-		return productoEncomiendas;
-	}
-
-	public void setProductoEncomiendas(List<ProductoEncomienda> productoEncomiendas) {
-		this.productoEncomiendas = productoEncomiendas;
-	}
-
 	public Seguro getSeguro() {
 		Seguro p = new Seguro();
 		p.setTarifa(123.0F);
@@ -358,11 +562,11 @@ public class Encomienda implements java.io.Serializable {
 	}
 
 	public boolean isTerciarizado() {
-		return terciarizado;
+		return tercerizado;
 	}
 
 	public void setTerciarizado(boolean terciarizado) {
-		this.terciarizado = terciarizado;
+		this.tercerizado = terciarizado;
 	}
 
 	public ServicioSeguridad getServicioSeguridad() {
@@ -407,7 +611,7 @@ public class Encomienda implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Encomienda [cliente=" + cliente.getIdCliente() + ", tipoEncomienda=" + tipoEncomienda
+		return "Encomienda [cliente=" + cliente.getIdCliente()
 				+ ", fechaCreacion=" + fechaCreacion
 				+ ", fechaEstimadaEntrega=" + fechaEstimadaEntrega
 				+ ", estado=" + estado + ", tercerizado=" + tercerizado
@@ -421,50 +625,97 @@ public class Encomienda implements java.io.Serializable {
 				+ nombreReceptor + ", apellidoReceptor=" + apellidoReceptor
 				+ ", dniReceptor=" + dniReceptor + ", volumenGranel="
 				+ volumenGranel + ", unidadGranel=" + unidadGranel
-				+ ", cargaGranel=" + cargaGranel + ", productoEncomiendas="
-				+ productoEncomiendas + ", terciarizado=" + terciarizado +""
+				+ ", cargaGranel=" + cargaGranel + ", terciarizado=" + tercerizado +""
 						+ " internacional +" + internacional + "]";
 	}
 
-	public DTO_Encomienda toDTO() {
-		DTO_Encomienda dto = new DTO_Encomienda();
-		dto.setAlto(this.getAlto());
-		dto.setAncho(this.getAncho());
-		dto.setApellidoReceptor(this.getApellidoReceptor());
-		dto.setApilable(this.getApilable());
-		dto.setCantApilable(this.getCantApilable());
-		dto.setCargaGranel(this.getCargaGranel());
-		dto.setCondicionTransporte(this.getCondicionTransporte());
-		dto.setTipoEncomienda(this.getTipoEncomienda());
-		if(this.getFactura()!=null)
-			dto.setFactura(this.getFactura().toDTO());
+	public boolean esEnvioTercerizado(){
 		
-		dto.setDniReceptor(this.getDniReceptor());
-		dto.setEstado(this.getEstado());
-		dto.setFechaCreacion(this.getFechaCreacion());
-		dto.setFragilidad(this.getFragilidad());
-		dto.setIdEncomienda(this.getIdEncomienda());
-		dto.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
-		dto.setInternacional(this.internacional);
-		dto.setLargo(this.getLargo());
-		if(this.getManifiesto()!=null)
-			dto.setManifiesto(this.getManifiesto().toDTO());
-		
-		dto.setNombreReceptor(this.getNombreReceptor());
-		dto.setPeso(this.getPeso());
-		dto.setRefrigerado(this.refrigerado);
-		dto.setSucursalActual(this.getSucursalActual().toDTO());
-		dto.setSucursalDestino(this.getSucursalDestino().toDTO());
-		dto.setSucursalOrigen(this.getSucursalOrigen().toDTO());
-		dto.setTercerizada(this.tercerizado);
-		dto.setTratamiento(this.getTratamiento());
-		dto.setUnidadGranel(this.getUnidadGranel());
-		dto.setVolumen(this.getVolumen());
-		dto.setVolumenGranel(this.getVolumenGranel());
-		dto.setCliente(this.getCliente().toDTO());
-		return dto;
+		if(this.getVolumenGranel()!=0){
+			return true;
+		}
+		if(this.isInternacional()){
+			return true;
+		}
+		MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(this.getSucursalOrigen().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
+		if(mr!=null){
+			Date hoy = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(hoy);
+			calendar.add(Calendar.HOUR, (int) mr.getDuracion());
+			
+			//Si tengo que enviarlo si o si hoy para que llegue y no hay vehiculos disponibles
+			if(this.getFechaEstimadaEntrega().compareTo(calendar.getTime())==0 ){
+				if(!hayVehiculosDisponibles()){
+					return true;
+				}
+				else
+					return false;
+			}
+		}
+		return false;
 	}
 
+
+	public boolean hayVehiculosDisponibles(){
+		
+		List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(this.getSucursalOrigen().getIdSucursal(),  
+				this.getVolumen(), this.getPeso());
+		boolean pesoOK = false;
+		boolean volumenOK = false;
+		
+		for(VehiculoE v: vehiculosDisponibles){
+			//Sumo los pesos y los volumenes
+			if(!pesoOK || !volumenOK){ //si aun no se  encontro ya vehiculo
+				float pesoTotal = v.getPeso() - v.getTara();
+				float volumenTotal = v.getVolumen();
+				float peso = 0;
+				float volumen = 0;
+				
+				EnvioE envio = (EnvioE) EnvioDao.getInstancia().getByVehiculo(v.getIdVehiculo());
+				if(envio!=null){
+					if(envio.getEstado()==EnvioEstado.Pendiente.toString()){
+						for(EncomiendaE enc: envio.getEncomiendas()){
+							peso = (float) (peso + enc.getPeso());
+							volumen = (float) (volumen + enc.getVolumen());
+						}
+					}
+				}		
+				//Verifico si entra el  pedido
+				if(pesoTotal >= peso + this.getPeso()){
+					pesoOK = true;
+				}
+				if(volumenTotal >= volumen + this.getVolumen()){
+					volumenOK = true;
+				}
+
+				if(pesoOK && volumenOK){ 
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public List<EncomiendaE> getEncomiendasPendientesBySucursal(int idSucursal){
+		//TODO: hacer
+		return EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
+	}
 	
-	
+	//TODO: esto tiene que ir en Sucursal??????
+	private List<VehiculoE> listarVehiculosDisponibles(int idSucursalOrigen, float volumen, float peso){
+
+		List<VehiculoE> vehiculos = VehiculoDao.getInstancia().getPorVolumenPesoSucursalTareasRealizadas(idSucursalOrigen, peso, volumen);
+		List<VehiculoE> vehiculosDisponibles = new ArrayList<VehiculoE>();
+		
+		for(VehiculoE vehiculo: vehiculos){
+			GestionVehiculo gVehiculo = new GestionVehiculo(vehiculo);
+			if(gVehiculo.estaUtilizable() && !gVehiculo.estaAsignado() && !gVehiculo.tieneTareasVencidas()){
+				vehiculosDisponibles.add(gVehiculo.getVehiculo());
+			}
+		}
+		
+		return vehiculosDisponibles;
+		
+	}
 }

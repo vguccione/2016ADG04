@@ -17,7 +17,7 @@ import java.util.Date;
 
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 
-public class TareaMantenimientoRealizada implements java.io.Serializable {
+public class TareaMantenimientoRealizada{
 	
 	private int idTareaMantenimientoRealizada;
 	private TareaMantenimiento tareaMantenimiento;

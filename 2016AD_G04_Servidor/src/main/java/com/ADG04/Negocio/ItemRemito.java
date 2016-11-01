@@ -6,7 +6,7 @@ import java.util.Set;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 
-public class ItemRemito implements java.io.Serializable {
+public class ItemRemito{
 	
 	private int idItemRemito;
 	private Remito remito;

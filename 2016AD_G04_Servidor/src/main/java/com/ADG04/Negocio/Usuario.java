@@ -11,7 +11,7 @@ import java.util.List;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
-public class Usuario implements java.io.Serializable {
+public class Usuario{
 
 	private int idUsuario;
 	private Sucursal sucursal;

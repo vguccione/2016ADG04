@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
 
-public class Coordenada implements java.io.Serializable {
+public class Coordenada{
 
 	private int idCoordenada;
 	private String latitud;

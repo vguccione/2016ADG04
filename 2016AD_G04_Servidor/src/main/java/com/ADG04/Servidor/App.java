@@ -2,6 +2,7 @@ package com.ADG04.Servidor;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,71 +15,18 @@ import javax.persistence.EntityTransaction;
 
 import org.hibernate.type.descriptor.java.UUIDTypeDescriptor.ToStringTransformer;
 
-import com.ADG04.Negocio.GestionAdministracion;
-import com.ADG04.Negocio.GestionCliente;
-import com.ADG04.Negocio.GestionControlViajes;
-import com.ADG04.Negocio.GestionEncomienda;
-import com.ADG04.Negocio.GestionProveedor;
-import com.ADG04.Negocio.GestionVehiculo;
+import com.ADG04.Negocio.*;
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
-import com.ADG04.Servidor.dao.FacturaDao;
-import com.ADG04.Servidor.dao.SeguroDao;
-import com.ADG04.Servidor.dao.TarifasCarrierDao;
-import com.ADG04.Servidor.dao.CoordenadaDao;
-import com.ADG04.Servidor.dao.DireccionDao;
-import com.ADG04.Servidor.dao.EncomiendaDao;
-import com.ADG04.Servidor.dao.EnvioDao;
-import com.ADG04.Servidor.dao.MapaDeRutaDao;
-import com.ADG04.Servidor.dao.PaisDao;
-import com.ADG04.Servidor.dao.PlanMantenimientoDao;
-import com.ADG04.Servidor.dao.ProductoDao;
-import com.ADG04.Servidor.dao.ProvinciaDao;
-import com.ADG04.Servidor.dao.RolDao;
-import com.ADG04.Servidor.dao.SucursalDao;
-import com.ADG04.Servidor.dao.VehiculoDao;
-import com.ADG04.Servidor.model.FacturaE;
-import com.ADG04.Servidor.model.TarifasCarrierE;
-import com.ADG04.Servidor.model.ClienteE;
-import com.ADG04.Servidor.model.CoordenadaE;
-import com.ADG04.Servidor.model.DireccionE;
-import com.ADG04.Servidor.model.EncomiendaE;
-import com.ADG04.Servidor.model.EnvioE;
-import com.ADG04.Servidor.model.MapaDeRutaE;
-import com.ADG04.Servidor.model.PaisE;
-import com.ADG04.Servidor.model.ProveedorE;
-import com.ADG04.Servidor.model.ProvinciaE;
-import com.ADG04.Servidor.model.RolE;
-import com.ADG04.Servidor.model.SeguroE;
-import com.ADG04.Servidor.model.SucursalE;
-import com.ADG04.Servidor.model.TareaMantenimientoE;
-import com.ADG04.Servidor.model.TareaMantenimientoPorKmE;
-import com.ADG04.Servidor.model.UsuarioE;
-import com.ADG04.Servidor.model.VehiculoE;
+import com.ADG04.Servidor.dao.*;
+import com.ADG04.Servidor.model.*;
+import com.ADG04.Servidor.rmi.DistribucionPaquetesRMI;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
-import com.ADG04.bean.Administracion.DTO_Direccion;
-import com.ADG04.bean.Administracion.DTO_Pais;
-import com.ADG04.bean.Administracion.DTO_Provincia;
-import com.ADG04.bean.Administracion.DTO_Rol;
-import com.ADG04.bean.Administracion.DTO_Sucursal;
-import com.ADG04.bean.Administracion.DTO_Usuario;
-import com.ADG04.bean.Cliente.DTO_ClienteParticular;
-import com.ADG04.bean.Cliente.DTO_Factura;
-import com.ADG04.bean.Cliente.DTO_Producto;
-import com.ADG04.bean.Encomienda.DTO_Encomienda;
-import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
-import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
-import com.ADG04.bean.Encomienda.DTO_ItemRemito;
-import com.ADG04.bean.Encomienda.DTO_Manifiesto;
-import com.ADG04.bean.Encomienda.DTO_Remito;
-import com.ADG04.bean.Proveedor.DTO_Proveedor;
-import com.ADG04.bean.Proveedor.DTO_Seguro;
-import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
-import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
-import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
-import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
-import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
-import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
+import com.ADG04.bean.Administracion.*;
+import com.ADG04.bean.Cliente.*;
+import com.ADG04.bean.Encomienda.*;
+import com.ADG04.bean.Proveedor.*;
+import com.ADG04.bean.Vehiculo.*;
 
 
 
@@ -89,7 +37,21 @@ import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 public class App 
 {
 
-    public static void main( String[] args ) throws IOException, NotBoundException
+	public static void main(String[] args) throws IOException {
+		
+		try {
+		//	TestEncomienda();
+			testControlViajes();
+			
+		} catch (Exception e) {
+				e.printStackTrace();
+		}	
+		finally{
+			System.exit(1);
+		}
+	}
+	
+    public static void main2( String[] args ) throws IOException, NotBoundException
     {
    	
     	/*BusinessDelegate bd = new BusinessDelegate();
@@ -119,25 +81,25 @@ public class App
 		
 		bd.altaVehiculo(v);
 		*/
-    	BusinessDelegate bd = new BusinessDelegate();
-    	DTO_Sucursal suc = new DTO_Sucursal();
-    	suc.setDescripcion("hola suc");
-    	
-    	DTO_Direccion dir = new DTO_Direccion();
-	    dir.setCalle("calle");
-	    dir.setCodigoPostal(123);
-	    dir.setLocalidad("cap");
-	    dir.setNro(12);
-	    PaisE pais = PaisDao.getInstancia().getById(1);
-	    ProvinciaE prov = ProvinciaDao.getInstancia().getById(1);
-	    dir.setPais(pais.toDTO());
-	    dir.setProvincia(prov.toDTO());
-    	suc.setDireccion(dir);
-    	
-    	suc.setIdGerente(1);
-    	suc.setTelefono("123132");
-    	
-    	bd.altaSucursal(suc);
+//    	BusinessDelegate bd = new BusinessDelegate();
+//    	DTO_Sucursal suc = new DTO_Sucursal();
+//    	suc.setDescripcion("hola suc");
+//    	
+//    	DTO_Direccion dir = new DTO_Direccion();
+//	    dir.setCalle("calle");
+//	    dir.setCodigoPostal(123);
+//	    dir.setLocalidad("cap");
+//	    dir.setNro(12);
+//	    PaisE pais = PaisDao.getInstancia().getById(1);
+//	    ProvinciaE prov = ProvinciaDao.getInstancia().getById(1);
+//	    dir.setPais(pais.toDTO());
+//	    dir.setProvincia(prov.toDTO());
+//    	suc.setDireccion(dir);
+//    	
+//    	suc.setIdGerente(1);
+//    	suc.setTelefono("123132");
+//    	
+//    	bd.altaSucursal(suc);
   /*
     DTO_Proveedor p = new DTO_Proveedor();
     p.setActivo("1");
@@ -161,7 +123,7 @@ public class App
     bd.altaProveedor(p);
     	
     */
-	//testControlViajes();
+	testControlViajes();
      	//VehiculosTest.TestVehiculos();
         //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
 
@@ -180,7 +142,7 @@ public class App
     	//TestGetPlanes();    	
     	//crearPaisesYProvincias();
     	//TestAltaCliente();
-    	//TestEncomienda();
+    TestEncomienda();
         //testAsignarEnvios();
     	//TestFacturaEncomiendaParticular();
     	
@@ -232,7 +194,7 @@ public class App
 		System.out.println("-------------------------------------------------------------------");
 	}
 	
-	public static void TestEncomienda(){
+	public static Integer TestEncomienda() throws RemoteException{
 		
 		float nro = 123;
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();
@@ -264,7 +226,9 @@ public class App
 		encomienda.setVolumenGranel(0f); 
 		encomienda.setUnidadGranel(null);
 		encomienda.setCargaGranel(null);	
-		encomienda.setFechaEstimadaEntrega(GestionEncomienda.getInstancia().calcularFechaEstimadaDeEntrega(sucursalOrigen.getId(), sucursalDestino.getId()));
+		
+		//se calcula dentro del create
+		//encomienda.setFechaEstimadaEntrega(GestionEncomienda.getInstancia().calcularFechaEstimadaDeEntrega(sucursalOrigen.getId(), sucursalDestino.getId()));
 		
 		DTO_Manifiesto manifiesto = new DTO_Manifiesto();
 		manifiesto.setFecha(new Date());
@@ -303,48 +267,116 @@ public class App
 		
 		encomienda.setRemito(remito);
 		
-    	GestionEncomienda.getInstancia().altaEncomiendaParticular(encomienda);
+    	//GestionEncomienda.getInstancia().altaEncomiendaParticular(encomienda);
+		
+		int idEncomienda = new DistribucionPaquetesRMI().nuevaEncomiedaParticular(encomienda);
+		System.out.println(idEncomienda);
+		return idEncomienda;
     }
     
-	public static void testEncomienda1() throws IOException{
-	}
-	
 	public static void testControlViajes() throws IOException{	
 
-
 		//Creo una encomienda particular
-		EncomiendaE enc = testEncomienda(1,2,1,100,100f,430f,100f,0f,0);
+		System.out.println("Crear encomienda");
+		Integer idEncomienda = TestEncomienda();
+		EncomiendaE enc = EncomiendaDao.getInstancia().getById(idEncomienda);
+		System.out.println("Encomienda id: " + idEncomienda);
 		System.out.println("Press key");
-		System.in.read();
+		
 		
 		//Intento asignarla a un envío.
 		System.out.println("-------Asignar la encomienda "+enc.getIdEncomienda()+" a un envío------------");
 
-		Integer idEnvio = GestionEncomienda.getInstancia().asignarEnvio(enc.getIdEncomienda(), null);
-		EnvioE envio = EnvioDao.getInstancia().getById(idEnvio);
-		System.out.println("Estado Inicial del Envio: "+envio.getEstado()+". Envío " + idEnvio);
+		//Cuando creo la encomienda, la sucursal actual es la misma que la de origen
+		Sucursal sucursalActual = new Sucursal();
+		sucursalActual.setIdSucursal(enc.getSucursalOrigen().getIdSucursal());
+		
+		Sucursal sucursalOrigen = new Sucursal();
+		sucursalOrigen.setIdSucursal(enc.getSucursalOrigen().getIdSucursal());
+		
+		Sucursal sucursalDestino = new Sucursal();
+		sucursalDestino.setIdSucursal(enc.getSucursalDestino().getIdSucursal());
+		
+		//Direccion direccionDestino = new Direccion();
+	//	direccionDestino.setIdDireccion(enc.getDireccionDestino().getIdDireccion());
+
+		//Direccion direccionOrigen = new Direccion();
+		//direccionOrigen.setIdDireccion(enc.getDireccionOrigen().getIdDireccion());
+
+		Cliente cliente = new Cliente();
+		cliente.setIdCliente(enc.getCliente().getIdCliente());
+		
+		ServicioSeguridad servicioSeg = null;
+		//servicioSeg.setIdServicioSeguridad(enc.getServicioSeguridad().getIdServicioSeguridad());
+		
+		Manifiesto manifiesto = new Manifiesto(enc.getManifiesto().getIdManifiesto(), enc.getManifiesto().getFecha());
+		
+		for (ItemManifiestoE item : enc.getManifiesto().getItemsManifiesto()) {
+			Producto producto = null;
+			
+			if(item.getProducto() != null){
+					producto = new Producto();
+					producto.setIdProducto(item.getProducto().getIdProducto());
+			}
+			
+			manifiesto.addItem(new ItemManifiesto(item.getDescripcion(), item.getCantidad(), producto)); 
+		}
+		
+		EncomiendaParticular encomiendaNegocio = 		
+				new EncomiendaParticular(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
+						enc.getFechaCreacion(), enc.getFechaEstimadaEntrega(), enc.getEstado(), enc.isTercerizado(), 
+						enc.getLargo(), enc.getAlto(), enc.getAncho(), enc.getPeso(), enc.getVolumen(), enc.getTratamiento(), 
+						enc.getApilable(), enc.getCantApilable(), enc.getRefrigerado(), enc.getCondicionTransporte(), 
+						enc.getIndicacionesManipulacion(), enc.getFragilidad(), enc.getNombreReceptor(), 
+						enc.getApellidoReceptor(), enc.getDniReceptor(), enc.getVolumenGranel(), enc.getUnidadGranel(), 
+						enc.getCargaGranel(), servicioSeg, manifiesto, enc.isInternacional());
+		encomiendaNegocio.setIdEncomienda(enc.getIdEncomienda());
+		
+		Integer idEnvio = encomiendaNegocio.asignarEnvio(null); //;GestionEncomienda.getInstancia().asignarEnvio(enc.getIdEncomienda(), null);
+		EnvioE envioEntity = EnvioDao.getInstancia().getById(idEnvio);
+		System.out.println("Estado Inicial del Envio: "+envioEntity.getEstado()+". Envío " + idEnvio);
 		System.in.read();
 		
 		/*Seguira en viaje*/
 		System.out.println("---------Seguira en viaje----------");
 		System.out.println("Estado del envio cuando sigue en curso");
-		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), CoordenadaDao.getInstancia().getById(3));
+		
+		
+		Proveedor proveedor = new Proveedor();
+		proveedor.setIdProveedor(envioEntity.getProveedor().getIdProveedor());
+		MapaDeRuta mapaDeRuta = new MapaDeRuta();
+		mapaDeRuta.setIdMapaDeRuta(envioEntity.getMapaDeRuta().getIdMapaDeRuta());
+		
+		Vehiculo vehiculo = new Vehiculo();
+		vehiculo.setIdVehiculo(envioEntity.getVehiculo().getIdVehiculo());
+		
+		Envio envio = new Envio(proveedor, mapaDeRuta,
+				null, sucursalDestino,
+				sucursalOrigen, vehiculo, envioEntity.getEstado(),
+				envioEntity.getFechaYHoraLlegadaEstimada(), envioEntity.getFechaYHoraSalida(),
+				envioEntity.isPropio(), envioEntity.getNroTracking());
+		envio.setIdEnvio(envioEntity.getIdEnvio());
+		//busco una coordenada para probar
+		CoordenadaE ce = CoordenadaDao.getInstancia().getById(1);
+		envio.actualizarEstadoVehiculo(ce.getLatitud(), ce.getLongitud());
+		
 		System.out.println(envio.getEstado());
 		System.out.println("----------------------------------------");
 		System.in.read();
 		
 		/*Se indicara desviado*/
-		System.out.println("---------------------------------------------------------------");
+		/*System.out.println("---------------------------------------------------------------");
 		CoordenadaE coordAct = new CoordenadaE();
 		coordAct.setLatitud("54°35′59″S");
 		coordAct.setLongitud("48°22′55″O﻿");
 		CoordenadaE coord = CoordenadaDao.getInstancia().saveOrUpdate(coordAct);
 		System.out.println("---------Nueva coordenada: "+coord.getIdCoordenada()+"-------------------");
-		System.in.read();
+		System.in.read();*/
 		
+		//Desviado
 		System.out.println("-----------------------------------------");
 		System.out.println("Estado del envio cuando se pasan coordenadas fuera de su mapa de ruta:");
-		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), coord);
+		envio.actualizarEstadoVehiculo("54°35′59″S", "48°22′55″O﻿");
 		System.out.println(envio.getEstado());	
 		System.out.println("-------------------");
 		System.in.read();		
@@ -352,7 +384,7 @@ public class App
 		
 		System.out.println("-----------------------------------------");
 		System.out.println("Estado del envio cuando se pasan nuevamente coordenadas fuera de su mapa de ruta:");
-		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), coord);
+		envio.actualizarEstadoVehiculo("54°35′59″S", "48°22′55″O﻿");
 		System.out.println(envio.getEstado());	
 		System.out.println("-------------------");
 		System.in.read();		
@@ -361,12 +393,17 @@ public class App
 		/*Se indicara demorado*/
 		System.out.println("-------Se indicara demorado------------");
 		System.out.println("Estado del envio cuando se chequea la fecha de llegada y la actual:");
-		GestionControlViajes.getInstancia().estaEnvioDemorado(envio.getIdEnvio());
+		envio.estaEnvioDemorado();
 		System.out.println("Envio llegando tarde: "+envio.getEstado());	
 		
 		System.out.println("");
 		System.out.println("-------------------------------------");
 		System.in.read();
+		
+		//sigueElTest();
+	}
+	
+	private static void sigueElTest() throws IOException {
 
 		System.out.println("----------------Otra encomienda---------------------");
 		EncomiendaE enc2 = testEncomienda(1,2,1,100,100f,430f,100f,0f,10);
@@ -391,14 +428,15 @@ public class App
 		System.out.println("------------------------Test finalizado!!!!-------------");
 		System.in.read();
 
-		EnvioDao.getInstancia().remove(envio);
+	/*	EnvioDao.getInstancia().removeById(envio.getIdEnvio());
 		EnvioDao.getInstancia().remove(envio2);
 		EncomiendaDao.getInstancia().remove(enc);
 		EncomiendaDao.getInstancia().remove(enc2);
+*/
 
-
+		
 	}
-	
+
 	/*
 	 * Test varias encomiendas y tratar de asignarlas a envios.
 	 */

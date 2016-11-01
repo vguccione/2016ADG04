@@ -5,6 +5,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.ADG04.Servidor.model.CoordenadaE;
+import com.ADG04.Servidor.model.UsuarioE;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -30,4 +32,19 @@ public class CoordenadaDao extends GenericDao<CoordenadaE, Integer> {
 		} 
 		return instancia;
 	}
+
+	//TODO: revisar
+	@SuppressWarnings("unchecked")
+	public CoordenadaE getByLatitudLongitud(String latitud, String longitud) {
+
+		List<CoordenadaE> cs = (List<CoordenadaE>)entityManager.createQuery("from Usuario where dni =:dni")
+					.setParameter("latitud", latitud)
+					.setParameter("longitud", longitud).getResultList();
+		
+		if(!cs.isEmpty())
+			return cs.get(0);
+		
+		return null;
+	}
+	
 }

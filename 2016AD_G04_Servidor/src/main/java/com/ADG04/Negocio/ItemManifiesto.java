@@ -2,10 +2,9 @@ package com.ADG04.Negocio;
 
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 
-public class ItemManifiesto implements java.io.Serializable {
+public class ItemManifiesto{
 
 	private int idItemManifiesto;
-	private Manifiesto manifiesto;
 	private String descripcion;
 	private int cantidad;
 	private Producto producto;
@@ -13,11 +12,16 @@ public class ItemManifiesto implements java.io.Serializable {
 	public ItemManifiesto() {
 	}
 
-	public ItemManifiesto(String descripcion, int cantidad) {
+	
+
+	public ItemManifiesto(String descripcion, int cantidad, Producto producto) {
 		super();
 		this.descripcion = descripcion;
 		this.cantidad = cantidad;
+		this.producto = producto;
 	}
+
+
 
 	public String getDescripcion() {
 		return descripcion;
@@ -26,17 +30,6 @@ public class ItemManifiesto implements java.io.Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
-
-	public Manifiesto getManifiesto() {
-		return manifiesto;
-	}
-
-
-	public void setManifiesto(Manifiesto manifiesto) {
-		this.manifiesto = manifiesto;
-	}
-
 
 	public int getCantidad() {
 		return this.cantidad;
@@ -60,7 +53,7 @@ public class ItemManifiesto implements java.io.Serializable {
     	DTO_ItemManifiesto im = new DTO_ItemManifiesto();
     	im.setCantidad(this.cantidad);
     	im.setDescripcion(this.descripcion);
-    	im.setIdManifiesto(this.getManifiesto().getIdManifiesto());
+    	//im.setIdManifiesto(this.getManifiesto().getIdManifiesto());
     	return im;
     }
 

@@ -11,7 +11,7 @@ package com.ADG04.Negocio;
 
 
 
-public class CondicionesEspecialesVehiculo implements java.io.Serializable {
+public class CondicionesEspecialesVehiculo{
 
 	private int idCondicionesEspecialesVehiculo;
 	private Vehiculo vehiculo;

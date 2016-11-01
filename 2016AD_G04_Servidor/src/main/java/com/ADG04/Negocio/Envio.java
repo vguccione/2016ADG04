@@ -8,21 +8,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
@@ -30,60 +30,30 @@ import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 
 
 
-@Table(name = "Envio")
 public class Envio implements java.io.Serializable {
 
 	
-	
-	@Column(name = "IdEnvio", unique = true, nullable = false)
 	private int idEnvio;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdProveedor")
 	private Proveedor proveedor;
-	
-	@ManyToOne
-	@JoinColumn(name="IdMapaDeRuta")
 	private MapaDeRuta mapaDeRuta;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdCoordenadaActual", nullable = false)
 	private Coordenada posicionActual;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdSucursalDestino", nullable = false)
 	private Sucursal sucursalDestino;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdSucursalOrigen", nullable = false)
+
 	private Sucursal sucursalOrigen;
 
-	@OneToOne(fetch = FetchType.LAZY)
 	private Vehiculo vehiculo;
 
-	@Column(name = "Estado", nullable = false, length = 20)
 	private String estado;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "FechaLlegadaEstimada", nullable = false, length = 10)
 	private Date fechaYHoraLlegadaEstimada;
-	
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "FechaSalida", nullable = false, length = 10)
 	private Date fechaYHoraSalida;
 
-	@Column(name = "Propio", nullable = false)
 	private boolean propio;
 
-	@Column(name = "NroTracking")
 	private Integer nroTracking;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "EncomiendaEnvio", joinColumns = {
-			@JoinColumn(name = "idEnvio", nullable = false, updatable = false) },
-			inverseJoinColumns = { @JoinColumn(name = "idEncomienda",
-					nullable = false, updatable = false) })
 	private List<Encomienda> encomiendas;
 
 	public Envio() {

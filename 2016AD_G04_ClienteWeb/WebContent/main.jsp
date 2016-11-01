@@ -133,6 +133,19 @@ console.log("js complete");;
         				<ul id="main-menu">
         					<li class="current-menu-item"><a href="">HOME</a></li>
         					<li class="parent">
+                            	<a href=" ">CLIENTES</a>
+                                <ul class="sub-menu">
+        							<li><a id="mClientes" href="menuClientes.jsp">Clientes</a></li>
+        							<li><a href=" ">Cuentas corrientes</a></li>
+                                </ul></li>   
+        					<li class="parent">
+        						<a href=" ">VIAJES</a>
+        						<ul class="sub-menu">
+        							<li><a href=" ">Control de viajes</a></li>
+        							<li><a href=" ">Contrataci&oacute;n de viajes</a></li>
+        						</ul>
+        					</li>        					
+        					<li class="parent">
         						<a class="parent" href="#"> ENCOMIENDA</a>
         							<ul class="sub-menu">
         									<li><a id="menu_new_encom_particular">Nueva Encomienda Particular</a></li>

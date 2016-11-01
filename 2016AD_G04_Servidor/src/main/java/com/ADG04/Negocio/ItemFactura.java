@@ -1,41 +1,12 @@
 package com.ADG04.Negocio;
-// default package
-// Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
-
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
-
-
-@Table(name = "ItemFactura")
 public class ItemFactura implements java.io.Serializable {
-
-	
-	
-	@Column(name = "IdItemFactura", unique = true, nullable = false)
 	private int idItemFactura;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdFactura")
 	private Factura factura;
-
-	@Column(name="Descripcion")
 	private String descripcion;
-	
-	@Column(name = "Cantidad", nullable = false)
 	private int cantidad;
-
-	@Column(name = "Valor", nullable = false, scale = 4)
 	private float valor;
 
 	public ItemFactura() {

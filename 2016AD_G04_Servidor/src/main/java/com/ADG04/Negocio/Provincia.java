@@ -6,37 +6,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+
+
+
+
+
+
+
+
 
 import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
 
 
-@Table(name = "Provincia")
 public class Provincia implements java.io.Serializable {
 
-	
-	
-	@Column(name = "IdProvincia", unique = true, nullable = false)
 	private int idProvincia;
-	
-	@Column(name = "Descripcion", nullable = false, length = 100)
 	private String descripcion;
-	
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "provincia")
 	private List<Direccion> direcciones;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdPais", nullable = false)
 	private Pais pais;
 
 	public Provincia() {

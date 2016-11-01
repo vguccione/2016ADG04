@@ -6,17 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.bean.Administracion.DTO_Direccion;
@@ -96,7 +85,6 @@ public class Direccion implements java.io.Serializable {
 		this.localidad = localidad;
 	}
 
-	@Column(name = "CodigoPostal", nullable = false)
 	public int getCodigoPostal() {
 		return this.codigoPostal;
 	}
@@ -104,9 +92,6 @@ public class Direccion implements java.io.Serializable {
 	public void setCodigoPostal(int codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
-
-
-
 
 	public DTO_Direccion toDTO(){
 		DTO_Direccion dir = new DTO_Direccion();

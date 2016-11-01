@@ -1,9 +1,8 @@
 package com.ADG04.web.controller;
 import com.ADG04.Repositorio.Interfaces.*;
 import com.ADG04.bean.Administracion.DTO_Direccion;
-
+import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Rol;
-
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
@@ -17,9 +16,7 @@ import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
-
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
-
 import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
@@ -900,6 +897,179 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes {
 	@Override
 	public DTO_TareaMantenimiento getTareaMantenimiento(
 			Integer idTareaMantenimiento) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Usuario> buscarUsuariosByNombreApellidoOUsuario(
+			String filtro) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Sucursal> buscarSucursalesByNombre(String filtro)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Proveedor> buscarProveedorByRazonSocial(String filtro)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Seguro> buscarSegurosByProveedor(String filtro)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_ServicioSeguridad> buscarServicioSeguridadByProveedor(
+			String filtro) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_TarifasCarrier> buscarTarifasCarrierByProveedor(
+			String filtro) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Provincia> listarProvinciasByPais(String pais)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Provincia buscarProvinciaByNombre(String prov)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_ClienteParticular> buscarClientesByNombreApellidoDni(
+			String filtro) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_ClienteEmpresa> buscarClientesEmpresaByRazonSocial(
+			String filtro) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Factura> buscarFacturasByDniCliente(String filtro)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Factura> buscarFacturasPendientesByDniCliente(String filtro)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Encomienda getEncomiendaParticular(Integer id)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Encomienda getEncomiendaEmpresa(Integer id)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Encomienda> listarEncomiendasParticulares()
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Encomienda> listarEncomiendasEmpresas()
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Coordenada getCoordenadasById(int id) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_EnvioPropio> listarEnviosPropios() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_EnvioTercerizado> listarEnviosTercerizados()
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_EnvioTercerizado> buscarEnviosByEstado(String filtro)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_EnvioPropio> buscarEnviosPropiosByEstado(String filtro)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Vehiculo> buscarVehiculoByModeloMarcaOPatente(String filtro)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Vehiculo buscarVehiculoById(Integer idVehiculo)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_PlanMantenimiento getPlanMantenimiento(Integer id)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_TareaMantenimientoRealizada> buscarTareasMantenimientoRealizadasPorVehiculo(
+			String filtro) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}

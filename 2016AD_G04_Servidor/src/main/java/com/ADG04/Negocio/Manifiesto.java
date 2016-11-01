@@ -8,42 +8,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 
 
-
-@Table(name = "Manifiesto")
 public class Manifiesto implements java.io.Serializable {
 	
-	
-	@Column(name = "IdManifiesto", unique = true, nullable = false)
 	private int idManifiesto;
-	
-	@OneToOne
-	@JoinColumn(name="IdEncomienda")
 	private Encomienda encomienda;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Fecha", nullable = false, length = 23)
 	private Date fecha;
-	
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "manifiesto", cascade = CascadeType.ALL)
 	private List<ItemManifiesto> itemsManifiesto;
 
 	public Manifiesto() {

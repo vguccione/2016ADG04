@@ -7,97 +7,45 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+
+
+
+
+
+
+
+
 
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
-
-@Table(name = "Vehiculo")
 public class Vehiculo implements java.io.Serializable {
 
-	
-	
-	@Column(name = "IdVehiculo", unique = true, nullable = false)
 	private int idVehiculo;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdPlanMantenimiento")
 	private PlanMantenimiento planMantenimiento;
-	
-	@Column(name="Estado")
 	private String estado;
-	
-	@Column(name = "Largo", precision = 53, scale = 0)
 	private float largo;
-
-	@Column(name = "Alto", precision = 53, scale = 0)
 	private float alto;
-
-	@Column(name = "Ancho", precision = 53, scale = 0)
 	private float ancho;
-
-	@Column(name = "Peso", precision = 53, scale = 0)
 	private float peso;
-
-	@Column(name = "Volumen", precision = 53, scale = 0)
 	private float volumen;
-
-	@Column(name = "Refrigerado")
 	private Boolean refrigerado;
-
-	@Column(name = "CondicionTransporte", length = 50)
 	private String condicionTransporte;
-
-	@Column(name = "KmRecorridos", nullable = false, precision = 53, scale = 0)
 	private float kmRecorridos;
-
-	@Column(name = "Marca", nullable = false, length = 100)
 	private String marca;
-	
-	@Column(name = "Modelo", nullable = false, length = 100)
 	private String modelo;
-
-	@Column(name = "Patente", nullable = false, length = 15)
 	private String patente;
-	
-	@Column(name="TemperaturaMin", nullable=true)
 	private Float temperaturaMin;
-	
-	@Column(name="TemperaturaMax", nullable=true)
 	private Float temperaturaMax;
-
-	@Column(name = "Anio", nullable = false)
 	private String anio;
-
-	@Column(name = "Tara", nullable = false, precision = 53, scale = 0)
 	private float tara;
-	
-	@Column(name="Tipo")
 	private String tipo;
-	
-	@ManyToOne
-	@JoinColumn(name="idSucursal")
 	private Sucursal sucursal;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
 	private List<TareaMantenimientoRealizada> tareasMantenimientoRealizadas;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
 	private List<CondicionesEspecialesVehiculo> condicionesEspecialesVehiculos;
-
-	@Column(name="FechaIngreso", nullable=false)
 	private Date FechaIngreso;
-	
 
 	public Vehiculo() {
 	}
@@ -349,7 +297,7 @@ public class Vehiculo implements java.io.Serializable {
 		v.setTara(tara);
 		v.setVolumen(volumen);
 		v.setFechaIngreso(this.getFechaIngreso());
-		PlanMantenimiento pm = PlanMantenimientoDao.getInstancia().getById(this.getPlanMantenimiento().getIdPlanMantenimiento());
+		PlanMantenimiento pm =  this.getPlanMantenimiento();//TODO: revisar PlanMantenimientoDao.getInstancia().getById(this.getPlanMantenimiento().getIdPlanMantenimiento());
 		v.setPlanMantenimiento(pm.toDTO());
 		return v;
 	}

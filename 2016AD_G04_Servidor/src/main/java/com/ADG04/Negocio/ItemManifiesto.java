@@ -1,45 +1,17 @@
 package com.ADG04.Negocio;
-// default package
-// Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
-
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 
-
-@Table(name = "ItemManifiesto")
 public class ItemManifiesto implements java.io.Serializable {
 
-	
-	
-	@Column(name = "IdItemManifiesto", unique = true, nullable = false)
 	private int idItemManifiesto;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdManifiesto")
 	private Manifiesto manifiesto;
-
-	@Column(name="Descripcion")
 	private String descripcion;
-	
-	@Column(name = "Cantidad", nullable = false)
 	private int cantidad;
-
-	@ManyToOne
-	@JoinColumn(name="IdProducto")
 	private Producto producto;
 
 	public ItemManifiesto() {
 	}
-
 
 	public ItemManifiesto(String descripcion, int cantidad) {
 		super();
@@ -91,6 +63,5 @@ public class ItemManifiesto implements java.io.Serializable {
     	im.setIdManifiesto(this.getManifiesto().getIdManifiesto());
     	return im;
     }
-
 
 }

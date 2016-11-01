@@ -4,14 +4,14 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+
+
+
+
+
+
+
 
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 

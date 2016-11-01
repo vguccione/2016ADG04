@@ -1,33 +1,14 @@
 package com.ADG04.Negocio;
 
-import javax.persistence.*;
-
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 
-
-
-@Table(name="Seguro")
 public class Seguro implements java.io.Serializable{
 	
-	
-	
-	@Column(name="IdSeguro")
 	private int idSeguro;
-
-	@Column(name="TipoSeguro")
 	private String tipoSeguro;
-	
-	@Column(name="Descripcion")
 	private String descripcion;
-	
-	@Column(name="Tarifa")
 	private float tarifa;
-
-	@Column(name="TarifaPorKm")
 	private float tarifaPorKm;
-	
-	@ManyToOne
-	@JoinColumn(name="idProveedor")
 	private Proveedor proveedor;
 
 	public Seguro() {

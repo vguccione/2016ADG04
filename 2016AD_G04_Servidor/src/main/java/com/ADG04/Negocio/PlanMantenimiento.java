@@ -1,42 +1,18 @@
 package com.ADG04.Negocio;
-// default package
-// Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 
-
-@Table(name = "PlanMantenimiento")
 public class PlanMantenimiento implements java.io.Serializable {
-
-	
-	
-	@Column(name = "IdPlanMantenimiento", unique = true, nullable = false)
+ 
 	private int idPlanMantenimiento;
-	
-	@Column(name = "Descripcion", nullable = false, length = 50)
 	private String descripcion;
-
-	@Column(name = "Comentarios", nullable = false)
 	private String comentarios;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "planMantenimiento")
 	private List<Vehiculo> vehiculos;
-	
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "planMantenimiento")
 	private List<TareaMantenimiento> tareaMantenimientos;
 
 	public PlanMantenimiento() {

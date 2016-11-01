@@ -5,62 +5,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
-
-
-
-
-
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
-import com.ADG04.Servidor.dao.ProveedorDao;
-import com.ADG04.Servidor.dao.TarifasCarrierDao;
-import com.ADG04.Servidor.dao.ClienteEmpresaDao;
-import com.ADG04.Servidor.dao.ClienteParticularDao;
-import com.ADG04.Servidor.dao.DireccionDao;
-import com.ADG04.Servidor.dao.EncomiendaDao;
-import com.ADG04.Servidor.dao.EnvioDao;
-import com.ADG04.Servidor.dao.FacturaDao;
-import com.ADG04.Servidor.dao.MapaDeRutaDao;
-import com.ADG04.Servidor.dao.ProductoDao;
-import com.ADG04.Servidor.dao.SucursalDao;
-import com.ADG04.Servidor.dao.VehiculoDao;
-import com.ADG04.Servidor.model.ProveedorE;
-import com.ADG04.Servidor.model.TarifasCarrierE;
-import com.ADG04.Servidor.model.ClienteE;
-import com.ADG04.Servidor.model.DireccionE;
-import com.ADG04.Servidor.model.EncomiendaE;
-import com.ADG04.Servidor.model.EnvioE;
-import com.ADG04.Servidor.model.FacturaE;
-import com.ADG04.Servidor.model.ItemFacturaE;
-import com.ADG04.Servidor.model.ItemManifiestoE;
-import com.ADG04.Servidor.model.ItemRemitoE;
-import com.ADG04.Servidor.model.ManifiestoE;
-import com.ADG04.Servidor.model.MapaDeRutaE;
-import com.ADG04.Servidor.model.ProductoE;
-import com.ADG04.Servidor.model.RemitoE;
-import com.ADG04.Servidor.model.SeguroE;
-import com.ADG04.Servidor.model.ServicioSeguridadE;
-import com.ADG04.Servidor.model.SucursalE;
-import com.ADG04.Servidor.model.VehiculoE;
+import com.ADG04.Servidor.dao.*;
+import com.ADG04.Servidor.model.*;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
-import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
-import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
-import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
-import com.ADG04.bean.Encomienda.DTO_ItemRemito;
-import com.ADG04.bean.Encomienda.DTO_Manifiesto;
-import com.ADG04.bean.Encomienda.DTO_Remito;
-
+import com.ADG04.bean.Encomienda.*;
 
 //Gestion Encomienda	
 public class GestionEncomienda {
-	
-	private int idEncomienda;
 	
 	private static GestionEncomienda instancia;
 		

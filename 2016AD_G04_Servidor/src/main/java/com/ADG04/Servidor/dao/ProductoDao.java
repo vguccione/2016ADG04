@@ -31,7 +31,7 @@ public class ProductoDao extends GenericDao<ProductoE, Integer> {
 	}
 
 	public ProductoE getByClienteCodigo(Integer idCliente, String codigoProducto) {
-		return (ProductoE) entityManager.createQuery("select p from Producto p where p.idCliente=:idCliente and p.codigoProducto=:codigoProducto")
+		return (ProductoE) entityManager.createQuery("select p from ProductoE p where p.idCliente=:idCliente and p.codigoProducto=:codigoProducto")
 						    .setParameter("idCliente", idCliente)
 						    .setParameter("codigoProducto", codigoProducto)
 						    .getSingleResult();

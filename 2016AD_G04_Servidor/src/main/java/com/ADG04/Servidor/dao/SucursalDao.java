@@ -33,7 +33,7 @@ public class SucursalDao extends GenericDao<SucursalE, Integer> {
 	public List<SucursalE> getSucursalesByNombre(String filtro) {
 		try {
 			  String f = filtro+'%';
-			  Query query = entityManager.createQuery("from Sucursal where (descripcion like :filtro ) ");
+			  Query query = entityManager.createQuery("from SucursalE where (descripcion like :filtro ) ");
 			  query.setParameter("filtro", f);
 			  return query.getResultList();
 			       

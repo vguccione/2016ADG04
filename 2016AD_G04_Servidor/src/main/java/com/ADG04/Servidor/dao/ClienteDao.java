@@ -28,7 +28,7 @@ public class ClienteDao extends GenericDao<ClienteE, Integer> {
 	
 	public ClienteE getByDni(String dni) {
 		try {
-		  Query query = entityManager.createQuery("from Cliente where dni =:dni");
+		  Query query = entityManager.createQuery("from ClienteE where dni =:dni");
 		  query.setParameter("dni", dni);
 		  ClienteE c = (ClienteE) query.getSingleResult();
 		  return c;
@@ -43,7 +43,7 @@ public class ClienteDao extends GenericDao<ClienteE, Integer> {
 	public List<ClienteE> getClientesByNombreApellidoDni(String filtro){
 		try {
 			  String f = filtro+'%';
-			  Query query = entityManager.createQuery("from Cliente c where (nombre like :filtro OR "
+			  Query query = entityManager.createQuery("from ClienteE c where (nombre like :filtro OR "
 			  		+ " apellido like :filtro OR dni like :filtro) and c.class = 'p'");
 			  query.setParameter("filtro", f);
 			  return query.getResultList();

@@ -35,7 +35,7 @@ public class FacturaDao extends GenericDao<FacturaE, Integer> {
 
 	public FacturaE getFacturaCliente(Integer idCliente) {
 		try {
-			  Query query = entityManager.createQuery("from Factura where cliente =:cliente");
+			  Query query = entityManager.createQuery("from FacturaE where cliente =:cliente");
 			  query.setParameter("cliente", idCliente);
 			  FacturaE f = (FacturaE) query.getSingleResult();
 			  return f;
@@ -49,7 +49,7 @@ public class FacturaDao extends GenericDao<FacturaE, Integer> {
 
 	public List<FacturaE> listarFacturasClientePendientes(Integer idCliente) {
 		try {
-			  Query query = entityManager.createQuery("from Factura where cliente =:cliente and pagada=false" );
+			  Query query = entityManager.createQuery("from FacturaE where cliente =:cliente and pagada=false" );
 			  query.setParameter("cliente", idCliente);
 			  List<FacturaE> f = (List<FacturaE>) query.getResultList();
 			  return f;
@@ -64,7 +64,7 @@ public class FacturaDao extends GenericDao<FacturaE, Integer> {
 
 	public List<FacturaE> listarFacturasCliente(Integer idCliente) {
 		try {
-			  Query query = entityManager.createQuery("from Factura where cliente =:cliente");
+			  Query query = entityManager.createQuery("from FacturaE where cliente =:cliente");
 			  query.setParameter("cliente", idCliente);
 			  List<FacturaE> f = (List<FacturaE>) query.getResultList();
 			  return f;
@@ -78,7 +78,7 @@ public class FacturaDao extends GenericDao<FacturaE, Integer> {
 
 	public List<FacturaE> listarFacturasClientePendientes() {
 		try {
-			  Query query = entityManager.createQuery("from Factura where  pagada=false" );
+			  Query query = entityManager.createQuery("from FacturaE where  pagada=false" );
 			  List<FacturaE> f = (List<FacturaE>) query.getResultList();
 			  return f;
 			       
@@ -94,9 +94,9 @@ public class FacturaDao extends GenericDao<FacturaE, Integer> {
 			  Query query;
 			  String f = filtro+'%';
 			  if(pendientes)
-				  query = entityManager.createQuery("from Factura f where f.encomienda.cliente.dni like :filtro and pagada=false" );
+				  query = entityManager.createQuery("from FacturaE f where f.encomienda.cliente.dni like :filtro and pagada=false" );
 			  else{
-				  query = entityManager.createQuery("from Factura f where f.encomienda.cliente.dni like :filtro" );
+				  query = entityManager.createQuery("from FacturaE f where f.encomienda.cliente.dni like :filtro" );
 			  }
 			  query.setParameter("filtro", f);
 			  List<FacturaE> facturas = (List<FacturaE>) query.getResultList();

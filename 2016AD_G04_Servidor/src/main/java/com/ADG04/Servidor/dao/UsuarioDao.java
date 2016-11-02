@@ -35,7 +35,7 @@ public class UsuarioDao extends GenericDao<UsuarioE, Integer> {
 
 	public UsuarioE getByDni(String dni) {
 		try {
-		  Query query = entityManager.createQuery("from Usuario where dni =:dni");
+		  Query query = entityManager.createQuery("from UsuarioE where dni =:dni");
 		  query.setParameter("dni", dni);
 		  UsuarioE u = (UsuarioE) query.getSingleResult();
 		  return u;
@@ -52,7 +52,7 @@ public class UsuarioDao extends GenericDao<UsuarioE, Integer> {
 	public List<UsuarioE> listarEmpleados(Integer idSucursal) {
 		try{
 			return entityManager
-	                .createQuery("from Usuario e where e.sucursal.idSucursal = :idSucursal ")
+	                .createQuery("from UsuarioE u where u.sucursal.idSucursal = :idSucursal ")
 	                .setParameter("idSucursal", idSucursal)
 	                .getResultList();
         }catch(Exception e){
@@ -64,7 +64,7 @@ public class UsuarioDao extends GenericDao<UsuarioE, Integer> {
 
 	public UsuarioE buscarUsuario(String usuario) {
 		try {
-			  Query query = entityManager.createQuery("from Usuario where usuario =:usuario");
+			  Query query = entityManager.createQuery("from UsuarioE where usuario =:usuario");
 			  query.setParameter("usuario", usuario);
 			  UsuarioE u = (UsuarioE) query.getSingleResult();
 			  return u;
@@ -80,7 +80,7 @@ public class UsuarioDao extends GenericDao<UsuarioE, Integer> {
 		try{
 			String f= filtro+"%";
 			return entityManager
-	                .createQuery("from Usuario  where (nombre like :filtro OR apellido like :filtro OR usuario like :filtro)")
+	                .createQuery("from UsuarioE  where (nombre like :filtro OR apellido like :filtro OR usuario like :filtro)")
 	                .setParameter("filtro", f)
 	                .getResultList();
         }catch(Exception e){

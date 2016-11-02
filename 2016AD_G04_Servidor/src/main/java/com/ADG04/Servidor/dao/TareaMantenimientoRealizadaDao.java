@@ -34,7 +34,7 @@ public class TareaMantenimientoRealizadaDao extends GenericDao<TareaMantenimient
 		try{
 			String f= filtro+"%";
 			return entityManager
-	                .createQuery("from TareaMantenimientoRealizada tr where "
+	                .createQuery("from TareaMantenimientoRealizadaE tr where "
 	                		+ " tr.vehiculo.patente like :filtro")
 	                .setParameter("filtro", f)
 	                .getResultList();

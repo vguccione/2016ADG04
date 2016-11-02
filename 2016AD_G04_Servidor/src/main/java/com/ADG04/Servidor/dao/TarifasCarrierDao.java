@@ -33,7 +33,7 @@ public class TarifasCarrierDao extends GenericDao<TarifasCarrierE, Integer> {
 	public List<TarifasCarrierE> getTarifasCarrierByProveedor(String filtro) {
 		try {
 			  String f = filtro + '%';
-			  Query query = entityManager.createQuery("from TarifasCarrier t where t.proveedor.razonSocial like :filtro");
+			  Query query = entityManager.createQuery("from TarifasCarrierE t where t.proveedor.razonSocial like :filtro");
 			  query.setParameter("filtro", f);
 			  return query.getResultList();
 			       

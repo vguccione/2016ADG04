@@ -33,7 +33,7 @@ public class ServicioSeguridadDao extends GenericDao<ServicioSeguridadE, Integer
 	public List<ServicioSeguridadE> getServiciosSeguridadByProveedor(String filtro) {
 		try {
 			  String f = filtro + '%';
-			  Query query = entityManager.createQuery("from ServicioSeguridad s where s.proveedor.razonSocial like :filtro");
+			  Query query = entityManager.createQuery("from ServicioSeguridadE s where s.proveedor.razonSocial like :filtro");
 			  query.setParameter("filtro", f);
 			  return query.getResultList();
 			       

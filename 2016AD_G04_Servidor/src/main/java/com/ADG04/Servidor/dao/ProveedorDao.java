@@ -34,7 +34,7 @@ public class ProveedorDao extends GenericDao<ProveedorE, Integer> {
 
 	public List<ProveedorE> getByTipo(char tipo) {
 		try {
-			  Query query = entityManager.createQuery("from Proveedor where tipo =:tipo");
+			  Query query = entityManager.createQuery("from ProveedorE where tipo =:tipo");
 			  query.setParameter("tipo", tipo);
 			  List<ProveedorE> lista = query.getResultList();
 			  return lista;
@@ -50,7 +50,7 @@ public class ProveedorDao extends GenericDao<ProveedorE, Integer> {
 		try{
 			String f= filtro+"%";
 			return entityManager
-	                .createQuery("from Proveedor c where razonSocial like :filtro")
+	                .createQuery("from ProveedorE c where razonSocial like :filtro")
 	                .setParameter("filtro", f)
 	                .getResultList();
         }catch(Exception e){

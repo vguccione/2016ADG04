@@ -37,7 +37,8 @@ public class CoordenadaDao extends GenericDao<CoordenadaE, Integer> {
 	@SuppressWarnings("unchecked")
 	public CoordenadaE getByLatitudLongitud(String latitud, String longitud) {
 
-		List<CoordenadaE> cs = (List<CoordenadaE>)entityManager.createQuery("from Usuario where dni =:dni")
+		List<CoordenadaE> cs = (List<CoordenadaE>)entityManager.createQuery("from CoordenadaE where latitud =:latitud"
+				+ " AND longitud=:longitud")
 					.setParameter("latitud", latitud)
 					.setParameter("longitud", longitud).getResultList();
 		

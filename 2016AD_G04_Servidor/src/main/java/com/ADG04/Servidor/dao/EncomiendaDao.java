@@ -38,7 +38,7 @@ public class EncomiendaDao extends GenericDao<EncomiendaE, Integer> {
 	public List<EncomiendaE> obtenerEncomiendasColocadasPorVencerHoy() {		
 		List<EncomiendaE> encomiendas = new ArrayList<EncomiendaE>();
 		try{
-			encomiendas = entityManager.createQuery("select enc from Encomienda enc "
+			encomiendas = entityManager.createQuery("select enc from EncomiendaE enc "
 																	+ " join enc.envios env"
 																	+ " join env.mapaDeRuta mr"
 																	+ " where enc.estado='Colocada'"
@@ -55,7 +55,7 @@ public class EncomiendaDao extends GenericDao<EncomiendaE, Integer> {
 	public EncomiendaE getByEnvio(int idEnvio) {
 		EncomiendaE enc = null;
 		try{
-			enc = (EncomiendaE) entityManager.createQuery("select enc from Encomienda enc"
+			enc = (EncomiendaE) entityManager.createQuery("select enc from EncomiendaE enc"
 					+ " join enc.envios env"
 					+ " where env.idEnvio =:idEnvio").setParameter("idEnvio", idEnvio).getSingleResult();
 		}
@@ -73,7 +73,7 @@ public class EncomiendaDao extends GenericDao<EncomiendaE, Integer> {
 		left outer join  Encomiendaenvio ee on ee.idEncomienda=e.IdEncomienda
 		where ee.idEncomienda is null*/
 		
-		List<EncomiendaE> encs = (List<EncomiendaE>)entityManager.createQuery("select enc from Encomienda enc where "
+		List<EncomiendaE> encs = (List<EncomiendaE>)entityManager.createQuery("select enc from EncomiendaE enc where "
 				+ "enc.sucursalOrigen.idSucursal =:idSuc").setParameter("idSuc", idSucursal).getResultList();
 		
 		List<EncomiendaE> encsPendientes = new ArrayList<EncomiendaE>();
@@ -90,7 +90,7 @@ public class EncomiendaDao extends GenericDao<EncomiendaE, Integer> {
 	public List<EncomiendaE> getAllParticulares() {
 		List<EncomiendaE> encomiendas = new ArrayList<EncomiendaE>();
 		try{
-			encomiendas = entityManager.createQuery("select enc from Encomienda enc "
+			encomiendas = entityManager.createQuery("select enc from EncomiendaE enc "
 					+ " where tipoEncomienda='P'"
 					+ " ORDER BY fechaCreacion DESC").getResultList();
 		}
@@ -104,7 +104,7 @@ public class EncomiendaDao extends GenericDao<EncomiendaE, Integer> {
 	public List<EncomiendaE> getAllEmpresas() {
 		List<EncomiendaE> encomiendas = new ArrayList<EncomiendaE>();
 		try{
-			encomiendas = entityManager.createQuery("select enc from Encomienda enc "
+			encomiendas = entityManager.createQuery("select enc from EncomiendaE enc "
 					+ " where tipoEncomienda='E'"
 					+ " ORDER BY fechaCreacion DESC").getResultList();
 		}

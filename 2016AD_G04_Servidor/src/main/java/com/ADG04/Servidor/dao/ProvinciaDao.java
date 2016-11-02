@@ -34,7 +34,7 @@ public class ProvinciaDao extends GenericDao<ProvinciaE, Integer> {
 	@SuppressWarnings("unchecked")
 	public List<ProvinciaE> getByPais(int idPais) {
 		try{
-		return entityManager.createQuery("from Provincia where pais=:pais")
+		return entityManager.createQuery("from ProvinciaE where pais=:pais")
 				            .setParameter("pais", idPais)
 				            .getResultList();
 		}catch(Exception e){
@@ -47,7 +47,7 @@ public class ProvinciaDao extends GenericDao<ProvinciaE, Integer> {
 	public List<ProvinciaE> getByPais(String pais) {
 		String p = pais +'%';
 		try{
-			return entityManager.createQuery("from Provincia where pais.descripcion like :pais")
+			return entityManager.createQuery("from ProvinciaE where pais.descripcion like :pais")
 					            .setParameter("pais", p)
 					            .getResultList();
 			}catch(Exception e){
@@ -60,7 +60,7 @@ public class ProvinciaDao extends GenericDao<ProvinciaE, Integer> {
 	public ProvinciaE getByNombre(String prov) {
 		String p = prov +'%';
 		try{
-			return (ProvinciaE) entityManager.createQuery("from Provincia where descripcion like :prov")
+			return (ProvinciaE) entityManager.createQuery("from ProvinciaE where descripcion like :prov")
 					            .setParameter("prov", p)
 					            .getSingleResult();
 			}catch(Exception e){

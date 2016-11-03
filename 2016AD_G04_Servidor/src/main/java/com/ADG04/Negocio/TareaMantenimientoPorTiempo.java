@@ -16,6 +16,12 @@ public class TareaMantenimientoPorTiempo extends TareaMantenimiento{
 		super(planMantenimiento, tarea);
 	}
 	
+	public TareaMantenimientoPorTiempo(PlanMantenimiento pm, String tarea,
+			int cant) {
+		super(pm, tarea);
+		this.cantidadDias=cant;
+	}
+
 	public int getCantidadDias() {
 		return this.cantidadDias;
 	}

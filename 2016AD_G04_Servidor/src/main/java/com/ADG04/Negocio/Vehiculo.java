@@ -17,7 +17,9 @@ import java.util.Set;
 
 
 
+
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
@@ -300,6 +302,58 @@ public class Vehiculo{
 		PlanMantenimiento pm =  this.getPlanMantenimiento();//TODO: revisar PlanMantenimientoDao.getInstancia().getById(this.getPlanMantenimiento().getIdPlanMantenimiento());
 		v.setPlanMantenimiento(pm.toDTO());
 		return v;
+	}
+
+	public Vehiculo fromDTO(DTO_Vehiculo dto) {
+		Vehiculo veh = new Vehiculo();
+		veh.setAlto(dto.getAlto());
+		veh.setAncho(dto.getAncho());
+		veh.setAnio(dto.getAnio());
+		veh.setCondicionTransporte(dto.getCondicionTransporte());
+		veh.setEstado(dto.getEstado());
+		veh.setFechaIngreso(dto.getFechaIngreso());
+		veh.setIdVehiculo(dto.getId());
+		veh.setKmRecorridos(dto.getKmsRecorridos());
+		veh.setLargo(dto.getLargo());
+		veh.setMarca(dto.getMarca());
+		veh.setModelo(dto.getModelo());
+		veh.setPatente(dto.getPatente());
+		veh.setPeso(dto.getPeso());
+		veh.setPlanMantenimiento(new PlanMantenimiento().fromDTO(dto.getPlanMantenimiento()));
+		veh.setRefrigerado(dto.getRefrigerado());
+		veh.setSucursal(new Sucursal().fromDTO(dto.getSucursal()));
+		veh.setTara(dto.getTara());
+		veh.setTemperaturaMax(dto.getTemperaturaMax());
+		veh.setTemperaturaMin(dto.getTemperaturaMin());
+		veh.setTipo(dto.getTipo());
+		veh.setVolumen(dto.getVolumen());
+		return veh;
+	}
+
+	public VehiculoE toEntity() {
+		VehiculoE veh = new VehiculoE();
+		veh.setAlto(alto);
+		veh.setAncho(ancho);
+		veh.setAnio(anio);
+		veh.setCondicionTransporte(this.condicionTransporte);
+		veh.setEstado(estado);
+		veh.setFechaIngreso(this.FechaIngreso);
+		veh.setIdVehiculo(this.idVehiculo);
+		veh.setKmRecorridos(this.kmRecorridos);
+		veh.setLargo(this.largo);
+		veh.setMarca(this.getMarca());
+		veh.setModelo(this.getModelo());
+		veh.setPatente(this.getPatente());
+		veh.setPeso(this.getPeso());
+		veh.setPlanMantenimiento(this.planMantenimiento.toEntity());
+		veh.setRefrigerado(this.getRefrigerado());
+		veh.setSucursal(sucursal.toEntity());
+		veh.setTara(this.getTara());
+		veh.setTemperaturaMax(this.getTemperaturaMax());
+		veh.setTemperaturaMin(this.getTemperaturaMin());
+		veh.setTipo(this.getTipo());
+		veh.setVolumen(this.getVolumen());
+		return veh;
 	}
 
 }

@@ -19,10 +19,14 @@ import java.util.List;
 
 
 
+
+
+import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.model.TareaMantenimientoE;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
     
 
-public abstract class TareaMantenimiento{
+public  class TareaMantenimiento{
 
 	private int idTareaMantenimiento;
 	private PlanMantenimiento planMantenimiento;
@@ -78,6 +82,22 @@ public abstract class TareaMantenimiento{
 		dto.setIdPlanMantenimiento(this.getPlanMantenimiento().getIdPlanMantenimiento());
 		dto.setTarea(this.getTarea());
 		return dto;
+	}
+
+	public TareaMantenimiento fromDTO(DTO_TareaMantenimiento dto) {
+		TareaMantenimiento tm = new TareaMantenimiento();
+		tm.setIdTareaMantenimiento(dto.getId());
+		tm.setPlanMantenimiento(new PlanMantenimiento().fromDTO(PlanMantenimientoDao.getInstancia().getById(dto.getIdPlanMantenimiento()).toDTO()));
+		tm.setTarea(dto.getTarea());
+		return tm;
+	}
+
+	public TareaMantenimientoE toEntity() {
+		TareaMantenimientoE tm = new TareaMantenimientoE();
+		tm.setIdTareaMantenimiento(idTareaMantenimiento);
+		tm.setPlanMantenimiento(planMantenimiento.toEntity());
+		tm.setTarea(tarea);
+		return tm;
 	}
 
 }

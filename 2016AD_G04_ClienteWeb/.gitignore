@@ -1,2 +1,13 @@
-/build/
+.classpath
+.settings
+.project
+.classpath
+.settings
+.project
+/target/
 *.class
+*.xml
+*.jar
+/2016AD_G04_Repositorio/target/classes/com/ADG04/Repositorio/*.class
+/2016AD_G04_Repositorio/target/test-classes/ADG04/AD_G04_Repositorio/*.class
+/build/

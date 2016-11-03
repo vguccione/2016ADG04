@@ -4,7 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.ADG04.Negocio.Cliente;
 import com.ADG04.Servidor.model.TareaMantenimientoE;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 import java.lang.reflect.ParameterizedType;
@@ -29,6 +31,19 @@ public class TareaMantenimientoDao extends GenericDao<TareaMantenimientoE, Integ
 			instancia = new TareaMantenimientoDao(EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager());
 		} 
 		return instancia;
+	}
+
+	public List<TareaMantenimientoE> getByPlan(Integer idPlan) {
+		try{	
+			return  entityManager
+	                .createQuery("from TareaMantenimientoE t where t.planMantenimiento.idPlan=:id)")
+	                .setParameter("id", idPlan)
+	                .getResultList();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: buscar tareas por plan");
+        }
+        return null;
 	}
 
 }

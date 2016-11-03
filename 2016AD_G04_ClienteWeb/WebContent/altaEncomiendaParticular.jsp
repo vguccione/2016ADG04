@@ -85,6 +85,7 @@ $(document).ready(function() {
 	  		});
 	  		
 	  		$("#menu_new_encom_particular").on("click",function(){
+				alert("pepe");
 	  			$("#divTodo").load("altaEncomiendaParticular.jsp");
 	  		});
 	  		
@@ -151,7 +152,7 @@ $(document).ready(function() {
         					<li class="parent">
         						<a class="parent" href="#"> ENCOMIENDA</a>
         							<ul class="sub-menu">
-        									<li><a id="menu_new_encom_particular">Nueva Encomienda Particular</a></li>
+        									<li><a id="menu_new_encom_particular" href="http://localhost:8080/2016AD_G04_ClienteWeb/altaEncomiendaParticular.jsp">Nuevabb Encomienda Particular</a></li>
         									<li><a id="menu_new_encom_empresa">Nueva Encomienda Empresa</a></li>
         							</ul>
         					</li>
@@ -256,19 +257,22 @@ $(document).ready(function() {
 
 
 
-  <label>
-    Datos del Cliente</label>
+  <label>Datos del Cliente</label>
 <!--Sólo se ve si es Particular --> 
     <fieldset><ul>
 				<li><label>DNI de particular:</label><input class="input-field" name="dniParticular" type="text" id="dniParticular" maxlength="10" /></li>
 				<li><label>Nombre del particular:</label><input class="input-field" name="nombreParticular" type="text" id="nombreParticular" maxlength="50" /></li>
  				<li><label>Apellido del particular:</label><input class="input-field" name="apellidoParticular" type="text" id="apellidoParticular" maxlength="50" /></li>
-<!--    				<li><label>Direcci&oacute;n de destino:</label><input class="input-field" name="direccionDestino" type="text" id="direccionDestino" maxlength="100" /></li>
-    			<li><label>C&oacute;digo postal de destino:</label><input class="input-field" name="codigoPostalDestino" type="text" id="codigoPostalDestino" maxlength="10" /></li>
-   				<li><label>Localidad destino:</label><input class="input-field" name="localidadDestino" type="text" id="localidadDestino" maxlength="50" /></li>
-   				<li><label>Provincia destino:</label><input class="input-field" name="provinciaDestino" type="text" id="provinciaDestino" maxlength="50" /></li>
-    			<li><label>Pa&iacute;s destino:</label><input class="input-field" name="paisDestino" type="text" id="paisDestino" maxlength="50" /></li> -->
     </ul></fieldset>
+
+<label>Datos del Receptor</label>
+<!--Sólo se ve si es Particular --> 
+    <fieldset><ul>
+		<li><label>DNI:</label><input class="input-field" name="dniReceptor" type="text" id="dniReceptor" maxlength="10" /></li>
+		<li><label>Nombre:</label><input class="input-field" name="nombreReceptor" type="text" id="nombreReceptor" maxlength="50" /></li>
+		<li><label>Apellido:</label><input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" /></li>
+    </ul></fieldset>
+
 
       <div class="btn_centrado"><input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" /></div></form>
 

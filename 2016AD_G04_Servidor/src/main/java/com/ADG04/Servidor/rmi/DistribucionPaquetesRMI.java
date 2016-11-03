@@ -435,10 +435,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		//Direccion direccionOrigen = new Direccion();
 		//direccionOrigen.setIdDireccion(encP.getDireccionOrigen().getIdDireccion());
 
-		ClienteE cliE = ClienteDao.getInstancia().getByDni(encP.getCliente().getDni());
+		ClienteParticularE cliE = (ClienteParticularE)ClienteDao.getInstancia().getByDni(encP.getCliente().getDni());
 		Cliente cliente = new Cliente();
 		cliente.setIdCliente(cliE.getIdCliente());
-		
+		cliente.setDni(cliE.getDni());
+				
 		ServicioSeguridad servicioSeg = new ServicioSeguridad();
 		servicioSeg.setIdServicioSeguridad(encP.getIdServicioSeguridad());
 		
@@ -467,15 +468,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		return nuevaEncomienda.saveOrUpdate();
 	}
-			
-	public void nuevaEncomiedaParticular(
-			String dniCliente, 
-			DTO_Sucursal sucursalOrigen,
-			DTO_Sucursal sucursalDestino,
-			double largo, double ancho, double alto, double peso, double volumen,
-			String nombreReceptor, String apellidoReceptor,String dniReceptor){
 	
-	}
 			
 	public void nuevaEncomiedaEmpresa(String dniCliente,
 			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
@@ -518,16 +511,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 
-	public void nuevaEncomiedaParticular(String dniCliente,
-			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
-			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
-			double largo, double ancho, double alto, double peso,
-			double volumen, String nombreReceptor, String apellidoReceptor,
-			String dniReceptor) throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	public DTO_ClienteParticular getClienteParticularByDni(String dni)throws RemoteException {
 		return (DTO_ClienteParticular) ClienteDao.getInstancia().getByDni(dni).toDTO();
 	}
@@ -659,16 +642,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 
-	public void nuevaEncomiedaParticular(String arg0, DTO_Direccion arg1,
-			DTO_Direccion arg2, DTO_Sucursal arg3, DTO_Sucursal arg4,
-			double arg5, double arg6, double arg7, double arg8, double arg9,
-			String arg10, boolean arg11, short arg12, boolean arg13,
-			String arg14, String arg15, String arg16, String arg17,
-			String arg18, String arg19, Double arg20, String arg21, String arg22)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 	public Integer altaVehiculo(DTO_Vehiculo v) throws RemoteException {

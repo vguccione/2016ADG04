@@ -6,6 +6,8 @@ import com.ADG04.bean.Administracion.DTO_Direccion;
 
 public class DTO_Cliente implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+
 	private Integer id;
 	private DTO_Direccion direccion;
 	private String email;

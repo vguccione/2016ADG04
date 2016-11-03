@@ -28,11 +28,22 @@ import java.util.Set;
 
 
 
+
+
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
 import com.ADG04.Servidor.dao.CoordenadaDao;
+import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.model.CoordenadaE;
+import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.model.EnvioE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.util.EncomiendaEstado;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
@@ -113,7 +124,7 @@ public class Envio{
 		
 		if(coord == null){
 			coord = new CoordenadaE(latitud, longitud);
-			CoordenadaDao.getInstancia().saveOrUpdate(coord);
+			CoordenadaDao.getInstancia().persist(coord);
 		}
 				
 		this.posicionActual = new Coordenada(latitud, longitud);
@@ -277,8 +288,9 @@ public class Envio{
 				}
 			}
 		}
-		e.setPosicionActual(CoordenadaDao.getInstancia().getById(posicionActual.getIdCoordenada()));
-		EnvioDao.getInstancia().saveOrUpdate(e);
+		CoordenadaE coorE = CoordenadaDao.getInstancia().getById(posicionActual.getIdCoordenada());
+		e.setPosicionActual(coorE);
+		EnvioDao.getInstancia().persist(e);
 	}
 	
 	public void estaEnvioDemorado(){
@@ -289,6 +301,34 @@ public class Envio{
 			e.setEstado(EnvioEstado.Demorado.toString());
 			EnvioDao.getInstancia().saveOrUpdate(e);
 		}
+	}
+
+	public void concluirEnvio() {
+		
+		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
+		//EncomiendaE enc = EncomiendaDao.getInstancia().getByEnvio(idEnvio);
+		List<EncomiendaE> encomiendasEntities = e.getEncomiendas();
+		
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();	
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		//Pongo como concluídas las encomiendas que están en este envío.
+		for(EncomiendaE enc:encomiendasEntities)
+		{
+			try{
+				enc.setEstado(EncomiendaEstado.EnSucursalDestino.toString());
+				EncomiendaDao.getInstancia().saveOrUpdate(enc);
+				e.setEstado(EnvioEstado.Concluido.toString());
+				EnvioDao.getInstancia().saveOrUpdate(e);
+			}
+			catch(Exception exc){
+				System.out.println("Error al concluir envio");
+				exc.printStackTrace();
+			}
+		}
+		
+		tx.commit();
 	}
 
 	

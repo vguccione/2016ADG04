@@ -41,13 +41,13 @@ public class Sistema extends HttpServlet {
 			else
 			{
 				if ("iniciarSesion".equals(action)) {
-					DTO_Usuario usu = BusinessDelegate.getInstancia().validarUsuario(request.getParameter("txtUsuario"),request.getParameter("txtPassword"));
+					DTO_Usuario usu = WebBusinessDelegate.getInstancia().validarUsuario(request.getParameter("txtUsuario"),request.getParameter("txtPassword"));
 					//DTO_Sucursal suc = BusinessDelegate.getInstancia().obtenerSucursalEmpleado(usu.getIdEmpleado());
 					//Para error de logueo
 					//usu = null;
 					
 					if (usu != null){
-						Integer sucrusal = BusinessDelegate.getInstancia().obtenerSucursalEmpleado(usu.getId());
+						Integer sucrusal = WebBusinessDelegate.getInstancia().obtenerSucursalEmpleado(usu.getId());
 						
 						HttpSession sesionIniciada = request.getSession();
 						sesionIniciada.setAttribute("usuario", usu.getUsuario());

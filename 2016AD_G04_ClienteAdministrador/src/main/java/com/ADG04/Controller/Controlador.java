@@ -33,6 +33,8 @@ import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 
@@ -801,6 +803,96 @@ public class Controlador {
 			i++;
 		}
 		return v;
+	}
+
+	public boolean altaPlanMantenimiento(String descripcion,  String comentario) {
+		try{
+			DTO_PlanMantenimiento pm = new DTO_PlanMantenimiento();
+			pm.setDescripcion(descripcion);
+			pm.setComentarios(comentario);
+			
+			bd.altaPlanMantenimiento(pm);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al crear plan de mantenimiento");
+		}
+		return false;
+	}
+
+	public boolean altaTareaMantenimientoKilometro(Integer plan, String tarea,
+			float cantKm) {
+		try{
+			DTO_TareasPorKilometro tpk = new DTO_TareasPorKilometro();
+			tpk.setIdPlanMantenimiento(plan);
+			tpk.setTarea(tarea);
+			tpk.setCantidadKilometros(cantKm);
+			
+			bd.altaTareaMantenimiento(tpk);
+			return true;
+		}
+		catch(Exception e){
+			
+		}
+		return false;
+	}
+
+	public boolean altaTareaMantenimientoTiempo(Integer plan, String tarea,
+			int cantDias) {
+		try{
+			DTO_TareasPorTiempo tpt = new DTO_TareasPorTiempo();
+			tpt.setCantidadDias(cantDias);
+			tpt.setIdPlanMantenimiento(plan);
+			tpt.setTarea(tarea);
+			
+			bd.altaTareaMantenimiento(tpt);
+			return true;
+		}
+		catch(Exception e){
+			
+		}
+		return false;
+	}
+
+	public boolean altaTareaMantenimientoRealizada(Integer idTarea, Integer idVehiculo,
+			Date fecha, float kmsRecorridos, Integer idProv) {
+		try{
+			DTO_TareaMantenimientoRealizada tmr = new DTO_TareaMantenimientoRealizada();
+			tmr.setCantidadKilometros(kmsRecorridos);
+			tmr.setFecha(fecha);
+			tmr.setIdProveedor(idProv);
+			tmr.setIdTareaMantenimiento(idTarea);
+			tmr.setIdVehiculo(idVehiculo);
+			
+			bd.altaTareaMantenimientoRealizada(tmr);
+			return true;
+		}
+		catch(Exception e){
+			
+		}
+		return false;
+	}
+
+	public DTO_Vehiculo buscarVehiculo(String patente) {
+		try{
+			return  bd.buscarVehiculo(patente);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar vehiculo");
+		}
+		return null;
+	}
+
+	public List<DTO_TareaMantenimiento> listarTareasMantenimiento(Integer idPlan) {
+		try{
+			return bd.getTareasMantenimiento(idPlan);
+		}
+		catch(RemoteException e) {
+	       	 System.out.println(e);
+	            System.out.println("Error al listar tareas por plan");
+	        }   
+	        return null;
 	}
 
 

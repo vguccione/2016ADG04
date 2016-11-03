@@ -754,6 +754,30 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public DTO_Provincia getProvByNombre(String prov) throws RemoteException{
 		return this.businessService.getProvByNombre(prov);
 	}
+
+	public void altaPlanMantenimiento(DTO_PlanMantenimiento pm) throws RemoteException{
+		return this.businessService.altaPlanMantenimiento(pm);
+	}
+
+	public void altaTareaMantenimiento(DTO_TareasPorKilometro tpk) throws RemoteException{
+		return this.businessService.altaTareaMantenimiento(tpk);
+
+	public void altaTareaMantenimiento(DTO_TareasPorTiempo tpt) throws RemoteException{
+		return this.businessService.altaTareaMantenimiento(tpt);	
+	}
+
+	public void altaTareaMantenimientoRealizada(
+			DTO_TareaMantenimientoRealizada tmr) throws RemoteException{
+		return this.businessService.altaTareaMantenimientoRealizada(tmr);	
+	}
+
+	public DTO_Vehiculo buscarVehiculo(String patente) throws RemoteException{
+		return this.businessService.buscarVehiculoByPatente(patente);
+	}
+
+	public List<DTO_TareaMantenimiento> getTareasMantenimiento(Integer idPlan) throws RemoteException{
+		return this.businessService.getTareaMantenimientoByPlan(idPlan);
+	}
 	
 
 }

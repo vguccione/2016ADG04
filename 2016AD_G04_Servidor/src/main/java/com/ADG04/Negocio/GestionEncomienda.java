@@ -945,7 +945,7 @@ public class GestionEncomienda {
 			e.printStackTrace();
 		}
 	}
-	
+	/*
 	public Date calcularFechaEstimadaDeEntrega(int idSucursalOrigen, int idSucursalDestino){
 		MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(idSucursalOrigen, idSucursalDestino);
 		if(mr!=null){
@@ -957,7 +957,7 @@ public class GestionEncomienda {
 		}
 		else
 			return null;
-	}
+	}*/
 
 	/**
 	 * Encomiendas que aun no se asignaron a un envío

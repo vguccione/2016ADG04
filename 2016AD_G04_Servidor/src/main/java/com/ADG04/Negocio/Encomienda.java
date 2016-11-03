@@ -238,54 +238,58 @@ public abstract class Encomienda{
 					boolean pesoNuevoOK = false;
 					boolean volumenNuevoOK = false;
 					
-					for(VehiculoE v: vehiculosDisponibles){
-						//Sumo los pesos y los volumenes
-						if(!pesoNuevoOK || !volumenNuevoOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
-							float pesoTotal = v.getPeso() - v.getTara();
-							float volumenTotal = v.getVolumen();
-							
-							
-							//Verifico si entra el nuevo pedido
-							if(pesoTotal >= e.getPeso()){
-								pesoNuevoOK = true;
-							}
-							if(volumenTotal >= e.getVolumen()){
-								volumenNuevoOK = true;
-							}
-							if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
-								//Genero el envio
+					if(vehiculosDisponibles.size() == 0) {
+						System.out.println("No hay vehículos disponibles para generar el envío");
+					} else {
+						for(VehiculoE v: vehiculosDisponibles){
+							//Sumo los pesos y los volumenes
+							if(!pesoNuevoOK || !volumenNuevoOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
+								float pesoTotal = v.getPeso() - v.getTara();
+								float volumenTotal = v.getVolumen();
 								
-								MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 								
-								EnvioE envioPropio = new EnvioE();
-								envioPropio.setEstado(EnvioEstado.Pendiente.toString());
-								envioPropio.setFechaYHoraSalida(new Date());
-								
-								envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
-								envioPropio.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
-								envioPropio.setVehiculo(v);
-								envioPropio.setPropio(true);
-							
-								envioPropio.setSucursalOrigen(e.getSucursalActual());
-								envioPropio.setSucursalDestino(e.getSucursalDestino());
-								envioPropio.setMapaDeRuta(mr);
-								List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
-								lista.add(e);
-								envioPropio.setEncomiendas(lista);
-								float volumen70 = (float)(e.getVolumen()/volumenTotal);
-								float peso70 = (float)(e.getPeso()/pesoTotal);
-								
-								if(peso70 > 0.7 || volumen70 > 0.7){
-									e.setEstado(EncomiendaEstado.Colocada.toString());
-									envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+								//Verifico si entra el nuevo pedido
+								if(pesoTotal >= e.getPeso()){
+									pesoNuevoOK = true;
 								}
+								if(volumenTotal >= e.getVolumen()){
+									volumenNuevoOK = true;
+								}
+								if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
+									//Genero el envio
+									
+									MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+									
+									EnvioE envioPropio = new EnvioE();
+									envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+									envioPropio.setFechaYHoraSalida(new Date());
+									
+									envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
+									envioPropio.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+									envioPropio.setVehiculo(v);
+									envioPropio.setPropio(true);
 								
-								EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
-								EncomiendaDao.getInstancia().saveOrUpdate(e);
-								idEnvio =  envio.getIdEnvio();
+									envioPropio.setSucursalOrigen(e.getSucursalActual());
+									envioPropio.setSucursalDestino(e.getSucursalDestino());
+									envioPropio.setMapaDeRuta(mr);
+									List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
+									lista.add(e);
+									envioPropio.setEncomiendas(lista);
+									float volumen70 = (float)(e.getVolumen()/volumenTotal);
+									float peso70 = (float)(e.getPeso()/pesoTotal);
+									
+									if(peso70 > 0.7 || volumen70 > 0.7){
+										e.setEstado(EncomiendaEstado.Colocada.toString());
+										envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+									}
+									
+									EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
+									EncomiendaDao.getInstancia().saveOrUpdate(e);
+									idEnvio =  envio.getIdEnvio();
+								}
 							}
-						}
-					}//End for
+						}//End for
+					}
 				}//End Nuevo Envio
 			}//End if else envio propio/tercerizado
 		}//End if no encontro encomienda

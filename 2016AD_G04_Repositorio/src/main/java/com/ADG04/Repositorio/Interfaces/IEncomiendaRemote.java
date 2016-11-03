@@ -21,15 +21,16 @@ public interface IEncomiendaRemote {
 	
 	public Integer gestionarEnvioEncomienda(int idEncomienda) throws RemoteException;
 	
-	public int nuevaEncomiedaParticular(String dniCliente,
+	/*public int nuevaEncomiedaParticular(String dniCliente,
 			int idDireccionOrigen, int idDireccionDestino, int idSucursalOrigen, int idSucursalDestino,
 			float largo, float ancho, float alto, float peso, float volumen, String tratamiento, boolean apilable,
 			short cantApilable, boolean refrigerado, String condiciionTransporte, String indicacionesManipulacion,
 			String fragilidad, String nombreReceptor, String apellidoReceptor, String dniReceptor, float volumenGranel, 
 			String unidadGranel)  
 					throws RemoteException;
+*/
 
-
+	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException;
 	
 	public void nuevaEncomiedaEmpresa(
 			String dniCliente, 

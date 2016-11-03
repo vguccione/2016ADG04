@@ -16,6 +16,10 @@ public class DTO_ItemManifiesto implements Serializable{
 	
 	public DTO_ItemManifiesto(){
 	}
+	
+	public DTO_ItemManifiesto(String descripcion){
+		this.descripcion = descripcion;
+	}
 
 	public Integer getId() {
 		return id;

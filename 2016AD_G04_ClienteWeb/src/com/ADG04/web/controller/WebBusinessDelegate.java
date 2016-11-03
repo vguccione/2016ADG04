@@ -124,20 +124,7 @@ public class WebBusinessDelegate implements InterfazRemotaDistribucionPaquetes {
 	public Integer nuevaEncomiendaEmpresa(Integer idSucursal){
 		return 1;
 	}	
-
-	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc){
-		
-		try {
-			objetoRemoto.confirmarEncomiendaParticular(enc);
-			return objetoRemoto.facturarEncomiendaParticular(enc);
-			
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0;
-	}	
-	
+/*
 	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc){
 		
 		try {
@@ -150,7 +137,7 @@ public class WebBusinessDelegate implements InterfazRemotaDistribucionPaquetes {
 		}
 		return 0;
 	}
-
+*/
 	/*
 	public Integer ingresarEncomiendaParticularAStock(DTO_EncomiendaEnStock es){
 		
@@ -789,9 +776,8 @@ public class WebBusinessDelegate implements InterfazRemotaDistribucionPaquetes {
 	}
 
 	@Override
-	public DTO_Sucursal getSucursal(Integer arg0) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException {
+		return objetoRemoto.getSucursal(idSucursal);
 	}
 
 	@Override
@@ -1091,6 +1077,10 @@ public class WebBusinessDelegate implements InterfazRemotaDistribucionPaquetes {
 	public DTO_Provincia getProvByNombre(String prov) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException {
+		return objetoRemoto.nuevaEncomiedaParticular(encomiendaParticular);
 	}
 	
 	//Clientes-----------------------------------------------------------------

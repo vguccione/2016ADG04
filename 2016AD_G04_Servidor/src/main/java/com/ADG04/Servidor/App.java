@@ -194,10 +194,13 @@ public class App
 		System.out.println("-------------------------------------------------------------------");
 	}
 	
-	public static Integer TestEncomienda(int idSucursalOrigen, int idSucursalDestino, int idCliente, int nmro, float alto
+	public static Integer TestEncomienda(int idSucursalOrigen, int idSucursalDestino, String dniCliente, int nmro, float alto
 			,float peso, float volumen, float carga, int dias, float largo, float ancho) throws RemoteException{
 		
+		int idCliente = ClienteDao.getInstancia().getByDni(dniCliente).getIdCliente();
+		
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();
+		cli.setDni(dniCliente);
 		cli.setId(idCliente);
     	DTO_Sucursal sucursalOrigen = SucursalDao.getInstancia().getById(idSucursalOrigen).toDTO();
     	DTO_Sucursal sucursalDestino = SucursalDao.getInstancia().getById(idSucursalDestino).toDTO();
@@ -278,7 +281,7 @@ public class App
 
 		//Creo una encomienda particular
 		System.out.println("Crear encomienda");
-		Integer idEncomienda = TestEncomienda(1,2,1,123,12,430,44.5f,123,1,123,123);
+		Integer idEncomienda = TestEncomienda(1,2,"34242342",123,12,430,44.5f,123,1,123,123);
 		EncomiendaE enc = EncomiendaDao.getInstancia().getById(idEncomienda);
 		System.out.println("Encomienda id: " + idEncomienda);
 		System.out.println("Press key");
@@ -297,78 +300,83 @@ public class App
 		EncomiendaParticular encomiendaNegocio = NewEncomienda(enc);
 		
 		Integer idEnvio = encomiendaNegocio.asignarEnvio(null); //;GestionEncomienda.getInstancia().asignarEnvio(enc.getIdEncomienda(), null);
-		EnvioE envioEntity = EnvioDao.getInstancia().getById(idEnvio);
-		System.out.println("Estado Inicial del Envio: "+envioEntity.getEstado()+". Envío " + idEnvio);
-		//System.in.read();
-		
-		/*Seguira en viaje*/
-		System.out.println("---------Seguira en viaje----------");
-		System.out.println("Estado del envio cuando sigue en curso");
-		
-		
-		//Proveedor proveedor = new Proveedor();
-		//proveedor.setIdProveedor(envioEntity.getProveedor().getIdProveedor());
-		MapaDeRuta mapaDeRuta = new MapaDeRuta();
-		mapaDeRuta.setIdMapaDeRuta(envioEntity.getMapaDeRuta().getIdMapaDeRuta());
-		
-		Vehiculo vehiculo = new Vehiculo();
-		vehiculo.setIdVehiculo(envioEntity.getVehiculo().getIdVehiculo());
-		
-		Sucursal sucursalOrigen = new Sucursal();
-		sucursalOrigen.setIdSucursal(enc.getSucursalOrigen().getIdSucursal());
-		
-		Sucursal sucursalDestino = new Sucursal();
-		sucursalDestino.setIdSucursal(enc.getSucursalDestino().getIdSucursal());
-		
-		Envio envio = new Envio(null, mapaDeRuta,
-				null, sucursalDestino,
-				sucursalOrigen, vehiculo, envioEntity.getEstado(),
-				envioEntity.getFechaYHoraLlegadaEstimada(), envioEntity.getFechaYHoraSalida(),
-				envioEntity.isPropio(), envioEntity.getNroTracking());
-		envio.setIdEnvio(envioEntity.getIdEnvio());
-		//busco una coordenada para probar
-		CoordenadaE ce = CoordenadaDao.getInstancia().getById(1);
-		envio.actualizarEstadoVehiculo(ce.getLatitud(), ce.getLongitud());
-		
-		System.out.println(envio.getEstado());
-		System.out.println("----------------------------------------");
-		////System.in.read();
-		
-		/*Se indicara desviado*/
-		/*System.out.println("---------------------------------------------------------------");
-		CoordenadaE coordAct = new CoordenadaE();
-		coordAct.setLatitud("54°35′59″S");
-		coordAct.setLongitud("48°22′55″O﻿");
-		CoordenadaE coord = CoordenadaDao.getInstancia().saveOrUpdate(coordAct);
-		System.out.println("---------Nueva coordenada: "+coord.getIdCoordenada()+"-------------------");
-		//System.in.read();*/
-		
-		//Desviado
-		System.out.println("-----------------------------------------");
-		System.out.println("Estado del envio cuando se pasan coordenadas fuera de su mapa de ruta:");
-		envio.actualizarEstadoVehiculo("54°35′59″S", "48°22′55″O﻿");
-		System.out.println(envio.getEstado());	
-		System.out.println("-------------------");
-		//System.in.read();		
-		System.out.println("");
-		
-		System.out.println("-----------------------------------------");
-		System.out.println("Estado del envio cuando se pasan nuevamente coordenadas fuera de su mapa de ruta:");
-		envio.actualizarEstadoVehiculo("54°35′59″S", "48°22′55″O﻿");
-		System.out.println(envio.getEstado());	
-		System.out.println("-------------------");
-		//System.in.read();		
-		System.out.println("");
-		
-		/*Se indicara demorado*/
-		System.out.println("-------Se indicara demorado------------");
-		System.out.println("Estado del envio cuando se chequea la fecha de llegada y la actual:");
-		envio.estaEnvioDemorado();
-		System.out.println("Envio llegando tarde: "+envio.getEstado());	
-		
-		System.out.println("");
-		System.out.println("-------------------------------------");
-		//System.in.read();
+		if(idEnvio == null || idEnvio <= 0){
+			System.out.println("No se pudo generar el envío");
+		}
+		else {
+			EnvioE envioEntity = EnvioDao.getInstancia().getById(idEnvio);
+			System.out.println("Estado Inicial del Envio: "+envioEntity.getEstado()+". Envío " + idEnvio);
+			//System.in.read();
+			
+			/*Seguira en viaje*/
+			System.out.println("---------Seguira en viaje----------");
+			System.out.println("Estado del envio cuando sigue en curso");
+			
+			
+			//Proveedor proveedor = new Proveedor();
+			//proveedor.setIdProveedor(envioEntity.getProveedor().getIdProveedor());
+			MapaDeRuta mapaDeRuta = new MapaDeRuta();
+			mapaDeRuta.setIdMapaDeRuta(envioEntity.getMapaDeRuta().getIdMapaDeRuta());
+			
+			Vehiculo vehiculo = new Vehiculo();
+			vehiculo.setIdVehiculo(envioEntity.getVehiculo().getIdVehiculo());
+			
+			Sucursal sucursalOrigen = new Sucursal();
+			sucursalOrigen.setIdSucursal(enc.getSucursalOrigen().getIdSucursal());
+			
+			Sucursal sucursalDestino = new Sucursal();
+			sucursalDestino.setIdSucursal(enc.getSucursalDestino().getIdSucursal());
+			
+			Envio envio = new Envio(null, mapaDeRuta,
+					null, sucursalDestino,
+					sucursalOrigen, vehiculo, envioEntity.getEstado(),
+					envioEntity.getFechaYHoraLlegadaEstimada(), envioEntity.getFechaYHoraSalida(),
+					envioEntity.isPropio(), envioEntity.getNroTracking());
+			envio.setIdEnvio(envioEntity.getIdEnvio());
+			//busco una coordenada para probar
+			CoordenadaE ce = CoordenadaDao.getInstancia().getById(1);
+			envio.actualizarEstadoVehiculo(ce.getLatitud(), ce.getLongitud());
+			
+			System.out.println(envio.getEstado());
+			System.out.println("----------------------------------------");
+			////System.in.read();
+			
+			/*Se indicara desviado*/
+			/*System.out.println("---------------------------------------------------------------");
+			CoordenadaE coordAct = new CoordenadaE();
+			coordAct.setLatitud("54°35′59″S");
+			coordAct.setLongitud("48°22′55″O﻿");
+			CoordenadaE coord = CoordenadaDao.getInstancia().saveOrUpdate(coordAct);
+			System.out.println("---------Nueva coordenada: "+coord.getIdCoordenada()+"-------------------");
+			//System.in.read();*/
+			
+			//Desviado
+			System.out.println("-----------------------------------------");
+			System.out.println("Estado del envio cuando se pasan coordenadas fuera de su mapa de ruta:");
+			envio.actualizarEstadoVehiculo("54°35′59″S", "48°22′55″O﻿");
+			System.out.println(envio.getEstado());	
+			System.out.println("-------------------");
+			//System.in.read();		
+			System.out.println("");
+			
+			System.out.println("-----------------------------------------");
+			System.out.println("Estado del envio cuando se pasan nuevamente coordenadas fuera de su mapa de ruta:");
+			envio.actualizarEstadoVehiculo("54°35′59″S", "48°22′55″O﻿");
+			System.out.println(envio.getEstado());	
+			System.out.println("-------------------");
+			//System.in.read();		
+			System.out.println("");
+			
+			/*Se indicara demorado*/
+			System.out.println("-------Se indicara demorado------------");
+			System.out.println("Estado del envio cuando se chequea la fecha de llegada y la actual:");
+			envio.estaEnvioDemorado();
+			System.out.println("Envio llegando tarde: "+envio.getEstado());	
+			
+			System.out.println("");
+			System.out.println("-------------------------------------");
+			//System.in.read();
+		}
 		
 		sigueElTest();
 	}
@@ -376,7 +384,7 @@ public class App
 	private static void sigueElTest() throws IOException {
 
 		System.out.println("----------------Otra encomienda---------------------");
-		int idEncomienda = TestEncomienda(1,2,1,100,100f,430f,100f,0f,10, 123, 123);
+		int idEncomienda = TestEncomienda(1,2,"34242342",100,100f,430f,100f,0f,10, 123, 123);
 		EncomiendaE enc = EncomiendaDao.getInstancia().getById(idEncomienda);
 		System.out.println("-------------Encomienda:"+idEncomienda+"------------------------");
 		//System.in.read();
@@ -386,6 +394,11 @@ public class App
 		System.out.println("---------------Le asigno envío----------------------");
 		Integer idEnvio2 = encomiendaNegocio.asignarEnvio(null); //GestionEncomienda.getInstancia().asignarEnvio(idEncomienda, null);
 
+		if(idEnvio2 == null || idEnvio2 <= 0){
+			System.out.println("No se pudo generar el envío");
+			return;
+		}
+		
 		System.out.println("-----------------Envío: "+idEnvio2+"--------------------");
 		//System.in.read();
 

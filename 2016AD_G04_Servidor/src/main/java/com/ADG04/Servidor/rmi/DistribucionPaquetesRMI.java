@@ -410,90 +410,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		return null;
 	}
 
-	public int nuevaEncomiedaParticular(String dniCliente,
-			int idDireccionOrigen, int idDireccionDestino, int idSucursalOrigen, int idSucursalDestino,
-			float largo, float ancho, float alto, float peso, float volumen, String tratamiento, boolean apilable,
-			short cantApilable, boolean refrigerado, String condiciionTransporte, String indicacionesManipulacion,
-			String fragilidad, String nombreReceptor, String apellidoReceptor, String dniReceptor, float volumenGranel, 
-			String unidadGranel) throws RemoteException {
-		
-		int idCliente = ClienteDao.getInstancia().getByDni(dniCliente).getIdCliente();
-		
-		DTO_ClienteParticular cli = new DTO_ClienteParticular();
-		cli.setId(idCliente);
-    	DTO_Sucursal sucursalOrigen = SucursalDao.getInstancia().getById(idSucursalOrigen).toDTO();
-    	DTO_Sucursal sucursalDestino = SucursalDao.getInstancia().getById(idSucursalDestino).toDTO();
-    	
-    	DTO_EncomiendaParticular encomienda = new DTO_EncomiendaParticular();
-
-		encomienda.setCliente(cli);
-		encomienda.setSucursalActual(sucursalOrigen);
-		encomienda.setSucursalOrigen(sucursalOrigen);
-		encomienda.setSucursalDestino(sucursalDestino);
-		encomienda.setLargo(largo);
-		encomienda.setAncho(ancho);
-				
-		encomienda.setFechaEstimadaEntrega(GestionEncomienda.getInstancia().calcularFechaEstimadaDeEntrega(
-		sucursalOrigen.getId(),	sucursalDestino.getId()));
-		
-		encomienda.setAlto(alto);
-		encomienda.setPeso(peso);
-		encomienda.setVolumen(volumen);
-		encomienda.setTratamiento("nada"); 
-		encomienda.setApilable(true);
-		encomienda.setCantApilable((short)2); 
-		encomienda.setRefrigerado(false);
-		encomienda.setCondicionTransporte(null); 
-		encomienda.setIndicacionesManipulacion(null);
-		encomienda.setFragilidad("no"); 
-		encomienda.setNombreReceptor("Alfredo"); 
-		encomienda.setApellidoReceptor("Receptor");
-		encomienda.setDniReceptor("99876543"); 
-		encomienda.setInternacional(false);
-		encomienda.setVolumenGranel(volumenGranel); 
-		
-		if(volumenGranel > 0){
-			encomienda.setCargaGranel("Carga Granel");
-			encomienda.setUnidadGranel(unidadGranel);
-		}
-		
-		EncomiendaE enc = GestionEncomienda.getInstancia().crearEncomiendaParticular(encomienda);
-		/*DTO_EncomiendaParticular encDTO = new DTO_EncomiendaParticular();
-		encDTO.setAlto(enc.getAlto());
-		encDTO.setAncho(enc.getAncho());
-		encDTO.setLargo(enc.getLargo());
-		encDTO.setPeso(enc.getPeso());
-		encDTO.setVolumen(enc.getVolumen());
-		encDTO.setVolumenGranel(enc.getVolumenGranel());
-		encDTO.setCantApilable(enc.getCantApilable());
-		encDTO.setAlto(enc.getIdEncomienda());
-		encDTO.setAlto(enc.getApellidoReceptor());
-		encDTO.setAlto(enc.getApilable());
-		encDTO.setAlto(enc.getCargaGranel());
-		encDTO.setAlto(enc.getCliente());
-		encDTO.setAlto(enc.getCondicionTransporte());
-		encDTO.setAlto(enc.getDireccionDestino());
-		encDTO.setAlto(enc.getDireccionOrigen());
-		encDTO.setAlto(enc.getDniReceptor());
-		encDTO.setAlto(enc.getEstado());
-		encDTO.setAlto(enc.getFechaEstimadaEntrega());
-		encDTO.setAlto(enc.getFragilidad());
-		encDTO.setAlto(enc.getIndicacionesManipulacion() );
-		encDTO.setAlto(enc.getManifiesto());
-		encDTO.setAlto(enc.getNombreReceptor());
-		encDTO.setAlto(enc.getRefrigerado());
-		encDTO.setAlto(enc.getSucursalDestino());
-		encDTO.setAlto(enc.getSucursalOrigen());
-		encDTO.setAlto(enc.getTratamiento());
-		encDTO.setAlto(enc.getUnidadGranel());
-		
-		*/
-		System.out.println("--------------EncomienencDTO.setAlto(enc.getApellidoReceptor());da: " + enc.getIdEncomienda() + "----------------------");
-		
-		return enc.getIdEncomienda();
-	}
-	
-	
 	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encP) {
 		
 		//Cuando creo la encomienda, la sucursal actual es la misma que la de origen
@@ -507,13 +423,14 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		sucursalDestino.setIdSucursal(encP.getSucursalDestino().getId());
 		
 		//Direccion direccionDestino = new Direccion();
-	//	direccionDestino.setIdDireccion(encP.getDireccionDestino().getIdDireccion());
+		//direccionDestino.setIdDireccion(encP.getDireccionDestino().getIdDireccion());
 
 		//Direccion direccionOrigen = new Direccion();
 		//direccionOrigen.setIdDireccion(encP.getDireccionOrigen().getIdDireccion());
 
+		ClienteE cliE = ClienteDao.getInstancia().getByDni(encP.getCliente().getDni());
 		Cliente cliente = new Cliente();
-		cliente.setIdCliente(encP.getCliente().getId());
+		cliente.setIdCliente(cliE.getIdCliente());
 		
 		ServicioSeguridad servicioSeg = new ServicioSeguridad();
 		servicioSeg.setIdServicioSeguridad(encP.getIdServicioSeguridad());
@@ -535,6 +452,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		new EncomiendaParticular(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
 				encP.getFechaCreacion(), encP.getFechaEstimadaEntrega(), encP.getEstado(), encP.isTercerizada(), 
 				encP.getLargo(), encP.getAlto(), encP.getAncho(), encP.getPeso(), encP.getVolumen(), encP.getTratamiento(), 
+
 				encP.getApilable(), encP.getCantApilable(), encP.getRefrigerado(), encP.getCondicionTransporte(), 
 				encP.getIndicacionesManipulacion(), encP.getFragilidad(), encP.getNombreReceptor(), 
 				encP.getApellidoReceptor(), encP.getDniReceptor(), encP.getVolumenGranel(), encP.getUnidadGranel(), 
@@ -1121,21 +1039,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 		return TareaMantenimientoDao.getInstancia().getById(idTareaMantenimiento).toDTO();
 	}
-
-	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-
-	}
-
-	@Override
-	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public Integer facturarEncomiendaEmpresa(int idEncomienda)
 			throws RemoteException {

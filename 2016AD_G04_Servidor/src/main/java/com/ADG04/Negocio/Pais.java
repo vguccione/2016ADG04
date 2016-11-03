@@ -12,6 +12,8 @@ import java.util.List;
 
 
 
+
+import com.ADG04.Servidor.model.PaisE;
 import com.ADG04.bean.Administracion.DTO_Pais;
 
 public class Pais{
@@ -56,6 +58,20 @@ public class Pais{
 		DTO_Pais p = new DTO_Pais();
 		p.setDescripcion(this.descripcion);
 		p.setId(this.idPais);
+		return p;
+	}
+
+	public PaisE toEntity() {
+		PaisE p = new PaisE();
+		p.setDescripcion(this.descripcion);
+		p.setIdPais(this.getIdPais());
+		return p;
+	}
+
+	public Pais fromDTO(DTO_Pais pais) {
+		Pais p = new Pais();
+		p.setDescripcion(pais.getDescripcion());
+		p.setIdPais(pais.getId());
 		return p;
 	}
 	

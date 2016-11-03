@@ -16,6 +16,8 @@ import java.util.Set;
 
 
 
+
+import com.ADG04.Servidor.model.ProvinciaE;
 import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
 
@@ -73,6 +75,22 @@ public class Provincia{
 		p.setDescripcion(this.descripcion);
 	    p.setId(this.idProvincia);
 	    p.setPais(this.getPais().toDTO());
+		return p;
+	}
+
+	public ProvinciaE toEntity() {
+		ProvinciaE p = new ProvinciaE();
+		p.setDescripcion(this.descripcion);
+	    p.setIdProvincia(this.idProvincia);
+	    p.setPais(this.getPais().toEntity());
+		return p;
+	}
+
+	public Provincia fromDTO(DTO_Provincia prove) {
+		Provincia p  = new Provincia();
+		p.setDescripcion(prove.getDescripcion());
+		p.setIdProvincia(prove.getId());
+		p.setPais(new Pais().fromDTO(prove.getPais()));
 		return p;
 	}
 }

@@ -18,8 +18,17 @@ import java.util.List;
 
 
 
+
+
+
+
+import javax.persistence.EntityManager;
+
 import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.PaisDao;
+import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.model.ProveedorE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
@@ -57,7 +66,7 @@ public class Proveedor{
 		this.tallerOficial = tallerOficial;
 		this.tipo = tipo;
 	}
-
+	
 	
 
 	public Proveedor(int idProveedor, Direccion direccion, String activo,
@@ -74,7 +83,7 @@ public class Proveedor{
 		this.tallerOficial = tallerOficial;
 		this.tipo = tipo;
 	}
-
+	
 
 	public Proveedor(String activo, String cuit, String razonSocial, String email,
 			String telefono) {
@@ -189,4 +198,26 @@ public class Proveedor{
 	}
 	
 
+
+	public ProveedorE toEntity(){
+		ProveedorE prov = new ProveedorE(this.idProveedor,this.getDireccion().toEntity(),this.getActivo(),this.getCuit(),
+				this.getRazonSocial(), this.getEmail(),this.getTelefono(),this.isTallerOficial(),this.getTipo());
+		return prov;
+	}
+
+	
+	public void remove() {
+		ProveedorE proveedor = toEntity();
+		if (proveedor != null){
+			ProveedorDao.getInstancia().remove(proveedor);
+		}
+	}
+	
+	public void saveOrUpdate() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		ProveedorE proveedor = toEntity();
+		ProveedorDao.getInstancia().saveOrUpdate(proveedor);
+		em.getTransaction().commit();
+	}
 }

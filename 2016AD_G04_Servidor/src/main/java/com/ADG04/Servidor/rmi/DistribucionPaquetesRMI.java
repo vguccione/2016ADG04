@@ -21,9 +21,13 @@ import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Negocio.ItemManifiesto;
 import com.ADG04.Negocio.Manifiesto;
+import com.ADG04.Negocio.Pais;
 import com.ADG04.Negocio.Producto;
+import com.ADG04.Negocio.Proveedor;
+import com.ADG04.Negocio.Provincia;
 import com.ADG04.Negocio.ServicioSeguridad;
 import com.ADG04.Negocio.Sucursal;
+import com.ADG04.Negocio.Usuario;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
@@ -162,32 +166,18 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
-		SucursalE suc = new SucursalE();
-		suc.setDescripcion(sucursal.getDescripcion());
-		suc.setGerente(UsuarioDao.getInstancia().getById(sucursal.getIdGerente()));
-		suc.setTelefono(sucursal.getTelefono());
-		
-		GestionAdministracion ga = new GestionAdministracion(new UsuarioE(),suc, new PaisE(), new ProvinciaE(), new DireccionE() );
-		DireccionE dir = ga.crearDireccion(sucursal.getDireccion());
-		
-		suc.setDireccion(dir);
-	
-		ga.guardarSucursal();
+		Usuario usu = new Usuario().fromDTO(UsuarioDao.getInstancia().getById(sucursal.getIdGerente()).toDTO());	
+		Direccion dir = new Direccion().fromDTO(sucursal.getDireccion());
+		Sucursal suc = new Sucursal(sucursal.getDescripcion(), sucursal.getTelefono(),usu, dir);
+		suc.guardar();
 	}
 
 	
 	public void modificarSucursal(DTO_Sucursal sucursal) throws RemoteException {
-		SucursalE suc = new SucursalE();
-		suc.setIdSucursal(sucursal.getId());
-		suc.setDescripcion(sucursal.getDescripcion());
-		suc.setGerente(UsuarioDao.getInstancia().getById(sucursal.getIdGerente()));
-		suc.setTelefono(sucursal.getTelefono());
-		DireccionE dir = DireccionDao.getInstancia().getById(sucursal.getDireccion().getIdDireccion());
-		suc.setDireccion(dir);
-		
-		GestionAdministracion ga = new GestionAdministracion(new UsuarioE(),suc, new PaisE(), new ProvinciaE(), new DireccionE() );
-		ga.modificarSucursal();
-		
+		Usuario usu = new Usuario().fromDTO(UsuarioDao.getInstancia().getById(sucursal.getIdGerente()).toDTO());
+		Direccion dir = new Direccion().fromDTO(sucursal.getDireccion());
+		Sucursal suc = new Sucursal(sucursal.getDescripcion(), sucursal.getTelefono(),usu, dir);
+		suc.modificar();
 	}
 
 	
@@ -611,29 +601,21 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public void altaProveedor(DTO_Proveedor prov) throws RemoteException {
-		ProveedorE p = new ProveedorE();
-		p.setActivo(prov.getActivo());
-	    p.setCuit(prov.getCuit());
-	   
-	    p.setEmail(prov.getEmail());
-	    p.setRazonSocial(prov.getRazonSocial());
-	    p.setTelefono(prov.getTelefono());
-	    
-	    GestionAdministracion ga = new GestionAdministracion();
-	    DireccionE dir = ga.crearDireccion(prov.getDireccion());
+		Direccion dir = new Direccion().fromDTO(prov.getDireccion());
 		
-		p.setDireccion(dir);
+		Proveedor proveedor = new Proveedor(dir, prov.getActivo(), prov.getCuit(),
+				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
 		
-		GestionProveedor gp = new GestionProveedor(0, p.getDireccion(), p.getActivo(), p.getCuit(),
-				p.getRazonSocial(), p.getEmail(), p.getTelefono(), p.isTallerOficial(), p.getTipo());
+		proveedor.saveOrUpdate();
+	}
+	
+	public void modificarProveedor(DTO_Proveedor prov) throws RemoteException {
+		Direccion dir = new Direccion().fromDTO(prov.getDireccion());
 		
-		gp.saveOrUpdate();
+		Proveedor proveedor = new Proveedor(prov.getId(), dir, prov.getActivo(), prov.getCuit(),
+				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
 		
-		/*  Utilizando el que tiene herencia
-		 * _GestionProveedor gp = p;
-			gp.altaProveedor();
-		 * */
-		
+		proveedor.saveOrUpdate();
 	}
 	
 	public void altaSeguro(DTO_Seguro seguro) throws RemoteException {
@@ -642,13 +624,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		GestionProveedor gp = new GestionProveedor(0, prov.getDireccion(), prov.getActivo(), prov.getCuit(),
 				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
 				
-		gp.altaSeguro(seguro.getTipoSeguro(), seguro.getDescripcion(), seguro.getTarifa(), seguro.getTarifaPorKm());
-		
-		/*  Utilizando el que tiene herencia
-		 * _GestionProveedor gp = prov;
-			gp.altaSeguro(seguro);
-		 * */
-		
+		gp.altaSeguro(seguro.getTipoSeguro(), seguro.getDescripcion(), seguro.getTarifa(), seguro.getTarifaPorKm());	
 	}
 	public void modificarSeguro(DTO_Seguro seguro) throws RemoteException{
 		ProveedorE prov = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
@@ -1400,5 +1376,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public DTO_PlanMantenimiento getPlanMantenimiento(Integer id)
 			throws RemoteException {
 		return PlanMantenimientoDao.getInstancia().getById(id).toDTO();
+	}
+
+	@Override
+	public DTO_Pais getPaisByNombre(String pais) throws RemoteException {
+		return PaisDao.getInstancia().getByNombre(pais).toDTO();
+	}
+
+	@Override
+	public DTO_Provincia getProvByNombre(String prov) throws RemoteException {
+		return ProvinciaDao.getInstancia().getByNombre(prov).toDTO();
 	}
 }

@@ -2,6 +2,7 @@ package com.ADG04.bean.Administracion;
 
 import java.io.Serializable;
 
+
 public class DTO_Pais  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -26,6 +27,5 @@ public class DTO_Pais  implements Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
 
 }

@@ -12,6 +12,8 @@ public class DTO_Provincia  implements Serializable {
 	
 	public DTO_Provincia(){	
 	}
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -36,6 +38,5 @@ public class DTO_Provincia  implements Serializable {
 	public void setPais(DTO_Pais pais) {
 		this.pais = pais;
 	}
-
 
 }

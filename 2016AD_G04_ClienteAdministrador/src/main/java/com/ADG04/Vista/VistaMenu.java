@@ -33,6 +33,7 @@ import com.ADG04.Vista.Listados.ListadoTareasRealizadas;
 import com.ADG04.Vista.Listados.ListadoTarifasCarriers;
 import com.ADG04.Vista.Listados.ListadoUsuarios;
 import com.ADG04.Vista.Listados.ListadoVehiculos;
+import com.ADG04.Vista.Proveedores.AltaProveedor;
 import com.ADG04.Vista.Vehiculos.AltaVehiculo;
 import com.ADG04.bean.Administracion.DTO_Rol;
 
@@ -315,9 +316,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem1.setBounds(93, -21, 119, 21);
 							JMenuItem1.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaAltaProveedor inst = new VistaAltaProveedor();
+									AltaProveedor inst = new AltaProveedor();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

@@ -349,8 +349,11 @@ public class VehiculoE implements java.io.Serializable {
 		v.setTara(tara);
 		v.setVolumen(volumen);
 		v.setFechaIngreso(this.getFechaIngreso());
-		PlanMantenimientoE pm = PlanMantenimientoDao.getInstancia().getById(this.getPlanMantenimiento().getIdPlanMantenimiento());
-		v.setPlanMantenimiento(pm.toDTO());
+		
+		if(this.getPlanMantenimiento()!=null) {
+			PlanMantenimientoE pm = this.getPlanMantenimiento();
+			v.setPlanMantenimiento(pm.toDTO());
+		}
 		return v;
 	}
 

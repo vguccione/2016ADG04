@@ -732,5 +732,29 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return null;
 	}
 	
+	public void altaPlanMantenimiento(DTO_PlanMantenimiento pm) throws RemoteException{
+		this.businessService.altaPlanMantenimiento(pm);
+	}
+
+	public void altaTareaMantenimiento(DTO_TareasPorKilometro tpk) throws RemoteException{
+		this.businessService.altaTareaMantenimiento(tpk);
+	}
+
+	public void altaTareaMantenimiento(DTO_TareasPorTiempo tpt) throws RemoteException{
+		this.businessService.altaTareaMantenimiento(tpt);	
+	}
+
+	public void altaTareaMantenimientoRealizada(
+			DTO_TareaMantenimientoRealizada tmr) throws RemoteException{
+		this.businessService.altaTareaMantenimientoRealizada(tmr);	
+	}
+
+	public DTO_Vehiculo buscarVehiculoByPatente(String patente) throws RemoteException{
+		return this.businessService.buscarVehiculoByPatente(patente);
+	}
+
+	public List<DTO_TareaMantenimiento> getTareaMantenimientoByPlan(Integer idPlan) throws RemoteException{
+		return this.businessService.getTareaMantenimientoByPlan(idPlan);
+	}
 
 }

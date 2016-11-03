@@ -3,6 +3,7 @@ package com.ADG04.Repositorio.Interfaces;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
@@ -71,4 +72,7 @@ public interface IAdministracionRemote {
 	/*************************** Otros *************************************/
 	public List<DTO_Provincia> listarProvinciasByPais(String pais) throws RemoteException;
 	public DTO_Provincia buscarProvinciaByNombre(String prov) throws RemoteException;
+	public List<DTO_Pais> listarPaises() throws RemoteException;
+	public DTO_Pais getPaisByNombre(String pais) throws RemoteException;
+	public DTO_Provincia getProvByNombre(String prov) throws RemoteException;
 }

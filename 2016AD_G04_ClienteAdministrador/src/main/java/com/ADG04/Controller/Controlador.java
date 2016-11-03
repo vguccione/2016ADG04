@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
@@ -732,6 +733,74 @@ public class Controlador {
 			System.out.println("Error al buscar sucursal");
 		}
 		return null;
+	}
+
+	public void altaProveedor(DTO_Direccion direccion, String activo, String cuit,
+			String razonSocial, String email, String telefono,
+			int tallerOficial, char tipo) {
+		try{
+			DTO_Proveedor prov=new DTO_Proveedor();
+			prov.setActivo(activo);
+			prov.setCuit(cuit);
+			prov.setRazonSocial(razonSocial);
+			prov.setEmail(email);
+			prov.setTelefono(telefono);
+			if(tallerOficial==1)
+				prov.setTallerOficial(true);
+			else
+				prov.setTallerOficial(false);
+			
+			prov.setTipo(tipo);
+			prov.setDireccion(direccion);
+			
+			System.out.println(prov.toString());
+			
+			bd.altaProveedor(prov);
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al crear Proveedor");
+		}
+	}
+
+	public DTO_Pais getPaisByNombre(String pais) {
+		try{
+			return bd.getPaisByNombre(pais);
+		}catch(Exception e){
+			System.out.println("Error al traer pais por nombre");
+		}
+		return null;
+	}
+
+	public DTO_Provincia getProvByNombre(String prov) {
+		try{
+			return bd.getProvByNombre(prov);
+		}catch(Exception e){
+			System.out.println("Error al traer provincia por nombre");
+		}
+		return null;
+	}
+	
+	public List<DTO_Pais> listaPaises() {
+		try{
+			return  bd.listarPaises();
+		}
+		catch(Exception e){
+			System.out.println("Error al listar paises");
+		}
+		return null;
+	}
+
+	public Vector listarPaises() {
+		List<DTO_Pais> lista = listaPaises();
+		Vector v =new Vector();
+		int i=0;
+		for(DTO_Pais p:lista){
+			v.add(i,p.getDescripcion());
+			i++;
+		}
+		return v;
 	}
 
 

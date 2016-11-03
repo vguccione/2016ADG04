@@ -20,8 +20,20 @@ import java.util.List;
 
 
 
+
+
+
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
+import com.ADG04.Servidor.dao.SucursalDao;
+import com.ADG04.Servidor.model.DireccionE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.model.SucursalE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
@@ -52,8 +64,22 @@ public class Sucursal{
 		this.telefono = telefono;
 	}
 
+	
+	public Sucursal(String descripcion, String telefono,
+			Usuario gerente, Direccion direccion) {
+		super();
+		this.descripcion = descripcion;
+		this.telefono = telefono;
+		this.gerente = gerente;
+		this.direccion = direccion;
+	}
 
-
+	@Override
+	public String toString() {
+		return "Sucursal [descripcion=" + descripcion + ", telefono="
+				+ telefono + ", gerente=" + gerente + ", direccion="
+				+ direccion + "]";
+	}
 
 	public int getIdSucursal() {
 		return this.idSucursal;
@@ -177,6 +203,30 @@ public class Sucursal{
 		s.setDireccion(this.getDireccion().toDTO());
 		s.setIdGerente(this.getGerente().getIdUsuario());
 		return s;
+	}
+	
+	public SucursalE toEntity(){
+		SucursalE suc = new SucursalE(this.idSucursal, this.descripcion, this.telefono);
+		DireccionE dir = new DireccionE(this.getDireccion().getPais().toEntity(), this.getDireccion().getProvincia().toEntity(), 
+				this.getDireccion().getCalle(),this.getDireccion().getNro(), this.getDireccion().getLocalidad(),
+				this.getDireccion().getCodigoPostal());
+		suc.setDireccion(dir);
+		return suc;
+	}
+	
+	
+	
+	public void guardar() {	
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		SucursalDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();
+	}
+
+	public void modificar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		SucursalDao.getInstancia().saveOrUpdate(this.toEntity());
 	}
 
 }

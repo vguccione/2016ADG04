@@ -6,7 +6,12 @@ import java.util.Set;
 
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
+import com.ADG04.Servidor.model.DireccionE;
+import com.ADG04.Servidor.model.PaisE;
+import com.ADG04.Servidor.model.ProvinciaE;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Pais;
+import com.ADG04.bean.Administracion.DTO_Provincia;
 
 public class Direccion{
 
@@ -101,6 +106,49 @@ public class Direccion{
 		dir.setNro(this.nro);
 		dir.setPais(PaisDao.getInstancia().getById(this.getPais().getIdPais()).toDTO());
 		dir.setProvincia(ProvinciaDao.getInstancia().getById(this.getProvincia().getIdProvincia()).toDTO());
+		return dir;
+	}
+
+
+	public DireccionE toEntity() {
+		DireccionE dir = new DireccionE();
+		dir.setCalle(this.getCalle());
+		dir.setCodigoPostal(this.getCodigoPostal());
+		dir.setLocalidad(this.getLocalidad());
+		dir.setNro(this.getNro());
+		
+		ProvinciaDao provDao = ProvinciaDao.getInstancia();
+		ProvinciaE prov = (ProvinciaE) provDao.getById(this.getProvincia().getIdProvincia());
+		
+		dir.setProvincia(prov);
+		
+		PaisDao paisDao = PaisDao.getInstancia();
+		PaisE pais = (PaisE) paisDao.getById(this.getPais().getIdPais());
+		
+		dir.setPais(pais);
+		
+		return dir;
+	}
+	
+	
+	public Direccion fromDTO(DTO_Direccion direccion) {
+
+		/*Crear Direccion*/
+		Direccion dir = new Direccion();
+		dir.setCalle(direccion.getCalle());
+		dir.setCodigoPostal(direccion.getCodigoPostal());
+		dir.setLocalidad(direccion.getLocalidad());
+		dir.setNro(direccion.getNro());
+		
+		DTO_Provincia prove = ProvinciaDao.getInstancia().getById(direccion.getProvincia().getId()).toDTO();
+		Provincia prov = new Provincia().fromDTO(prove);
+		
+		DTO_Pais pais = PaisDao.getInstancia().getById(direccion.getPais().getId()).toDTO();
+		Pais p = new Pais().fromDTO(pais);
+		
+		
+		dir.setProvincia(prov);
+		dir.setPais(p);
 		return dir;
 	}
 

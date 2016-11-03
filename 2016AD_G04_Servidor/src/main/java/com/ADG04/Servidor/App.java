@@ -35,9 +35,9 @@ import com.ADG04.bean.Vehiculo.*;
  *
  */
 public class App 
-{
+{/*
 
-	public static void main(String[] args) throws IOException {
+	public static void main2(String[] args) throws IOException {
 		
 		try {
 		//	TestEncomienda();
@@ -50,8 +50,8 @@ public class App
 			System.exit(1);
 		}
 	}
-	
-    public static void main2( String[] args ) throws IOException, NotBoundException
+	*/
+    public static void main( String[] args ) throws IOException, NotBoundException
     {
    	
     	/*BusinessDelegate bd = new BusinessDelegate();
@@ -81,26 +81,26 @@ public class App
 		
 		bd.altaVehiculo(v);
 		*/
-//    	BusinessDelegate bd = new BusinessDelegate();
-//    	DTO_Sucursal suc = new DTO_Sucursal();
-//    	suc.setDescripcion("hola suc");
-//    	
-//    	DTO_Direccion dir = new DTO_Direccion();
-//	    dir.setCalle("calle");
-//	    dir.setCodigoPostal(123);
-//	    dir.setLocalidad("cap");
-//	    dir.setNro(12);
-//	    PaisE pais = PaisDao.getInstancia().getById(1);
-//	    ProvinciaE prov = ProvinciaDao.getInstancia().getById(1);
-//	    dir.setPais(pais.toDTO());
-//	    dir.setProvincia(prov.toDTO());
-//    	suc.setDireccion(dir);
-//    	
-//    	suc.setIdGerente(1);
-//    	suc.setTelefono("123132");
-//    	
-//    	bd.altaSucursal(suc);
-  /*
+    	/*BusinessDelegate bd = new BusinessDelegate();
+    	DTO_Sucursal suc = new DTO_Sucursal();
+    	suc.setDescripcion("hola suc");
+    	
+    	DTO_Direccion dir = new DTO_Direccion();
+	    dir.setCalle("calle");
+	    dir.setCodigoPostal(123);
+	    dir.setLocalidad("cap");
+	    dir.setNro(12);
+	    PaisE pais = PaisDao.getInstancia().getById(1);
+	    ProvinciaE prov = ProvinciaDao.getInstancia().getById(1);
+	    dir.setPais(pais.toDTO());
+	    dir.setProvincia(prov.toDTO());
+    	suc.setDireccion(dir);
+    	
+    	suc.setIdGerente(1);
+    	suc.setTelefono("123132");
+    	
+   	bd.altaSucursal(suc);
+   */
     DTO_Proveedor p = new DTO_Proveedor();
     p.setActivo("1");
     p.setRazonSocial("RAZON");
@@ -110,8 +110,8 @@ public class App
     dir.setCodigoPostal(123);
     dir.setLocalidad("cap");
     dir.setNro(12);
-    Pais pais = PaisDao.getInstancia().getById(1);
-    Provincia prov = ProvinciaDao.getInstancia().getById(1);
+    PaisE pais = PaisDao.getInstancia().getById(1);
+    ProvinciaE prov = ProvinciaDao.getInstancia().getById(1);
     dir.setPais(pais.toDTO());
     dir.setProvincia(prov.toDTO());
     
@@ -122,8 +122,8 @@ public class App
     BusinessDelegate bd = new BusinessDelegate();
     bd.altaProveedor(p);
     	
-    */
-	testControlViajes();
+   
+	//testControlViajes();
      	//VehiculosTest.TestVehiculos();
         //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
 
@@ -142,7 +142,7 @@ public class App
     	//TestGetPlanes();    	
     	//crearPaisesYProvincias();
     	//TestAltaCliente();
-    TestEncomienda();
+    	//TestEncomienda();
         //testAsignarEnvios();
     	//TestFacturaEncomiendaParticular();
     	

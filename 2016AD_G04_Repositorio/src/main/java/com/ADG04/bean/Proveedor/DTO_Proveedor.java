@@ -117,4 +117,15 @@ public class DTO_Proveedor implements Serializable{
 	public void setFacturas(List<DTO_FacturaProveedor> facturas) {
 		this.facturas = facturas;
 	}
+
+	@Override
+	public String toString() {
+		return "DTO_Proveedor [id=" + id + ", activo=" + activo
+				+ ", razonSocial=" + razonSocial + ", cuit=" + cuit
+				+ ", direccion=" + direccion + ", email=" + email
+				+ ", telefono=" + telefono + ", tipo=" + tipo
+				+ ", TallerOficial=" + TallerOficial + "]";
+	}
+	
+	
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 
 
+
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
@@ -36,6 +37,21 @@ public class Usuario{
 		this.apellido = apellido;
 		this.usuario = usuario;
 		this.dni = dni;
+		this.password = password;
+		this.ultimoAcceso = ultimoAcceso;
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	
+	public Usuario(int idUsuario, String nombre, String apellido, String dni,
+			String usuario, String password, Date ultimoAcceso,
+			Date fechaCreacion) {
+		super();
+		this.idUsuario = idUsuario;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.usuario = usuario;
 		this.password = password;
 		this.ultimoAcceso = ultimoAcceso;
 		this.fechaCreacion = fechaCreacion;
@@ -158,6 +174,12 @@ public class Usuario{
 		u.setRoles(roles);
 		
 		return u;
+	}
+	
+	public Usuario fromDTO(DTO_Usuario usu){
+		return new Usuario(usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
+				usu.getDni(), usu.getUsuario(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
+		
 	}
 
 	

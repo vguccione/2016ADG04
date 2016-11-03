@@ -68,7 +68,6 @@ public class ListadoTalleres extends javax.swing.JFrame {
 					jTableListadoModel.addColumn("Estado");
 					jTableListadoModel.addColumn("CUIT");
 					jTableListadoModel.addColumn("Razon Social");
-					jTableListadoModel.addColumn("Categoria");
 					jTableListadoModel.addColumn("Direccion");
 					jTableListadoModel.addColumn("Codigo Postal");
 					jTableListadoModel.addColumn("Localidad");

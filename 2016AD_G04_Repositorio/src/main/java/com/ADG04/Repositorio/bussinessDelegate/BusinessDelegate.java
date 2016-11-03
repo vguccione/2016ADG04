@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
@@ -740,6 +741,18 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public DTO_PlanMantenimiento getPlanMantenimiento(Integer id) throws RemoteException{
 		return this.businessService.getPlanMantenimiento(id);
+	}
+
+	public List<DTO_Pais> listarPaises() throws RemoteException{
+		return this.businessService.listarPaises();
+	}
+
+	public DTO_Pais getPaisByNombre(String pais) throws RemoteException{
+		return this.businessService.getPaisByNombre(pais);
+	}
+
+	public DTO_Provincia getProvByNombre(String prov) throws RemoteException{
+		return this.businessService.getProvByNombre(prov);
 	}
 	
 

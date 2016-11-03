@@ -82,6 +82,13 @@ public class SucursalE implements java.io.Serializable {
 
 
 
+	public SucursalE(int idSucursal, String descripcion, String telefono) {
+		super();
+		this.idSucursal=idSucursal;
+		this.descripcion = descripcion;
+		this.telefono = telefono;
+	}
+
 	public int getIdSucursal() {
 		return this.idSucursal;
 	}

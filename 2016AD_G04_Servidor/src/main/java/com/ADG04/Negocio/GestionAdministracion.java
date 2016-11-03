@@ -86,21 +86,7 @@ public class GestionAdministracion {
 	 
 		
 	/*Sucursal*/
-	public void guardarSucursal() {	
-	/*	EntityManager em =  EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();	*/
-		SucursalDao.getInstancia().persist(sucursal);
-	//	tx.commit();
-	}
-
-	public void modificarSucursal() {
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		SucursalDao.getInstancia().saveOrUpdate(sucursal);
-		tx.commit();
-	}
+	
 	
 	
 	public void guardarPais(){

@@ -222,12 +222,12 @@ $(document).ready(function() {
 <h2>Encomienda Particular:</h2>
 <form action="serveletEncomiendaParticular?action=altaEncomiendaParticular" method="post" name="frm_idEncomienda" class="form-style-2">
 <ul>
-	<li><label>Nro. de Encomienda:</label><input class="input-field" name="idEncomienda" readonly="readonly" type="text" value="<%=encomienda%>" /></li>
+
 	<li><label>ID Sucursal de origen:</label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value="<%=sucursal%>"/></li>
-	<li><label>Sucursal de origen::</label><input name="SucursalOrigen" type="text" readonly="readonly" class="input-field" id="SucursalOrigen" value="<%=sucursalNombre%>"/></li>
-	<li><label>Estado:</label><input class="input-field" name="estado" type="text" readonly="readonly" id="estado" maxlength="50" value="<%=estado%>"/></li>
+	<li><label>ID Sucursal de destino:</label><input name="idSucursalDestino" type="text" class="input-field" id="idSucursalDestino" /></li>
+	
  	<br/>
- 	<%=destinos%>
+ 	
 	<li><label>Fecha de recepci&oacute;n:</label><input type="date" id="fechaRecepcion" class="datepicker"></li>
  	<li><label>Fecha de m&aacute;xima:</label><input type="date" id="fechaMaxima" class="datepicker"></li>
  	<li>
@@ -251,25 +251,23 @@ $(document).ready(function() {
 	<li><label>Tercerizado:</label>
 				<label class="input-radio-field"><input type="radio" name="tercerizado" value="true" id="tercerizado" />Sí</label>
        			<label class="input-radio-field"><input type="radio" name="tercerizado" value="false" id="tercerizado" />No</label></li>
-    <li><label>Valor estimado:</label><input class="input-field" name="valorEstimado" type="text" id="valorEstimado" /></li>
-	<li><label>Distancia estimada (KM):</label><input class="input-field" name="distanciaEstimadaKM" type="text" id="distanciaEstimadaKM" /></li>
-	
+    
 </ul>
 
 
 
   <label>
-    Particular</label>
+    Datos del Cliente</label>
 <!--Sólo se ve si es Particular --> 
     <fieldset><ul>
 				<li><label>DNI de particular:</label><input class="input-field" name="dniParticular" type="text" id="dniParticular" maxlength="10" /></li>
 				<li><label>Nombre del particular:</label><input class="input-field" name="nombreParticular" type="text" id="nombreParticular" maxlength="50" /></li>
  				<li><label>Apellido del particular:</label><input class="input-field" name="apellidoParticular" type="text" id="apellidoParticular" maxlength="50" /></li>
-   				<li><label>Direcci&oacute;n de destino:</label><input class="input-field" name="direccionDestino" type="text" id="direccionDestino" maxlength="100" /></li>
+<!--    				<li><label>Direcci&oacute;n de destino:</label><input class="input-field" name="direccionDestino" type="text" id="direccionDestino" maxlength="100" /></li>
     			<li><label>C&oacute;digo postal de destino:</label><input class="input-field" name="codigoPostalDestino" type="text" id="codigoPostalDestino" maxlength="10" /></li>
    				<li><label>Localidad destino:</label><input class="input-field" name="localidadDestino" type="text" id="localidadDestino" maxlength="50" /></li>
    				<li><label>Provincia destino:</label><input class="input-field" name="provinciaDestino" type="text" id="provinciaDestino" maxlength="50" /></li>
-    			<li><label>Pa&iacute;s destino:</label><input class="input-field" name="paisDestino" type="text" id="paisDestino" maxlength="50" /></li>
+    			<li><label>Pa&iacute;s destino:</label><input class="input-field" name="paisDestino" type="text" id="paisDestino" maxlength="50" /></li> -->
     </ul></fieldset>
 
       <div class="btn_centrado"><input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" /></div></form>

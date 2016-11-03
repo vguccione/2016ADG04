@@ -215,7 +215,7 @@ public class EncomiendasTest {
 	}
 	
 	private static void AltaEncomiendaParticular() throws IOException {
-
+/*
 			String dniCliente = getStringFromConsole("dni cliente particular: ");
 			
 			int idSucOrigen = getIntFromConsole("Sucursal origen: ");
@@ -232,7 +232,7 @@ public class EncomiendasTest {
 			System.out.println("Nueva encomienda particular");
 			int idEncomienda = bDelegate.nuevaEncomiedaParticular(dniCliente, 1, 2, idSucOrigen, idSucDestino, largo, ancho, alto, peso, volumen, 
 					"", false, (short) 0, false, "", "", "", "", "", "", 0f, "");
-				
+				*/
 		
 	}
 	

@@ -1,7 +1,9 @@
 package com.ADG04.bean.Encomienda;
 
+import java.io.Serializable;
 
-public class DTO_EnvioTercerizado extends DTO_Envio{
+
+public class DTO_EnvioTercerizado extends DTO_Envio implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String numeroTracking;
 	private Integer idProveedor;

@@ -40,7 +40,8 @@ public class GenericDao<E,PK> {
     }
 
     public E getById(PK id) {
-
+    	System.out.println("public E getById(PK " + id +")");
+    	System.out.println(this.getType().toGenericString());
         return entityManager.find(this.getType(), id);
 
     }

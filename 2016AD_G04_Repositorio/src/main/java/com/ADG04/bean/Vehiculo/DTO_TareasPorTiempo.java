@@ -1,6 +1,8 @@
 package com.ADG04.bean.Vehiculo;
 
-public class DTO_TareasPorTiempo extends DTO_TareaMantenimiento{
+import java.io.Serializable;
+
+public class DTO_TareasPorTiempo extends DTO_TareaMantenimiento implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int cantidadDias;
 

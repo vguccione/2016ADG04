@@ -1,8 +1,9 @@
 package com.ADG04.bean.Encomienda;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DTO_EnvioPropio extends DTO_Envio{
+public class DTO_EnvioPropio extends DTO_Envio implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer idVehiculo;
 	private Integer idHojaDeRuta;

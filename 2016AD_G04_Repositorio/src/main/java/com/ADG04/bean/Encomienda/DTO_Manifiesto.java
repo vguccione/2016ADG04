@@ -13,7 +13,7 @@ public class DTO_Manifiesto implements Serializable{
 	private int id;
 	private Date fecha;
 	private int idManifiesto;
-	private List<DTO_ItemManifiesto> detalle;
+	private List<DTO_ItemManifiesto> detalle = new ArrayList<DTO_ItemManifiesto>();
 	
 	public DTO_Manifiesto(){
 	}
@@ -48,6 +48,11 @@ public class DTO_Manifiesto implements Serializable{
 
 	public void setDetalle(List<DTO_ItemManifiesto> detalle) {
 		this.detalle = detalle;
+	}
+
+	public void addItem(DTO_ItemManifiesto item) {
+		this.detalle.add(item);
+		
 	}
 	
 

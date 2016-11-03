@@ -31,6 +31,10 @@ public class DTO_Sucursal implements Serializable{
 		envios = new ArrayList<DTO_Envio>();*/
 	}
 
+	public DTO_Sucursal(int idSucursal) {
+		this.id = idSucursal;
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -351,22 +351,6 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	}
 	
 
-
-	public int nuevaEncomiedaParticular(String dniCliente,
-			int idDireccionOrigen, int idDireccionDestino,
-			int idSucursalOrigen, int idSucursalDestino, float largo,
-			float ancho, float alto, float peso, float volumen,
-			String tratamiento, boolean apilable, short cantApilable,
-			boolean refrigerado, String condiciionTransporte,
-			String indicacionesManipulacion, String fragilidad,
-			String nombreReceptor, String apellidoReceptor, String dniReceptor,
-			float volumenGranel, String unidadGranel) throws RemoteException {
-		
-		return this.businessService.nuevaEncomiedaParticular(dniCliente, idDireccionOrigen, idDireccionDestino, idSucursalOrigen, idSucursalDestino, 
-				largo, ancho, alto, peso, volumen, tratamiento, apilable, cantApilable, refrigerado, condiciionTransporte, indicacionesManipulacion, 
-				fragilidad, nombreReceptor, apellidoReceptor, dniReceptor, volumenGranel, unidadGranel);
-		
-	}
 	
 	public DTO_EnvioPropio getInfoEnvioPropio(int idEnvio) throws RemoteException{
 		
@@ -450,20 +434,6 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	}
 
 	public Integer cobrarEncomiendaParticular(Integer idFactura) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc) throws RemoteException {
-		// TODO Auto-generated method stub
-		return this.businessService.confirmarEncomiendaEmpresa(enc);
-	}
-
-	public Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc) throws RemoteException {
-		return this.businessService.confirmarEncomiendaParticular(enc);
-	}
-
-	public Integer nuevaEncomiendaParticular(Integer idSucursal) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -753,6 +723,13 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public DTO_Provincia getProvByNombre(String prov) throws RemoteException{
 		return this.businessService.getProvByNombre(prov);
+	}
+
+	public Integer nuevaEncomiedaParticular(
+			DTO_EncomiendaParticular encomiendaParticular)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

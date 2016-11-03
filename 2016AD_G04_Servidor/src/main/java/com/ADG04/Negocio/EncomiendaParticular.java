@@ -1,6 +1,7 @@
 package com.ADG04.Negocio;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -233,7 +234,7 @@ public class EncomiendaParticular extends Encomienda{
 		this.idEncomienda = encomienda.getIdEncomienda();
 		return encomienda.getIdEncomienda();
 	}
-
+	
 	private EntityManager getEntityFactoryInstace() {
 		return EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
 	}

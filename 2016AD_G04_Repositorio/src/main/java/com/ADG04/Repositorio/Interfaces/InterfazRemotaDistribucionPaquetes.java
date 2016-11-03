@@ -28,10 +28,6 @@ public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministrac
 	//Metodos agregados desde la interfaz web
 	Integer cobrarEncomiendaParticular(Integer idFactura) throws RemoteException;
 
-	Integer confirmarEncomiendaParticular(DTO_EncomiendaParticular enc)throws RemoteException;
-
-	Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc)throws RemoteException;
-
 	Integer facturarEncomiendaEmpresa(int idEncomienda)throws RemoteException;
 
 	Integer cobrarEncomiendaEmpresa(Integer idFactura)throws RemoteException;
@@ -39,5 +35,7 @@ public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministrac
 	DTO_Usuario getEmpleado(Integer idEmpleado)throws RemoteException;
 
 	Integer facturarEncomiendaParticular(DTO_EncomiendaParticular enc)throws RemoteException;
+
+	
 
 }

@@ -107,33 +107,26 @@ public class ServletEncomiendaParticular extends HttpServlet {
 						else
 							e.setTercerizada(false);
 
-						//e.setKilometrosRecorridos(0);
-						//e.setFacturado(false);
-						//e.setValorEstimado((float)Float.parseFloat((String)request.getParameter("valorEstimado")));
-						//e.setDistanciaEstimadaKM((float)Float.parseFloat((String)request.getParameter("distanciaEstimadaKM")));
-
 						DTO_ClienteParticular cliente = new DTO_ClienteParticular();
 						
 						cliente.setNombre((String)request.getParameter("nombreParticular"));
 						cliente.setApellido((String)request.getParameter("apellidoParticular"));
 						cliente.setDni((String)request.getParameter("dniParticular"));
 						e.setCliente(cliente);
-						/*e.setDireccionDestino((String)request.getParameter("direccionDestino"));
-						e.setCodigoPostalDestino((String)request.getParameter("codigoPostalDestino"));
-						e.setLocalidadDestino((String)request.getParameter("localidadDestino"));
-						e.setProvinciaDestino((String)request.getParameter("provinciaDestino"));
-						e.setPaisDestino((String)request.getParameter("paisDestino"));
-						*/
-						Integer factura = WebBusinessDelegate.getInstancia().nuevaEncomiedaParticular(e);
+						
+						e.setDniReceptor((String)request.getParameter("dniReceptor"));
+						e.setNombreReceptor((String)request.getParameter("nombreReceptor"));
+						e.setApellidoReceptor((String)request.getParameter("apellidoReceptor"));
+						Integer idencomienda = WebBusinessDelegate.getInstancia().nuevaEncomiedaParticular(e);
 
 						jspPage = "mostrarMensaje.jsp";
-						request.setAttribute("mensaje", "La encomienda se ha generado correctamente y se a factura con el numero: " + Integer.toString(factura));	
+						request.setAttribute("mensaje", "La encomienda se ha generado correctamente y se le asignó con el numero: " + Integer.toString(idencomienda));	
 					
 					}
 					else
 					{
 						jspPage = "mostrarMensaje.jsp";
-						request.setAttribute("mensaje", "Ha ocurrido un error con la sucursal");	
+						request.setAttribute("mensaje", "Ha ocurrido un error");	
 					}
 				}
 			}

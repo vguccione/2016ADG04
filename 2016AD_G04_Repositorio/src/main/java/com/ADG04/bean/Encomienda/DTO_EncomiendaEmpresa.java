@@ -12,6 +12,8 @@ import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
 public class DTO_EncomiendaEmpresa extends DTO_Encomienda implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+
 	private DTO_ClienteEmpresa empresa;
 
 	public DTO_EncomiendaEmpresa() {

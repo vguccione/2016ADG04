@@ -45,7 +45,7 @@ public class ClienteE implements java.io.Serializable {
 	
 	@Column(name = "Estado", nullable = false)
 	private boolean estado;
-
+	
 	@Column(name = "Email", nullable = false, length = 50)
 	private String email;
 
@@ -123,7 +123,6 @@ public class ClienteE implements java.io.Serializable {
 	}
 
 
-
 	public DTO_Cliente toDTO() {
 		DTO_Cliente cli = new DTO_Cliente();
 		cli.setId(this.getIdCliente());
@@ -131,6 +130,7 @@ public class ClienteE implements java.io.Serializable {
 		cli.setEstado(this.getEstado());
 		cli.setTelefono(this.getTelefono());		
 		cli.setDireccion(this.getDireccion().toDTO());
+		
 		
 		return cli;
 	}

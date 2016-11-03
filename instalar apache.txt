@@ -1,0 +1,14 @@
+Instrucciones apache.
+http://tomcat.apache.org/download-80.cgi
+1- Version 8.0.38 - 32-bit/64-bit Windows Service Installer (pgp, md5, sha1)
+
+
+New Dynamic Web Project.
+Apache Tomcat v8.0
+Dynamic web module version 3.1
+JRE installed
+
+En el proyecto Web, boton derecho -> Deployment Assembly --> Add --> Elegir el proyecto del Repositorio.
+
+Run on Server
+

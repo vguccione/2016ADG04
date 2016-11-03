@@ -20,7 +20,8 @@ public class Cliente{
 	private String telefono;
 	private List <Encomienda> encomiendas;
 	private Direccion direccion;
-
+	private String dni;
+	
 	public Cliente() {
 	}
 
@@ -138,6 +139,15 @@ public class Cliente{
 		
 		return cli;
 	}
+
+
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
 				
 
+	public String getDni(){
+		return this.dni;
+	}
 }

@@ -226,9 +226,13 @@ public class EncomiendaParticular extends Encomienda{
 		}*/
 
 		/*Deberia persistir en cascada*/
-		
-		EncomiendaDao.getInstancia().persist(encomienda);
 
+		try{
+		EncomiendaDao.getInstancia().persist(encomienda);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 //		tx.commit();
 		this.manifiesto.setIdManifiesto(manifiestoE.getIdManifiesto());
 		this.idEncomienda = encomienda.getIdEncomienda();

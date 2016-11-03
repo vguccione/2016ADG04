@@ -178,7 +178,7 @@ public class App
 		cliParticular.setTelefono("1556932544");
 		cliParticular.setDireccion(dir);
 		
-		GestionCliente.getInstancia().altaClienteParticular(cliParticular);
+		//GestionCliente.getInstancia().altaClienteParticular(cliParticular);
     }
 	
 	public static void TestFacturaEncomiendaParticular(){

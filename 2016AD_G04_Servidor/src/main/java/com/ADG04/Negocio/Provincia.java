@@ -17,7 +17,14 @@ import java.util.Set;
 
 
 
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.model.ProvinciaE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
 
@@ -92,5 +99,13 @@ public class Provincia{
 		p.setIdProvincia(prove.getId());
 		p.setPais(new Pais().fromDTO(prove.getPais()));
 		return p;
+	}
+	
+	public void guardar(){
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		ProvinciaDao.getInstancia().persist(this.toEntity());
+		tx.commit();
 	}
 }

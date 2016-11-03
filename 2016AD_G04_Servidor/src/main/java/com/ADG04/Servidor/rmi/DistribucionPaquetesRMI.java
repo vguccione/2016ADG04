@@ -10,11 +10,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.ADG04.Negocio.Cliente;
+import com.ADG04.Negocio.ClienteEmpresa;
+import com.ADG04.Negocio.CuentaCorriente;
 import com.ADG04.Negocio.Direccion;
 import com.ADG04.Negocio.Encomienda;
 import com.ADG04.Negocio.EncomiendaParticular;
-import com.ADG04.Negocio.GestionAdministracion;
-import com.ADG04.Negocio.GestionCliente;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionProveedor;
@@ -25,6 +25,7 @@ import com.ADG04.Negocio.Pais;
 import com.ADG04.Negocio.Producto;
 import com.ADG04.Negocio.Proveedor;
 import com.ADG04.Negocio.Provincia;
+import com.ADG04.Negocio.Rol;
 import com.ADG04.Negocio.ServicioSeguridad;
 import com.ADG04.Negocio.Sucursal;
 import com.ADG04.Negocio.Usuario;
@@ -54,6 +55,7 @@ import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.model.ClienteParticularE;
+import com.ADG04.Servidor.model.CuentaCorrienteE;
 import com.ADG04.Servidor.model.FacturaE;
 import com.ADG04.Servidor.model.PaisE;
 import com.ADG04.Servidor.model.PlanMantenimientoE;
@@ -115,10 +117,16 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	/*Direccion*/
 
 	public void altaUsuario(DTO_Usuario usuario) throws RemoteException {
-		SucursalE suc = (SucursalE) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
-		List<RolE> roles = (List<RolE>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
-	
-		UsuarioE u= new UsuarioE();
+		Sucursal suc = new Sucursal().fromDTO(SucursalDao.getInstancia().getById(usuario.getIdSucursal()).toDTO());
+		
+		List<RolE> rolesE = (List<RolE>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
+		List<Rol> roles = new ArrayList<Rol>();
+		for(RolE rol:rolesE){
+			Rol r = new Rol(rol.getDescripcion());
+			roles.add(r);
+		}
+		
+		Usuario u= new Usuario();
 		u.setNombre(usuario.getNombre());
 		u.setApellido(usuario.getApellido());
 		u.setDni(usuario.getDni());
@@ -129,15 +137,23 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		u.setUsuario(usuario.getNombreUsuario());
 		u.setPassword(usuario.getPassword());
 		
-		GestionAdministracion ga = new GestionAdministracion(u, new SucursalE(), new PaisE(), new ProvinciaE(), new DireccionE());
-		ga.guardarUsuario();
+		u.guardar();
+		
+		
 	}
 
 	public void modificarUsuario(DTO_Usuario usuario) throws RemoteException {
-		SucursalE suc = (SucursalE) SucursalDao.getInstancia().getById(usuario.getIdSucursal());
-		List<RolE> roles = (List<RolE>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
-	
-		UsuarioE u= new UsuarioE();
+		Sucursal suc = new Sucursal().fromDTO(SucursalDao.getInstancia().getById(usuario.getIdSucursal()).toDTO());
+		
+		List<RolE> rolesE = (List<RolE>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
+		List<Rol> roles = new ArrayList<Rol>();
+		for(RolE rol:rolesE){
+			Rol r = new Rol(rol.getDescripcion());
+			roles.add(r);
+		}
+		
+		Usuario u= new Usuario();
+		u.setIdUsuario(usuario.getIdUsuario());
 		u.setNombre(usuario.getNombre());
 		u.setApellido(usuario.getApellido());
 		u.setDni(usuario.getDni());
@@ -145,12 +161,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		u.setFechaCreacion(usuario.getFechaCreacion());
 		u.setSucursal(suc);
 		u.setRoles(roles);
-		u.setIdUsuario(usuario.getIdUsuario());
 		u.setUsuario(usuario.getNombreUsuario());
 		u.setPassword(usuario.getPassword());
 		
-		GestionAdministracion ga = new GestionAdministracion(u, new SucursalE(), new PaisE(), new ProvinciaE(), new DireccionE());
-		ga.modificarUsuario();
+		u.modificar();
 	}
 
 	public void bajaUsuario(Integer idUsuario) throws RemoteException {
@@ -190,17 +204,17 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	
-	public void altaClienteParticular(DTO_ClienteParticular cliente) throws RemoteException {
-		
-		GestionCliente gCliente = GestionCliente.getInstancia();
-		gCliente.altaClienteParticular(cliente);
-		
+	public void altaClienteParticular(DTO_ClienteParticular cliente) throws RemoteException {	
+		Direccion dir = new Direccion().fromDTO(cliente.getDireccion());
+		Cliente cli = new Cliente(true,cliente.getEmail(),cliente.getTelefono(),dir);
+		cli.guardar();
 	}
 
 	
 	public void modificarClienteParticular(DTO_ClienteParticular cliente) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		Direccion dir = new Direccion().fromDTO(cliente.getDireccion());
+		Cliente cli = new Cliente(cliente.getId(),true,cliente.getEmail(),cliente.getTelefono(),dir);
+		cli.modificar();
 	}
 
 	
@@ -231,12 +245,22 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	
 	public List<DTO_ClienteEmpresa> getClientesEmpresa() throws RemoteException {
-		return GestionCliente.getInstancia().getClientesEmpresa();
+		List<ClienteEmpresaE> clientes = ClienteEmpresaDao.getInstancia().listarClientes();
+		List<DTO_ClienteEmpresa> clientesDTO = new ArrayList<DTO_ClienteEmpresa>();
+		for(ClienteEmpresaE cliente : clientes){
+			clientesDTO.add(cliente.toDTO());
+		}
+		return clientesDTO;
 	}
 
 	
 	public List<DTO_ClienteParticular> getClientesParticular() throws RemoteException {
-		return GestionCliente.getInstancia().getClientesParticular();
+		List<ClienteParticularE> clientes = ClienteParticularDao.getInstancia().listarClientes();
+		List<DTO_ClienteParticular> clientesDTO = new ArrayList<DTO_ClienteParticular>();
+		for(ClienteParticularE cliente : clientes){
+			clientesDTO.add(cliente.toDTO());
+		}
+		return clientesDTO;
 	}
 
 	
@@ -592,12 +616,45 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	public void altaClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException{
-		GestionCliente gCliente = GestionCliente.getInstancia();
-		gCliente.altaClienteEmpresa(empresa);
+		Direccion dir = new Direccion().fromDTO(empresa.getDireccion());
+		ClienteEmpresa c = new ClienteEmpresa();
+	
+		c.setCuit(empresa.getCuit());
+		c.setEmail(empresa.getEmail());
+		c.setRazonSocial(empresa.getRazonSocial());
+		c.setEstado(empresa.isEstado());
+		c.setTelefono(empresa.getTelefono());
+		c.setDireccion(dir);
+		
+		CuentaCorriente cc = new CuentaCorriente();
+		cc.setLimiteCredito(empresa.getCuentaCorriente().getLimiteCredito());
+		cc.setCredito(empresa.getCuentaCorriente().getCredito());
+		cc.setFormaPago(empresa.getCuentaCorriente().getFormaPago());
+		
+		c.setCuentaCorrientes(cc);
+		
+		c.guardar();
 	}
+	
 	public void modificarClienteEmpresa(DTO_ClienteEmpresa empresa) throws RemoteException{
-		GestionCliente gCliente = GestionCliente.getInstancia();
-		gCliente.modificarClienteEmpresa(empresa);
+		Direccion dir = new Direccion().fromDTO(empresa.getDireccion());
+		ClienteEmpresa c = new ClienteEmpresa();
+	
+		c.setCuit(empresa.getCuit());
+		c.setEmail(empresa.getEmail());
+		c.setRazonSocial(empresa.getRazonSocial());
+		c.setEstado(empresa.isEstado());
+		c.setTelefono(empresa.getTelefono());
+		c.setDireccion(dir);
+		
+		CuentaCorriente cc = new CuentaCorriente();
+		cc.setLimiteCredito(empresa.getCuentaCorriente().getLimiteCredito());
+		cc.setCredito(empresa.getCuentaCorriente().getCredito());
+		cc.setFormaPago(empresa.getCuentaCorriente().getFormaPago());
+		
+		c.setCuentaCorrientes(cc);
+		
+		c.modificar();
 	}
 	
 	public void altaProveedor(DTO_Proveedor prov) throws RemoteException {
@@ -811,11 +868,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	@Override
 	public void bajaProveedor(Integer idProveedor) throws RemoteException {
-		ProveedorE prov = ProveedorDao.getInstancia().getById(idProveedor);
-		GestionProveedor gp = new GestionProveedor(0, prov.getDireccion(), prov.getActivo(), prov.getCuit(),
-				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
-		
-		gp.remove();
+		ProveedorDao.getInstancia().removeById(idProveedor);
 	}
 
 	@Override

@@ -25,11 +25,13 @@ import java.util.List;
 
 
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.SucursalDao;
+import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.model.DireccionE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
 import com.ADG04.Servidor.model.SucursalE;
@@ -227,6 +229,15 @@ public class Sucursal{
 		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
 		em.getTransaction().begin();
 		SucursalDao.getInstancia().saveOrUpdate(this.toEntity());
+	}
+
+	public Sucursal fromDTO(DTO_Sucursal dto) {
+		Sucursal suc = new Sucursal();
+		suc.setDescripcion(dto.getDescripcion());
+		suc.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
+		suc.setGerente(new Usuario().fromDTO(UsuarioDao.getInstancia().getById(dto.getIdGerente()).toDTO()));
+		suc.setTelefono(dto.getTelefono());
+		return suc;
 	}
 
 }

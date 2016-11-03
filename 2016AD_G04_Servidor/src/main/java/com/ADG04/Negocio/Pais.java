@@ -13,7 +13,14 @@ import java.util.List;
 
 
 
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.model.PaisE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Pais;
 
 public class Pais{
@@ -75,7 +82,14 @@ public class Pais{
 		return p;
 	}
 	
-
+	public void guardar(){
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		PaisDao.getInstancia().persist(this.toEntity());
+		tx.commit();
+	}
+	
 
 	
 }

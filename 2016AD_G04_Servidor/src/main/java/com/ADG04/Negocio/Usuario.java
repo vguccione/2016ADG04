@@ -9,6 +9,19 @@ import java.util.List;
 
 
 
+
+
+
+
+
+import javax.management.relation.Role;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import com.ADG04.Servidor.dao.UsuarioDao;
+import com.ADG04.Servidor.model.RolE;
+import com.ADG04.Servidor.model.UsuarioE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
@@ -180,6 +193,46 @@ public class Usuario{
 		return new Usuario(usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
 				usu.getDni(), usu.getUsuario(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
 		
+	}
+	
+	public UsuarioE toEntity(){
+		UsuarioE usu = new UsuarioE();
+		usu.setApellido(this.apellido);
+		usu.setDni(dni);
+		usu.setFechaCreacion(fechaCreacion);
+		usu.setIdUsuario(idUsuario);
+		usu.setNombre(nombre);
+		usu.setPassword(password);
+		usu.setUltimoAcceso(ultimoAcceso);
+		
+		List<RolE> rolesE = new ArrayList<RolE>();
+		for(Rol r:this.getRoles()){
+			RolE rol = new RolE();
+			rol.setDescripcion(r.getDescripcion());
+			rol.setIdRol(r.getIdRol());
+			rolesE.add(rol);
+		}
+		
+		usu.setRoles(rolesE);
+		usu.setSucursal(sucursal.toEntity());
+		usu.setUsuario(usuario);
+		return usu;
+	}
+	
+	public void guardar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		UsuarioDao.getInstancia().persist(this.toEntity());
+		tx.commit();
+	}
+	
+	public void modificar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();		
+		UsuarioDao.getInstancia().saveOrUpdate(this.toEntity());
+		tx.commit();
 	}
 
 	

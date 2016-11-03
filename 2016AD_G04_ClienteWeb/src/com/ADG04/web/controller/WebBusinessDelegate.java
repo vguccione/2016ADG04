@@ -1,6 +1,7 @@
 package com.ADG04.web.controller;
 import com.ADG04.Repositorio.Interfaces.*;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
@@ -29,18 +30,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes {
+public class WebBusinessDelegate implements InterfazRemotaDistribucionPaquetes {
 	
 	InterfazRemotaDistribucionPaquetes objetoRemoto;
-	private static BusinessDelegate instancia;
+	private static WebBusinessDelegate instancia;
 	
-	private BusinessDelegate() throws Exception{
+	private WebBusinessDelegate() throws Exception{
 		getStub();
 	}
 	
-	public static BusinessDelegate getInstancia() throws Exception{
+	public static WebBusinessDelegate getInstancia() throws Exception{
 		if(instancia==null)
-			instancia = new BusinessDelegate();
+			instancia = new WebBusinessDelegate();
 		return instancia;
 	}
 	
@@ -1070,6 +1071,24 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes {
 	@Override
 	public List<DTO_TareaMantenimientoRealizada> buscarTareasMantenimientoRealizadasPorVehiculo(
 			String filtro) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DTO_Pais> listarPaises() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Pais getPaisByNombre(String pais) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DTO_Provincia getProvByNombre(String prov) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -45,7 +45,7 @@ public class servletCobros extends HttpServlet {
 
 					jspPage = "mostrarMensaje.jsp";
 					
-					numeroRecibo = BusinessDelegate.getInstancia().pagarFacturaClientePaticular(numeroFac);
+					numeroRecibo = WebBusinessDelegate.getInstancia().pagarFacturaClientePaticular(numeroFac);
 					
 					
 					if (numeroRecibo != 0){
@@ -61,7 +61,7 @@ public class servletCobros extends HttpServlet {
 
 					jspPage = "mostrarMensaje.jsp";
 					
-					numeroRecibo = BusinessDelegate.getInstancia().pagarFacturaClienteEmpresa(numeroFac);
+					numeroRecibo = WebBusinessDelegate.getInstancia().pagarFacturaClienteEmpresa(numeroFac);
 					
 					
 					if (numeroRecibo != 0){

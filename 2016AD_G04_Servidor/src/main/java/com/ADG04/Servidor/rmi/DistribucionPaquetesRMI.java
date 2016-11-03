@@ -1373,14 +1373,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	@Override
+
 	public DTO_Vehiculo buscarVehiculoByPatente(String patente) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<DTO_TareaMantenimiento> getTareaMantenimientoByPlan(Integer idPlan)
-			throws RemoteException {
+
+	public List<DTO_TareaMantenimiento> getTareaMantenimientoByPlan(Integer idPlan)	throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}

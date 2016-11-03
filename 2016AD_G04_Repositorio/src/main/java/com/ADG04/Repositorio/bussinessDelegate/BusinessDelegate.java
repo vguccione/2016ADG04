@@ -725,11 +725,26 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.getProvByNombre(prov);
 	}
 
+
 	public Integer nuevaEncomiedaParticular(
 			DTO_EncomiendaParticular encomiendaParticular)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	public void altaTareaMantenimientoRealizada(
+			DTO_TareaMantenimientoRealizada tmr) throws RemoteException{
+		this.businessService.altaTareaMantenimientoRealizada(tmr);	
+	}
+
+	public DTO_Vehiculo buscarVehiculo(String patente) throws RemoteException{
+		return this.businessService.buscarVehiculoByPatente(patente);
+	}
+
+	public List<DTO_TareaMantenimiento> getTareasMantenimiento(Integer idPlan) throws RemoteException{
+		return this.businessService.getTareaMantenimientoByPlan(idPlan);
 	}
 	
 	public void altaPlanMantenimiento(DTO_PlanMantenimiento pm) throws RemoteException{
@@ -744,10 +759,6 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		this.businessService.altaTareaMantenimiento(tpt);	
 	}
 
-	public void altaTareaMantenimientoRealizada(
-			DTO_TareaMantenimientoRealizada tmr) throws RemoteException{
-		this.businessService.altaTareaMantenimientoRealizada(tmr);	
-	}
 
 	public DTO_Vehiculo buscarVehiculoByPatente(String patente) throws RemoteException{
 		return this.businessService.buscarVehiculoByPatente(patente);

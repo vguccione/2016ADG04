@@ -1343,4 +1343,46 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public DTO_Provincia getProvByNombre(String prov) throws RemoteException {
 		return ProvinciaDao.getInstancia().getByNombre(prov).toDTO();
 	}
+
+	@Override
+	public void altaPlanMantenimiento(DTO_PlanMantenimiento pm)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void altaTareaMantenimiento(DTO_TareasPorKilometro tpk)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void altaTareaMantenimiento(DTO_TareasPorTiempo tpt)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void altaTareaMantenimientoRealizada(
+			DTO_TareaMantenimientoRealizada tmr) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+
+	public DTO_Vehiculo buscarVehiculoByPatente(String patente) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+
+	public List<DTO_TareaMantenimiento> getTareaMantenimientoByPlan(Integer idPlan)	throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

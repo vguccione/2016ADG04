@@ -25,4 +25,11 @@ public interface IVehiculo {
 	public DTO_Vehiculo buscarVehiculoById(Integer idVehiculo) throws RemoteException;
 	public DTO_PlanMantenimiento getPlanMantenimiento(Integer id) throws RemoteException;
 	public List<DTO_TareaMantenimientoRealizada> buscarTareasMantenimientoRealizadasPorVehiculo(String filtro) throws RemoteException;
+	public void altaPlanMantenimiento(DTO_PlanMantenimiento pm) throws RemoteException;
+	public void altaTareaMantenimiento(DTO_TareasPorKilometro tpk) throws RemoteException;
+	public void altaTareaMantenimiento(DTO_TareasPorTiempo tpt) throws RemoteException;
+	public void altaTareaMantenimientoRealizada(DTO_TareaMantenimientoRealizada tmr) throws RemoteException;
+	public DTO_Vehiculo buscarVehiculoByPatente(String patente) throws RemoteException;
+	public List<DTO_TareaMantenimiento> getTareaMantenimientoByPlan(Integer idPlan) throws RemoteException;
+	
 }

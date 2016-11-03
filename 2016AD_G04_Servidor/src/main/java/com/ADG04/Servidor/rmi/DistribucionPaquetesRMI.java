@@ -22,13 +22,19 @@ import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Negocio.ItemManifiesto;
 import com.ADG04.Negocio.Manifiesto;
 import com.ADG04.Negocio.Pais;
+import com.ADG04.Negocio.PlanMantenimiento;
 import com.ADG04.Negocio.Producto;
 import com.ADG04.Negocio.Proveedor;
 import com.ADG04.Negocio.Provincia;
 import com.ADG04.Negocio.Rol;
 import com.ADG04.Negocio.ServicioSeguridad;
 import com.ADG04.Negocio.Sucursal;
+import com.ADG04.Negocio.TareaMantenimiento;
+import com.ADG04.Negocio.TareaMantenimientoPorKm;
+import com.ADG04.Negocio.TareaMantenimientoPorTiempo;
+import com.ADG04.Negocio.TareaMantenimientoRealizada;
 import com.ADG04.Negocio.Usuario;
+import com.ADG04.Negocio.Vehiculo;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
@@ -62,6 +68,7 @@ import com.ADG04.Servidor.model.PlanMantenimientoE;
 import com.ADG04.Servidor.model.ProvinciaE;
 import com.ADG04.Servidor.model.RolE;
 import com.ADG04.Servidor.model.SucursalE;
+import com.ADG04.Servidor.model.TareaMantenimientoE;
 import com.ADG04.Servidor.model.TareaMantenimientoRealizadaE;
 import com.ADG04.Servidor.model.TarifasCarrierE;
 import com.ADG04.Servidor.model.CoordenadaE;
@@ -1347,42 +1354,50 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public void altaPlanMantenimiento(DTO_PlanMantenimiento pm)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		PlanMantenimiento plm = new PlanMantenimiento(pm.getDescripcion(), pm.getComentarios());
 		
+		plm.guardar();
 	}
 
 	@Override
 	public void altaTareaMantenimiento(DTO_TareasPorKilometro tpk)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		PlanMantenimiento pm = new PlanMantenimiento().fromDTO(PlanMantenimientoDao.getInstancia().getById(tpk.getIdPlanMantenimiento()).toDTO());
+		TareaMantenimientoPorKm tarea = new TareaMantenimientoPorKm(pm, tpk.getTarea(), tpk.getCantidadKilometros());
 	}
 
 	@Override
 	public void altaTareaMantenimiento(DTO_TareasPorTiempo tpt)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		PlanMantenimiento pm = new PlanMantenimiento().fromDTO(PlanMantenimientoDao.getInstancia().getById(tpt.getIdPlanMantenimiento()).toDTO());
+		TareaMantenimientoPorTiempo tarea = new TareaMantenimientoPorTiempo(pm, tpt.getTarea(), tpt.getCantidadDias());
 	}
 
 	@Override
 	public void altaTareaMantenimientoRealizada(
-			DTO_TareaMantenimientoRealizada tmr) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+			DTO_TareaMantenimientoRealizada tmr) throws RemoteException {		
+		TareaMantenimiento t = new TareaMantenimiento().fromDTO(TareaMantenimientoDao.getInstancia().getById(tmr.getIdTareaMantenimiento()).toDTO());
+		Proveedor prov = new Proveedor().fromDTO(ProveedorDao.getInstancia().getById(tmr.getIdProveedor()).toDTO());
+		Vehiculo veh = new Vehiculo().fromDTO(VehiculoDao.getInstancia().getById(tmr.getIdVehiculo()).toDTO());
+		TareaMantenimientoRealizada tr = new TareaMantenimientoRealizada(t,prov,veh,tmr.getFecha(),tmr.getCantidadKilometros());
+		tr.guardar();
 	}
 
 	@Override
 
 	public DTO_Vehiculo buscarVehiculoByPatente(String patente) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return VehiculoDao.getInstancia().getByPatente(patente).toDTO();
 	}
 
 	@Override
 
 	public List<DTO_TareaMantenimiento> getTareaMantenimientoByPlan(Integer idPlan)	throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		List<TareaMantenimientoE> tareas = TareaMantenimientoDao.getInstancia().getByPlan(idPlan);
+		List<DTO_TareaMantenimiento> tareasDto = new ArrayList<DTO_TareaMantenimiento>();
+	    for(TareaMantenimientoE t : tareas){
+	    	tareasDto.add(t.toDTO());	    		
+	    }
+		return tareasDto;
+		
 	}
 }

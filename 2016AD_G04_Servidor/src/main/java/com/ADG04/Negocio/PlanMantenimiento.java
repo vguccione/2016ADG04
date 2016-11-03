@@ -5,6 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.dao.SucursalDao;
+import com.ADG04.Servidor.model.PlanMantenimientoE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
 
 public class PlanMantenimiento{
@@ -78,5 +84,36 @@ public class PlanMantenimiento{
 		dto.setComentarios(this.getComentarios());
 		dto.setDescripcion(this.getDescripcion());
 		return dto;
+	}
+
+	public PlanMantenimiento fromDTO(DTO_PlanMantenimiento dto) {
+		PlanMantenimiento pm = new PlanMantenimiento();
+		pm.setComentarios(dto.getComentarios());
+		pm.setDescripcion(dto.getDescripcion());
+		pm.setIdPlanMantenimiento(dto.getId());
+		return pm;
+	}
+
+	
+	public void guardar() {	
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		PlanMantenimientoDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();
+	}
+
+	public PlanMantenimientoE toEntity() {
+		PlanMantenimientoE pe = new PlanMantenimientoE();
+		pe.setComentarios(this.comentarios);
+		pe.setDescripcion(descripcion);
+		pe.setIdPlanMantenimiento(this.idPlanMantenimiento);
+		return pe;
+	}
+
+	public void modificar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		PlanMantenimientoDao.getInstancia().saveOrUpdate(this.toEntity());
+		em.getTransaction().commit();
 	}
 }

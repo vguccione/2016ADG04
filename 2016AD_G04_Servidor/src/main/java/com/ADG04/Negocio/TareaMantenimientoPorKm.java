@@ -16,6 +16,12 @@ public class TareaMantenimientoPorKm extends TareaMantenimiento{
 		super(planMantenimiento, tarea);
 	}
 
+	public TareaMantenimientoPorKm(PlanMantenimiento pm, String tarea,
+			float cant) {
+		super(pm, tarea);
+		this.cantidadKilometros=cant;
+	}
+
 	public float getCantidadKilometros() {
 		return this.cantidadKilometros;
 	}

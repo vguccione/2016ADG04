@@ -229,6 +229,7 @@ public class Sucursal{
 		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
 		em.getTransaction().begin();
 		SucursalDao.getInstancia().saveOrUpdate(this.toEntity());
+		em.getTransaction().commit();
 	}
 
 	public Sucursal fromDTO(DTO_Sucursal dto) {

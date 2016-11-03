@@ -220,4 +220,19 @@ public class Proveedor{
 		ProveedorDao.getInstancia().saveOrUpdate(proveedor);
 		em.getTransaction().commit();
 	}
+
+
+	public Proveedor fromDTO(DTO_Proveedor dto) {
+		Proveedor p = new Proveedor();
+		p.setActivo(dto.getActivo());
+		p.setCuit(dto.getCuit());
+		p.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
+		p.setEmail(dto.getEmail());
+		p.setIdProveedor(dto.getId());
+		p.setRazonSocial(dto.getRazonSocial());
+		p.setTallerOficial(dto.isTallerOficial());
+		p.setTelefono(dto.getTelefono());
+		p.setTipo(dto.getTipo());
+		return p;
+	}
 }

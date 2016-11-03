@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.ADG04.Negocio.Cliente;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
@@ -102,6 +103,19 @@ public class VehiculoDao extends GenericDao<VehiculoE, Integer> {
         }catch(Exception e){
                 System.out.println(e);
                 System.out.println("ErrorDAO: Listar vehiculos por modelo, marca o patente");
+        }
+        return null;
+	}
+
+	public VehiculoE getByPatente(String patente) {
+		try{	
+			return (VehiculoE) entityManager
+	                .createQuery("from VehiculoE v where patente= :patente)")
+	                .setParameter("patente", patente)
+	                .getSingleResult();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: buscarVehiculo por patente");
         }
         return null;
 	}

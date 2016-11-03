@@ -15,6 +15,16 @@ import java.util.Date;
 
 
 
+
+
+
+
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.dao.TareaMantenimientoRealizadaDao;
+import com.ADG04.Servidor.model.TareaMantenimientoRealizadaE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 
 public class TareaMantenimientoRealizada{
@@ -38,6 +48,7 @@ public class TareaMantenimientoRealizada{
 		this.cantidadKilometros = cantidadKilometros;
 	}
 	
+
 	public int getIdTareaMantenimientoRealizada() {
 		return this.idTareaMantenimientoRealizada;
 	}
@@ -102,6 +113,24 @@ public class TareaMantenimientoRealizada{
 		dto.setIdVehiculo(this.getVehiculo().getIdVehiculo());
 		dto.setIdTareaMantenimiento(this.getTareaMantenimiento().getIdTareaMantenimiento());
 		return dto;
+	}
+
+	public void guardar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		TareaMantenimientoRealizadaDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();	
+		}
+
+	private TareaMantenimientoRealizadaE toEntity() {
+		TareaMantenimientoRealizadaE tm = new TareaMantenimientoRealizadaE();
+		tm.setCantidadKilometros(cantidadKilometros);
+		tm.setFechaRealizada(fechaRealizada);
+		tm.setIdTareaMantenimientoRealizada(idTareaMantenimientoRealizada);
+		tm.setProveedor(proveedor.toEntity());
+		tm.setTareaMantenimiento(tareaMantenimiento.toEntity());
+		tm.setVehiculo(vehiculo.toEntity());
+		return tm;
 	}
 
 }

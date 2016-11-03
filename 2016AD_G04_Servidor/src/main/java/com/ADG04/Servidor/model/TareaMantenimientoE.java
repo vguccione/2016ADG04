@@ -26,7 +26,7 @@ import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="Tipo",discriminatorType=DiscriminatorType.CHAR) 
 @DiscriminatorValue("c")
-public abstract class TareaMantenimientoE implements java.io.Serializable {
+public class TareaMantenimientoE implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue

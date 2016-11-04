@@ -10,7 +10,9 @@ import javax.swing.*;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.Vista.Administrativos.AltaSucursal;
+import com.ADG04.Vista.Administrativos.AltaUsuario;
 import com.ADG04.Vista.Clientes.AltaClienteEmpresa;
+import com.ADG04.Vista.Clientes.AltaClienteParticular;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
 import com.ADG04.Vista.Listados.ListadoCarriers;
@@ -254,6 +256,18 @@ public class VistaMenu extends javax.swing.JFrame {
 							});
 						}
 						{
+							JMenuItem5 = new JMenuItem();
+							JMenuCliente.add(JMenuItem5);
+							JMenuItem5.setLayout(null);
+							JMenuItem5.setText("Alta Cliente Particular");
+							JMenuItem5.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									AltaClienteParticular inst = new AltaClienteParticular();
+									inst.getFrmAplicacionesDistribuidas().setVisible(true);
+								}
+							});
+						}
+						{
 							JMenuItem6 = new JMenuItem();
 							JMenuCliente.add(JMenuItem6);
 							JMenuItem6.setLayout(null);
@@ -265,41 +279,6 @@ public class VistaMenu extends javax.swing.JFrame {
 						}
 						
 						
-					}
-					{
-						JMenuEmpleado = new JMenu();
-						JMenu4.add(JMenuEmpleado);
-						JMenuEmpleado.setLayout(null);
-						JMenuEmpleado.setText("Empleado");
-						if (roles.contains("ADMINISTRACION")) {
-							JMenuEmpleado.setVisible(true);
-						} else {
-							JMenuEmpleado.setVisible(false);
-						}
-						{
-							JMenuItemAltaEmpleado = new JMenuItem();
-							JMenuEmpleado.add(JMenuItemAltaEmpleado);
-							JMenuItemAltaEmpleado.setText("Alta Empleado");
-							JMenuItemAltaEmpleado.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									/*VistaAltaEmpleado inst = new VistaAltaEmpleado();
-									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
-								}
-							});
-						}
-						{
-							JMenuItemBajaEmpleado = new JMenuItem();
-							JMenuEmpleado.add(JMenuItemBajaEmpleado);
-							JMenuItemBajaEmpleado.setText("Baja Empleado");
-							JMenuItemBajaEmpleado.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									/*VistaBajaEmpleado inst = new VistaBajaEmpleado();
-									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
-								}
-							});
-						}
 					}
 					{
 						JMenuProveedor = new JMenu();
@@ -725,9 +704,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemAltaUsuario.setText("Alta Usuario");
 							JMenuItemAltaUsuario.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaAltaUsuario inst = new VistaAltaUsuario();
+									AltaUsuario inst = new AltaUsuario();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

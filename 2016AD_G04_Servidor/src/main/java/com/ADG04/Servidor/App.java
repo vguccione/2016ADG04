@@ -55,11 +55,25 @@ public class App
 	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-   	
+    	BusinessDelegate bd = new BusinessDelegate();
+    	DTO_Usuario usu = new DTO_Usuario();
+    	usu.setApellido("a");
+    	usu.setNombre("nombre");
+    	usu.setFechaCreacion(new Date());
+    	usu.setIdSucursal(1);
+    	usu.setUsuario("usuario");
+    	usu.setPassword("password");
+    	usu.setDni("12319992");
     	
-    	Sucursal suc = new Sucursal().fromDTO(SucursalDao.getInstancia().getById(2).toDTO());
-    	suc.toString();
+    	List<DTO_Rol> roles = new ArrayList<DTO_Rol>();
+    	roles.add(RolDao.getInstancia().getById(1).toDTO());
     	
+    	usu.setRoles(roles);
+    	Usuario u=new Usuario().fromDTO(usu);
+    	UsuarioE usua = u.toEntity();
+    	
+    	u.guardar();
+ 
     	/*BusinessDelegate bd = new BusinessDelegate();
     	
     	DTO_Vehiculo v = new DTO_Vehiculo();

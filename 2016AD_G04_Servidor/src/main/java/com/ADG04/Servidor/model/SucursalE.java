@@ -209,7 +209,8 @@ public class SucursalE implements java.io.Serializable {
 		s.setDescripcion(this.descripcion);
 		s.setTelefono(this.telefono);
 		s.setDireccion(this.getDireccion().toDTO());
-		s.setIdGerente(this.getGerente().getIdUsuario());
+		if(this.getGerente()!=null)
+			s.setIdGerente(this.getGerente().getIdUsuario());
 		return s;
 	}
 

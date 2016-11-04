@@ -124,56 +124,14 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		super();
 	}
 	
-	/*Direccion*/
 
 	public void altaUsuario(DTO_Usuario usuario) throws RemoteException {
-		Sucursal suc = new Sucursal().fromDTO(SucursalDao.getInstancia().getById(usuario.getIdSucursal()).toDTO());
-		
-		List<RolE> rolesE = (List<RolE>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
-		List<Rol> roles = new ArrayList<Rol>();
-		for(RolE rol:rolesE){
-			Rol r = new Rol(rol.getDescripcion());
-			roles.add(r);
-		}
-		
-		Usuario u= new Usuario();
-		u.setNombre(usuario.getNombre());
-		u.setApellido(usuario.getApellido());
-		u.setDni(usuario.getDni());
-		u.setUltimoAcceso(usuario.getUltimoAcceso());
-		u.setFechaCreacion(usuario.getFechaCreacion());
-		u.setSucursal(suc);
-		u.setRoles(roles);
-		u.setUsuario(usuario.getNombreUsuario());
-		u.setPassword(usuario.getPassword());
-		
-		u.guardar();
-		
-		
+		Usuario u=new Usuario().fromDTO(usuario);
+		u.guardar();	
 	}
 
-	public void modificarUsuario(DTO_Usuario usuario) throws RemoteException {
-		Sucursal suc = new Sucursal().fromDTO(SucursalDao.getInstancia().getById(usuario.getIdSucursal()).toDTO());
-		
-		List<RolE> rolesE = (List<RolE>) RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario.getId()));
-		List<Rol> roles = new ArrayList<Rol>();
-		for(RolE rol:rolesE){
-			Rol r = new Rol(rol.getDescripcion());
-			roles.add(r);
-		}
-		
-		Usuario u= new Usuario();
-		u.setIdUsuario(usuario.getIdUsuario());
-		u.setNombre(usuario.getNombre());
-		u.setApellido(usuario.getApellido());
-		u.setDni(usuario.getDni());
-		u.setUltimoAcceso(usuario.getUltimoAcceso());
-		u.setFechaCreacion(usuario.getFechaCreacion());
-		u.setSucursal(suc);
-		u.setRoles(roles);
-		u.setUsuario(usuario.getNombreUsuario());
-		u.setPassword(usuario.getPassword());
-		
+	public void modificarUsuario(DTO_Usuario usuario) throws RemoteException {	
+		Usuario u=new Usuario().fromDTO(usuario);
 		u.modificar();
 	}
 
@@ -190,17 +148,13 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
-		Usuario usu = new Usuario().fromDTO(UsuarioDao.getInstancia().getById(sucursal.getIdGerente()).toDTO());	
-		Direccion dir = new Direccion().fromDTO(sucursal.getDireccion());
-		Sucursal suc = new Sucursal(sucursal.getDescripcion(), sucursal.getTelefono(),usu, dir);
+		Sucursal suc = new Sucursal().fromDTO(sucursal);
 		suc.guardar();
 	}
 
 	
 	public void modificarSucursal(DTO_Sucursal sucursal) throws RemoteException {
-		Usuario usu = new Usuario().fromDTO(UsuarioDao.getInstancia().getById(sucursal.getIdGerente()).toDTO());
-		Direccion dir = new Direccion().fromDTO(sucursal.getDireccion());
-		Sucursal suc = new Sucursal(sucursal.getDescripcion(), sucursal.getTelefono(),usu, dir);
+		Sucursal suc = new Sucursal().fromDTO(sucursal);
 		suc.modificar();
 	}
 

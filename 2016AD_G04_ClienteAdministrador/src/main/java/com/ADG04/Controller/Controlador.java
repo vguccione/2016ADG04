@@ -69,20 +69,20 @@ public class Controlador {
 				 return null;
 		}
 		catch (RemoteException e) {
-     	 System.out.println(e);
+     	 e.printStackTrace();
          System.out.println("Error al validar usuario");
 		}  
 		return null;
 	}
 	
 	public List<String> buscarRolesUsuario(int codigo){
-		 try {
-       	 return bd.buscarRolesUsuario(codigo);
-        } catch (RemoteException e) {
-       	 System.out.println(e);
-            System.out.println("Error al buscar roles de usuario");
-        }   
-        return null;
+		try {
+			 return bd.buscarRolesUsuario(codigo);
+	    } catch (RemoteException e) {
+	   	 	System.out.println(e);
+	        System.out.println("Error al buscar roles de usuario");
+	    }   
+	    return null;
 	 }
 
 	public List<DTO_ClienteParticular> listarClientes() {
@@ -545,11 +545,6 @@ public class Controlador {
 		return null;
 	}
 
-	public boolean altaSucursal(String text, String text2, String string,
-			String text3, String text4, String text5, DTO_Usuario gerente) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public List<DTO_Provincia> listarProvincias(String pais) {
 		try{
@@ -894,6 +889,39 @@ public class Controlador {
 	            System.out.println("Error al listar tareas por plan");
 	        }   
 	        return null;
+	}
+
+	public List<DTO_Rol> listarRoles() {
+		try{
+			return bd.listarRoles();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al listar roles");
+		}
+		return null;
+	}
+
+	public boolean altaUsuario(String nombre, String apellido, String dni, String usuario, String password, Date fecha, DTO_Sucursal suc, List<DTO_Rol> roles) {
+		try{
+			DTO_Usuario usu = new DTO_Usuario();
+			usu.setApellido(apellido);
+			usu.setIdSucursal(suc.getId());
+			usu.setNombre(nombre);
+			usu.setPassword(password);
+			usu.setUsuario(usuario);
+			usu.setFechaCreacion(fecha);
+			usu.setRoles(roles);
+			usu.setDni(dni);
+			
+			bd.altaUsuario(usu);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al dar de alta un usuario");
+		}
+		return false;
 	}
 
 

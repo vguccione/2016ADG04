@@ -25,7 +25,7 @@ public class Servidor extends Thread {
              try {
                  LocateRegistry.createRegistry(1099);    
                  objetoRemoto = new DistribucionPaquetesRMI();
-                 System.setProperty("java.rmi.server.hostname","192.168.1.105");
+                 System.setProperty("java.rmi.server.hostname","192.168.1.131");
                  //Vincula el objeto con un nombre en el registry
                  Naming.rebind (InterfazRemotaDistribucionPaquetes.url, objetoRemoto);
                  System.out.println("Servidor inicializado correctamente...");

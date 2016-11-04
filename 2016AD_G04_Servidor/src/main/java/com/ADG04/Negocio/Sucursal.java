@@ -209,6 +209,7 @@ public class Sucursal{
 	
 	public SucursalE toEntity(){
 		SucursalE suc = new SucursalE(this.idSucursal, this.descripcion, this.telefono);
+		suc.setGerente(this.gerente.toEntity());
 		DireccionE dir = new DireccionE(this.getDireccion().getPais().toEntity(), this.getDireccion().getProvincia().toEntity(), 
 				this.getDireccion().getCalle(),this.getDireccion().getNro(), this.getDireccion().getLocalidad(),
 				this.getDireccion().getCodigoPostal());

@@ -7,12 +7,12 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
-            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="hibernate.connection.username" value="sa"/>
-            <property name="hibernate.connection.password" value="admin"/>
-            <property name="hibernate.connection.url" value="jdbc:sqlserver://LAPTOP-9BV4DK3P\SQLEXPRESS;databaseName=AD2016_new"/>
+            <property name="hibernate.connection.password" value="sqlserver"/>
+            <property name="hibernate.connection.url" value="jdbc:sqlserver://127.0.0.1;databaseName=distribucionPaquetes"/>
         </properties>
     </persistence-unit>
 </persistence>

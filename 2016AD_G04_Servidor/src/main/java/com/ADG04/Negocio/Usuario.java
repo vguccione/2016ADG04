@@ -14,21 +14,27 @@ import java.util.List;
 
 
 
+
+
+
 import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import com.ADG04.Servidor.dao.RolDao;
+import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.model.RolE;
 import com.ADG04.Servidor.model.UsuarioE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Rol;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
 public class Usuario{
 
 	private int idUsuario;
-	private Sucursal sucursal;
+	private int idSucursal;
 	private Rol rolUsuario;
 	private String nombre;
 	private String apellido;
@@ -42,10 +48,11 @@ public class Usuario{
 	public Usuario() {
 	}
 
-	public Usuario(Sucursal sucursal, String nombre, String apellido, String usuario,
+	public Usuario(int idSucursal, int idUsuario, String nombre, String apellido, String usuario,
 			String dni, String password, Date ultimoAcceso, Date fechaCreacion) {
 		super();
-		this.sucursal = sucursal;
+		this.idSucursal = idSucursal;
+		this.idUsuario = idUsuario;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.usuario = usuario;
@@ -56,20 +63,6 @@ public class Usuario{
 	}
 
 	
-	public Usuario(int idUsuario, String nombre, String apellido, String dni,
-			String usuario, String password, Date ultimoAcceso,
-			Date fechaCreacion) {
-		super();
-		this.idUsuario = idUsuario;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.dni = dni;
-		this.usuario = usuario;
-		this.password = password;
-		this.ultimoAcceso = ultimoAcceso;
-		this.fechaCreacion = fechaCreacion;
-	}
-
 	public int getIdUsuario() {
 		return this.idUsuario;
 	}
@@ -87,12 +80,14 @@ public class Usuario{
 		this.usuario = usuario;
 	}
 
-	public Sucursal getSucursal() {
-		return this.sucursal;
+	
+
+	public int getIdSucursal() {
+		return idSucursal;
 	}
 
-	public void setSucursal(Sucursal sucursal) {
-		this.sucursal = sucursal;
+	public void setIdSucursal(int idSucursal) {
+		this.idSucursal = idSucursal;
 	}
 
 	public Rol getRolUsuario() {
@@ -153,7 +148,7 @@ public class Usuario{
 
 	@Override
 	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", sucursal=" + sucursal
+		return "Usuario [idUsuario=" + idUsuario + ", sucursal=" + idSucursal
 				+ ", nombre=" + nombre + ", apellido=" + apellido + ", dni="
 				+ dni + ", password=" + password + ", ultimoAcceso="
 				+ ultimoAcceso + ", fechaCreacion=" + fechaCreacion + "]";
@@ -175,11 +170,11 @@ public class Usuario{
 		u.setNombre(this.getNombre());
 		u.setApellido(this.getApellido());
 		u.setPassword(this.getPassword());
-		u.setUsuario(this.getUsuario());
 		u.setFechaCreacion(this.getFechaCreacion());
 		u.setUltimoAcceso(this.getUltimoAcceso());
 		u.setIdUsuario(this.getIdUsuario());
-		u.setIdSucursal(this.sucursal.getIdSucursal());
+		u.setIdSucursal(this.getIdSucursal());
+		u.setUsuario(this.getUsuario());
 		List<DTO_Rol> roles = new ArrayList<DTO_Rol>();
 		for(Rol r: this.getRoles()){
 			roles.add(r.toDTO());
@@ -190,9 +185,19 @@ public class Usuario{
 	}
 	
 	public Usuario fromDTO(DTO_Usuario usu){
-		return new Usuario(usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
-				usu.getDni(), usu.getUsuario(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
+		Usuario usuario =new Usuario(usu.getIdSucursal(), usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
+				 usu.getUsuario(),usu.getDni(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
 		
+		List<Rol> roles = new ArrayList<Rol>();
+		for(DTO_Rol r: usu.getRoles()){
+			Rol rol = new Rol();
+			rol.setDescripcion(r.getdescripcion());
+			rol.setIdRol(r.getId());
+			roles.add(rol);
+		}
+		usuario.setRoles(roles);
+		
+		return usuario;
 	}
 	
 	public UsuarioE toEntity(){
@@ -201,21 +206,19 @@ public class Usuario{
 		usu.setDni(dni);
 		usu.setFechaCreacion(fechaCreacion);
 		usu.setIdUsuario(idUsuario);
+		usu.setUsuario(this.usuario);
 		usu.setNombre(nombre);
 		usu.setPassword(password);
+		usu.setSucursal(SucursalDao.getInstancia().getById(this.getIdSucursal()));
 		usu.setUltimoAcceso(ultimoAcceso);
 		
 		List<RolE> rolesE = new ArrayList<RolE>();
 		for(Rol r:this.getRoles()){
-			RolE rol = new RolE();
-			rol.setDescripcion(r.getDescripcion());
-			rol.setIdRol(r.getIdRol());
+			RolE rol = RolDao.getInstancia().getById(r.getIdRol());
 			rolesE.add(rol);
 		}
 		
 		usu.setRoles(rolesE);
-		usu.setSucursal(sucursal.toEntity());
-		usu.setUsuario(usuario);
 		return usu;
 	}
 	

@@ -236,7 +236,9 @@ public class Sucursal{
 		Sucursal suc = new Sucursal();
 		suc.setDescripcion(dto.getDescripcion());
 		suc.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
-		suc.setGerente(new Usuario().fromDTO(UsuarioDao.getInstancia().getById(dto.getIdGerente()).toDTO()));
+		if(dto.getIdGerente()!=null){
+			suc.setGerente(new Usuario().fromDTO(UsuarioDao.getInstancia().getById(dto.getIdGerente()).toDTO()));
+		}
 		suc.setTelefono(dto.getTelefono());
 		return suc;
 	}

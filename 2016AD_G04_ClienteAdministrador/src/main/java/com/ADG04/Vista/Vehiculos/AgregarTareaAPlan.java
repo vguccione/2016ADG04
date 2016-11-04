@@ -72,8 +72,7 @@ public class AgregarTareaAPlan {
 		frame.setBounds(100, 100, 509, 329);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.setTitle("Aplicaciones Distribuidas - TPO Grupo: 10");
-		frame.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("images/box.png")).getImage());
+		frame.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 		
 		
 		JLabel titulo = new JLabel("Agregar Tarea Mantenimiento");
@@ -117,12 +116,12 @@ public class AgregarTareaAPlan {
 		panel.add(btnBuscar);
 		
 		id = new JFormattedTextField();
-		id.setBounds(77, 27, 59, 20);
+		id.setBounds(87, 27, 59, 20);
 		id.setValue(new Integer(0));
 		panel.add(id);
 		
 		cliente = new JLabel("");
-		cliente.setBounds(239, 30, 215, 14);
+		cliente.setBounds(279, 30, 215, 14);
 		panel.add(cliente);
 		
 		panel_1 = new JPanel();
@@ -156,7 +155,7 @@ public class AgregarTareaAPlan {
 		
 		cantidad = new JFormattedTextField();
 		cantidad.setBounds(94, 82, 109, 20);
-		cantidad.setValue(new Float(0));
+		cantidad.setValue(0f);
 		panel_1.add(cantidad);
 		
 		final
@@ -186,9 +185,9 @@ public class AgregarTareaAPlan {
 				boolean flag = false;
 				if (validacion()) {
 					if (tipo.getSelectedItem().toString().equals("Kilometros")){
-						flag = Controlador.getInstancia().altaTareaMantenimientoKilometro(clienteDTO.getId(), tarea.getText(), (float)Integer.valueOf((String) cantidad.getValue()));
+						flag = Controlador.getInstancia().altaTareaMantenimientoKilometro(clienteDTO.getId(), tarea.getText(), (Float) cantidad.getValue());
 					} else {
-						flag = Controlador.getInstancia().altaTareaMantenimientoTiempo(clienteDTO.getId(),tarea.getText(), Integer.valueOf((String) cantidad.getValue()));
+						flag = Controlador.getInstancia().altaTareaMantenimientoTiempo(clienteDTO.getId(),tarea.getText(), (Float)cantidad.getValue());
 					}
 						if(flag){
 							JOptionPane.showMessageDialog(null,"Se ha dado de alta la tarea:", "Alta tarea de mantenimiento", JOptionPane.INFORMATION_MESSAGE);
@@ -204,12 +203,12 @@ public class AgregarTareaAPlan {
 public boolean validacion(){
 		
 		if(tarea.getText().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese la tarea.", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese la tarea.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			tarea.requestFocus();
 			return false;
 			
 		} else if(cantidad.getText().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese la cantidad.", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese la cantidad.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			tarea.requestFocus();
 			return false;
 			

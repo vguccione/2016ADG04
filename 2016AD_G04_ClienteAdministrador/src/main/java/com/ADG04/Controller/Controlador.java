@@ -839,10 +839,10 @@ public class Controlador {
 	}
 
 	public boolean altaTareaMantenimientoTiempo(Integer plan, String tarea,
-			int cantDias) {
+			Float  cant) {
 		try{
 			DTO_TareasPorTiempo tpt = new DTO_TareasPorTiempo();
-			tpt.setCantidadDias(cantDias);
+			tpt.setCantidadDias(Math.round(cant));
 			tpt.setIdPlanMantenimiento(plan);
 			tpt.setTarea(tarea);
 			
@@ -869,7 +869,8 @@ public class Controlador {
 			return true;
 		}
 		catch(Exception e){
-			
+			e.printStackTrace();
+			System.out.println("No se puede cargar tarea realizada");
 		}
 		return false;
 	}

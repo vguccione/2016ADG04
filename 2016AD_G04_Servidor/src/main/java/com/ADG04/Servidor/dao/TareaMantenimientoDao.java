@@ -36,7 +36,7 @@ public class TareaMantenimientoDao extends GenericDao<TareaMantenimientoE, Integ
 	public List<TareaMantenimientoE> getByPlan(Integer idPlan) {
 		try{	
 			return  entityManager
-	                .createQuery("from TareaMantenimientoE t where t.planMantenimiento.idPlan=:id)")
+	                .createQuery("from TareaMantenimientoE t where t.planMantenimiento.idPlanMantenimiento=:id)")
 	                .setParameter("id", idPlan)
 	                .getResultList();
         }catch(Exception e){

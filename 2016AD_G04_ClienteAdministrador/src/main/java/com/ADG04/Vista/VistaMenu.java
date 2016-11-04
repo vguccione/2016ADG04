@@ -34,7 +34,10 @@ import com.ADG04.Vista.Listados.ListadoTarifasCarriers;
 import com.ADG04.Vista.Listados.ListadoUsuarios;
 import com.ADG04.Vista.Listados.ListadoVehiculos;
 import com.ADG04.Vista.Proveedores.AltaProveedor;
+import com.ADG04.Vista.Vehiculos.AgregarTareaAPlan;
+import com.ADG04.Vista.Vehiculos.AltaPlanMantenimiento;
 import com.ADG04.Vista.Vehiculos.AltaVehiculo;
+import com.ADG04.Vista.Vehiculos.RegistrarTareaRealizada;
 import com.ADG04.bean.Administracion.DTO_Rol;
 
 
@@ -651,9 +654,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemAltaPlanMantenimiento.setText("Alta Plan Mantenimiento");
 								JMenuItemAltaPlanMantenimiento.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-									/*	VistaAltaPlanMantenimiento inst = new VistaAltaPlanMantenimiento();
+										AltaPlanMantenimiento inst = new AltaPlanMantenimiento();
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
 									}
 								});
 							}
@@ -679,9 +682,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemAgregarTarea.setText("Agregar Tarea Mantenimiento");
 								JMenuItemAgregarTarea.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaAgregarTareaAPlan inst = new VistaAgregarTareaAPlan();
+										AgregarTareaAPlan inst = new AgregarTareaAPlan();
 										inst.getFrame().setLocationRelativeTo(null);
-										inst.getFrame().setVisible(true);*/
+										inst.getFrame().setVisible(true);
 									}
 								});
 							}
@@ -696,9 +699,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemRealizarMantenimiento.setText("Realizar Mantenimiento");
 							JMenuItemRealizarMantenimiento.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaRegistrarTareaRealizada inst = new VistaRegistrarTareaRealizada();
+									RegistrarTareaRealizada inst = new RegistrarTareaRealizada();
 									inst.getFrame().setLocationRelativeTo(null);
-									inst.getFrame().setVisible(true);*/
+									inst.getFrame().setVisible(true);
 								}
 							});
 						

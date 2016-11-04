@@ -37,7 +37,7 @@ import com.ADG04.bean.Vehiculo.*;
 public class App 
 {
 
-	public static void main(String[] args) throws IOException {
+/*	public static void main(String[] args) throws IOException {
 		
 		try {
 		//	TestEncomienda();
@@ -49,11 +49,15 @@ public class App
 		finally{
 			System.exit(1);
 		}
-	}
+	}*/
 	
-    public static void main2( String[] args ) throws IOException, NotBoundException
+    public static void main( String[] args ) throws IOException, NotBoundException
     {
    	
+    	
+    	Sucursal suc = new Sucursal().fromDTO(SucursalDao.getInstancia().getById(2).toDTO());
+    	suc.toString();
+    	
     	/*BusinessDelegate bd = new BusinessDelegate();
     	
     	DTO_Vehiculo v = new DTO_Vehiculo();
@@ -100,7 +104,7 @@ public class App
     	suc.setTelefono("123132");
     	
    	bd.altaSucursal(suc);
-   */
+   
     DTO_Proveedor p = new DTO_Proveedor();
     p.setActivo("1");
     p.setRazonSocial("RAZON");
@@ -121,7 +125,7 @@ public class App
     
     BusinessDelegate bd = new BusinessDelegate();
     bd.altaProveedor(p);
-    	
+   */ 	
    
 	//testControlViajes();
      	//VehiculosTest.TestVehiculos();

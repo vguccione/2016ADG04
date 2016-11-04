@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ADG04.Repositorio.Exceptions.BusinessException;
+import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
@@ -37,9 +39,11 @@ public class ServletEncomiendaParticular extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String action = request.getParameter("action");
+		String jspPage = "mostrarMensaje.jsp";
+		
 		try { 	
-			String action = request.getParameter("action");
-			String jspPage = "mostrarMensaje.jsp";
 				
 			if ((action==null) || (action.length() < 1) )
 			{
@@ -117,11 +121,12 @@ public class ServletEncomiendaParticular extends HttpServlet {
 						e.setDniReceptor((String)request.getParameter("dniReceptor"));
 						e.setNombreReceptor((String)request.getParameter("nombreReceptor"));
 						e.setApellidoReceptor((String)request.getParameter("apellidoReceptor"));
+						
 						Integer idencomienda = WebBusinessDelegate.getInstancia().nuevaEncomiedaParticular(e);
 
 						jspPage = "mostrarMensaje.jsp";
 						request.setAttribute("mensaje", "La encomienda se ha generado correctamente y se le asignó con el numero: " + Integer.toString(idencomienda));	
-					
+		
 					}
 					else
 					{
@@ -133,8 +138,15 @@ public class ServletEncomiendaParticular extends HttpServlet {
 	
 			dispatch(jspPage, request, response);
 		
-		} catch (Exception e) {
+		}
+		catch(BusinessException cEx){
+			jspPage = "mostrarMensaje.jsp";
+			request.setAttribute("mensaje", cEx.getMessage());	
+		}
+		catch (Exception e) {
 			e.printStackTrace();
+			jspPage = "mostrarMensaje.jsp";
+			request.setAttribute("mensaje", "Ha ocurrido un error");
 		}
 	}
 	

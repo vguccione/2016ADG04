@@ -16,6 +16,8 @@ import javax.persistence.EntityTransaction;
 import org.hibernate.type.descriptor.java.UUIDTypeDescriptor.ToStringTransformer;
 
 import com.ADG04.Negocio.*;
+import com.ADG04.Repositorio.Exceptions.BusinessException;
+import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
 import com.ADG04.Servidor.dao.*;
 import com.ADG04.Servidor.model.*;
@@ -195,7 +197,7 @@ public class App
 	}
 	
 	public static Integer TestEncomienda(int idSucursalOrigen, int idSucursalDestino, String dniCliente, int nmro, float alto
-			,float peso, float volumen, float carga, int dias, float largo, float ancho) throws RemoteException{
+			,float peso, float volumen, float carga, int dias, float largo, float ancho) throws RemoteException, BusinessException{
 		
 		int idCliente = ClienteDao.getInstancia().getByDni(dniCliente).getIdCliente();
 		
@@ -277,7 +279,7 @@ public class App
 		return idEncomienda;
     }
     
-	public static void testControlViajes() throws IOException{	
+	public static void testControlViajes() throws IOException, BusinessException{	
 
 		//Creo una encomienda particular
 		System.out.println("Crear encomienda");
@@ -381,7 +383,7 @@ public class App
 		sigueElTest();
 	}
 	
-	private static void sigueElTest() throws IOException {
+	private static void sigueElTest() throws IOException, BusinessException {
 
 		System.out.println("----------------Otra encomienda---------------------");
 		int idEncomienda = TestEncomienda(1,2,"34242342",100,100f,430f,100f,0f,10, 123, 123);
@@ -506,7 +508,7 @@ public class App
 	/*
 	 * Test varias encomiendas y tratar de asignarlas a envios.
 	 */
-	public static void testAsignarEnvios() throws IOException{
+	public static void testAsignarEnvios() throws IOException, BusinessException{
 		
 		/*encomienda con 70% peso de posible vehiculo 1 (unico con tareas de mantenimiento realizadas) */
 				
@@ -773,7 +775,7 @@ public class App
 	 * Fecha de recepcion: hoy + días por parámtro.
 	 */
 	public static EncomiendaE testEncomienda(int idSucursalOrigen, int idSucursalDestino, int idCliente, int nmro, float alto
-			,float peso, float volumen, float carga, int dias) throws RemoteException{
+			,float peso, float volumen, float carga, int dias) throws RemoteException, BusinessException{
 				
 		float nro = nmro;
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();

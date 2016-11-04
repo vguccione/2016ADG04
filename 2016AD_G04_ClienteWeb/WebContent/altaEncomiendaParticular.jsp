@@ -85,7 +85,6 @@ $(document).ready(function() {
 	  		});
 	  		
 	  		$("#menu_new_encom_particular").on("click",function(){
-				alert("pepe");
 	  			$("#divTodo").load("altaEncomiendaParticular.jsp");
 	  		});
 	  		
@@ -116,9 +115,26 @@ $(document).ready(function() {
 		 			}
 		 		}
 		 	});
-		  
+
+			  //buscar cliente
+			  /*$("#btnBuscarCliente").on("click",function(){
+				  alert('epepepep');
+	              $.get("ServletBuscarCliente", function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+	                  $("#divBuscarCliente").text(responseText);           // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+	              });
+		  		});
+			  */
+
 	   
 }); //document ready
+
+function findClient(){
+	alert('findClient');
+	$.get("ServletBuscarCliente", function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+        $("#divBuscarCliente").text(responseText);           // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+    });
+}
+
 
 </script>
 <!-- Timepicker -->
@@ -152,7 +168,7 @@ $(document).ready(function() {
         					<li class="parent">
         						<a class="parent" href="#"> ENCOMIENDA</a>
         							<ul class="sub-menu">
-        									<li><a id="menu_new_encom_particular" href="http://localhost:8080/2016AD_G04_ClienteWeb/altaEncomiendaParticular.jsp">Nuevabb Encomienda Particular</a></li>
+        									<li><a id="menu_new_encom_particular">Nueva Encomienda Particular</a></li>
         									<li><a id="menu_new_encom_empresa">Nueva Encomienda Empresa</a></li>
         							</ul>
         					</li>
@@ -224,8 +240,21 @@ $(document).ready(function() {
 <form action="serveletEncomiendaParticular?action=altaEncomiendaParticular" method="post" name="frm_idEncomienda" class="form-style-2">
 <ul>
 
-	<li><label>ID Sucursal de origen:</label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value="<%=sucursal%>"/></li>
-	<li><label>ID Sucursal de destino:</label><input name="idSucursalDestino" type="text" class="input-field" id="idSucursalDestino" /></li>
+
+  <label>Datos del Cliente</label>
+	<!--Sólo se ve si es Particular --> 
+    <fieldset>
+    <ul>
+		<li><label>DNI de particular:</label><input class="input-field" name="dniParticular" type="text" id="dniParticular" maxlength="10" /></li>
+		              <!-- <button id="btnBuscarCliente" onclick="findClient()">Buscar Cliente</button>
+        				<div id="divBuscarCliente"></div> -->
+		<!-- <li><label>Nombre del particular:</label><input class="input-field" name="nombreParticular" type="text" id="nombreParticular" maxlength="50" /></li>
+		<li><label>Apellido del particular:</label><input class="input-field" name="apellidoParticular" type="text" id="apellidoParticular" maxlength="50" /></li>-->
+    </ul></fieldset>
+	
+
+	<li><label>Código Sucursal de origen:</label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value="<%=sucursal%>"/></li>
+	<li><label>Código Sucursal de destino:</label><input name="idSucursalDestino" type="text" class="input-field" id="idSucursalDestino" /></li>
 	
  	<br/>
  	
@@ -254,16 +283,6 @@ $(document).ready(function() {
        			<label class="input-radio-field"><input type="radio" name="tercerizado" value="false" id="tercerizado" />No</label></li>
     
 </ul>
-
-
-
-  <label>Datos del Cliente</label>
-<!--Sólo se ve si es Particular --> 
-    <fieldset><ul>
-				<li><label>DNI de particular:</label><input class="input-field" name="dniParticular" type="text" id="dniParticular" maxlength="10" /></li>
-				<li><label>Nombre del particular:</label><input class="input-field" name="nombreParticular" type="text" id="nombreParticular" maxlength="50" /></li>
- 				<li><label>Apellido del particular:</label><input class="input-field" name="apellidoParticular" type="text" id="apellidoParticular" maxlength="50" /></li>
-    </ul></fieldset>
 
 <label>Datos del Receptor</label>
 <!--Sólo se ve si es Particular --> 

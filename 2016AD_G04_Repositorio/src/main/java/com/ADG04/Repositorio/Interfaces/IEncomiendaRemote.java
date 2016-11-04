@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
+import com.ADG04.Repositorio.Exceptions.BusinessException;
+import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Cliente.DTO_Producto;
@@ -30,7 +32,7 @@ public interface IEncomiendaRemote {
 					throws RemoteException;
 */
 
-	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException;
+	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException, BusinessException;
 	
 	public void nuevaEncomiedaEmpresa(
 			String dniCliente, 

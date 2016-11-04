@@ -1,4 +1,6 @@
 package com.ADG04.web.controller;
+import com.ADG04.Repositorio.Exceptions.BusinessException;
+import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
 import com.ADG04.Repositorio.Interfaces.*;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
@@ -733,7 +735,7 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 		
 	}
 
-	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException {
+	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException, BusinessException {
 		return objetoRemoto.nuevaEncomiedaParticular(encomiendaParticular);
 	}
 

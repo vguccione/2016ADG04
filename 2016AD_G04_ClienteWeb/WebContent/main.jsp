@@ -76,7 +76,6 @@ $(document).ready(function() {
 	  		});
 	  		
 	  		$("#menu_new_encom_particular").on("click",function(){
-				alert("pepe");
 	  			$("#divTodo").load("altaEncomiendaParticular.jsp");
 	  		});
 	  		
@@ -149,7 +148,7 @@ console.log("js complete");;
         					<li class="parent">
         						<a class="parent" href="#"> ENCOMIENDA</a>
         							<ul class="sub-menu">
-        									<li><a id="menu_new_encom_particular">Nuevaaaddddddddd Encomienda Particular</a></li>
+        									<li><a id="menu_new_encom_particular">Nueva Encomienda Particular</a></li>
         									<li><a id="menu_new_encom_empresa">Nueva Encomienda Empresa</a></li>
         									<li><a id="menu_ingreso_encom_stock_empresa">Ingresar Encomienda al stock</a>
         									<li><a id="menu_egresar_encom_stock_empresa">Egresar Encomienda del stock</a>

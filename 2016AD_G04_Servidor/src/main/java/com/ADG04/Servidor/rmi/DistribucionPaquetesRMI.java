@@ -35,6 +35,9 @@ import com.ADG04.Negocio.TareaMantenimientoPorTiempo;
 import com.ADG04.Negocio.TareaMantenimientoRealizada;
 import com.ADG04.Negocio.Usuario;
 import com.ADG04.Negocio.Vehiculo;
+import com.ADG04.Repositorio.Exceptions.BusinessException;
+import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
+import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteEmpresaDao;
@@ -417,7 +420,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		return null;
 	}
 
-	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encP) {
+	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encP) throws BusinessException {
 		
 		//Cuando creo la encomienda, la sucursal actual es la misma que la de origen
 		Sucursal sucursalActual = new Sucursal();
@@ -436,6 +439,16 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		//direccionOrigen.setIdDireccion(encP.getDireccionOrigen().getIdDireccion());
 
 		ClienteParticularE cliE = (ClienteParticularE)ClienteDao.getInstancia().getByDni(encP.getCliente().getDni());
+		
+		if(sucursalActual == null)
+			throw new SucursalNotFoundException(encP.getSucursalActual().getId());
+		if(sucursalOrigen == null)
+			throw new SucursalNotFoundException(encP.getSucursalOrigen().getId());
+		if(sucursalDestino == null)
+			throw new SucursalNotFoundException(encP.getSucursalDestino().getId());
+		if(cliE == null)
+			throw new ClientNotFoundException();
+		
 		Cliente cliente = new Cliente();
 		cliente.setIdCliente(cliE.getIdCliente());
 		cliente.setDni(cliE.getDni());

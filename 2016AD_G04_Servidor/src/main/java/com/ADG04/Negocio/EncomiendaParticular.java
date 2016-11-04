@@ -12,6 +12,9 @@ import javax.persistence.EntityTransaction;
 
 import org.hibernate.property.Getter;
 
+import com.ADG04.Repositorio.Exceptions.BusinessException;
+import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
+import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
 import com.ADG04.Servidor.dao.*;
 import com.ADG04.Servidor.model.*;
 import com.ADG04.Servidor.util.EncomiendaEstado;
@@ -117,13 +120,23 @@ public class EncomiendaParticular extends Encomienda{
 		return dto;
 	}
 
-	public Integer saveOrUpdate() {
+	public Integer saveOrUpdate() throws BusinessException {
 		
 		SucursalE actual = SucursalDao.getInstancia().getById(this.getSucursalActual().getIdSucursal());
 		SucursalE origen = SucursalDao.getInstancia().getById(this.getSucursalOrigen().getIdSucursal());
 		SucursalE destino = SucursalDao.getInstancia().getById(this.getSucursalDestino().getIdSucursal());
 		ClienteE cli = ClienteParticularDao.getInstancia().getById(this.getCliente().getIdCliente());
-				
+		
+		if(actual == null)
+			throw new SucursalNotFoundException(this.getSucursalActual().getIdSucursal());
+		if(origen == null)
+			throw new SucursalNotFoundException(this.getSucursalOrigen().getIdSucursal());
+		if(destino == null)
+			throw new SucursalNotFoundException(this.getSucursalDestino().getIdSucursal());
+		if(cli == null)
+			throw new ClientNotFoundException();
+		
+		
 		EncomiendaE encomienda = new EncomiendaE();
 		encomienda.setCliente(cli);
 		encomienda.setSucursalOrigen(origen);
@@ -232,6 +245,7 @@ public class EncomiendaParticular extends Encomienda{
 		}
 		catch(Exception e){
 			e.printStackTrace();
+			throw e;
 		}
 //		tx.commit();
 		this.manifiesto.setIdManifiesto(manifiestoE.getIdManifiesto());

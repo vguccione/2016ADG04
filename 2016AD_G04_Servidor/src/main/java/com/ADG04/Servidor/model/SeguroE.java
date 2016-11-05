@@ -113,15 +113,4 @@ public class SeguroE implements java.io.Serializable{
 	public void setProveedor(ProveedorE proveedor) {
 		this.proveedor = proveedor;
 	}
-
-	public DTO_Seguro toDTO() {
-		DTO_Seguro s = new DTO_Seguro();
-		s.setId(this.getIdSeguro());
-		s.setIdProveedor(this.getProveedor().getIdProveedor());
-		s.setTipoSeguro(this.getTipoSeguro());
-		s.setDescripcion(this.descripcion);
-		s.setTarifa(this.getTarifa());
-		s.setTarifaPorKm(this.tarifaPorKm);
-		return s;
-	}
 }

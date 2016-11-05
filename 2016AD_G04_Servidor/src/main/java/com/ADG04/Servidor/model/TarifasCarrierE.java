@@ -105,17 +105,4 @@ public class TarifasCarrierE implements java.io.Serializable{
 		this.proveedor = proveedor;
 	}
 
-	public DTO_TarifasCarrier toDTO() {
-		DTO_TarifasCarrier pc = new DTO_TarifasCarrier();
-		pc.setIdProveedor(this.getProveedor().getIdProveedor());
-		pc.setId(this.getIdTarifasCarrier());
-		
-		pc.setComentarios(this.getComentarios());
-		pc.setPrioridad(this.getPrioridad());
-		pc.setPrecioKMExtra(this.getPrecioKMExtra());
-		pc.setTarifa(this.getTarifa());
-		return pc;
-	}
-
-	
 }

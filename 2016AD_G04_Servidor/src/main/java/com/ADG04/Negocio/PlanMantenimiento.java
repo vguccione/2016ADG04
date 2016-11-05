@@ -116,4 +116,12 @@ public class PlanMantenimiento{
 		PlanMantenimientoDao.getInstancia().saveOrUpdate(this.toEntity());
 		em.getTransaction().commit();
 	}
+
+	public PlanMantenimiento fromEntity(PlanMantenimientoE p) {
+		PlanMantenimiento pm = new PlanMantenimiento();
+		pm.setComentarios(p.getComentarios());
+		pm.setDescripcion(p.getDescripcion());
+		pm.setIdPlanMantenimiento(p.getIdPlanMantenimiento());
+		return pm;
+	}
 }

@@ -203,15 +203,5 @@ public class SucursalE implements java.io.Serializable {
 		this.coordenadas = coordenadas;
 	}
 
-	public DTO_Sucursal toDTO(){
-		DTO_Sucursal s = new DTO_Sucursal();
-		s.setId(this.idSucursal);
-		s.setDescripcion(this.descripcion);
-		s.setTelefono(this.telefono);
-		s.setDireccion(this.getDireccion().toDTO());
-		if(this.getGerente()!=null)
-			s.setIdGerente(this.getGerente().getIdUsuario());
-		return s;
-	}
 
 }

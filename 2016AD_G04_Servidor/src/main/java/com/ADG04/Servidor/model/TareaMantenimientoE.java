@@ -86,12 +86,4 @@ public class TareaMantenimientoE implements java.io.Serializable {
 		this.tareasMantenimientoRealizadas = tareasMantenimientoRealizadas;
 	}
 
-	public DTO_TareaMantenimiento toDTO() {
-		DTO_TareaMantenimiento dto = new DTO_TareaMantenimiento();
-		dto.setId(this.getIdTareaMantenimiento());
-		dto.setIdPlanMantenimiento(this.getPlanMantenimiento().getIdPlanMantenimiento());
-		dto.setTarea(this.getTarea());
-		return dto;
-	}
-
 }

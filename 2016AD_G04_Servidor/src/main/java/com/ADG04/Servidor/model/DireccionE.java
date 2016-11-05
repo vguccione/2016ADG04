@@ -123,19 +123,4 @@ public class DireccionE implements java.io.Serializable {
 		this.codigoPostal = codigoPostal;
 	}
 
-
-
-
-	public DTO_Direccion toDTO(){
-		DTO_Direccion dir = new DTO_Direccion();
-		dir.setCalle(this.calle);
-		dir.setCodigoPostal(this.codigoPostal);
-		dir.setIdDireccion(this.idDireccion);
-		dir.setLocalidad(this.localidad);
-		dir.setNro(this.nro);
-		dir.setPais(PaisDao.getInstancia().getById(this.getPais().getIdPais()).toDTO());
-		dir.setProvincia(ProvinciaDao.getInstancia().getById(this.getProvincia().getIdProvincia()).toDTO());
-		return dir;
-	}
-
 }

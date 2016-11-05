@@ -24,6 +24,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.ADG04.Negocio.Direccion;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Usuario;
@@ -91,7 +92,7 @@ public class ClienteParticularE extends ClienteE implements java.io.Serializable
 		cli.setEstado(this.getEstado());
 		cli.setTelefono(this.getTelefono());
 		
-		cli.setDireccion(this.getDireccion().toDTO());
+		cli.setDireccion(new Direccion().fromEntity(this.getDireccion()).toDTO());
 		
 		return cli;
 	}

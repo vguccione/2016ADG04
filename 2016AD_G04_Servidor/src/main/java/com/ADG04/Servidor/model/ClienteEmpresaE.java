@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.ADG04.Negocio.Direccion;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 
 
@@ -105,7 +106,7 @@ public class ClienteEmpresaE extends ClienteE implements java.io.Serializable {
 		cli.setEstado(this.getEstado());
 		cli.setTelefono(this.getTelefono());
 			
-		cli.setDireccion(this.getDireccion().toDTO());
+		cli.setDireccion(new Direccion().fromEntity(this.getDireccion()).toDTO());
 		
 		return cli;
 	}

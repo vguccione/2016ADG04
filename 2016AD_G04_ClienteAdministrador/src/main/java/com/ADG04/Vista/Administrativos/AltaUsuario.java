@@ -432,7 +432,13 @@ public class AltaUsuario extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(null,"Por favor, ingrese el usuario", "Atencion", JOptionPane.WARNING_MESSAGE);
 			jTextFieldUsuario.requestFocus();
 			return false;
-		} else if(Contrasena.getText().equals("")){
+		}
+		else if(Controlador.getInstancia().existeUsuario(jTextFieldUsuario.getText())){
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese otro nombre de usuario, ya existe", "Atencion", JOptionPane.WARNING_MESSAGE);
+			jTextFieldUsuario.requestFocus();
+			return false;
+		} 
+		else if(Contrasena.getText().equals("")){
 			JOptionPane.showMessageDialog(null,"Por favor, ingrese el password.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			Contrasena.requestFocus();
 			return false;

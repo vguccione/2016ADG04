@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ADG04.Negocio.PlanMantenimiento;
+import com.ADG04.Negocio.Sucursal;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
@@ -328,7 +330,7 @@ public class VehiculoE implements java.io.Serializable {
 	public DTO_Vehiculo toDTO() {
 		DTO_Vehiculo v = new DTO_Vehiculo();
 		v.setEstado(this.estado);
-		v.setSucursal(this.getSucursal().toDTO());
+		v.setSucursal(new Sucursal().fromEntity(this.getSucursal()).toDTO());
 		v.setId(this.getIdVehiculo());
 		v.setAlto(alto);
 		v.setAncho(ancho);
@@ -352,7 +354,7 @@ public class VehiculoE implements java.io.Serializable {
 		
 		if(this.getPlanMantenimiento()!=null) {
 			PlanMantenimientoE pm = this.getPlanMantenimiento();
-			v.setPlanMantenimiento(pm.toDTO());
+			v.setPlanMantenimiento(new PlanMantenimiento().fromEntity(pm).toDTO());
 		}
 		return v;
 	}

@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-import vista.Vehiculo.Alta.AltaVehiculo;
 
 
 /**

@@ -10,6 +10,8 @@ import java.util.List;
 
 
 
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -20,6 +22,7 @@ import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.CuentaCorrienteDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
+import com.ADG04.Servidor.dao.UsuarioDao;
 import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.model.ClienteParticularE;
@@ -28,7 +31,9 @@ import com.ADG04.Servidor.model.DireccionE;
 import com.ADG04.Servidor.model.FacturaE;
 import com.ADG04.Servidor.model.ItemFacturaE;
 import com.ADG04.Servidor.model.ProductoE;
+import com.ADG04.Servidor.model.UsuarioE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
@@ -273,5 +278,4 @@ public class GestionCliente {
 		return facturasDTO;
 	}
 
-	
 }

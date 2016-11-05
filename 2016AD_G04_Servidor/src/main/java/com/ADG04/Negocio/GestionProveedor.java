@@ -164,10 +164,6 @@ public class GestionProveedor {
 		return SeguroDao.getInstancia().getById(id).toDTO();
 	}
 
-	public DTO_Proveedor getProveedor(Integer id) {
-		return ProveedorDao.getInstancia().getById(id).toDTO();
-	}
-	
 	
 	public DTO_TarifasCarrier getCarrier(Integer id) {
 		return TarifasCarrierDao.getInstancia().getById(id).toDTO();

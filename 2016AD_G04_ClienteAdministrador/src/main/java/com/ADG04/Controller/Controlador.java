@@ -75,6 +75,7 @@ public class Controlador {
 		return null;
 	}
 	
+	
 	public List<String> buscarRolesUsuario(int codigo){
 		try {
 			 return bd.buscarRolesUsuario(codigo);
@@ -921,6 +922,32 @@ public class Controlador {
 			e.printStackTrace();
 			System.out.println("Error al dar de alta un usuario");
 		}
+		return false;
+	}
+
+	public boolean cambiarPassword(String usuario, String oldPassword, String newPassword) {
+		try{
+			return bd.cambiarPassword(usuario, oldPassword, newPassword);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("No se ha podido cambiar la password");
+		}
+		return false;
+	}
+
+	public boolean existeUsuario(String usuario) {
+		try {
+			 DTO_Usuario user = bd.existeUsuario(usuario);
+			 if(user!=null)
+				 return true;
+			 else
+				 return false;
+		}
+		catch (RemoteException e) {
+    	 e.printStackTrace();
+        System.out.println("Error al verificar si existe el usuario");
+		}  
 		return false;
 	}
 

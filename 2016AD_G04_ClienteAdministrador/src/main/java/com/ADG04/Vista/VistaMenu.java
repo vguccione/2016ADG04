@@ -11,6 +11,7 @@ import javax.swing.*;
 import com.ADG04.Controller.Controlador;
 import com.ADG04.Vista.Administrativos.AltaSucursal;
 import com.ADG04.Vista.Administrativos.AltaUsuario;
+import com.ADG04.Vista.Administrativos.CambiarContrasena;
 import com.ADG04.Vista.Clientes.AltaClienteEmpresa;
 import com.ADG04.Vista.Clientes.AltaClienteParticular;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
@@ -732,9 +733,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemCambiarPassword.setText("Cambiar Password");
 							JMenuItemCambiarPassword.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaCambiarContrasena inst = new VistaCambiarContrasena();
+									CambiarContrasena inst = new CambiarContrasena();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

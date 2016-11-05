@@ -108,4 +108,12 @@ public class Provincia{
 		ProvinciaDao.getInstancia().persist(this.toEntity());
 		tx.commit();
 	}
+
+	public Provincia fromEntity(ProvinciaE prove) {
+		Provincia p  = new Provincia();
+		p.setDescripcion(prove.getDescripcion());
+		p.setIdProvincia(prove.getIdProvincia());
+		p.setPais(new Pais().fromEntity(prove.getPais()));
+		return p;
+	}
 }

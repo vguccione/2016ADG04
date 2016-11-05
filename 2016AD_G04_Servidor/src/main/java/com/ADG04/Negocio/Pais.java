@@ -89,6 +89,13 @@ public class Pais{
 		PaisDao.getInstancia().persist(this.toEntity());
 		tx.commit();
 	}
+
+	public Pais fromEntity(PaisE pais) {
+		Pais p = new Pais();
+		p.setDescripcion(pais.getDescripcion());
+		p.setIdPais(pais.getIdPais());
+		return p;
+	}
 	
 
 	

@@ -768,4 +768,12 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.getTareaMantenimientoByPlan(idPlan);
 	}
 
+	public boolean cambiarPassword(String usuario, String oldPassword,String newPassword) throws RemoteException {
+		return this.businessService.cambiarPassword(usuario,oldPassword,newPassword);
+	}
+
+	public DTO_Usuario existeUsuario(String usuario) throws RemoteException{
+		return this.businessService.existeUsuario(usuario);
+	}
+
 }

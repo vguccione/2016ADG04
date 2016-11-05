@@ -174,25 +174,5 @@ public class UsuarioE implements java.io.Serializable {
 		this.roles = roles;
 	}
 
-	public DTO_Usuario toDTO(){
-		DTO_Usuario u = new DTO_Usuario();
-		u.setDni(this.getDni());
-		u.setNombre(this.getNombre());
-		u.setApellido(this.getApellido());
-		u.setPassword(this.getPassword());
-		u.setUsuario(this.getUsuario());
-		u.setFechaCreacion(this.getFechaCreacion());
-		u.setUltimoAcceso(this.getUltimoAcceso());
-		u.setIdUsuario(this.getIdUsuario());
-		u.setIdSucursal(this.sucursal.getIdSucursal());
-		List<DTO_Rol> roles = new ArrayList<DTO_Rol>();
-		for(RolE r: this.getRoles()){
-			roles.add(r.toDTO());
-		}
-		u.setRoles(roles);
-		
-		return u;
-	}
-
 	
 }

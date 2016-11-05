@@ -15,9 +15,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import controlador.controladorAdmin;
-import dto.Administracion.DTO_Usuario;
-
+import com.ADG04.Controller.Controlador;
+import com.ADG04.bean.Administracion.DTO_Usuario;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -37,16 +36,6 @@ public class CambiarContrasena extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	{
-		//Set Look & Feel
-		try {
-			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	private JPanel jPanel;
 	private JLabel jLabelTitulo;
 	private JButton jButtonAceptar;
@@ -76,8 +65,7 @@ public class CambiarContrasena extends javax.swing.JFrame {
 			GroupLayout thisLayout = new GroupLayout((JComponent)getContentPane());
 			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 10");
-			this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("images/box.png")).getImage());
+			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 			this.setResizable(false);
 			this.setPreferredSize(new java.awt.Dimension(505, 328));
 			{
@@ -196,9 +184,9 @@ public class CambiarContrasena extends javax.swing.JFrame {
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent evt) {
 					if (validacion()) {
-						DTO_Usuario u = controladorAdmin.getInstancia().validarUsuario(jTextFieldUsuario.getText(), Contrasena.getText());
+						Integer u = Controlador.getInstancia().login(jTextFieldUsuario.getText(), Contrasena.getText());
 						if(u != null){
-							boolean flag = controladorAdmin.getInstancia().cambiarPassword(jTextFieldUsuario.getText(), Contrasena.getText(), NuevaContrasena.getText());
+							boolean flag = Controlador.getInstancia().cambiarPassword(jTextFieldUsuario.getText(), Contrasena.getText(), NuevaContrasena.getText());
 							if(flag){
 								JOptionPane.showMessageDialog(null,"Se ha cambiado la password del usuario: " + jTextFieldUsuario.getText(), "Cambio passowrd realizadao", JOptionPane.INFORMATION_MESSAGE);
 								setVisible(false);
@@ -252,23 +240,23 @@ public class CambiarContrasena extends javax.swing.JFrame {
 	private boolean validacion(){
 		
 		if (jTextFieldUsuario.getText().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese el usuario", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese el usuario", "Atencion", JOptionPane.WARNING_MESSAGE);
 			jTextFieldUsuario.requestFocus();
 			return false;
 		} else if(Contrasena.getText().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese el password.", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese el password.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			Contrasena.requestFocus();
 			return false;
 		} else if(NuevaContrasena.getText().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese el nuevo password.", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese el nuevo password.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			NuevaContrasena.requestFocus();
 			return false;
 		} else if(ReNuevaContrasena.getText().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese la confirmaci�n del nuevo password.", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese la confirmacion del nuevo password.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			NuevaContrasena.requestFocus();
 			return false;
 		} else if(!checkPassword()){
-			JOptionPane.showMessageDialog(null,"La nueva password ingresadas no coinciden.", "Atenci�n", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,"La nueva password ingresadas no coinciden.", "Atencion", JOptionPane.ERROR_MESSAGE);
 			NuevaContrasena.requestFocus();
 			return false;
 		}

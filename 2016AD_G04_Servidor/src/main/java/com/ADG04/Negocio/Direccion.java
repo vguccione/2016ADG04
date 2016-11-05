@@ -104,8 +104,8 @@ public class Direccion{
 		dir.setIdDireccion(this.idDireccion);
 		dir.setLocalidad(this.localidad);
 		dir.setNro(this.nro);
-		dir.setPais(PaisDao.getInstancia().getById(this.getPais().getIdPais()).toDTO());
-		dir.setProvincia(ProvinciaDao.getInstancia().getById(this.getProvincia().getIdProvincia()).toDTO());
+		dir.setPais(new Pais().fromEntity(PaisDao.getInstancia().getById(this.getPais().getIdPais())).toDTO());
+		dir.setProvincia(new Provincia().fromEntity(ProvinciaDao.getInstancia().getById(this.getProvincia().getIdProvincia())).toDTO());
 		return dir;
 	}
 
@@ -140,11 +140,32 @@ public class Direccion{
 		dir.setLocalidad(direccion.getLocalidad());
 		dir.setNro(direccion.getNro());
 		
-		DTO_Provincia prove = ProvinciaDao.getInstancia().getById(direccion.getProvincia().getId()).toDTO();
-		Provincia prov = new Provincia().fromDTO(prove);
+		ProvinciaE prove =ProvinciaDao.getInstancia().getById(direccion.getProvincia().getId());
+		Provincia prov = new Provincia().fromEntity(prove);
 		
-		DTO_Pais pais = PaisDao.getInstancia().getById(direccion.getPais().getId()).toDTO();
-		Pais p = new Pais().fromDTO(pais);
+		PaisE pais = PaisDao.getInstancia().getById(direccion.getPais().getId());
+		Pais p = new Pais().fromEntity(pais);
+		
+		
+		dir.setProvincia(prov);
+		dir.setPais(p);
+		return dir;
+	}
+
+
+	public Direccion fromEntity(DireccionE direccion) {
+		/*Crear Direccion*/
+		Direccion dir = new Direccion();
+		dir.setCalle(direccion.getCalle());
+		dir.setCodigoPostal(direccion.getCodigoPostal());
+		dir.setLocalidad(direccion.getLocalidad());
+		dir.setNro(direccion.getNro());
+		
+		ProvinciaE prove = ProvinciaDao.getInstancia().getById(direccion.getProvincia().getIdProvincia());
+		Provincia prov = new Provincia().fromEntity(prove);
+		
+		PaisE pais = PaisDao.getInstancia().getById(direccion.getPais().getIdPais());
+		Pais p = new Pais().fromEntity(pais);
 		
 		
 		dir.setProvincia(prov);

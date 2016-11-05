@@ -87,7 +87,7 @@ public  class TareaMantenimiento{
 	public TareaMantenimiento fromDTO(DTO_TareaMantenimiento dto) {
 		TareaMantenimiento tm = new TareaMantenimiento();
 		tm.setIdTareaMantenimiento(dto.getId());
-		tm.setPlanMantenimiento(new PlanMantenimiento().fromDTO(PlanMantenimientoDao.getInstancia().getById(dto.getIdPlanMantenimiento()).toDTO()));
+		tm.setPlanMantenimiento(new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(dto.getIdPlanMantenimiento())));
 		tm.setTarea(dto.getTarea());
 		return tm;
 	}
@@ -97,6 +97,14 @@ public  class TareaMantenimiento{
 		tm.setIdTareaMantenimiento(idTareaMantenimiento);
 		tm.setPlanMantenimiento(planMantenimiento.toEntity());
 		tm.setTarea(tarea);
+		return tm;
+	}
+
+	public TareaMantenimiento fromEntity(TareaMantenimientoE t) {
+		TareaMantenimiento tm = new TareaMantenimiento();
+		tm.setIdTareaMantenimiento(t.getIdTareaMantenimiento());
+		tm.setPlanMantenimiento(new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(t.getPlanMantenimiento().getIdPlanMantenimiento())));
+		tm.setTarea(t.getTarea());
 		return tm;
 	}
 

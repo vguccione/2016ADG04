@@ -55,25 +55,7 @@ public class App
 	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-    	BusinessDelegate bd = new BusinessDelegate();
-    	DTO_Usuario usu = new DTO_Usuario();
-    	usu.setApellido("a");
-    	usu.setNombre("nombre");
-    	usu.setFechaCreacion(new Date());
-    	usu.setIdSucursal(1);
-    	usu.setUsuario("usuario");
-    	usu.setPassword("password");
-    	usu.setDni("12319992");
-    	
-    	List<DTO_Rol> roles = new ArrayList<DTO_Rol>();
-    	roles.add(RolDao.getInstancia().getById(1).toDTO());
-    	
-    	usu.setRoles(roles);
-    	Usuario u=new Usuario().fromDTO(usu);
-    	UsuarioE usua = u.toEntity();
-    	
-    	u.guardar();
- 
+    	Usuario usu = new Usuario().fromEntity(UsuarioDao.getInstancia().getById(1));
     	/*BusinessDelegate bd = new BusinessDelegate();
     	
     	DTO_Vehiculo v = new DTO_Vehiculo();
@@ -185,8 +167,8 @@ public class App
     	dir.setCodigoPostal(1234);
     	dir.setLocalidad("Capital Federal");
     	dir.setNro(123);
-    	dir.setPais(pais.toDTO());
-    	dir.setProvincia(prov.toDTO());
+    	dir.setPais(new Pais().fromEntity(pais).toDTO());
+    	dir.setProvincia(new Provincia().fromEntity(prov).toDTO());
     	
     	DTO_ClienteParticular cliParticular = new DTO_ClienteParticular();
     	
@@ -222,8 +204,8 @@ public class App
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();
 		cli.setDni(dniCliente);
 		cli.setId(idCliente);
-    	DTO_Sucursal sucursalOrigen = SucursalDao.getInstancia().getById(idSucursalOrigen).toDTO();
-    	DTO_Sucursal sucursalDestino = SucursalDao.getInstancia().getById(idSucursalDestino).toDTO();
+    	DTO_Sucursal sucursalOrigen = new Sucursal().fromEntity(SucursalDao.getInstancia().getById(idSucursalOrigen)).toDTO();
+    	DTO_Sucursal sucursalDestino = new Sucursal().fromEntity(SucursalDao.getInstancia().getById(idSucursalDestino)).toDTO();
     	
     	DTO_EncomiendaParticular encomienda = new DTO_EncomiendaParticular();
 
@@ -798,8 +780,8 @@ public class App
 		float nro = nmro;
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();
 		cli.setId(idCliente);
-    	DTO_Sucursal sucursalOrigen = SucursalDao.getInstancia().getById(idSucursalOrigen).toDTO();
-    	DTO_Sucursal sucursalDestino = SucursalDao.getInstancia().getById(idSucursalDestino).toDTO();
+    	DTO_Sucursal sucursalOrigen = new Sucursal().fromEntity(SucursalDao.getInstancia().getById(idSucursalOrigen)).toDTO();
+    	DTO_Sucursal sucursalDestino = new Sucursal().fromEntity(SucursalDao.getInstancia().getById(idSucursalDestino)).toDTO();
     	
     	DTO_EncomiendaParticular encomienda = new DTO_EncomiendaParticular();
 

@@ -64,7 +64,7 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 		frmAplicacionesDistribuidas.getContentPane().setLayout(null);
 		
 		JPanel General = new JPanel();
-		General.setBounds(10, 42, 414, 89);
+		General.setBounds(10, 42, 414, 119);
 		General.setBorder(new TitledBorder(null, "General", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		frmAplicacionesDistribuidas.getContentPane().add(General);
 		General.setLayout(null);
@@ -73,7 +73,7 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 		lblNombre.setBounds(10, 30, 73, 14);
 		General.add(lblNombre);
 		
-		JLabel lblApellido = new JLabel("CUIT");
+		JLabel lblApellido = new JLabel("Apellido");
 		lblApellido.setBounds(10, 55, 46, 14);
 		General.add(lblApellido);
 		
@@ -87,8 +87,18 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 		General.add(txtApellido);
 		txtApellido.setColumns(10);
 		
+		JLabel lblDni = new JLabel("DNI");
+		lblDni.setBounds(10, 83, 46, 14);
+		General.add(lblDni);
+		
+		txtDni = new JTextField();
+		txtDni.setBounds(80, 83, 324, 20);
+		General.add(txtDni);
+		txtDni.setColumns(10);
+		
+	
 		JPanel Contacto = new JPanel();
-		Contacto.setBounds(10, 132, 414, 153);
+		Contacto.setBounds(10, 149, 414, 153);
 		Contacto.setBorder(new TitledBorder(null, "Contacto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		frmAplicacionesDistribuidas.getContentPane().add(Contacto);
 		Contacto.setLayout(null);
@@ -148,15 +158,6 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 		Contacto.add(txtEmail);
 		txtEmail.setColumns(10);
 		
-		JLabel lblDni = new JLabel("DNI");
-		lblDni.setBounds(10, 130, 46, 14);
-		General.add(lblDni);
-		
-		txtDni = new JTextField();
-		txtDni.setBounds(83, 130, 321, 20);
-		Contacto.add(txtDni);
-		txtDni.setColumns(10);
-		
 		
 		JLabel titulo = new JLabel("Alta Cliente");
 		titulo.setFont(new Font("Verdana", Font.BOLD, 20));
@@ -190,13 +191,13 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 																				txtTelefono.getText(),
 																				txtDni.getText());
 					
-						JOptionPane.showMessageDialog(null,"Se ha dado de alta al proveedor:" + txtNombre.getText(), "Alta proveedor realizada", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Se ha dado de alta al cliente:" + txtNombre.getText() + " " + txtApellido.getText(), "Alta cliente realizada", JOptionPane.INFORMATION_MESSAGE);
 						frmAplicacionesDistribuidas.setVisible(false);
 						} 
 					catch(Exception e)
 					{
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null,"No se ha podido dar de alta al proveedor.", "Error", JOptionPane.ERROR_MESSAGE);	
+						JOptionPane.showMessageDialog(null,"No se ha podido dar de alta al cliente particular.", "Error", JOptionPane.ERROR_MESSAGE);	
 					}
 				}
 			}
@@ -243,14 +244,6 @@ public boolean validacion(){
 			
 		} else if(txtEmail.getText().equals("")){
 			JOptionPane.showMessageDialog(null,"Por favor, seleccione el email.", "Atencion", JOptionPane.WARNING_MESSAGE);
-			txtEmail.requestFocus();
-			return false;
-		} else if(txtLimiteCredito.getValue().toString() == ""){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese el limite de crediito.", "Atencion", JOptionPane.WARNING_MESSAGE);
-			txtEmail.requestFocus();
-			return false;
-		} else if(cbxFormaPago.getSelectedItem().toString().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, seleccione la forma de pago.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			txtEmail.requestFocus();
 			return false;
 		}

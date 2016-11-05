@@ -13,6 +13,18 @@ import java.util.List;
 
 
 
+
+
+
+
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.model.ClienteE;
+import com.ADG04.Servidor.model.ClienteEmpresaE;
+import com.ADG04.Servidor.model.CuentaCorrienteE;
+import com.ADG04.Servidor.model.DireccionE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 
 
@@ -84,6 +96,21 @@ public class ClienteEmpresa extends Cliente{
 	}
 
 
+	public void guardar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		ClienteDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();
+	}
+
+
+
+	public void modificar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		ClienteDao.getInstancia().saveOrUpdate(this.toEntity());
+		em.getTransaction().commit();
+	}
 
 	public DTO_ClienteEmpresa toDTO(){
 		DTO_ClienteEmpresa cli = new DTO_ClienteEmpresa();
@@ -95,6 +122,27 @@ public class ClienteEmpresa extends Cliente{
 		cli.setTelefono(this.getTelefono());
 			
 		cli.setDireccion(this.getDireccion().toDTO());
+		
+		return cli;
+	}
+	
+	
+	public ClienteEmpresaE toEntity() {
+		ClienteEmpresaE cli = new ClienteEmpresaE();
+		cli.setEmail(this.getEmail());
+		cli.setEstado(this.getEstado());
+		cli.setIdCliente(this.getIdCliente());
+		cli.setTelefono(this.getTelefono());
+		cli.setRazonSocial(this.getRazonSocial());
+		cli.setCuit(this.getCuit());
+		DireccionE dir = new DireccionE(this.getDireccion().getPais().toEntity(), this.getDireccion().getProvincia().toEntity(), 
+				this.getDireccion().getCalle(),this.getDireccion().getNro(), this.getDireccion().getLocalidad(),
+				this.getDireccion().getCodigoPostal());
+		
+		CuentaCorrienteE cte = new CuentaCorrienteE(this.getCuentaCorrientes().getCredito(),this.getCuentaCorrientes().getLimiteCredito(),this.getCuentaCorrientes().getFormaPago());
+		
+		cli.setCuentaCorrientes(cte);
+		cli.setDireccion(dir);
 		
 		return cli;
 	}

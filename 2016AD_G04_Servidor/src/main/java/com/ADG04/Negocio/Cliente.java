@@ -21,28 +21,31 @@ public class Cliente{
 	private List <Encomienda> encomiendas;
 	private Direccion direccion;
 	private String dni;
+	private char tipo;
 	
 	public Cliente() {
 	}
 
 
 
-	public Cliente(int idCliente, boolean estado, String email, String telefono, Direccion dir) {
+	public Cliente(int idCliente, boolean estado, String email, String telefono, Direccion dir, char tipo) {
 		super();
 		this.idCliente = idCliente;
 		this.estado = estado;
 		this.email = email;
 		this.telefono = telefono;
 		this.direccion=dir;
+		this.tipo=tipo;
 	}
 
 	public Cliente(boolean estado, String email, String telefono,
-			Direccion direccion) {
+			Direccion direccion, char tipo) {
 		super();
 		this.estado = estado;
 		this.email = email;
 		this.telefono = telefono;
 		this.direccion = direccion;
+		this.tipo=tipo;
 	}
 
 	public int getIdCliente() {
@@ -94,6 +97,13 @@ public class Cliente{
 	}
 
 
+	public char getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(char tipo) {
+		this.tipo = tipo;
+	}
 
 	public DTO_Cliente toDTO() {
 		DTO_Cliente cli = new DTO_Cliente();
@@ -105,41 +115,6 @@ public class Cliente{
 		
 		return cli;
 	}
-
-
-
-	public void guardar() {
-		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
-		em.getTransaction().begin();
-		ClienteDao.getInstancia().persist(this.toEntity());
-		em.getTransaction().commit();
-	}
-
-
-
-	public void modificar() {
-		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
-		em.getTransaction().begin();
-		ClienteDao.getInstancia().saveOrUpdate(this.toEntity());
-		em.getTransaction().commit();
-	}
-
-
-
-	private ClienteE toEntity() {
-		ClienteE cli = new ClienteE();
-		cli.setEmail(email);
-		cli.setEstado(estado);
-		cli.setIdCliente(idCliente);
-		cli.setTelefono(telefono);
-		DireccionE dir = new DireccionE(this.getDireccion().getPais().toEntity(), this.getDireccion().getProvincia().toEntity(), 
-				this.getDireccion().getCalle(),this.getDireccion().getNro(), this.getDireccion().getLocalidad(),
-				this.getDireccion().getCodigoPostal());
-		cli.setDireccion(dir);
-		
-		return cli;
-	}
-
 
 
 	public void setDni(String dni) {

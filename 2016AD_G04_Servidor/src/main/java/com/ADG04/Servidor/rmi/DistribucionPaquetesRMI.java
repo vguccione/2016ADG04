@@ -18,7 +18,6 @@ import com.ADG04.Negocio.Encomienda;
 import com.ADG04.Negocio.EncomiendaParticular;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
-import com.ADG04.Negocio.GestionProveedor;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Negocio.ItemManifiesto;
 import com.ADG04.Negocio.Manifiesto;
@@ -724,7 +723,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<DTO_Seguro> listadto= new ArrayList<DTO_Seguro>();
 		List<SeguroE> lista = SeguroDao.getInstancia().getAll();
 		for(SeguroE seg: lista){
-			listadto.add(seg.toDTO());
+			Seguro seguro = new Seguro().fromEntity(seg);
+			listadto.add(seguro.toDTO());
 		}
 		return listadto;
 	}
@@ -734,7 +734,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<DTO_TarifasCarrier> listadto= new ArrayList<DTO_TarifasCarrier>();
 		List<TarifasCarrierE> lista = TarifasCarrierDao.getInstancia().getAll();
 		for(TarifasCarrierE tc: lista){
-			listadto.add(tc.toDTO());
+			TarifasCarrier tar=new TarifasCarrier().fromEntity(tc);
+			listadto.add(tar.toDTO());
 		}
 		return listadto;
 	}
@@ -745,7 +746,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<DTO_ServicioSeguridad> listadto= new ArrayList<DTO_ServicioSeguridad>();
 		List<ServicioSeguridadE> lista = ServicioSeguridadDao.getInstancia().getAll();
 		for(ServicioSeguridadE ss: lista){
-			listadto.add(ss.toDTO());
+			ServicioSeguridad serv = new ServicioSeguridad().fromEntity(ss);
+			listadto.add(serv.toDTO());
 		}
 		return listadto;
 	}
@@ -1095,8 +1097,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		List<DTO_Seguro> listaDTO = new ArrayList<DTO_Seguro>();
 		List<SeguroE> lista = SeguroDao.getInstancia().getSegurosByProveedor(filtro);
-        for(SeguroE sec: lista)
-        	listaDTO.add( sec.toDTO());
+        for(SeguroE sec: lista){
+        	Seguro seguro = new Seguro().fromEntity(sec);
+        	listaDTO.add(seguro.toDTO());
+        }
         
 		 return listaDTO;
 	}
@@ -1106,8 +1110,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			String filtro) throws RemoteException {
 		List<DTO_ServicioSeguridad> listaDTO = new ArrayList<DTO_ServicioSeguridad>();
 		List<ServicioSeguridadE> lista = ServicioSeguridadDao.getInstancia().getServiciosSeguridadByProveedor(filtro);
-        for(ServicioSeguridadE seg: lista)
-        	listaDTO.add( seg.toDTO());
+        for(ServicioSeguridadE seg: lista){
+        	ServicioSeguridad serv = new ServicioSeguridad().fromEntity(seg);
+        	listaDTO.add(serv.toDTO());
+        }
         
 		 return listaDTO;
 	}
@@ -1117,9 +1123,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			String filtro) throws RemoteException {
 		List<DTO_TarifasCarrier> listaDTO = new ArrayList<DTO_TarifasCarrier>();
 		List<TarifasCarrierE> lista = TarifasCarrierDao.getInstancia().getTarifasCarrierByProveedor(filtro);
-        for(TarifasCarrierE tc: lista)
-        	listaDTO.add( tc.toDTO());
-        
+        for(TarifasCarrierE tc: lista){
+        	TarifasCarrier tar=new TarifasCarrier().fromEntity(tc);
+        	listaDTO.add(tar.toDTO());
+		}
 		 return listaDTO;
 	}
 

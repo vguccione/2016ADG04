@@ -83,12 +83,4 @@ public class ServicioSeguridadE implements java.io.Serializable{
 		this.proveedor = proveedor;
 	}
 
-	public DTO_ServicioSeguridad toDTO() {
-        DTO_ServicioSeguridad ss = new DTO_ServicioSeguridad();
-        ss.setId(this.getIdServicioSeguridad());
-        ss.setIdProveedor(this.getProveedor().getIdProveedor());
-        ss.setDescripcion(this.getDescripcion());
-        ss.setTarifa(this.getTarifa());
-        return ss;
-    }
 }

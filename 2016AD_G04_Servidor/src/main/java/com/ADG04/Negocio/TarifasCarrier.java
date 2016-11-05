@@ -148,5 +148,16 @@ public class TarifasCarrier implements java.io.Serializable{
 		em.getTransaction().commit();
 	}
 
+	public TarifasCarrier fromEntity(TarifasCarrierE tarifa) {
+		TarifasCarrier tc = new TarifasCarrier();
+		tc.setComentarios(tarifa.getComentarios());
+		tc.setIdTarifasCarrier(tarifa.getIdTarifasCarrier());
+		tc.setPrecioKMExtra(tarifa.getPrecioKMExtra());
+		tc.setPrioridad(tarifa.getPrioridad());
+		tc.setProveedor(new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(tarifa.getProveedor().getIdProveedor())));
+		tc.setTarifa(tarifa.getTarifa());
+		return tc;
+	}
+
 	
 }

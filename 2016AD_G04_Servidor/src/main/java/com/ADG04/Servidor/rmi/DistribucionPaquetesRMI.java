@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.ADG04.Negocio.Cliente;
 import com.ADG04.Negocio.ClienteEmpresa;
+import com.ADG04.Negocio.ClienteParticular;
 import com.ADG04.Negocio.CuentaCorriente;
 import com.ADG04.Negocio.Direccion;
 import com.ADG04.Negocio.Encomienda;
@@ -170,14 +171,29 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	
 	public void altaClienteParticular(DTO_ClienteParticular cliente) throws RemoteException {	
 		Direccion dir = new Direccion().fromDTO(cliente.getDireccion());
-		Cliente cli = new Cliente(true,cliente.getEmail(),cliente.getTelefono(),dir);
+		ClienteParticular cli = new ClienteParticular();
+		cli.setApellido(cliente.getApellido());
+		cli.setDireccion(dir);
+		cli.setDni(cliente.getDni());
+		cli.setEmail(cliente.getEmail());
+		cli.setEstado(cliente.isEstado());
+		cli.setNombre(cliente.getNombre());
+		cli.setTelefono(cliente.getTelefono());
 		cli.guardar();
 	}
 
 	
 	public void modificarClienteParticular(DTO_ClienteParticular cliente) throws RemoteException {
 		Direccion dir = new Direccion().fromDTO(cliente.getDireccion());
-		Cliente cli = new Cliente(cliente.getId(),true,cliente.getEmail(),cliente.getTelefono(),dir);
+		ClienteParticular cli = new ClienteParticular();
+		cli.setApellido(cliente.getApellido());
+		cli.setDireccion(dir);
+		cli.setDni(cliente.getDni());
+		cli.setEmail(cliente.getEmail());
+		cli.setEstado(cliente.isEstado());
+		cli.setNombre(cliente.getNombre());
+		cli.setTelefono(cliente.getTelefono());
+		cli.setIdCliente(cliente.getId());
 		cli.modificar();
 	}
 

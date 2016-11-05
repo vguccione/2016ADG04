@@ -141,11 +141,16 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	public DTO_Usuario getUsuario(Integer idUsuario) throws RemoteException {
-		return UsuarioDao.getInstancia().getById(idUsuario).toDTO();
+		UsuarioE usu = UsuarioDao.getInstancia().getById(idUsuario);
+		Usuario usuario = new Usuario().fromEntity(usu);
+		return usuario.toDTO();
+		
 	}
 
 	public DTO_Usuario getUsuario(String dni) throws RemoteException {
-		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
+		UsuarioE usu = UsuarioDao.getInstancia().getByDni(dni);
+		Usuario usuario = new Usuario().fromEntity(usu);
+		return usuario.toDTO();
 	}
 	
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
@@ -165,7 +170,9 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException {
-		 return SucursalDao.getInstancia().getById(idSucursal).toDTO();
+		 SucursalE suc = SucursalDao.getInstancia().getById(idSucursal);
+		 Sucursal sucursal = new Sucursal().fromEntity(suc);
+		 return sucursal.toDTO();
 	}
 
 	
@@ -690,8 +697,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<ProveedorE> tallers = ProveedorDao.getInstancia().getByTipo('T');
 		List<DTO_Proveedor> talleresDTO = new ArrayList<DTO_Proveedor>();
 		for(ProveedorE taller : tallers){
-		
-			talleresDTO.add(taller.toDTO());
+			Proveedor prov = new Proveedor().fromEntity(taller);
+			talleresDTO.add(prov.toDTO());
 		}
 		return talleresDTO;
 	}
@@ -789,7 +796,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<ProveedorE> listp = ProveedorDao.getInstancia().getByTipo('A');
 		if(listp!=null){
 			for(ProveedorE p: listp){
-				lista.add(p.toDTO());
+				Proveedor prov = new Proveedor().fromEntity(p);
+				lista.add(prov.toDTO());
 			}
 			return lista;
 		}
@@ -804,7 +812,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<ProveedorE> listp = ProveedorDao.getInstancia().getByTipo('S');
 		if(listp!=null){
 			for(ProveedorE p: listp){
-				lista.add(p.toDTO());
+				Proveedor prov = new Proveedor().fromEntity(p);
+				lista.add(prov.toDTO());
 			}
 			return lista;
 		}
@@ -818,7 +827,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<ProveedorE> listp = ProveedorDao.getInstancia().getByTipo('C');
 		if(listp!=null){
 			for(ProveedorE p: listp){
-				lista.add(p.toDTO());
+				Proveedor prov = new Proveedor().fromEntity(p);
+				lista.add(prov.toDTO());
 			}
 			return lista;
 		}
@@ -831,7 +841,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<ProveedorE> listp = ProveedorDao.getInstancia().getByTipo('T');
 		if(listp!=null){
 			for(ProveedorE p: listp){
-				lista.add(p.toDTO());
+				Proveedor prov = new Proveedor().fromEntity(p);
+				lista.add(prov.toDTO());
 			}
 			return lista;
 		}
@@ -845,7 +856,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<ProveedorE> listp = ProveedorDao.getInstancia().getAll();
 		if(listp!=null){
 			for(ProveedorE p: listp){
-				lista.add(p.toDTO());
+				Proveedor prov = new Proveedor().fromEntity(p);
+				lista.add(prov.toDTO());
 			}
 			return lista;
 		}
@@ -857,7 +869,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public DTO_Proveedor getProveedor(Integer idProveedor)
 			throws RemoteException {
 		ProveedorE prov = ProveedorDao.getInstancia().getById(idProveedor);
-		return prov.toDTO();
+		
+		return new Proveedor().fromEntity(prov).toDTO();
 	}
 
 	@Override
@@ -867,7 +880,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<UsuarioE> listu = UsuarioDao.getInstancia().getAll();
 		if(listu!=null){
 			for(UsuarioE u: listu){
-				lista.add(u.toDTO());
+				Usuario usu = new Usuario().fromEntity(u);
+				lista.add(usu.toDTO());
 			}
 			return lista;
 		}
@@ -877,51 +891,35 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	
 	@Override
 	public DTO_Usuario getUsuarioPorDni(String dni) {
-		return UsuarioDao.getInstancia().getByDni(dni).toDTO();
+		UsuarioE usuario = UsuarioDao.getInstancia().getByDni(dni);
+		Usuario usu = new Usuario().fromEntity(usuario);
+		return usu.toDTO();
 	}
 	
 	 @Override
 	 public DTO_Usuario login(String usuario, String password){
 		 UsuarioE u = UsuarioDao.getInstancia().buscarUsuario(usuario);
+		 Usuario usu = new Usuario().fromEntity(u);
 		 if (u.getPassword().equals(password))
-			 return u.toDTO();
+			 return usu.toDTO();
 		 else
 			 return null;
-	 }
-	 
-	 @Override
-	 public List<DTO_Usuario> listarEmpleados(){
-		 List<UsuarioE> empleados = UsuarioDao.getInstancia().getAll();
-		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
-	    for(UsuarioE empleado : empleados){
-	    	empleadosDTO.add(empleado.toDTO());	    		
-	    }
-		return empleadosDTO;
-	 }
-	 
-	 @Override
-	 public List<DTO_Usuario> listarEmpleados(Integer idSucursal){
-		 List<UsuarioE> empleados = UsuarioDao.getInstancia().listarEmpleados(idSucursal);
-		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
-	    for(UsuarioE empleado : empleados){
-	    	empleadosDTO.add(empleado.toDTO());	    		
-	    }
-		return empleadosDTO;
 	 }
 	 
 	 @Override
 	 public List<DTO_Rol> listarRoles(){
 		 List<RolE> lista = RolDao.getInstancia().getAll();
 		 List<DTO_Rol> listaDTO = new ArrayList<DTO_Rol>();
-         for(RolE p: lista)
-         	listaDTO.add(p.toDTO());
-         
+         for(RolE p: lista){
+        	 Rol rol = new Rol().fromEntity(p);
+        	 listaDTO.add(rol.toDTO());
+         }
 		 return listaDTO;
 	 }
 	 
 	 @Override
-	 public List<String> buscarRolesUsuario(int usuario){
-		 List<RolE> roles = RolDao.getInstancia().buscarRolesUsuario(String.valueOf(usuario));
+	 public List<String> buscarRolesUsuario(int idUsuario){
+		 List<RolE> roles = RolDao.getInstancia().buscarRolesByIdUsuario(idUsuario);
 		 List<String> dtoRoles = new ArrayList<String>();
 	    	for(RolE rol : roles){
 	    		DTO_Rol dto = new DTO_Rol();
@@ -949,9 +947,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		 List<DTO_PlanMantenimiento> listaDTO = new ArrayList<DTO_PlanMantenimiento>();
 		 List<PlanMantenimientoE> lista = PlanMantenimientoDao.getInstancia().getAll();
-         for(PlanMantenimientoE p: lista)
-         	listaDTO.add(p.toDTO());
-         
+         for(PlanMantenimientoE p: lista){
+        	 PlanMantenimiento plan = new PlanMantenimiento().fromEntity(p);
+        	 listaDTO.add(plan.toDTO());
+         }
 		 return listaDTO;
 	}
 
@@ -959,8 +958,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public List<DTO_Sucursal> listarSucursales() throws RemoteException {
 		List<DTO_Sucursal> listaDTO = new ArrayList<DTO_Sucursal>();
 		List<SucursalE> lista = SucursalDao.getInstancia().getAll();
-        for(SucursalE suc: lista)
-        	listaDTO.add(suc.toDTO()); 
+        for(SucursalE suc: lista){
+        	Sucursal sucursal = new Sucursal().fromEntity(suc);
+        	listaDTO.add(sucursal.toDTO());
+        }
 		 return listaDTO;
 	}
 
@@ -990,8 +991,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		List<DTO_TareaMantenimientoRealizada> listaDTO = new ArrayList<DTO_TareaMantenimientoRealizada>();
 		List<TareaMantenimientoRealizadaE> lista = TareaMantenimientoRealizadaDao.getInstancia().getAll();
-        for(TareaMantenimientoRealizadaE tarea: lista)
-        	listaDTO.add(tarea.toDTO());
+        for(TareaMantenimientoRealizadaE tarea: lista){
+        	TareaMantenimientoRealizada tr = new TareaMantenimientoRealizada().fromEntity(tarea);
+        	listaDTO.add(tr.toDTO());
+        }
         
 		 return listaDTO;
 	}
@@ -1000,7 +1003,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public DTO_TareaMantenimiento getTareaMantenimiento(
 			Integer idTareaMantenimiento) throws RemoteException {
 
-		return TareaMantenimientoDao.getInstancia().getById(idTareaMantenimiento).toDTO();
+		return new TareaMantenimiento().fromEntity(TareaMantenimientoDao.getInstancia().getById(idTareaMantenimiento)).toDTO();
 	}
 	@Override
 	public Integer facturarEncomiendaEmpresa(int idEncomienda)
@@ -1045,8 +1048,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		List<DTO_Sucursal> listaDTO = new ArrayList<DTO_Sucursal>();
 		List<SucursalE> lista = SucursalDao.getInstancia().getSucursalesByNombre(filtro);
-        for(SucursalE suc: lista)
-        	listaDTO.add((DTO_Sucursal) suc.toDTO());
+        for(SucursalE suc: lista){
+        	Sucursal sucursal = new Sucursal().fromEntity(suc);
+        	listaDTO.add((DTO_Sucursal) sucursal.toDTO());
+        }
         
 		 return listaDTO;
 	}
@@ -1067,9 +1072,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		List<DTO_Proveedor> listaDTO = new ArrayList<DTO_Proveedor>();
 		List<ProveedorE> lista = ProveedorDao.getInstancia().getProveedorByRazonSocial(filtro);
-        for(ProveedorE prov: lista)
-        	listaDTO.add( prov.toDTO());
-        
+        for(ProveedorE prov: lista){
+        	Proveedor p = new Proveedor().fromEntity(prov);
+			listaDTO.add(p.toDTO());
+		}
 		 return listaDTO;
 	}
 
@@ -1077,9 +1083,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public List<DTO_Usuario> buscarUsuariosByNombreApellidoOUsuario(String filtro) throws RemoteException {
 		List<DTO_Usuario> listaDTO = new ArrayList<DTO_Usuario>();
 		List<UsuarioE> lista = UsuarioDao.getInstancia().getUsuariosByNombreApellidoOUsuario(filtro);
-        for(UsuarioE usu: lista)
-        	listaDTO.add( usu.toDTO());
-        
+        for(UsuarioE usu: lista){
+        	Usuario u = new Usuario().fromEntity(usu);
+        	listaDTO.add(u.toDTO());
+        }
 		 return listaDTO;
 	}
 
@@ -1104,9 +1111,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public List<DTO_TareaMantenimientoRealizada> buscarTareasMantenimientoRealizadasPorVehiculo(String filtro) throws RemoteException {
 		List<DTO_TareaMantenimientoRealizada> listaDTO = new ArrayList<DTO_TareaMantenimientoRealizada>();
 		List<TareaMantenimientoRealizadaE> lista = TareaMantenimientoRealizadaDao.getInstancia().getByPatenteVehiculo(filtro);
-        for(TareaMantenimientoRealizadaE tr: lista)
-        	listaDTO.add( tr.toDTO());
-        
+        for(TareaMantenimientoRealizadaE tr: lista){
+        	TareaMantenimientoRealizada tarea = new TareaMantenimientoRealizada().fromEntity(tr);
+        	listaDTO.add( tarea.toDTO());
+        }
 		 return listaDTO;
 		
 	}
@@ -1261,23 +1269,25 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		List<DTO_Provincia> listaDTO = new ArrayList<DTO_Provincia>();
 		List<ProvinciaE> lista = ProvinciaDao.getInstancia().getByPais(pais);
-        for(ProvinciaE pr: lista)
-        	listaDTO.add( (DTO_Provincia) pr.toDTO());
-        
+        for(ProvinciaE pr: lista){
+        	Provincia prov = new Provincia().fromEntity(pr);
+        	listaDTO.add( (DTO_Provincia) prov.toDTO());
+        }
 		 return listaDTO;
 	}
 
 	@Override
 	public DTO_Provincia buscarProvinciaByNombre(String prov)
 			throws RemoteException {
-		return ProvinciaDao.getInstancia().getByNombre(prov).toDTO();
+		return new Provincia().fromEntity(ProvinciaDao.getInstancia().getByNombre(prov)).toDTO();
 	}
 
 	public List<DTO_Pais> listarPaises(){
 		List<PaisE> paises = PaisDao.getInstancia().getAll();
 		List<DTO_Pais> paisesDTO = new ArrayList<DTO_Pais>();
 	    for(PaisE pais : paises){
-	    	paisesDTO.add(pais.toDTO());	    		
+	    	Pais p = new Pais().fromEntity(pais);
+	    	paisesDTO.add(p.toDTO());	    		
 	    }
 		return paisesDTO;
 	}
@@ -1286,7 +1296,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<ProvinciaE> provincias = ProvinciaDao.getInstancia().getByPais(idPais);
 		List<DTO_Provincia> provinciasDTO = new ArrayList<DTO_Provincia>();
 	    for(ProvinciaE prov : provincias){
-	    	provinciasDTO.add(prov.toDTO());	    		
+	    	Provincia p = new Provincia().fromEntity(prov);
+	    	provinciasDTO.add(p.toDTO());	    		
 	    }
 		return provinciasDTO;
 	}
@@ -1294,17 +1305,17 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_PlanMantenimiento getPlanMantenimiento(Integer id)
 			throws RemoteException {
-		return PlanMantenimientoDao.getInstancia().getById(id).toDTO();
+		return new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(id)).toDTO();
 	}
 
 	@Override
 	public DTO_Pais getPaisByNombre(String pais) throws RemoteException {
-		return PaisDao.getInstancia().getByNombre(pais).toDTO();
+		return new Pais().fromEntity(PaisDao.getInstancia().getByNombre(pais)).toDTO();
 	}
 
 	@Override
 	public DTO_Provincia getProvByNombre(String prov) throws RemoteException {
-		return ProvinciaDao.getInstancia().getByNombre(prov).toDTO();
+		return new Provincia().fromEntity(ProvinciaDao.getInstancia().getByNombre(prov)).toDTO();
 	}
 
 	@Override
@@ -1318,22 +1329,22 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public void altaTareaMantenimiento(DTO_TareasPorKilometro tpk)
 			throws RemoteException {
-		PlanMantenimiento pm = new PlanMantenimiento().fromDTO(PlanMantenimientoDao.getInstancia().getById(tpk.getIdPlanMantenimiento()).toDTO());
+		PlanMantenimiento pm = new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(tpk.getIdPlanMantenimiento()));
 		TareaMantenimientoPorKm tarea = new TareaMantenimientoPorKm(pm, tpk.getTarea(), tpk.getCantidadKilometros());
 	}
 
 	@Override
 	public void altaTareaMantenimiento(DTO_TareasPorTiempo tpt)
 			throws RemoteException {
-		PlanMantenimiento pm = new PlanMantenimiento().fromDTO(PlanMantenimientoDao.getInstancia().getById(tpt.getIdPlanMantenimiento()).toDTO());
+		PlanMantenimiento pm = new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(tpt.getIdPlanMantenimiento()));
 		TareaMantenimientoPorTiempo tarea = new TareaMantenimientoPorTiempo(pm, tpt.getTarea(), tpt.getCantidadDias());
 	}
 
 	@Override
 	public void altaTareaMantenimientoRealizada(
 			DTO_TareaMantenimientoRealizada tmr) throws RemoteException {		
-		TareaMantenimiento t = new TareaMantenimiento().fromDTO(TareaMantenimientoDao.getInstancia().getById(tmr.getIdTareaMantenimiento()).toDTO());
-		Proveedor prov = new Proveedor().fromDTO(ProveedorDao.getInstancia().getById(tmr.getIdProveedor()).toDTO());
+		TareaMantenimiento t = new TareaMantenimiento().fromEntity(TareaMantenimientoDao.getInstancia().getById(tmr.getIdTareaMantenimiento()));
+		Proveedor prov = new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(tmr.getIdProveedor()));
 		Vehiculo veh = new Vehiculo().fromDTO(VehiculoDao.getInstancia().getById(tmr.getIdVehiculo()).toDTO());
 		TareaMantenimientoRealizada tr = new TareaMantenimientoRealizada(t,prov,veh,tmr.getFecha(),tmr.getCantidadKilometros());
 		tr.guardar();
@@ -1351,9 +1362,60 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<TareaMantenimientoE> tareas = TareaMantenimientoDao.getInstancia().getByPlan(idPlan);
 		List<DTO_TareaMantenimiento> tareasDto = new ArrayList<DTO_TareaMantenimiento>();
 	    for(TareaMantenimientoE t : tareas){
-	    	tareasDto.add(t.toDTO());	    		
+	    	TareaMantenimiento ta = new TareaMantenimiento().fromEntity(t);
+	    	tareasDto.add(ta.toDTO());	    		
 	    }
 		return tareasDto;
 		
+	}
+	
+	@Override
+	public boolean cambiarPassword(String usuario, String oldPassword,
+			String newPassword) throws RemoteException {
+		try{
+			UsuarioE u = UsuarioDao.getInstancia().buscarUsuario(usuario);
+			u.setPassword(newPassword);	
+			Usuario usu = new Usuario().fromEntity(u);
+			usu.modificar();
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+
+	 @Override
+	 public List<DTO_Usuario> listarEmpleados(){
+		 List<UsuarioE> empleados = UsuarioDao.getInstancia().getAll();
+		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
+	    for(UsuarioE empleado : empleados){
+	    	Usuario u = new Usuario().fromEntity(empleado);
+	    	empleadosDTO.add(u.toDTO());	    		
+	    }
+		return empleadosDTO;
+	 }
+	 
+	 @Override
+	 public List<DTO_Usuario> listarEmpleados(Integer idSucursal){
+		 List<UsuarioE> empleados = UsuarioDao.getInstancia().listarEmpleados(idSucursal);
+		 List<DTO_Usuario> empleadosDTO = new ArrayList<DTO_Usuario>();
+	    for(UsuarioE empleado : empleados){
+	    	Usuario u = new Usuario().fromEntity(empleado);
+	    	empleadosDTO.add(u.toDTO());	    		    		
+	    }
+		return empleadosDTO;
+	 }
+
+
+	@Override
+	public DTO_Usuario existeUsuario(String usuario) throws RemoteException {
+		UsuarioE usu = UsuarioDao.getInstancia().buscarUsuario(usuario);
+		if(usu!=null){
+			return new Usuario().fromEntity(usu).toDTO();
+		}
+		else
+			return null;
 	}
 }

@@ -68,14 +68,4 @@ public class RolE implements java.io.Serializable {
 		this.descripcion = descripcion;
 	}
 
-
-	public DTO_Rol toDTO() {
-		DTO_Rol rol = new DTO_Rol();
-		rol.setdescripcion(this.descripcion);
-		rol.setId(this.idRol);
-		
-		return rol;
-	}
-
-
 }

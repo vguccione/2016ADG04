@@ -238,5 +238,21 @@ public class Usuario{
 		tx.commit();
 	}
 
+	public Usuario fromEntity(UsuarioE usu) {
+		Usuario usuario =new Usuario(usu.getSucursal().getIdSucursal(), usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
+				 usu.getUsuario(),usu.getDni(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
+		
+		List<Rol> roles = new ArrayList<Rol>();
+		for(RolE r: usu.getRoles()){
+			Rol rol = new Rol();
+			rol.setDescripcion(r.getDescripcion());
+			rol.setIdRol(r.getIdRol());
+			roles.add(rol);
+		}
+		usuario.setRoles(roles);
+		
+		return usuario;
+	}
+
 	
 }

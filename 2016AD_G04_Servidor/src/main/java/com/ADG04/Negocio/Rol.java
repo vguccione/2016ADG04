@@ -13,6 +13,8 @@ import java.util.List;
 
 
 
+
+import com.ADG04.Servidor.model.RolE;
 import com.ADG04.bean.Administracion.DTO_Rol;
 
 public class Rol{
@@ -63,6 +65,13 @@ public class Rol{
 		rol.setId(this.idRol);
 		
 		return rol;
+	}
+
+	public Rol fromEntity(RolE p) {
+		Rol r = new Rol();
+		r.setDescripcion(p.getDescripcion());
+		r.setIdRol(p.getIdRol());
+		return r;
 	}
 
 

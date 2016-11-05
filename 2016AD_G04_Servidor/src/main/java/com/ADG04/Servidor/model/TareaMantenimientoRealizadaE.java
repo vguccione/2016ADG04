@@ -112,15 +112,5 @@ public class TareaMantenimientoRealizadaE implements java.io.Serializable {
 		this.cantidadKilometros = cantidadKilometros;
 	}
 
-	public DTO_TareaMantenimientoRealizada toDTO() {
-		DTO_TareaMantenimientoRealizada dto = new DTO_TareaMantenimientoRealizada();
-		dto.setCantidadKilometros(this.getCantidadKilometros());
-		dto.setFecha(this.getFechaRealizada());
-		dto.setId(this.getIdTareaMantenimientoRealizada());
-		dto.setIdProveedor(this.getProveedor().getIdProveedor());
-		dto.setIdVehiculo(this.getVehiculo().getIdVehiculo());
-		dto.setIdTareaMantenimiento(this.getTareaMantenimiento().getIdTareaMantenimiento());
-		return dto;
-	}
 
 }

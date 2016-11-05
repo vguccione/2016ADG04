@@ -36,6 +36,7 @@ public interface IAdministracionRemote {
 	public List<DTO_Usuario> getUsuarios() throws RemoteException;
 	public List<String> buscarRolesUsuario(int usuario) throws RemoteException;
 	public List<DTO_Usuario> buscarUsuariosByNombreApellidoOUsuario(String filtro) throws RemoteException;
+	public DTO_Usuario existeUsuario(String usuario) throws RemoteException;
 	
 	/*************************** Sucursal *************************************/
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException;
@@ -75,4 +76,5 @@ public interface IAdministracionRemote {
 	public List<DTO_Pais> listarPaises() throws RemoteException;
 	public DTO_Pais getPaisByNombre(String pais) throws RemoteException;
 	public DTO_Provincia getProvByNombre(String prov) throws RemoteException;
+	public boolean cambiarPassword(String usuario, String oldPassword,String newPassword) throws RemoteException;
 }

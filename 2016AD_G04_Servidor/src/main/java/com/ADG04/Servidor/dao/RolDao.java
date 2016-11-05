@@ -35,7 +35,7 @@ public class RolDao extends GenericDao<RolE, Integer> {
 	public List<RolE> buscarRolesUsuario(String usuario) {
 		try{
 		return entityManager.createQuery("select r from RolE r join r.usuarios ru"
-				+ " where ru.idUsuario=:usuario")
+				+ " where ru.usuario=:usuario")
 				            .setParameter("usuario", Integer.valueOf(usuario))
 				            .getResultList();
 		}catch(Exception e){
@@ -43,5 +43,18 @@ public class RolDao extends GenericDao<RolE, Integer> {
             System.out.println("ErrorDAO: Listar roles usuario");
 		}
 		return null;
+	}
+
+	public List<RolE> buscarRolesByIdUsuario(int idUsuario) {
+		try{
+			return entityManager.createQuery("select r from RolE r join r.usuarios ru"
+					+ " where ru.idUsuario=:idUsuario")
+					            .setParameter("idUsuario", idUsuario)
+					            .getResultList();
+			}catch(Exception e){
+	            System.out.println(e);
+	            System.out.println("ErrorDAO: Listar roles usuario");
+			}
+			return null;
 	}
 }

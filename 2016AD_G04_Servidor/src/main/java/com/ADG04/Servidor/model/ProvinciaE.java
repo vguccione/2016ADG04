@@ -80,11 +80,4 @@ public class ProvinciaE implements java.io.Serializable {
 		this.pais = pais;
 	}
 
-	public DTO_Provincia toDTO(){
-		DTO_Provincia p = new DTO_Provincia();
-		p.setDescripcion(this.descripcion);
-	    p.setId(this.idProvincia);
-	    p.setPais(this.getPais().toDTO());
-		return p;
-	}
 }

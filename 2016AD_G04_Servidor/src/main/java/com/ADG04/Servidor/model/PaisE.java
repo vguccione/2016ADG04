@@ -60,15 +60,5 @@ public class PaisE implements java.io.Serializable {
 	public void setDirecciones(List<DireccionE> direcciones) {
 		this.direcciones = direcciones;
 	}
-	
-	public DTO_Pais toDTO(){
-		DTO_Pais p = new DTO_Pais();
-		p.setDescripcion(this.descripcion);
-		p.setId(this.idPais);
-		return p;
-	}
-	
-
-
-	
+		
 }

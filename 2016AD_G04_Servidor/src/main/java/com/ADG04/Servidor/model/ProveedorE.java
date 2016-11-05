@@ -191,20 +191,4 @@ public class ProveedorE implements java.io.Serializable {
 		this.tipo = tipo;
 	}
 
-	public DTO_Proveedor toDTO() {
-		DTO_Proveedor prov = new DTO_Proveedor();
-		prov.setId(this.getIdProveedor());
-		prov.setActivo(this.getActivo());
-		prov.setCuit(this.getCuit());
-		prov.setDireccion(this.getDireccion().toDTO());
-		prov.setEmail(this.getEmail());
-		prov.setRazonSocial(this.getRazonSocial());
-		prov.setTallerOficial(this.isTallerOficial());
-		prov.setTipo(this.getTipo());
-		prov.setTelefono(this.getTelefono());
-		
-		return prov;
-	}
-	
-
 }

@@ -356,4 +356,30 @@ public class Vehiculo{
 		return veh;
 	}
 
+	public Vehiculo fromEntity(VehiculoE vehiculo) {
+		Vehiculo veh = new Vehiculo();
+		veh.setAlto(vehiculo.getAlto());
+		veh.setAncho(vehiculo.getAncho());
+		veh.setAnio(vehiculo.getAnio());
+		veh.setCondicionTransporte(vehiculo.getCondicionTransporte());
+		veh.setEstado(vehiculo.getEstado());
+		veh.setFechaIngreso(vehiculo.getFechaIngreso());
+		veh.setIdVehiculo(vehiculo.getIdVehiculo());
+		veh.setKmRecorridos(vehiculo.getKmRecorridos());
+		veh.setLargo(vehiculo.getLargo());
+		veh.setMarca(vehiculo.getMarca());
+		veh.setModelo(vehiculo.getModelo());
+		veh.setPatente(vehiculo.getPatente());
+		veh.setPeso(vehiculo.getPeso());
+		veh.setPlanMantenimiento(new PlanMantenimiento().fromEntity(vehiculo.getPlanMantenimiento()));
+		veh.setRefrigerado(vehiculo.getRefrigerado());
+		veh.setSucursal(new Sucursal().fromEntity(vehiculo.getSucursal()));
+		veh.setTara(vehiculo.getTara());
+		veh.setTemperaturaMax(vehiculo.getTemperaturaMax());
+		veh.setTemperaturaMin(vehiculo.getTemperaturaMin());
+		veh.setTipo(vehiculo.getTipo());
+		veh.setVolumen(vehiculo.getVolumen());
+		return veh;
+	}
+
 }

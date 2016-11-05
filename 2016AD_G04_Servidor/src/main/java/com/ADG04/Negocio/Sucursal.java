@@ -203,7 +203,8 @@ public class Sucursal{
 		s.setDescripcion(this.descripcion);
 		s.setTelefono(this.telefono);
 		s.setDireccion(this.getDireccion().toDTO());
-		s.setIdGerente(this.getGerente().getIdUsuario());
+		if(this.getGerente()!=null)
+			s.setIdGerente(this.getGerente().getIdUsuario());
 		return s;
 	}
 	
@@ -238,10 +239,21 @@ public class Sucursal{
 		suc.setDescripcion(dto.getDescripcion());
 		suc.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
 		if(dto.getIdGerente()!=null){
-			suc.setGerente(new Usuario().fromDTO(UsuarioDao.getInstancia().getById(dto.getIdGerente()).toDTO()));
+			suc.setGerente(new Usuario().fromEntity(UsuarioDao.getInstancia().getById(dto.getIdGerente())));
 		}
 		suc.setTelefono(dto.getTelefono());
 		return suc;
+	}
+
+	public Sucursal fromEntity(SucursalE suc) {
+		Sucursal sucursal = new Sucursal();
+		sucursal.setDescripcion(suc.getDescripcion());
+		sucursal.setDireccion(new Direccion().fromEntity(suc.getDireccion()));
+		if(suc.getGerente()!=null){
+			sucursal.setGerente(new Usuario().fromEntity(UsuarioDao.getInstancia().getById(suc.getGerente().getIdUsuario())));
+		}
+		sucursal.setTelefono(suc.getTelefono());
+		return sucursal;
 	}
 
 }

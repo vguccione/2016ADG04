@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.ADG04.Negocio.Sucursal;
 import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 
@@ -553,9 +554,9 @@ public class EncomiendaE implements java.io.Serializable {
 		dto.setNombreReceptor(this.getNombreReceptor());
 		dto.setPeso(this.getPeso());
 		dto.setRefrigerado(this.refrigerado);
-		dto.setSucursalActual(this.getSucursalActual().toDTO());
-		dto.setSucursalDestino(this.getSucursalDestino().toDTO());
-		dto.setSucursalOrigen(this.getSucursalOrigen().toDTO());
+		dto.setSucursalActual(new Sucursal().fromEntity(this.getSucursalActual()).toDTO());
+		dto.setSucursalDestino(new Sucursal().fromEntity(this.getSucursalDestino()).toDTO());
+		dto.setSucursalOrigen(new Sucursal().fromEntity(this.getSucursalOrigen()).toDTO());
 		dto.setTercerizada(this.tercerizado);
 		dto.setTratamiento(this.getTratamiento());
 		dto.setUnidadGranel(this.getUnidadGranel());

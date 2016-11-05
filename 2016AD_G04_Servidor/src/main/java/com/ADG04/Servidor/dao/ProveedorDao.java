@@ -60,4 +60,17 @@ public class ProveedorDao extends GenericDao<ProveedorE, Integer> {
         return null;
 	}
 
+	public ProveedorE getByCuit(String cuit) {
+		try{
+			return (ProveedorE) entityManager
+	                .createQuery("from ProveedorE  where cuit =:cuit")
+	                .setParameter("cuit", cuit)
+	                .getSingleResult();
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: Buscar proveedor por cuit");
+        }
+        return null;
+	}
+
 }

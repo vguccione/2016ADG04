@@ -21,6 +21,7 @@ import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_CuentaCorriente;
 import com.ADG04.bean.Cliente.DTO_Factura;
+import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_Envio;
@@ -949,6 +950,109 @@ public class Controlador {
         System.out.println("Error al verificar si existe el usuario");
 		}  
 		return false;
+	}
+
+	public boolean altaProductoCliente(String codigo, String descripcion, String categoria,
+			String unidad, Integer idCliente) {
+		try{
+			DTO_Producto producto = new DTO_Producto();
+			producto.setCategoria(categoria);
+			producto.setDescripcion(descripcion);
+			producto.setCodigo(codigo);
+			producto.setUnidad(unidad);
+			producto.setIdCliente(idCliente);
+			
+			bd.altaProducto(producto);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al dar de alta un producto");
+		}
+		return false;
+	}
+
+	public boolean altaSeguro(Integer idProveedor, String tipo, String descripcion,Float monto) {
+		try{
+			DTO_Seguro seguro = new DTO_Seguro();
+			seguro.setDescripcion(descripcion);
+			seguro.setIdProveedor(idProveedor);
+			seguro.setTarifa(monto);
+			seguro.setTipoSeguro(tipo);
+			bd.altaSeguro(seguro);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al dar de alta Seguro");
+		}
+		return false;
+	}
+
+	public DTO_Proveedor buscarProveedorByCuit(String cuit) {
+		try{
+			return bd.buscarProveedorByCuit(cuit);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar Proveedor por cuit");
+		}
+		return null;
+	}
+
+	public boolean altaServicioSeguridad(Integer idProveedor, String descripcion, Float monto) {
+		try{
+			DTO_ServicioSeguridad ss = new DTO_ServicioSeguridad();
+			ss.setDescripcion(descripcion);
+			ss.setIdProveedor(idProveedor);
+			ss.setTarifa(monto);
+			bd.altaServicioSeguridad(ss);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al dar de alta Servicio de Seguridad");
+		}
+		return false;
+	}
+	
+	public boolean altaTarifaCarrier(String tipo,  int idProveedor, int idDestino, String comentarios, String prioridad, float precioKMExtra, float monto) {
+		try{
+			DTO_TarifasCarrier tc = new DTO_TarifasCarrier();
+			tc.setComentarios(comentarios);
+			tc.setIdProveedor(idProveedor);
+			tc.setTarifa(monto);
+			tc.setPrecioKMExtra(precioKMExtra);
+			tc.setPrioridad(prioridad);
+			tc.setIdDireccion(idDestino);
+			bd.altaTarifasCarrier(tc);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al dar de alta Tarifas Carrier");
+		}
+		return false;
+	}
+
+	public List<DTO_Direccion> listarDestinoNacionalSucursal(Integer id) {
+		try {
+       	 return bd.listarDestinoNacional(id);
+        } catch (Exception e) {
+       	 	e.printStackTrace();
+            System.out.println("Error Listar Destino Nacional por Sucursal");
+        }   
+        return null;
+	}
+
+	public List<DTO_Direccion> listarDestinoInternacionalSucursal(Integer id) {
+		try {
+       	 return bd.listarDestinoInternacional(id);
+        } catch (Exception e) {
+       		e.printStackTrace();
+            System.out.println("Error Listar Destino Internacional por Sucursal");
+        }   
+        return null;
 	}
 
 

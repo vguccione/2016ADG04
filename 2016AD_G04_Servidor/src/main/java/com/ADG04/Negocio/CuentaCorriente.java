@@ -4,6 +4,8 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
+import com.ADG04.Servidor.model.CuentaCorrienteE;
+
 
 
 
@@ -85,6 +87,17 @@ public class CuentaCorriente{
 
 	public void setFormaPago(String formaPago) {
 		this.formaPago = formaPago;
+	}
+
+
+
+	public CuentaCorriente fromEntity(CuentaCorrienteE ctc) {
+		CuentaCorriente cuenta = new CuentaCorriente();
+		cuenta.setCredito(ctc.getCredito());
+		cuenta.setFormaPago(ctc.getFormaPago());
+		cuenta.setIdCtaCte(ctc.getIdCtaCte());
+		cuenta.setLimiteCredito(ctc.getLimiteCredito());
+		return cuenta;
 	}
 
 }

@@ -15,10 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
-import controlador.controladorAdmin;
-import dto.Proveedor.DTO_Proveedor;
-
-
+import com.ADG04.Controller.Controlador;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 /**
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
@@ -37,15 +35,6 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	{
-		//Set Look & Feel
-		try {
-			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	private JPanel jPanel;
 	private JLabel jLabelTitulo;
@@ -76,8 +65,7 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 			GroupLayout thisLayout = new GroupLayout((JComponent)getContentPane());
 			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 10");
-			this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("images/box.png")).getImage());
+			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 			this.setResizable(false);
 			{
 				jPanel = new JPanel();
@@ -199,7 +187,7 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAceptarActionPerformed(evt);
 					if(validacion()){
-						boolean flag = controladorAdmin.getInstancia().altaServicioSeguridad(proveedor.getId(),jTextFieldDescripcion.getText(), (float)jFormattedTextFieldMonto.getValue());
+						boolean flag = Controlador.getInstancia().altaServicioSeguridad(proveedor.getId(),jTextFieldDescripcion.getText(), (Float)jFormattedTextFieldMonto.getValue());
 						if(flag){
 							JOptionPane.showMessageDialog(null,"Se ha dado de alta el servicio de seguridad", "Alta servicio seguridad realizada", JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
@@ -257,7 +245,7 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAceptarActionPerformed(evt);
 
-					proveedor = controladorAdmin.getInstancia().buscarProveedor(jTextFieldCuit.getText());
+					proveedor = Controlador.getInstancia().buscarProveedorByCuit(jTextFieldCuit.getText());
 					
 					if(proveedor == null){
 						//No encontro el proveedor entonces notifico que no lo encontro
@@ -282,11 +270,11 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 public boolean validacion(){
 		
 		if (jTextFieldDescripcion.getText().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese la descripci�n del servicio de seguridad.", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese la descripcion del servicio de seguridad.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			jTextFieldDescripcion.requestFocus();
 			return false;
 		} else if(jFormattedTextFieldMonto.getValue().toString().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese el precio del servicio de seguridad.", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese el precio del servicio de seguridad.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			jFormattedTextFieldMonto.requestFocus();
 			return false;
 		}

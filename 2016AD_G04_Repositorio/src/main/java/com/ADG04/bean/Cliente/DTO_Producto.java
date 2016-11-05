@@ -7,10 +7,10 @@ public class DTO_Producto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer idProducto;
-	private int codigo;
+	private String codigo;
 	private String descripcion;
 	private String categoria;
-	private char unidad;
+	private String unidad;
 	private Integer idCliente;
 	
 	public DTO_Producto(){
@@ -24,12 +24,12 @@ public class DTO_Producto implements Serializable{
 		this.idProducto = id;
 	}
 
-	public int getCodigo() {
+	public String getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public void setCodigo(String codigoProducto) {
+		this.codigo = codigoProducto;
 	}
 
 	public String getDescripcion() {
@@ -48,11 +48,11 @@ public class DTO_Producto implements Serializable{
 		this.categoria = categoria;
 	}
 
-	public char getUnidad() {
+	public String getUnidad() {
 		return unidad;
 	}
 
-	public void setUnidad(char unidad) {
+	public void setUnidad(String unidad) {
 		this.unidad = unidad;
 	}
 

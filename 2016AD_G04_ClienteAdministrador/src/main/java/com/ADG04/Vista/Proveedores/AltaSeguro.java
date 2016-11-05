@@ -19,9 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
-
-import controlador.controladorAdmin;
-import dto.Proveedor.DTO_Proveedor;
+import com.ADG04.Controller.Controlador;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 
 
 /**
@@ -42,16 +41,6 @@ public class AltaSeguro extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	{
-		//Set Look & Feel
-		try {
-			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	private JPanel jPanel;
 	private JLabel jLabelTitulo;
 	private JButton jButtonAceptar;
@@ -84,8 +73,7 @@ public class AltaSeguro extends javax.swing.JFrame {
 			GroupLayout thisLayout = new GroupLayout((JComponent)getContentPane());
 			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 10");
-			this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("images/box.png")).getImage());
+			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 			this.setResizable(false);
 			{
 				jPanel = new JPanel();
@@ -192,7 +180,7 @@ public class AltaSeguro extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAceptarActionPerformed(evt);
 					if(validacion()){
-						boolean flag = controladorAdmin.getInstancia().altaSeguro(proveedor.getId() ,jComboBoxTipo.getSelectedItem().toString(), jTextFieldDescripcion.getText(), (float)jFormattedTextFieldMonto.getValue());
+						boolean flag = Controlador.getInstancia().altaSeguro(proveedor.getId() ,jComboBoxTipo.getSelectedItem().toString(), jTextFieldDescripcion.getText(), (Float)jFormattedTextFieldMonto.getValue());
 						if(flag){
 							JOptionPane.showMessageDialog(null,"Se ha dado de alta el seguro", "Alta seguro realizada", JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
@@ -252,7 +240,7 @@ public class AltaSeguro extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAceptarActionPerformed(evt);
 					
-					proveedor = controladorAdmin.getInstancia().buscarProveedor(jTextFieldCuit.getText());
+					proveedor = Controlador.getInstancia().buscarProveedorByCuit(jTextFieldCuit.getText());
 					
 					if(proveedor == null){
 						//No encontro el proveedor entonces notifico que no lo encontro
@@ -279,15 +267,15 @@ public class AltaSeguro extends javax.swing.JFrame {
 public boolean validacion(){
 		
 		if (jComboBoxTipo.getSelectedItem().toString().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, seleccione el tipo de seguro", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, seleccione el tipo de seguro", "Atencion", JOptionPane.WARNING_MESSAGE);
 			jComboBoxTipo.requestFocus();
 			return false;
 		} else if(jTextFieldDescripcion.getText().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese la descripci�n del seguro.", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese la descripcion del seguro.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			jTextFieldDescripcion.requestFocus();
 			return false;
 		} else if(jFormattedTextFieldMonto.getText().equals("")){
-			JOptionPane.showMessageDialog(null,"Por favor, ingrese el precio del seguro.", "Atenci�n", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese el precio del seguro.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			jFormattedTextFieldMonto.requestFocus();
 			return false;
 		} 
@@ -338,7 +326,7 @@ public boolean validacion(){
 	private JLabel getJLabel7() {
 		if(jLabel7 == null) {
 			jLabel7 = new JLabel();
-			jLabel7.setText("Descripci�n");
+			jLabel7.setText("Descripcion");
 			jLabel7.setFont(new java.awt.Font("Verdana",0,11));
 			jLabel7.setLayout(null);
 			jLabel7.setBounds(6, 55, 70, 20);

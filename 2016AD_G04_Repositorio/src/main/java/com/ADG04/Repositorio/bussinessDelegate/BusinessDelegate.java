@@ -776,4 +776,18 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.existeUsuario(usuario);
 	}
 
+	public DTO_Proveedor buscarProveedorByCuit(String cuit) throws RemoteException{
+		return this.businessService.buscarProveedorByCuit(cuit);
+	}
+
+	public List<DTO_Direccion> listarDestinoNacional(Integer id) throws RemoteException{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<DTO_Direccion> listarDestinoInternacional(Integer id) throws RemoteException{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

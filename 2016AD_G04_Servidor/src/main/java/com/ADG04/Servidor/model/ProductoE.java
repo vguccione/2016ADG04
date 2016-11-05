@@ -33,7 +33,7 @@ public class ProductoE implements java.io.Serializable {
 	private ClienteE cliente;
 
 	@Column(name = "CodigoProducto", nullable = false)
-	private int codigoProducto;
+	private String codigoProducto;
 	
 	@Column(name = "Categoria")
 	private String categoria;
@@ -42,7 +42,7 @@ public class ProductoE implements java.io.Serializable {
 	private String descripcion;
 
 	@Column(name = "Unidad", nullable = false, length = 1)
-	private char unidad;
+	private String unidad;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
 	private List<ProductoEncomiendaE> productoEncomiendas;
@@ -56,8 +56,8 @@ public class ProductoE implements java.io.Serializable {
 	public ProductoE() {
 	}
 
-	public ProductoE(ClienteE cliente, int codigoProducto,
-			String descripcion, char unidad) {
+	public ProductoE(ClienteE cliente, String codigoProducto,
+			String descripcion, String unidad) {
 		this.cliente = cliente;
 		this.codigoProducto = codigoProducto;
 		this.descripcion = descripcion;
@@ -80,11 +80,11 @@ public class ProductoE implements java.io.Serializable {
 		this.cliente = cliente;
 	}
 
-	public int getCodigoProducto() {
+	public String getCodigoProducto() {
 		return this.codigoProducto;
 	}
 
-	public void setCodigoProducto(int codigoProducto) {
+	public void setCodigoProducto(String codigoProducto) {
 		this.codigoProducto = codigoProducto;
 	}
 
@@ -96,11 +96,11 @@ public class ProductoE implements java.io.Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public char getUnidad() {
+	public String getUnidad() {
 		return this.unidad;
 	}
 
-	public void setUnidad(char unidad) {
+	public void setUnidad(String unidad) {
 		this.unidad = unidad;
 	}
 

@@ -16,21 +16,20 @@ import javax.swing.UIManager;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 
-import controlador.controladorAdmin;
-import dto.Cliente.DTO_Cliente;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 
+import com.ADG04.Controller.Controlador;
+import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
+
 public class AltaProductoCliente {
 
 	private JFrame frame;
 	private JFormattedTextField id;
 	
-	private DTO_Cliente clienteDTO;
 	private JLabel cliente;
 	private JButton btnBuscar;
 	private JPanel panel_1;
@@ -43,6 +42,7 @@ public class AltaProductoCliente {
 	private JTextField categoria;
 	private JButton button;
 	private JButton button_1;
+	DTO_ClienteEmpresa clienteDTO;
 	@SuppressWarnings("rawtypes")
 	private JComboBox unidad;
 
@@ -72,8 +72,7 @@ public class AltaProductoCliente {
 		frame.setBounds(100, 100, 509, 421);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.setTitle("Aplicaciones Distribuidas - TPO Grupo: 10");
-		frame.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("images/box.png")).getImage());
+		frame.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 		
 		
 		JLabel titulo = new JLabel("Alta Producto Cliente");
@@ -95,7 +94,7 @@ public class AltaProductoCliente {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				clienteDTO = controladorAdmin.getInstancia().getCliente((Integer) id.getValue());
+				clienteDTO = Controlador.getInstancia().getEmpresaById((Integer) id.getValue());
 				if (clienteDTO != null){
 					cliente.setText(clienteDTO.getRazonSocial());
 					btnBuscar.setEnabled(false);
@@ -192,7 +191,7 @@ public class AltaProductoCliente {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (validacion()) {
-					boolean flag = controladorAdmin.getInstancia().altaProductoCliente(codigo.getText(), descripcion.getText(), categoria.getText(), unidad.getSelectedItem().toString(), clienteDTO.getId());
+					boolean flag = Controlador.getInstancia().altaProductoCliente(codigo.getText(), descripcion.getText(), categoria.getText(), unidad.getSelectedItem().toString(), clienteDTO.getId());
 						if(flag){
 							JOptionPane.showMessageDialog(null,"Se ha dado de alta el producto.", "Alta producto realizada", JOptionPane.INFORMATION_MESSAGE);
 							frame.setVisible(false);

@@ -246,7 +246,7 @@ public class AltaUsuario extends javax.swing.JFrame {
 		if(jButton1 == null) {
 			jButton1 = new JButton();
 			jButton1.setText("Buscar");
-			jButton1.setBounds(148, 130, 65, 21);
+			jButton1.setBounds(148, 130, 100, 21);
 			jButton1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 						sucursal = Controlador.getInstancia().getSucursal((Integer) jFormattedTextFieldIdSucursal.getValue());

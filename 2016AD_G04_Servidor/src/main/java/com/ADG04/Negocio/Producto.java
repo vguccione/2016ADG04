@@ -4,16 +4,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.ClienteEmpresaDao;
+import com.ADG04.Servidor.dao.ProductoDao;
+import com.ADG04.Servidor.model.ProductoE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Cliente.DTO_Producto;
 
 public class Producto{
 
 	private int idProducto;
 	private Cliente cliente;
-	private int codigoProducto;
+	private String codigoProducto;
 	private String categoria;
 	private String descripcion;
-	private char unidad;
+	private String unidad;
 	private List<ProductoEncomienda> productoEncomiendas;
 	private List<ItemManifiesto> manifiestos;
 	private List<ItemRemito> remitos;
@@ -21,8 +28,8 @@ public class Producto{
 	public Producto() {
 	}
 
-	public Producto(Cliente cliente, int codigoProducto,
-			String descripcion, char unidad) {
+	public Producto(Cliente cliente, String codigoProducto,
+			String descripcion, String unidad) {
 		this.cliente = cliente;
 		this.codigoProducto = codigoProducto;
 		this.descripcion = descripcion;
@@ -45,11 +52,11 @@ public class Producto{
 		this.cliente = cliente;
 	}
 
-	public int getCodigoProducto() {
+	public String getCodigoProducto() {
 		return this.codigoProducto;
 	}
 
-	public void setCodigoProducto(int codigoProducto) {
+	public void setCodigoProducto(String codigoProducto) {
 		this.codigoProducto = codigoProducto;
 	}
 
@@ -61,11 +68,11 @@ public class Producto{
 		this.descripcion = descripcion;
 	}
 
-	public char getUnidad() {
+	public String getUnidad() {
 		return this.unidad;
 	}
 
-	public void setUnidad(char unidad) {
+	public void setUnidad(String unidad) {
 		this.unidad = unidad;
 	}
 
@@ -111,6 +118,54 @@ public class Producto{
 		prod.setDescripcion(this.descripcion);
 		prod.setId(this.idProducto);
 		
+		return prod;
+	}
+
+	public Producto fromDTO(DTO_Producto producto) {
+		Producto prod  = new Producto();
+		prod.setCategoria(producto.getCategoria());
+		prod.setCliente(new ClienteEmpresa().fromEntity(ClienteEmpresaDao.getInstancia().getById(producto.getIdCliente())));
+		prod.setCodigoProducto(producto.getCodigo());
+		prod.setDescripcion(producto.getDescripcion());
+		if(producto.getId()!=null)
+			prod.setIdProducto(producto.getId());
+		prod.setUnidad(producto.getUnidad());
+		return prod;
+	}
+	
+	public ProductoE toEntity(){
+		ProductoE prod = new ProductoE();
+		prod.setCategoria(categoria);
+		prod.setCliente(ClienteEmpresaDao.getInstancia().getById(cliente.getIdCliente()));
+		prod.setCodigoProducto(codigoProducto);
+		prod.setDescripcion(descripcion);
+		prod.setUnidad(unidad);
+		prod.setIdProducto(idProducto);
+		return prod;
+	}
+
+	public void guardar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		ProductoDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();
+	}
+	
+	public void modificar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		ProductoDao.getInstancia().saveOrUpdate(this.toEntity());
+		em.getTransaction().commit();
+	}
+
+	public Producto fromEntity(ProductoE producto) {
+		Producto prod  = new Producto();
+		prod.setCategoria(producto.getCategoria());
+		prod.setCliente(new ClienteEmpresa().fromEntity(ClienteEmpresaDao.getInstancia().getById(producto.getCliente().getIdCliente())));
+		prod.setCodigoProducto(producto.getCodigoProducto());
+		prod.setDescripcion(producto.getDescripcion());
+		prod.setIdProducto(producto.getIdProducto());
+		producto.setUnidad(producto.getUnidad());
 		return prod;
 	}
 }

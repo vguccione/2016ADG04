@@ -14,6 +14,7 @@ import com.ADG04.Vista.Administrativos.AltaUsuario;
 import com.ADG04.Vista.Administrativos.CambiarContrasena;
 import com.ADG04.Vista.Clientes.AltaClienteEmpresa;
 import com.ADG04.Vista.Clientes.AltaClienteParticular;
+import com.ADG04.Vista.Clientes.AltaProductoCliente;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
 import com.ADG04.Vista.Listados.ListadoCarriers;
@@ -37,6 +38,8 @@ import com.ADG04.Vista.Listados.ListadoTarifasCarriers;
 import com.ADG04.Vista.Listados.ListadoUsuarios;
 import com.ADG04.Vista.Listados.ListadoVehiculos;
 import com.ADG04.Vista.Proveedores.AltaProveedor;
+import com.ADG04.Vista.Proveedores.AltaSeguro;
+import com.ADG04.Vista.Proveedores.AltaServicioSeguridad;
 import com.ADG04.Vista.Vehiculos.AgregarTareaAPlan;
 import com.ADG04.Vista.Vehiculos.AltaPlanMantenimiento;
 import com.ADG04.Vista.Vehiculos.AltaVehiculo;
@@ -347,9 +350,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemAltaSeguro.setText("Alta Seguro");
 								JMenuItemAltaSeguro.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaAltaSeguro inst = new VistaAltaSeguro();
+										AltaSeguro inst = new AltaSeguro();
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
 									}
 								});
 							}
@@ -394,9 +397,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemAltaServicioSeguridad.setText("Alta Servicio Seguridad");
 								JMenuItemAltaServicioSeguridad.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-									/*	VistaAltaServicioSeguridad inst = new VistaAltaServicioSeguridad();
+										AltaServicioSeguridad inst = new AltaServicioSeguridad();
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
 									}
 								});
 							}
@@ -454,9 +457,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemAltaProductoCliente.setText("Alta Producto");
 								JMenuItemAltaProductoCliente.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaAltaProductoCliente inst = new VistaAltaProductoCliente();
+										AltaProductoCliente inst = new AltaProductoCliente();
 										inst.getFrame().setLocationRelativeTo(null);
-										inst.getFrame().setVisible(true);*/
+										inst.getFrame().setVisible(true);
 									}
 								});
 							}

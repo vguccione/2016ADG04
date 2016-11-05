@@ -22,10 +22,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import controlador.controladorAdmin;
-import dto.Administracion.DTO_Destino;
-import dto.Administracion.DTO_Sucursal;
-import dto.Proveedor.DTO_Proveedor;
+import com.ADG04.Controller.Controlador;
+import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 
 
 /**
@@ -40,7 +40,7 @@ import dto.Proveedor.DTO_Proveedor;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaPrecioCarrier extends javax.swing.JFrame {
+public class AltaTarifaCarrier extends javax.swing.JFrame {
 
 	/**
 	 * 
@@ -89,9 +89,9 @@ public class AltaPrecioCarrier extends javax.swing.JFrame {
 	private JLabel jLabelRazonSocial;
 
 	private DTO_Proveedor proveedor;
-	private List<DTO_Destino> destinos;
+	private List<DTO_Direccion> destinos;
 	
-	public AltaPrecioCarrier() {
+	public AltaTarifaCarrier() {
 		super();
 		initGUI();
 	}
@@ -102,8 +102,7 @@ public class AltaPrecioCarrier extends javax.swing.JFrame {
 			GroupLayout thisLayout = new GroupLayout((JComponent)getContentPane());
 			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 10");
-			this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("images/box.png")).getImage());
+			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 			this.setResizable(false);
 			{
 				jPanel = new JPanel();
@@ -243,8 +242,8 @@ public class AltaPrecioCarrier extends javax.swing.JFrame {
 							tipo = "N";
 						else 
 							tipo = "I";
-						DTO_Destino d = destinos.get(jComboBoxDestinos.getSelectedIndex());
-						boolean flag = controladorAdmin.getInstancia().altaPrecioCarrier(tipo,  proveedor.getId(), d.getId(), jTextAreaComentarios.getText(), jTextFieldPrioridad.getText(), (float)jFormattedTextFieldKMExtra.getValue(), (float)jFormattedTextFieldPrecio.getValue());
+						DTO_Direccion d = destinos.get(jComboBoxDestinos.getSelectedIndex());
+						boolean flag = Controlador.getInstancia().altaTarifaCarrier(tipo,  proveedor.getId(), d.getIdDireccion(), jTextAreaComentarios.getText(), jTextFieldPrioridad.getText(), (Float)jFormattedTextFieldKMExtra.getValue(), (Float)jFormattedTextFieldPrecio.getValue());
 							if(flag){
 								JOptionPane.showMessageDialog(null,"Se ha dado el precio del carrier del proveedor: " + proveedor.getRazonSocial(), "Alta precio carrier realizada", JOptionPane.INFORMATION_MESSAGE);
 								setVisible(false);
@@ -310,7 +309,7 @@ public class AltaPrecioCarrier extends javax.swing.JFrame {
 			Buscar.setBounds(182, 27, 69, 20);
 			Buscar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
-					proveedor = controladorAdmin.getInstancia().buscarProveedor(jTextFieldCuit.getText());
+					proveedor = Controlador.getInstancia().buscarProveedorByCuit(jTextFieldCuit.getText());
 					
 					if(proveedor == null){
 						//No encontro el proveedor entonces notifico que no lo encontro
@@ -432,14 +431,14 @@ public boolean validacion(){
 	private ComboBoxModel getItemsComboBox(){
 		destinos = null;
 		if(jRadioButtonNacional.isSelected()){
-			destinos = controladorAdmin.getInstancia().listarDestinoNacionalSucursal(sucursal.getId());
+			destinos = Controlador.getInstancia().listarDestinoNacionalSucursal(sucursal.getId());
 		} else if (jRadioButtonInternacional.isSelected()){
-			destinos = controladorAdmin.getInstancia().listarDestinoInternacionalSucursal(sucursal.getId());
+			destinos = Controlador.getInstancia().listarDestinoInternacionalSucursal(sucursal.getId());
 		}
 		if(destinos != null){
 			String lista[] = new String[destinos.size()];
 			for(int i=0; i<destinos.size(); i++){
-				lista[i] = destinos.get(i).getCiudad();
+				lista[i] = destinos.get(i).getLocalidad() + " " + destinos.get(i).getPais().getDescripcion();
 			}
 			ComboBoxModel jComboBoxModel = new DefaultComboBoxModel(lista);
 		
@@ -476,7 +475,7 @@ public boolean validacion(){
 			jButton1.addActionListener(new ActionListener() {
 				@SuppressWarnings("unchecked")
 				public void actionPerformed(ActionEvent evt) {
-					sucursal = controladorAdmin.getInstancia().getSucursal((Integer) jFormattedTextFieldIdSucursal.getValue());
+					sucursal = Controlador.getInstancia().getSucursal((Integer) jFormattedTextFieldIdSucursal.getValue());
 					if(sucursal != null){
 						jFormattedTextFieldIdSucursal.setEnabled(false);
 						jButton1.setEnabled(false);

@@ -1,5 +1,12 @@
 package com.ADG04.Negocio;
 
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.SeguroDao;
+import com.ADG04.Servidor.model.SeguroE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
 
 public class Seguro implements java.io.Serializable{
@@ -105,4 +112,52 @@ public class Seguro implements java.io.Serializable{
 		s.setTarifaPorKm(this.tarifaPorKm);
 		return s;
 	}
+
+	public Seguro fromDTO(DTO_Seguro seguro) {
+		Seguro seg=new Seguro();
+		seg.setDescripcion(seguro.getDescripcion());
+		if(seguro.getId()!=null)
+			seg.setIdSeguro(seguro.getId());
+		seg.setProveedor(new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(seguro.getIdProveedor())));
+		seg.setTarifa(seguro.getTarifa());
+		seg.setTipoSeguro(seguro.getTipoSeguro());
+		return seg;
+	}
+	
+	public Seguro fromEntity(SeguroE seguro) {
+		Seguro seg=new Seguro();
+		seg.setDescripcion(seguro.getDescripcion());
+		seg.setIdSeguro(seguro.getIdSeguro());
+		seg.setProveedor(new Proveedor().fromEntity(seguro.getProveedor()));
+		seg.setTarifa(seguro.getTarifa());
+		seg.setTipoSeguro(seguro.getTipoSeguro());
+		return seg;
+	}
+	
+	
+	public SeguroE toEntity(){
+		SeguroE s = new SeguroE();
+		s.setIdSeguro(this.getIdSeguro());
+		s.setProveedor(ProveedorDao.getInstancia().getById(this.getProveedor().getIdProveedor()));
+		s.setTipoSeguro(this.getTipoSeguro());
+		s.setDescripcion(this.descripcion);
+		s.setTarifa(this.getTarifa());
+		s.setTarifaPorKm(this.tarifaPorKm);
+		return s;
+	}
+	
+	public void guardar(){
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		SeguroDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();
+	}
+	
+	public void modificar(){
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		SeguroDao.getInstancia().saveOrUpdate(this.toEntity());
+		em.getTransaction().commit();
+	}
+	
 }

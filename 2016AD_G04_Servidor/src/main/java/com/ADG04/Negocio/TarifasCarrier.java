@@ -1,5 +1,12 @@
 package com.ADG04.Negocio;
 
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.ServicioSeguridadDao;
+import com.ADG04.Servidor.dao.TarifasCarrierDao;
+import com.ADG04.Servidor.model.TarifasCarrierE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 
 public class TarifasCarrier implements java.io.Serializable{	
@@ -102,6 +109,43 @@ public class TarifasCarrier implements java.io.Serializable{
 		pc.setPrecioKMExtra(this.getPrecioKMExtra());
 		pc.setTarifa(this.getTarifa());
 		return pc;
+	}
+
+	public TarifasCarrier fromDTO(DTO_TarifasCarrier tarifa) {
+		TarifasCarrier tc = new TarifasCarrier();
+		tc.setComentarios(tarifa.getComentarios());
+		if(tarifa.getId()!=null)
+			tc.setIdTarifasCarrier(tarifa.getId());
+		tc.setPrecioKMExtra(tarifa.getPrecioKMExtra());
+		tc.setPrioridad(tarifa.getPrioridad());
+		tc.setProveedor(new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(tarifa.getIdProveedor())));
+		tc.setTarifa(tarifa.getTarifa());
+		return tc;
+	}
+	
+	public TarifasCarrierE toEntity(){
+		TarifasCarrierE tc = new TarifasCarrierE();
+		tc.setComentarios(comentarios);
+		tc.setIdTarifasCarrier(idTarifasCarrier);
+		tc.setPrecioKMExtra(precioKMExtra);
+		tc.setPrioridad(prioridad);
+		tc.setTarifa(tarifa);
+		tc.setProveedor(ProveedorDao.getInstancia().getById(this.proveedor.getIdProveedor()));
+		return tc;
+	}
+
+	public void guardar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		TarifasCarrierDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();
+	}
+
+	public void modificar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		TarifasCarrierDao.getInstancia().saveOrUpdate(this.toEntity());
+		em.getTransaction().commit();
 	}
 
 	

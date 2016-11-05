@@ -55,7 +55,8 @@ public class App
 	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-    	Usuario usu = new Usuario().fromEntity(UsuarioDao.getInstancia().getById(1));
+    	Proveedor prov = new Proveedor().fromEntity(ProveedorDao.getInstancia().getByCuit("445432"));
+    	
     	/*BusinessDelegate bd = new BusinessDelegate();
     	
     	DTO_Vehiculo v = new DTO_Vehiculo();

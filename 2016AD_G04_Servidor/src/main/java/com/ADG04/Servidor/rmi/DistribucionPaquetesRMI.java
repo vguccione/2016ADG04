@@ -28,12 +28,14 @@ import com.ADG04.Negocio.Producto;
 import com.ADG04.Negocio.Proveedor;
 import com.ADG04.Negocio.Provincia;
 import com.ADG04.Negocio.Rol;
+import com.ADG04.Negocio.Seguro;
 import com.ADG04.Negocio.ServicioSeguridad;
 import com.ADG04.Negocio.Sucursal;
 import com.ADG04.Negocio.TareaMantenimiento;
 import com.ADG04.Negocio.TareaMantenimientoPorKm;
 import com.ADG04.Negocio.TareaMantenimientoPorTiempo;
 import com.ADG04.Negocio.TareaMantenimientoRealizada;
+import com.ADG04.Negocio.TarifasCarrier;
 import com.ADG04.Negocio.Usuario;
 import com.ADG04.Negocio.Vehiculo;
 import com.ADG04.Repositorio.Exceptions.BusinessException;
@@ -49,6 +51,7 @@ import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RolDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoDao;
@@ -116,6 +119,7 @@ import com.ADG04.bean.Vehiculo.DTO_TareaMantenimientoRealizada;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
+
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 
@@ -361,33 +365,25 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	
 	public void altaProducto(DTO_Producto producto) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		Producto prod = new Producto().fromDTO(producto);
+		prod.guardar();
 	}
 
 	
 	public void modificarProducto(DTO_Producto producto) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		Producto prod = new Producto().fromDTO(producto);
+		prod.modificar();
 	}
 
 	
 	public void eliminarProducto(Integer idProducto) throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	public void eliminarProducto(Integer idCliente, String codigoProducto)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		ProductoDao.getInstancia().removeById(idProducto);
 	}
 
 	
 	public DTO_Producto getProducto(Integer idProducto) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		Producto prod = new Producto().fromEntity(ProductoDao.getInstancia().getById(idProducto));
+		return prod.toDTO();
 	}
 
 	
@@ -574,29 +570,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public void altaSeguro(DTO_Seguro seguro) throws RemoteException {
-		ProveedorE prov = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
-		
-		GestionProveedor gp = new GestionProveedor(0, prov.getDireccion(), prov.getActivo(), prov.getCuit(),
-				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
-				
-		gp.altaSeguro(seguro.getTipoSeguro(), seguro.getDescripcion(), seguro.getTarifa(), seguro.getTarifaPorKm());	
+		Seguro seg = new Seguro().fromDTO(seguro);
+		seg.guardar();
 	}
 	public void modificarSeguro(DTO_Seguro seguro) throws RemoteException{
-		ProveedorE prov = ProveedorDao.getInstancia().getById(seguro.getIdProveedor());
-		GestionProveedor gp = new GestionProveedor(0, prov.getDireccion(), prov.getActivo(), prov.getCuit(),
-				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
-		
-		gp.modificarSeguro(seguro.getId(), seguro.getTipoSeguro(), seguro.getDescripcion(), seguro.getTarifa(), seguro.getTarifaPorKm());
-		/*
-		 * Usando el que tiene herencia 
-		 * _GestionProveedor gp = ProveedorDao.getInstancia.getById(seguro.getIdProveedor());
-			gp.altaSeguro(seguro);
-		 * 
-		 * */
+		Seguro seg = new Seguro().fromDTO(seguro);
+		seg.modificar();
 	}
 	
-	public Integer gestionarEnvioEncomienda(int idEncomienda){
-		
+	public Integer gestionarEnvioEncomienda(int idEncomienda){		
 		return GestionEncomienda.getInstancia().asignarEnvio(idEncomienda, null);		
 	}
 	
@@ -706,52 +688,30 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public void altaServicioSeguridad(DTO_ServicioSeguridad servicioSeguridad)
 			throws RemoteException {
-		ProveedorE prov = ProveedorDao.getInstancia().getById(servicioSeguridad.getIdProveedor());
-		
-		GestionProveedor gp = new GestionProveedor(0, prov.getDireccion(), prov.getActivo(), prov.getCuit(),
-				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
-		
-		gp.altaServicioSeguridad(servicioSeguridad.getDescripcion(), servicioSeguridad.getTarifa());
-		
+		ServicioSeguridad ss = new ServicioSeguridad().fromDTO(servicioSeguridad);
+		ss.guardar();
 	}
 
 	@Override
 	public void modificarServicioSeguridad(
 			DTO_ServicioSeguridad servicioSeguridad) throws RemoteException {
-		ProveedorE prov = ProveedorDao.getInstancia().getById(servicioSeguridad.getIdProveedor());
-		
-		GestionProveedor gp = new GestionProveedor(0, prov.getDireccion(), prov.getActivo(), prov.getCuit(),
-				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
-		
-		gp.modificarServicioSeguridad(servicioSeguridad.getId(),servicioSeguridad.getDescripcion(), servicioSeguridad.getTarifa());
-		
+		ServicioSeguridad ss = new ServicioSeguridad().fromDTO(servicioSeguridad);
+		ss.modificar();
 	}
 	
 
 	@Override
 	public void altaTarifasCarrier(DTO_TarifasCarrier tarifasCarrier)
 			throws RemoteException {
-		ProveedorE prov = ProveedorDao.getInstancia().getById(tarifasCarrier.getIdProveedor());
-		
-		GestionProveedor gp = new GestionProveedor(0, prov.getDireccion(), prov.getActivo(), prov.getCuit(),
-				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
-		
-		gp.altaTarifasCarrier(tarifasCarrier.getComentarios(), tarifasCarrier.getPrioridad(),
-								tarifasCarrier.getPrecioKMExtra(), tarifasCarrier.getTarifa());
-		
+		TarifasCarrier tc = new TarifasCarrier().fromDTO(tarifasCarrier);
+		tc.guardar();
 	}
 
 	@Override
 	public void modificarTarifasCarrier(DTO_TarifasCarrier tarifasCarrier)
 			throws RemoteException {
-		ProveedorE prov = ProveedorDao.getInstancia().getById(tarifasCarrier.getIdProveedor());
-		
-		GestionProveedor gp = new GestionProveedor(0, prov.getDireccion(), prov.getActivo(), prov.getCuit(),
-				prov.getRazonSocial(), prov.getEmail(), prov.getTelefono(), prov.isTallerOficial(), prov.getTipo());
-		
-		gp.modificarTarifasCarrier(tarifasCarrier.getId(), tarifasCarrier.getComentarios(), tarifasCarrier.getPrioridad(),
-								tarifasCarrier.getPrecioKMExtra(), tarifasCarrier.getTarifa());
-		
+		TarifasCarrier tc = new TarifasCarrier().fromDTO(tarifasCarrier);
+		tc.modificar();	
 	}
 
 	@Override
@@ -1418,4 +1378,21 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		else
 			return null;
 	}
+
+
+	@Override
+	public void eliminarProducto(Integer idCliente, String codigoProducto)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public DTO_Proveedor buscarProveedorByCuit(String cuit)
+			throws RemoteException {
+		Proveedor prov = new Proveedor().fromEntity(ProveedorDao.getInstancia().getByCuit(cuit));
+		return prov.toDTO();
+	}
+
 }

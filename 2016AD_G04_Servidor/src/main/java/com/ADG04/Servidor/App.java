@@ -55,35 +55,38 @@ public class App
 	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-    	Proveedor prov = new Proveedor().fromEntity(ProveedorDao.getInstancia().getByCuit("445432"));
+    	   	
+    	BusinessDelegate bd = new BusinessDelegate();
     	
-    	/*BusinessDelegate bd = new BusinessDelegate();
     	
-    	DTO_Vehiculo v = new DTO_Vehiculo();
-		v.setTipo("Camion");
-		v.setPatente("ADK");
-		v.setMarca("A");
-		v.setModelo("B");
-		v.setKmsRecorridos(100f);
-		v.setAncho(100f);
+    	Vehiculo veh = new Vehiculo().fromEntity(VehiculoDao.getInstancia().getById(4013));
+    	DTO_Vehiculo v = veh.toDTO();
+    	
+		v.setTipo("Camioneta");
+		v.setPatente("ADK111");
+		v.setMarca("CCC");
+		v.setModelo("DDDD");
+		v.setKmsRecorridos(1100f);
+		v.setAncho(1100f);
 		v.setAlto(250f);
-		v.setLargo(230f);
-		v.setPeso(140f);
-		v.setTara(200f);
-		v.setVolumen(350f);
-		v.setAnio("");
+		v.setLargo(2230f);
+		v.setPeso(1140f);
+		v.setTara(2200f);
+		v.setVolumen(1350f);
+		v.setAnio("1234");
 		v.setFechaIngreso(new Date());
+	
 	/*	v.setUltimoMantenimiento(fechaUltMant);
 		v.setUltimoUso(fechaUltUso);
 		v.setVencimientoGarantia(vencimientoGarantia); */
-	//	v.setSucursal(bd.getSucursal(1));
-		//v.setIdSucursalActual(idSucursalActual);
-		//v.setTemperaturaMin(temperaturaMin);
-		//v.setTemperaturaMax(temperaturaMax);
-/*		v.setPlanMantenimiento(bd.getPlanMantenimiento(1));
+		v.setSucursal(new Sucursal().fromDTO(v.getSucursal()).toDTO());
+		v.setTemperaturaMin(1070f);
+		v.setTemperaturaMax(200f);
+		v.setPlanMantenimiento(bd.getPlanMantenimiento(1));
 		
-		bd.altaVehiculo(v);
-		*/
+		veh = new Vehiculo().fromDTO(v);
+		veh.modificar();
+		
     	/*BusinessDelegate bd = new BusinessDelegate();
     	DTO_Sucursal suc = new DTO_Sucursal();
     	suc.setDescripcion("hola suc");

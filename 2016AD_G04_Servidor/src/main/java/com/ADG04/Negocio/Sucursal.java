@@ -215,6 +215,7 @@ public class Sucursal{
 				this.getDireccion().getCalle(),this.getDireccion().getNro(), this.getDireccion().getLocalidad(),
 				this.getDireccion().getCodigoPostal());
 		suc.setDireccion(dir);
+		suc.setIdSucursal(this.getIdSucursal());
 		return suc;
 	}
 	
@@ -236,6 +237,7 @@ public class Sucursal{
 
 	public Sucursal fromDTO(DTO_Sucursal dto) {
 		Sucursal suc = new Sucursal();
+		suc.setIdSucursal(dto.getId());
 		suc.setDescripcion(dto.getDescripcion());
 		suc.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
 		if(dto.getIdGerente()!=null){
@@ -253,6 +255,7 @@ public class Sucursal{
 			sucursal.setGerente(new Usuario().fromEntity(UsuarioDao.getInstancia().getById(suc.getGerente().getIdUsuario())));
 		}
 		sucursal.setTelefono(suc.getTelefono());
+		sucursal.setIdSucursal(suc.getIdSucursal());
 		return sucursal;
 	}
 

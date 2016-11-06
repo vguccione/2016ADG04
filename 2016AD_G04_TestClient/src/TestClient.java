@@ -59,10 +59,10 @@ public class TestClient {
 			if(tareasVencidas == null || tareasVencidas.isEmpty()) { System.out.println("No hay tareas vencidas."); }
 			
 			for(DTO_TareaMantenimiento t:tareasVencidas){
-				System.out.println("La tarea : " + t.getTarea() + " ("+t.getId()+") está vencida.");
+				System.out.println("La tarea : " + t.getTarea() + " ("+t.getId()+") estï¿½ vencida.");
 			}
 			
-			ok = getStringFromConsole("Buscar tareas vencidas de otro vehículo (si/no)?");
+			ok = getStringFromConsole("Buscar tareas vencidas de otro vehï¿½culo (si/no)?");
 		}
 		
 
@@ -93,11 +93,11 @@ public class TestClient {
 			else{
 				
 				for(DTO_TareaMantenimiento t:tareasVencidas){
-					System.out.println("La tarea : " + t.getTarea() + " ("+t.getId()+") está vencida.");
+					System.out.println("La tarea : " + t.getTarea() + " ("+t.getId()+") estï¿½ vencida.");
 				}
 			
 			}
-			ok = getStringFromConsole("Buscar tareas vencidas de otro vehículo (si/no)?");
+			ok = getStringFromConsole("Buscar tareas vencidas de otro vehï¿½culo (si/no)?");
 		}
 		/*
 		List<Vehiculo> vhs = VehiculoDao.getInstancia().getAll();
@@ -109,10 +109,10 @@ public class TestClient {
 
 	 private static void TestCrearPlanesYTareasYVehiculos() throws Exception{
 	    	
-	    	String ok = getStringFromConsole("Agregar vehículo(si/no)?");
+	    	String ok = getStringFromConsole("Agregar vehï¿½culo(si/no)?");
 	    	
 	    	if(ok.equals("si")){
-		    	//System.out.println("Agregar vehículo con este plan");
+		    	//System.out.println("Agregar vehï¿½culo con este plan");
 		    	String marca = getStringFromConsole("Marca: ");
 		    	String modelo = getStringFromConsole("Modelo: ");
 		    	String anio = getStringFromConsole("Anio: ");
@@ -153,28 +153,28 @@ public class TestClient {
     	TestAddTareasToPlan(tareaTiempo, frecKm, tareaTiempo, frecTiempo,idPm1);
     	System.out.println("Plan generado. Id plan: " + idPm1);
     	
-    	String ok = getStringFromConsole("Agregar vehículo con este plan(si/no)?");
+    	String ok = getStringFromConsole("Agregar vehï¿½culo con este plan(si/no)?");
     	
     	if(ok.equals("si")){
-	    	System.out.println("Agregar vehículo con este plan");
+	    	System.out.println("Agregar vehï¿½culo con este plan");
 	    	String marca = getStringFromConsole("Marca: ");
 	    	String modelo = getStringFromConsole("Modelo: ");
 	    	String anio = getStringFromConsole("Anio: ");
 	    	String patente = getStringFromConsole("Patente: ");
 	    	int idVeh1 = generarVehiculoTest(marca, modelo, anio, patente,idPm1);   	
 	    	System.out.println("Vehiculo generado: " + idVeh1);
-	    	ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
+	    	ok = getStringFromConsole("Agregar otro vehï¿½culo (si/no)?");
 	    	
 	    	while(ok.equals("si")){
 	    	
-	    		System.out.println("Agregar vehículo con este plan");
+	    		System.out.println("Agregar vehï¿½culo con este plan");
 	        	marca = getStringFromConsole("Marca: ");
 	        	modelo = getStringFromConsole("Modelo: ");
 	        	anio = getStringFromConsole("Anio: ");
 	        	patente = getStringFromConsole("Patente: ");
 	        	idVeh1 = generarVehiculoTest(marca, modelo, anio, patente,idPm1);   	
 	        	System.out.println("Vehiculo generado: " + idVeh1);
-	        	ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
+	        	ok = getStringFromConsole("Agregar otro vehï¿½culo (si/no)?");
 	    	}
     	}
     }
@@ -214,25 +214,25 @@ public class TestClient {
 
 	
 	private static void TestVehiculo() throws IOException, NotBoundException{
-		System.out.println("Agregar vehículo con este plan");
+		System.out.println("Agregar vehï¿½culo con este plan");
 		String marca = getStringFromConsole("Marca: ");
 		String modelo = getStringFromConsole("Modelo: ");
 		String anio = getStringFromConsole("Anio: ");
 		String patente = getStringFromConsole("Patente: ");
 		int idVeh1 = generarVehiculoTest(marca, modelo, anio, patente);   	
 		System.out.println("Vehiculo generado: " + idVeh1);
-		String ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
+		String ok = getStringFromConsole("Agregar otro vehï¿½culo (si/no)?");
 		
 		while(ok.equals("si")){
 		
-			System.out.println("Agregar vehículo con este plan");
+			System.out.println("Agregar vehï¿½culo con este plan");
 	    	marca = getStringFromConsole("Marca: ");
 	    	modelo = getStringFromConsole("Modelo: ");
 	    	anio = getStringFromConsole("Anio: ");
 	    	patente = getStringFromConsole("Patente: ");
 	    	idVeh1 = generarVehiculoTest(marca, modelo, anio, patente);   	
 	    	System.out.println("Vehiculo generado: " + idVeh1);
-	    	ok = getStringFromConsole("Agregar otro vehículo (si/no)?");
+	    	ok = getStringFromConsole("Agregar otro vehï¿½culo (si/no)?");
 		}
 	}
 	
@@ -329,15 +329,15 @@ public class TestClient {
 			System.out.println("----------Encomienda: "+idEncomienda+"--------------------------------");
 			Integer idenvio = bDelegate.gestionarEnvioEncomienda(idEncomienda);			
 			if(idenvio != null){
-				System.out.println("----------La encomienda no se pudo asignar a un envío--------------------------------");
+				System.out.println("----------La encomienda no se pudo asignar a un envï¿½o--------------------------------");
 			}
 			else
 			{
-				System.out.println("----------La encomienda saldrá por el envío: "+ idenvio + "--------------------------------");
-				System.out.println("Info del envío: ");
+				System.out.println("----------La encomienda saldrï¿½ por el envï¿½o: "+ idenvio + "--------------------------------");
+				System.out.println("Info del envï¿½o: ");
 				DTO_EnvioPropio envio = bDelegate.getInfoEnvioPropio(idenvio);
 				System.out.println("Vehiculo: "+envio.getIdVehiculo());
-				System.out.println("Estado envío: "+envio.getEstado());
+				System.out.println("Estado envï¿½o: "+envio.getEstado());
 				
 				System.out.println(envio.toString());
 			}

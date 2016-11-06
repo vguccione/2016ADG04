@@ -795,4 +795,65 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		
 	}
 
+	public void bajaPlanMantenimiento(Integer id) throws RemoteException{
+		this.businessService.bajaPlanMantenimiento(id);
+	}
+
+	
+	public void bajaServicioSeguridad(Integer id) throws RemoteException{
+		this.businessService.bajaServicioSeguridad(id);
+	}
+
+	public void bajaMapaDeRuta(Integer id) throws RemoteException{
+		this.businessService.bajaMapaDeRuta(id);		
+	}
+
+	public void bajaSeguro(Integer id) throws RemoteException{
+		this.businessService.bajaSeguro(id);	
+	}
+
+	public void bajaTarifasCarrier(Integer id) throws RemoteException{
+		this.businessService.bajaTarifasCarrier(id);		
+	}
+
+	public DTO_ServicioSeguridad getServicioSeguridad(Integer id) throws RemoteException{
+		return this.businessService.getServicioSeguridad(id);
+	}
+
+	public DTO_TarifasCarrier getTarifasCarrier(Integer id) throws RemoteException{
+		return this.businessService.getTarifasCarrier(id);
+	}
+
+	public DTO_Seguro getSeguro(Integer id) throws RemoteException{
+		return this.businessService.getSeguro(id);
+	}
+
+	public boolean estaProductoAsociado(Integer id) throws RemoteException{
+		return this.businessService.estaProductoAsociado(id);
+	}
+
+	public boolean clienteTieneEncomiendas(Integer id) throws RemoteException{
+		return this.businessService.clienteTieneEncomiendas(id);
+	}
+
+	public boolean sucursalTieneEncomiendas(Integer id) throws RemoteException{
+		return this.businessService.sucursalTieneEncomiendas(id);
+	}
+
+	public boolean vehiculoAsociadoAEnvio(Integer id) throws RemoteException{
+		return this.businessService.vehiculoAsociadoAEnvio(id);
+	}
+
+	public void bajaVehiculo(Integer id) throws RemoteException{
+		this.businessService.bajaVehiculo(id);
+	}
+
+	public boolean tareaEstaRealizada(Integer id) throws RemoteException{
+		return this.businessService.tareaEstaRealizada(id);
+	}
+
+	public void bajaTareaMantenimiento(Integer id) throws RemoteException{
+		this.businessService.bajaTareaMantenimiento(id);
+	}
+
 }

@@ -46,4 +46,21 @@ public class TareaMantenimientoDao extends GenericDao<TareaMantenimientoE, Integ
         return null;
 	}
 
+	public boolean estaRealizada(Integer id) {
+		try{
+			List<TareaMantenimientoE> tareas= 	entityManager
+	                .createQuery("from TareaMantenimientoRealizadaE t where tareaMantenimiento.idTareaMantenimiento=:id")
+	                .setParameter("id", id)
+	                .getResultList();
+			if(tareas.size()>0)
+				return true;
+			else
+				return false;
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: obtener tareas realizadas");
+        }
+		return false;
+	}
+
 }

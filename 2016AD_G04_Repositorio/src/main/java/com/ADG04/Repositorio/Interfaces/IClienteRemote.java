@@ -29,6 +29,7 @@ public interface IClienteRemote {
 	
 	public List<DTO_ClienteParticular> buscarClientesByNombreApellidoDni (String filtro) throws RemoteException;
 	public List<DTO_ClienteEmpresa> buscarClientesEmpresaByRazonSocial(String filtro) throws RemoteException;
+	public boolean clienteTieneEncomiendas(Integer id) throws RemoteException;
 	
 	/************************ Producto ***********************************/
 	public void altaProducto(DTO_Producto producto) throws RemoteException;
@@ -38,5 +39,6 @@ public interface IClienteRemote {
 	
 	public DTO_Producto getProducto(Integer idProducto) throws RemoteException;
 	public DTO_Producto getProducto(Integer idCliente, String codigoProducto) throws RemoteException;
+	public boolean estaProductoAsociado(Integer id) throws RemoteException;
 
 }

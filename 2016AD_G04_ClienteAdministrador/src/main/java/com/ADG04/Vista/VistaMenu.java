@@ -11,10 +11,15 @@ import javax.swing.*;
 import com.ADG04.Controller.Controlador;
 import com.ADG04.Vista.Administrativos.AltaSucursal;
 import com.ADG04.Vista.Administrativos.AltaUsuario;
+import com.ADG04.Vista.Administrativos.BajaMapaDeRuta;
+import com.ADG04.Vista.Administrativos.BajaSucursal;
+import com.ADG04.Vista.Administrativos.BajaUsuario;
 import com.ADG04.Vista.Administrativos.CambiarContrasena;
 import com.ADG04.Vista.Clientes.AltaClienteEmpresa;
 import com.ADG04.Vista.Clientes.AltaClienteParticular;
 import com.ADG04.Vista.Clientes.AltaProductoCliente;
+import com.ADG04.Vista.Clientes.BajaCliente;
+import com.ADG04.Vista.Clientes.BajaProductoCliente;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
 import com.ADG04.Vista.Listados.ListadoCarriers;
@@ -40,9 +45,15 @@ import com.ADG04.Vista.Listados.ListadoVehiculos;
 import com.ADG04.Vista.Proveedores.AltaProveedor;
 import com.ADG04.Vista.Proveedores.AltaSeguro;
 import com.ADG04.Vista.Proveedores.AltaServicioSeguridad;
+import com.ADG04.Vista.Proveedores.BajaProveedor;
+import com.ADG04.Vista.Proveedores.BajaSeguro;
+import com.ADG04.Vista.Proveedores.BajaServicioSeguridad;
+import com.ADG04.Vista.Proveedores.BajaTarifaCarrier;
 import com.ADG04.Vista.Vehiculos.AgregarTareaAPlan;
 import com.ADG04.Vista.Vehiculos.AltaPlanMantenimiento;
 import com.ADG04.Vista.Vehiculos.AltaVehiculo;
+import com.ADG04.Vista.Vehiculos.BajaPlanMantenimiento;
+import com.ADG04.Vista.Vehiculos.BajaVehiculo;
 import com.ADG04.Vista.Vehiculos.BusquedaVehiculo;
 import com.ADG04.Vista.Vehiculos.RegistrarTareaRealizada;
 import com.ADG04.bean.Administracion.DTO_Rol;
@@ -127,6 +138,7 @@ public class VistaMenu extends javax.swing.JFrame {
 	private JMenuItem JMenuItemBajaSeguro;
 	private JMenuItem JMenuItemModificarSeguro;
 	private JMenuItem JMenuItemAltaSeguro;
+	private JMenuItem JMenuItemBajaTarifasCarrier;
 	private JMenu JMenuSeguridad;
 	private JSeparator jSeparatorProveedor3;
 	private JMenu JMenuSeguro;
@@ -329,9 +341,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem2.setBounds(93, 0, 119, 21);
 							JMenuItem2.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaBajaProveedor inst = new VistaBajaProveedor();
+									BajaProveedor inst = new BajaProveedor();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -375,9 +387,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemBajaSeguro.setText("Baja Seguro");
 								JMenuItemBajaSeguro.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaBajaSeguro inst = new VistaBajaSeguro();
+										BajaSeguro inst = new BajaSeguro();
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
 									}
 								});
 							}
@@ -422,9 +434,21 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemBajaServicioSeguridad.setText("Baja Servicio Seguridad");
 								JMenuItemBajaServicioSeguridad.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-									/*	VistaBajaServicioSeguridad inst = new VistaBajaServicioSeguridad();
+										BajaServicioSeguridad inst = new BajaServicioSeguridad();
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
+									}
+								});
+							}
+							{
+								JMenuItemBajaTarifasCarrier = new JMenuItem();
+								JMenuSeguridad.add(JMenuItemBajaTarifasCarrier);
+								JMenuItemBajaTarifasCarrier.setText("Baja Tarifas Carrier");
+								JMenuItemBajaTarifasCarrier.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										BajaTarifaCarrier inst = new BajaTarifaCarrier();
+										inst.setLocationRelativeTo(null);
+										inst.setVisible(true);
 									}
 								});
 							}
@@ -436,9 +460,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem8.setText("Baja Cliente");
 							JMenuItem8.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaBajaCliente inst = new VistaBajaCliente();
+									BajaCliente inst = new BajaCliente();
 									inst.getFrame().setLocationRelativeTo(null);
-									inst.getFrame().setVisible(true);*/
+									inst.getFrame().setVisible(true);
 								}
 							});
 						}
@@ -470,9 +494,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemBajaProductoCliente.setText("Baja Producto");
 								JMenuItemBajaProductoCliente.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaBajaProductoCliente inst = new VistaBajaProductoCliente();
+										BajaProductoCliente inst = new BajaProductoCliente();
 										inst.getFrame().setLocationRelativeTo(null);
-										inst.getFrame().setVisible(true);*/
+										inst.getFrame().setVisible(true);
 									}
 								});
 							}
@@ -521,9 +545,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem4.setText("Baja Sucursal");
 							JMenuItem4.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaBajaSucursal inst = new VistaBajaSucursal();
+									BajaSucursal inst = new BajaSucursal();
 									inst.getFrame().setLocationRelativeTo(null);
-									inst.getFrame().setVisible(true);*/
+									inst.getFrame().setVisible(true);
 								}
 							});
 						}
@@ -569,9 +593,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemBajaMDR.setBounds(0, -21, 110, 21);
 								JMenuItemBajaMDR.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaBajaMapaDeRuta inst = new VistaBajaMapaDeta(null);
+										BajaMapaDeRuta inst = new BajaMapaDeRuta();
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
 									}
 								});
 							}
@@ -618,9 +642,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemBajaVehiculo.setText("Baja Vehiculo");
 							JMenuItemBajaVehiculo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaBajaVehiculo inst = new VistaBajaVehiculo();
+									BajaVehiculo inst = new BajaVehiculo();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -650,9 +674,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemBajaPlanMantenimiento.setText("Baja Plan Mantenimiento");
 								JMenuItemBajaPlanMantenimiento.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaBajaPlanMantenimiento inst = new VistaBajaPlanMantenimiento();
+										BajaPlanMantenimiento inst = new BajaPlanMantenimiento();
 										inst.getFrame().setLocationRelativeTo(null);
-										inst.getFrame().setVisible(true);*/
+										inst.getFrame().setVisible(true);
 									}
 								});
 							}
@@ -721,9 +745,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemBajaUsuario.setText("Baja Usuario");
 							JMenuItemBajaUsuario.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaBajaUsuario inst = new VistaBajaUsuario();
+									BajaUsuario inst = new BajaUsuario();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

@@ -48,6 +48,7 @@ import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.FacturaDao;
+import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.ProductoDao;
@@ -1397,6 +1398,99 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		Proveedor prov = new Proveedor().fromEntity(ProveedorDao.getInstancia().getByCuit(cuit));
 		return prov.toDTO();
+	}
+
+
+	@Override
+	public void bajaPlanMantenimiento(Integer id) throws RemoteException {
+		PlanMantenimientoDao.getInstancia().removeById(id);
+	}
+
+
+	@Override
+	public void bajaServicioSeguridad(Integer id) throws RemoteException {
+		ServicioSeguridadDao.getInstancia().removeById(id);
+	}
+
+
+	@Override
+	public void bajaMapaDeRuta(Integer id) throws RemoteException {
+		MapaDeRutaDao.getInstancia().removeById(id);
+	}
+
+
+	@Override
+	public void bajaSeguro(Integer id) throws RemoteException {
+		SeguroDao.getInstancia().removeById(id);	
+	}
+
+
+	@Override
+	public void bajaTarifasCarrier(Integer id) throws RemoteException {
+		TarifasCarrierDao.getInstancia().removeById(id);
+	}
+
+
+	@Override
+	public DTO_ServicioSeguridad getServicioSeguridad(Integer id)
+			throws RemoteException {
+		return new ServicioSeguridad().fromEntity(ServicioSeguridadDao.getInstancia().getById(id)).toDTO();
+	}
+
+
+	@Override
+	public DTO_TarifasCarrier getTarifasCarrier(Integer id)
+			throws RemoteException {
+		return new TarifasCarrier().fromEntity(TarifasCarrierDao.getInstancia().getById(id)).toDTO();
+	}
+
+
+	@Override
+	public DTO_Seguro getSeguro(Integer id) throws RemoteException {
+		return new Seguro().fromEntity(SeguroDao.getInstancia().getById(id)).toDTO();
+	}
+
+
+	@Override
+	public boolean sucursalTieneEncomiendas(Integer id) throws RemoteException {
+		return SucursalDao.getInstancia().tieneEncomiendas(id);
+	}
+
+
+	@Override
+	public boolean clienteTieneEncomiendas(Integer id) throws RemoteException {
+		return ClienteDao.getInstancia().tieneEncomiendas(id);
+	}
+
+
+	@Override
+	public boolean estaProductoAsociado(Integer id) throws RemoteException {
+		return ProductoDao.getInstancia().estaAsociado(id);
+	}
+
+
+	@Override
+	public boolean vehiculoAsociadoAEnvio(Integer id) throws RemoteException {
+		return VehiculoDao.getInstancia().estaAsociado(id);
+	}
+
+
+	@Override
+	public void bajaVehiculo(Integer id) throws RemoteException {
+		VehiculoDao.getInstancia().removeById(id);
+	}
+
+
+	@Override
+	public boolean tareaEstaRealizada(Integer id) throws RemoteException {
+		return TareaMantenimientoDao.getInstancia().estaRealizada(id);
+	}
+
+
+	@Override
+	public void bajaTareaMantenimiento(Integer id) throws RemoteException {
+		// TODO Auto-generated method stub
+		
 	}
 
 

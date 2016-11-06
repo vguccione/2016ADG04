@@ -6,6 +6,9 @@ import javax.persistence.Query;
 
 import com.ADG04.Negocio.Cliente;
 import com.ADG04.Negocio.GestionVehiculo;
+import com.ADG04.Servidor.model.EncomiendaE;
+import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.TareaMantenimientoE;
 import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
@@ -118,6 +121,23 @@ public class VehiculoDao extends GenericDao<VehiculoE, Integer> {
                 System.out.println("ErrorDAO: buscarVehiculo por patente");
         }
         return null;
+	}
+
+	public boolean estaAsociado(Integer id) {
+		try{
+			List<EnvioE> envios= 	entityManager
+	                .createQuery("from EnvioE e where vehiculo.idVehiculo=:id")
+	                .setParameter("id", id)
+	                .getResultList();
+			if(envios.size()>0)
+				return true;
+			else
+				return false;
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: obtener envios");
+        }
+		return false;
 	}
 
 

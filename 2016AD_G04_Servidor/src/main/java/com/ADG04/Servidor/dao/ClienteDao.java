@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.ADG04.Servidor.model.ClienteE;
+import com.ADG04.Servidor.model.EncomiendaE;
+import com.ADG04.Servidor.model.EnvioE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
 
@@ -53,5 +55,22 @@ public class ClienteDao extends GenericDao<ClienteE, Integer> {
 	            System.out.println("Error al buscar clientes");
 	            return null;
 	        }
+	}
+
+	public boolean tieneEncomiendas(Integer id) {
+		try{
+			List<EncomiendaE> encomiendas= 	entityManager
+	                .createQuery("from EncomiendaE e where cliente.idCliente=:id")
+	                .setParameter("id", id)
+	                .getResultList();
+			if(encomiendas.size()>0)
+				return true;
+			else
+				return false;
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: obtener encomiendas");
+        }
+		return false;
 	}
 }

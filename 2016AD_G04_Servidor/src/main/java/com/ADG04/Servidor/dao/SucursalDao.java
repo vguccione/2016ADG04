@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.model.SucursalE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
@@ -42,6 +43,24 @@ public class SucursalDao extends GenericDao<SucursalE, Integer> {
 	            System.out.println("Error al buscar sucursales");
 	            return null;
 	        }
+	}
+
+	public boolean tieneEncomiendas(Integer id) {
+		try{
+			List<EncomiendaE> encomiendas= 	entityManager
+	                .createQuery("from EncomiendaE e where sucursalOrigen.idSucursal=:id OR"
+	                		+ " sucursalDestino.idSucursal=:id OR sucursalActual.idSucursal=:id")
+	                .setParameter("id", id)
+	                .getResultList();
+			if(encomiendas.size()>0)
+				return true;
+			else
+				return false;
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: obtener encomiendas");
+        }
+		return false;
 	}
 
 }

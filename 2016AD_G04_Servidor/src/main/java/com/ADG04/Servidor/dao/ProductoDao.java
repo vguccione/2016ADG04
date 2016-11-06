@@ -4,6 +4,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.ADG04.Negocio.ItemManifiesto;
+import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.ItemManifiestoE;
+import com.ADG04.Servidor.model.ItemRemitoE;
 import com.ADG04.Servidor.model.ProductoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
@@ -35,6 +39,27 @@ public class ProductoDao extends GenericDao<ProductoE, Integer> {
 						    .setParameter("idCliente", idCliente)
 						    .setParameter("codigoProducto", codigoProducto)
 						    .getSingleResult();
+	}
+
+	public boolean estaAsociado(Integer id) {
+		try{
+			List<ItemManifiestoE> itemsManifiesto= 	entityManager
+	                .createQuery("from ItemManifiestoE i where producto.idProducto=:id")
+	                .setParameter("id", id)
+	                .getResultList();
+		    List<ItemRemitoE> itemsRemito= 	entityManager
+	                .createQuery("from ItemRemitoE i where producto.idProducto=:id")
+	                .setParameter("id", id)
+	                .getResultList();
+			if(itemsManifiesto.size()>0 && itemsRemito.size()>0)
+				return true;
+			else
+				return false;
+        }catch(Exception e){
+                System.out.println(e);
+                System.out.println("ErrorDAO: buscar si esta asociado el producto");
+        }
+		return false;
 	}
 
 }

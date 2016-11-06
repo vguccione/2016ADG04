@@ -46,6 +46,7 @@ public interface IAdministracionRemote {
 	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException;
 	public List<DTO_Sucursal> listarSucursales() throws RemoteException;
 	public List<DTO_Sucursal> buscarSucursalesByNombre(String filtro) throws RemoteException;
+	public boolean sucursalTieneEncomiendas(Integer id) throws RemoteException;
 	
 	
 	/*************************** Proveedores *************************************/
@@ -71,6 +72,13 @@ public interface IAdministracionRemote {
 	public List<DTO_ServicioSeguridad> buscarServicioSeguridadByProveedor(String filtro) throws RemoteException;
 	public List<DTO_TarifasCarrier> buscarTarifasCarrierByProveedor(String filtro) throws RemoteException;
 	public DTO_Proveedor buscarProveedorByCuit(String cuit) throws RemoteException;
+	public void bajaServicioSeguridad(Integer id) throws RemoteException;
+	public void bajaMapaDeRuta(Integer id) throws RemoteException;
+	public void bajaSeguro(Integer id) throws RemoteException;
+	public void bajaTarifasCarrier(Integer id) throws RemoteException;
+	public DTO_ServicioSeguridad getServicioSeguridad(Integer id) throws RemoteException;
+	public DTO_TarifasCarrier getTarifasCarrier(Integer id) throws RemoteException;
+	public DTO_Seguro getSeguro(Integer id) throws RemoteException;
 
 	/*************************** Otros *************************************/
 	public List<DTO_Provincia> listarProvinciasByPais(String pais) throws RemoteException;

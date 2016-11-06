@@ -27,6 +27,7 @@ import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
+import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
@@ -1108,7 +1109,220 @@ public class Controlador {
 		return null;
 	}
 
+	public boolean bajaSucursal(Integer id) {
+		try{
+			if(!bd.sucursalTieneEncomiendas(id)){
+				bd.bajaSucursal(id);
+				return true;
+			}
+			else
+				return false;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar Sucursal");
+		}
+		return false;
+	}
 
-	
+	public boolean bajaCliente(Integer id) {
+		try{
+			if(!bd.clienteTieneEncomiendas(id)){
+				bd.eliminarCliente(id);
+				return true;
+			}
+			else
+				return false;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar Cliente");
+		}
+		return false;
+	}
+
+	public boolean bajaProductoCliente(Integer id) {
+		try{
+			//verificar no pertence a un manifiesto o remito
+			if(!bd.estaProductoAsociado(id)){
+				bd.eliminarProducto(id);
+				return true;
+			}
+			else
+				return false;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar Producto");
+		}
+		return false;
+	}
+
+	public DTO_Producto getProductoCliente(Integer id) {
+		try{
+			return bd.getProducto(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar Producto");
+		}
+		return null;
+	}
+
+	public boolean bajaPlanMantenimiento(Integer id) {
+		try{
+			bd.bajaPlanMantenimiento(id);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar Plan de Mantenimiento");
+		}
+		return false;
+	}
+
+	public boolean bajaProveedor(Integer id) {
+		try{
+			bd.bajaProveedor(id);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar el Proveedor");
+		}
+		return false;
+	}
+
+	public boolean bajaUsuario(Integer id) {
+		try{
+			bd.bajaUsuario(id);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar el Usuario");
+		}
+		return false;
+	}
+
+	public DTO_Seguro getSeguro(Integer id) {
+		try{
+			return bd.getSeguro(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al traer Seguro");
+		}
+		return null;
+	}
+
+	public boolean bajaSeguro(Integer id) {
+		try{
+			bd.bajaSeguro(id);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar el Seguro");
+		}
+		return false;
+	}
+
+	public DTO_ServicioSeguridad getServicioSeguridad(Integer id) {
+		try{
+			return bd.getServicioSeguridad(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al traer Servicio de Seguridad");
+		}
+		return null;
+		
+	}
+
+	public boolean bajaServicioSeguridad(Integer id) {
+		try{
+			bd.bajaServicioSeguridad(id);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar el Servicio de Seguridad");
+		}
+		return false;
+	}
+
+	public DTO_TarifasCarrier getTarifasCarrier(Integer id) {
+		try{
+			return bd.getTarifasCarrier(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al traer Tarifa de Carrier");
+		}
+		return null;
+	}
+
+	public boolean bajaTarifasCarrier(Integer id) {
+		try{
+			bd.bajaTarifasCarrier(id);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar la Tarfifa de Carrier");
+		}
+		return false;
+	}
+
+	public DTO_MapaDeRuta getMapaDeRuta(Integer value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean bajaMapaDeRuta(Integer id) {
+		try{
+			bd.bajaMapaDeRuta(id);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar el Mapa de Ruta");
+		}
+		return false;
+	}
+
+	public boolean bajaVehiculo(Integer id) {
+		try{
+			if(!bd.vehiculoAsociadoAEnvio(id)){
+				bd.bajaVehiculo(id);
+				return true;
+			}
+			else
+				return false;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar Vehiculo");
+		}
+		return false;
+	}
+
+	public boolean bajaTareaMantenimiento(Integer id) {
+		try{
+			if(!bd.tareaEstaRealizada(id)){
+				bd.bajaTareaMantenimiento(id);
+				return true;
+			}
+			else
+				return false;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al borrar Tarea de Mantenimiento");
+		}
+		return false;
+	}
+
 	
 }

@@ -2,6 +2,7 @@ package com.ADG04.Vista.Vehiculos;
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Vehiculo.DTO_PlanMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 import com.toedter.calendar.JDateChooser;
 
 import java.awt.event.ActionEvent;
@@ -90,13 +91,15 @@ public class AltaVehiculo extends javax.swing.JFrame {
 	private JLabel patenteLabel;
 	private DTO_Sucursal sucursal;
 	private DTO_PlanMantenimiento plan;
+	private DTO_Vehiculo veh;
 
-	public AltaVehiculo() {
+	public AltaVehiculo(DTO_Vehiculo vehiculo) {
 		super();
-		initGUI();
+		veh = vehiculo;
+		initGUI(veh);
 	}
 	
-	private void initGUI() {
+	private void initGUI(DTO_Vehiculo veh) {
 		try {
 			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -104,7 +107,10 @@ public class AltaVehiculo extends javax.swing.JFrame {
 			{
 				jLabelTitulo = new JLabel();
 				getContentPane().add(jLabelTitulo);
-				jLabelTitulo.setText("Alta Vehiculo");
+				if(veh==null)
+					jLabelTitulo.setText("Alta Vehiculo");
+				else
+					jLabelTitulo.setText("Modificar Vehiculo");
 				jLabelTitulo.setFont(new java.awt.Font("Verdana",1,20));
 				jLabelTitulo.setBounds(10, 0, 231, 40);
 			}
@@ -128,6 +134,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 				{
 					patenteTextField = new JTextField();
 					jPanel1.add(patenteTextField);
+					if(veh!=null)
+						patenteTextField.setText(veh.getPatente());
 					patenteTextField.setBounds(80, 25, 240, 21);
 				}
 				{
@@ -173,6 +181,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 	private JTextField getMarcaTextField() {
 		if(marcaTextField == null) {
 			marcaTextField = new JTextField();
+			if(veh!=null)
+				marcaTextField.setText(veh.getMarca());
 			marcaTextField.setBounds(80, 112, 243, 21);
 		}
 		return marcaTextField;
@@ -191,6 +201,7 @@ public class AltaVehiculo extends javax.swing.JFrame {
 	private JLabel getAnioLabel() {
 		if(anioLabel == null) {
 			anioLabel = new JLabel();
+			
 			anioLabel.setText("Anio");
 			anioLabel.setFont(new java.awt.Font("Verdana",0,11));
 			anioLabel.setBounds(350, 144, 59, 21);
@@ -201,6 +212,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 	private JTextField getAnioTextField() {
 		if(anioTextField == null) {
 			anioTextField = new JTextField();
+			if(veh!=null)
+				anioTextField.setText(veh.getAnio());;
 			anioTextField.setBounds(385 ,  144, 59, 21);
 		}
 		return anioTextField;
@@ -210,6 +223,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(modeloTextField == null) {
 			modeloTextField = new JFormattedTextField();
 			modeloTextField.setValue(new Integer(0));
+			if(veh!=null)
+				modeloTextField.setText(veh.getModelo());
 			modeloTextField.setBounds(80, 144, 59, 21);
 		}
 		return modeloTextField;
@@ -230,6 +245,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 			kmTextField = new JFormattedTextField();
 			kmTextField.setBounds(259, 144, 63, 21);
 			kmTextField.setValue(new Float(0));
+			if(veh!=null)
+				kmTextField.setValue(veh.getKmsRecorridos());
 		}
 		return kmTextField;
 	}
@@ -298,6 +315,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 			Ancho = new JFormattedTextField();
 			Ancho.setBounds(106, 21, 57, 21);
 			Ancho.setValue(new Float(0));
+			if(veh!=null)
+				Ancho.setValue(veh.getAncho());
 		}
 		return Ancho;
 	}
@@ -316,6 +335,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(altoTextField == null) {
 			altoTextField = new JFormattedTextField();
 			altoTextField.setValue(new Float(0));
+			if(veh!=null)
+				altoTextField.setValue(veh.getAlto());
 			altoTextField.setBounds(274, 21, 63, 21);
 		}
 		return altoTextField;
@@ -335,6 +356,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(largoTextField == null) {
 			largoTextField = new JFormattedTextField();
 			largoTextField.setValue(new Float(0));
+			if(veh!=null)
+				largoTextField.setValue(veh.getLargo());
 			largoTextField.setBounds(106, 47, 57, 21);
 		}
 		return largoTextField;
@@ -354,6 +377,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(taraTextField == null) {
 			taraTextField = new JFormattedTextField();
 			taraTextField.setValue(new Float(0));
+			if(veh!=null)
+				taraTextField.setValue(veh.getTara());
 			taraTextField.setBounds(274, 47, 62, 21);
 		}
 		return taraTextField;
@@ -373,6 +398,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(volumenTextField == null) {
 			volumenTextField = new JFormattedTextField();
 			volumenTextField.setValue(new Float(0));
+			if(veh!=null)
+				volumenTextField.setValue(veh.getVolumen());
 			volumenTextField.setBounds(106, 73, 57, 21);
 		}
 		return volumenTextField;
@@ -382,6 +409,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(jDateChooserFechaIngreso == null) {
 			jDateChooserFechaIngreso = new JDateChooser("dd/MM/yyyy","##-##-####",'-');
 			jDateChooserFechaIngreso.setDateFormatString("dd/MM/yyyy");
+			if(veh!=null)
+				jDateChooserFechaIngreso.setDate(veh.getFechaIngreso());
 			jDateChooserFechaIngreso.setBounds(178, 200, 149, 23);
 		}
 		return jDateChooserFechaIngreso;
@@ -411,6 +440,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(jDateChooserUMAntenimiento == null) {
 			jDateChooserUMAntenimiento = new JDateChooser("dd/MM/yyyy","##-##-####",'-');
 			jDateChooserUMAntenimiento.setDateFormatString("dd/MM/yyyy");
+			if(veh!=null)
+				jDateChooserUMAntenimiento.setDate(veh.getFechaIngreso());
 			jDateChooserUMAntenimiento.setBounds(178, 229, 149, 23);
 		}
 		return jDateChooserUMAntenimiento;
@@ -433,6 +464,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 			sucursalTextField = new JFormattedTextField();
 			sucursalTextField.setBounds(130, 319, 36, 20);
 			sucursalTextField.setValue(new Integer(0));
+			if(veh!=null)
+				sucursalTextField.setValue(veh.getSucursal().getId());
 		}
 		return sucursalTextField;
 	}
@@ -452,6 +485,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 			tempMinimaTextField = new JFormattedTextField();
 			tempMinimaTextField.setBounds(178, 139, 81, 21);
 			tempMinimaTextField.setValue(new Float(0));
+			if(veh!=null && veh.getTemperaturaMin()!=null)
+				tempMinimaTextField.setValue(veh.getTemperaturaMin());
 		}
 		return tempMinimaTextField;
 	}
@@ -471,6 +506,8 @@ public class AltaVehiculo extends javax.swing.JFrame {
 			tempMaximaField = new JFormattedTextField();
 			tempMaximaField.setBounds(178, 167, 81, 21);
 			tempMaximaField.setValue(new Float(0));
+			if(veh!=null && veh.getTemperaturaMax()!=null)
+				tempMaximaField.setValue(veh.getTemperaturaMax());
 		}
 		return tempMaximaField;
 	}
@@ -479,6 +516,12 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(CamionTanqueRadioButton == null) {
 			CamionTanqueRadioButton = new JRadioButton();
 			CamionTanqueRadioButton.setText("Camion Tanque");
+			if(veh!=null){
+				if(veh.getTipo()!=null){
+					if(veh.getTipo().contains("Camion Tanque"))
+						CamionTanqueRadioButton.isSelected();
+				}
+			}
 			CamionTanqueRadioButton.setFont(new java.awt.Font("Verdana",0,11));
 			CamionTanqueRadioButton.setBounds(80, 73, 144, 23);
 		}
@@ -489,6 +532,12 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(CamionConCajaRadioButton == null) {
 			CamionConCajaRadioButton = new JRadioButton();
 			CamionConCajaRadioButton.setText("Camion C/Caja");
+			if(veh!=null){
+				if(veh.getTipo()!=null){
+					if(veh.getTipo().contains("Camion C/Caja"))
+						CamionConCajaRadioButton.isSelected();
+				}
+			}
 			CamionConCajaRadioButton.setFont(new java.awt.Font("Verdana",0,11));
 			CamionConCajaRadioButton.setBounds(126, 51, 129, 23);
 		}
@@ -499,6 +548,12 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(TractorRadioButton == null) {
 			TractorRadioButton = new JRadioButton();
 			TractorRadioButton.setText("Tractor");
+			if(veh!=null){
+				if(veh.getTipo()!=null){
+					if(veh.getTipo().contains("Tractor"))
+						TractorRadioButton.isSelected();
+				}
+			}
 			TractorRadioButton.setFont(new java.awt.Font("Verdana",0,11));
 			TractorRadioButton.setBounds(48, 51, 79, 23);
 		}
@@ -509,6 +564,12 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(CamionetaRadioButton == null) {
 			CamionetaRadioButton = new JRadioButton();
 			CamionetaRadioButton.setText("Camioneta");
+			if(veh!=null){
+				if(veh.getTipo()!=null){
+					if(veh.getTipo().contains("Camioneta"))
+						CamionetaRadioButton.isSelected();
+				}
+			}
 			CamionetaRadioButton.setSelected(true);
 			CamionetaRadioButton.setFont(new java.awt.Font("Verdana",0,11));
 			CamionetaRadioButton.setBounds(259, 51, 130, 23);
@@ -520,6 +581,12 @@ public class AltaVehiculo extends javax.swing.JFrame {
 		if(otroRadioButton == null) {
 			otroRadioButton = new JRadioButton();
 			otroRadioButton.setText("Otro");
+			if(veh!=null){
+				if(veh.getTipo()!=null){
+					if(veh.getTipo().contains("Otro"))
+						otroRadioButton.isSelected();
+				}
+			}
 			otroRadioButton.setBounds(224, 77, 115, 18);
 			otroRadioButton.setFont(new java.awt.Font("Verdana",0,11));
 		}
@@ -547,19 +614,35 @@ public class AltaVehiculo extends javax.swing.JFrame {
 						if (otroRadioButton.isSelected())
 							tipo = "Otro";
 						
-						boolean flag = Controlador.getInstancia().altaVehiculo(tipo, patenteTextField.getText(),
-								marcaTextField.getText(),String.valueOf(modeloTextField.getValue()), (Float)kmTextField.getValue(),
-								anioTextField.getText(),(Float)Ancho.getValue(), (Float)altoTextField.getValue(), (Float)largoTextField.getValue(),
-								(Float)pesoTextField.getValue(), (Float)taraTextField.getValue(), (Float)volumenTextField.getValue(), 
-								jDateChooserFechaIngreso.getDate(),
-								jDateChooserUMAntenimiento.getDate(),(Integer)sucursalTextField.getValue(), (Integer)sucursalTextField.getValue(), (Float)tempMinimaTextField.getValue(), 
-								(Float)tempMaximaField.getValue(), (Integer)jFormattedTextField1.getValue());
+						if(veh==null){
+							boolean flag = Controlador.getInstancia().altaVehiculo(tipo, patenteTextField.getText(),
+									marcaTextField.getText(),String.valueOf(modeloTextField.getValue()), (Float)kmTextField.getValue(),
+									anioTextField.getText(),(Float)Ancho.getValue(), (Float)altoTextField.getValue(), (Float)largoTextField.getValue(),
+									(Float)pesoTextField.getValue(), (Float)taraTextField.getValue(), (Float)volumenTextField.getValue(), 
+									jDateChooserFechaIngreso.getDate(),
+									jDateChooserUMAntenimiento.getDate(),(Integer)sucursalTextField.getValue(), (Integer)sucursalTextField.getValue(), (Float)tempMinimaTextField.getValue(), 
+									(Float)tempMaximaField.getValue(), (Integer)jFormattedTextField1.getValue());
 						
-						if (flag){
-							JOptionPane.showMessageDialog(null,"Se ha dado de alta al vehiculo:" + patenteTextField.getText(), "Alta vehiculo realizada", JOptionPane.INFORMATION_MESSAGE);
-							setVisible(false);
-						}else {
-							JOptionPane.showMessageDialog(null,"No se ha podido dar de alta al vehiculo.", "Error", JOptionPane.ERROR_MESSAGE);	
+							if (flag){
+								JOptionPane.showMessageDialog(null,"Se ha dado de alta al vehiculo:" + patenteTextField.getText(), "Alta vehiculo realizada", JOptionPane.INFORMATION_MESSAGE);
+								setVisible(false);
+							}else {
+								JOptionPane.showMessageDialog(null,"No se ha podido dar de alta al vehiculo.", "Error", JOptionPane.ERROR_MESSAGE);	
+							}
+						}else{
+							boolean flag = Controlador.getInstancia().modificarVehiculo(veh.getId(),tipo, patenteTextField.getText(),
+									marcaTextField.getText(),String.valueOf(modeloTextField.getValue()), (Float)kmTextField.getValue(),
+									anioTextField.getText(),(Float)Ancho.getValue(), (Float)altoTextField.getValue(), (Float)largoTextField.getValue(),
+									(Float)pesoTextField.getValue(), (Float)taraTextField.getValue(), (Float)volumenTextField.getValue(), 
+									jDateChooserFechaIngreso.getDate(),
+									jDateChooserUMAntenimiento.getDate(),(Integer)sucursalTextField.getValue(), (Integer)sucursalTextField.getValue(), (Float)tempMinimaTextField.getValue(), 
+									(Float)tempMaximaField.getValue(), (Integer)jFormattedTextField1.getValue());
+							if (flag){
+								JOptionPane.showMessageDialog(null,"Se ha modificado al vehiculo:" + patenteTextField.getText(), "Vehiculo modificado", JOptionPane.INFORMATION_MESSAGE);
+								setVisible(false);
+							}else {
+								JOptionPane.showMessageDialog(null,"No se ha podido modificar al vehiculo.", "Error", JOptionPane.ERROR_MESSAGE);	
+							}
 						}
 					}
 				}	
@@ -665,6 +748,8 @@ private JFormattedTextField getPesoTextField() {
 		pesoTextField = new JFormattedTextField();
 		pesoTextField.setBounds(106, 100, 57, 21);
 		pesoTextField.setValue(new Float(0));
+		if(veh!=null)
+			pesoTextField.setValue(veh.getPeso());
 	}
 	return pesoTextField;
 }
@@ -709,6 +794,8 @@ private JButton getJButton1() {
 private JLabel getJLabel2() {
 	if(jLabel2 == null) {
 		jLabel2 = new JLabel();
+		if(veh!=null)
+			jLabel2.setText(veh.getSucursal().getDescripcion());
 		jLabel2.setBounds(258, 323, 216, 17);
 	}
 	return jLabel2;
@@ -717,6 +804,8 @@ private JLabel getJLabel2() {
 private JLabel getJLabel3() {
 	if(jLabel3 == null) {
 		jLabel3 = new JLabel();
+		if(veh!=null)
+			jLabel3.setText(veh.getPlanMantenimiento().getDescripcion());
 		jLabel3.setBounds(257, 346, 216, 19);
 	}
 	return jLabel3;
@@ -736,6 +825,8 @@ private JFormattedTextField getJFormattedTextField1() {
 	if(jFormattedTextField1 == null) {
 		jFormattedTextField1 = new JFormattedTextField();
 		jFormattedTextField1.setValue(new Integer(0));
+		if(veh!=null)
+			jFormattedTextField1.setValue(veh.getPlanMantenimiento().getId());
 		jFormattedTextField1.setBounds(130, 345, 36, 23);
 	}
 	return jFormattedTextField1;

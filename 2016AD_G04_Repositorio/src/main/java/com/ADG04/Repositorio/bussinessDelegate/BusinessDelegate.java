@@ -790,4 +790,9 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return null;
 	}
 
+	public void modificarVehiculo(DTO_Vehiculo v) throws RemoteException{
+		this.businessService.modificarVehiculo(v);
+		
+	}
+
 }

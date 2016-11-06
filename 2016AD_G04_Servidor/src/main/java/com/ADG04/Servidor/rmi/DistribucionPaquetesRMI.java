@@ -616,18 +616,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	
 	public Integer altaVehiculo(DTO_Vehiculo v) throws RemoteException {
-		
-		VehiculoE veh = new VehiculoE(v.getEstado(), v.getLargo(), v.getAlto(), v.getAncho(), v.getPeso(), v.getVolumen(), 
-				v.getRefrigerado(), v.getCondicionTransporte(), v.getKmsRecorridos(), v.getMarca(), v.getModelo(), v.getPatente(), 
-				v.getTemperaturaMin(), v.getTemperaturaMax(), v.getAnio(), v.getTara(), v.getTipo(), v.getFechaIngreso());
-		
-		PlanMantenimientoE pm = PlanMantenimientoDao.getInstancia().getById(v.getPlanMantenimiento().getId());
-		veh.setPlanMantenimiento(pm);
-		
-		GestionVehiculo gVehiculo = new GestionVehiculo(veh);
-		gVehiculo.setSucursal(SucursalDao.getInstancia().getById(v.getSucursal().getId()));
-		
-		return (Integer)gVehiculo.saveOrUpdate();
+		Vehiculo veh = new Vehiculo().fromDTO(v);
+		veh.guardar();
+		return 1;
+	}
+	
+	@Override
+	public void modificarVehiculo(DTO_Vehiculo v) throws RemoteException {	
+		Vehiculo veh = new Vehiculo().fromDTO(v);
+		veh.modificar();
 	}
 
 	@Override
@@ -1320,7 +1317,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 
 	public DTO_Vehiculo buscarVehiculoByPatente(String patente) throws RemoteException {
-		return VehiculoDao.getInstancia().getByPatente(patente).toDTO();
+		return new Vehiculo().fromEntity(VehiculoDao.getInstancia().getByPatente(patente)).toDTO();
 	}
 
 	@Override
@@ -1401,5 +1398,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		Proveedor prov = new Proveedor().fromEntity(ProveedorDao.getInstancia().getByCuit(cuit));
 		return prov.toDTO();
 	}
+
 
 }

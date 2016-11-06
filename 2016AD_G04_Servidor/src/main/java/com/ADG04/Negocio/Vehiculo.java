@@ -18,8 +18,17 @@ import java.util.Set;
 
 
 
+
+
+
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.dao.SucursalDao;
+import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.VehiculoE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
@@ -289,6 +298,7 @@ public class Vehiculo{
 		v.setPatente(patente);
 		v.setPeso(peso);
 		v.setTipo(tipo);
+		v.setAnio(anio);
 		v.setTemperaturaMax(temperaturaMax);
 		v.setTemperaturaMin(temperaturaMin);
 		if(refrigerado==null)
@@ -299,8 +309,10 @@ public class Vehiculo{
 		v.setTara(tara);
 		v.setVolumen(volumen);
 		v.setFechaIngreso(this.getFechaIngreso());
-		PlanMantenimiento pm =  this.getPlanMantenimiento();//TODO: revisar PlanMantenimientoDao.getInstancia().getById(this.getPlanMantenimiento().getIdPlanMantenimiento());
+		PlanMantenimiento pm =  this.getPlanMantenimiento();
 		v.setPlanMantenimiento(pm.toDTO());
+		Sucursal suc = this.getSucursal();
+		v.setSucursal(suc.toDTO());
 		return v;
 	}
 
@@ -312,7 +324,8 @@ public class Vehiculo{
 		veh.setCondicionTransporte(dto.getCondicionTransporte());
 		veh.setEstado(dto.getEstado());
 		veh.setFechaIngreso(dto.getFechaIngreso());
-		veh.setIdVehiculo(dto.getId());
+		if(dto.getId()!=null)
+			veh.setIdVehiculo(dto.getId());
 		veh.setKmRecorridos(dto.getKmsRecorridos());
 		veh.setLargo(dto.getLargo());
 		veh.setMarca(dto.getMarca());
@@ -347,17 +360,19 @@ public class Vehiculo{
 		veh.setPeso(this.getPeso());
 		veh.setPlanMantenimiento(this.planMantenimiento.toEntity());
 		veh.setRefrigerado(this.getRefrigerado());
-		veh.setSucursal(sucursal.toEntity());
+		veh.setSucursal(SucursalDao.getInstancia().getById(sucursal.getIdSucursal()));
 		veh.setTara(this.getTara());
 		veh.setTemperaturaMax(this.getTemperaturaMax());
 		veh.setTemperaturaMin(this.getTemperaturaMin());
 		veh.setTipo(this.getTipo());
 		veh.setVolumen(this.getVolumen());
+		veh.setIdVehiculo(idVehiculo);
 		return veh;
 	}
 
 	public Vehiculo fromEntity(VehiculoE vehiculo) {
 		Vehiculo veh = new Vehiculo();
+		veh.setIdVehiculo(vehiculo.getIdVehiculo());
 		veh.setAlto(vehiculo.getAlto());
 		veh.setAncho(vehiculo.getAncho());
 		veh.setAnio(vehiculo.getAnio());
@@ -380,6 +395,20 @@ public class Vehiculo{
 		veh.setTipo(vehiculo.getTipo());
 		veh.setVolumen(vehiculo.getVolumen());
 		return veh;
+	}
+
+	public void guardar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		VehiculoDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();	
+	}
+
+	public void modificar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		VehiculoDao.getInstancia().saveOrUpdate(this.toEntity());
+		em.getTransaction().commit();	
 	}
 
 }

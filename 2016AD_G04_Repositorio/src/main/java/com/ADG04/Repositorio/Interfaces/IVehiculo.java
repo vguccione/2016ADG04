@@ -31,5 +31,6 @@ public interface IVehiculo {
 	public void altaTareaMantenimientoRealizada(DTO_TareaMantenimientoRealizada tmr) throws RemoteException;
 	public DTO_Vehiculo buscarVehiculoByPatente(String patente) throws RemoteException;
 	public List<DTO_TareaMantenimiento> getTareaMantenimientoByPlan(Integer idPlan) throws RemoteException;
+	public void modificarVehiculo(DTO_Vehiculo v) throws RemoteException;
 	
 }

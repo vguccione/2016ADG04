@@ -43,6 +43,7 @@ import com.ADG04.Vista.Proveedores.AltaServicioSeguridad;
 import com.ADG04.Vista.Vehiculos.AgregarTareaAPlan;
 import com.ADG04.Vista.Vehiculos.AltaPlanMantenimiento;
 import com.ADG04.Vista.Vehiculos.AltaVehiculo;
+import com.ADG04.Vista.Vehiculos.BusquedaVehiculo;
 import com.ADG04.Vista.Vehiculos.RegistrarTareaRealizada;
 import com.ADG04.bean.Administracion.DTO_Rol;
 
@@ -593,7 +594,7 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemAltaVehiculo.setText("Alta Vehiculo");
 							JMenuItemAltaVehiculo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									AltaVehiculo inst = new AltaVehiculo();
+									AltaVehiculo inst = new AltaVehiculo(null);
 									inst.setLocationRelativeTo(null);
 									inst.setVisible(true);
 								}
@@ -605,9 +606,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemModificarVehiculo.setText("Modificar Vehiculo");
 							JMenuItemModificarVehiculo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaModificarVehiculo inst = new VistaModificarVehiculo();
-									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									BusquedaVehiculo inst = new BusquedaVehiculo();
+									inst.getFrame().setLocationRelativeTo(null);
+									inst.getFrame().setVisible(true);
 								}
 							});
 						}

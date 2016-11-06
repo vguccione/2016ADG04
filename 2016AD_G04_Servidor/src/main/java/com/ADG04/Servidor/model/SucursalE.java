@@ -63,7 +63,7 @@ public class SucursalE implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursal")
 	private List<UsuarioE> usuarios; 
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursal")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sucursal", cascade=CascadeType.ALL)
 	private List<VehiculoE> vehiculos;
 	
 	@OneToOne

@@ -706,8 +706,49 @@ public class Controlador {
 				bd.altaVehiculo(v);
 				return true;
 			 } catch (RemoteException e) {
-				 System.out.println(e);
+				 e.printStackTrace();
 				 System.out.println("Error al crear vehiculo");
+			 }   
+			 return false;
+	}
+	
+
+	public boolean modificarVehiculo(int id, String tipo, String patente, String marca,
+			String modelo, Float km, String anio, Float ancho, Float alto,
+			Float largo, Float peso, Float tara, Float volumen,
+			Date fechaIngreso, Date fechaUltMant, Integer idSucursal,
+			Integer idSucursalActual, float temperaturaMin,
+			float temperaturaMax, Integer idPlan) {
+		 try {
+				DTO_Vehiculo v = new DTO_Vehiculo();
+				v.setTipo(tipo);
+				v.setId(id);
+				v.setPatente(patente);
+				v.setMarca(marca);
+				v.setModelo(modelo);
+				v.setKmsRecorridos(km);
+				v.setAncho(ancho);
+				v.setAlto(alto);
+				v.setLargo(largo);
+				v.setPeso(peso);
+				v.setTara(tara);
+				v.setAnio(anio);
+				v.setVolumen(volumen);
+				v.setFechaIngreso(fechaIngreso);
+			/*	v.setUltimoMantenimiento(fechaUltMant);
+				v.setUltimoUso(fechaUltUso);
+				v.setVencimientoGarantia(vencimientoGarantia); */
+				v.setSucursal(this.getSucursal(idSucursal));
+				//v.setIdSucursalActual(idSucursalActual);
+				v.setTemperaturaMin(temperaturaMin);
+				v.setTemperaturaMax(temperaturaMax);
+				v.setPlanMantenimiento(this.getPlanMantenimiento(idPlan));
+					
+				bd.modificarVehiculo(v);
+				return true;
+			 } catch (Exception e) {
+				 e.printStackTrace();
+				 System.out.println("Error al modificar el vehiculo");
 			 }   
 			 return false;
 	}
@@ -1053,6 +1094,18 @@ public class Controlador {
             System.out.println("Error Listar Destino Internacional por Sucursal");
         }   
         return null;
+	}
+
+	
+	public DTO_Vehiculo getVehiculoByPatente(String patente) {
+		try{
+			return bd.buscarVehiculoByPatente(patente);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar vehiculo por patente");
+		}
+		return null;
 	}
 
 

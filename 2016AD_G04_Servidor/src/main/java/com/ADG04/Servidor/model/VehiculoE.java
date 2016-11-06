@@ -330,7 +330,8 @@ public class VehiculoE implements java.io.Serializable {
 	public DTO_Vehiculo toDTO() {
 		DTO_Vehiculo v = new DTO_Vehiculo();
 		v.setEstado(this.estado);
-		v.setSucursal(new Sucursal().fromEntity(this.getSucursal()).toDTO());
+		if(this.getSucursal()!=null)
+			v.setSucursal(new Sucursal().fromEntity(this.getSucursal()).toDTO());
 		v.setId(this.getIdVehiculo());
 		v.setAlto(alto);
 		v.setAncho(ancho);

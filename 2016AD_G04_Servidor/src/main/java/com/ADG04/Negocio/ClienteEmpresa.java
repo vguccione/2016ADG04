@@ -17,9 +17,11 @@ import java.util.List;
 
 
 
+
 import javax.persistence.EntityManager;
 
 import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.model.CuentaCorrienteE;
@@ -43,6 +45,7 @@ public class ClienteEmpresa extends Cliente{
 
 	public ClienteEmpresa(String razonSocial, String cuit) {
 		super();
+		this.setTipo('E');
 		this.razonSocial = razonSocial;
 		this.cuit = cuit;
 	}
@@ -99,7 +102,7 @@ public class ClienteEmpresa extends Cliente{
 	public void guardar() {
 		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
 		em.getTransaction().begin();
-		ClienteDao.getInstancia().persist(this.toEntity());
+		ClienteEmpresaDao.getInstancia().persist(this.toEntity());
 		em.getTransaction().commit();
 	}
 
@@ -108,12 +111,14 @@ public class ClienteEmpresa extends Cliente{
 	public void modificar() {
 		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
 		em.getTransaction().begin();
-		ClienteDao.getInstancia().saveOrUpdate(this.toEntity());
+		ClienteEmpresaDao.getInstancia().saveOrUpdate(this.toEntity());
 		em.getTransaction().commit();
+		em.close();
 	}
 
 	public DTO_ClienteEmpresa toDTO(){
 		DTO_ClienteEmpresa cli = new DTO_ClienteEmpresa();
+		cli.setTipo('E');
 		cli.setId(this.getIdCliente());
 		cli.setRazonSocial(this.razonSocial);
 		cli.setCuit(this.cuit);
@@ -152,6 +157,7 @@ public class ClienteEmpresa extends Cliente{
 	public ClienteEmpresa fromEntity(ClienteEmpresaE cliente) {
 		if(cliente!=null){
 			ClienteEmpresa cli = new ClienteEmpresa();
+			cli.setTipo('E');
 			cli.setIdCliente(cliente.getIdCliente());
 			cli.setCuit(cliente.getCuit());
 			cli.setDireccion(new Direccion().fromEntity(cliente.getDireccion()));

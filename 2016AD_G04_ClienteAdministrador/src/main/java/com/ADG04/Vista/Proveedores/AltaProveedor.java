@@ -1,6 +1,7 @@
 package com.ADG04.Vista.Proveedores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -20,6 +21,9 @@ import javax.swing.WindowConstants;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Administracion.DTO_Direccion;
+import com.ADG04.bean.Administracion.DTO_Pais;
+import com.ADG04.bean.Administracion.DTO_Provincia;
+import com.ADG04.bean.Proveedor.DTO_Proveedor;
 
 
 /**
@@ -82,9 +86,11 @@ public class AltaProveedor extends javax.swing.JFrame {
 	private JLabel jLabel2;
 	private JLabel jLabelAlumnos;
 	private JLabel jLabel1;
+	private DTO_Proveedor dto;
 
-	public AltaProveedor() {
+	public AltaProveedor(DTO_Proveedor DTO) {
 		super();
+		dto = DTO;
 		initGUI();
 	}
 
@@ -250,6 +256,9 @@ public class AltaProveedor extends javax.swing.JFrame {
 		if(jTextFieldRazonSocial == null) {
 			jTextFieldRazonSocial = new JTextField();
 			jTextFieldRazonSocial.setBounds(94, 25, 354, 20);
+			if(dto!=null){
+				jTextFieldRazonSocial.setText(dto.getRazonSocial());
+			}
 		}
 		return jTextFieldRazonSocial;
 	}
@@ -258,6 +267,9 @@ public class AltaProveedor extends javax.swing.JFrame {
 		if(jTextFieldCuit == null) {
 			jTextFieldCuit = new JTextField();
 			jTextFieldCuit.setBounds(94, 51, 111, 20);
+			if(dto!=null){
+				jTextFieldCuit.setText(dto.getCuit());
+			}
 		}
 		return jTextFieldCuit;
 	}
@@ -267,6 +279,9 @@ public class AltaProveedor extends javax.swing.JFrame {
 		if(jTextFieldDireccion == null) {
 			jTextFieldDireccion = new JTextField();
 			jTextFieldDireccion.setBounds(94, 83, 350, 18);
+			if(dto!=null){
+				jTextFieldDireccion.setText(dto.getDireccion().getCalle());
+			}
 		}
 		return jTextFieldDireccion;
 	}
@@ -275,6 +290,9 @@ public class AltaProveedor extends javax.swing.JFrame {
 		if(jTextFieldCodigoPostal == null) {
 			jTextFieldCodigoPostal = new JTextField();
 			jTextFieldCodigoPostal.setBounds(94, 112, 117, 20);
+			if(dto!=null){
+				jTextFieldCodigoPostal.setText(String.valueOf(dto.getDireccion().getCodigoPostal()));
+			}
 		}
 		return jTextFieldCodigoPostal;
 	}
@@ -283,6 +301,9 @@ public class AltaProveedor extends javax.swing.JFrame {
 		if(jTextFieldLocalidad == null) {
 			jTextFieldLocalidad = new JTextField();
 			jTextFieldLocalidad.setBounds(94, 52, 350, 20);
+			if(dto!=null){
+				jTextFieldLocalidad.setText(dto.getDireccion().getLocalidad());
+			}
 		}
 		return jTextFieldLocalidad;
 	}
@@ -291,6 +312,9 @@ public class AltaProveedor extends javax.swing.JFrame {
 		if(jTextFieldEmail == null) {
 			jTextFieldEmail = new JTextField();
 			jTextFieldEmail.setBounds(94, 143, 350, 20);
+			if(dto!=null){
+				jTextFieldEmail.setText(dto.getEmail());
+			}
 		}
 		return jTextFieldEmail;
 	}
@@ -299,6 +323,9 @@ public class AltaProveedor extends javax.swing.JFrame {
 		if(jTextFieldTelefono == null) {
 			jTextFieldTelefono = new JTextField();
 			jTextFieldTelefono.setBounds(327, 112, 117, 20);
+			if(dto!=null){
+				jTextFieldTelefono.setText(dto.getTelefono());
+			}
 		}
 		return jTextFieldTelefono;
 	}
@@ -353,8 +380,15 @@ public class AltaProveedor extends javax.swing.JFrame {
 							dir.setPais(Controlador.getInstancia().getPaisByNombre(jComboBoxPaises.getSelectedItem().toString()));
 							dir.setProvincia(Controlador.getInstancia().getProvByNombre(jComboBoxProvincias.getSelectedItem().toString()));
 							
-							Controlador.getInstancia().altaProveedor(dir, "1", jTextFieldCuit.getText(), jTextFieldRazonSocial.getText(), jTextFieldEmail.getText(), jTextFieldTelefono.getText(), tallerOficial, tipo);
-							JOptionPane.showMessageDialog(null,"Se ha dado de alta al proveedor:" + jTextFieldRazonSocial.getText(), "Alta proveedor realizada", JOptionPane.INFORMATION_MESSAGE);
+							if(dto==null){
+								Controlador.getInstancia().altaProveedor(dir, "1", jTextFieldCuit.getText(), jTextFieldRazonSocial.getText(), jTextFieldEmail.getText(), jTextFieldTelefono.getText(), tallerOficial, tipo);
+								JOptionPane.showMessageDialog(null,"Se ha dado de alta al proveedor:" + jTextFieldRazonSocial.getText(), "Alta proveedor realizada", JOptionPane.INFORMATION_MESSAGE);
+							}
+							else{
+								Controlador.getInstancia().modificarProveedor(dto.getId(), dir, "1", jTextFieldCuit.getText(), jTextFieldRazonSocial.getText(), jTextFieldEmail.getText(), jTextFieldTelefono.getText(), tallerOficial, tipo);
+								JOptionPane.showMessageDialog(null,"Se ha modificado el proveedor:" + jTextFieldRazonSocial.getText(), "Modificacion de Proveedor realizada", JOptionPane.INFORMATION_MESSAGE);
+							}
+						
 							setVisible(false);
 						} catch(Exception e) {
 							JOptionPane.showMessageDialog(null,"No se ha podido dar de alta al proveedor.", "Error", JOptionPane.ERROR_MESSAGE);	
@@ -453,6 +487,10 @@ public class AltaProveedor extends javax.swing.JFrame {
 			Aseguradora = new JRadioButton();
 			Aseguradora.setText("Aseguradora");
 			Aseguradora.setBounds(94, 75, 93, 23);
+			if(dto!=null){
+				if(dto.getTipo()=='A')
+					Aseguradora.setSelected(true);
+			}
 			Aseguradora.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					if (Taller.isSelected()) 
@@ -470,6 +508,10 @@ public class AltaProveedor extends javax.swing.JFrame {
 			Carrier = new JRadioButton();
 			Carrier.setText("Carrier");
 			Carrier.setBounds(189, 75, 59, 23);
+			if(dto!=null){
+				if(dto.getTipo()=='C')
+					Aseguradora.setSelected(true);
+			}
 			Carrier.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					if (Taller.isSelected()) 
@@ -487,6 +529,10 @@ public class AltaProveedor extends javax.swing.JFrame {
 			Seguridad = new JRadioButton();
 			Seguridad.setText("Seguridad");
 			Seguridad.setBounds(254, 75, 73, 23);
+			if(dto!=null){
+				if(dto.getTipo()=='S')
+					Aseguradora.setSelected(true);
+			}
 			Seguridad.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					if (Taller.isSelected()) 
@@ -504,6 +550,10 @@ public class AltaProveedor extends javax.swing.JFrame {
 			Taller = new JRadioButton();
 			Taller.setText("Taller");
 			Taller.setBounds(334, 75, 60, 23);
+			if(dto!=null){
+				if(dto.getTipo()=='T')
+					Aseguradora.setSelected(true);
+			}
 			Taller.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					if (Taller.isSelected()) 
@@ -539,13 +589,19 @@ public class AltaProveedor extends javax.swing.JFrame {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox getJComboBoxPaises() {
 		if(jComboBoxPaises == null) {
+			Vector<DTO_Pais> lista = Controlador.getInstancia().listarPaises();
 			ComboBoxModel jComboBoxPaisesModel = 
-					new DefaultComboBoxModel(
-							Controlador.getInstancia().listarPaises());
+					new DefaultComboBoxModel(lista);
 			jComboBoxPaises = new JComboBox();
 			jComboBoxPaises.setModel(jComboBoxPaisesModel);
 			jComboBoxPaises.setBounds(94, 21, 117, 20);
 			jComboBoxPaises.setSelectedItem("Argentina");
+			if(dto!=null){
+				for(int i=0;i<lista.size();i++){
+					if(jComboBoxPaises.getItemAt(i).toString().contains(dto.getDireccion().getPais().getDescripcion()))
+						jComboBoxPaises.setSelectedIndex(i);
+				}
+			}
 		}
 		return jComboBoxPaises;
 	}
@@ -553,11 +609,17 @@ public class AltaProveedor extends javax.swing.JFrame {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JComboBox getJComboBox1() {
 		if(jComboBoxProvincias == null) {
-			ComboBoxModel jComboBoxProvinciasModel =  new DefaultComboBoxModel(Controlador.getInstancia().armarComboProvincias("Argentina"));
+			Vector<DTO_Provincia> lista = Controlador.getInstancia().armarComboProvincias("Argentina");
+			ComboBoxModel jComboBoxProvinciasModel =  new DefaultComboBoxModel(lista);
 			jComboBoxProvincias = new JComboBox();
 			jComboBoxProvincias.setModel(jComboBoxProvinciasModel);
-			jComboBoxProvincias.setSelectedItem("Argentina");
 			jComboBoxProvincias.setBounds(327, 21, 117, 20);
+			if(dto!=null){
+				for(int i=0;i<lista.size();i++){
+					if(jComboBoxProvincias.getItemAt(i).toString().contains(dto.getDireccion().getProvincia().getDescripcion()))
+						jComboBoxProvincias.setSelectedIndex(i);
+				}
+			}
 		}
 		return jComboBoxProvincias;
 	}

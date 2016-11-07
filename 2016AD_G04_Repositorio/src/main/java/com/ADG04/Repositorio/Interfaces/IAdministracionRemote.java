@@ -79,6 +79,7 @@ public interface IAdministracionRemote {
 	public DTO_ServicioSeguridad getServicioSeguridad(Integer id) throws RemoteException;
 	public DTO_TarifasCarrier getTarifasCarrier(Integer id) throws RemoteException;
 	public DTO_Seguro getSeguro(Integer id) throws RemoteException;
+	public void modificarProveedor(DTO_Proveedor prov) throws RemoteException;
 
 	/*************************** Otros *************************************/
 	public List<DTO_Provincia> listarProvinciasByPais(String pais) throws RemoteException;

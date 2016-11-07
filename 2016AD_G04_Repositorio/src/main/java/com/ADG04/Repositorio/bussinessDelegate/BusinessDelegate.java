@@ -856,4 +856,9 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		this.businessService.bajaTareaMantenimiento(id);
 	}
 
+	public void modificarProveedor(DTO_Proveedor prov) throws RemoteException{
+		this.businessService.modificarProveedor(prov);
+		
+	}
+
 }

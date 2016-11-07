@@ -19,9 +19,11 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
 
 import com.ADG04.Controller.Controlador;
+import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Vector;
 
 public class AltaClienteEmpresa extends javax.swing.JFrame{
 
@@ -38,9 +40,11 @@ public class AltaClienteEmpresa extends javax.swing.JFrame{
 	private JComboBox cbxProvincia;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbxFormaPago;
-
-	public AltaClienteEmpresa() {
+	private DTO_ClienteEmpresa dto;
+	
+	public AltaClienteEmpresa(DTO_ClienteEmpresa DTO) {
 		super();
+		dto = DTO;
 		initialize();
 	}
 
@@ -57,7 +61,7 @@ public class AltaClienteEmpresa extends javax.swing.JFrame{
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
-		frmAplicacionesDistribuidas = new JFrame();
+		frmAplicacionesDistribuidas = this;
 		frmAplicacionesDistribuidas.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 		frmAplicacionesDistribuidas.setBounds(100, 100, 450, 469);
 		frmAplicacionesDistribuidas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -79,11 +83,15 @@ public class AltaClienteEmpresa extends javax.swing.JFrame{
 		
 		txtRazonSocial = new JTextField();
 		txtRazonSocial.setBounds(80, 27, 324, 20);
+		if(dto!=null)
+			txtRazonSocial.setText(dto.getRazonSocial());
 		General.add(txtRazonSocial);
 		txtRazonSocial.setColumns(10);
 		
 		txtCUIT = new JTextField();
 		txtCUIT.setBounds(80, 55, 324, 20);
+		if(dto!=null)
+			txtCUIT.setText(dto.getCuit());
 		General.add(txtCUIT);
 		txtCUIT.setColumns(10);
 		
@@ -117,34 +125,53 @@ public class AltaClienteEmpresa extends javax.swing.JFrame{
 		lblEmail.setBounds(10, 123, 46, 14);
 		Contacto.add(lblEmail);
 		
-		ComboBoxModel ProvinciasModel = new DefaultComboBoxModel(Controlador.getInstancia().armarComboProvincias("Argentina"));
+		Vector listaPaises = Controlador.getInstancia().armarComboProvincias("Argentina");
+		ComboBoxModel ProvinciasModel = new DefaultComboBoxModel(listaPaises);
 		cbxProvincia = new JComboBox();
 		cbxProvincia.setBounds(83, 20, 117, 20);
 		cbxProvincia.setModel(ProvinciasModel);
+		if(dto!=null){
+			for(int i = 0;i<listaPaises.size();i++){
+				if(cbxProvincia.getItemAt(i).toString().contains(dto.getDireccion().getProvincia().getDescripcion())){
+					cbxProvincia.setSelectedIndex(i);
+				}
+			}
+		}
+		
 		Contacto.add(cbxProvincia);
 		
 		txtLocalidad = new JTextField();
 		txtLocalidad.setBounds(83, 45, 321, 20);
+		if(dto!=null)
+			txtLocalidad.setText(dto.getDireccion().getLocalidad());
 		Contacto.add(txtLocalidad);
 		txtLocalidad.setColumns(10);
 		
 		txtDireccion = new JTextField();
 		txtDireccion.setBounds(83, 70, 321, 20);
+		if(dto!=null)
+			txtDireccion.setText(dto.getDireccion().getCalle());
 		Contacto.add(txtDireccion);
 		txtDireccion.setColumns(10);
 		
 		txtPostal = new JTextField();
 		txtPostal.setBounds(83, 95, 117, 20);
+		if(dto!=null)
+			txtPostal.setText(String.valueOf(dto.getDireccion().getCodigoPostal()));
 		Contacto.add(txtPostal);
 		txtPostal.setColumns(10);
 		
 		txtTelefono = new JTextField();
 		txtTelefono.setBounds(273, 95, 131, 20);
+		if(dto!=null)
+			txtTelefono.setText(dto.getTelefono());
 		Contacto.add(txtTelefono);
 		txtTelefono.setColumns(10);
 		
 		txtEmail = new JTextField();
 		txtEmail.setBounds(83, 120, 321, 20);
+		if(dto!=null)
+			txtEmail.setText(dto.getEmail());
 		Contacto.add(txtEmail);
 		txtEmail.setColumns(10);
 		
@@ -165,14 +192,27 @@ public class AltaClienteEmpresa extends javax.swing.JFrame{
 		txtLimiteCredito = new JFormattedTextField();
 		txtLimiteCredito.setBounds(85, 25, 319, 20);
 		txtLimiteCredito.setValue(new Float(10000));
+		if(dto!=null && dto.getCuentaCorriente()!=null)
+			txtLimiteCredito.setValue(dto.getCuentaCorriente().getLimiteCredito());
 		CuentaCorriente.add(txtLimiteCredito);
 		
 		cbxFormaPago = new JComboBox();
-		cbxFormaPago.setModel(new DefaultComboBoxModel(new String[] {"Contado", "Transferencia Bancaria", "30 dias", "60 dias"}));
+		String[] lista = new String[] {"Contado", "Transferencia Bancaria", "30 dias", "60 dias"};
+		cbxFormaPago.setModel(new DefaultComboBoxModel(lista));
 		cbxFormaPago.setBounds(85, 48, 319, 20);
+		if(dto!=null && dto.getCuentaCorriente()!=null){
+			for(int i=0;i<lista.length;i++){
+				if(cbxFormaPago.getItemAt(i).toString().contains(dto.getCuentaCorriente().getFormaPago()))
+					cbxFormaPago.setSelectedIndex(i);
+			}
+		}
 		CuentaCorriente.add(cbxFormaPago);
 		
-		JLabel titulo = new JLabel("Alta Cliente");
+		JLabel titulo;
+		if(dto==null)
+			titulo = new JLabel("Alta Cliente");
+		else
+			titulo = new JLabel("Modificar Cliente");
 		titulo.setFont(new Font("Verdana", Font.BOLD, 20));
 		titulo.setBounds(10, 11, 182, 20);
 		frmAplicacionesDistribuidas.getContentPane().add(titulo);
@@ -192,26 +232,44 @@ public class AltaClienteEmpresa extends javax.swing.JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				if (validacion()) {
 					try{
-						Controlador.getInstancia().altaClienteEmpresa(txtRazonSocial.getText(), 
-																				txtCUIT.getText(), 
-																				true,
-																				txtDireccion.getText(),
-																				txtPostal.getText(),
-																				txtLocalidad.getText(),
-																				cbxProvincia.getSelectedItem().toString(),
-																				"Argentina",
-																				txtEmail.getText(),
-																				txtTelefono.getText(),
-																				(Float) txtLimiteCredito.getValue(),
-																				cbxFormaPago.getSelectedItem().toString());
-					
-						JOptionPane.showMessageDialog(null,"Se ha dado de alta al proveedor:" + txtRazonSocial.getText(), "Alta proveedor realizada", JOptionPane.INFORMATION_MESSAGE);
-						frmAplicacionesDistribuidas.setVisible(false);
+						if(dto==null){
+							Controlador.getInstancia().altaClienteEmpresa(txtRazonSocial.getText(), 
+																					txtCUIT.getText(), 
+																					true,
+																					txtDireccion.getText(),
+																					txtPostal.getText(),
+																					txtLocalidad.getText(),
+																					cbxProvincia.getSelectedItem().toString(),
+																					"Argentina",
+																					txtEmail.getText(),
+																					txtTelefono.getText(),
+																					(Float) txtLimiteCredito.getValue(),
+																					cbxFormaPago.getSelectedItem().toString());
+						
+							JOptionPane.showMessageDialog(null,"Se ha dado de alta al proveedor:" + txtRazonSocial.getText(), "Alta proveedor realizada", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else{
+							Controlador.getInstancia().modificarClienteEmpresa(dto.getId(),txtRazonSocial.getText(), 
+									txtCUIT.getText(), 
+									true,
+									txtDireccion.getText(),
+									txtPostal.getText(),
+									txtLocalidad.getText(),
+									cbxProvincia.getSelectedItem().toString(),
+									"Argentina",
+									txtEmail.getText(),
+									txtTelefono.getText(),
+									(Float) txtLimiteCredito.getValue(),
+									cbxFormaPago.getSelectedItem().toString());
+
+							JOptionPane.showMessageDialog(null,"Se ha modificado el proveedor:" + txtRazonSocial.getText(), "Modificacion proveedor realizada", JOptionPane.INFORMATION_MESSAGE);
+						}
+							frmAplicacionesDistribuidas.setVisible(false);
 						} 
 					catch(Exception e)
 					{
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null,"No se ha podido dar de alta al proveedor.", "Error", JOptionPane.ERROR_MESSAGE);	
+						JOptionPane.showMessageDialog(null,"No se ha podido dar de alta/modificar al proveedor.", "Error", JOptionPane.ERROR_MESSAGE);	
 					}
 				}
 			}

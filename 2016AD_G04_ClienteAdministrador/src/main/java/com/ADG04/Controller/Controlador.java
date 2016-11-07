@@ -104,8 +104,8 @@ public class Controlador {
 			return bd.getClientesEmpresa();
 		}
 		catch(RemoteException e) {
-	       	 System.out.println(e);
-	            System.out.println("Error al listar clientes");
+	       	 e.printStackTrace();
+	         System.out.println("Error al listar clientes");
 	        }   
 	        return null;
 	}
@@ -334,6 +334,7 @@ public class Controlador {
 			return  bd.buscarClientesEmpresaByRazonSocial(filtro);
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			System.out.println("Error al buscar clientes empresas");
 		}
 		return null;
@@ -642,6 +643,41 @@ public class Controlador {
 			System.out.println("Error al guardar cliente empresa");
 		}
 	}
+	
+	public void modificarClienteEmpresa(int id, String razonSocial, String cuit, boolean activa, String calle,
+			String codPostal, String loc, String prov, String pais, String email,
+			 String telefono, float limiteCredito, String formaPago) {
+		try{
+			DTO_ClienteEmpresa cliente = new DTO_ClienteEmpresa();
+			cliente.setCuit(cuit);
+			cliente.setRazonSocial(razonSocial);
+			cliente.setTelefono(telefono);
+			cliente.setEstado(activa);
+			cliente.setEmail(email);
+	
+			DTO_CuentaCorriente cte = new DTO_CuentaCorriente();
+			cte.setFormaPago(formaPago);
+			cte.setLimiteCredito(limiteCredito);
+			cliente.setCuentaCorriente(cte);
+			
+			DTO_Provincia provincia = buscarProvinciaByNombre(prov);
+			DTO_Direccion dir = new DTO_Direccion();
+			dir.setCalle(calle);
+			dir.setCodigoPostal(Integer.valueOf(codPostal));
+			dir.setLocalidad(loc);
+			dir.setProvincia(provincia);
+			dir.setPais(provincia.getPais());
+			
+			cliente.setId(id);
+			cliente.setDireccion(dir);
+			
+			bd.modificarClienteEmpresa(cliente);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al modificar cliente empresa");
+		}
+	}
 
 	public void altaClienteParticular(String nombre, String apellido, boolean activa, String calle,
 			String codPostal, String loc, String prov, String pais, String email,
@@ -670,6 +706,38 @@ public class Controlador {
 		catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Error al guardar cliente particular");
+		}
+		
+	}
+	
+	public void modificarClienteParticular(int id,String nombre, String apellido, boolean activa, String calle,
+			String codPostal, String loc, String prov, String pais, String email,
+			 String telefono, String dni) {
+		try{
+			DTO_ClienteParticular cliente = new DTO_ClienteParticular();
+			cliente.setNombre(nombre);
+			cliente.setApellido(apellido);
+			cliente.setTelefono(telefono);
+			cliente.setEstado(activa);
+			cliente.setEmail(email);
+			cliente.setDni(dni);
+			
+			DTO_Provincia provincia = buscarProvinciaByNombre(prov);
+			DTO_Direccion dir = new DTO_Direccion();
+			dir.setCalle(calle);
+			dir.setCodigoPostal(Integer.valueOf(codPostal));
+			dir.setLocalidad(loc);
+			dir.setProvincia(provincia);
+			dir.setPais(provincia.getPais());
+			
+			cliente.setId(id);
+			cliente.setDireccion(dir);
+			
+			bd.modificarClienteParticular(cliente);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al modificar cliente particular");
 		}
 		
 	}
@@ -1322,6 +1390,64 @@ public class Controlador {
 			System.out.println("Error al borrar Tarea de Mantenimiento");
 		}
 		return false;
+	}
+
+	public void modificarSucursal(int id, String desc, String calle, String prov,
+			String loc, String codPostal, String telefono, String dniGerente) {
+		try{
+			DTO_Sucursal sucursal = new DTO_Sucursal();
+			sucursal.setDescripcion(desc);
+			sucursal.setTelefono(telefono);
+			
+			DTO_Provincia provincia = buscarProvinciaByNombre(prov);
+			
+			DTO_Direccion dir = new DTO_Direccion();
+			dir.setCalle(calle);
+			dir.setCodigoPostal(Integer.valueOf(codPostal));
+			dir.setLocalidad(loc);
+			dir.setProvincia(provincia);
+			dir.setPais(provincia.getPais());
+			
+			DTO_Usuario gerente =bd.getUsuarioPorDni(dniGerente);
+			
+			sucursal.setDireccion(dir);
+			sucursal.setIdGerente(gerente.getId());
+			sucursal.setId(id);
+			bd.modificarSucursal(sucursal);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al modificar sucursal");
+		}
+		
+	}
+	public void modificarProveedor(int id, DTO_Direccion direccion, String activo, String cuit,
+			String razonSocial, String email, String telefono,
+			int tallerOficial, char tipo) {
+		try{
+			DTO_Proveedor prov=new DTO_Proveedor();
+			prov.setActivo(activo);
+			prov.setCuit(cuit);
+			prov.setRazonSocial(razonSocial);
+			prov.setEmail(email);
+			prov.setTelefono(telefono);
+			if(tallerOficial==1)
+				prov.setTallerOficial(true);
+			else
+				prov.setTallerOficial(false);
+			
+			prov.setTipo(tipo);
+			prov.setDireccion(direccion);
+			prov.setId(id);
+
+			
+			bd.modificarProveedor(prov);
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al modificar Proveedor");
+		}
 	}
 
 	

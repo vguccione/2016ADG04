@@ -14,12 +14,14 @@ import com.ADG04.Vista.Administrativos.AltaUsuario;
 import com.ADG04.Vista.Administrativos.BajaMapaDeRuta;
 import com.ADG04.Vista.Administrativos.BajaSucursal;
 import com.ADG04.Vista.Administrativos.BajaUsuario;
+import com.ADG04.Vista.Administrativos.BusquedaScursal;
 import com.ADG04.Vista.Administrativos.CambiarContrasena;
 import com.ADG04.Vista.Clientes.AltaClienteEmpresa;
 import com.ADG04.Vista.Clientes.AltaClienteParticular;
 import com.ADG04.Vista.Clientes.AltaProductoCliente;
 import com.ADG04.Vista.Clientes.BajaCliente;
 import com.ADG04.Vista.Clientes.BajaProductoCliente;
+import com.ADG04.Vista.Clientes.BusquedaCliente;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
 import com.ADG04.Vista.Listados.ListadoCarriers;
@@ -49,6 +51,7 @@ import com.ADG04.Vista.Proveedores.BajaProveedor;
 import com.ADG04.Vista.Proveedores.BajaSeguro;
 import com.ADG04.Vista.Proveedores.BajaServicioSeguridad;
 import com.ADG04.Vista.Proveedores.BajaTarifaCarrier;
+import com.ADG04.Vista.Proveedores.BusquedaProveedor;
 import com.ADG04.Vista.Vehiculos.AgregarTareaAPlan;
 import com.ADG04.Vista.Vehiculos.AltaPlanMantenimiento;
 import com.ADG04.Vista.Vehiculos.AltaVehiculo;
@@ -267,7 +270,7 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem5.setText("Alta Empresa");
 							JMenuItem5.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									AltaClienteEmpresa inst = new AltaClienteEmpresa();
+									AltaClienteEmpresa inst = new AltaClienteEmpresa(null);
 									inst.getFrmAplicacionesDistribuidas().setVisible(true);
 								}
 							});
@@ -279,7 +282,7 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem5.setText("Alta Cliente Particular");
 							JMenuItem5.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									AltaClienteParticular inst = new AltaClienteParticular();
+									AltaClienteParticular inst = new AltaClienteParticular(null);
 									inst.getFrmAplicacionesDistribuidas().setVisible(true);
 								}
 							});
@@ -291,6 +294,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem6.setText("Modificar Cliente");
 							JMenuItem6.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
+									BusquedaCliente inst = new BusquedaCliente();
+									inst.setLocationRelativeTo(null);
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -315,7 +321,7 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem1.setBounds(93, -21, 119, 21);
 							JMenuItem1.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									AltaProveedor inst = new AltaProveedor();
+									AltaProveedor inst = new AltaProveedor(null);
 									inst.setLocationRelativeTo(null);
 									inst.setVisible(true);
 								}
@@ -327,9 +333,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemModificarProveedor.setText("Modificar Proveedor");
 							JMenuItemModificarProveedor.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaModificarProveedor inst = new VistaModificarProveedor();
+									BusquedaProveedor inst = new BusquedaProveedor();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}
@@ -520,7 +526,7 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem3.setText("Alta Sucursal");
 							JMenuItem3.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									AltaSucursal inst = new AltaSucursal();
+									AltaSucursal inst = new AltaSucursal(null);
 									inst.setLocationRelativeTo(null);
 									inst.setVisible(true);
 								}
@@ -532,9 +538,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemModificarSucursal.setText("Modificar Sucursal");
 							JMenuItemModificarSucursal.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*VistaModificarSucursal inst = new VistaModificarSucursal();
+									BusquedaScursal inst = new BusquedaScursal();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

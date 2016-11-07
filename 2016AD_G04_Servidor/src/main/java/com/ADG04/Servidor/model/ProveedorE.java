@@ -78,7 +78,8 @@ public class ProveedorE implements java.io.Serializable {
 		this.email = email;
 		this.telefono = telefono;
 		this.tallerOficial = tallerOficial;
-		this.tipo = tipo;
+		if(tipo!=' ')
+			this.tipo = tipo;
 	}
 
 	
@@ -95,7 +96,8 @@ public class ProveedorE implements java.io.Serializable {
 		this.email = email;
 		this.telefono = telefono;
 		this.tallerOficial = tallerOficial;
-		this.tipo = tipo;
+		if(tipo!=' ')
+			this.tipo = tipo;
 	}
 
 

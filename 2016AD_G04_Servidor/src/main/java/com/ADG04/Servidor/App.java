@@ -55,6 +55,11 @@ public class App
 	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
+    	
+    	Proveedor prov = new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(1006));
+    	prov.setRazonSocial("A");
+    	prov.saveOrUpdate();
+    	/*
     	   	
     	BusinessDelegate bd = new BusinessDelegate();
     	
@@ -78,14 +83,14 @@ public class App
 	
 	/*	v.setUltimoMantenimiento(fechaUltMant);
 		v.setUltimoUso(fechaUltUso);
-		v.setVencimientoGarantia(vencimientoGarantia); */
+		v.setVencimientoGarantia(vencimientoGarantia); 
 		v.setSucursal(new Sucursal().fromDTO(v.getSucursal()).toDTO());
 		v.setTemperaturaMin(1070f);
 		v.setTemperaturaMax(200f);
 		v.setPlanMantenimiento(bd.getPlanMantenimiento(1));
 		
 		veh = new Vehiculo().fromDTO(v);
-		veh.modificar();
+		veh.modificar();*/
 		
     	/*BusinessDelegate bd = new BusinessDelegate();
     	DTO_Sucursal suc = new DTO_Sucursal();

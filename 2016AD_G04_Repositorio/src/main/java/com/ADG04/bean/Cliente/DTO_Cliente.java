@@ -13,6 +13,7 @@ public class DTO_Cliente implements Serializable{
 	private String email;
 	private String telefono;
 	private boolean estado;
+	private char tipo;
 	
 	public DTO_Cliente() {
 		super();
@@ -32,6 +33,14 @@ public class DTO_Cliente implements Serializable{
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	
+	public char getTipo() {
+		return tipo;
+	}
+	public void setTipo(char tipo) {
+		this.tipo = tipo;
 	}
 	public DTO_Direccion getDireccion() {
 		return direccion;

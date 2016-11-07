@@ -29,7 +29,7 @@ public class ClienteEmpresaDao extends GenericDao<ClienteEmpresaE, Integer> {
 	public List<ClienteEmpresaE> listarClientes() {
 		try{
 			return entityManager
-	                .createQuery("from ClienteE c where c.class = 'e'")
+	                .createQuery("from ClienteEmpresaE c where c.class = 'e'")
 	                .getResultList();
         }catch(Exception e){
                 System.out.println(e);
@@ -55,7 +55,7 @@ public class ClienteEmpresaDao extends GenericDao<ClienteEmpresaE, Integer> {
 		try{
 			String f= filtro+"%";
 			return entityManager
-	                .createQuery("from ClienteE c where c.class = 'e' and razonSocial like :filtro")
+	                .createQuery("from ClienteEmpresaE c where c.class = 'e' and razonSocial like :filtro")
 	                .setParameter("filtro", f)
 	                .getResultList();
         }catch(Exception e){

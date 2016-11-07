@@ -200,6 +200,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		cli.setEstado(cliente.isEstado());
 		cli.setNombre(cliente.getNombre());
 		cli.setTelefono(cliente.getTelefono());
+		cli.setDireccion(dir);
+		
 		cli.guardar();
 	}
 
@@ -207,6 +209,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public void modificarClienteParticular(DTO_ClienteParticular cliente) throws RemoteException {
 		Direccion dir = new Direccion().fromDTO(cliente.getDireccion());
 		ClienteParticular cli = new ClienteParticular();
+	
 		cli.setApellido(cliente.getApellido());
 		cli.setDireccion(dir);
 		cli.setDni(cliente.getDni());
@@ -215,6 +218,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		cli.setNombre(cliente.getNombre());
 		cli.setTelefono(cliente.getTelefono());
 		cli.setIdCliente(cliente.getId());
+		cli.setDireccion(dir);
+		
 		cli.modificar();
 	}
 
@@ -258,7 +263,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<ClienteParticularE> clientes = ClienteParticularDao.getInstancia().listarClientes();
 		List<DTO_ClienteParticular> clientesDTO = new ArrayList<DTO_ClienteParticular>();
 		for(ClienteParticularE cliente : clientes){
-			clientesDTO.add(cliente.toDTO());
+			ClienteParticular c = new ClienteParticular().fromEntity(cliente);
+			clientesDTO.add(c.toDTO());
 		}
 		return clientesDTO;
 	}
@@ -511,7 +517,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	public DTO_ClienteParticular getClienteParticularById(Integer idCliente) throws RemoteException {
-		return ClienteParticularDao.getInstancia().getById(idCliente).toDTO();
+		return new ClienteParticular().fromEntity(ClienteParticularDao.getInstancia().getById(idCliente)).toDTO();
 	}
 	
 	public void eliminarCliente(Integer idCliente) throws RemoteException {
@@ -544,18 +550,21 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		ClienteEmpresa c = new ClienteEmpresa();
 	
 		c.setCuit(empresa.getCuit());
+		c.setIdCliente(empresa.getId());
 		c.setEmail(empresa.getEmail());
 		c.setRazonSocial(empresa.getRazonSocial());
 		c.setEstado(empresa.isEstado());
 		c.setTelefono(empresa.getTelefono());
 		c.setDireccion(dir);
 		
-		CuentaCorriente cc = new CuentaCorriente();
-		cc.setLimiteCredito(empresa.getCuentaCorriente().getLimiteCredito());
-		cc.setCredito(empresa.getCuentaCorriente().getCredito());
-		cc.setFormaPago(empresa.getCuentaCorriente().getFormaPago());
-		
-		c.setCuentaCorrientes(cc);
+		if(empresa.getCuentaCorriente()!=null){	
+			CuentaCorriente cc = new CuentaCorriente();
+			cc.setLimiteCredito(empresa.getCuentaCorriente().getLimiteCredito());
+			cc.setCredito(empresa.getCuentaCorriente().getCredito());
+			cc.setFormaPago(empresa.getCuentaCorriente().getFormaPago());
+			
+			c.setCuentaCorrientes(cc);
+		}
 		
 		c.modificar();
 	}
@@ -1017,10 +1026,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public List<DTO_ClienteParticular> buscarClientesByNombreApellidoDni (String filtro){
 		List<DTO_ClienteParticular> listaDTO = new ArrayList<DTO_ClienteParticular>();
-		List<ClienteE> lista = ClienteDao.getInstancia().getClientesByNombreApellidoDni(filtro);
-        for(ClienteE cli: lista)
-        	listaDTO.add((DTO_ClienteParticular) cli.toDTO());
-        
+		List<ClienteParticularE> lista = ClienteParticularDao.getInstancia().getClientesByNombreApellidoDni(filtro);
+        for(ClienteParticularE cli: lista){
+        	ClienteParticular c = new ClienteParticular().fromEntity(cli);
+        	listaDTO.add(c.toDTO());
+        }
 		 return listaDTO;
 	}
 
@@ -1042,9 +1052,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			String filtro) throws RemoteException {
 		List<DTO_ClienteEmpresa> listaDTO = new ArrayList<DTO_ClienteEmpresa>();
 		List<ClienteEmpresaE> lista = ClienteEmpresaDao.getInstancia().getEmpresaByRazonSocial(filtro);
-        for(ClienteEmpresaE cli: lista)
-        	listaDTO.add((DTO_ClienteEmpresa) cli.toDTO());
-        
+        for(ClienteEmpresaE cli: lista){
+        	ClienteEmpresa c = new ClienteEmpresa().fromEntity(cli);
+        	listaDTO.add(c.toDTO());
+        }
 		 return listaDTO;
 	}
 

@@ -21,6 +21,7 @@ import javax.swing.WindowConstants;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Administracion.DTO_Provincia;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 
 
@@ -73,10 +74,12 @@ public class AltaSucursal extends javax.swing.JFrame {
 	private JLabel jLabelDesc;
 	private JLabel jLabel1;
 	private JComboBox jComboBoxGerente;
+	DTO_Sucursal dto;
 
 	
-	public AltaSucursal() {
+	public AltaSucursal(DTO_Sucursal DTO) {
 		super();
+		dto = DTO;
 		initGUI();
 	}
 
@@ -98,7 +101,10 @@ public class AltaSucursal extends javax.swing.JFrame {
 					jLabelTitulo = new JLabel();
 					jPanel.add(jLabelTitulo);
 					jPanel.add(getJPanel1());
-					jLabelTitulo.setText("Alta Sucursal");
+					if(dto==null)
+						jLabelTitulo.setText("Alta Sucursal");
+					else
+						jLabelTitulo.setText("Modificar Sucursal");
 					jLabelTitulo.setFont(new java.awt.Font("Verdana",1,20));
 					jLabelTitulo.setBounds(10, 11, 372, 26);
 				}
@@ -230,6 +236,15 @@ public class AltaSucursal extends javax.swing.JFrame {
 			jComboBoxGerente = new JComboBox();
 			jComboBoxGerente.setModel(jComboBoxGerenteModel);
 			jComboBoxGerente.setBounds(94, 157, 154, 20);
+			if(dto!=null){
+				int j=0;
+				for(DTO_Usuario u:lista){
+					if(u.getId()==dto.getId()){
+						jComboBoxGerente.setSelectedIndex(j);
+						j++;
+					}
+				}
+			}
 		}
 		return jComboBoxGerente;
 	}
@@ -238,6 +253,8 @@ public class AltaSucursal extends javax.swing.JFrame {
 		if(jTextFieldDescripcion == null) {
 			jTextFieldDescripcion = new JTextField();
 			jTextFieldDescripcion.setBounds(94, 25, 354, 20);
+			if(dto!=null)
+				jTextFieldDescripcion.setText(dto.getDescripcion());
 		}
 		return jTextFieldDescripcion;
 	}
@@ -246,6 +263,8 @@ public class AltaSucursal extends javax.swing.JFrame {
 		if(jTextFieldDireccion == null) {
 			jTextFieldDireccion = new JTextField();
 			jTextFieldDireccion.setBounds(94, 53, 354, 18);
+			if(dto!=null)
+				jTextFieldDireccion.setText(dto.getDireccion().getCalle());
 		}
 		return jTextFieldDireccion;
 	}
@@ -255,6 +274,8 @@ public class AltaSucursal extends javax.swing.JFrame {
 			jTextFieldCodigoPostal = new JTextField();
 			jTextFieldCodigoPostal.setBounds(96, 135, 120, 18);
 		}
+		if(dto!=null)
+			jTextFieldCodigoPostal.setText(String.valueOf(dto.getDireccion().getCodigoPostal()));
 		return jTextFieldCodigoPostal;
 	}
 	
@@ -262,6 +283,8 @@ public class AltaSucursal extends javax.swing.JFrame {
 		if(jTextFieldLocalidad == null) {
 			jTextFieldLocalidad = new JTextField();
 			jTextFieldLocalidad.setBounds(94, 107, 354, 20);
+			if(dto!=null)
+				jTextFieldLocalidad.setText(dto.getDireccion().getLocalidad());
 		}
 		return jTextFieldLocalidad;
 	}
@@ -271,6 +294,9 @@ public class AltaSucursal extends javax.swing.JFrame {
 			jTextFieldTelefono = new JTextField();
 			jTextFieldTelefono.setBounds(331, 135, 117, 18);
 		}
+		if(dto!=null)
+			jTextFieldTelefono.setText(dto.getTelefono());
+	
 		return jTextFieldTelefono;
 	}
 
@@ -297,8 +323,14 @@ public class AltaSucursal extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent evt) {
 					if (validacion()) {
 						try{
-						Controlador.getInstancia().altaSucursal(jTextFieldDescripcion.getText(), jTextFieldDireccion.getText(), jComboBoxProvincias.getSelectedItem().toString(), jTextFieldLocalidad.getText(), jTextFieldCodigoPostal.getText(), jTextFieldTelefono.getText(), jComboBoxGerente.getSelectedItem().toString());
-						JOptionPane.showMessageDialog(null,"Se ha dado de alta la sucursal:" + jTextFieldDescripcion.getText(), "Alta sucursal realizada", JOptionPane.INFORMATION_MESSAGE);
+						  if(dto==null){
+							Controlador.getInstancia().altaSucursal(jTextFieldDescripcion.getText(), jTextFieldDireccion.getText(), jComboBoxProvincias.getSelectedItem().toString(), jTextFieldLocalidad.getText(), jTextFieldCodigoPostal.getText(), jTextFieldTelefono.getText(), jComboBoxGerente.getSelectedItem().toString());
+							JOptionPane.showMessageDialog(null,"Se ha dado de alta la sucursal:" + jTextFieldDescripcion.getText(), "Alta sucursal realizada", JOptionPane.INFORMATION_MESSAGE);
+							}
+							else{
+								Controlador.getInstancia().modificarSucursal(dto.getId(),jTextFieldDescripcion.getText(), jTextFieldDireccion.getText(), jComboBoxProvincias.getSelectedItem().toString(), jTextFieldLocalidad.getText(), jTextFieldCodigoPostal.getText(), jTextFieldTelefono.getText(), jComboBoxGerente.getSelectedItem().toString());
+								JOptionPane.showMessageDialog(null,"Se ha modificado la sucursal:" + jTextFieldDescripcion.getText(), "Modificacion sucursal realizada", JOptionPane.INFORMATION_MESSAGE);
+							}
 						setVisible(false);
 						}
 						catch(Exception e)
@@ -341,12 +373,19 @@ public class AltaSucursal extends javax.swing.JFrame {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JComboBox getJComboBox1() {
+		Vector<DTO_Provincia> lista = Controlador.getInstancia().armarComboProvincias("Argentina");
 		if(jComboBoxProvincias == null) {
 			ComboBoxModel jComboBoxProvinciasModel = 
-					new DefaultComboBoxModel(Controlador.getInstancia().armarComboProvincias("Argentina"));
+					new DefaultComboBoxModel(lista);
 			jComboBoxProvincias = new JComboBox();
 			jComboBoxProvincias.setModel(jComboBoxProvinciasModel);
 			jComboBoxProvincias.setBounds(94, 79, 354, 20);
+		}
+		if(dto!=null){
+			for(int i=0;i<lista.size();i++){
+				if(jComboBoxProvincias.getItemAt(i).toString().contains(dto.getDireccion().getProvincia().getDescripcion()))
+					jComboBoxProvincias.setSelectedIndex(i);
+			}
 		}
 		return jComboBoxProvincias;
 	}

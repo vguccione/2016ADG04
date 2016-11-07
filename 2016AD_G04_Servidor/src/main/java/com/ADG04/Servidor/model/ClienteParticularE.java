@@ -80,20 +80,4 @@ public class ClienteParticularE extends ClienteE implements java.io.Serializable
 		this.dni = dni;
 	}
 
-
-	public DTO_ClienteParticular toDTO(){
-
-		DTO_ClienteParticular cli = new DTO_ClienteParticular();
-		cli.setId(this.getIdCliente());
-		cli.setDni(this.getDni());
-		cli.setNombre(this.getNombre());
-		cli.setApellido(this.getApellido());
-		cli.setEmail(this.getEmail());	
-		cli.setEstado(this.getEstado());
-		cli.setTelefono(this.getTelefono());
-		
-		cli.setDireccion(new Direccion().fromEntity(this.getDireccion()).toDTO());
-		
-		return cli;
-	}
 }

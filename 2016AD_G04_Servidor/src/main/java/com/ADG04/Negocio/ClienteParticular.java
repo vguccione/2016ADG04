@@ -28,9 +28,13 @@ import java.util.Set;
 
 
 
+
+
+
 import javax.persistence.EntityManager;
 
 import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.model.ClienteParticularE;
@@ -54,6 +58,7 @@ public class ClienteParticular extends Cliente{
 
 	public ClienteParticular(String nombre, String apellido, String dni) {
 		super();
+		this.setTipo('P');
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
@@ -90,6 +95,8 @@ public class ClienteParticular extends Cliente{
 	public DTO_ClienteParticular toDTO(){
 
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();
+
+		cli.setTipo('P');
 		cli.setId(this.getIdCliente());
 		cli.setDni(this.getDni());
 		cli.setNombre(this.getNombre());
@@ -124,7 +131,7 @@ public class ClienteParticular extends Cliente{
 	public void guardar() {
 		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
 		em.getTransaction().begin();
-		ClienteDao.getInstancia().persist(this.toEntity());
+		ClienteParticularDao.getInstancia().persist(this.toEntity());
 		em.getTransaction().commit();
 	}
 
@@ -133,7 +140,26 @@ public class ClienteParticular extends Cliente{
 	public void modificar() {
 		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
 		em.getTransaction().begin();
-		ClienteDao.getInstancia().saveOrUpdate(this.toEntity());
+		ClienteParticularDao.getInstancia().saveOrUpdate(this.toEntity());
 		em.getTransaction().commit();
+	}
+	
+	
+	public ClienteParticular fromEntity(ClienteParticularE cliente) {
+		if(cliente!=null){
+			ClienteParticular cli = new ClienteParticular();
+			cli.setApellido(cliente.getApellido());
+			cli.setDireccion(new Direccion().fromEntity(cliente.getDireccion()));
+			cli.setDni(cliente.getDni());
+			cli.setEmail(cliente.getEmail());
+			cli.setEstado(cliente.getEstado());
+			cli.setIdCliente(cliente.getIdCliente());
+			cli.setNombre(cliente.getNombre());
+			cli.setTelefono(cliente.getTelefono());
+			cli.setTipo('P');
+			return cli;
+		}
+		else
+			return null;
 	}
 }

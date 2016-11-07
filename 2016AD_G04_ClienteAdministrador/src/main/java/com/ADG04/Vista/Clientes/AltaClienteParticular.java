@@ -18,9 +18,11 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
 
 import com.ADG04.Controller.Controlador;
+import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Vector;
 
 public class AltaClienteParticular extends javax.swing.JFrame{
 
@@ -38,9 +40,11 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 	private JComboBox cbxProvincia;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbxFormaPago;
+	private DTO_ClienteParticular dto;
 
-	public AltaClienteParticular() {
+	public AltaClienteParticular(DTO_ClienteParticular DTO) {
 		super();
+		dto = DTO;
 		initialize();
 	}
 
@@ -57,7 +61,7 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
-		frmAplicacionesDistribuidas = new JFrame();
+		frmAplicacionesDistribuidas = this;
 		frmAplicacionesDistribuidas.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 		frmAplicacionesDistribuidas.setBounds(100, 100, 450, 469);
 		frmAplicacionesDistribuidas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -79,11 +83,16 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 		
 		txtNombre = new JTextField();
 		txtNombre.setBounds(80, 27, 324, 20);
+		if(dto!=null){
+			txtNombre.setText(dto.getNombre());
+		}
 		General.add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		txtApellido = new JTextField();
 		txtApellido.setBounds(80, 55, 324, 20);
+		if(dto!=null)
+			txtApellido.setText(dto.getApellido());
 		General.add(txtApellido);
 		txtApellido.setColumns(10);
 		
@@ -93,6 +102,8 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 		
 		txtDni = new JTextField();
 		txtDni.setBounds(80, 83, 324, 20);
+		if(dto!=null)
+			txtDni.setText(dto.getDni());
 		General.add(txtDni);
 		txtDni.setColumns(10);
 		
@@ -127,34 +138,52 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 		lblEmail.setBounds(10, 123, 46, 14);
 		Contacto.add(lblEmail);
 		
-		ComboBoxModel ProvinciasModel = new DefaultComboBoxModel(Controlador.getInstancia().armarComboProvincias("Argentina"));
+		Vector listaPaises = Controlador.getInstancia().armarComboProvincias("Argentina");
+		ComboBoxModel ProvinciasModel = new DefaultComboBoxModel(listaPaises);
 		cbxProvincia = new JComboBox();
 		cbxProvincia.setBounds(83, 20, 117, 20);
 		cbxProvincia.setModel(ProvinciasModel);
+		if(dto!=null){
+			for(int i = 0;i<listaPaises.size();i++){
+				if(cbxProvincia.getItemAt(i).toString().contains(dto.getDireccion().getProvincia().getDescripcion())){
+					cbxProvincia.setSelectedIndex(i);
+				}
+			}
+		}
 		Contacto.add(cbxProvincia);
 		
 		txtLocalidad = new JTextField();
 		txtLocalidad.setBounds(83, 45, 321, 20);
+		if(dto!=null)
+			txtLocalidad.setText(dto.getDireccion().getLocalidad());
 		Contacto.add(txtLocalidad);
 		txtLocalidad.setColumns(10);
 		
 		txtDireccion = new JTextField();
 		txtDireccion.setBounds(83, 70, 321, 20);
+		if(dto!=null)
+			txtDireccion.setText(dto.getDireccion().getCalle());
 		Contacto.add(txtDireccion);
 		txtDireccion.setColumns(10);
 		
 		txtPostal = new JTextField();
 		txtPostal.setBounds(83, 95, 117, 20);
+		if(dto!=null)
+			txtPostal.setText(String.valueOf(dto.getDireccion().getCodigoPostal()));
 		Contacto.add(txtPostal);
 		txtPostal.setColumns(10);
 		
 		txtTelefono = new JTextField();
 		txtTelefono.setBounds(273, 95, 131, 20);
+		if(dto!=null)
+			txtTelefono.setText(dto.getTelefono());
 		Contacto.add(txtTelefono);
 		txtTelefono.setColumns(10);
 		
 		txtEmail = new JTextField();
 		txtEmail.setBounds(83, 120, 321, 20);
+		if(dto!=null)
+			txtEmail.setText(dto.getEmail());
 		Contacto.add(txtEmail);
 		txtEmail.setColumns(10);
 		
@@ -179,25 +208,42 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				if (validacion()) {
 					try{
-						Controlador.getInstancia().altaClienteParticular(txtNombre.getText(), 
-																				txtApellido.getText(), 
-																				true,
-																				txtDireccion.getText(),
-																				txtPostal.getText(),
-																				txtLocalidad.getText(),
-																				cbxProvincia.getSelectedItem().toString(),
-																				"Argentina",
-																				txtEmail.getText(),
-																				txtTelefono.getText(),
-																				txtDni.getText());
-					
-						JOptionPane.showMessageDialog(null,"Se ha dado de alta al cliente:" + txtNombre.getText() + " " + txtApellido.getText(), "Alta cliente realizada", JOptionPane.INFORMATION_MESSAGE);
+						if(dto==null){
+							Controlador.getInstancia().altaClienteParticular(txtNombre.getText(), 
+																					txtApellido.getText(), 
+																					true,
+																					txtDireccion.getText(),
+																					txtPostal.getText(),
+																					txtLocalidad.getText(),
+																					cbxProvincia.getSelectedItem().toString(),
+																					"Argentina",
+																					txtEmail.getText(),
+																					txtTelefono.getText(),
+																					txtDni.getText());
+						
+							JOptionPane.showMessageDialog(null,"Se ha dado de alta al cliente:" + txtNombre.getText() + " " + txtApellido.getText(), "Alta cliente realizada", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else{
+							Controlador.getInstancia().modificarClienteParticular(dto.getId(),txtNombre.getText(), 
+									txtApellido.getText(), 
+									true,
+									txtDireccion.getText(),
+									txtPostal.getText(),
+									txtLocalidad.getText(),
+									cbxProvincia.getSelectedItem().toString(),
+									"Argentina",
+									txtEmail.getText(),
+									txtTelefono.getText(),
+									txtDni.getText());
+
+JOptionPane.showMessageDialog(null,"Se ha modificado el cliente:" + txtNombre.getText() + " " + txtApellido.getText(), "Modificacion cliente realizada", JOptionPane.INFORMATION_MESSAGE);
+						}
 						frmAplicacionesDistribuidas.setVisible(false);
 						} 
 					catch(Exception e)
 					{
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null,"No se ha podido dar de alta al cliente particular.", "Error", JOptionPane.ERROR_MESSAGE);	
+						JOptionPane.showMessageDialog(null,"No se ha podido dar de alta/modificar al cliente particular.", "Error", JOptionPane.ERROR_MESSAGE);	
 					}
 				}
 			}

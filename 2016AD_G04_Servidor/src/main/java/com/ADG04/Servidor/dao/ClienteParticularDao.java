@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteParticularE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 
@@ -26,6 +27,20 @@ public class ClienteParticularDao extends GenericDao<ClienteParticularE, Integer
 		return instancia;
 	}
 	
+	public List<ClienteParticularE> getClientesByNombreApellidoDni(String filtro){
+		try {
+			  String f = filtro+'%';
+			  Query query = entityManager.createQuery("from ClienteE c where (nombre like :filtro OR "
+			  		+ " apellido like :filtro OR dni like :filtro) and c.class = 'p'");
+			  query.setParameter("filtro", f);
+			  return query.getResultList();
+			       
+	        } catch (Exception e){
+	            System.out.println(e);
+	            System.out.println("Error al buscar clientes");
+	            return null;
+	        }
+	}
 	public ClienteParticularE getByDni(String dni) {
 		try {
 		  Query query = entityManager.createQuery("from ClienteE where dni =:dni");

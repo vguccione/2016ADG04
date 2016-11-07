@@ -68,10 +68,14 @@ public class Rol{
 	}
 
 	public Rol fromEntity(RolE p) {
-		Rol r = new Rol();
-		r.setDescripcion(p.getDescripcion());
-		r.setIdRol(p.getIdRol());
-		return r;
+		if(p!=null){
+			Rol r = new Rol();
+			r.setDescripcion(p.getDescripcion());
+			r.setIdRol(p.getIdRol());
+			return r;
+		}
+		else
+			return null;
 	}
 
 

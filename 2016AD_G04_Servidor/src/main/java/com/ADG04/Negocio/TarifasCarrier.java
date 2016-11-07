@@ -112,15 +112,19 @@ public class TarifasCarrier implements java.io.Serializable{
 	}
 
 	public TarifasCarrier fromDTO(DTO_TarifasCarrier tarifa) {
-		TarifasCarrier tc = new TarifasCarrier();
-		tc.setComentarios(tarifa.getComentarios());
-		if(tarifa.getId()!=null)
-			tc.setIdTarifasCarrier(tarifa.getId());
-		tc.setPrecioKMExtra(tarifa.getPrecioKMExtra());
-		tc.setPrioridad(tarifa.getPrioridad());
-		tc.setProveedor(new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(tarifa.getIdProveedor())));
-		tc.setTarifa(tarifa.getTarifa());
-		return tc;
+		if(tarifa!=null){
+			TarifasCarrier tc = new TarifasCarrier();
+			tc.setComentarios(tarifa.getComentarios());
+			if(tarifa.getId()!=null)
+				tc.setIdTarifasCarrier(tarifa.getId());
+			tc.setPrecioKMExtra(tarifa.getPrecioKMExtra());
+			tc.setPrioridad(tarifa.getPrioridad());
+			tc.setProveedor(new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(tarifa.getIdProveedor())));
+			tc.setTarifa(tarifa.getTarifa());
+			return tc;
+		}
+		else
+			return null;
 	}
 	
 	public TarifasCarrierE toEntity(){
@@ -149,14 +153,18 @@ public class TarifasCarrier implements java.io.Serializable{
 	}
 
 	public TarifasCarrier fromEntity(TarifasCarrierE tarifa) {
-		TarifasCarrier tc = new TarifasCarrier();
-		tc.setComentarios(tarifa.getComentarios());
-		tc.setIdTarifasCarrier(tarifa.getIdTarifasCarrier());
-		tc.setPrecioKMExtra(tarifa.getPrecioKMExtra());
-		tc.setPrioridad(tarifa.getPrioridad());
-		tc.setProveedor(new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(tarifa.getProveedor().getIdProveedor())));
-		tc.setTarifa(tarifa.getTarifa());
-		return tc;
+		if(tarifa!=null){
+			TarifasCarrier tc = new TarifasCarrier();
+			tc.setComentarios(tarifa.getComentarios());
+			tc.setIdTarifasCarrier(tarifa.getIdTarifasCarrier());
+			tc.setPrecioKMExtra(tarifa.getPrecioKMExtra());
+			tc.setPrioridad(tarifa.getPrioridad());
+			tc.setProveedor(new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(tarifa.getProveedor().getIdProveedor())));
+			tc.setTarifa(tarifa.getTarifa());
+			return tc;
+		}
+		else
+			return null;
 	}
 
 	

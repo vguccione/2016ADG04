@@ -150,15 +150,19 @@ public class ClienteEmpresa extends Cliente{
 
 
 	public ClienteEmpresa fromEntity(ClienteEmpresaE cliente) {
-		ClienteEmpresa cli = new ClienteEmpresa();
-		cli.setIdCliente(cliente.getIdCliente());
-		cli.setCuit(cliente.getCuit());
-		cli.setDireccion(new Direccion().fromEntity(cliente.getDireccion()));
-		cli.setRazonSocial(cliente.getRazonSocial());
-		cli.setEmail(cliente.getEmail());
-		cli.setTelefono(cliente.getTelefono());
-		cli.setEstado(cliente.getEstado());
-		cli.setCuentaCorrientes(new CuentaCorriente().fromEntity(cliente.getCuentaCorrientes()));
-		return cli;
+		if(cliente!=null){
+			ClienteEmpresa cli = new ClienteEmpresa();
+			cli.setIdCliente(cliente.getIdCliente());
+			cli.setCuit(cliente.getCuit());
+			cli.setDireccion(new Direccion().fromEntity(cliente.getDireccion()));
+			cli.setRazonSocial(cliente.getRazonSocial());
+			cli.setEmail(cliente.getEmail());
+			cli.setTelefono(cliente.getTelefono());
+			cli.setEstado(cliente.getEstado());
+			cli.setCuentaCorrientes(new CuentaCorriente().fromEntity(cliente.getCuentaCorrientes()));
+			return cli;
+		}
+		else
+			return null;
 	}
 }

@@ -317,30 +317,34 @@ public class Vehiculo{
 	}
 
 	public Vehiculo fromDTO(DTO_Vehiculo dto) {
-		Vehiculo veh = new Vehiculo();
-		veh.setAlto(dto.getAlto());
-		veh.setAncho(dto.getAncho());
-		veh.setAnio(dto.getAnio());
-		veh.setCondicionTransporte(dto.getCondicionTransporte());
-		veh.setEstado(dto.getEstado());
-		veh.setFechaIngreso(dto.getFechaIngreso());
-		if(dto.getId()!=null)
-			veh.setIdVehiculo(dto.getId());
-		veh.setKmRecorridos(dto.getKmsRecorridos());
-		veh.setLargo(dto.getLargo());
-		veh.setMarca(dto.getMarca());
-		veh.setModelo(dto.getModelo());
-		veh.setPatente(dto.getPatente());
-		veh.setPeso(dto.getPeso());
-		veh.setPlanMantenimiento(new PlanMantenimiento().fromDTO(dto.getPlanMantenimiento()));
-		veh.setRefrigerado(dto.getRefrigerado());
-		veh.setSucursal(new Sucursal().fromDTO(dto.getSucursal()));
-		veh.setTara(dto.getTara());
-		veh.setTemperaturaMax(dto.getTemperaturaMax());
-		veh.setTemperaturaMin(dto.getTemperaturaMin());
-		veh.setTipo(dto.getTipo());
-		veh.setVolumen(dto.getVolumen());
-		return veh;
+		if(dto!=null){
+			Vehiculo veh = new Vehiculo();
+			veh.setAlto(dto.getAlto());
+			veh.setAncho(dto.getAncho());
+			veh.setAnio(dto.getAnio());
+			veh.setCondicionTransporte(dto.getCondicionTransporte());
+			veh.setEstado(dto.getEstado());
+			veh.setFechaIngreso(dto.getFechaIngreso());
+			if(dto.getId()!=null)
+				veh.setIdVehiculo(dto.getId());
+			veh.setKmRecorridos(dto.getKmsRecorridos());
+			veh.setLargo(dto.getLargo());
+			veh.setMarca(dto.getMarca());
+			veh.setModelo(dto.getModelo());
+			veh.setPatente(dto.getPatente());
+			veh.setPeso(dto.getPeso());
+			veh.setPlanMantenimiento(new PlanMantenimiento().fromDTO(dto.getPlanMantenimiento()));
+			veh.setRefrigerado(dto.getRefrigerado());
+			veh.setSucursal(new Sucursal().fromDTO(dto.getSucursal()));
+			veh.setTara(dto.getTara());
+			veh.setTemperaturaMax(dto.getTemperaturaMax());
+			veh.setTemperaturaMin(dto.getTemperaturaMin());
+			veh.setTipo(dto.getTipo());
+			veh.setVolumen(dto.getVolumen());
+			return veh;
+		}
+		else
+			return null;
 	}
 
 	public VehiculoE toEntity() {
@@ -371,30 +375,34 @@ public class Vehiculo{
 	}
 
 	public Vehiculo fromEntity(VehiculoE vehiculo) {
-		Vehiculo veh = new Vehiculo();
-		veh.setIdVehiculo(vehiculo.getIdVehiculo());
-		veh.setAlto(vehiculo.getAlto());
-		veh.setAncho(vehiculo.getAncho());
-		veh.setAnio(vehiculo.getAnio());
-		veh.setCondicionTransporte(vehiculo.getCondicionTransporte());
-		veh.setEstado(vehiculo.getEstado());
-		veh.setFechaIngreso(vehiculo.getFechaIngreso());
-		veh.setIdVehiculo(vehiculo.getIdVehiculo());
-		veh.setKmRecorridos(vehiculo.getKmRecorridos());
-		veh.setLargo(vehiculo.getLargo());
-		veh.setMarca(vehiculo.getMarca());
-		veh.setModelo(vehiculo.getModelo());
-		veh.setPatente(vehiculo.getPatente());
-		veh.setPeso(vehiculo.getPeso());
-		veh.setPlanMantenimiento(new PlanMantenimiento().fromEntity(vehiculo.getPlanMantenimiento()));
-		veh.setRefrigerado(vehiculo.getRefrigerado());
-		veh.setSucursal(new Sucursal().fromEntity(vehiculo.getSucursal()));
-		veh.setTara(vehiculo.getTara());
-		veh.setTemperaturaMax(vehiculo.getTemperaturaMax());
-		veh.setTemperaturaMin(vehiculo.getTemperaturaMin());
-		veh.setTipo(vehiculo.getTipo());
-		veh.setVolumen(vehiculo.getVolumen());
-		return veh;
+		if(vehiculo!=null){
+			Vehiculo veh = new Vehiculo();
+			veh.setIdVehiculo(vehiculo.getIdVehiculo());
+			veh.setAlto(vehiculo.getAlto());
+			veh.setAncho(vehiculo.getAncho());
+			veh.setAnio(vehiculo.getAnio());
+			veh.setCondicionTransporte(vehiculo.getCondicionTransporte());
+			veh.setEstado(vehiculo.getEstado());
+			veh.setFechaIngreso(vehiculo.getFechaIngreso());
+			veh.setIdVehiculo(vehiculo.getIdVehiculo());
+			veh.setKmRecorridos(vehiculo.getKmRecorridos());
+			veh.setLargo(vehiculo.getLargo());
+			veh.setMarca(vehiculo.getMarca());
+			veh.setModelo(vehiculo.getModelo());
+			veh.setPatente(vehiculo.getPatente());
+			veh.setPeso(vehiculo.getPeso());
+			veh.setPlanMantenimiento(new PlanMantenimiento().fromEntity(vehiculo.getPlanMantenimiento()));
+			veh.setRefrigerado(vehiculo.getRefrigerado());
+			veh.setSucursal(new Sucursal().fromEntity(vehiculo.getSucursal()));
+			veh.setTara(vehiculo.getTara());
+			veh.setTemperaturaMax(vehiculo.getTemperaturaMax());
+			veh.setTemperaturaMin(vehiculo.getTemperaturaMin());
+			veh.setTipo(vehiculo.getTipo());
+			veh.setVolumen(vehiculo.getVolumen());
+			return veh;
+		}
+		else
+			return null;
 	}
 
 	public void guardar() {

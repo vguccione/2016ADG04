@@ -132,45 +132,52 @@ public class Direccion{
 	
 	
 	public Direccion fromDTO(DTO_Direccion direccion) {
-
-		/*Crear Direccion*/
-		Direccion dir = new Direccion();
-		dir.setCalle(direccion.getCalle());
-		dir.setCodigoPostal(direccion.getCodigoPostal());
-		dir.setLocalidad(direccion.getLocalidad());
-		dir.setNro(direccion.getNro());
-		
-		ProvinciaE prove =ProvinciaDao.getInstancia().getById(direccion.getProvincia().getId());
-		Provincia prov = new Provincia().fromEntity(prove);
-		
-		PaisE pais = PaisDao.getInstancia().getById(direccion.getPais().getId());
-		Pais p = new Pais().fromEntity(pais);
-		
-		
-		dir.setProvincia(prov);
-		dir.setPais(p);
-		return dir;
+		if(direccion!=null){
+			/*Crear Direccion*/
+			Direccion dir = new Direccion();
+			dir.setCalle(direccion.getCalle());
+			dir.setCodigoPostal(direccion.getCodigoPostal());
+			dir.setLocalidad(direccion.getLocalidad());
+			dir.setNro(direccion.getNro());
+			
+			ProvinciaE prove =ProvinciaDao.getInstancia().getById(direccion.getProvincia().getId());
+			Provincia prov = new Provincia().fromEntity(prove);
+			
+			PaisE pais = PaisDao.getInstancia().getById(direccion.getPais().getId());
+			Pais p = new Pais().fromEntity(pais);
+			
+			
+			dir.setProvincia(prov);
+			dir.setPais(p);
+			return dir;
+		}
+		else
+			return null;
 	}
 
 
 	public Direccion fromEntity(DireccionE direccion) {
-		/*Crear Direccion*/
-		Direccion dir = new Direccion();
-		dir.setCalle(direccion.getCalle());
-		dir.setCodigoPostal(direccion.getCodigoPostal());
-		dir.setLocalidad(direccion.getLocalidad());
-		dir.setNro(direccion.getNro());
-		
-		ProvinciaE prove = ProvinciaDao.getInstancia().getById(direccion.getProvincia().getIdProvincia());
-		Provincia prov = new Provincia().fromEntity(prove);
-		
-		PaisE pais = PaisDao.getInstancia().getById(direccion.getPais().getIdPais());
-		Pais p = new Pais().fromEntity(pais);
-		
-		
-		dir.setProvincia(prov);
-		dir.setPais(p);
-		return dir;
+		if(direccion!=null){
+			/*Crear Direccion*/
+			Direccion dir = new Direccion();
+			dir.setCalle(direccion.getCalle());
+			dir.setCodigoPostal(direccion.getCodigoPostal());
+			dir.setLocalidad(direccion.getLocalidad());
+			dir.setNro(direccion.getNro());
+			
+			ProvinciaE prove = ProvinciaDao.getInstancia().getById(direccion.getProvincia().getIdProvincia());
+			Provincia prov = new Provincia().fromEntity(prove);
+			
+			PaisE pais = PaisDao.getInstancia().getById(direccion.getPais().getIdPais());
+			Pais p = new Pais().fromEntity(pais);
+			
+			
+			dir.setProvincia(prov);
+			dir.setPais(p);
+			return dir;
+		}
+		else
+			return null;
 	}
 
 }

@@ -223,31 +223,39 @@ public class Proveedor{
 
 
 	public Proveedor fromDTO(DTO_Proveedor dto) {
-		Proveedor p = new Proveedor();
-		p.setActivo(dto.getActivo());
-		p.setCuit(dto.getCuit());
-		p.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
-		p.setEmail(dto.getEmail());
-		p.setIdProveedor(dto.getId());
-		p.setRazonSocial(dto.getRazonSocial());
-		p.setTallerOficial(dto.isTallerOficial());
-		p.setTelefono(dto.getTelefono());
-		p.setTipo(dto.getTipo());
-		return p;
+		if(dto!=null){
+			Proveedor p = new Proveedor();
+			p.setActivo(dto.getActivo());
+			p.setCuit(dto.getCuit());
+			p.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
+			p.setEmail(dto.getEmail());
+			p.setIdProveedor(dto.getId());
+			p.setRazonSocial(dto.getRazonSocial());
+			p.setTallerOficial(dto.isTallerOficial());
+			p.setTelefono(dto.getTelefono());
+			p.setTipo(dto.getTipo());
+			return p;
+		}
+		else
+			return null;
 	}
 
 
 	public Proveedor fromEntity(ProveedorE prov) {
-		Proveedor p = new Proveedor();
-		p.setActivo(prov.getActivo());
-		p.setCuit(prov.getCuit());
-		p.setDireccion(new Direccion().fromEntity(prov.getDireccion()));
-		p.setEmail(prov.getEmail());
-		p.setIdProveedor(prov.getIdProveedor());
-		p.setRazonSocial(prov.getRazonSocial());
-		p.setTallerOficial(prov.isTallerOficial());
-		p.setTelefono(prov.getTelefono());
-		p.setTipo(prov.getTipo());
-		return p;
+		if(prov!=null){
+			Proveedor p = new Proveedor();
+			p.setActivo(prov.getActivo());
+			p.setCuit(prov.getCuit());
+			p.setDireccion(new Direccion().fromEntity(prov.getDireccion()));
+			p.setEmail(prov.getEmail());
+			p.setIdProveedor(prov.getIdProveedor());
+			p.setRazonSocial(prov.getRazonSocial());
+			p.setTallerOficial(prov.isTallerOficial());
+			p.setTelefono(prov.getTelefono());
+			p.setTipo(prov.getTipo());
+			return p;
+		}
+		else
+			return null;
 	}
 }

@@ -146,15 +146,21 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	public DTO_Usuario getUsuario(Integer idUsuario) throws RemoteException {
 		UsuarioE usu = UsuarioDao.getInstancia().getById(idUsuario);
-		Usuario usuario = new Usuario().fromEntity(usu);
-		return usuario.toDTO();
-		
+		if(usu!=null){
+			Usuario usuario = new Usuario().fromEntity(usu);
+			return usuario.toDTO();
+		}
+		else 
+			return null;
 	}
 
 	public DTO_Usuario getUsuario(String dni) throws RemoteException {
 		UsuarioE usu = UsuarioDao.getInstancia().getByDni(dni);
-		Usuario usuario = new Usuario().fromEntity(usu);
-		return usuario.toDTO();
+		if(usu!=null){
+			Usuario usuario = new Usuario().fromEntity(usu);
+			return usuario.toDTO();
+		}else
+			return null;
 	}
 	
 	public void altaSucursal(DTO_Sucursal sucursal) throws RemoteException {
@@ -175,8 +181,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException {
 		 SucursalE suc = SucursalDao.getInstancia().getById(idSucursal);
-		 Sucursal sucursal = new Sucursal().fromEntity(suc);
-		 return sucursal.toDTO();
+		 if(suc!=null){
+			 Sucursal sucursal = new Sucursal().fromEntity(suc);
+			 return sucursal.toDTO();
+		 }
+		 else
+			 return null;
 	}
 
 	
@@ -214,10 +224,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 	}
 
-	public ClienteParticularE getClienteByDni(String dniCliente) {
-		
+	public ClienteParticularE getClienteByDni(String dniCliente) {		
 		return ClienteParticularDao.getInstancia().getByDni(dniCliente);
-		
 	}
 
 	
@@ -239,7 +247,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<ClienteEmpresaE> clientes = ClienteEmpresaDao.getInstancia().listarClientes();
 		List<DTO_ClienteEmpresa> clientesDTO = new ArrayList<DTO_ClienteEmpresa>();
 		for(ClienteEmpresaE cliente : clientes){
-			clientesDTO.add(cliente.toDTO());
+			ClienteEmpresa cli = new ClienteEmpresa().fromEntity(cliente);
+			clientesDTO.add(cli.toDTO());
 		}
 		return clientesDTO;
 	}
@@ -642,8 +651,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	@Override
-	public Integer altaPlanMantenimiento(DTO_PlanMantenimiento pm, Integer idVehiculo)	throws RemoteException, Exception {
-				
+	public Integer altaPlanMantenimiento(DTO_PlanMantenimiento pm, Integer idVehiculo)	throws RemoteException, Exception {			
 		GestionVehiculo v = new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo));
 		return v.altaPlanMantenimiento(pm.getDescripcion(), pm.getComentarios());
 	}
@@ -829,8 +837,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public DTO_Proveedor getProveedor(Integer idProveedor)
 			throws RemoteException {
 		ProveedorE prov = ProveedorDao.getInstancia().getById(idProveedor);
-		
-		return new Proveedor().fromEntity(prov).toDTO();
+		if(prov!=null){
+			return new Proveedor().fromEntity(prov).toDTO();
+		}
+		else
+			return null;
 	}
 
 	@Override
@@ -852,8 +863,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_Usuario getUsuarioPorDni(String dni) {
 		UsuarioE usuario = UsuarioDao.getInstancia().getByDni(dni);
-		Usuario usu = new Usuario().fromEntity(usuario);
-		return usu.toDTO();
+		if(usuario!=null){
+			Usuario usu = new Usuario().fromEntity(usuario);
+			return usu.toDTO();
+		}
+		else
+			return null;
 	}
 	
 	 @Override
@@ -894,7 +909,13 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente)
 	{
-		return ClienteEmpresaDao.getInstancia().getById(idCliente).toDTO();
+		ClienteEmpresaE e = ClienteEmpresaDao.getInstancia().getById(idCliente);
+		if(e!=null){
+			return new ClienteEmpresa().fromEntity(e).toDTO();
+		}
+		else
+			return null;
+		
 	}
 	
 	public Integer cobrarEncomiendaParticular(Integer idFactura) throws RemoteException {

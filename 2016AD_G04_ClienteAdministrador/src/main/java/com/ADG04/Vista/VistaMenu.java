@@ -745,7 +745,7 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItemBajaUsuario.setText("Baja Usuario");
 							JMenuItemBajaUsuario.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									BajaUsuario inst = new BajaUsuario();
+									BajaUsuario inst = new BajaUsuario(codigoUsuario);
 									inst.setLocationRelativeTo(null);
 									inst.setVisible(true);
 								}

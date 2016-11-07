@@ -95,19 +95,4 @@ public class ClienteEmpresaE extends ClienteE implements java.io.Serializable {
 		this.cuentaCorrientes = cuentaCorrientes;
 	}
 
-
-
-	public DTO_ClienteEmpresa toDTO(){
-		DTO_ClienteEmpresa cli = new DTO_ClienteEmpresa();
-		cli.setId(this.getIdCliente());
-		cli.setRazonSocial(this.razonSocial);
-		cli.setCuit(this.cuit);
-		cli.setEmail(this.getEmail());	
-		cli.setEstado(this.getEstado());
-		cli.setTelefono(this.getTelefono());
-			
-		cli.setDireccion(new Direccion().fromEntity(this.getDireccion()).toDTO());
-		
-		return cli;
-	}
 }

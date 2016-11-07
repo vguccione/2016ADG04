@@ -134,14 +134,18 @@ public class TareaMantenimientoRealizada{
 	}
 
 	public TareaMantenimientoRealizada fromEntity(TareaMantenimientoRealizadaE tarea) {
-		TareaMantenimientoRealizada tr = new TareaMantenimientoRealizada();
-		tr.setCantidadKilometros(tarea.getCantidadKilometros());
-		tr.setFechaRealizada(tarea.getFechaRealizada());
-		tr.setIdTareaMantenimientoRealizada(tarea.getIdTareaMantenimientoRealizada());
-		tr.setProveedor(new Proveedor().fromEntity(tarea.getProveedor()));
-		tr.setVehiculo(new Vehiculo().fromEntity(tarea.getVehiculo()));
-		tr.setTareaMantenimiento(new TareaMantenimiento().fromEntity(tarea.getTareaMantenimiento()));
-		return tr;
+		if(tarea!=null){
+			TareaMantenimientoRealizada tr = new TareaMantenimientoRealizada();
+			tr.setCantidadKilometros(tarea.getCantidadKilometros());
+			tr.setFechaRealizada(tarea.getFechaRealizada());
+			tr.setIdTareaMantenimientoRealizada(tarea.getIdTareaMantenimientoRealizada());
+			tr.setProveedor(new Proveedor().fromEntity(tarea.getProveedor()));
+			tr.setVehiculo(new Vehiculo().fromEntity(tarea.getVehiculo()));
+			tr.setTareaMantenimiento(new TareaMantenimiento().fromEntity(tarea.getTareaMantenimiento()));
+			return tr;
+		}
+		else
+			return null;
 	}
 
 }

@@ -85,11 +85,15 @@ public  class TareaMantenimiento{
 	}
 
 	public TareaMantenimiento fromDTO(DTO_TareaMantenimiento dto) {
-		TareaMantenimiento tm = new TareaMantenimiento();
-		tm.setIdTareaMantenimiento(dto.getId());
-		tm.setPlanMantenimiento(new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(dto.getIdPlanMantenimiento())));
-		tm.setTarea(dto.getTarea());
-		return tm;
+			if(dto!=null){
+			TareaMantenimiento tm = new TareaMantenimiento();
+			tm.setIdTareaMantenimiento(dto.getId());
+			tm.setPlanMantenimiento(new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(dto.getIdPlanMantenimiento())));
+			tm.setTarea(dto.getTarea());
+			return tm;
+		}
+		else
+			return null;
 	}
 
 	public TareaMantenimientoE toEntity() {
@@ -101,11 +105,15 @@ public  class TareaMantenimiento{
 	}
 
 	public TareaMantenimiento fromEntity(TareaMantenimientoE t) {
-		TareaMantenimiento tm = new TareaMantenimiento();
-		tm.setIdTareaMantenimiento(t.getIdTareaMantenimiento());
-		tm.setPlanMantenimiento(new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(t.getPlanMantenimiento().getIdPlanMantenimiento())));
-		tm.setTarea(t.getTarea());
-		return tm;
+		if(t!=null){
+			TareaMantenimiento tm = new TareaMantenimiento();
+			tm.setIdTareaMantenimiento(t.getIdTareaMantenimiento());
+			tm.setPlanMantenimiento(new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(t.getPlanMantenimiento().getIdPlanMantenimiento())));
+			tm.setTarea(t.getTarea());
+			return tm;
+		}
+		else
+			return null;
 	}
 
 }

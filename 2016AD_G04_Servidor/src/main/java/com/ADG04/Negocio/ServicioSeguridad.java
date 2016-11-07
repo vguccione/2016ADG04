@@ -87,22 +87,30 @@ public class ServicioSeguridad implements java.io.Serializable{
 
 
 	public ServicioSeguridad fromDTO(DTO_ServicioSeguridad serv) {
-		ServicioSeguridad ss = new ServicioSeguridad();
-		ss.setDescripcion(serv.getDescripcion());
-		if(serv.getId()!=null)
-			ss.setIdServicioSeguridad(serv.getId());
-		ss.setTarifa(serv.getTarifa());
-		ss.setProveedor(new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(serv.getIdProveedor())));
-		return ss;
+		if(serv!=null){
+			ServicioSeguridad ss = new ServicioSeguridad();
+			ss.setDescripcion(serv.getDescripcion());
+			if(serv.getId()!=null)
+				ss.setIdServicioSeguridad(serv.getId());
+			ss.setTarifa(serv.getTarifa());
+			ss.setProveedor(new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(serv.getIdProveedor())));
+			return ss;
+		}
+		else
+			return null;
 	}
 	
 	public ServicioSeguridad fromEntity(ServicioSeguridadE serv) {
-		ServicioSeguridad ss = new ServicioSeguridad();
-		ss.setDescripcion(serv.getDescripcion());
-		ss.setIdServicioSeguridad(serv.getIdServicioSeguridad());
-		ss.setTarifa(serv.getTarifa());
-		ss.setProveedor(new Proveedor().fromEntity(serv.getProveedor()));
-		return ss;
+		if(serv!=null){
+			ServicioSeguridad ss = new ServicioSeguridad();
+			ss.setDescripcion(serv.getDescripcion());
+			ss.setIdServicioSeguridad(serv.getIdServicioSeguridad());
+			ss.setTarifa(serv.getTarifa());
+			ss.setProveedor(new Proveedor().fromEntity(serv.getProveedor()));
+			return ss;
+		}
+		else
+			return null;
 	}
 
 	public ServicioSeguridadE toEntity() {

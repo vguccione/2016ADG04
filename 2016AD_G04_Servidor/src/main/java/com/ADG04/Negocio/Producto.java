@@ -122,15 +122,19 @@ public class Producto{
 	}
 
 	public Producto fromDTO(DTO_Producto producto) {
-		Producto prod  = new Producto();
-		prod.setCategoria(producto.getCategoria());
-		prod.setCliente(new ClienteEmpresa().fromEntity(ClienteEmpresaDao.getInstancia().getById(producto.getIdCliente())));
-		prod.setCodigoProducto(producto.getCodigo());
-		prod.setDescripcion(producto.getDescripcion());
-		if(producto.getId()!=null)
-			prod.setIdProducto(producto.getId());
-		prod.setUnidad(producto.getUnidad());
-		return prod;
+		if(producto!=null){
+			Producto prod  = new Producto();
+			prod.setCategoria(producto.getCategoria());
+			prod.setCliente(new ClienteEmpresa().fromEntity(ClienteEmpresaDao.getInstancia().getById(producto.getIdCliente())));
+			prod.setCodigoProducto(producto.getCodigo());
+			prod.setDescripcion(producto.getDescripcion());
+			if(producto.getId()!=null)
+				prod.setIdProducto(producto.getId());
+			prod.setUnidad(producto.getUnidad());
+			return prod;
+		}
+		else
+			return null;
 	}
 	
 	public ProductoE toEntity(){
@@ -159,13 +163,17 @@ public class Producto{
 	}
 
 	public Producto fromEntity(ProductoE producto) {
-		Producto prod  = new Producto();
-		prod.setCategoria(producto.getCategoria());
-		prod.setCliente(new ClienteEmpresa().fromEntity(ClienteEmpresaDao.getInstancia().getById(producto.getCliente().getIdCliente())));
-		prod.setCodigoProducto(producto.getCodigoProducto());
-		prod.setDescripcion(producto.getDescripcion());
-		prod.setIdProducto(producto.getIdProducto());
-		producto.setUnidad(producto.getUnidad());
-		return prod;
+		if(producto!=null){
+			Producto prod  = new Producto();
+			prod.setCategoria(producto.getCategoria());
+			prod.setCliente(new ClienteEmpresa().fromEntity(ClienteEmpresaDao.getInstancia().getById(producto.getCliente().getIdCliente())));
+			prod.setCodigoProducto(producto.getCodigoProducto());
+			prod.setDescripcion(producto.getDescripcion());
+			prod.setIdProducto(producto.getIdProducto());
+			producto.setUnidad(producto.getUnidad());
+			return prod;
+		}
+		else
+			return null;
 	}
 }

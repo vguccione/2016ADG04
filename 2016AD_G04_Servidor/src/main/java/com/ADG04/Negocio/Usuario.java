@@ -185,19 +185,23 @@ public class Usuario{
 	}
 	
 	public Usuario fromDTO(DTO_Usuario usu){
-		Usuario usuario =new Usuario(usu.getIdSucursal(), usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
-				 usu.getUsuario(),usu.getDni(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
-		
-		List<Rol> roles = new ArrayList<Rol>();
-		for(DTO_Rol r: usu.getRoles()){
-			Rol rol = new Rol();
-			rol.setDescripcion(r.getdescripcion());
-			rol.setIdRol(r.getId());
-			roles.add(rol);
+		if(usu!=null){
+			Usuario usuario =new Usuario(usu.getIdSucursal(), usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
+					 usu.getUsuario(),usu.getDni(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
+			
+			List<Rol> roles = new ArrayList<Rol>();
+			for(DTO_Rol r: usu.getRoles()){
+				Rol rol = new Rol();
+				rol.setDescripcion(r.getdescripcion());
+				rol.setIdRol(r.getId());
+				roles.add(rol);
+			}
+			usuario.setRoles(roles);
+			
+			return usuario;
 		}
-		usuario.setRoles(roles);
-		
-		return usuario;
+		else
+			return null;
 	}
 	
 	public UsuarioE toEntity(){
@@ -239,19 +243,23 @@ public class Usuario{
 	}
 
 	public Usuario fromEntity(UsuarioE usu) {
-		Usuario usuario =new Usuario(usu.getSucursal().getIdSucursal(), usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
-				 usu.getUsuario(),usu.getDni(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
-		
-		List<Rol> roles = new ArrayList<Rol>();
-		for(RolE r: usu.getRoles()){
-			Rol rol = new Rol();
-			rol.setDescripcion(r.getDescripcion());
-			rol.setIdRol(r.getIdRol());
-			roles.add(rol);
+		if(usu!=null){
+			Usuario usuario =new Usuario(usu.getSucursal().getIdSucursal(), usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
+					 usu.getUsuario(),usu.getDni(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
+			
+			List<Rol> roles = new ArrayList<Rol>();
+			for(RolE r: usu.getRoles()){
+				Rol rol = new Rol();
+				rol.setDescripcion(r.getDescripcion());
+				rol.setIdRol(r.getIdRol());
+				roles.add(rol);
+			}
+			usuario.setRoles(roles);
+			
+			return usuario;
 		}
-		usuario.setRoles(roles);
-		
-		return usuario;
+		else
+			return null;
 	}
 
 	

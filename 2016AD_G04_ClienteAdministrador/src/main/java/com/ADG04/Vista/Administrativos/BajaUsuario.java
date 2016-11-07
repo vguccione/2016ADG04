@@ -34,6 +34,7 @@ public class BajaUsuario extends javax.swing.JFrame{
 	private JButton btnBuscar;
 	private JButton button;
 	private JButton button_1;
+	private int codUsuario;
 
 
 	public JFrame getFrame() {
@@ -46,8 +47,10 @@ public class BajaUsuario extends javax.swing.JFrame{
 
 	/**
 	 * Create the application.
+	 * @param codigoUsuario 
 	 */
-	public BajaUsuario() {
+	public BajaUsuario(int codigoUsuario) {
+		this.codUsuario=codigoUsuario;
 		initialize();
 	}
 
@@ -82,7 +85,7 @@ public class BajaUsuario extends javax.swing.JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				DTO = Controlador.getInstancia().getUsuarioById((Integer)id.getValue());
-				if (DTO != null){
+				if (DTO != null && DTO.getId()!=codUsuario){
 					cliente.setText(DTO.getUsuario());
 					btnBuscar.setEnabled(false);
 					id.setEnabled(false);

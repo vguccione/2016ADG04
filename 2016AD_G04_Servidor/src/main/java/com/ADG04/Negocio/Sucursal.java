@@ -236,27 +236,35 @@ public class Sucursal{
 	}
 
 	public Sucursal fromDTO(DTO_Sucursal dto) {
-		Sucursal suc = new Sucursal();
-		suc.setIdSucursal(dto.getId());
-		suc.setDescripcion(dto.getDescripcion());
-		suc.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
-		if(dto.getIdGerente()!=null){
-			suc.setGerente(new Usuario().fromEntity(UsuarioDao.getInstancia().getById(dto.getIdGerente())));
+		if(dto!=null){
+			Sucursal suc = new Sucursal();
+			suc.setIdSucursal(dto.getId());
+			suc.setDescripcion(dto.getDescripcion());
+			suc.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
+			if(dto.getIdGerente()!=null){
+				suc.setGerente(new Usuario().fromEntity(UsuarioDao.getInstancia().getById(dto.getIdGerente())));
+			}
+			suc.setTelefono(dto.getTelefono());
+			return suc;
 		}
-		suc.setTelefono(dto.getTelefono());
-		return suc;
+		else
+			return null;
 	}
 
 	public Sucursal fromEntity(SucursalE suc) {
-		Sucursal sucursal = new Sucursal();
-		sucursal.setDescripcion(suc.getDescripcion());
-		sucursal.setDireccion(new Direccion().fromEntity(suc.getDireccion()));
-		if(suc.getGerente()!=null){
-			sucursal.setGerente(new Usuario().fromEntity(UsuarioDao.getInstancia().getById(suc.getGerente().getIdUsuario())));
+		if(suc!=null){
+			Sucursal sucursal = new Sucursal();
+			sucursal.setDescripcion(suc.getDescripcion());
+			sucursal.setDireccion(new Direccion().fromEntity(suc.getDireccion()));
+			if(suc.getGerente()!=null){
+				sucursal.setGerente(new Usuario().fromEntity(UsuarioDao.getInstancia().getById(suc.getGerente().getIdUsuario())));
+			}
+			sucursal.setTelefono(suc.getTelefono());
+			sucursal.setIdSucursal(suc.getIdSucursal());
+			return sucursal;
 		}
-		sucursal.setTelefono(suc.getTelefono());
-		sucursal.setIdSucursal(suc.getIdSucursal());
-		return sucursal;
+		else
+			return null;
 	}
 
 }

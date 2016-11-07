@@ -92,12 +92,16 @@ public class CuentaCorriente{
 
 
 	public CuentaCorriente fromEntity(CuentaCorrienteE ctc) {
-		CuentaCorriente cuenta = new CuentaCorriente();
-		cuenta.setCredito(ctc.getCredito());
-		cuenta.setFormaPago(ctc.getFormaPago());
-		cuenta.setIdCtaCte(ctc.getIdCtaCte());
-		cuenta.setLimiteCredito(ctc.getLimiteCredito());
-		return cuenta;
+		if(ctc!=null){
+			CuentaCorriente cuenta = new CuentaCorriente();
+			cuenta.setCredito(ctc.getCredito());
+			cuenta.setFormaPago(ctc.getFormaPago());
+			cuenta.setIdCtaCte(ctc.getIdCtaCte());
+			cuenta.setLimiteCredito(ctc.getLimiteCredito());
+			return cuenta;
+		}
+		else
+			return null;
 	}
 
 }

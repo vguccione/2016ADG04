@@ -118,10 +118,14 @@ public class PlanMantenimiento{
 	}
 
 	public PlanMantenimiento fromEntity(PlanMantenimientoE p) {
-		PlanMantenimiento pm = new PlanMantenimiento();
-		pm.setComentarios(p.getComentarios());
-		pm.setDescripcion(p.getDescripcion());
-		pm.setIdPlanMantenimiento(p.getIdPlanMantenimiento());
-		return pm;
+		if(p!=null){
+			PlanMantenimiento pm = new PlanMantenimiento();
+			pm.setComentarios(p.getComentarios());
+			pm.setDescripcion(p.getDescripcion());
+			pm.setIdPlanMantenimiento(p.getIdPlanMantenimiento());
+			return pm;
+		}
+		else 
+			return null;
 	}
 }

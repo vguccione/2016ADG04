@@ -527,44 +527,7 @@ public class EncomiendaE implements java.io.Serializable {
 						+ " internacional +" + internacional + "]";
 	}
 
-	public DTO_Encomienda toDTO() {
-		DTO_Encomienda dto = new DTO_Encomienda();
-		dto.setAlto(this.getAlto());
-		dto.setAncho(this.getAncho());
-		dto.setApellidoReceptor(this.getApellidoReceptor());
-		dto.setApilable(this.getApilable());
-		dto.setCantApilable(this.getCantApilable());
-		dto.setCargaGranel(this.getCargaGranel());
-		dto.setCondicionTransporte(this.getCondicionTransporte());
-		dto.setTipoEncomienda(this.getTipoEncomienda());
-		if(this.getFactura()!=null)
-			dto.setFactura(this.getFactura().toDTO());
-		
-		dto.setDniReceptor(this.getDniReceptor());
-		dto.setEstado(this.getEstado());
-		dto.setFechaCreacion(this.getFechaCreacion());
-		dto.setFragilidad(this.getFragilidad());
-		dto.setIdEncomienda(this.getIdEncomienda());
-		dto.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
-		dto.setInternacional(this.internacional);
-		dto.setLargo(this.getLargo());
-		if(this.getManifiesto()!=null)
-			dto.setManifiesto(this.getManifiesto().toDTO());
-		
-		dto.setNombreReceptor(this.getNombreReceptor());
-		dto.setPeso(this.getPeso());
-		dto.setRefrigerado(this.refrigerado);
-		dto.setSucursalActual(new Sucursal().fromEntity(this.getSucursalActual()).toDTO());
-		dto.setSucursalDestino(new Sucursal().fromEntity(this.getSucursalDestino()).toDTO());
-		dto.setSucursalOrigen(new Sucursal().fromEntity(this.getSucursalOrigen()).toDTO());
-		dto.setTercerizada(this.tercerizado);
-		dto.setTratamiento(this.getTratamiento());
-		dto.setUnidadGranel(this.getUnidadGranel());
-		dto.setVolumen(this.getVolumen());
-		dto.setVolumenGranel(this.getVolumenGranel());
-		dto.setCliente(this.getCliente().toDTO());
-		return dto;
-	}
+
 
 	
 	

@@ -1,5 +1,6 @@
 package com.ADG04.Negocio;
 
+import com.ADG04.Servidor.model.ItemFacturaE;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 
 public class ItemFactura{
@@ -70,6 +71,16 @@ public class ItemFactura{
     	item.setId(this.idItemFactura);
     	item.setValor(this.valor);
     	return item;
+	}
+
+
+	public ItemFactura fromEntity(ItemFacturaE item) {
+		ItemFactura it = new ItemFactura();
+		it.setCantidad(item.getCantidad());
+		it.setDescripcion(item.getDescripcion());
+		it.setIdItemFactura(item.getIdItemFactura());
+		it.setValor(item.getValor());
+		return it;
 	}
 
 

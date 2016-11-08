@@ -31,7 +31,6 @@ import com.ADG04.bean.Proveedor.*;
 import com.ADG04.bean.Vehiculo.*;
 
 
-
 /**
  * Hello world!
  *
@@ -53,9 +52,10 @@ public class App
 		}
 	}*/
 	
+	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
- 
+        
     	/*
     	   	
     	BusinessDelegate bd = new BusinessDelegate();

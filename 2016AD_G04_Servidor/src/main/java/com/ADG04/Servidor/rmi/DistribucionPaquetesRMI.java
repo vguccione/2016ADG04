@@ -443,7 +443,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		//Direccion direccionOrigen = new Direccion();
 		//direccionOrigen.setIdDireccion(encP.getDireccionOrigen().getIdDireccion());
 
-		ClienteParticularE cliE = (ClienteParticularE)ClienteDao.getInstancia().getByDni(encP.getCliente().getDni());
+		ClienteParticularE cliE = (ClienteParticularE)ClienteDao.getInstancia().getById(encP.getCliente().getId());
 		
 		if(sucursalActual == null)
 			throw new SucursalNotFoundException(encP.getSucursalActual().getId());
@@ -596,9 +596,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		ClienteParticularE cli = (ClienteParticularE)ClienteDao.getInstancia().getByDni(dni);
 		
-		if(cli != null)
-			return (DTO_ClienteParticular) cli.toDTO();
-		
+		if(cli != null){
+			ClienteParticular c = new ClienteParticular().fromEntity(cli);
+			return (DTO_ClienteParticular) c.toDTO();
+		}
 		return null;
 	}
 	
@@ -1260,7 +1261,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_Encomienda getEncomiendaParticular(Integer id)
 			throws RemoteException {
-		DTO_Encomienda enc = EncomiendaDao.getInstancia().getById(id).toDTO();
+		DTO_EncomiendaParticular enc = new EncomiendaParticular().fromEntity(EncomiendaDao.getInstancia().getById(id)).toDTO();
 		if(enc.getTipoEncomienda().contains("P"))
 			return enc;
 		else
@@ -1270,7 +1271,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_Encomienda getEncomiendaEmpresa(Integer id)
 			throws RemoteException {
-		DTO_Encomienda enc = EncomiendaDao.getInstancia().getById(id).toDTO();
+		DTO_Encomienda enc = new EncomiendaEmpresa().fromEntity(EncomiendaDao.getInstancia().getById(id)).toDTO();
 		if(enc.getTipoEncomienda().contains("E"))
 			return enc;
 		else
@@ -1278,24 +1279,27 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	@Override
-	public List<DTO_Encomienda> listarEncomiendasParticulares()
+	public List<DTO_EncomiendaParticular> listarEncomiendasParticulares()
 			throws RemoteException {
-		List<DTO_Encomienda> listaDTO = new ArrayList<DTO_Encomienda>();
+		List<DTO_EncomiendaParticular> listaDTO = new ArrayList<DTO_EncomiendaParticular>();
 		List<EncomiendaE> lista = EncomiendaDao.getInstancia().getAllParticulares();
-        for(EncomiendaE enc: lista)
-        	listaDTO.add( enc.toDTO());
+        for(EncomiendaE enc: lista){
+        	EncomiendaParticular e = new EncomiendaParticular().fromEntity(enc);
+        	listaDTO.add( e.toDTO());
+        }
         
 		 return listaDTO;
 	}
 
 	@Override
-	public List<DTO_Encomienda> listarEncomiendasEmpresas()
+	public List<DTO_EncomiendaEmpresa> listarEncomiendasEmpresas()
 			throws RemoteException {
-		List<DTO_Encomienda> listaDTO = new ArrayList<DTO_Encomienda>();
+		List<DTO_EncomiendaEmpresa> listaDTO = new ArrayList<DTO_EncomiendaEmpresa>();
 		List<EncomiendaE> lista = EncomiendaDao.getInstancia().getAllEmpresas();
-        for(EncomiendaE enc: lista)
-        	listaDTO.add( enc.toDTO());
-        
+        for(EncomiendaE enc: lista){
+        	EncomiendaEmpresa ence = new EncomiendaEmpresa().fromEntity(enc);
+        	listaDTO.add( ence.toDTO());
+        }
 		 return listaDTO;
 	}
 

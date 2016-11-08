@@ -13,18 +13,10 @@ public  class DTO_EncomiendaParticular extends DTO_Encomienda implements Seriali
 
 	private static final long serialVersionUID = 1L;
 	
-	private DTO_ClienteParticular cliente;
+	//private DTO_ClienteParticular cliente;
 	
 	public DTO_EncomiendaParticular() {
 		super();
-	}
-
-	public DTO_ClienteParticular getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(DTO_ClienteParticular cliente) {
-		this.cliente = cliente;
 	}
 
 

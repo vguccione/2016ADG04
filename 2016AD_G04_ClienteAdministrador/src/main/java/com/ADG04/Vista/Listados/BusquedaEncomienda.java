@@ -79,7 +79,7 @@ public class BusquedaEncomienda extends javax.swing.JFrame{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 509, 204);
+		frame.setBounds(100, 100, 509, 504);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");

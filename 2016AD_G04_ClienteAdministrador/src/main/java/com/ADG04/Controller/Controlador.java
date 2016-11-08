@@ -24,6 +24,8 @@ import com.ADG04.bean.Cliente.DTO_Factura;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
@@ -469,7 +471,7 @@ public class Controlador {
 		return null;
 	}
 
-	public List<DTO_Encomienda> listarEncomiendasParticulares() {
+	public List<DTO_EncomiendaParticular> listarEncomiendasParticulares() {
 		try{
 			return  bd.listarEncomiendasParticulares();
 		}
@@ -479,7 +481,7 @@ public class Controlador {
 		return null;
 	}
 
-	public List<DTO_Encomienda> listarEncomiendasEmpresa() {
+	public List<DTO_EncomiendaEmpresa> listarEncomiendasEmpresa() {
 		try{
 			return  bd.listarEncomiendasEmpresas();
 		}

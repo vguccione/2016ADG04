@@ -1,5 +1,6 @@
 package com.ADG04.Negocio;
 
+import com.ADG04.Servidor.model.ProductoEncomiendaE;
 import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 
 public class ProductoEncomienda{
@@ -63,6 +64,11 @@ public class ProductoEncomienda{
 
 	public void setCantidad(float cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public ProductoEncomienda fromEntity(ProductoEncomiendaE byId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

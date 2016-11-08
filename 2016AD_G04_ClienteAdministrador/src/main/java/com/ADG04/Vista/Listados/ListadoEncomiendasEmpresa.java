@@ -12,6 +12,7 @@ import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 
 
 /**
@@ -48,7 +49,7 @@ public class ListadoEncomiendasEmpresa extends javax.swing.JFrame {
 			{
 				jLabelTitulo = new JLabel();
 				getContentPane().add(jLabelTitulo);
-				jLabelTitulo.setText("Listado Encomienda Particular");
+				jLabelTitulo.setText("Listado Encomienda Empresa");
 				jLabelTitulo.setFont(new java.awt.Font("Verdana",1,20));
 				jLabelTitulo.setBounds(12, 12, 500, 36);
 			}
@@ -58,7 +59,7 @@ public class ListadoEncomiendasEmpresa extends javax.swing.JFrame {
 				jScrollPaneListadoEncomiendas.setBounds(12, 60, 799, 305);
 				{
 					
-					List<DTO_Encomienda> listadto = Controlador.getInstancia().listarEncomiendasEmpresa();
+					List<DTO_EncomiendaEmpresa> listadto = Controlador.getInstancia().listarEncomiendasEmpresa();
 					
 					DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			

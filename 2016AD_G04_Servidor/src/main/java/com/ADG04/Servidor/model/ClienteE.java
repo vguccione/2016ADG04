@@ -118,16 +118,6 @@ public class ClienteE implements java.io.Serializable {
 		this.direccion = direccion;
 	}
 
-
-	public DTO_Cliente toDTO() {
-		DTO_Cliente cli = new DTO_Cliente();
-		cli.setId(this.getIdCliente());
-		cli.setEmail(this.getEmail());	
-		cli.setEstado(this.getEstado());
-		cli.setTelefono(this.getTelefono());		
-		cli.setDireccion(new Direccion().fromEntity(this.getDireccion()).toDTO());
-		return cli;
-	}
-				
+	
 
 }

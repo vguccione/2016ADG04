@@ -22,6 +22,8 @@ import java.util.Set;
 
 
 
+
+import com.ADG04.Servidor.model.ManifiestoE;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 
@@ -103,6 +105,12 @@ public class Manifiesto{
 
 	public void addItem(ItemManifiesto itemManifiesto) {
 		this.itemsManifiesto.add(itemManifiesto);		
+	}
+
+
+	public Manifiesto fromEntity(ManifiestoE manifiesto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

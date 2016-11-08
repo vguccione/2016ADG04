@@ -52,7 +52,7 @@ public class ClienteE implements java.io.Serializable {
 
 	@Column(name = "Telefono", nullable = false, length = 50)
 	private String telefono;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
 	private List <EncomiendaE> encomiendas;
 	
@@ -63,8 +63,6 @@ public class ClienteE implements java.io.Serializable {
 	public ClienteE() {
 	}
 
-
-
 	public ClienteE(int idCliente, boolean estado, String email, String telefono) {
 		super();
 		this.idCliente = idCliente;
@@ -72,9 +70,6 @@ public class ClienteE implements java.io.Serializable {
 		this.email = email;
 		this.telefono = telefono;
 	}
-
-
-
 	public int getIdCliente() {
 		return this.idCliente;
 	}

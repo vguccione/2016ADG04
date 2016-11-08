@@ -40,7 +40,7 @@ public class DTO_EncomiendaEmpresa extends DTO_Encomienda implements Serializabl
 	}
 
 	public void setProductos(List<DTO_ProductoEncomienda> productos) {
-		DTO_EncomiendaEmpresa.productos = productos;
+		this.productos = productos;
 	}
 	
 }

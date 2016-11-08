@@ -33,12 +33,15 @@ public class ClienteDao extends GenericDao<ClienteE, Integer> {
 		try {
 		  Query query = entityManager.createQuery("from ClienteE where dni =:dni");
 		  query.setParameter("dni", dni);
-		  ClienteE c = (ClienteE) query.getSingleResult();
-		  return c;
+		  List<ClienteE> list = (List<ClienteE>) query.getResultList();
+		  if(!list.isEmpty())
+			  return list.get(0);
+		  
+		  return null;
 		       
         } catch (Exception e){
             System.out.println(e);
-            System.out.println("Error en traer usuario por dni");
+            System.out.println("Error en traer cliente por dni");
             return null;
         }
 	}
@@ -65,7 +68,12 @@ public class ClienteDao extends GenericDao<ClienteE, Integer> {
 		try {
 			  Query query = entityManager.createQuery("from ClienteE where cuit =:cuit");
 			  query.setParameter("cuit", cuit);
-			  ClienteE c = (ClienteE) query.getSingleResult();
+			  List<ClienteE> list = (List<ClienteE>) query.getResultList();
+			  
+			  if(list.isEmpty())
+				  return null;
+			  
+			  ClienteE c = list.get(0);
 			  return c;
 			       
 	        } catch (Exception e){

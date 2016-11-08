@@ -18,6 +18,12 @@ public class DTO_ClienteEmpresa extends DTO_Cliente  implements Serializable{
 		
 	}
 
+	public DTO_ClienteEmpresa(Integer id, DTO_Direccion direccion, String email,String telefono, boolean estado, 
+			String razonSocial, String cuit) {
+		super(id, direccion, email, telefono, estado);
+		this.cuit=cuit;
+		this.razonSocial=razonSocial;
+	}
 
 	public String getRazonSocial() {
 		return razonSocial;

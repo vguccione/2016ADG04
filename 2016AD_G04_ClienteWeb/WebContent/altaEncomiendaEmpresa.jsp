@@ -59,6 +59,31 @@
 
 $(document).ready(function() {	
 	  
+	
+    $('#btnBuscarCliente').on("click",function(){
+    	var cuitCliente = $('#cuitEmpresaBuscar').val();
+        $.get('servletBuscarCliente?action=byCuit', {
+        		cuit : cuitCliente
+        	}, 
+        	function(responseText) {
+        		
+        		if(responseText == "noExiste"){
+        			alert('El Cliente no existe');
+        			$("#cuitEmpresa").val("");
+	        		$("#razonSocialTxt").val("");
+        			$("#altaEncomiendaForm").css("display", "none");
+        		}
+        		else{
+	        		//$("#divBuscarCliente").text(responseText);
+	        		$("#cuitEmpresa").val(cuitCliente);
+	        		$("#razonSocialTxt").val(responseText);
+	        		$("#altaEncomiendaForm").css("display", "block");
+        		}
+        	}
+        );
+	});
+	
+	
 	  	  var usuario = <%= '"' + usuario + '"'%>
 	  	  var sucursal = <%= '"' + sucursal + '"'%>
 	  	  var sucursalNombre = <%= '"' + sucursalNombre + '"'%>
@@ -133,7 +158,8 @@ $(document).ready(function() {
 		 		}
 		 	});
 		  
-	   
+		  
+			  	   
 }); //document ready
 
 </script>
@@ -239,56 +265,158 @@ $(document).ready(function() {
   	<div class="page" style="background: #FFF; padding: 25px 50px;">
       <div id="divLogin">
 <h2>Encomienda Empresa:</h2>
-<form action="ServeletEncomiendaEmpresa?action=altaEncomiendaEmpresa" method="post" name="frm_idEncomienda" class="form-style-2">
-<ul>
-<!--
-	<li><label>Nro. de Encomienda:</label><input class="input-field" name="idEncomienda" readonly="readonly" type="text" value="<%=encomienda%>" /></li>
-	<li><label>ID Sucursal de origen:</label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value="<%=sucursal%>"/></li>
-	<li><label>Sucursal de origen::</label><input name="SucursalOrigen" type="text" readonly="readonly" class="input-field" id="SucursalOrigen" value="<%=sucursalNombre%>"/></li>
-	<li><label>Estado:</label><input class="input-field" name="estado" type="text" readonly="readonly" id="estado" maxlength="50" value="<%=estado%>"/></li>
- 	<li><label>Código Cliente:</label><input id="idCliente" type="text"  class="input-field" name="idCliente" ></li>
- 	<li><label>Dirección Entrega:</label><input id="idDireccionEntrega" type="text"  class="input-field" name="idDireccionEntrega" ></li>-->
- 	<br/>
- 	<!--  <%=destinos%>-->
- 	
- 	<li><label>CUIT cliente:</label><input class="input-field" name="cuitEmpresa" type="text" id="cuitEmpresa" maxlength="15" /></li>
- 	<li><label>Código Sucursal de origen:</label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value="<%=sucursal%>"/></li>
-	<li><label>Código Sucursal de destino:</label><input name="idSucursalDestino" type="text" class="input-field" id="idSucursalDestino" /></li>
-	
-	<li><label>Fecha de recepci&oacute;n:</label><input type="date" id="fechaRecepcion" class="datepicker"></li>
- 	<!--  <li><label>Fecha de m&aacute;xima:</label><input type="date" id="fechaMaxima" class="datepicker"></li>-->
- 	<li>
- 	  <label>Largo (cm):</label><input class="input-field" name="largo" type="text" id="largo" size="18" /> 
-      <label>Alto (cm):</label><input class="input-field" name="alto" type="text" id="alto" size="18" />
-      <label>Ancho (cm):</label><input class="input-field" name="ancho" type="text" id="ancho" size="18" /></li>
- 	<li><label>Peso (kg):</label><input class="input-field" name="peso" type="text" id="peso" size="18" />
-    	
-        <label>Tratamiento:</label><input class="input-field" name="" type="text" id="tratamiento" value="" maxlength="50" />
- 	</li>
- 	<li><label>Apilable:</label>
-     			<label class="input-radio-field"><input type="radio" name="Apilable" value="true" id="Apilable" />Sí</label>
-       			<label class="input-radio-field"><input type="radio" name="Apilable" value="false" id="Apilable" />No</label></li>
- 	<li><label>Cantidad Apilable:</label><input class="input-field" name="cantApilable" type="text" id="cantApilable" size="10" /></li>
- 	<li><label>Refrigerado:</label>
-    			<label class="input-radio-field"><input type="radio" name="Refrigerado" value="true" id="Refrigerado" />Sí</label>
-           		<label class="input-radio-field"><input type="radio" name="Refrigerado" value="false" id="Refrigerado" />No</label></li>
-	<li><label>Condición de transporte</label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" /></li>
-	<li><label>Indicaciones de manipulaci&oacute;n:</label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" /></li>      
-	<li><label>Fragilidad:</label><input class="input-field" name="" type="text" id="fragilidad" maxlength="20" /></li>
-<label>Datos del Receptor</label>
-<!--Sólo se ve si es Particular --> 
-    <fieldset><ul>
-		<li><label>DNI:</label><input class="input-field" name="dniReceptor" type="text" id="dniReceptor" maxlength="10" /></li>
-		<li><label>Nombre:</label><input class="input-field" name="nombreReceptor" type="text" id="nombreReceptor" maxlength="50" /></li>
-		<li><label>Apellido:</label><input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" /></li>
-    </ul></fieldset>
 
-    <!-- <li><label>Valor estimado:</label><input class="input-field" name="valorEstimado" type="text" id="valorEstimado" /></li>
-	<li><label>Distancia estimada (KM):</label><input class="input-field" name="distanciaEstimadaKM" type="text" id="distanciaEstimadaKM" /></li>-->
-</ul>
-      <div class="btn_centrado"><input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" /></div>
-      
- </form>
+
+<ul><li>
+<label>Buscar cliente por CUIT:</label>
+<input class="input-field" name="cuitEmpresaBuscar" type="text" id="cuitEmpresaBuscar" maxlength="15" />
+</li></ul>
+
+<button id="btnBuscarCliente">Buscar Cliente</button>
+<div id="divBuscarCliente"> </div>
+
+<br/>
+<div id="altaEncomiendaForm" style="display:none;">
+
+<form action="ServeletEncomiendaEmpresa?action=altaEncomiendaEmpresa" method="post" name="frm_idEncomienda" class="form-style-2">
+	<ul>
+		<li>
+			<label>CUIT cliente:</label>
+			<input class="input-field" name="cuitEmpresa" type="text" readonly="readonly" id="cuitEmpresa" maxlength="15" />
+			<label>Razón Social:</label>
+			<input class="input-field" name="razonSocialTxt" readonly="readonly" type="text" id="razonSocialTxt" maxlength="15" />
+		</li>
+		<li>
+			<label>Código Sucursal de origen:</label>
+			<input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value="<%=sucursal%>"/></li>
+					<li>
+						<label>Código Sucursal de destino:</label>
+						<input name="idSucursalDestino" type="text" class="input-field" id="idSucursalDestino" />
+					</li>
+
+					<li>
+						<label>Fecha de recepci&oacute;n:</label>
+						<input type="date" id="fechaRecepcion" class="datepicker">
+						</li>
+						<!--  <li><label>Fecha de m&aacute;xima:</label><input type="date" id="fechaMaxima" class="datepicker"></li>-->
+						<li>
+							<label>Largo (cm):</label>
+							<input class="input-field" name="largo" type="text" id="largo" size="18" /> 
+							<label>Alto (cm):</label>
+							<input class="input-field" name="alto" type="text" id="alto" size="18" />
+							<label>Ancho (cm):</label>
+							<input class="input-field" name="ancho" type="text" id="ancho" size="18" />
+						</li>
+						<li>
+							<label>Peso (kg):</label>
+							<input class="input-field" name="peso" type="text" id="peso" size="18" />
+
+							<label>Tratamiento:</label>
+							<input class="input-field" name="" type="text" id="tratamiento" value="" maxlength="50" />
+						</li>
+						<li>
+							<label>Apilable:</label>
+							<label class="input-radio-field">
+								<input type="radio" name="Apilable" value="true" id="Apilable" />Sí</label>
+							<label class="input-radio-field">
+								<input type="radio" name="Apilable" value="false" id="Apilable" />No</label>
+						</li>
+						<li>
+							<label>Cantidad Apilable:</label>
+							<input class="input-field" name="cantApilable" type="text" id="cantApilable" size="10" />
+						</li>
+						<li>
+							<label>Refrigerado:</label>
+							<label class="input-radio-field">
+								<input type="radio" name="Refrigerado" value="true" id="Refrigerado" />Sí</label>
+							<label class="input-radio-field">
+								<input type="radio" name="Refrigerado" value="false" id="Refrigerado" />No</label>
+						</li>
+						<li>
+							<label>Condición de transporte</label>
+							<input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" />
+						</li>
+						<li>
+							<label>Indicaciones de manipulaci&oacute;n:</label>
+							<input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" />
+						</li>      
+						<li>
+							<label>Fragilidad:</label>
+							<input class="input-field" name="" type="text" id="fragilidad" maxlength="20" />
+						</li>
+						
+						<label>Agregar productos</label>
+						<!--Sólo se ve si es Particular --> 
+						<fieldset>
+							<ul>
+								<li>
+									<div id="producto1"><label>Producto 1:</label>
+									<input class="input-field" name="producto1" type="text" id="producto1" maxlength="10" /></div>
+								</li>
+								<li>
+									<div id="producto2" style="display:block;"><label>Codigo Producto:</label>
+									<input class="input-field" name="producto2" type="text" id="producto2" maxlength="10" /></div>
+								</li>										
+								<li>
+									<div id="producto3" style="display:block;"><label>Codigo Producto</label>
+									<input class="input-field" name="producto3" type="text" id="producto3" maxlength="10" /></div>
+								</li>										
+								<li>
+									<div id="producto4" style="display:block;"><label>Codigo Producto</label>
+									<input class="input-field" name="producto4" type="text" id="producto4" maxlength="10" /></div>
+								</li>									
+								<li>
+									<div id="producto5" style="display:block;"><label>Codigo Producto</label>
+									<input class="input-field" name="producto5" type="text" id="producto5" maxlength="10" /></div>									
+								</li>
+								<li>
+									<div id="producto6" style="display:block;"><label>Codigo Producto</label>
+									<input class="input-field" name="producto6" type="text" id="producto6" maxlength="10" /></div>									
+								</li>
+								<li>
+									<div id="producto7" style="display:block;"><label>Codigo Producto</label>
+									<input class="input-field" name="producto7" type="text" id="producto7" maxlength="10" /></div>									
+								</li>
+								<li>
+									<div id="producto8" style="display:block;"><label>Codigo Producto</label>
+									<input class="input-field" name="producto8" type="text" id="producto8" maxlength="10" /></div>									
+								</li>
+								<li>	
+									<div id="producto9" style="display:block;"><label>Codigo Producto</label>
+									<input class="input-field" name="producto9" type="text" id="producto9" maxlength="10" /></div>									
+								</li>	
+								<li><div id="producto10" style="display:block;"><label>Codigo Producto</label>
+									<input class="input-field" name="producto10" type="text" id="producto10" maxlength="10" /></div>									
+								</li>
+							</ul>
+						</fieldset>
+						
+						<label>Datos del Receptor</label>
+						<!--Sólo se ve si es Particular --> 
+						<fieldset>
+							<ul>
+								<li>
+									<label>DNI:</label>
+									<input class="input-field" name="dniReceptor" type="text" id="dniReceptor" maxlength="10" />
+								</li>
+								<li>
+									<label>Nombre:</label>
+									<input class="input-field" name="nombreReceptor" type="text" id="nombreReceptor" maxlength="50" />
+								</li>
+								<li>
+									<label>Apellido:</label>
+									<input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" />
+								</li>
+							</ul>
+						</fieldset>
+					</ul>
+					<div class="btn_centrado">
+						<input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" />
+					</div>
+
+				</form>
+</div> <!-- End altaEncomiendaForm -->
+
   </div>
   </div>
       </div>

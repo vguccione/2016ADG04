@@ -74,6 +74,8 @@ import com.ADG04.Servidor.model.CuentaCorrienteE;
 import com.ADG04.Servidor.model.FacturaE;
 import com.ADG04.Servidor.model.PaisE;
 import com.ADG04.Servidor.model.PlanMantenimientoE;
+import com.ADG04.Servidor.model.ProductoE;
+import com.ADG04.Servidor.model.ProductoEncomiendaE;
 import com.ADG04.Servidor.model.ProvinciaE;
 import com.ADG04.Servidor.model.RolE;
 import com.ADG04.Servidor.model.SucursalE;
@@ -375,9 +377,14 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	
-	public DTO_ClienteEmpresa getClienteEmpresaByCuit(String cuit)
-			throws RemoteException {
-		// TODO Auto-generated method stub
+	public DTO_ClienteEmpresa getClienteEmpresaByCuit(String cuit) throws RemoteException {
+		
+		ClienteEmpresaE cli = (ClienteEmpresaE)ClienteDao.getInstancia().getByCuit(cuit);
+		if(cli != null) {
+			return new DTO_ClienteEmpresa(cli.getIdCliente(), null, cli.getEmail(), cli.getTelefono(), 
+				cli.getEstado(), cli.getRazonSocial(), cli.getCuit());
+		}
+		
 		return null;
 	}
 
@@ -400,8 +407,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	
 	public DTO_Producto getProducto(Integer idProducto) throws RemoteException {
-		Producto prod = new Producto().fromEntity(ProductoDao.getInstancia().getById(idProducto));
-		return prod.toDTO();
+		
+		ProductoE pe = ProductoDao.getInstancia().getById(idProducto);
+		
+		if(pe != null){
+			Producto prod = new Producto().fromEntity(pe);
+			return prod.toDTO();
+		}
+		
+		return null;
 	}
 
 	
@@ -579,7 +593,13 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	public DTO_ClienteParticular getClienteParticularByDni(String dni)throws RemoteException {
-		return (DTO_ClienteParticular) ClienteDao.getInstancia().getByDni(dni).toDTO();
+		
+		ClienteParticularE cli = (ClienteParticularE)ClienteDao.getInstancia().getByDni(dni);
+		
+		if(cli != null)
+			return (DTO_ClienteParticular) cli.toDTO();
+		
+		return null;
 	}
 	
 	public DTO_ClienteParticular getClienteParticularById(Integer idCliente) throws RemoteException {

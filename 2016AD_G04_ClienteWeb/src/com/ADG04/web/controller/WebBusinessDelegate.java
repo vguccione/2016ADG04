@@ -407,8 +407,7 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	
 	public DTO_ClienteEmpresa getClienteEmpresaByCuit(String cuit)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.objetoRemoto.getClienteEmpresaByCuit(cuit);
 	}
 
 	

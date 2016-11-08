@@ -293,7 +293,8 @@ function findClient(){
     </ul></fieldset>
 
 
-      <div class="btn_centrado"><input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" /></div></form>
+      <div class="btn_centrado"><input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" /></div>
+      </form>
 
   </div>
   </div>

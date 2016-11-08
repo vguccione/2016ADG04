@@ -23,6 +23,11 @@ public class ProductoEncomienda{
 		this.producto =producto;
 	}
 
+	public ProductoEncomienda(Producto producto, float cantidad) {
+		this.producto =producto;
+		this.cantidad = cantidad;
+	}
+
 	public int getIdProductoEncomienda() {
 		return this.idProductoEncomienda;
 	}

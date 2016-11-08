@@ -231,7 +231,7 @@ public class EncomiendaEmpresa extends Encomienda{
 					
 					ProductoE pEntity = ProductoDao.getInstancia().getById(pe.getProducto().getIdProducto()); 
 					
-					ProductoEncomiendaE productoEncomiendaEntity = new ProductoEncomiendaE(encomiendaEntity, pEntity);
+					ProductoEncomiendaE productoEncomiendaEntity = new ProductoEncomiendaE(encomiendaEntity, pEntity, pe.getCantidad());
 					ProductoEncomiendaDao.getInstancia().saveOrUpdate(productoEncomiendaEntity);
 				}
 			}

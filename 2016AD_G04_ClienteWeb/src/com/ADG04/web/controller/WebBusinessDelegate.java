@@ -62,7 +62,7 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	//Usuarios-----------------------------------------------------------------
 	
 	// TODO Completar el metodo validarUsuario
-	public DTO_Usuario validarUsuario(String usuario, String contrasena){		
+	public DTO_Usuario validarUsuario(String usuario, String contrasena) throws BusinessException{		
 		try {
 			DTO_Usuario usu = objetoRemoto.login(usuario,contrasena);
 			//List<DTO_Rol> roles = objetoRemoto.buscarRolesUsuario(usu.getUsuario());

@@ -9,7 +9,7 @@
             <property name="hibernate.dialect" value="com.ADG04.Servidor.util.MySQLServerDialect"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.cache.use_query_cache" value="false"/>
-            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider"/>
+             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="hibernate.connection.username" value="sa"/>

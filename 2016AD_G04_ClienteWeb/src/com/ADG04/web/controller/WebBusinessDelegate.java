@@ -114,18 +114,7 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 		}
 		return 0;
 	}
-	
-	//@SuppressWarnings("null")
-	public Integer nuevaEncomienda(Integer idSucursal) throws RemoteException{
-		//
-	
-		return  1;//objetoRemoto.nuevaEncomiendaParticular(idSucursal);
-	}	
-	
-	//@SuppressWarnings("null")
-	public Integer nuevaEncomiendaEmpresa(Integer idSucursal){
-		return 1;
-	}	
+		
 /*
 	public Integer confirmarEncomiendaEmpresa(DTO_EncomiendaEmpresa enc){
 		
@@ -572,35 +561,6 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	}
 
 	
-	public int nuevaEncomiedaParticular(String dniCliente,
-			int idDireccionOrigen, int idDireccionDestino,
-			int idSucursalOrigen, int idSucursalDestino, float largo,
-			float ancho, float alto, float peso, float volumen,
-			String tratamiento, boolean apilable, short cantApilable,
-			boolean refrigerado, String condiciionTransporte,
-			String indicacionesManipulacion, String fragilidad,
-			String nombreReceptor, String apellidoReceptor, String dniReceptor,
-			float volumenGranel, String unidadGranel) throws RemoteException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-	public void nuevaEncomiedaEmpresa(String dniCliente,
-			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
-			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
-			double largo, double ancho, double alto, double peso,
-			double volumen, String tratamiento, boolean apilable,
-			short cantApilable, boolean refrigerado,
-			String condiciionTransporte, String indicacionesManipulacion,
-			String fragilidad, String nombreReceptor, String apellidoReceptor,
-			String dniReceptor, Double volumenGranel, String unidadGranel,
-			String cargaGranel) throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 	public void setFechaEstimadaEntrega(int idEncomienda,
 			Date fechaEstimadaDeEntrega) throws RemoteException {
 		// TODO Auto-generated method stub
@@ -736,11 +696,17 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	}
 
 	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException, BusinessException {
-		return objetoRemoto.nuevaEncomiedaParticular(encomiendaParticular);
+		Integer idencomienda = objetoRemoto.nuevaEncomiedaParticular(encomiendaParticular);
+		
+		return idencomienda;
 	}
 
 	public DTO_Sucursal getSucursal(Integer idSucursal) throws RemoteException {
 		return objetoRemoto.getSucursal(idSucursal);
+	}
+
+	public Integer nuevaEncomiedaEmpresa(DTO_EncomiendaEmpresa encomiendaEmpresa) throws RemoteException, BusinessException {
+		return objetoRemoto.nuevaEncomiedaEmpresa(encomiendaEmpresa);		
 	}
 	
 	//Clientes-----------------------------------------------------------------

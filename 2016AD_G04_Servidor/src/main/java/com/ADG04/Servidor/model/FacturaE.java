@@ -28,6 +28,7 @@ import com.ADG04.bean.Cliente.DTO_ItemFactura;
 @Entity
 @Table(name = "Factura")
 public class FacturaE implements java.io.Serializable {
+	
 	@Id
 	@GeneratedValue
 	@Column(name = "IdFactura", unique = true, nullable = false)

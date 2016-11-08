@@ -1,11 +1,14 @@
 package com.ADG04.Negocio;
 
+import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
+
 public class ProductoEncomienda{
 
 	private int idProductoEncomienda;
 	private Encomienda encomienda;
 	private Producto producto;
-
+	private float cantidad;
+	
 	public ProductoEncomienda() {
 	}
 
@@ -15,6 +18,10 @@ public class ProductoEncomienda{
 	}
 
 	
+	public ProductoEncomienda(Producto producto) {
+		this.producto =producto;
+	}
+
 	public int getIdProductoEncomienda() {
 		return this.idProductoEncomienda;
 	}
@@ -37,6 +44,25 @@ public class ProductoEncomienda{
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+	public DTO_ProductoEncomienda toDTO() {
+		
+		DTO_ProductoEncomienda p = new DTO_ProductoEncomienda();
+		
+		p.setCantidad(this.cantidad);
+		p.setIdEncomienda(this.encomienda.getIdEncomienda());
+		p.setIdProductoCliente(this.producto.getIdProducto());
+		
+		return p;
+	}
+
+	public float getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(float cantidad) {
+		this.cantidad = cantidad;
 	}
 
 }

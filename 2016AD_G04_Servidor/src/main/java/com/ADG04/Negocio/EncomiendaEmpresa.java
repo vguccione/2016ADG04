@@ -1,45 +1,102 @@
 package com.ADG04.Negocio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 import org.hibernate.property.Getter;
 
+import com.ADG04.Repositorio.Exceptions.BusinessException;
+import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
+import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
+import com.ADG04.Servidor.dao.ClienteDao;
+import com.ADG04.Servidor.dao.ClienteParticularDao;
+import com.ADG04.Servidor.dao.EncomiendaDao;
+import com.ADG04.Servidor.dao.MapaDeRutaDao;
+import com.ADG04.Servidor.dao.ProductoDao;
+import com.ADG04.Servidor.dao.ProductoEncomiendaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.RemitoDao;
+import com.ADG04.Servidor.dao.SucursalDao;
+import com.ADG04.Servidor.model.ClienteE;
+import com.ADG04.Servidor.model.ClienteEmpresaE;
+import com.ADG04.Servidor.model.EncomiendaE;
+import com.ADG04.Servidor.model.ItemManifiestoE;
+import com.ADG04.Servidor.model.ItemRemitoE;
+import com.ADG04.Servidor.model.ManifiestoE;
+import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.model.ProductoE;
+import com.ADG04.Servidor.model.ProductoEncomiendaE;
+import com.ADG04.Servidor.model.RemitoE;
+import com.ADG04.Servidor.model.SucursalE;
+import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
+import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 
 
 public class EncomiendaEmpresa extends Encomienda{
 
-	private List<ProductoEncomienda> productoEncomiendas;
+	private List<ProductoEncomienda> productosEncomienda;
 	
 	public EncomiendaEmpresa() {
 	}
 
-	public EncomiendaEmpresa(//ItemFactura itemFactura,
-			Sucursal sucursalDestino, 
-			Sucursal sucursalOrigen, Cliente cliente,
-			Date fechaCreacion,
-			Date fechaEstimadaEntrega, String estado)//, boolean tercerizado,
-			//String nombreReceptor, String apellidoReceptor, String dniReceptor) 
-			
-	{
-		super(sucursalDestino, sucursalOrigen, cliente, fechaCreacion, fechaEstimadaEntrega, estado);
+	public EncomiendaEmpresa(Direccion direccionDestino, Sucursal sucursalDestno,
+			Sucursal sucursalOrigen, Direccion direccionOrigen,
+			Sucursal sucursalActual, Cliente cliente, Date fechaCreacion,
+			Date fechaEstimadaEntrega, String estado, boolean tercerizado,
+			float largo, float alto, float ancho, float peso, float volumen,
+			String tratamiento, Boolean apilable, Short cantApilable,
+			Boolean refrigerado, String condicionTransporte,
+			String indicacionesManipulacion, String fragilidad,
+			String nombreReceptor, String apellidoReceptor, String dniReceptor,
+			float volumenGranel, String unidadGranel, String cargaGranel,
+			ServicioSeguridad servicioSeguridad,
+			Manifiesto manifiesto, 
+			//Factura factura, Remito remito,
+			boolean internacional){
+	
+		super(direccionDestino, sucursalDestno, sucursalOrigen, direccionOrigen, sucursalActual, 
+				cliente, fechaCreacion, fechaEstimadaEntrega, estado, tercerizado, largo, alto, ancho, peso, volumen, 
+				tratamiento, apilable, cantApilable, refrigerado, condicionTransporte, indicacionesManipulacion, 
+				fragilidad, nombreReceptor, apellidoReceptor, dniReceptor, volumenGranel, unidadGranel, cargaGranel, 
+				servicioSeguridad, manifiesto, 
+				//factura, remito, 
+				internacional);
+		
+		this.productosEncomienda  = new ArrayList<ProductoEncomienda>();
 	}
-	
-	
+
 	public List<ProductoEncomienda> getProductoEncomiendas() {
-		return productoEncomiendas;
+		return productosEncomienda;
 	}
 
 	public void setProductoEncomiendas(List<ProductoEncomienda> productoEncomiendas) {
-		this.productoEncomiendas = productoEncomiendas;
+		this.productosEncomienda = productoEncomiendas;
 	}
 
+	public void addProducto(ProductoEncomienda producto){
+		this.productosEncomienda.add(producto);
+	}
+	
 	@Override
 	public String toString() {
 		return "Encomienda [cliente=" + getCliente().getIdCliente()
@@ -57,12 +114,173 @@ public class EncomiendaEmpresa extends Encomienda{
 				+ ", dniReceptor=" + getDniReceptor() + ", volumenGranel="
 				+ volumenGranel + ", unidadGranel=" + unidadGranel
 				+ ", cargaGranel=" + cargaGranel + ", productoEncomiendas="
-				+ productoEncomiendas + ", terciarizado=" + isTercerizado() +""
+				+ productosEncomienda + ", terciarizado=" + isTercerizado() +""
 						+ " internacional +" + internacional + "]";
 	}
 
-	public DTO_Encomienda toDTO() {
-		DTO_Encomienda dto = new DTO_Encomienda();
+	public Integer saveOrUpdate() throws BusinessException {
+		
+		SucursalE actual = SucursalDao.getInstancia().getById(this.getSucursalActual().getIdSucursal());
+		SucursalE origen = SucursalDao.getInstancia().getById(this.getSucursalOrigen().getIdSucursal());
+		SucursalE destino = SucursalDao.getInstancia().getById(this.getSucursalDestino().getIdSucursal());
+		ClienteEmpresaE cli = (ClienteEmpresaE)ClienteDao.getInstancia().getById(this.getCliente().getIdCliente());
+		
+		if(actual == null)
+			throw new SucursalNotFoundException(this.getSucursalActual().getIdSucursal());
+		if(origen == null)
+			throw new SucursalNotFoundException(this.getSucursalOrigen().getIdSucursal());
+		if(destino == null)
+			throw new SucursalNotFoundException(this.getSucursalDestino().getIdSucursal());
+		if(cli == null)
+			throw new ClientNotFoundException();
+				
+		EncomiendaE encomiendaEntity = new EncomiendaE();
+		encomiendaEntity.setCliente(cli);
+		encomiendaEntity.setSucursalOrigen(origen);
+		encomiendaEntity.setSucursalActual(actual);
+		encomiendaEntity.setSucursalDestino(destino);
+		encomiendaEntity.setLargo(this.getLargo());
+		encomiendaEntity.setAncho(this.getAncho());
+		encomiendaEntity.setInternacional(this.isInternacional());
+		encomiendaEntity.setAlto(this.getAlto());
+		encomiendaEntity.setPeso(this.getPeso());
+		encomiendaEntity.setVolumen(this.getVolumen());
+		encomiendaEntity.setTratamiento(this.getTratamiento()); 
+		encomiendaEntity.setApilable(this.getApilable());
+		encomiendaEntity.setCantApilable(this.getCantApilable()); 
+		encomiendaEntity.setRefrigerado(this.getRefrigerado());
+		encomiendaEntity.setCondicionTransporte(this.getCondicionTransporte()); 
+		encomiendaEntity.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
+		encomiendaEntity.setFragilidad(this.getFragilidad()); 
+		encomiendaEntity.setNombreReceptor(this.getNombreReceptor()); 
+		encomiendaEntity.setApellidoReceptor(this.getApellidoReceptor());
+		encomiendaEntity.setDniReceptor(this.getDniReceptor()); 
+		encomiendaEntity.setVolumenGranel(this.getVolumenGranel()); 
+		encomiendaEntity.setUnidadGranel(this.getUnidadGranel());
+		encomiendaEntity.setCargaGranel(this.getCargaGranel());		
+		encomiendaEntity.setTipoEncomienda("E");	//OJO, encomienda empresa!!!!!!!1
+		
+		encomiendaEntity.setTercerizado(this.isTercerizado());
+		encomiendaEntity.setEstado(EncomiendaEstado.Ingresada.toString());
+		encomiendaEntity.setFechaCreacion(new Date());
+		
+		//El Mapa de Ruta es el encargado de calcular la fecha de entrega, porque la calculamos en base a 
+		//la distancia
+		System.out.println("MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino");
+		MapaDeRutaE m = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(this.getSucursalOrigen().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
+		System.out.println(this.getSucursalOrigen().getIdSucursal());
+		System.out.println(this.getSucursalDestino().getIdSucursal());
+		System.out.println(m.getIdMapaDeRuta());
+		MapaDeRuta mapa = new MapaDeRuta();
+		mapa.setIdMapaDeRuta(m.getIdMapaDeRuta());
+		encomiendaEntity.setFechaEstimadaEntrega(mapa.calcularFechaEstimadaDeEntrega());
+					
+	//	EntityManager em = getEntityFactoryInstace();
+		//EntityTransaction tx = em.getTransaction();
+		//tx.begin();	
+		
+		Manifiesto dtoM = this.getManifiesto();
+
+		ManifiestoE manifiestoE = new ManifiestoE();
+		manifiestoE.setEncomienda(encomiendaEntity);
+		manifiestoE.setFecha(new Date());		
+		manifiestoE.setEncomienda(encomiendaEntity);
+	
+		List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
+		for(ItemManifiesto item:dtoM.getItemsManifiesto()){
+			if(item!=null){
+				ItemManifiestoE im = new ItemManifiestoE();
+				im.setCantidad(item.getCantidad());
+				im.setDescripcion(item.getDescripcion());
+				
+				//TODO: tiene que tener productos??????? No es para las empresas los productos
+				if(item.getProducto() != null) {	
+					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getIdProducto());
+					im.setProducto(prod);
+				}
+				
+				im.setManifiesto(manifiestoE);
+				itemsManifiesto.add(im);
+			}
+		}
+		manifiestoE.setItemsManifiesto(itemsManifiesto);
+		
+		encomiendaEntity.setManifiesto(manifiestoE);
+		
+		/*Deberia persistir en cascada*/
+		if(this.productosEncomienda == null || this.productosEncomienda.size() == 0)
+			throw new BusinessException("La encomienda no tiene productos asignados");
+				
+		try{
+			
+			encomiendaEntity = EncomiendaDao.getInstancia().saveOrUpdate(encomiendaEntity);
+			
+			//TODO: revisar. habria que guardar esto en transaccion
+			//Si es encomienda de empresa, tiene productos asociados
+			if(this.productosEncomienda != null){
+				for(ProductoEncomienda pe: this.productosEncomienda){
+					
+					ProductoE pEntity = ProductoDao.getInstancia().getById(pe.getProducto().getIdProducto()); 
+					
+					ProductoEncomiendaE productoEncomiendaEntity = new ProductoEncomiendaE(encomiendaEntity, pEntity);
+					ProductoEncomiendaDao.getInstancia().saveOrUpdate(productoEncomiendaEntity);
+				}
+			}
+
+			Remito dtoR = this.getRemito();
+			if(dtoR != null){
+				RemitoE remitoEntity = new RemitoE();
+				remitoEntity.setApellidoReceptor(dtoR.getApellidoReceptor());
+				remitoEntity.setConformado(dtoR.isConformado());
+				remitoEntity.setDniReceptor(dtoR.getDniReceptor());
+				remitoEntity.setFechaConformado(dtoR.getFechaConformado());
+				remitoEntity.setNombreReceptor(dtoR.getNombreReceptor());
+				remitoEntity.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
+				remitoEntity.setCondicionTransporte(dtoR.getCondicionTransporte());
+				remitoEntity.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
+				
+				List<ItemRemitoE> itemsRemitoEntity = new ArrayList<ItemRemitoE>();
+				for(ItemRemito item:dtoR.getItemsRemito()){
+					ItemRemitoE ir = new ItemRemitoE();
+					ir.setCantidad(item.getCantidad());
+					ir.setDescripcion(item.getDescripcion());
+					ProductoE prodEntity = ProductoDao.getInstancia().getById(item.getProducto().getIdProducto());
+					ir.setProducto(prodEntity);
+					ir.setRemito(remitoEntity);
+					itemsRemitoEntity.add(ir);
+				}
+
+				remitoEntity.setItemsRemito(itemsRemitoEntity);
+				
+				remitoEntity.setItemsRemito(itemsRemitoEntity);
+				remitoEntity.setEncomienda(encomiendaEntity);
+				remitoEntity = RemitoDao.getInstancia().saveOrUpdate(remitoEntity);
+				encomiendaEntity.setRemito(remitoEntity);
+				
+				this.remito = new Remito(this, remitoEntity.getNombreReceptor(), remitoEntity.getApellidoReceptor(), remitoEntity.getDniReceptor(), remitoEntity.isConformado(), remitoEntity.getFechaConformado());
+				this.remito.setIdRemito(remitoEntity.getIdRemito());
+				List<ItemRemito> myItems = new ArrayList<ItemRemito>();
+				for(ItemRemitoE i:remitoEntity.getItemsRemito()){
+					myItems.add(new ItemRemito(i.getIdItemRemito(), i.getDescripcion(), i.getCantidad()));
+				}
+				this.remito.setItemsRemito(myItems);
+			}
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+//		tx.commit();
+		this.manifiesto.setIdManifiesto(manifiestoE.getIdManifiesto());
+		this.idEncomienda = encomiendaEntity.getIdEncomienda();
+		return encomiendaEntity.getIdEncomienda();
+	}
+
+	
+	public DTO_EncomiendaEmpresa toDTO() {
+		
+		DTO_EncomiendaEmpresa dto = new DTO_EncomiendaEmpresa();
 		dto.setAlto(this.getAlto());
 		dto.setAncho(this.getAncho());
 		dto.setApellidoReceptor(this.getApellidoReceptor());
@@ -97,7 +315,21 @@ public class EncomiendaEmpresa extends Encomienda{
 		dto.setVolumen(this.getVolumen());
 		dto.setVolumenGranel(this.getVolumenGranel());
 		dto.setCliente(this.getCliente().toDTO());
+		
+		if(this.productosEncomienda != null){
+			for(ProductoEncomienda pe: this.productosEncomienda){
+				
+				DTO_ProductoEncomienda pdto = pe.toDTO();
+				dto.addProducto(pdto);
+			}
+		}
+		
 		return dto;
+	}
+
+	public void facturar() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

@@ -12,15 +12,35 @@ import java.util.Set;
 
 
 
+
+
+import com.ADG04.Repositorio.Exceptions.BusinessException;
+import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
+import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
+import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
+import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
+import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.SeguroDao;
+import com.ADG04.Servidor.dao.ServicioSeguridadDao;
+import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.FacturaE;
+import com.ADG04.Servidor.model.ItemFacturaE;
+import com.ADG04.Servidor.model.ItemManifiestoE;
+import com.ADG04.Servidor.model.ManifiestoE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.model.ProductoE;
 import com.ADG04.Servidor.model.ProveedorE;
+import com.ADG04.Servidor.model.SeguroE;
+import com.ADG04.Servidor.model.ServicioSeguridadE;
+import com.ADG04.Servidor.model.SucursalE;
 import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EnvioEstado;
@@ -31,7 +51,7 @@ public abstract class Encomienda{
 
 	protected int idEncomienda;
 	protected Direccion direccionDestino;
-	protected Sucursal sucursalDestno;
+	protected Sucursal sucursalDestino;
 	protected Sucursal sucursalOrigen;
 	protected Direccion direccionOrigen;
 	protected Sucursal sucursalActual;
@@ -88,7 +108,7 @@ public abstract class Encomienda{
 			boolean internacional) {
 		super();
 		this.direccionDestino = direccionDestino;
-		this.sucursalDestno = sucursalDestno;
+		this.sucursalDestino = sucursalDestno;
 		this.sucursalOrigen = sucursalOrigen;
 		this.direccionOrigen = direccionOrigen;
 		this.sucursalActual = sucursalActual;
@@ -131,7 +151,7 @@ public abstract class Encomienda{
 			//String nombreReceptor, String apellidoReceptor, String dniReceptor) 
 			{
 	//	this.itemFactura = itemFactura;
-		this.sucursalDestno = sucursalDestino;
+		this.sucursalDestino = sucursalDestino;
 		//this.envio = envio;
 		this.sucursalOrigen = sucursalOrigen;
 		this.cliente = cliente;
@@ -328,12 +348,12 @@ public abstract class Encomienda{
 	}
 
 	public Sucursal getSucursalDestino() {
-		return this.sucursalDestno;
+		return this.sucursalDestino;
 	}
 
 	public void setSucursalDestino(
 			Sucursal sucursalDestino) {
-		this.sucursalDestno = sucursalDestino;
+		this.sucursalDestino = sucursalDestino;
 	}
 
 	public Sucursal getSucursalOrigen() {
@@ -558,11 +578,11 @@ public abstract class Encomienda{
 	}
 
 	public Sucursal getSucursalDestno() {
-		return sucursalDestno;
+		return sucursalDestino;
 	}
 
 	public void setSucursalDestno(Sucursal sucursalDestno) {
-		this.sucursalDestno = sucursalDestno;
+		this.sucursalDestino = sucursalDestno;
 	}
 
 	public boolean isTerciarizado() {
@@ -706,6 +726,212 @@ public abstract class Encomienda{
 		return EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
 	}
 	
+public void facturar() throws BusinessException {
+		
+		//Calculo la primer linea de la factura - El valor del transporte lo define la cantidad de km y el costo
+		//que se obtiene del mapa de ruta. 
+		float kilometros = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCantKm();
+		float costo = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCosto();
+
+		List<ItemFacturaE> items = new ArrayList<ItemFacturaE>();
+
+		//Costo por Km
+		ItemFacturaE itemTransporte = new ItemFacturaE();
+		itemTransporte.setDescripcion("Transporte: " + this.cliente.getIdCliente() + "-" + this.sucursalOrigen.getIdSucursal() + "-" + this.sucursalDestino.getIdSucursal());
+		itemTransporte.setCantidad(1);
+		itemTransporte.setValor(costo);
+		items.add(itemTransporte);
+						
+		//Segunda Linea Seguros
+		SeguroE pSeguro = SeguroDao.getInstancia().getById(this.getSeguro().getIdSeguro());
+		if(pSeguro != null){
+			ItemFacturaE itemSeguro = new ItemFacturaE();
+			itemSeguro.setDescripcion("Seguro: " + this.cliente.getIdCliente() + "-" + this.sucursalOrigen.getIdSucursal() + "-" + this.sucursalDestino.getIdSucursal());
+			itemSeguro.setCantidad(1);
+			itemSeguro.setValor((float)(pSeguro.getTarifa() + (pSeguro.getTarifaPorKm() * kilometros)));
+			items.add(itemSeguro);
+		}
+				
+		//Tercer Linea Servicio Seguridad
+		ServicioSeguridadE ss = ServicioSeguridadDao.getInstancia().getById(this.getServicioSeguridad().getIdServicioSeguridad());
+		if(ss != null){
+			ItemFacturaE itemSeguridad = new ItemFacturaE();
+			itemSeguridad.setDescripcion("Servicio de Seguridad: " + ss.getDescripcion());
+			itemSeguridad.setCantidad(1);
+			itemSeguridad.setValor((float)(ss.getTarifa()));
+			items.add(itemSeguridad);
+		}
+	
+		//Cuarta Linea Impueestos
+		ItemFacturaE itemImpuesto = new ItemFacturaE();
+		itemImpuesto.setDescripcion("IVA 21%");
+		itemImpuesto.setCantidad(1);
+		float costoTotal = (float) (calcularIVA(items) * 0.21);
+		itemImpuesto.setValor(costoTotal);
+		items.add(itemImpuesto);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); // Now use today date.
+		c.add(Calendar.DATE, 30); // Adding 30 days
+		
+		FacturaE facturaEntity = new FacturaE();//("A", new Date(), false, c.getTime(), this);
+		facturaEntity.setFecha(new Date());
+		facturaEntity.setEncomienda(this.toEntity());
+		facturaEntity.setFechaVencimiento(c.getTime());
+		facturaEntity.setPagada(false);
+		facturaEntity.setTipoFactura("A");
+		facturaEntity.setItemsFactura(items);
+		
+		/*EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();*/
+		
+		//Guardo la factura
+		FacturaE fe = FacturaDao.getInstancia().saveOrUpdate(facturaEntity);
+		
+		//actualizo la encomienda
+		EncomiendaE encomiendaEntity = this.toEntity();
+		encomiendaEntity.setFactura(fe);
+		EncomiendaDao.getInstancia().saveOrUpdate(encomiendaEntity);
+		
+		//Actualizo los datos de factura en el objeto this
+		this.factura = new Factura(fe.getTipoFactura(), fe.getFecha(), fe.isPagada(), fe.getVencimiento(), this);
+		this.factura.setIdFactura(fe.getIdFactura());
+		for(ItemFactura item:this.getFactura().getItemsFactura()){
+			this.factura.addItem(item);
+		}
+		
+		//tx.commit();
+
+		
+	}
+
+	public EncomiendaE toEntity() throws BusinessException {
+	
+		SucursalE actual = SucursalDao.getInstancia().getById(this.getSucursalActual().getIdSucursal());
+		SucursalE origen = SucursalDao.getInstancia().getById(this.getSucursalOrigen().getIdSucursal());
+		SucursalE destino = SucursalDao.getInstancia().getById(this.getSucursalDestino().getIdSucursal());
+		ClienteEmpresaE cli = (ClienteEmpresaE)ClienteDao.getInstancia().getById(this.getCliente().getIdCliente());
+		
+		if(actual == null)
+			throw new SucursalNotFoundException(this.getSucursalActual().getIdSucursal());
+		if(origen == null)
+			throw new SucursalNotFoundException(this.getSucursalOrigen().getIdSucursal());
+		if(destino == null)
+			throw new SucursalNotFoundException(this.getSucursalDestino().getIdSucursal());
+		if(cli == null)
+			throw new ClientNotFoundException();
+				
+		EncomiendaE encomienda = new EncomiendaE();
+		encomienda.setCliente(cli);
+		encomienda.setSucursalOrigen(origen);
+		encomienda.setSucursalActual(actual);
+		encomienda.setSucursalDestino(destino);
+		encomienda.setLargo(this.getLargo());
+		encomienda.setAncho(this.getAncho());
+		encomienda.setInternacional(this.isInternacional());
+		encomienda.setAlto(this.getAlto());
+		encomienda.setPeso(this.getPeso());
+		encomienda.setVolumen(this.getVolumen());
+		encomienda.setTratamiento(this.getTratamiento()); 
+		encomienda.setApilable(this.getApilable());
+		encomienda.setCantApilable(this.getCantApilable()); 
+		encomienda.setRefrigerado(this.getRefrigerado());
+		encomienda.setCondicionTransporte(this.getCondicionTransporte()); 
+		encomienda.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
+		encomienda.setFragilidad(this.getFragilidad()); 
+		encomienda.setNombreReceptor(this.getNombreReceptor()); 
+		encomienda.setApellidoReceptor(this.getApellidoReceptor());
+		encomienda.setDniReceptor(this.getDniReceptor()); 
+		encomienda.setVolumenGranel(this.getVolumenGranel()); 
+		encomienda.setUnidadGranel(this.getUnidadGranel());
+		encomienda.setCargaGranel(this.getCargaGranel());		
+		encomienda.setTipoEncomienda("P");	//OJO, encomienda empresa!!!!!!!1
+		
+		encomienda.setTercerizado(this.isTercerizado());
+		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
+		encomienda.setFechaCreacion(new Date());
+		
+		//El Mapa de Ruta es el encargado de calcular la fecha de entrega, porque la calculamos en base a 
+		//la distancia
+		System.out.println("MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino");
+		MapaDeRutaE m = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(this.getSucursalOrigen().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
+		System.out.println(this.getSucursalOrigen().getIdSucursal());
+		System.out.println(this.getSucursalDestino().getIdSucursal());
+		System.out.println(m.getIdMapaDeRuta());
+		MapaDeRuta mapa = new MapaDeRuta();
+		mapa.setIdMapaDeRuta(m.getIdMapaDeRuta());
+		encomienda.setFechaEstimadaEntrega(mapa.calcularFechaEstimadaDeEntrega());
+		
+		Manifiesto dtoM = this.getManifiesto();
+	
+		ManifiestoE manifiestoE = new ManifiestoE();
+		manifiestoE.setEncomienda(encomienda);
+		manifiestoE.setFecha(new Date());		
+		manifiestoE.setEncomienda(encomienda);
+	
+		List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
+		for(ItemManifiesto item:dtoM.getItemsManifiesto()){
+			if(item!=null){
+				ItemManifiestoE im = new ItemManifiestoE();
+				im.setCantidad(item.getCantidad());
+				im.setDescripcion(item.getDescripcion());
+				
+				//TODO: tiene que tener productos??????? No es para las empresas los productos
+				if(item.getProducto() != null) {	
+					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getIdProducto());
+					im.setProducto(prod);
+				}
+				
+				im.setManifiesto(manifiestoE);
+				itemsManifiesto.add(im);
+			}
+		}
+		manifiestoE.setItemsManifiesto(itemsManifiesto);
+		
+		encomienda.setManifiesto(manifiestoE);
+	
+		/*
+		DTO_Remito dtoR = this.getRemito();
+		if(dtoR != null){
+			RemitoE remito = new RemitoE();
+			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
+			remito.setConformado(dtoR.isConformado());
+			remito.setDniReceptor(dtoR.getDniReceptor());
+			remito.setFechaConformado(dtoR.getFecha());
+			remito.setNombreReceptor(dtoR.getNombreReceptor());
+			remito.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
+			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
+			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
+			
+			List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
+			for(DTO_ItemRemito item:dtoR.getDetalle()){
+				ItemRemitoE ir = new ItemRemitoE();
+				ir.setCantidad(item.getCantidad());
+				ir.setDescripcion(item.getDescripcion());
+				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ir.setProducto(prod);
+				ir.setRemito(remito);
+				itemsRemito.add(ir);
+			}
+			remito.setItemsRemito(itemsRemito);
+			remito.setEncomienda(encomienda);
+			encomienda.setRemito(remito);
+		}*/
+		
+		return encomienda;
+	}
+
+	private double calcularIVA(List<ItemFacturaE> items) {
+	
+		float costoTotal=0;
+	
+		for(ItemFacturaE item: items){
+			costoTotal =+ item.getValor();
+		}
+		
+		return costoTotal;
+	}
 	//TODO: esto tiene que ir en Sucursal??????
 	private List<VehiculoE> listarVehiculosDisponibles(int idSucursalOrigen, float volumen, float peso){
 
@@ -722,4 +948,6 @@ public abstract class Encomienda{
 		return vehiculosDisponibles;
 		
 	}
+	
+	
 }

@@ -15,6 +15,7 @@ import com.ADG04.Negocio.ClienteParticular;
 import com.ADG04.Negocio.CuentaCorriente;
 import com.ADG04.Negocio.Direccion;
 import com.ADG04.Negocio.Encomienda;
+import com.ADG04.Negocio.EncomiendaEmpresa;
 import com.ADG04.Negocio.EncomiendaParticular;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
@@ -24,6 +25,7 @@ import com.ADG04.Negocio.Manifiesto;
 import com.ADG04.Negocio.Pais;
 import com.ADG04.Negocio.PlanMantenimiento;
 import com.ADG04.Negocio.Producto;
+import com.ADG04.Negocio.ProductoEncomienda;
 import com.ADG04.Negocio.Proveedor;
 import com.ADG04.Negocio.Provincia;
 import com.ADG04.Negocio.Rol;
@@ -107,6 +109,7 @@ import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
+import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
@@ -467,24 +470,87 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 				encP.getApellidoReceptor(), encP.getDniReceptor(), encP.getVolumenGranel(), encP.getUnidadGranel(), 
 				encP.getCargaGranel(), servicioSeg, manifiesto, encP.isInternacional());
 		
-		return nuevaEncomienda.saveOrUpdate();
+		Integer idEncomienda = nuevaEncomienda.saveOrUpdate();
+		
+		nuevaEncomienda.facturar();
+		
+		return idEncomienda;
 	}
 	
-			
-	public void nuevaEncomiedaEmpresa(String dniCliente,
-			DTO_Direccion direccionOrigen, DTO_Direccion direccionDestino,
-			DTO_Sucursal sucursalOrigen, DTO_Sucursal sucursalDestino,
-			double largo, double ancho, double alto, double peso,
-			double volumen, String tratamiento, boolean apilable,
-			short cantApilable, boolean refrigerado,
-			String condiciionTransporte, String indicacionesManipulacion,
-			String fragilidad, String nombreReceptor, String apellidoReceptor,
-			String dniReceptor, Double volumenGranel, String unidadGranel,
-			String cargaGranel) throws RemoteException {
-		// TODO Auto-generated method stub
+	@SuppressWarnings("unused")
+	public Integer nuevaEncomiedaEmpresa(DTO_EncomiendaEmpresa encP) throws BusinessException {
 		
+		//Cuando creo la encomienda, la sucursal actual es la misma que la de origen
+		Sucursal sucursalActual = new Sucursal();
+		sucursalActual.setIdSucursal(encP.getSucursalOrigen().getId());
+		
+		Sucursal sucursalOrigen = new Sucursal();
+		sucursalOrigen.setIdSucursal(encP.getSucursalOrigen().getId());
+		
+		Sucursal sucursalDestino = new Sucursal();
+		sucursalDestino.setIdSucursal(encP.getSucursalDestino().getId());
+		
+		//Direccion direccionDestino = new Direccion();
+		//direccionDestino.setIdDireccion(encP.getDireccionDestino().getIdDireccion());
+
+		//Direccion direccionOrigen = new Direccion();
+		//direccionOrigen.setIdDireccion(encP.getDireccionOrigen().getIdDireccion());
+
+		ClienteEmpresaE cliE = (ClienteEmpresaE)ClienteDao.getInstancia().getByCuit(((DTO_ClienteEmpresa)encP.getCliente()).getCuit());
+		
+		if(sucursalActual == null)
+			throw new SucursalNotFoundException(encP.getSucursalActual().getId());
+		if(sucursalOrigen == null)
+			throw new SucursalNotFoundException(encP.getSucursalOrigen().getId());
+		if(sucursalDestino == null)
+			throw new SucursalNotFoundException(encP.getSucursalDestino().getId());
+		if(cliE == null)
+			throw new ClientNotFoundException();
+		
+		ClienteEmpresa cliente = new ClienteEmpresa();
+		cliente.setIdCliente(cliE.getIdCliente());
+		//cliente.setDni(cliE.getDni());
+						
+		ServicioSeguridad servicioSeg = new ServicioSeguridad();
+		servicioSeg.setIdServicioSeguridad(encP.getIdServicioSeguridad());
+		
+		Manifiesto manifiesto = new Manifiesto(encP.getManifiesto().getId(), encP.getManifiesto().getFecha());
+		
+		for (DTO_ItemManifiesto item : encP.getManifiesto().getDetalle()) {
+			Producto producto = null;
+			
+			if(item.getProducto() != null){
+					producto = new Producto();
+					producto.setIdProducto(item.getProducto().getId());
+			}
+			
+			manifiesto.addItem(new ItemManifiesto(item.getDescripcion(), item.getCantidad(), producto)); 
+		}
+		
+		EncomiendaEmpresa nuevaEncomienda = 		
+		new EncomiendaEmpresa(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
+				encP.getFechaCreacion(), encP.getFechaEstimadaEntrega(), encP.getEstado(), encP.isTercerizada(), 
+				encP.getLargo(), encP.getAlto(), encP.getAncho(), encP.getPeso(), encP.getVolumen(), encP.getTratamiento(), 
+
+				encP.getApilable(), encP.getCantApilable(), encP.getRefrigerado(), encP.getCondicionTransporte(), 
+				encP.getIndicacionesManipulacion(), encP.getFragilidad(), encP.getNombreReceptor(), 
+				encP.getApellidoReceptor(), encP.getDniReceptor(), encP.getVolumenGranel(), encP.getUnidadGranel(), 
+				encP.getCargaGranel(), servicioSeg, manifiesto, encP.isInternacional());
+		
+				
+		//Agrego los productos
+		for(DTO_ProductoEncomienda pedto:encP.getProductos()){
+			nuevaEncomienda.addProducto(new ProductoEncomienda(new Producto(pedto.getIdProductoCliente())));
+		}
+		
+		Integer idEncomienda = nuevaEncomienda.saveOrUpdate();
+		
+		nuevaEncomienda.facturar();
+		
+		return idEncomienda;
 	}
 
+	
 	
 	public void setFechaEstimadaEntrega(int idEncomienda,
 			Date fechaEstimadaDeEntrega) throws RemoteException {

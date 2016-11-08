@@ -90,12 +90,14 @@ public class ServletEncomiendaParticular extends HttpServlet {
 						e.setPeso((float)Float.parseFloat((String)request.getParameter("peso")));
 						e.setVolumen((float)Float.parseFloat((String)request.getParameter("ancho"))/100 * (float)Float.parseFloat((String)request.getParameter("largo"))/100 * (float)Float.parseFloat((String)request.getParameter("alto"))/100);
 						e.setTratamiento((String)request.getParameter("tratamiento"));
-						if(request.getParameter("Apilable").equals("true"))
+						if(request.getParameter("Apilable").equals("true")){
 							e.setApilable(true);
-						else
+							e.setCantApilable(Short.parseShort((String)request.getParameter("cantApilable")));
+						}
+						else{
 							e.setApilable(false);
-
-						e.setCantApilable(Short.parseShort((String)request.getParameter("cantApilable")));
+						}
+						
 						
 						if(request.getParameter("Refrigerado").equals("true"))
 							e.setRefrigerado(true);

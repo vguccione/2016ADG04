@@ -36,6 +36,10 @@ public class Producto{
 		this.unidad = unidad;
 	}
 
+	public Producto(Integer idProducto) {
+		this.idProducto = idProducto;
+	}
+
 	public int getIdProducto() {
 		return this.idProducto;
 	}

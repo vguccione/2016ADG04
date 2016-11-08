@@ -11,6 +11,7 @@ import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
@@ -32,20 +33,9 @@ public interface IEncomiendaRemote {
 					throws RemoteException;
 */
 
-	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException, BusinessException;
+	public Integer nuevaEncomiedaEmpresa(DTO_EncomiendaEmpresa encomiendaEmpresa)  throws RemoteException, BusinessException;
 	
-	public void nuevaEncomiedaEmpresa(
-			String dniCliente, 
-			DTO_Direccion direccionOrigen, 
-			DTO_Direccion direccionDestino,
-			DTO_Sucursal sucursalOrigen,
-			DTO_Sucursal sucursalDestino,
-			double largo, double ancho, double alto, double peso, double volumen,
-			String tratamiento, boolean apilable, short cantApilable, boolean refrigerado,
-			String condiciionTransporte, String indicacionesManipulacion, 
-			String fragilidad, String nombreReceptor, String apellidoReceptor,String dniReceptor,
-			Double volumenGranel, String unidadGranel, String cargaGranel) 
-					throws RemoteException;
+	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encomiendaParticular) throws RemoteException, BusinessException;
 	
 	public void setFechaEstimadaEntrega(int idEncomienda, Date fechaEstimadaDeEntrega) throws RemoteException;
 	

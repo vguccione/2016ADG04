@@ -138,13 +138,13 @@ public class AltaClienteParticular extends javax.swing.JFrame{
 		lblEmail.setBounds(10, 123, 46, 14);
 		Contacto.add(lblEmail);
 		
-		Vector listaPaises = Controlador.getInstancia().armarComboProvincias("Argentina");
-		ComboBoxModel ProvinciasModel = new DefaultComboBoxModel(listaPaises);
+		Vector listaProvs = Controlador.getInstancia().armarComboProvincias("Argentina");
+		ComboBoxModel ProvinciasModel = new DefaultComboBoxModel(listaProvs);
 		cbxProvincia = new JComboBox();
 		cbxProvincia.setBounds(83, 20, 117, 20);
 		cbxProvincia.setModel(ProvinciasModel);
 		if(dto!=null){
-			for(int i = 0;i<listaPaises.size();i++){
+			for(int i = 0;i<listaProvs.size();i++){
 				if(cbxProvincia.getItemAt(i).toString().contains(dto.getDireccion().getProvincia().getDescripcion())){
 					cbxProvincia.setSelectedIndex(i);
 				}

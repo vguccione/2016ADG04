@@ -29,23 +29,37 @@ public class TarifasCarrierE implements java.io.Serializable{
 	@JoinColumn(name="idProveedor")
 	private ProveedorE proveedor;
 
+	@Column(name="Ciudad")
+	private String ciudad;
+	
+	@ManyToOne
+	@JoinColumn(name = "IdPais", nullable = true)
+	private PaisE pais;
+	
+	@ManyToOne
+	@JoinColumn(name="IdSucursal", nullable=true)
+	private SucursalE origen;
+	
+	
 	public TarifasCarrierE() {
 		
 	}
 	
 	public TarifasCarrierE(String comentarios, String prioridad,
-			float precioKMExtra, float tarifa, ProveedorE proveedor) {
+			float precioKMExtra, float tarifa, ProveedorE proveedor, String ciudad, PaisE pais) {
 		super();
 		this.comentarios = comentarios;
 		this.prioridad = prioridad;
 		this.precioKMExtra = precioKMExtra;
 		this.tarifa = tarifa;
 		this.proveedor = proveedor;
+		this.ciudad=ciudad;
+		this.pais=pais;
 	}
 
 	public TarifasCarrierE(int idTarifasCarrier, String comentarios,
 			String prioridad, float precioKMExtra, float tarifa,
-			ProveedorE proveedor) {
+			ProveedorE proveedor ,String ciudad, PaisE pais)  {
 		super();
 		this.idTarifasCarrier = idTarifasCarrier;
 		this.comentarios = comentarios;
@@ -53,6 +67,8 @@ public class TarifasCarrierE implements java.io.Serializable{
 		this.precioKMExtra = precioKMExtra;
 		this.tarifa = tarifa;
 		this.proveedor = proveedor;
+		this.ciudad=ciudad;
+		this.pais=pais;
 	}
 
 	public String getComentarios() {
@@ -104,5 +120,32 @@ public class TarifasCarrierE implements java.io.Serializable{
 	public void setProveedor(ProveedorE proveedor) {
 		this.proveedor = proveedor;
 	}
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public PaisE getPais() {
+		return pais;
+	}
+
+	public void setPais(PaisE pais) {
+		this.pais = pais;
+	}
+
+	public SucursalE getOrigen() {
+		return origen;
+	}
+
+	public void setOrigen(SucursalE origen) {
+		this.origen = origen;
+	}
+	
+	
+	
 
 }

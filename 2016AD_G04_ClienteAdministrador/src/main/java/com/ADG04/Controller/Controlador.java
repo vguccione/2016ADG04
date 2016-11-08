@@ -1126,7 +1126,8 @@ public class Controlador {
 		return false;
 	}
 	
-	public boolean altaTarifaCarrier(String tipo,  int idProveedor, int idDestino, String comentarios, String prioridad, float precioKMExtra, float monto) {
+	public boolean altaTarifaCarrier(int idProveedor, String ciudad, String comentarios, String prioridad, float precioKMExtra, float monto, DTO_Pais pais,
+			DTO_Sucursal sucursal) {
 		try{
 			DTO_TarifasCarrier tc = new DTO_TarifasCarrier();
 			tc.setComentarios(comentarios);
@@ -1134,13 +1135,38 @@ public class Controlador {
 			tc.setTarifa(monto);
 			tc.setPrecioKMExtra(precioKMExtra);
 			tc.setPrioridad(prioridad);
-			tc.setIdDireccion(idDestino);
+			tc.setCiudad(ciudad);
+			tc.setPais(pais);
+			tc.setOrigen(sucursal);
 			bd.altaTarifasCarrier(tc);
 			return true;
 		}
 		catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Error al dar de alta Tarifas Carrier");
+		}
+		return false;
+	}
+	
+	public boolean modificarTarifaCarrier(int id, int idProveedor, String ciudad, String comentarios, String prioridad, float precioKMExtra, float monto, DTO_Pais pais,
+			DTO_Sucursal sucursal) {
+		try{
+			DTO_TarifasCarrier tc = new DTO_TarifasCarrier();
+			tc.setComentarios(comentarios);
+			tc.setIdProveedor(idProveedor);
+			tc.setTarifa(monto);
+			tc.setPrecioKMExtra(precioKMExtra);
+			tc.setPrioridad(prioridad);
+			tc.setCiudad(ciudad);
+			tc.setPais(pais);
+			tc.setOrigen(sucursal);
+			tc.setId(id);
+			bd.modificarTarifasCarrier(tc);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al modificar la Tarifa Carrier");
 		}
 		return false;
 	}
@@ -1449,6 +1475,5 @@ public class Controlador {
 			System.out.println("Error al modificar Proveedor");
 		}
 	}
-
 	
 }

@@ -109,11 +109,15 @@ public class ListadoTarifasCarriers extends javax.swing.JFrame {
 								}
 								
 								
-								jTableListadoModel.addRow(new Object[] { proveedor,
+								jTableListadoModel.addRow(new Object[] { item.getId(),
+																			proveedor,
 																			item.getComentarios(),
 																			Float.toString(item.getTarifa()),
 																			Float.toString(item.getPrecioKMExtra()),
-																			item.getPrioridad()								
+																			item.getPrioridad(),
+																			item.getOrigen().getDescripcion(),
+																			item.getCiudad(),
+																			item.getPais().getDescripcion()								
 								});
 																		
 							}
@@ -133,12 +137,16 @@ public class ListadoTarifasCarriers extends javax.swing.JFrame {
 				{
 					
 					List<DTO_TarifasCarrier> listaDTO = Controlador.getInstancia().listarTarifasCarriers();
-								
+					
+					jTableListadoModel.addColumn("Id");
 					jTableListadoModel.addColumn("Proveedor");
 					jTableListadoModel.addColumn("Comentarios");
 					jTableListadoModel.addColumn("Tarifa");
 					jTableListadoModel.addColumn("Precio Kilometro");
 					jTableListadoModel.addColumn("Prioridad");
+					jTableListadoModel.addColumn("Sucursal Origen");
+					jTableListadoModel.addColumn("Ciudad");
+					jTableListadoModel.addColumn("Pais");
 
 	
 					if(listaDTO!=null){
@@ -154,11 +162,14 @@ public class ListadoTarifasCarriers extends javax.swing.JFrame {
 						}
 						
 						
-						jTableListadoModel.addRow(new Object[] { proveedor,
+						jTableListadoModel.addRow(new Object[] { item.getId(),proveedor,
 																	item.getComentarios(),
 																	Float.toString(item.getTarifa()),
 																	Float.toString(item.getPrecioKMExtra()),
-																	item.getPrioridad()								
+																	item.getPrioridad(),
+																	item.getOrigen().getDescripcion(),
+																	item.getCiudad(),
+																	item.getPais().getDescripcion()
 						});
 																
 					}

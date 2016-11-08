@@ -55,10 +55,7 @@ public class App
 	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-    	
-    	Proveedor prov = new Proveedor().fromEntity(ProveedorDao.getInstancia().getById(1006));
-    	prov.setRazonSocial("A");
-    	prov.saveOrUpdate();
+ 
     	/*
     	   	
     	BusinessDelegate bd = new BusinessDelegate();

@@ -2,6 +2,9 @@ package com.ADG04.bean.Proveedor;
 
 import java.io.Serializable;
 
+import com.ADG04.bean.Administracion.DTO_Pais;
+import com.ADG04.bean.Administracion.DTO_Sucursal;
+
 
 public class DTO_TarifasCarrier implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -13,6 +16,10 @@ public class DTO_TarifasCarrier implements Serializable{
 	private String prioridad;
 	private float precioKMExtra;
 	private float tarifa;
+	private String ciudad;
+	private DTO_Pais pais;
+	private DTO_Sucursal origen;
+	
 
 	public DTO_TarifasCarrier() {
 		
@@ -74,6 +81,31 @@ public class DTO_TarifasCarrier implements Serializable{
 	public void setTarifa(float tarifa) {
 		this.tarifa = tarifa;
 	}
-	
-	
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public DTO_Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(DTO_Pais pais) {
+		this.pais = pais;
+	}
+
+	public DTO_Sucursal getOrigen() {
+		return origen;
+	}
+
+	public void setOrigen(DTO_Sucursal origen) {
+		this.origen = origen;
+	}
+
+
+		
 }

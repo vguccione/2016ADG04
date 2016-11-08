@@ -47,11 +47,13 @@ import com.ADG04.Vista.Listados.ListadoVehiculos;
 import com.ADG04.Vista.Proveedores.AltaProveedor;
 import com.ADG04.Vista.Proveedores.AltaSeguro;
 import com.ADG04.Vista.Proveedores.AltaServicioSeguridad;
+import com.ADG04.Vista.Proveedores.AltaTarifaCarrier;
 import com.ADG04.Vista.Proveedores.BajaProveedor;
 import com.ADG04.Vista.Proveedores.BajaSeguro;
 import com.ADG04.Vista.Proveedores.BajaServicioSeguridad;
 import com.ADG04.Vista.Proveedores.BajaTarifaCarrier;
 import com.ADG04.Vista.Proveedores.BusquedaProveedor;
+import com.ADG04.Vista.Proveedores.BusquedaTarifasCarrier;
 import com.ADG04.Vista.Vehiculos.AgregarTareaAPlan;
 import com.ADG04.Vista.Vehiculos.AltaPlanMantenimiento;
 import com.ADG04.Vista.Vehiculos.AltaVehiculo;
@@ -194,6 +196,9 @@ public class VistaMenu extends javax.swing.JFrame {
 	private JSeparator jSeparatorSucursal3;
 	private JMenuItem JMenuItemAgregarTarea;
 	private int codigoUsuario;
+	private JMenu JMenuTarifasCarrier;
+	private JMenuItem JMenuItemAltaTarifas;
+	private JMenuItem JMenuItemModificarTarifasCarrier;
 	
 	
 	public VistaMenu(int codigoUsuario){
@@ -446,19 +451,50 @@ public class VistaMenu extends javax.swing.JFrame {
 									}
 								});
 							}
-							{
-								JMenuItemBajaTarifasCarrier = new JMenuItem();
-								JMenuSeguridad.add(JMenuItemBajaTarifasCarrier);
-								JMenuItemBajaTarifasCarrier.setText("Baja Tarifas Carrier");
-								JMenuItemBajaTarifasCarrier.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent evt) {
-										BajaTarifaCarrier inst = new BajaTarifaCarrier();
-										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);
-									}
-								});
-							}
 						}
+							{
+								JMenuTarifasCarrier = new JMenu();
+								JMenuProveedor.add(JMenuTarifasCarrier);
+								JMenuTarifasCarrier.setText("Tarifas Carrier");
+								JMenuTarifasCarrier.setBounds(93, 87, 119, 21);
+								{
+									JMenuItemAltaTarifas = new JMenuItem();
+									JMenuTarifasCarrier.add(JMenuItemAltaTarifas);
+									JMenuItemAltaTarifas.setText("Alta Tarifas Carrier");
+									JMenuItemAltaTarifas.addActionListener(new ActionListener() {
+										public void actionPerformed(ActionEvent evt) {
+											AltaTarifaCarrier inst = new AltaTarifaCarrier(null);
+											inst.setLocationRelativeTo(null);
+											inst.setVisible(true);
+										}
+									});
+								}
+								{
+									JMenuItemModificarTarifasCarrier = new JMenuItem();
+									JMenuTarifasCarrier.add(JMenuItemModificarTarifasCarrier);
+									JMenuItemModificarTarifasCarrier.setText("Modificar Tarifas Carrier");
+									JMenuItemModificarTarifasCarrier.addActionListener(new ActionListener() {
+										public void actionPerformed(ActionEvent evt) {
+											BusquedaTarifasCarrier inst = new BusquedaTarifasCarrier();
+											inst.setLocationRelativeTo(null);
+											inst.setVisible(true);
+										}
+									});
+								}
+								{
+									JMenuItemBajaTarifasCarrier = new JMenuItem();
+									JMenuSeguridad.add(JMenuItemBajaTarifasCarrier);
+									JMenuItemBajaTarifasCarrier.setText("Baja Tarifas Carrier");
+									JMenuItemBajaTarifasCarrier.addActionListener(new ActionListener() {
+										public void actionPerformed(ActionEvent evt) {
+											BajaTarifaCarrier inst = new BajaTarifaCarrier();
+											inst.setLocationRelativeTo(null);
+											inst.setVisible(true);
+										}
+									});
+								}
+							
+							}
 						{
 							JMenuItem8 = new JMenuItem();
 							JMenuCliente.add(JMenuItem8);

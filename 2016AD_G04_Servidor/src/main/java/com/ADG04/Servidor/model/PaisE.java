@@ -28,6 +28,9 @@ public class PaisE implements java.io.Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pais")
 	private List<DireccionE> direcciones;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pais")
+	private List<TarifasCarrierE> tarifas;
 
 	public PaisE() {
 	}
@@ -60,5 +63,14 @@ public class PaisE implements java.io.Serializable {
 	public void setDirecciones(List<DireccionE> direcciones) {
 		this.direcciones = direcciones;
 	}
+
+	public List<TarifasCarrierE> getTarifas() {
+		return tarifas;
+	}
+
+	public void setTarifas(List<TarifasCarrierE> tarifas) {
+		this.tarifas = tarifas;
+	}
 		
+	
 }

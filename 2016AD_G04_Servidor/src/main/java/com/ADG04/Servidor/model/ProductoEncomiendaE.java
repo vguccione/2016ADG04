@@ -20,6 +20,9 @@ public class ProductoEncomiendaE implements java.io.Serializable {
 	@Column(name = "IdProductoEncomienda", unique = true, nullable = false)
 	private int idProductoEncomienda;
 
+	@Column(name = "cantidad", unique = true, nullable = false)
+	private float cantidad;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IdEncomienda", nullable = false)
 	private EncomiendaE encomienda;
@@ -59,6 +62,14 @@ public class ProductoEncomiendaE implements java.io.Serializable {
 
 	public void setProducto(ProductoE producto) {
 		this.producto = producto;
+	}
+
+	public float getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(float cantidad) {
+		this.cantidad = cantidad;
 	}
 
 }

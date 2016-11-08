@@ -4,14 +4,33 @@ import java.io.Serializable;
 
 
 public class DTO_ProductoEncomienda implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	private float cantidad;
 	private Integer idProductoCliente;
+	private Integer idEncomienda;
 	
 	public DTO_ProductoEncomienda(){
 	}
 	
+	public DTO_ProductoEncomienda(float cantidad, Integer idProductoCliente) {
+		super();
+		this.cantidad = cantidad;
+		this.idProductoCliente = idProductoCliente;
+	}
+	
+	public DTO_ProductoEncomienda(float cantidad, Integer idProductoCliente,
+			Integer idEncomienda) {
+		super();
+		this.cantidad = cantidad;
+		this.idProductoCliente = idProductoCliente;
+		this.idEncomienda = idEncomienda;
+	}
+
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -35,4 +54,13 @@ public class DTO_ProductoEncomienda implements Serializable{
 		this.idProductoCliente = idProductoCliente;
 	}
 
+	public Integer getIdEncomienda() {
+		return idEncomienda;
+	}
+
+	public void setIdEncomienda(Integer idEncomienda) {
+		this.idEncomienda = idEncomienda;
+	}
+
+	
 }

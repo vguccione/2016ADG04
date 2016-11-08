@@ -1,3 +1,4 @@
+
 package com.ADG04.Negocio;
 
 import java.util.ArrayList;
@@ -209,9 +210,8 @@ public class EncomiendaParticular extends Encomienda{
 		manifiestoE.setItemsManifiesto(itemsManifiesto);
 		
 		encomienda.setManifiesto(manifiestoE);
-
-		/*
-		DTO_Remito dtoR = this.getRemito();
+		
+		/*Remito dtoR = this.getRemito();
 		if(dtoR != null){
 			RemitoE remito = new RemitoE();
 			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
@@ -224,15 +224,16 @@ public class EncomiendaParticular extends Encomienda{
 			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
 			
 			List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
-			for(DTO_ItemRemito item:dtoR.getDetalle()){
+			for(ItemRemito item:dtoR.getItemsRemito()){
 				ItemRemitoE ir = new ItemRemitoE();
 				ir.setCantidad(item.getCantidad());
 				ir.setDescripcion(item.getDescripcion());
-				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
+				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getIdProducto());
 				ir.setProducto(prod);
 				ir.setRemito(remito);
 				itemsRemito.add(ir);
 			}
+			
 			remito.setItemsRemito(itemsRemito);
 			remito.setEncomienda(encomienda);
 			encomienda.setRemito(remito);
@@ -255,6 +256,19 @@ public class EncomiendaParticular extends Encomienda{
 	
 	private EntityManager getEntityFactoryInstace() {
 		return EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
+	}
+
+	
+
+	private float calcularPrecioTotal() {
+		
+		float costoTotal=0;
+		
+		for(ItemFactura item: this.factura.getItemsFactura()){
+			costoTotal =+ item.getValor();
+		}
+
+		return costoTotal;
 	}
 
 	

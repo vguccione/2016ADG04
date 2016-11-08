@@ -32,13 +32,24 @@ public class Factura{
 	public Factura() {
 	}
 
-	public Factura(int idFactura, String tipoFactura, Date fecha, boolean pagada,
-			Date vencimiento) {
+	public Factura(int idFactura, String tipoFactura, Date fecha, boolean pagada,Date vencimiento, Encomienda encomienda) {
 		this.idFactura = idFactura;
 		this.tipoFactura = tipoFactura;
 		this.fecha = fecha;
 		this.pagada = pagada;
 		this.vencimiento = vencimiento;
+		this.itemsFactura = new ArrayList<ItemFactura>();
+		this.encomienda = encomienda;
+	}
+	
+	public Factura(String tipoFactura, Date fecha, boolean pagada,Date vencimiento, Encomienda encomienda) {
+
+		this.tipoFactura = tipoFactura;
+		this.fecha = fecha;
+		this.pagada = pagada;
+		this.vencimiento = vencimiento;
+		this.itemsFactura = new ArrayList<ItemFactura>();
+		this.encomienda = encomienda;
 	}
 	
 	public int getIdFactura() {
@@ -132,5 +143,9 @@ public class Factura{
     	
     	return f;
     }
+
+	public void addItem(ItemFactura item) {
+		this.itemsFactura.add(item);
+	}
 
 }

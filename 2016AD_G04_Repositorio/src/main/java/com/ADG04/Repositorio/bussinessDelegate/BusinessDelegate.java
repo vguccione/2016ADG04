@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
@@ -859,6 +860,11 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public void modificarProveedor(DTO_Proveedor prov) throws RemoteException{
 		this.businessService.modificarProveedor(prov);
 		
+	}
+
+	public Integer nuevaEncomiedaEmpresa(DTO_EncomiendaEmpresa encomiendaEmpresa)
+			throws RemoteException, BusinessException {
+		return this.nuevaEncomiedaEmpresa(encomiendaEmpresa);
 	}
 
 }

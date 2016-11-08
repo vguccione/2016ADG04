@@ -80,7 +80,7 @@ $(document).ready(function() {
 	  		});
 	  		
 	  		$("#menu_new_encom_empresa").on("click",function(){
-	  			$("#divTodo").load("altaEncomiendaEmpresa_ok.jsp");
+	  			$("#divTodo").load("altaEncomiendaEmpresa.jsp");
 	  		});
 	  		
 	  		$("#menu_ingreso_encom_stock_empresa").on("click",function(){

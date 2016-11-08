@@ -21,6 +21,9 @@ import java.util.Set;
 
 
 
+
+
+
 import org.hibernate.property.Getter;
 
 import com.ADG04.Repositorio.Exceptions.BusinessException;
@@ -29,6 +32,8 @@ import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
+import com.ADG04.Servidor.dao.FacturaDao;
+import com.ADG04.Servidor.dao.ManifiestoDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.ProductoEncomiendaDao;
@@ -37,6 +42,7 @@ import com.ADG04.Servidor.dao.RemitoDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteEmpresaE;
+import com.ADG04.Servidor.model.ClienteParticularE;
 import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.model.ItemManifiestoE;
 import com.ADG04.Servidor.model.ItemRemitoE;
@@ -59,6 +65,8 @@ public class EncomiendaEmpresa extends Encomienda{
 	public EncomiendaEmpresa() {
 	}
 
+	
+	
 	public EncomiendaEmpresa(Direccion direccionDestino, Sucursal sucursalDestno,
 			Sucursal sucursalOrigen, Direccion direccionOrigen,
 			Sucursal sucursalActual, Cliente cliente, Date fechaCreacion,
@@ -85,6 +93,7 @@ public class EncomiendaEmpresa extends Encomienda{
 		this.productosEncomienda  = new ArrayList<ProductoEncomienda>();
 	}
 
+	
 	public List<ProductoEncomienda> getProductoEncomiendas() {
 		return productosEncomienda;
 	}
@@ -330,6 +339,57 @@ public class EncomiendaEmpresa extends Encomienda{
 	public void facturar() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public EncomiendaEmpresa fromEntity(EncomiendaE ence) {
+		EncomiendaEmpresa enc = new EncomiendaEmpresa();
+		enc.setAlto(ence.getAlto());
+		enc.setAncho(ence.getAncho());
+		enc.setApellidoReceptor(ence.getApellidoReceptor());
+		enc.setApilable(ence.getApilable());
+		enc.setCantApilable(ence.getCantApilable());
+		enc.setCargaGranel(ence.getCargaGranel());
+		enc.setCondicionTransporte(ence.getCondicionTransporte());
+		
+		if(ence.getFactura()!=null)
+			enc.setFactura(new Factura().fromEntity(FacturaDao.getInstancia().getById(ence.getFactura().getIdFactura())));
+		
+		enc.setDniReceptor(ence.getDniReceptor());
+		enc.setEstado(ence.getEstado());
+		enc.setFechaCreacion(ence.getFechaCreacion());
+		enc.setFragilidad(ence.getFragilidad());
+		enc.setIdEncomienda(ence.getIdEncomienda());
+		enc.setIndicacionesManipulacion(ence.getIndicacionesManipulacion());
+		enc.setInternacional(ence.isInternacional());
+		enc.setLargo(ence.getLargo());
+		if(ence.getManifiesto()!=null)
+			enc.setManifiesto(new Manifiesto().fromEntity(ence.getManifiesto()));
+		
+		enc.setNombreReceptor(ence.getNombreReceptor());
+		enc.setPeso(ence.getPeso());
+		enc.setRefrigerado(ence.getRefrigerado());
+		enc.setSucursalActual(new Sucursal().fromEntity(ence.getSucursalActual()));
+		enc.setSucursalDestino(new Sucursal().fromEntity(ence.getSucursalDestino()));
+		enc.setSucursalOrigen(new Sucursal().fromEntity(ence.getSucursalOrigen()));
+		enc.setTercerizado(ence.isTercerizado());
+		enc.setTratamiento(ence.getTratamiento());
+		enc.setUnidadGranel(ence.getUnidadGranel());
+		enc.setVolumen(ence.getVolumen());
+		enc.setVolumenGranel(ence.getVolumenGranel());
+		enc.setCliente(new Cliente().fromEntity((ClienteE)ence.getCliente()));
+		
+		if(ence.getProductoEncomiendas() != null){
+			List<ProductoEncomienda> productos =new  ArrayList<ProductoEncomienda>();
+			for(ProductoEncomiendaE pe: ence.getProductoEncomiendas()){
+				
+				ProductoEncomienda prod = new ProductoEncomienda().fromEntity(ProductoEncomiendaDao.getInstancia().getById(pe.getIdProductoEncomienda()));
+				productos.add(prod);
+			}
+			if(productos.size()>0)
+				enc.setProductoEncomiendas(productos);;
+		}
+		
+		return enc;
 	}
 
 	

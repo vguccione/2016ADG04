@@ -12,6 +12,7 @@ import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 
 
 /**
@@ -58,7 +59,7 @@ public class ListadoEncomiendasParticular extends javax.swing.JFrame {
 				jScrollPaneListadoEncomiendas.setBounds(12, 60, 799, 305);
 				{
 					
-					List<DTO_Encomienda> listadto = Controlador.getInstancia().listarEncomiendasParticulares();
+					List<DTO_EncomiendaParticular> listadto = Controlador.getInstancia().listarEncomiendasParticulares();
 					
 					DefaultTableModel jTableListadoModel = new DefaultTableModel();
 			
@@ -77,9 +78,10 @@ public class ListadoEncomiendasParticular extends javax.swing.JFrame {
 	
 					
 					if(listadto!=null){
-					for (DTO_Encomienda enc :listadto){
+					for (DTO_EncomiendaParticular enc :listadto){
 						String cliente = "";
-						DTO_ClienteParticular cli = Controlador.getInstancia().getClienteById(enc.getCliente().getId());
+						int idCliente = enc.getCliente().getId();
+						DTO_ClienteParticular cli = Controlador.getInstancia().getClienteById(idCliente);
 						cliente = cli.getNombre() + ' ' + cli.getApellido();
 						
 						jTableListadoModel.addRow(new Object[] { enc.getIdEncomienda(),

@@ -21,6 +21,7 @@ import com.ADG04.Servidor.model.*;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
+import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 
 public class EncomiendaParticular extends Encomienda{
 
@@ -82,8 +83,8 @@ public class EncomiendaParticular extends Encomienda{
 						+ " internacional +" + internacional + "]";
 	}
 
-	public DTO_Encomienda toDTO() {
-		DTO_Encomienda dto = new DTO_Encomienda();
+	public DTO_EncomiendaParticular toDTO() {
+		DTO_EncomiendaParticular dto = new DTO_EncomiendaParticular();
 		dto.setAlto(this.getAlto());
 		dto.setAncho(this.getAncho());
 		dto.setApellidoReceptor(this.getApellidoReceptor());
@@ -271,6 +272,44 @@ public class EncomiendaParticular extends Encomienda{
 		return costoTotal;
 	}
 
-	
+	public EncomiendaParticular fromEntity(EncomiendaE ence) {
+		EncomiendaParticular enc = new EncomiendaParticular();
+		enc.setAlto(ence.getAlto());
+		enc.setAncho(ence.getAncho());
+		enc.setApellidoReceptor(ence.getApellidoReceptor());
+		enc.setApilable(ence.getApilable());
+		enc.setCantApilable(ence.getCantApilable());
+		enc.setCargaGranel(ence.getCargaGranel());
+		enc.setCondicionTransporte(ence.getCondicionTransporte());
+		
+		if(ence.getFactura()!=null)
+			enc.setFactura(new Factura().fromEntity(FacturaDao.getInstancia().getById(ence.getFactura().getIdFactura())));
+		
+		enc.setDniReceptor(ence.getDniReceptor());
+		enc.setEstado(ence.getEstado());
+		enc.setFechaCreacion(ence.getFechaCreacion());
+		enc.setFragilidad(ence.getFragilidad());
+		enc.setIdEncomienda(ence.getIdEncomienda());
+		enc.setIndicacionesManipulacion(ence.getIndicacionesManipulacion());
+		enc.setInternacional(ence.isInternacional());
+		enc.setLargo(ence.getLargo());
+		if(ence.getManifiesto()!=null)
+			enc.setManifiesto(new Manifiesto().fromEntity(ence.getManifiesto()));
+		
+		enc.setNombreReceptor(ence.getNombreReceptor());
+		enc.setPeso(ence.getPeso());
+		enc.setRefrigerado(ence.getRefrigerado());
+		enc.setSucursalActual(new Sucursal().fromEntity(ence.getSucursalActual()));
+		enc.setSucursalDestino(new Sucursal().fromEntity(ence.getSucursalDestino()));
+		enc.setSucursalOrigen(new Sucursal().fromEntity(ence.getSucursalOrigen()));
+		enc.setTercerizado(ence.isTercerizado());
+		enc.setTratamiento(ence.getTratamiento());
+		enc.setUnidadGranel(ence.getUnidadGranel());
+		enc.setVolumen(ence.getVolumen());
+		enc.setVolumenGranel(ence.getVolumenGranel());
+		enc.setCliente(new Cliente().fromEntity(ClienteDao.getInstancia().getById(ence.getCliente().getIdCliente())));
+		
+		return enc;
+	}
 	
 }

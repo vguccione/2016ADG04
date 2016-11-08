@@ -673,11 +673,11 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.getEncomiendaEmpresa(id);
 	}
 
-	public List<DTO_Encomienda> listarEncomiendasParticulares()throws RemoteException {
+	public List<DTO_EncomiendaParticular> listarEncomiendasParticulares()throws RemoteException {
 		return this.businessService.listarEncomiendasParticulares();
 	}
 
-	public List<DTO_Encomienda> listarEncomiendasEmpresas()
+	public List<DTO_EncomiendaEmpresa> listarEncomiendasEmpresas()
 			throws RemoteException {
 		return this.businessService.listarEncomiendasEmpresas();
 	}

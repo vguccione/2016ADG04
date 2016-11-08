@@ -125,4 +125,16 @@ public class Cliente{
 	public String getDni(){
 		return this.dni;
 	}
+
+
+
+	public Cliente fromEntity(ClienteE cliente) {
+		Cliente cli = new Cliente();
+		cli.setEmail(cliente.getEmail());
+		cli.setEstado(cliente.getEstado());
+		cli.setIdCliente(cliente.getIdCliente());
+		cli.setTelefono(cliente.getTelefono());
+		cli.setDireccion(new Direccion().fromEntity(cliente.getDireccion()));
+		return cli;
+	}
 }

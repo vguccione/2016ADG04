@@ -94,7 +94,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 
 	public DTO_Usuario login(String usuario, String password)
-			throws RemoteException {
+			throws RemoteException, BusinessException {
 		return this.businessService.login(usuario, password);
 	}
 

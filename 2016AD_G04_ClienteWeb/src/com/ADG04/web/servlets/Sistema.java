@@ -4,6 +4,7 @@ import java.io.IOException;
 //import java.io.PrintWriter;
 
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.web.controller.*;
 
@@ -73,7 +75,14 @@ public class Sistema extends HttpServlet {
 		
 			dispatch(jspPage, request, response);
 		
-		} catch (Exception e) {
+		}
+		 catch (BusinessException e) {
+				
+				e.printStackTrace();
+				
+				request.setAttribute("mensaje", "Error: \n Descripcion :" + e.getMessage());
+				dispatch("mostrarMensaje.jsp", request, response);
+			}catch (Exception e) {
 			
 			e.printStackTrace();
 			

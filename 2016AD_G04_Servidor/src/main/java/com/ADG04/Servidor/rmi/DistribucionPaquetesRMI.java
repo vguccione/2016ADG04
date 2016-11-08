@@ -554,7 +554,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 				
 		//Agrego los productos
 		for(DTO_ProductoEncomienda pedto:encP.getProductos()){
-			nuevaEncomienda.addProducto(new ProductoEncomienda(new Producto(pedto.getIdProductoCliente())));
+			nuevaEncomienda.addProducto(new ProductoEncomienda(new Producto(pedto.getIdProductoCliente()), pedto.getCantidad()));
 		}
 		
 		Integer idEncomienda = nuevaEncomienda.saveOrUpdate();
@@ -968,13 +968,22 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 	
 	 @Override
-	 public DTO_Usuario login(String usuario, String password){
+	 public DTO_Usuario login(String usuario, String password) throws BusinessException{
+		 try{
 		 UsuarioE u = UsuarioDao.getInstancia().buscarUsuario(usuario);
 		 Usuario usu = new Usuario().fromEntity(u);
 		 if (u.getPassword().equals(password))
 			 return usu.toDTO();
 		 else
-			 return null;
+			 throw new BusinessException("No se encontró el usuario");
+		 }
+		  catch(Exception ex){
+			  if(ex.getClass().equals(BusinessException.class)){
+				  throw (BusinessException)ex;
+			  }
+			  ex.printStackTrace();
+			  return null;
+		 }
 	 }
 	 
 	 @Override

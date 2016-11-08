@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
@@ -64,13 +65,17 @@ public class Controlador {
 	}
 	
 
-	public Integer login(String usuario, String password) {
+	public Integer login(String usuario, String password)  {
 		try {
 			 DTO_Usuario user = bd.login(usuario, password);
 			 if(user!=null)
 				 return user.getId();
 			 else
 				 return null;
+		}
+		catch(BusinessException bex){
+			bex.printStackTrace();
+	        System.out.println("Error al validar usuario");
 		}
 		catch (RemoteException e) {
      	 e.printStackTrace();

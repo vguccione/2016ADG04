@@ -34,12 +34,13 @@ public class ProductoEncomiendaE implements java.io.Serializable {
 	public ProductoEncomiendaE() {
 	}
 
-	public ProductoEncomiendaE(EncomiendaE encomienda,ProductoE producto) {
-		this.encomienda = encomienda;
-		this.producto = producto;
+	public ProductoEncomiendaE(EncomiendaE encomiendaEntity, ProductoE pEntity,
+			float cantidad) {
+		this.cantidad = cantidad;
+		this.encomienda = encomiendaEntity;
+		this.producto = pEntity;
 	}
 
-	
 	public int getIdProductoEncomienda() {
 		return this.idProductoEncomienda;
 	}

@@ -483,7 +483,7 @@ public class VistaMenu extends javax.swing.JFrame {
 								}
 								{
 									JMenuItemBajaTarifasCarrier = new JMenuItem();
-									JMenuSeguridad.add(JMenuItemBajaTarifasCarrier);
+									JMenuTarifasCarrier.add(JMenuItemBajaTarifasCarrier);
 									JMenuItemBajaTarifasCarrier.setText("Baja Tarifas Carrier");
 									JMenuItemBajaTarifasCarrier.addActionListener(new ActionListener() {
 										public void actionPerformed(ActionEvent evt) {

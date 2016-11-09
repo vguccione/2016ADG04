@@ -21,6 +21,8 @@ public class DTO_ItemManifiesto implements Serializable{
 		this.descripcion = descripcion;
 	}
 	
+	
+	
 	public DTO_ItemManifiesto(String descripcion, int idProducto, int cantidad){
 		this.descripcion = descripcion;
 		this.Producto = new DTO_Producto();

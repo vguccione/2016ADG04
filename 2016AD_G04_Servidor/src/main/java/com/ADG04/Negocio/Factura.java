@@ -153,20 +153,26 @@ public class Factura{
 	}
 
 	public Factura fromEntity(FacturaE fe) {
-		Factura f = new Factura();
-		f.setCuentaCorriente(new CuentaCorriente().fromEntity(fe.getCuentaCorriente()));
-		f.setFecha(fe.getFecha());
-		f.setFechaVencimiento(fe.getFechaVencimiento());
-		//f.setIdFactura(fe.getIdFactura());
-		f.setPagada(fe.isPagada());
-		f.setTipoFactura(fe.getTipoFactura());
-		f.setVencimiento(f.getVencimiento());
-		List<ItemFactura> lista  = new ArrayList<ItemFactura>();
-		for(ItemFacturaE item : fe.getItemsFactura()){
-			ItemFactura i = new ItemFactura().fromEntity(item);
-			lista.add(i);
-		}
-		return f;
+		if(fe!=null){
+			Factura f = new Factura();
+			if(fe.getCuentaCorriente()!=null)
+				f.setCuentaCorriente(new CuentaCorriente().fromEntity(fe.getCuentaCorriente()));
+			f.setFecha(fe.getFecha());
+			f.setFechaVencimiento(fe.getFechaVencimiento());
+			//f.setIdFactura(fe.getIdFactura());
+			f.setPagada(fe.isPagada());
+			f.setTipoFactura(fe.getTipoFactura());
+			f.setVencimiento(f.getVencimiento());
+			List<ItemFactura> lista  = new ArrayList<ItemFactura>();
+			for(ItemFacturaE item : fe.getItemsFactura()){
+				ItemFactura i = new ItemFactura().fromEntity(item);
+				lista.add(i);
+			}
+			return f;
+			
+		}else
+			return null;
+		
 	}
 
 }

@@ -28,6 +28,7 @@ import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
+import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
@@ -877,6 +878,10 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	}
 	public DTO_MapaDeRuta getMapaDeRuta(Integer id) throws RemoteException{
 		return this.businessService.getMapaDeRuta(id);
+	}
+
+	public DTO_Manifiesto getManifiesto(Integer id) throws RemoteException{
+		return this.businessService.getManifiesto(id);
 	}
 
 }

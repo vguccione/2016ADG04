@@ -51,6 +51,7 @@ import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.FacturaDao;
+import com.ADG04.Servidor.dao.ManifiestoDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
@@ -112,6 +113,7 @@ import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
+import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 import com.ADG04.bean.Encomienda.DTO_Remito;
@@ -1652,6 +1654,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException, BusinessException {
 		MapaDeRuta mr = new MapaDeRuta().fromDTO(mapa);
 		mr.modificar();
+	}
+
+
+	@Override
+	public DTO_Manifiesto getManifiesto(Integer id) throws RemoteException {
+		return new Manifiesto().fromEntity(ManifiestoDao.getInstancia().getById(id)).toDTO();
 	}
 
 

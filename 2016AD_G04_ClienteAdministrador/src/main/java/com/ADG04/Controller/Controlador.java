@@ -31,6 +31,7 @@ import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
+import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
@@ -1549,6 +1550,17 @@ public class Controlador {
 				}
 				
 			}
+
+	public DTO_Manifiesto getManifiesto(Integer id) {
+		try{
+			return bd.getManifiesto(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar Manifiesto");
+		}
+		return null;
+	}
 		
 	
 }

@@ -47,7 +47,7 @@ import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 
 
-public abstract class Encomienda{
+public  class Encomienda{
 
 	protected int idEncomienda;
 	protected Direccion direccionDestino;
@@ -947,6 +947,45 @@ public void facturar() throws BusinessException {
 		
 		return vehiculosDisponibles;
 		
+	}
+
+
+
+	public Encomienda fromEntity(EncomiendaE e) {
+		Encomienda enc = new Encomienda();
+		enc.setAlto(e.getAlto());
+		enc.setAncho(e.getAncho());
+		enc.setApellidoReceptor(e.getApellidoReceptor());
+		enc.setApilable(e.getApilable());
+		enc.setCantApilable(e.getCantApilable());
+		enc.setCargaGranel(e.getCargaGranel());
+		enc.setCliente(new Cliente().fromEntity(e.getCliente()));
+		enc.setCondicionTransporte(e.getCondicionTransporte());
+		enc.setDireccionDestino(new Direccion().fromEntity(e.getDireccionDestino()));
+		enc.setDireccionOrigen(new Direccion().fromEntity(e.getDireccionOrigen()));
+		enc.setDniReceptor(e.getDniReceptor());
+		enc.setEstado(e.getEstado());
+		enc.setFactura(new Factura().fromEntity(e.getFactura()));
+		enc.setFechaCreacion(e.getFechaCreacion());
+		enc.setFechaEstimadaEntrega(e.getFechaEstimadaEntrega());
+		enc.setFragilidad(e.getFragilidad());
+		enc.setIdEncomienda(e.getIdEncomienda());
+		enc.setIndicacionesManipulacion(e.getIndicacionesManipulacion());
+		enc.setInternacional(e.isInternacional());
+		enc.setLargo(e.getLargo());
+		enc.setNombreReceptor(e.getNombreReceptor());
+		enc.setPeso(e.getPeso());
+		enc.setRefrigerado(e.getRefrigerado());
+		enc.setServicioSeguridad(new ServicioSeguridad().fromEntity(e.getServicioSeguridad()));
+		enc.setSucursalActual(new Sucursal().fromEntity(e.getSucursalActual()));
+		enc.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
+		enc.setSucursalOrigen(new Sucursal().fromEntity(e.getSucursalOrigen()));
+		enc.setTercerizado(e.isTercerizado());
+		enc.setTratamiento(e.getTratamiento());
+		enc.setUnidadGranel(e.getUnidadGranel());
+		enc.setVolumen(e.getVolumen());
+		enc.setVolumenGranel(e.getVolumenGranel());
+		return enc;
 	}
 	
 	

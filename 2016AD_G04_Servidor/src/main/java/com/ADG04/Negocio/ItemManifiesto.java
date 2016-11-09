@@ -1,5 +1,6 @@
 package com.ADG04.Negocio;
 
+import com.ADG04.Servidor.model.ItemManifiestoE;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 
 public class ItemManifiesto{
@@ -19,6 +20,18 @@ public class ItemManifiesto{
 		this.descripcion = descripcion;
 		this.cantidad = cantidad;
 		this.producto = producto;
+	}
+
+	
+
+	public int getIdItemManifiesto() {
+		return idItemManifiesto;
+	}
+
+
+
+	public void setIdItemManifiesto(int idItemManifiesto) {
+		this.idItemManifiesto = idItemManifiesto;
 	}
 
 
@@ -53,8 +66,20 @@ public class ItemManifiesto{
     	DTO_ItemManifiesto im = new DTO_ItemManifiesto();
     	im.setCantidad(this.cantidad);
     	im.setDescripcion(this.descripcion);
-    	//im.setIdManifiesto(this.getManifiesto().getIdManifiesto());
+    	im.setProducto(this.getProducto().toDTO());
+    	im.setIdManifiesto(this.idItemManifiesto);
     	return im;
     }
+
+
+
+	public ItemManifiesto fromEntity(ItemManifiestoE itemE) {
+		ItemManifiesto item = new ItemManifiesto();
+		item.setCantidad(itemE.getCantidad());
+		item.setDescripcion(itemE.getDescripcion());
+		item.setProducto(new Producto().fromEntity(itemE.getProducto()));
+		item.setIdItemManifiesto(itemE.getIdItemManifiesto());
+		return item;
+	}
 
 }

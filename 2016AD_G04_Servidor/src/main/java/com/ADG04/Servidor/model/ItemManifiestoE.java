@@ -61,6 +61,17 @@ public class ItemManifiestoE implements java.io.Serializable {
 	}
 
 
+	
+	public int getIdItemManifiesto() {
+		return idItemManifiesto;
+	}
+
+
+	public void setIdItemManifiesto(int idItemManifiesto) {
+		this.idItemManifiesto = idItemManifiesto;
+	}
+
+
 	public void setManifiesto(ManifiestoE manifiesto) {
 		this.manifiesto = manifiesto;
 	}

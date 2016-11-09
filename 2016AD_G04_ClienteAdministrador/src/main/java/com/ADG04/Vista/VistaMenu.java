@@ -25,6 +25,7 @@ import com.ADG04.Vista.Clientes.BajaCliente;
 import com.ADG04.Vista.Clientes.BajaProductoCliente;
 import com.ADG04.Vista.Clientes.BusquedaCliente;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
+import com.ADG04.Vista.Listados.BusquedaManifiesto;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
 import com.ADG04.Vista.Listados.ListadoCarriers;
 import com.ADG04.Vista.Listados.ListadoCliente;
@@ -1024,9 +1025,9 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem25.setText("Manifiestos");
 							JMenuItem25.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoManifiestos inst = new ListadoManifiestos();
+									BusquedaManifiesto inst = new BusquedaManifiesto();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
 						}

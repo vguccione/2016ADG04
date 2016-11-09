@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.ADG04.Negocio.Encomienda;
+import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 
@@ -56,6 +58,7 @@ public class ManifiestoE implements java.io.Serializable {
 		this.fecha = fecha;
 	}
 
+	
 
 	public int getIdManifiesto() {
 		return idManifiesto;

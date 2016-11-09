@@ -528,7 +528,6 @@ public class EncomiendaE implements java.io.Serializable {
 	}
 
 
-
 	
 	
 }

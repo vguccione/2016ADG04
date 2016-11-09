@@ -22,6 +22,7 @@ import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionVehiculo;
 import com.ADG04.Negocio.ItemManifiesto;
 import com.ADG04.Negocio.Manifiesto;
+import com.ADG04.Negocio.MapaDeRuta;
 import com.ADG04.Negocio.Pais;
 import com.ADG04.Negocio.PlanMantenimiento;
 import com.ADG04.Negocio.Producto;
@@ -111,6 +112,7 @@ import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
+import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
@@ -1622,6 +1624,28 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public void bajaTareaMantenimiento(Integer id) throws RemoteException {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public void altaMapaDeRuta(DTO_MapaDeRuta mapa) throws RemoteException,
+			BusinessException {
+		MapaDeRuta mr = new MapaDeRuta().fromDTO(mapa);
+		mr.guardar();
+	}
+
+
+	@Override
+	public DTO_MapaDeRuta getMapaDeRuta(Integer id) throws RemoteException {
+		return new MapaDeRuta().fromEntity(MapaDeRutaDao.getInstancia().getById(id)).toDTO();
+	}
+
+
+	@Override
+	public void modificarMapaDeRuta(DTO_MapaDeRuta mapa)
+			throws RemoteException, BusinessException {
+		MapaDeRuta mr = new MapaDeRuta().fromDTO(mapa);
+		mr.modificar();
 	}
 
 

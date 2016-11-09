@@ -9,11 +9,13 @@ import java.util.Collection;
 import javax.swing.*;
 
 import com.ADG04.Controller.Controlador;
+import com.ADG04.Vista.Administrativos.AltaMapaDeRuta;
 import com.ADG04.Vista.Administrativos.AltaSucursal;
 import com.ADG04.Vista.Administrativos.AltaUsuario;
 import com.ADG04.Vista.Administrativos.BajaMapaDeRuta;
 import com.ADG04.Vista.Administrativos.BajaSucursal;
 import com.ADG04.Vista.Administrativos.BajaUsuario;
+import com.ADG04.Vista.Administrativos.BusquedaMapaDeRuta;
 import com.ADG04.Vista.Administrativos.BusquedaScursal;
 import com.ADG04.Vista.Administrativos.CambiarContrasena;
 import com.ADG04.Vista.Clientes.AltaClienteEmpresa;
@@ -609,9 +611,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemAltaDestino.setBounds(0, -63, 110, 21);
 								JMenuItemAltaDestino.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaAltaMapaDeRuta inst = new VistaAltaMapaDeRuta(null);
+										AltaMapaDeRuta inst = new AltaMapaDeRuta(null);
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
 									}
 								});
 							}
@@ -622,9 +624,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemModificarDestino.setBounds(0, -42, 110, 21);
 								JMenuItemModificarDestino.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaModificarMapaDeRuta inst = new VistaModificarMapaDeRuta(null);
+										BusquedaMapaDeRuta inst = new BusquedaMapaDeRuta();
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
 									}
 								});
 							}

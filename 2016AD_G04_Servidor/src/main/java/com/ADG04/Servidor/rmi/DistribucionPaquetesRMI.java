@@ -490,6 +490,9 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		nuevaEncomienda.facturar();
 		
+		//Intento asignar la encomienda a un envío.
+		nuevaEncomienda.asignarEnvio(null);
+		
 		return idEncomienda;
 	}
 	
@@ -562,6 +565,9 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		Integer idEncomienda = nuevaEncomienda.saveOrUpdate();
 		
 		nuevaEncomienda.facturar();
+		
+		//Intento asignar la encomienda a un envío.
+		nuevaEncomienda.asignarEnvio(null);
 		
 		return idEncomienda;
 	}

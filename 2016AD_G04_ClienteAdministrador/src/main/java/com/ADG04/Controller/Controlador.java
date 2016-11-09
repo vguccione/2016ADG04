@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
@@ -1371,8 +1372,14 @@ public class Controlador {
 		return false;
 	}
 
-	public DTO_MapaDeRuta getMapaDeRuta(Integer value) {
-		// TODO Auto-generated method stub
+	public DTO_MapaDeRuta getMapaDeRuta(Integer id) {
+		try{
+			return bd.getMapaDeRuta(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar Mapa de Ruta");
+		}
 		return null;
 	}
 
@@ -1477,5 +1484,66 @@ public class Controlador {
 			System.out.println("Error al modificar Proveedor");
 		}
 	}
+
+
+	public void altaMapaDeRuta(DTO_Sucursal sucursalOrigen,
+			DTO_Sucursal sucursalDestino, Float cantKm, Float costo,
+			Float duracion, Map<String, String> mapLatLong) {
+		
+		try{
+			DTO_MapaDeRuta mapa = new DTO_MapaDeRuta();
+			mapa.setCantKm(cantKm);
+			mapa.setCosto(costo);
+			mapa.setDuracion(duracion);
+			mapa.setIdSucursalDestino(sucursalDestino.getId());
+			mapa.setIdSucursalOrigen(sucursalOrigen.getId());
+			
+			List<DTO_Coordenada> coordenadas = new ArrayList<DTO_Coordenada>();
+			for (Map.Entry<String, String> item : mapLatLong.entrySet()) {
+				DTO_Coordenada coord = new DTO_Coordenada();
+				coord.setLatitud(item.getKey());
+				coord.setLongitud(item.getValue());
+				coordenadas.add(coord);
+			}
+			mapa.setCoordenadas(coordenadas);
+			bd.altaMapaDeRuta(mapa);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al guardar mapa de ruta");
+		}
+		
+	}
+
+	public void modificarMapaDeRuta(int id, DTO_Sucursal sucursalOrigen,
+					DTO_Sucursal sucursalDestino, Float cantKm, Float costo,
+					Float duracion, Map<String, String> mapLatLong) {
+				
+				try{
+					DTO_MapaDeRuta mapa = new DTO_MapaDeRuta();
+					mapa.setId(id);
+					mapa.setCantKm(cantKm);
+					mapa.setCosto(costo);
+					mapa.setDuracion(duracion);
+					mapa.setIdSucursalDestino(sucursalDestino.getId());
+					mapa.setIdSucursalOrigen(sucursalOrigen.getId());
+					
+					List<DTO_Coordenada> coordenadas = new ArrayList<DTO_Coordenada>();
+					for (Map.Entry<String, String> item : mapLatLong.entrySet()) {
+						DTO_Coordenada coord = new DTO_Coordenada();
+						coord.setLatitud(item.getKey());
+						coord.setLongitud(item.getValue());
+						coordenadas.add(coord);
+					}
+					mapa.setCoordenadas(coordenadas);
+					bd.modificarMapaDeRuta(mapa);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					System.out.println("Error al guardar mapa de ruta");
+				}
+				
+			}
+		
 	
 }

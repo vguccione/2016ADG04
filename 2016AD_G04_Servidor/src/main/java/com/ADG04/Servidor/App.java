@@ -56,6 +56,8 @@ public class App
     public static void main( String[] args ) throws IOException, NotBoundException
     {
         
+    	DTO_MapaDeRuta mr = new MapaDeRuta().fromEntity(MapaDeRutaDao.getInstancia().getById(2)).toDTO();
+    	System.out.println(mr.getCantKm());
     	/*
     	   	
     	BusinessDelegate bd = new BusinessDelegate();

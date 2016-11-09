@@ -2,12 +2,20 @@ package com.ADG04.Negocio;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.ClienteEmpresaDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
+import com.ADG04.Servidor.dao.SucursalDao;
+import com.ADG04.Servidor.model.CoordenadaE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.bean.Encomienda.DTO_Coordenada;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 
 public class MapaDeRuta{
@@ -102,6 +110,16 @@ public class MapaDeRuta{
 		dto.setId(this.getIdMapaDeRuta());
 		dto.setIdSucursalDestino(this.getSucursalDestino().getIdSucursal());
 		dto.setIdSucursalOrigen(this.getSucursalOrigen().getIdSucursal());
+		
+		List<DTO_Coordenada> listaCoordenadas = new ArrayList<DTO_Coordenada>();
+		for(Coordenada coord : this.getCoordenadas()){
+			DTO_Coordenada c = new DTO_Coordenada();
+			c.setLatitud(coord.getLatitud());
+			c.setLongitud(coord.getLongitud());
+			listaCoordenadas.add(c);
+		}
+		dto.setCoordenadas(listaCoordenadas);
+		
 		return dto;
 	}
 	
@@ -120,5 +138,89 @@ public class MapaDeRuta{
 		else
 			return null;
 	}
+
+	public MapaDeRuta fromDTO(DTO_MapaDeRuta mapa) {
+		MapaDeRuta mr = new MapaDeRuta();
+		mr.setCantKm(mapa.getCantKm());
+		
+		List<Coordenada> listaCoordenadas = new ArrayList<Coordenada>();
+		for(DTO_Coordenada coord : mapa.getCoordenadas()){
+			Coordenada c = new Coordenada();
+			c.setLatitud(coord.getLatitud());
+			c.setLongitud(coord.getLongitud());
+			listaCoordenadas.add(c);
+		}
+		
+		mr.setCoordenadas(listaCoordenadas);
+		mr.setCosto(mapa.getCosto());
+		mr.setDuracion(mapa.getDuracion());
+		mr.setSucursalDestino(new Sucursal().fromEntity(SucursalDao.getInstancia().getById(mapa.getIdSucursalDestino())));
+		mr.setSucursalOrigen(new Sucursal().fromEntity(SucursalDao.getInstancia().getById(mapa.getIdSucursalOrigen())));
+		if(mapa.getId()!=null)
+			mr.setIdMapaDeRuta(mapa.getId());
+		return mr;
+	}
+
+	public MapaDeRutaE toEntity(){
+		MapaDeRutaE me = new MapaDeRutaE();
+		me.setCantKm(this.cantKm);
+		me.setCosto(this.costo);
+		me.setDuracion(this.duracion);
+		me.setIdMapaDeRuta(this.idMapaDeRuta);
+		me.setSucursalDestino(SucursalDao.getInstancia().getById(this.sucursalDestino.getIdSucursal()));
+		me.setSucursalOrigen(SucursalDao.getInstancia().getById(this.sucursalOrigen.getIdSucursal()));
+		
+		List<CoordenadaE> listaCoord = new ArrayList<CoordenadaE>();
+		for(Coordenada c : this.getCoordenadas()){
+			CoordenadaE cord = new CoordenadaE();
+			cord.setLatitud(c.getLatitud());
+			cord.setLongitud(c.getLongitud());
+			cord.setIdCoordenada(c.getIdCoordenada());
+			listaCoord.add(cord);
+		}
+		me.setCoordenadas(listaCoord);
+		return me;
+	}
+	
+	public void guardar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		MapaDeRutaDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();
+	}
+
+
+
+	public void modificar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		MapaDeRutaDao.getInstancia().saveOrUpdate(this.toEntity());
+		em.getTransaction().commit();
+		em.close();
+	}
+
+	public MapaDeRuta fromEntity(MapaDeRutaE mapa) {
+		MapaDeRuta mr = new MapaDeRuta();
+		mr.setCantKm(mapa.getCantKm());
+		mr.setCosto(mapa.getCosto());
+		mr.setDuracion(mapa.getDuracion());
+		mr.setIdMapaDeRuta(mapa.getIdMapaDeRuta());
+		mr.setSucursalDestino(new Sucursal().fromEntity(mapa.getSucursalDestino()));
+		mr.setSucursalOrigen(new Sucursal().fromEntity(mapa.getSucursalOrigen()));
+		mr.setIdMapaDeRuta(mapa.getIdMapaDeRuta());
+		
+		List<Coordenada> listaCoordenadas = new ArrayList<Coordenada>();
+		for(CoordenadaE coord : mapa.getCoordenadas()){
+			Coordenada c = new Coordenada();
+			c.setLatitud(coord.getLatitud());
+			c.setLongitud(coord.getLongitud());
+			c.setIdCoordenada(coord.getIdCoordenada());
+			listaCoordenadas.add(c);
+		}
+		mr.setCoordenadas(listaCoordenadas);
+		
+		return mr;
+	}
+
 
 }

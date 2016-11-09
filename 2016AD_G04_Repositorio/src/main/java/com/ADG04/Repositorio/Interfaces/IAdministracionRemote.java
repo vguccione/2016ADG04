@@ -3,6 +3,7 @@ package com.ADG04.Repositorio.Interfaces;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
@@ -11,6 +12,7 @@ import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_Factura;
+import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
@@ -88,5 +90,7 @@ public interface IAdministracionRemote {
 	public DTO_Pais getPaisByNombre(String pais) throws RemoteException;
 	public DTO_Provincia getProvByNombre(String prov) throws RemoteException;
 	public boolean cambiarPassword(String usuario, String oldPassword,String newPassword) throws RemoteException;
-
+	public void altaMapaDeRuta(DTO_MapaDeRuta mapa) throws RemoteException, BusinessException;
+	public DTO_MapaDeRuta getMapaDeRuta(Integer id) throws RemoteException;
+	public void modificarMapaDeRuta(DTO_MapaDeRuta mapa) throws RemoteException, BusinessException;
 }

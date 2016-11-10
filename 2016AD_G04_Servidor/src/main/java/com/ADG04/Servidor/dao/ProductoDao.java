@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import com.ADG04.Negocio.ItemManifiesto;
 import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.FacturaE;
 import com.ADG04.Servidor.model.ItemManifiestoE;
 import com.ADG04.Servidor.model.ItemRemitoE;
 import com.ADG04.Servidor.model.ProductoE;
@@ -60,6 +61,21 @@ public class ProductoDao extends GenericDao<ProductoE, Integer> {
                 System.out.println("ErrorDAO: buscar si esta asociado el producto");
         }
 		return false;
+	}
+
+	public List<ProductoE>  getByRazonSocialCliente(String razonSocial) {
+		try {
+			  String f = razonSocial+"%";
+			  Query query = entityManager.createQuery("from ProductoE where cliente.razonSocial like :razonSocial");
+			  query.setParameter("razonSocial", f);
+			  List<ProductoE> productos = (List<ProductoE>) query.getResultList();
+			  return productos;
+			       
+	        } catch (Exception e){
+	            System.out.println(e);
+	            System.out.println("Error en listar productos por cliente");
+	            return null;
+	        }
 	}
 
 }

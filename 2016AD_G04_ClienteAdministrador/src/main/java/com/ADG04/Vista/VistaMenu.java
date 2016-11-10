@@ -26,6 +26,7 @@ import com.ADG04.Vista.Clientes.BajaProductoCliente;
 import com.ADG04.Vista.Clientes.BusquedaCliente;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
 import com.ADG04.Vista.Listados.BusquedaManifiesto;
+import com.ADG04.Vista.Listados.BusquedaRemito;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
 import com.ADG04.Vista.Listados.ListadoCarriers;
 import com.ADG04.Vista.Listados.ListadoCliente;
@@ -37,8 +38,11 @@ import com.ADG04.Vista.Listados.ListadoEnviosPropios;
 import com.ADG04.Vista.Listados.ListadoEnviosTercerizados;
 import com.ADG04.Vista.Listados.ListadoFacturasClientes;
 import com.ADG04.Vista.Listados.ListadoFacturasClientesPendientes;
+import com.ADG04.Vista.Listados.ListadoManifiestos;
 import com.ADG04.Vista.Listados.ListadoPlanMantenimiento;
+import com.ADG04.Vista.Listados.ListadoProducto;
 import com.ADG04.Vista.Listados.ListadoProveedores;
+import com.ADG04.Vista.Listados.ListadoRemitos;
 import com.ADG04.Vista.Listados.ListadoSeguros;
 import com.ADG04.Vista.Listados.ListadoServicioSeguridad;
 import com.ADG04.Vista.Listados.ListadoSucursales;
@@ -1004,16 +1008,71 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuConsultasClientes.add(jSeparator6);
 						}
 						{
+							
+							JMenu1 = new JMenu();
+							JMenuConsultasClientes.add(JMenu1);
+							JMenu1.setText("Remitos");								
+							{
+								JMenuItem25 = new JMenuItem();
+								JMenu1.add(JMenuItem25);
+								JMenuItem25.setText("Bisqueda Remitos");
+								JMenuItem25.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										BusquedaRemito inst = new BusquedaRemito();
+										inst.setLocationRelativeTo(null);
+										inst.setVisible(true);
+									}
+								});
+							}
+							{ 
+								JMenuItem25 = new JMenuItem();
+								JMenu1.add(JMenuItem25);
+								JMenuItem25.setText("Listado Remitos");
+								JMenuItem25.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										ListadoRemitos inst = new ListadoRemitos();
+										inst.setLocationRelativeTo(null);
+										inst.setVisible(true);
+									}
+								});
+							}
+							
+						}
+						
+						{
+							jSeparator6 = new JSeparator();
+							JMenuConsultasClientes.add(jSeparator6);
+						}
+						{
+						
+							JMenu1 = new JMenu();
+							JMenuConsultasClientes.add(JMenu1);
+							JMenu1.setText("Manifiestos");								
+							{ 
 							JMenuItem25 = new JMenuItem();
-							JMenuConsultasClientes.add(JMenuItem25);
-							JMenuItem25.setText("Remitos");
+							JMenu1.add(JMenuItem25);
+							JMenuItem25.setText("Busqueda Manifiestos");
 							JMenuItem25.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									/*ListadoRemitos inst = new ListadoRemitos();
+									BusquedaManifiesto inst = new BusquedaManifiesto();
 									inst.setLocationRelativeTo(null);
-									inst.setVisible(true);*/
+									inst.setVisible(true);
 								}
 							});
+							}
+							{ 
+								JMenuItem25 = new JMenuItem();
+								JMenu1.add(JMenuItem25);
+								JMenuItem25.setText("Listado Manifiestos");
+								JMenuItem25.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										ListadoManifiestos inst = new ListadoManifiestos();
+										inst.setLocationRelativeTo(null);
+										inst.setVisible(true);
+									}
+								});
+								}
+							
 						}
 						{
 							jSeparator6 = new JSeparator();
@@ -1022,10 +1081,10 @@ public class VistaMenu extends javax.swing.JFrame {
 						{
 							JMenuItem25 = new JMenuItem();
 							JMenuConsultasClientes.add(JMenuItem25);
-							JMenuItem25.setText("Manifiestos");
+							JMenuItem25.setText("Productos");
 							JMenuItem25.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									BusquedaManifiesto inst = new BusquedaManifiesto();
+									ListadoProducto inst = new ListadoProducto();
 									inst.setLocationRelativeTo(null);
 									inst.setVisible(true);
 								}

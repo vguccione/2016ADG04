@@ -121,6 +121,7 @@ public class Producto{
 		prod.setCodigo(this.codigoProducto);
 		prod.setDescripcion(this.descripcion);
 		prod.setId(this.idProducto);
+		prod.setIdCliente(this.getCliente().getIdCliente());
 		
 		return prod;
 	}
@@ -174,7 +175,7 @@ public class Producto{
 			prod.setCodigoProducto(producto.getCodigoProducto());
 			prod.setDescripcion(producto.getDescripcion());
 			prod.setIdProducto(producto.getIdProducto());
-			producto.setUnidad(producto.getUnidad());
+			prod.setUnidad(producto.getUnidad());
 			return prod;
 		}
 		else

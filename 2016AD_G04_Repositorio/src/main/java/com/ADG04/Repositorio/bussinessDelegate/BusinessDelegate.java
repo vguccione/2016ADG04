@@ -884,4 +884,24 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.getManifiesto(id);
 	}
 
+	public DTO_Remito getRemito(Integer id)  throws RemoteException{
+		return this.businessService.getRemito(id);
+	}
+
+	public List<DTO_Producto> buscarProductosByRazonSocialCliente(String razonSocial) throws RemoteException{
+		return this.businessService.buscarProductosByRazonSocialCliente(razonSocial);
+	}
+
+	public List<DTO_Producto> listarProductos() throws RemoteException{
+		return this.businessService.listarProductos();
+	}
+
+	public List<DTO_Manifiesto> listarManifiestos() throws RemoteException{
+		return this.businessService.listarManifiestos();
+	}
+
+	public List<DTO_Remito> listarRemitos() throws RemoteException {
+		return this.businessService.listarRemitos();
+	}
+
 }

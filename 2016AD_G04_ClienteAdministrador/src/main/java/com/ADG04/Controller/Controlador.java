@@ -33,6 +33,7 @@ import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
+import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
 import com.ADG04.bean.Proveedor.DTO_Seguro;
@@ -1558,6 +1559,57 @@ public class Controlador {
 		catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Error al buscar Manifiesto");
+		}
+		return null;
+	}
+
+	public DTO_Remito getRemito(Integer id) {
+		try{
+			return bd.getRemito(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar Remito");
+		}
+		return null;
+	}
+
+	public List<DTO_Producto> buscarProductosByRazonSocialCliente(String razonSocial) {
+		try{
+			return  bd.buscarProductosByRazonSocialCliente(razonSocial);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar Producto");
+		}
+		return null;
+	}
+
+	public List<DTO_Producto> listarProductos() {
+		try{
+			return  bd.listarProductos();
+		}
+		catch(Exception e){
+			System.out.println("Error al listar Productos");
+		}
+		return null;
+	}
+
+	public List<DTO_Manifiesto> listarManifiestos() {
+		try{
+			return  bd.listarManifiestos();
+		}
+		catch(Exception e){
+			System.out.println("Error al listar Manifiestos");
+		}
+		return null;
+	}
+
+	public List<DTO_Remito> listarRemitos() {
+		try{
+			return  bd.listarRemitos();
+		}
+		catch(Exception e){
+			System.out.println("Error al listar Remitos");
 		}
 		return null;
 	}

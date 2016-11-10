@@ -55,9 +55,12 @@ public class App
 	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-        
-    	DTO_MapaDeRuta mr = new MapaDeRuta().fromEntity(MapaDeRutaDao.getInstancia().getById(2)).toDTO();
-    	System.out.println(mr.getCantKm());
+    	List<DTO_Producto> listado = new ArrayList<DTO_Producto>();
+		for(ProductoE prod : ProductoDao.getInstancia().getAll()){
+			Producto p = new Producto().fromEntity(prod);
+			listado.add(p.toDTO());
+		}
+		
     	/*
     	   	
     	BusinessDelegate bd = new BusinessDelegate();

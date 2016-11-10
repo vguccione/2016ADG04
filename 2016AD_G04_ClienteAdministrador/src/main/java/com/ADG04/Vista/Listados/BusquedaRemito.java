@@ -17,18 +17,19 @@ import javax.swing.JFormattedTextField;
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
+import com.ADG04.bean.Encomienda.DTO_Remito;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
 
-public class BusquedaManifiesto extends javax.swing.JFrame{
+public class BusquedaRemito extends javax.swing.JFrame{
 
 	private JFrame frame;
 	private JFormattedTextField id;
 	
-	private DTO_Manifiesto DTO;
+	private DTO_Remito DTO;
 	private JLabel cliente;
 	private JButton btnBuscar;
 	private JButton button;
@@ -46,7 +47,7 @@ public class BusquedaManifiesto extends javax.swing.JFrame{
 	/**
 	 * Create the application.
 	 */
-	public BusquedaManifiesto() {
+	public BusquedaRemito() {
 		super();
 		initialize();
 	}
@@ -62,14 +63,14 @@ public class BusquedaManifiesto extends javax.swing.JFrame{
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
 		
-		JLabel titulo = new JLabel("Busqueda Manifiesto");
+		JLabel titulo = new JLabel("Busqueda Remito");
 		titulo.setBounds(10, 11, 300, 26);
 		titulo.setFont(new Font("Verdana", Font.BOLD, 20));
 		frame.getContentPane().add(titulo);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Seleccione el id de Manifiesto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Seleccione el id de Remito", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 48, 464, 63);
 		frame.getContentPane().add(panel);
 		
@@ -81,16 +82,16 @@ public class BusquedaManifiesto extends javax.swing.JFrame{
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				DTO = Controlador.getInstancia().getManifiesto((Integer) id.getValue());
+				DTO = Controlador.getInstancia().getRemito((Integer) id.getValue());
 				if (DTO != null){
-					cliente.setText(String.valueOf(DTO.getIdManifiesto()));
+					cliente.setText(String.valueOf(DTO.getId()));
 					btnBuscar.setEnabled(false);
 					id.setEnabled(false);
 					button_1.setVisible(true);
 					button.setVisible(true);
 				} else {
 					//No encontro el proveedor entonces notifico que no lo encontro
-					JOptionPane.showMessageDialog(null,"No se ha encontrado el Manifiesto", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,"No se ha encontrado el Remito", "Error", JOptionPane.ERROR_MESSAGE);
 					id.setText("");
 				}
 				
@@ -127,7 +128,7 @@ public class BusquedaManifiesto extends javax.swing.JFrame{
 		button_1.setVisible(false);
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DetalleManifiesto inst2=new DetalleManifiesto(DTO);
+				DetalleRemito inst2=new DetalleRemito(DTO);
 				inst2.setLocationRelativeTo(null);
 				inst2.setVisible(true);
 				setVisible(false);

@@ -18,6 +18,7 @@ public class DTO_Remito implements Serializable{
 	private Date fechaEstimadaEntrega;
 	private String condicionTransporte;
 	private String indicacionesManipulacion;
+	private int idEncomienda;
 	
 	public DTO_Remito(){
 	
@@ -29,6 +30,16 @@ public class DTO_Remito implements Serializable{
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	
+	
+	public int getIdEncomienda() {
+		return idEncomienda;
+	}
+
+	public void setIdEncomienda(int idEncomienda) {
+		this.idEncomienda = idEncomienda;
 	}
 
 	public Date getFecha() {

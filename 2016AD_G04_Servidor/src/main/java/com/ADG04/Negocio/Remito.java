@@ -14,11 +14,17 @@ import java.util.List;
 
 
 
+
+
 import javax.persistence.MapsId;
 
 
 
 
+
+
+import com.ADG04.Servidor.model.ItemRemitoE;
+import com.ADG04.Servidor.model.RemitoE;
 import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 
@@ -156,6 +162,10 @@ public class Remito{
 		r.setApellidoReceptor(apellidoReceptor);
 		r.setDniReceptor(dniReceptor);
 		r.setNombreReceptor(nombreReceptor);
+		r.setCondicionTransporte(condicionTransporte);
+		r.setFechaEstimadaEntrega(fechaEstimadaEntrega);
+		r.setIndicacionesManipulacion(indicacionesManipulacion);
+		r.setIdEncomienda(this.getEncomienda().getIdEncomienda());
     	
     	List<DTO_ItemRemito> list = new ArrayList<DTO_ItemRemito>();
     	for(ItemRemito item : this.itemsRemito){
@@ -165,5 +175,30 @@ public class Remito{
     	
     	return r;
     }
+
+	public Remito fromEntity(RemitoE r) {
+		if(r!=null){
+			Remito remito = new Remito();
+			remito.setApellidoReceptor(r.getApellidoReceptor());
+			remito.setCondicionTransporte(r.getCondicionTransporte());
+			remito.setDniReceptor(r.getDniReceptor());
+			remito.setFechaConformado(r.getFechaConformado());
+			remito.setFechaEstimadaEntrega(r.getFechaEstimadaEntrega());
+			remito.setIdRemito(r.getIdRemito());
+			remito.setIndicacionesManipulacion(r.getIndicacionesManipulacion());
+			remito.setNombreReceptor(r.getNombreReceptor());
+			remito.setEncomienda(new Encomienda().fromEntity(r.getEncomienda()));
+			
+			List<ItemRemito> list = new ArrayList<ItemRemito>();
+	    	for(ItemRemitoE item : r.getItemsRemito()){
+	    		ItemRemito itm = new ItemRemito().fromEntity(item);
+	    		list.add(itm);
+	    	}    	
+	    	remito.setItemsRemito(list);
+	    	return remito;
+    	}
+		else
+			return null;
+	}
 
 }

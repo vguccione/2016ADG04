@@ -3,6 +3,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.ADG04.Servidor.model.ItemRemitoE;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
 import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 
@@ -80,6 +81,16 @@ public class ItemRemito{
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+
+	public ItemRemito fromEntity(ItemRemitoE item) {
+		ItemRemito ir = new ItemRemito();
+		ir.setCantidad(item.getCantidad());
+		ir.setDescripcion(item.getDescripcion());
+		ir.setIdItemRemito(item.getIdItemRemito());
+		ir.setProducto(new Producto().fromEntity(item.getProducto()));
+		return ir;
 	}
 	
 	

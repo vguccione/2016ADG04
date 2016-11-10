@@ -40,5 +40,8 @@ public interface IClienteRemote {
 	public DTO_Producto getProducto(Integer idProducto) throws RemoteException;
 	public DTO_Producto getProducto(Integer idCliente, String codigoProducto) throws RemoteException;
 	public boolean estaProductoAsociado(Integer id) throws RemoteException;
+	
+	public List<DTO_Producto> buscarProductosByRazonSocialCliente(String razonSocial) throws RemoteException;
+	public List<DTO_Producto> listarProductos() throws RemoteException;
 
 }

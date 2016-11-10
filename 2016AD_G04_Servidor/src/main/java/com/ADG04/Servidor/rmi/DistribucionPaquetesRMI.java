@@ -29,6 +29,7 @@ import com.ADG04.Negocio.Producto;
 import com.ADG04.Negocio.ProductoEncomienda;
 import com.ADG04.Negocio.Proveedor;
 import com.ADG04.Negocio.Provincia;
+import com.ADG04.Negocio.Remito;
 import com.ADG04.Negocio.Rol;
 import com.ADG04.Negocio.Seguro;
 import com.ADG04.Negocio.ServicioSeguridad;
@@ -57,6 +58,7 @@ import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
+import com.ADG04.Servidor.dao.RemitoDao;
 import com.ADG04.Servidor.dao.RolDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoDao;
 import com.ADG04.Servidor.dao.TareaMantenimientoRealizadaDao;
@@ -74,11 +76,13 @@ import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.model.ClienteParticularE;
 import com.ADG04.Servidor.model.CuentaCorrienteE;
 import com.ADG04.Servidor.model.FacturaE;
+import com.ADG04.Servidor.model.ManifiestoE;
 import com.ADG04.Servidor.model.PaisE;
 import com.ADG04.Servidor.model.PlanMantenimientoE;
 import com.ADG04.Servidor.model.ProductoE;
 import com.ADG04.Servidor.model.ProductoEncomiendaE;
 import com.ADG04.Servidor.model.ProvinciaE;
+import com.ADG04.Servidor.model.RemitoE;
 import com.ADG04.Servidor.model.RolE;
 import com.ADG04.Servidor.model.SucursalE;
 import com.ADG04.Servidor.model.TareaMantenimientoE;
@@ -1660,6 +1664,57 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_Manifiesto getManifiesto(Integer id) throws RemoteException {
 		return new Manifiesto().fromEntity(ManifiestoDao.getInstancia().getById(id)).toDTO();
+	}
+
+
+	@Override
+	public DTO_Remito getRemito(Integer id) throws RemoteException {
+		return new Remito().fromEntity(RemitoDao.getInstancia().getById(id)).toDTO();
+	}
+
+
+	@Override
+	public List<DTO_Producto> buscarProductosByRazonSocialCliente(
+			String razonSocial) throws RemoteException {
+		List<DTO_Producto> listado = new ArrayList<DTO_Producto>();
+		for(ProductoE prod : ProductoDao.getInstancia().getByRazonSocialCliente(razonSocial)){
+			Producto p = new Producto().fromEntity(prod);
+			listado.add(p.toDTO());
+		}
+		return listado;
+	}
+
+
+	@Override
+	public List<DTO_Producto> listarProductos() throws RemoteException {
+		List<DTO_Producto> listado = new ArrayList<DTO_Producto>();
+		for(ProductoE prod : ProductoDao.getInstancia().getAll()){
+			Producto p = new Producto().fromEntity(prod);
+			listado.add(p.toDTO());
+		}
+		return listado;
+	}
+
+
+	@Override
+	public List<DTO_Manifiesto> listarManifiestos() throws RemoteException {
+		List<DTO_Manifiesto> listado = new ArrayList<DTO_Manifiesto>();
+		for(ManifiestoE m : ManifiestoDao.getInstancia().getAll()){
+			Manifiesto p = new Manifiesto().fromEntity(m);
+			listado.add(p.toDTO());
+		}
+		return listado;
+	}
+
+
+	@Override
+	public List<DTO_Remito> listarRemitos() throws RemoteException {
+		List<DTO_Remito> listado = new ArrayList<DTO_Remito>();
+		for(RemitoE r : RemitoDao.getInstancia().getAll()){
+			Remito remito = new Remito().fromEntity(r);
+			listado.add(remito.toDTO());
+		}
+		return listado;
 	}
 
 

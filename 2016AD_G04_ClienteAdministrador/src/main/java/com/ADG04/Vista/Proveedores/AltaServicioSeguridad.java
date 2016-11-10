@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
+import com.ADG04.bean.Proveedor.DTO_ServicioSeguridad;
 /**
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
@@ -51,12 +52,14 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 	private JLabel jLabel2;
 	private JLabel jLabelAlumnos;
 	private JLabel jLabel1;
+	private DTO_ServicioSeguridad dto;
 
 	private DTO_Proveedor proveedor;
 
 	
-	public AltaServicioSeguridad() {
+	public AltaServicioSeguridad(DTO_ServicioSeguridad DTO) {
 		super();
+		dto = DTO;
 		initGUI();
 	}
 
@@ -78,7 +81,10 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 					jPanel.add(jLabelTitulo);
 					jPanel.add(getJPanel1());
 					jPanel.add(getJPanel2());
-					jLabelTitulo.setText("Alta Servicio Seguridad");
+					if(dto==null)
+						jLabelTitulo.setText("Alta Servicio Seguridad");
+					else
+						jLabelTitulo.setText("Modificar Servicio Seguridad");
 					jLabelTitulo.setFont(new java.awt.Font("Verdana",1,20));
 					jLabelTitulo.setBounds(10, 11, 372, 26);
 				}
@@ -91,6 +97,14 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 				.addComponent(jPanel, 0, 429, Short.MAX_VALUE));
 			pack();
 			this.setSize(445, 432);
+			if(dto!=null){
+				proveedor = Controlador.getInstancia().getProveedor(dto.getIdProveedor());
+				jLabelRazonSocial.setText(proveedor.getRazonSocial());
+				
+				jButtonAceptar.setVisible(true);
+				jButtonCancelar.setVisible(true);
+				jPanel2.setVisible(true);
+			}
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -158,6 +172,11 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 		if(jTextFieldCuit == null) {
 			jTextFieldCuit = new JTextField();
 			jTextFieldCuit.setBounds(92, 27, 80, 20);
+			if(dto!=null){
+				DTO_Proveedor prov = Controlador.getInstancia().getProveedor(dto.getIdProveedor());
+				jTextFieldCuit.setText(prov.getCuit());
+			//	jLabelRazonSocial.setText(prov.getRazonSocial());
+			}
 		}
 		return jTextFieldCuit;
 	}
@@ -187,12 +206,23 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAceptarActionPerformed(evt);
 					if(validacion()){
-						boolean flag = Controlador.getInstancia().altaServicioSeguridad(proveedor.getId(),jTextFieldDescripcion.getText(), (Float)jFormattedTextFieldMonto.getValue());
-						if(flag){
-							JOptionPane.showMessageDialog(null,"Se ha dado de alta el servicio de seguridad", "Alta servicio seguridad realizada", JOptionPane.INFORMATION_MESSAGE);
-							setVisible(false);
-						} else {
-							JOptionPane.showMessageDialog(null,"No se ha podido dar de alta el servicio de seguridad.", "Error", JOptionPane.ERROR_MESSAGE);	
+						if(dto==null){
+							boolean flag = Controlador.getInstancia().altaServicioSeguridad(proveedor.getId(),jTextFieldDescripcion.getText(), (Float)jFormattedTextFieldMonto.getValue());
+							if(flag){
+								JOptionPane.showMessageDialog(null,"Se ha dado de alta el servicio de seguridad", "Alta servicio seguridad realizada", JOptionPane.INFORMATION_MESSAGE);
+								setVisible(false);
+							} else {
+								JOptionPane.showMessageDialog(null,"No se ha podido dar de alta el servicio de seguridad.", "Error", JOptionPane.ERROR_MESSAGE);	
+							}
+						}
+						else{
+							boolean flag = Controlador.getInstancia().modificarServicioSeguridad(dto.getId(),proveedor.getId(),jTextFieldDescripcion.getText(), (Float)jFormattedTextFieldMonto.getValue());
+							if(flag){
+								JOptionPane.showMessageDialog(null,"Se ha modificado el servicio de seguridad", "Alta servicio seguridad realizada", JOptionPane.INFORMATION_MESSAGE);
+								setVisible(false);
+							} else {
+								JOptionPane.showMessageDialog(null,"No se ha podido modificar el servicio de seguridad.", "Error", JOptionPane.ERROR_MESSAGE);	
+							}
 						}
 					}
 				}
@@ -244,7 +274,7 @@ public class AltaServicioSeguridad extends javax.swing.JFrame {
 			Buscar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAceptarActionPerformed(evt);
-
+					
 					proveedor = Controlador.getInstancia().buscarProveedorByCuit(jTextFieldCuit.getText());
 					
 					if(proveedor == null){
@@ -286,6 +316,8 @@ public boolean validacion(){
 		if(jFormattedTextFieldMonto == null) {
 			jFormattedTextFieldMonto = new JFormattedTextField(new Float(0));
 			jFormattedTextFieldMonto.setBounds(94, 50, 272, 20);
+			if(dto!=null)
+				jFormattedTextFieldMonto.setValue(dto.getTarifa());
 		}
 		return jFormattedTextFieldMonto;
 	}
@@ -294,6 +326,8 @@ public boolean validacion(){
 		if(jTextFieldDescripcion == null) {
 			jTextFieldDescripcion = new JTextField();
 			jTextFieldDescripcion.setBounds(94, 25, 272, 20);
+			if(dto!=null)
+				jTextFieldDescripcion.setText(dto.getDescripcion());
 		}
 		return jTextFieldDescripcion;
 	}
@@ -305,6 +339,7 @@ public boolean validacion(){
 			jLabelRazonSocial.setFont(new java.awt.Font("Verdana",0,11));
 			jLabelRazonSocial.setLayout(null);
 			jLabelRazonSocial.setBounds(255, 30, 127, 15);
+			
 		}
 		return jLabelRazonSocial;
 	}

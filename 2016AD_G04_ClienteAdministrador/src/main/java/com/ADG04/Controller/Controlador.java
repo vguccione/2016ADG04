@@ -1108,6 +1108,25 @@ public class Controlador {
 		}
 		return false;
 	}
+	
+	
+	public boolean modificarSeguro(int id, Integer idProveedor, String tipo, String descripcion,Float monto) {
+		try{
+			DTO_Seguro seguro = new DTO_Seguro();
+			seguro.setId(id);
+			seguro.setDescripcion(descripcion);
+			seguro.setIdProveedor(idProveedor);
+			seguro.setTarifa(monto);
+			seguro.setTipoSeguro(tipo);
+			bd.modificarSeguro(seguro);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al modificar Seguro");
+		}
+		return false;
+	}
 
 	public DTO_Proveedor buscarProveedorByCuit(String cuit) {
 		try{
@@ -1132,6 +1151,23 @@ public class Controlador {
 		catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Error al dar de alta Servicio de Seguridad");
+		}
+		return false;
+	}
+	
+	public boolean modificarServicioSeguridad(int id, Integer idProveedor, String descripcion, Float monto) {
+		try{
+			DTO_ServicioSeguridad ss = new DTO_ServicioSeguridad();
+			ss.setId(id);
+			ss.setDescripcion(descripcion);
+			ss.setIdProveedor(idProveedor);
+			ss.setTarifa(monto);
+			bd.modificarServicioSeguridad(ss);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al modificar Servicio de Seguridad");
 		}
 		return false;
 	}

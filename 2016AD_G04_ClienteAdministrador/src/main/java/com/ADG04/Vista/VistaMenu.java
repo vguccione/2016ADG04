@@ -60,6 +60,8 @@ import com.ADG04.Vista.Proveedores.BajaSeguro;
 import com.ADG04.Vista.Proveedores.BajaServicioSeguridad;
 import com.ADG04.Vista.Proveedores.BajaTarifaCarrier;
 import com.ADG04.Vista.Proveedores.BusquedaProveedor;
+import com.ADG04.Vista.Proveedores.BusquedaSeguro;
+import com.ADG04.Vista.Proveedores.BusquedaServicioSeguridad;
 import com.ADG04.Vista.Proveedores.BusquedaTarifasCarrier;
 import com.ADG04.Vista.Vehiculos.AgregarTareaAPlan;
 import com.ADG04.Vista.Vehiculos.AltaPlanMantenimiento;
@@ -381,7 +383,7 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemAltaSeguro.setText("Alta Seguro");
 								JMenuItemAltaSeguro.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										AltaSeguro inst = new AltaSeguro();
+										AltaSeguro inst = new AltaSeguro(null);
 										inst.setLocationRelativeTo(null);
 										inst.setVisible(true);
 									}
@@ -393,9 +395,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemModificarSeguro.setText("Modificar Seguro");
 								JMenuItemModificarSeguro.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										/*VistaModificarSeguro inst = new VistaModificarSeguro();
+										BusquedaSeguro inst = new BusquedaSeguro();
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
 									}
 								});
 							}
@@ -428,7 +430,7 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemAltaServicioSeguridad.setText("Alta Servicio Seguridad");
 								JMenuItemAltaServicioSeguridad.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-										AltaServicioSeguridad inst = new AltaServicioSeguridad();
+										AltaServicioSeguridad inst = new AltaServicioSeguridad(null);
 										inst.setLocationRelativeTo(null);
 										inst.setVisible(true);
 									}
@@ -440,9 +442,9 @@ public class VistaMenu extends javax.swing.JFrame {
 								JMenuItemModificarServicioSeguridad.setText("Modificar Servicio Seguridad");
 								JMenuItemModificarServicioSeguridad.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
-									/*	VistaModificarServicioSeguridad inst = new VistaModificarServicioSeguridad();
+										BusquedaServicioSeguridad inst = new BusquedaServicioSeguridad();
 										inst.setLocationRelativeTo(null);
-										inst.setVisible(true);*/
+										inst.setVisible(true);
 									}
 								});
 							}

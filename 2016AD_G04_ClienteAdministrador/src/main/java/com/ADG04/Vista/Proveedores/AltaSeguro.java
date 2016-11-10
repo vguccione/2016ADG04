@@ -21,6 +21,7 @@ import javax.swing.border.TitledBorder;
 
 import com.ADG04.Controller.Controlador;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
+import com.ADG04.bean.Proveedor.DTO_Seguro;
 
 
 /**
@@ -59,12 +60,14 @@ public class AltaSeguro extends javax.swing.JFrame {
 	private JFormattedTextField jFormattedTextFieldMonto;
 	private JLabel jLabel2;
 	private JLabel jLabel1;
+	private DTO_Seguro dto;
 
 	private DTO_Proveedor proveedor;
 
 	
-	public AltaSeguro() {
+	public AltaSeguro(DTO_Seguro DTO) {
 		super();
+		dto = DTO;
 		initGUI();
 	}
 	
@@ -74,6 +77,7 @@ public class AltaSeguro extends javax.swing.JFrame {
 			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Aplicaciones Distribuidas - TPO Grupo: 04");
+			
 			this.setResizable(false);
 			{
 				jPanel = new JPanel();
@@ -86,7 +90,10 @@ public class AltaSeguro extends javax.swing.JFrame {
 					jPanel.add(jLabelTitulo);
 					jPanel.add(getJPanel1());
 					jPanel.add(getJPanel2());
-					jLabelTitulo.setText("Alta Seguro");
+					if(dto==null)
+						jLabelTitulo.setText("Alta Seguro");
+					else
+						jLabelTitulo.setText("Modificar Seguro");
 					jLabelTitulo.setFont(new java.awt.Font("Verdana",1,20));
 					jLabelTitulo.setBounds(10, 11, 372, 26);
 				}
@@ -99,6 +106,14 @@ public class AltaSeguro extends javax.swing.JFrame {
 				.addComponent(jPanel, 0, 429, Short.MAX_VALUE));
 			pack();
 			this.setSize(445, 432);
+			if(dto!=null){
+				proveedor = Controlador.getInstancia().getProveedor(dto.getIdProveedor());
+				jLabelRazonSocial.setText(proveedor.getRazonSocial());
+				
+				jButtonAceptar.setVisible(true);
+				jButtonCancelar.setVisible(true);
+				jPanel2.setVisible(true);
+			}
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -151,6 +166,11 @@ public class AltaSeguro extends javax.swing.JFrame {
 		if(jTextFieldCuit == null) {
 			jTextFieldCuit = new JTextField();
 			jTextFieldCuit.setBounds(92, 27, 80, 20);
+			if(dto!=null){
+				DTO_Proveedor prov = Controlador.getInstancia().getProveedor(dto.getIdProveedor());
+				jTextFieldCuit.setText(prov.getCuit());
+			//	jLabelRazonSocial.setText(prov.getRazonSocial());
+			}
 		}
 		return jTextFieldCuit;
 	}
@@ -180,15 +200,26 @@ public class AltaSeguro extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAceptarActionPerformed(evt);
 					if(validacion()){
-						boolean flag = Controlador.getInstancia().altaSeguro(proveedor.getId() ,jComboBoxTipo.getSelectedItem().toString(), jTextFieldDescripcion.getText(), (Float)jFormattedTextFieldMonto.getValue());
-						if(flag){
-							JOptionPane.showMessageDialog(null,"Se ha dado de alta el seguro", "Alta seguro realizada", JOptionPane.INFORMATION_MESSAGE);
-							setVisible(false);
-						} else {
-							JOptionPane.showMessageDialog(null,"No se ha podido dar de alta el seguro.", "Error", JOptionPane.ERROR_MESSAGE);	
+						if(dto ==null){
+							boolean flag = Controlador.getInstancia().altaSeguro(proveedor.getId() ,jComboBoxTipo.getSelectedItem().toString(), jTextFieldDescripcion.getText(), (Float)jFormattedTextFieldMonto.getValue());
+							if(flag){
+								JOptionPane.showMessageDialog(null,"Se ha dado de alta el seguro", "Alta seguro realizada", JOptionPane.INFORMATION_MESSAGE);
+								setVisible(false);
+							}
+						}
+						else{
+							boolean flag = Controlador.getInstancia().modificarSeguro(dto.getId(),proveedor.getId() ,jComboBoxTipo.getSelectedItem().toString(), jTextFieldDescripcion.getText(), (Float)jFormattedTextFieldMonto.getValue());
+							if(flag){
+								JOptionPane.showMessageDialog(null,"Se ha modificado el seguro", "Alta seguro realizada", JOptionPane.INFORMATION_MESSAGE);
+								setVisible(false);
+							}
+							
+						} 
+					}
+						else {
+							JOptionPane.showMessageDialog(null,"No se ha podido dar de alta/modificar el seguro.", "Error", JOptionPane.ERROR_MESSAGE);	
 						}
 					}
-				}
 			});
 		}
 		return jButtonAceptar;
@@ -239,8 +270,7 @@ public class AltaSeguro extends javax.swing.JFrame {
 			Buscar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAceptarActionPerformed(evt);
-					
-					proveedor = Controlador.getInstancia().buscarProveedorByCuit(jTextFieldCuit.getText());
+						proveedor = Controlador.getInstancia().buscarProveedorByCuit(jTextFieldCuit.getText());
 					
 					if(proveedor == null){
 						//No encontro el proveedor entonces notifico que no lo encontro
@@ -260,7 +290,7 @@ public class AltaSeguro extends javax.swing.JFrame {
 			});
 		}
 		return Buscar;
-	}
+	} 
 	
 
 	
@@ -287,12 +317,15 @@ public boolean validacion(){
 		if(jFormattedTextFieldMonto == null) {
 			jFormattedTextFieldMonto = new JFormattedTextField(new Float(0));
 			jFormattedTextFieldMonto.setBounds(94, 84, 270, 20);
+			if(dto!=null)
+				jFormattedTextFieldMonto.setValue(dto.getTarifa());
 		}
 		return jFormattedTextFieldMonto;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JComboBox getJComboBoxPaises() {
+		String[] tipos = { "Aereo", "Incendio", "Maritimo", "Mercaderia", "Perdida", "Robo", "Total","Transporte"  };
 		if(jComboBoxTipo == null) {
 			ComboBoxModel jComboBoxTipoModel = 
 					new DefaultComboBoxModel(
@@ -300,6 +333,15 @@ public boolean validacion(){
 			jComboBoxTipo = new JComboBox();
 			jComboBoxTipo.setModel(jComboBoxTipoModel);
 			jComboBoxTipo.setBounds(94, 27, 270, 20);
+			if(dto!=null){
+				int i = 0;
+				for(String tipo: tipos){
+					if(tipo.contains(dto.getTipoSeguro()))
+						jComboBoxTipoModel.setSelectedItem(i);
+					i++;
+				}
+			}
+				
 		}
 		return jComboBoxTipo;
 	}
@@ -308,6 +350,8 @@ public boolean validacion(){
 		if(jTextFieldDescripcion == null) {
 			jTextFieldDescripcion = new JTextField();
 			jTextFieldDescripcion.setBounds(94, 55, 270, 21);
+			if(dto!=null)
+				jTextFieldDescripcion.setText(dto.getDescripcion());
 		}
 		return jTextFieldDescripcion;
 	}

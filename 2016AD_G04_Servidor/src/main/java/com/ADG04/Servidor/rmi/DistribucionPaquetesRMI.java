@@ -77,6 +77,7 @@ import com.ADG04.Servidor.model.ClienteParticularE;
 import com.ADG04.Servidor.model.CuentaCorrienteE;
 import com.ADG04.Servidor.model.FacturaE;
 import com.ADG04.Servidor.model.ManifiestoE;
+import com.ADG04.Servidor.model.MapaDeRutaE;
 import com.ADG04.Servidor.model.PaisE;
 import com.ADG04.Servidor.model.PlanMantenimientoE;
 import com.ADG04.Servidor.model.ProductoE;
@@ -783,7 +784,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<VehiculoE> lista = VehiculoDao.getInstancia().getAll();
 		List<DTO_Vehiculo> listadto = new ArrayList<DTO_Vehiculo>();
 		for(VehiculoE v:lista){
-			listadto.add(v.toDTO());
+			Vehiculo ve = new Vehiculo().fromEntity(v);
+			listadto.add(ve.toDTO());
 		}
 		return listadto;
 	}
@@ -1102,8 +1104,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_TareaMantenimiento getTareaMantenimiento(
 			Integer idTareaMantenimiento) throws RemoteException {
-
-		return new TareaMantenimiento().fromEntity(TareaMantenimientoDao.getInstancia().getById(idTareaMantenimiento)).toDTO();
+		TareaMantenimientoE tarea =TareaMantenimientoDao.getInstancia().getById(idTareaMantenimiento); 
+		if(tarea!=null)
+			return new TareaMantenimiento().fromEntity(tarea).toDTO();
+		else
+			return null;
 	}
 	@Override
 	public Integer facturarEncomiendaEmpresa(int idEncomienda)
@@ -1389,7 +1394,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_Provincia buscarProvinciaByNombre(String prov)
 			throws RemoteException {
-		return new Provincia().fromEntity(ProvinciaDao.getInstancia().getByNombre(prov)).toDTO();
+		ProvinciaE p =ProvinciaDao.getInstancia().getByNombre(prov);
+		if(p!=null)
+			return new Provincia().fromEntity(p).toDTO();
+		else
+			return null;
 	}
 
 	public List<DTO_Pais> listarPaises(){
@@ -1415,17 +1424,29 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_PlanMantenimiento getPlanMantenimiento(Integer id)
 			throws RemoteException {
-		return new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(id)).toDTO();
+		PlanMantenimientoE plan =PlanMantenimientoDao.getInstancia().getById(id);
+		if(plan!=null)
+			return new PlanMantenimiento().fromEntity(plan).toDTO();
+		else
+			return null;
 	}
 
 	@Override
 	public DTO_Pais getPaisByNombre(String pais) throws RemoteException {
-		return new Pais().fromEntity(PaisDao.getInstancia().getByNombre(pais)).toDTO();
+		PaisE p = PaisDao.getInstancia().getByNombre(pais);
+		if(p!=null)
+			return new Pais().fromEntity(p).toDTO();
+		else
+			return null;
 	}
 
 	@Override
 	public DTO_Provincia getProvByNombre(String prov) throws RemoteException {
-		return new Provincia().fromEntity(ProvinciaDao.getInstancia().getByNombre(prov)).toDTO();
+		ProvinciaE p = ProvinciaDao.getInstancia().getByNombre(prov);
+		if(p!=null)
+			return new Provincia().fromEntity(p).toDTO();
+		else
+			return null;
 	}
 
 	@Override
@@ -1463,7 +1484,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 
 	public DTO_Vehiculo buscarVehiculoByPatente(String patente) throws RemoteException {
-		return new Vehiculo().fromEntity(VehiculoDao.getInstancia().getByPatente(patente)).toDTO();
+		VehiculoE veh = VehiculoDao.getInstancia().getByPatente(patente);
+		if(veh!=null)
+			return new Vehiculo().fromEntity(veh).toDTO();
+		else
+			return null;
 	}
 
 	@Override
@@ -1579,20 +1604,31 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_ServicioSeguridad getServicioSeguridad(Integer id)
 			throws RemoteException {
-		return new ServicioSeguridad().fromEntity(ServicioSeguridadDao.getInstancia().getById(id)).toDTO();
+		ServicioSeguridadE serv=ServicioSeguridadDao.getInstancia().getById(id);
+		if(serv!=null)
+			return new ServicioSeguridad().fromEntity(serv).toDTO();
+		else
+			return null;
 	}
 
 
 	@Override
 	public DTO_TarifasCarrier getTarifasCarrier(Integer id)
 			throws RemoteException {
-		return new TarifasCarrier().fromEntity(TarifasCarrierDao.getInstancia().getById(id)).toDTO();
+		TarifasCarrierE t = TarifasCarrierDao.getInstancia().getById(id);
+		if(t!=null)
+			return new TarifasCarrier().fromEntity(TarifasCarrierDao.getInstancia().getById(id)).toDTO();
+		else
+			return null;
 	}
 
 
 	@Override
 	public DTO_Seguro getSeguro(Integer id) throws RemoteException {
-		return new Seguro().fromEntity(SeguroDao.getInstancia().getById(id)).toDTO();
+		if(SeguroDao.getInstancia().getById(id)!=null)
+			return new Seguro().fromEntity(SeguroDao.getInstancia().getById(id)).toDTO();
+		else
+			return null;
 	}
 
 
@@ -1649,7 +1685,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	@Override
 	public DTO_MapaDeRuta getMapaDeRuta(Integer id) throws RemoteException {
-		return new MapaDeRuta().fromEntity(MapaDeRutaDao.getInstancia().getById(id)).toDTO();
+		MapaDeRutaE mapa =MapaDeRutaDao.getInstancia().getById(id);
+		if(mapa!=null)
+			return new MapaDeRuta().fromEntity(mapa).toDTO();
+		else
+			return null;
 	}
 
 
@@ -1663,13 +1703,21 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	@Override
 	public DTO_Manifiesto getManifiesto(Integer id) throws RemoteException {
-		return new Manifiesto().fromEntity(ManifiestoDao.getInstancia().getById(id)).toDTO();
+		ManifiestoE man = ManifiestoDao.getInstancia().getById(id);
+		if(man!=null)
+			return new Manifiesto().fromEntity(man).toDTO();
+		else
+			return null;
 	}
 
 
 	@Override
 	public DTO_Remito getRemito(Integer id) throws RemoteException {
-		return new Remito().fromEntity(RemitoDao.getInstancia().getById(id)).toDTO();
+		RemitoE re = RemitoDao.getInstancia().getById(id);
+		if(re!=null)
+			return new Remito().fromEntity(re).toDTO();
+		else
+			return null;
 	}
 
 

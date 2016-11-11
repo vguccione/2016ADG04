@@ -249,7 +249,7 @@ ul.sub-menu > li > a.parent {
 /********************** FIN MENU **********************/  
 html {
     backgorund-color: #999;
-	background: url(../images/bg_web_dgv_01.jpg) repeat-x top #999;
+	background: url(../images/delivery.bmp) repeat-x top #999;
 }
 body {
 	font: 100%/1.4 "Open Sans", "open-sans", sans-serif;
@@ -266,9 +266,10 @@ ul, ol, dl { /* Due to variations between browsers, it's best practices to zero 
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;	 /* removing the top margin gets around an issue where margins can escape from their containing div. The remaining bottom margin will hold it away from any elements that follow. */
 	padding-right: 0px;
-	padding-left: 0px;
+	padding-left: 10px;
 	/* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
-	font-weight:normal;
+	font-weight:bold;
+	color: #FFFFFF;
 }
 
 
@@ -368,6 +369,7 @@ display:block; background-color: #9CF; margin-bottom: 15px; padding-top:10px;}
 	text-align:right;
 	padding-top: 8px;
 	padding-right: 5px;
+	color:white;
 }
 .form-style-2 .label-corto {
 	display:block;

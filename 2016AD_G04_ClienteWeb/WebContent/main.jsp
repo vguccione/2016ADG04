@@ -122,7 +122,7 @@ console.log("js complete");;
         	<header>
         		<div class="inner relative">
                       <ul style="width:227px;">
-        				<li style="width:230px;"><a class="logo" href="main.jsp"><img src="images/logo_web_dgv_02.jpg" alt="Der grobe Verteiler" border="0"></a></li>
+        				<li style="width:230px;"><a class="logo" href="main.jsp"><img src="images/logo.bmp" alt="Der grobe Verteiler" border="0"></a></li>
                      	<li class="logueado" style="width:227px; margin-top:10px;font-size:18px; line-height:25px; color:#f0af1e;">
                          <span id="nombreUsuario"> </span>               
                         </li>

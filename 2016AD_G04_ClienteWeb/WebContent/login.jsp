@@ -6,12 +6,12 @@
  <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div>
+<div align=center height:200px >
    <form action="Sistema?action=iniciarSesion" method="post" id="frmLogin" class="form-style-2">
-         <div><h2>Login</h2></div>
+         <div align=left><h2>Login</h2></div>
           <div><label>Usuario</label><input name="txtUsuario" type="text" class="input-field" /></div>
           <div><label>Password</label><input name="txtPassword" type="password" class="input-field" /></div>
-     <div style="width:100%; text-align:center;"><input type="submit" value="Iniciar Sesion"/></div>
+     <div style="width:100%; text-align:center;" align=center><input type="submit" value="Iniciar Sesion"/></div>
    </form>
 </div>
 </body> 	 

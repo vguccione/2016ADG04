@@ -106,6 +106,7 @@ public class ListadoEnviosPropios extends javax.swing.JFrame {
 							jTableListadoModel.addRow(new Object[] { 
 									env.getId(),
 									env.getEstado(),
+									env.getFechaActualizacion(),
 									env.getFechaYHoraSalida(),
 									env.getFechaYHoraLlegada(),
 									veh.getPatente(),
@@ -129,6 +130,7 @@ public class ListadoEnviosPropios extends javax.swing.JFrame {
 			
 					jTableListadoModel.addColumn("ID");
 					jTableListadoModel.addColumn("Estado");
+					jTableListadoModel.addColumn("Fecha Actualizacion");
 					jTableListadoModel.addColumn("Fecha salida");
 					jTableListadoModel.addColumn("Fecha llegada estimada");
 					jTableListadoModel.addColumn("Patente Vehiculo");
@@ -141,6 +143,7 @@ public class ListadoEnviosPropios extends javax.swing.JFrame {
 						jTableListadoModel.addRow(new Object[] { 
 								env.getId(),
 								env.getEstado(),
+								env.getFechaActualizacion(),
 								env.getFechaYHoraSalida(),
 								env.getFechaYHoraLlegada(),
 								veh.getPatente(),

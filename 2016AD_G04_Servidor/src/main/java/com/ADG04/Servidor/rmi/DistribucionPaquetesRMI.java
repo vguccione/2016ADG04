@@ -28,6 +28,7 @@ import com.ADG04.Negocio.Encomienda;
 import com.ADG04.Negocio.EncomiendaEmpresa;
 import com.ADG04.Negocio.EncomiendaParticular;
 import com.ADG04.Negocio.Envio;
+import com.ADG04.Negocio.EnvioHistorico;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionVehiculo;
@@ -62,6 +63,7 @@ import com.ADG04.Servidor.dao.ClienteParticularDao;
 import com.ADG04.Servidor.dao.DireccionDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
+import com.ADG04.Servidor.dao.EnvioHistoricoDao;
 import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.dao.ManifiestoDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
@@ -86,6 +88,7 @@ import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.model.ClienteParticularE;
 import com.ADG04.Servidor.model.CuentaCorrienteE;
+import com.ADG04.Servidor.model.EnvioHistoricoE;
 import com.ADG04.Servidor.model.FacturaE;
 import com.ADG04.Servidor.model.ManifiestoE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
@@ -126,6 +129,7 @@ import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Encomienda.DTO_EnvioHistorico;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
@@ -1351,9 +1355,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public List<DTO_EnvioPropio> listarEnviosPropios() throws RemoteException {
 		List<DTO_EnvioPropio> listaDTO = new ArrayList<DTO_EnvioPropio>();
 		List<EnvioE> lista = EnvioDao.getInstancia().getEnviosPropios();
-        for(EnvioE env: lista)
-        	listaDTO.add( (DTO_EnvioPropio) env.toDTO());
-        
+        for(EnvioE env: lista){
+        	Envio e = new Envio().fromEntity(env);
+        	listaDTO.add( (DTO_EnvioPropio) e.toDTO());
+        }
 		 return listaDTO;
 	}
 
@@ -1362,8 +1367,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		List<DTO_EnvioTercerizado> listaDTO = new ArrayList<DTO_EnvioTercerizado>();
 		List<EnvioE> lista = EnvioDao.getInstancia().getEnviosTercerizados();
-        for(EnvioE env: lista)
-        	listaDTO.add( (DTO_EnvioTercerizado) env.toDTO());
+        for(EnvioE env: lista){
+        	Envio e = new Envio().fromEntity(env);
+        	listaDTO.add( (DTO_EnvioTercerizado) e.toDTO());
+        }
         
 		 return listaDTO;
 	}
@@ -1373,9 +1380,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		List<DTO_EnvioTercerizado> listaDTO = new ArrayList<DTO_EnvioTercerizado>();
 		List<EnvioE> lista = EnvioDao.getInstancia().getEnviosTercerizadosByEstado(filtro);
-        for(EnvioE env: lista)
-        	listaDTO.add( (DTO_EnvioTercerizado) env.toDTO());
-        
+        for(EnvioE env: lista){
+        	Envio e = new Envio().fromEntity(env);
+        	listaDTO.add( (DTO_EnvioTercerizado) e.toDTO());
+        }
 		 return listaDTO;
 	}
 
@@ -1384,9 +1392,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		List<DTO_EnvioPropio> listaDTO = new ArrayList<DTO_EnvioPropio>();
 		List<EnvioE> lista = EnvioDao.getInstancia().getEnviosPropiosByEstado(filtro);
-        for(EnvioE env: lista)
-        	listaDTO.add( (DTO_EnvioPropio) env.toDTO());
-        
+        for(EnvioE env: lista){
+        	Envio e = new Envio().fromEntity(env);
+        	listaDTO.add( (DTO_EnvioPropio) e.toDTO());
+        }
 		 return listaDTO;
 	}
 
@@ -1791,8 +1800,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 				latitud = coord.getLatitud();
 				longitud = coord.getLongitud();
 			}
-				
-			e.actualizarEstadoVehiculo(latitud, longitud);
+			
+			/*Verifico la ultima actualizacion haya sido realizada hace 5 minutos*/
+			Date now = new Date();
+			long diffInMillies = now.getTime() -  e.getFechaActualizacion().getTime();
+			if(diffInMillies>=300000)
+				e.actualizarEstadoVehiculo(latitud, longitud);
 		}
 	}
 
@@ -1867,6 +1880,42 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		    }
     	}
     	return null;
+	}
+
+
+	@Override
+	public DTO_Envio getEnvio(Integer id) throws RemoteException {
+		EnvioE env = EnvioDao.getInstancia().getById(id);
+		if(env!=null){
+			Envio envio = new Envio().fromEntity(env);
+			return envio.toDTO();
+		}
+		else
+			return null;
+	}
+
+
+	@Override
+	public List<DTO_EnvioHistorico> getHistorico(Integer id)
+			throws RemoteException {
+		List<DTO_EnvioHistorico> historico = new ArrayList<DTO_EnvioHistorico>();
+		for(EnvioHistoricoE hist : EnvioHistoricoDao.getInstancia().getAllOrderByFechaASC(id)){
+			EnvioHistorico eh = new EnvioHistorico().fromEntity(hist);
+			historico.add(eh.toDTO());
+		}
+		return historico;
+	}
+
+
+	@Override
+	public DTO_EnvioPropio getEnvioPropio(Integer id) throws RemoteException {
+		EnvioE env = EnvioDao.getInstancia().getPropioById(id);
+		if(env!=null){
+			Envio envio = new Envio().fromEntity(env);
+			return (DTO_EnvioPropio) envio.toDTO();
+		}
+		else
+			return null;
 	}
 
 

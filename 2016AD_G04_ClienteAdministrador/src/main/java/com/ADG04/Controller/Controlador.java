@@ -29,6 +29,7 @@ import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Encomienda.DTO_EnvioHistorico;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
@@ -1656,6 +1657,39 @@ public class Controlador {
 		}
 		catch(Exception e){
 			System.out.println("Error al listar Remitos");
+		}
+		return null;
+	}
+
+	public DTO_Envio getEnvio(Integer id) {
+		try{
+			return bd.getEnvio(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar Envio");
+		}
+		return null;
+	}
+
+	public List<DTO_EnvioHistorico> getHistorico(Integer id) {
+		try{
+			return bd.getHistorico(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al buscar historico");
+		}
+		return null;
+	}
+
+
+	public DTO_EnvioPropio getEnvioPropio(Integer id) {
+		try{
+			return bd.getEnvioPropio(id);
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar envio propio");
 		}
 		return null;
 	}

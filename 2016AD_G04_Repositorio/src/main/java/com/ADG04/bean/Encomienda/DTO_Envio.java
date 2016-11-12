@@ -2,6 +2,7 @@ package com.ADG04.bean.Encomienda;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DTO_Envio implements Serializable{
@@ -9,11 +10,12 @@ public class DTO_Envio implements Serializable{
 	private Integer id;
 	private String estado;
 	private DTO_Coordenada posicionActual;
-	private List<DTO_EncomiendaParticular> encomiendas;
+	private List<DTO_Encomienda> encomiendas;
+	private Date fechaActualizacion;
 	
 	
 	public DTO_Envio(){
-		encomiendas = new ArrayList<DTO_EncomiendaParticular>();
+		encomiendas = new ArrayList<DTO_Encomienda>();
 	}
 
 
@@ -47,13 +49,22 @@ public class DTO_Envio implements Serializable{
 	}
 
 
-	public List<DTO_EncomiendaParticular> getEncomiendas() {
+	public List<DTO_Encomienda> getEncomiendas() {
 		return encomiendas;
 	}
 
 
-	public void setEncomiendas(List<DTO_EncomiendaParticular> encomiendas) {
+	public void setEncomiendas(List<DTO_Encomienda> encomiendas) {
 		this.encomiendas = encomiendas;
 	}
 
+
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+
+
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
 }

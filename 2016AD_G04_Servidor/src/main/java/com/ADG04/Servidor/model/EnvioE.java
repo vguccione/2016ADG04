@@ -78,6 +78,9 @@ public class EnvioE implements java.io.Serializable {
 
 	@Column(name = "NroTracking")
 	private Integer nroTracking;
+	
+	@Column(name = "FechaActualizacion")
+	private Date fechaActualizacion;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "EncomiendaEnvio", joinColumns = {
@@ -99,6 +102,7 @@ public class EnvioE implements java.io.Serializable {
 		this.fechaYHoraSalida = fechaYHoraSalida;
 		this.propio = propio;
 		this.nroTracking = nroTracking;
+		this.fechaActualizacion=new Date();
 	}
 
 
@@ -211,6 +215,16 @@ public class EnvioE implements java.io.Serializable {
 	public void setEncomiendas(List<EncomiendaE> encomiendas) {
 		this.encomiendas = encomiendas;
 	}
+	
+	
+
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
 
 	@Override
 	public String toString() {
@@ -233,6 +247,7 @@ public class EnvioE implements java.io.Serializable {
 			dto.setFechaYHoraSalida(this.getFechaYHoraSalida());
 			dto.setIdHojaDeRuta(this.getMapaDeRuta().getIdMapaDeRuta());
 			dto.setIdVehiculo(this.getVehiculo().getIdVehiculo());
+			dto.setFechaActualizacion(fechaActualizacion);
 			return dto;
 		}
 		else{

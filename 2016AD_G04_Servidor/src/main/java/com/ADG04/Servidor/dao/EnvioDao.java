@@ -150,6 +150,21 @@ public class EnvioDao extends GenericDao<EnvioE, Integer> {
 			return null;
 		}
 	}
+
+	public EnvioE getPropioById(Integer id) {
+		try{
+			@SuppressWarnings("unchecked")
+			EnvioE envio= (EnvioE) entityManager.createQuery("from EnvioE e where propio=1"
+					+ " AND idEnvio=:id").setParameter("id", id)
+				.getSingleResult();
+			return envio;
+		}
+		catch(Exception e){
+			System.out.println("Error al buscar envio propio");
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 
 }

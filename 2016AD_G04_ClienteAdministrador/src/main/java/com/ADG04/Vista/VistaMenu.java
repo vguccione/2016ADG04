@@ -25,6 +25,7 @@ import com.ADG04.Vista.Clientes.BajaCliente;
 import com.ADG04.Vista.Clientes.BajaProductoCliente;
 import com.ADG04.Vista.Clientes.BusquedaCliente;
 import com.ADG04.Vista.Listados.BusquedaEncomienda;
+import com.ADG04.Vista.Listados.BusquedaEnvio;
 import com.ADG04.Vista.Listados.BusquedaManifiesto;
 import com.ADG04.Vista.Listados.BusquedaRemito;
 import com.ADG04.Vista.Listados.ListadoAseguradoras;
@@ -880,6 +881,18 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenu7.setVisible(true);
 						} else {
 							JMenu7.setVisible(false);
+						}
+						{
+							JMenuItem26 = new JMenuItem();
+							JMenu7.add(JMenuItem26);
+							JMenuItem26.setText("Buscar Envios");
+							JMenuItem26.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									BusquedaEnvio inst = new BusquedaEnvio();
+									inst.setLocationRelativeTo(null);
+									inst.setVisible(true);
+								}
+							});
 						}
 						{
 							JMenuItem26 = new JMenuItem();

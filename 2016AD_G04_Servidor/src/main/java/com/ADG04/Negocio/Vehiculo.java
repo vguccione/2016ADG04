@@ -287,7 +287,8 @@ public class Vehiculo{
 	public DTO_Vehiculo toDTO() {
 		DTO_Vehiculo v = new DTO_Vehiculo();
 		v.setEstado(this.estado);
-		v.setSucursal(this.getSucursal().toDTO());
+		if(this.getSucursal()!=null)
+			v.setSucursal(this.getSucursal().toDTO());
 		v.setId(this.getIdVehiculo());
 		v.setAlto(alto);
 		v.setAncho(ancho);
@@ -310,9 +311,9 @@ public class Vehiculo{
 		v.setVolumen(volumen);
 		v.setFechaIngreso(this.getFechaIngreso());
 		PlanMantenimiento pm =  this.getPlanMantenimiento();
-		v.setPlanMantenimiento(pm.toDTO());
-		Sucursal suc = this.getSucursal();
-		v.setSucursal(suc.toDTO());
+		if(pm!=null)
+			v.setPlanMantenimiento(pm.toDTO());
+
 		return v;
 	}
 

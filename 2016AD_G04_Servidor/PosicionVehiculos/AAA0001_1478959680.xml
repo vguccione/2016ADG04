@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viaje>
+	<vehiculo patente="AAA0001">
+		<nroRemito>1</nroRemito>
+		<fecha>2016-11-12</fecha>
+		<hora>11:13:00</hora>
+		<latitud>1</latitud>
+		<longitud>2</longitud>
+	</vehiculo>
+</viaje>

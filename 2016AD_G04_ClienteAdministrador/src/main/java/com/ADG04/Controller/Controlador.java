@@ -518,6 +518,16 @@ public class Controlador {
 		}
 		return null;
 	}
+	
+	public void actualizarEstadoEnvios(){
+		try{
+			bd.actualizarEstadoEnvios();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al actualizar estados de envios");
+		}
+	}
 
 	public DTO_Coordenada getCoordenadaById(int id) {
 		try{

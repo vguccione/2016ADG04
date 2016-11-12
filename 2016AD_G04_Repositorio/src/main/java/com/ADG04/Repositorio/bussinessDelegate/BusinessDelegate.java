@@ -904,4 +904,8 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.listarRemitos();
 	}
 
+	public void actualizarEstadoEnvios()  throws RemoteException {
+		this.businessService.actualizarEstadoEnvios();
+	}
+
 }

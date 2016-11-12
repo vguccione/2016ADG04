@@ -60,5 +60,6 @@ public interface IEncomiendaRemote {
 	public DTO_Remito getRemito(Integer id)  throws RemoteException;
 	public List<DTO_Manifiesto> listarManifiestos() throws RemoteException;
 	public List<DTO_Remito> listarRemitos() throws RemoteException;
+	public void actualizarEstadoEnvios()  throws RemoteException;
 
 }

@@ -26,6 +26,7 @@ import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Encomienda.DTO_EnvioHistorico;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
@@ -906,5 +907,17 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public void actualizarEstadoEnvios(String dir)  throws RemoteException {
 		this.businessService.actualizarEstadoEnvios(dir);
+	}
+
+	public DTO_Envio getEnvio(Integer id) throws RemoteException {
+		return this.businessService.getEnvio(id);
+	}
+
+	public List<DTO_EnvioHistorico> getHistorico(Integer id) throws RemoteException {
+		return this.businessService.getHistorico(id);
+	}
+
+	public DTO_EnvioPropio getEnvioPropio(Integer id) throws RemoteException {
+		return this.businessService.getEnvioPropio(id);
 	}
 }

@@ -782,6 +782,7 @@ public class GestionEncomienda {
 				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
 				envioTercerizado.setMapaDeRuta(mr);
 				envioTercerizado.setPropio(false);
+				envioTercerizado.setFechaActualizacion(new Date());
 				List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
 				lista.add(e);
 				envioTercerizado.setEncomiendas(lista);
@@ -823,6 +824,7 @@ public class GestionEncomienda {
 							encomiendas.add(e);
 							envProp.setEncomiendas(encomiendas);
 							envProp.setPropio(true);
+							envProp.setFechaActualizacion(new Date());
 					
 							float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
 							float peso70 = (float)(peso + e.getPeso()/pesoTotal);
@@ -879,6 +881,7 @@ public class GestionEncomienda {
 								envioPropio.setSucursalOrigen(e.getSucursalActual());
 								envioPropio.setSucursalDestino(e.getSucursalDestino());
 								envioPropio.setMapaDeRuta(mr);
+								envioPropio.setFechaActualizacion(new Date());
 								List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
 								lista.add(e);
 								envioPropio.setEncomiendas(lista);
@@ -914,6 +917,7 @@ public class GestionEncomienda {
 		      EnvioE envio = EnvioDao.getInstancia().getByEncomiendaColocada(enc.getIdEncomienda());
 		      if(envio!=null){
 			      envio.setEstado(EnvioEstado.EnViaje.toString());
+			      envio.setFechaActualizacion(new Date());
 			      
 				  EncomiendaDao.getInstancia().saveOrUpdate(enc);
 				  EnvioDao.getInstancia().saveOrUpdate(envio);
@@ -930,6 +934,7 @@ public class GestionEncomienda {
 	public void cambiarEstadoEnvio(int idEnvio, EnvioEstado estado){
 		EnvioE env = EnvioDao.getInstancia().getById(idEnvio);
 		env.setEstado(estado.toString());
+		env.setFechaActualizacion(new Date());
 		EnvioDao.getInstancia().saveOrUpdate(env);
 	}
 	

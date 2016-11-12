@@ -14,6 +14,7 @@ import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Encomienda.DTO_EnvioHistorico;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
@@ -61,6 +62,9 @@ public interface IEncomiendaRemote {
 	public List<DTO_Manifiesto> listarManifiestos() throws RemoteException;
 	public List<DTO_Remito> listarRemitos() throws RemoteException;
 	public void actualizarEstadoEnvios(String dir)  throws RemoteException;
+	public DTO_Envio getEnvio(Integer id) throws RemoteException;
+	public List<DTO_EnvioHistorico> getHistorico(Integer id) throws RemoteException;
+	public DTO_EnvioPropio getEnvioPropio(Integer id) throws RemoteException;
 	
 
 }

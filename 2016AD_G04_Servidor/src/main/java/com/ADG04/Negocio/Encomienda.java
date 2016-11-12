@@ -14,6 +14,9 @@ import java.util.Set;
 
 
 
+
+
+
 import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
 import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
@@ -21,9 +24,11 @@ import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.FacturaDao;
+import com.ADG04.Servidor.dao.ManifiestoDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.RemitoDao;
 import com.ADG04.Servidor.dao.SeguroDao;
 import com.ADG04.Servidor.dao.ServicioSeguridadDao;
 import com.ADG04.Servidor.dao.SucursalDao;
@@ -45,6 +50,7 @@ import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
+import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 
 
 public  class Encomienda{
@@ -190,6 +196,7 @@ public  class Encomienda{
 				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
 				envioTercerizado.setMapaDeRuta(mr);
 				envioTercerizado.setPropio(false);
+				envioTercerizado.setFechaActualizacion(new Date());
 				List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
 				lista.add(e);
 				envioTercerizado.setEncomiendas(lista);
@@ -197,6 +204,9 @@ public  class Encomienda{
 				
 				EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
 				EncomiendaDao.getInstancia().saveOrUpdate(e);
+				
+				Envio env = new Envio().fromEntity(envio);
+				env.actualizarHistorico();
 				
 				idEnvio = envio.getIdEnvio();
 			} else {
@@ -231,6 +241,7 @@ public  class Encomienda{
 							encomiendas.add(e);
 							envProp.setEncomiendas(encomiendas);
 							envProp.setPropio(true);
+							envProp.setFechaActualizacion(new Date());
 					
 							float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
 							float peso70 = (float)(peso + e.getPeso()/pesoTotal);
@@ -245,6 +256,8 @@ public  class Encomienda{
 							EncomiendaDao.getInstancia().saveOrUpdate(e);
 							nuevoEnvio = false;
 							
+							Envio env = new Envio().fromEntity(envProp);
+							env.actualizarHistorico();
 							
 							idEnvio =  envProp.getIdEnvio();
 						} 
@@ -288,6 +301,7 @@ public  class Encomienda{
 									envioPropio.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
 									envioPropio.setVehiculo(v);
 									envioPropio.setPropio(true);
+									envioPropio.setFechaActualizacion(new Date());
 								
 									envioPropio.setSucursalOrigen(e.getSucursalActual());
 									envioPropio.setSucursalDestino(e.getSucursalDestino());
@@ -305,6 +319,10 @@ public  class Encomienda{
 									
 									EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
 									EncomiendaDao.getInstancia().saveOrUpdate(e);
+									
+									Envio env = new Envio().fromEntity(envioPropio);
+									env.actualizarHistorico();
+									
 									idEnvio =  envio.getIdEnvio();
 								}
 							}
@@ -986,6 +1004,50 @@ public void facturar() throws BusinessException {
 		enc.setVolumen(e.getVolumen());
 		enc.setVolumenGranel(e.getVolumenGranel());
 		return enc;
+	}
+
+
+
+	public DTO_Encomienda toDTO() {
+			
+		DTO_Encomienda encomienda = new DTO_Encomienda();
+		encomienda.setIdEncomienda(this.getIdEncomienda());
+		encomienda.setCliente(this.getCliente().toDTO());
+		encomienda.setSucursalOrigen(this.getSucursalOrigen().toDTO());
+		encomienda.setSucursalActual(this.getSucursalDestino().toDTO());
+		encomienda.setSucursalDestino(this.getSucursalActual().toDTO());
+		encomienda.setLargo(this.getLargo());
+		encomienda.setAncho(this.getAncho());
+		encomienda.setInternacional(this.isInternacional());
+		encomienda.setAlto(this.getAlto());
+		encomienda.setPeso(this.getPeso());
+		encomienda.setVolumen(this.getVolumen());
+		encomienda.setTratamiento(this.getTratamiento()); 
+		encomienda.setApilable(this.getApilable());
+		encomienda.setCantApilable(this.getCantApilable()); 
+		encomienda.setRefrigerado(this.getRefrigerado());
+		encomienda.setCondicionTransporte(this.getCondicionTransporte()); 
+		encomienda.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
+		encomienda.setFragilidad(this.getFragilidad()); 
+		encomienda.setNombreReceptor(this.getNombreReceptor()); 
+		encomienda.setApellidoReceptor(this.getApellidoReceptor());
+		encomienda.setDniReceptor(this.getDniReceptor()); 
+		encomienda.setVolumenGranel(this.getVolumenGranel()); 
+		encomienda.setUnidadGranel(this.getUnidadGranel());
+		encomienda.setCargaGranel(this.getCargaGranel());		
+		
+		
+		encomienda.setTercerizada(this.isTercerizado());
+		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
+		encomienda.setFechaCreacion(new Date());
+		encomienda.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
+		if(this.getManifiesto()!=null)
+			encomienda.setManifiesto(this.getManifiesto().toDTO());
+		
+		if(this.getRemito()!=null)
+			encomienda.setRemito(this.getRemito().toDTO());
+		
+		return encomienda;
 	}
 	
 	

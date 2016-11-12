@@ -46,6 +46,9 @@ import java.util.Set;
 
 
 
+
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.xml.parsers.DocumentBuilder;
@@ -59,6 +62,7 @@ import org.w3c.dom.NodeList;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
+import com.ADG04.Servidor.dao.EnvioHistoricoDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.Servidor.dao.SucursalDao;
@@ -66,10 +70,12 @@ import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.CoordenadaE;
 import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.model.EnvioE;
+import com.ADG04.Servidor.model.EnvioHistoricoE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
@@ -93,6 +99,8 @@ public class Envio{
 	private boolean propio;
 	private Integer nroTracking;
 	private List<Encomienda> encomiendas;
+	private Date fechaActualizacion;
+	
 
 	public Envio() {
 	}
@@ -114,6 +122,7 @@ public class Envio{
 		this.fechaYHoraSalida = fechaYHoraSalida;
 		this.propio = propio;
 		this.nroTracking = nroTracking;
+		this.fechaActualizacion = new Date();
 	}
 
 
@@ -239,6 +248,16 @@ public class Envio{
 	public void setEncomiendas(List<Encomienda> encomiendas) {
 		this.encomiendas = encomiendas;
 	}
+	
+	
+
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
 
 	@Override
 	public String toString() {
@@ -261,6 +280,16 @@ public class Envio{
 			dto.setFechaYHoraSalida(this.getFechaYHoraSalida());
 			dto.setIdHojaDeRuta(this.getMapaDeRuta().getIdMapaDeRuta());
 			dto.setIdVehiculo(this.getVehiculo().getIdVehiculo());
+			dto.setFechaActualizacion(fechaActualizacion);
+			dto.setSucursalDestino(this.sucursalDestino.toDTO());
+			dto.setSucursalOrigen(this.sucursalOrigen.toDTO());
+			
+			List<DTO_Encomienda>lista = new ArrayList<DTO_Encomienda>();
+			for(Encomienda enc : this.getEncomiendas()){
+				lista.add(enc.toDTO());
+			}
+			dto.setEncomiendas(lista);
+			
 			return dto;
 		}
 		else{
@@ -270,6 +299,13 @@ public class Envio{
 			dto.setPosicionActual(this.getPosicionActual().toDTO());
 			dto.setIdProveedor(this.getProveedor().getIdProveedor());
 			dto.setNumeroTracking(String.valueOf(this.getNroTracking()));
+			dto.setFechaActualizacion(fechaActualizacion);
+			List<DTO_Encomienda>lista = new ArrayList<DTO_Encomienda>();
+			for(Encomienda enc : this.getEncomiendas()){
+				lista.add(enc.toDTO());
+			}
+			dto.setEncomiendas(lista);
+			
 			return dto;
 		}
 		
@@ -307,26 +343,32 @@ public class Envio{
 			if(!encontrado){
 				if(e.getEstado().equals(EnvioEstado.EnViaje.toString())){
 					e.setEstado(EnvioEstado.Desviado.toString());
+					actualizarHistorico();
 				}
 				else {
 					if(e.getEstado().equals(EnvioEstado.Desviado.toString())){
 						e.setEstado(EnvioEstado.Alerta.toString());
+						actualizarHistorico();
 					}
 				}
 			}
 			CoordenadaE coorE = CoordenadaDao.getInstancia().getById(posicionActual.getIdCoordenada());
 			e.setPosicionActual(coorE);
+			e.setFechaActualizacion(new Date());
 			EnvioDao.getInstancia().persist(e);
 		}
 	}
 	
 	public void estaEnvioDemorado(){
-		
 		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
 		Date hoy = new Date();
 		if(e.getFechaYHoraLlegadaEstimada().compareTo(hoy)<0){
-			e.setEstado(EnvioEstado.Demorado.toString());
-			EnvioDao.getInstancia().saveOrUpdate(e);
+			if(!e.getEstado().equals("Demorado")){
+				e.setEstado(EnvioEstado.Demorado.toString());
+				e.setFechaActualizacion(new Date());
+				EnvioDao.getInstancia().saveOrUpdate(e);
+				actualizarHistorico();
+			}
 		}
 	}
 
@@ -347,14 +389,27 @@ public class Envio{
 				enc.setEstado(EncomiendaEstado.EnSucursalDestino.toString());
 				EncomiendaDao.getInstancia().saveOrUpdate(enc);
 				e.setEstado(EnvioEstado.Concluido.toString());
+				e.setFechaActualizacion(new Date());
 				EnvioDao.getInstancia().saveOrUpdate(e);
 			}
 			catch(Exception exc){
 				System.out.println("Error al concluir envio");
 				exc.printStackTrace();
 			}
+			
 		}
 		
+		tx.commit();
+		actualizarHistorico();
+	}
+	
+	public void actualizarHistorico(){
+		EnvioHistoricoE eh = new EnvioHistoricoE(this.getEstado(),new Date(),this.toEntity());
+		
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();	
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		EnvioHistoricoDao.getInstancia().persist(eh);
 		tx.commit();
 	}
 
@@ -367,11 +422,15 @@ public class Envio{
 		env.setNroTracking(nroTracking);
 		env.setPropio(propio);
 		env.setMapaDeRuta(MapaDeRutaDao.getInstancia().getById(this.mapaDeRuta.getIdMapaDeRuta()));
-		env.setProveedor(ProveedorDao.getInstancia().getById(this.proveedor.getIdProveedor()));
-		env.setVehiculo(VehiculoDao.getInstancia().getById(this.vehiculo.getIdVehiculo()));
+		if(proveedor!=null)
+			env.setProveedor(ProveedorDao.getInstancia().getById(this.proveedor.getIdProveedor()));
+		if(vehiculo!=null)
+			env.setVehiculo(VehiculoDao.getInstancia().getById(this.vehiculo.getIdVehiculo()));
 		env.setPosicionActual(CoordenadaDao.getInstancia().getById(this.posicionActual.getIdCoordenada()));
 		env.setSucursalDestino(SucursalDao.getInstancia().getById(this.getSucursalDestino().getIdSucursal()));
 		env.setSucursalOrigen(SucursalDao.getInstancia().getById(this.getSucursalOrigen().getIdSucursal()));
+		env.setFechaActualizacion(fechaActualizacion);
+	
 		return env;
 	}
 	
@@ -383,6 +442,7 @@ public class Envio{
 		env.setIdEnvio(e.getIdEnvio());
 		env.setNroTracking(e.getNroTracking());
 		env.setPropio(e.isPropio());
+		env.setFechaActualizacion(e.getFechaActualizacion());
 		
 		MapaDeRuta mapa = null;
 		if(e.getMapaDeRuta()==null){
@@ -402,13 +462,14 @@ public class Envio{
 		env.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
 		env.setSucursalOrigen(new Sucursal().fromEntity(e.getSucursalOrigen()));
 		
-		List<Encomienda> lista = new ArrayList<Encomienda>();
-		for(EncomiendaE enc : e.getEncomiendas()){
-			Encomienda en = new Encomienda().fromEntity(enc);
-			lista.add(en);
+		if(e.getEncomiendas()!=null){
+			List<Encomienda> lista = new ArrayList<Encomienda>();
+			for(EncomiendaE enc : e.getEncomiendas()){
+				Encomienda en = new Encomienda().fromEntity(enc);
+				lista.add(en);
+			}
+			env.setEncomiendas(lista);
 		}
-		env.setEncomiendas(lista);
-		
 		return env;
 	}
 	

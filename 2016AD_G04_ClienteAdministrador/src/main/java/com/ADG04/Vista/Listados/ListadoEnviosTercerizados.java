@@ -44,6 +44,7 @@ public class ListadoEnviosTercerizados extends javax.swing.JFrame {
 
 	public  ListadoEnviosTercerizados() {
 		super();
+		Controlador.getInstancia().actualizarEstadoEnvios();
 		initGUI();
 	}
 	

@@ -44,6 +44,7 @@ public class ListadoEnviosPropios extends javax.swing.JFrame {
 
 	public  ListadoEnviosPropios() {
 		super();
+		Controlador.getInstancia().actualizarEstadoEnvios();
 		initGUI();
 	}
 	

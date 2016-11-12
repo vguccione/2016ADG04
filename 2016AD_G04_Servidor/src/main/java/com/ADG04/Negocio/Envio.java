@@ -2,11 +2,17 @@ package com.ADG04.Negocio;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+
+
+
+
 
 
 
@@ -38,6 +44,10 @@ import javax.persistence.EntityTransaction;
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
+import com.ADG04.Servidor.dao.MapaDeRutaDao;
+import com.ADG04.Servidor.dao.ProveedorDao;
+import com.ADG04.Servidor.dao.SucursalDao;
+import com.ADG04.Servidor.dao.VehiculoDao;
 import com.ADG04.Servidor.model.CoordenadaE;
 import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.model.EnvioE;
@@ -269,28 +279,30 @@ public class Envio{
 		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
 		MapaDeRutaE mr = e.getMapaDeRuta();
 		
-		List<CoordenadaE> lista = mr.getCoordenadas();
-		Boolean encontrado = false;
-		
-		for(CoordenadaE coord: mr.getCoordenadas()){
-			if(posicionActual.getLatitud().equals(coord.getLatitud()) && posicionActual.getLongitud().equals(coord.getLongitud())){
-				encontrado=true;
-			}
-		}
-		
-		if(!encontrado){
-			if(e.getEstado()==EnvioEstado.EnViaje.toString()){
-				e.setEstado(EnvioEstado.Desviado.toString());
-			}
-			else {
-				if(e.getEstado()==EnvioEstado.Desviado.toString()){
-					e.setEstado(EnvioEstado.Alerta.toString());
+		if(mr!=null){
+			List<CoordenadaE> lista = mr.getCoordenadas();
+			Boolean encontrado = false;
+			
+			for(CoordenadaE coord: mr.getCoordenadas()){
+				if(posicionActual.getLatitud().equals(coord.getLatitud()) && posicionActual.getLongitud().equals(coord.getLongitud())){
+					encontrado=true;
 				}
 			}
+			
+			if(!encontrado){
+				if(e.getEstado()==EnvioEstado.EnViaje.toString()){
+					e.setEstado(EnvioEstado.Desviado.toString());
+				}
+				else {
+					if(e.getEstado()==EnvioEstado.Desviado.toString()){
+						e.setEstado(EnvioEstado.Alerta.toString());
+					}
+				}
+			}
+			CoordenadaE coorE = CoordenadaDao.getInstancia().getById(posicionActual.getIdCoordenada());
+			e.setPosicionActual(coorE);
+			EnvioDao.getInstancia().persist(e);
 		}
-		CoordenadaE coorE = CoordenadaDao.getInstancia().getById(posicionActual.getIdCoordenada());
-		e.setPosicionActual(coorE);
-		EnvioDao.getInstancia().persist(e);
 	}
 	
 	public void estaEnvioDemorado(){
@@ -331,6 +343,58 @@ public class Envio{
 		tx.commit();
 	}
 
+	public EnvioE toEntity(){
+		EnvioE  env = new EnvioE();
+		env.setEstado(estado);
+		env.setFechaYHoraLlegadaEstimada(fechaYHoraLlegadaEstimada);
+		env.setFechaYHoraSalida(fechaYHoraSalida);
+		env.setIdEnvio(idEnvio);
+		env.setNroTracking(nroTracking);
+		env.setPropio(propio);
+		env.setMapaDeRuta(MapaDeRutaDao.getInstancia().getById(this.mapaDeRuta.getIdMapaDeRuta()));
+		env.setProveedor(ProveedorDao.getInstancia().getById(this.proveedor.getIdProveedor()));
+		env.setVehiculo(VehiculoDao.getInstancia().getById(this.vehiculo.getIdVehiculo()));
+		env.setPosicionActual(CoordenadaDao.getInstancia().getById(this.posicionActual.getIdCoordenada()));
+		env.setSucursalDestino(SucursalDao.getInstancia().getById(this.getSucursalDestino().getIdSucursal()));
+		env.setSucursalOrigen(SucursalDao.getInstancia().getById(this.getSucursalOrigen().getIdSucursal()));
+		return env;
+	}
 	
+	public Envio fromEntity(EnvioE e){
+		Envio  env = new Envio();
+		env.setEstado(e.getEstado());
+		env.setFechaYHoraLlegadaEstimada(e.getFechaYHoraLlegadaEstimada());
+		env.setFechaYHoraSalida(e.getFechaYHoraSalida());
+		env.setIdEnvio(e.getIdEnvio());
+		env.setNroTracking(e.getNroTracking());
+		env.setPropio(e.isPropio());
+		
+		MapaDeRuta mapa = null;
+		if(e.getMapaDeRuta()==null){
+			MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+			mapa = new MapaDeRuta().fromEntity(mr);
+		}
+		else{
+			mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
+		}
+		
+		if(mapa!=null)
+			env.setMapaDeRuta(mapa);	
+		
+		env.setProveedor(new Proveedor().fromEntity(e.getProveedor()));
+		env.setVehiculo(new Vehiculo().fromEntity(e.getVehiculo()));
+		env.setPosicionActual(new Coordenada().fromEntity(e.getPosicionActual()));
+		env.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
+		env.setSucursalOrigen(new Sucursal().fromEntity(e.getSucursalOrigen()));
+		
+		List<Encomienda> lista = new ArrayList<Encomienda>();
+		for(EncomiendaE enc : e.getEncomiendas()){
+			Encomienda en = new Encomienda().fromEntity(enc);
+			lista.add(en);
+		}
+		env.setEncomiendas(lista);
+		
+		return env;
+	}
 	
 }

@@ -4,6 +4,7 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
+import com.ADG04.Servidor.model.CoordenadaE;
 import com.ADG04.bean.Encomienda.DTO_Coordenada;
 
 public class Coordenada{
@@ -62,4 +63,11 @@ public class Coordenada{
 		return dto;
 	}
 
+	public Coordenada fromEntity(CoordenadaE coord) {
+		Coordenada c = new Coordenada();
+		c.setIdCoordenada(coord.getIdCoordenada());
+		c.setLatitud(coord.getLatitud());
+		c.setLongitud(coord.getLongitud());
+		return c;
+	}
 }

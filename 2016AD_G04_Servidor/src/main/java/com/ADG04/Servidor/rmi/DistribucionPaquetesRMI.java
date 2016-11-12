@@ -17,6 +17,7 @@ import com.ADG04.Negocio.Direccion;
 import com.ADG04.Negocio.Encomienda;
 import com.ADG04.Negocio.EncomiendaEmpresa;
 import com.ADG04.Negocio.EncomiendaParticular;
+import com.ADG04.Negocio.Envio;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
 import com.ADG04.Negocio.GestionVehiculo;
@@ -1763,6 +1764,17 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			listado.add(remito.toDTO());
 		}
 		return listado;
+	}
+
+
+	@Override
+	public void actualizarEstadoEnvios() throws RemoteException {
+		List<EnvioE> envios = EnvioDao.getInstancia().getAll();
+		for(EnvioE envio :envios){
+			Envio e = new Envio().fromEntity(envio);
+			e.estaEnvioDemorado();
+			e.actualizarEstadoVehiculo(e.getPosicionActual().getLatitud(), e.getPosicionActual().getLongitud());
+		}
 	}
 
 

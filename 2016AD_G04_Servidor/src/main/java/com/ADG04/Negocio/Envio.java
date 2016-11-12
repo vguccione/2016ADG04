@@ -2,6 +2,7 @@ package com.ADG04.Negocio;
 // default package
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,8 +39,22 @@ import java.util.Set;
 
 
 
+
+
+
+
+
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.ADG04.Servidor.dao.CoordenadaDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
@@ -290,11 +305,11 @@ public class Envio{
 			}
 			
 			if(!encontrado){
-				if(e.getEstado()==EnvioEstado.EnViaje.toString()){
+				if(e.getEstado().equals(EnvioEstado.EnViaje.toString())){
 					e.setEstado(EnvioEstado.Desviado.toString());
 				}
 				else {
-					if(e.getEstado()==EnvioEstado.Desviado.toString()){
+					if(e.getEstado().equals(EnvioEstado.Desviado.toString())){
 						e.setEstado(EnvioEstado.Alerta.toString());
 					}
 				}

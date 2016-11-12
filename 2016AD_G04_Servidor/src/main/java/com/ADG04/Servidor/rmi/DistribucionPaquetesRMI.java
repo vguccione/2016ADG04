@@ -1,6 +1,8 @@
 package com.ADG04.Servidor.rmi;
 
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -8,6 +10,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.ADG04.Negocio.Cliente;
 import com.ADG04.Negocio.ClienteEmpresa;
@@ -1768,13 +1778,95 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 
 	@Override
-	public void actualizarEstadoEnvios() throws RemoteException {
+	public void actualizarEstadoEnvios(String dir) throws RemoteException {
 		List<EnvioE> envios = EnvioDao.getInstancia().getAll();
 		for(EnvioE envio :envios){
 			Envio e = new Envio().fromEntity(envio);
 			e.estaEnvioDemorado();
-			e.actualizarEstadoVehiculo(e.getPosicionActual().getLatitud(), e.getPosicionActual().getLongitud());
+			CoordenadaE coord = obtenerPosicionActual(e.getIdEnvio(),dir);
+			String latitud = e.getPosicionActual().getLatitud();
+			String longitud = e.getPosicionActual().getLongitud();
+				
+			if(coord!=null){
+				latitud = coord.getLatitud();
+				longitud = coord.getLongitud();
+			}
+				
+			e.actualizarEstadoVehiculo(latitud, longitud);
 		}
+	}
+
+	private CoordenadaE obtenerPosicionActual(int idEnvio, String dir) throws RemoteException {
+
+    	EnvioE env = EnvioDao.getInstancia().getById(idEnvio);
+    	CoordenadaE coord  = new CoordenadaE();
+    	
+    	if(env.getVehiculo()!=null){
+			//File f = new File("./PosicionVehiculos/");
+			File f = new File("./"+dir+"/");
+	
+	    	File[] matchingFiles = f.listFiles(new FilenameFilter() {
+	    	    public boolean accept(File dir, String name) {
+	    	    	
+	    	        return name.startsWith(env.getVehiculo().getPatente());
+	    	    }
+	    	});
+	    	
+	    	long latestModified = -1;
+	    	File lastModifiedFile = null;
+	    	
+	    	for(File file:matchingFiles){
+	    		if(f.lastModified() > latestModified) {
+	                lastModifiedFile = file;
+	                latestModified = file.lastModified();
+	            }
+	    	}
+	    	
+	    	Envio e = new Envio().fromEntity(env);
+	
+	    	try{
+	    	if(lastModifiedFile!=null){	
+		    	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(lastModifiedFile);
+		
+				doc.getDocumentElement().normalize();
+		
+				System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+		
+				NodeList nList = doc.getElementsByTagName("vehiculo");
+		
+				System.out.println("----------------------------");
+		
+				for (int temp = 0; temp < nList.getLength(); temp++) {
+		
+					Node nNode = nList.item(temp);
+		
+					System.out.println("\nCurrent Element :" + nNode.getNodeName());
+		
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+		
+						Element eElement = (Element) nNode;
+		
+						System.out.println("Patente Vehiculo : " + eElement.getAttribute("patente"));
+						System.out.println("Nro Remito : " + eElement.getElementsByTagName("nroRemito").item(0).getTextContent());
+						System.out.println("Fecha : " + eElement.getElementsByTagName("fecha").item(0).getTextContent());
+						System.out.println("Hora : " + eElement.getElementsByTagName("hora").item(0).getTextContent());
+						System.out.println("Latitud : " + eElement.getElementsByTagName("latitud").item(0).getTextContent());
+						System.out.println("Longitud : " + eElement.getElementsByTagName("longitud").item(0).getTextContent());
+		
+						coord.setLatitud(eElement.getElementsByTagName("latitud").item(0).getTextContent());
+						coord.setLongitud(eElement.getElementsByTagName("longitud").item(0).getTextContent());
+					}
+				}
+				return coord;
+	    	 }
+		    } 
+	    	catch (Exception exc) {
+		    	exc.printStackTrace();
+		    }
+    	}
+    	return null;
 	}
 
 

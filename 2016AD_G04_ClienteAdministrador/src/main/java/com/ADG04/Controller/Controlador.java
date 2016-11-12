@@ -521,7 +521,7 @@ public class Controlador {
 	
 	public void actualizarEstadoEnvios(){
 		try{
-			bd.actualizarEstadoEnvios();
+			bd.actualizarEstadoEnvios("PosicionVehiculos");
 		}
 		catch(Exception e){
 			e.printStackTrace();

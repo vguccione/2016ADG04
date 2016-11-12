@@ -1,5 +1,7 @@
 package com.ADG04.Servidor;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -12,8 +14,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.hibernate.type.descriptor.java.UUIDTypeDescriptor.ToStringTransformer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.ADG04.Negocio.*;
 import com.ADG04.Repositorio.Exceptions.BusinessException;
@@ -55,118 +63,96 @@ public class App
 	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-    	List<DTO_Producto> listado = new ArrayList<DTO_Producto>();
-		for(ProductoE prod : ProductoDao.getInstancia().getAll()){
-			Producto p = new Producto().fromEntity(prod);
-			listado.add(p.toDTO());
+
+    	List<EnvioE> envios = EnvioDao.getInstancia().getAll();
+		for(EnvioE envio :envios){
+			Envio e = new Envio().fromEntity(envio);
+			e.estaEnvioDemorado();
+			CoordenadaE coord = obtenerPosicionActual(e.getIdEnvio(),"PosicionVehiculos");
+			String latitud = e.getPosicionActual().getLatitud();
+			String longitud = e.getPosicionActual().getLongitud();
+				
+			if(coord!=null){
+				latitud = coord.getLatitud();
+				longitud = coord.getLongitud();
+			}
+				
+			e.actualizarEstadoVehiculo(latitud, longitud);
 		}
-		
-    	/*
-    	   	
-    	BusinessDelegate bd = new BusinessDelegate();
-    	
-    	
-    	Vehiculo veh = new Vehiculo().fromEntity(VehiculoDao.getInstancia().getById(4013));
-    	DTO_Vehiculo v = veh.toDTO();
-    	
-		v.setTipo("Camioneta");
-		v.setPatente("ADK111");
-		v.setMarca("CCC");
-		v.setModelo("DDDD");
-		v.setKmsRecorridos(1100f);
-		v.setAncho(1100f);
-		v.setAlto(250f);
-		v.setLargo(2230f);
-		v.setPeso(1140f);
-		v.setTara(2200f);
-		v.setVolumen(1350f);
-		v.setAnio("1234");
-		v.setFechaIngreso(new Date());
-	
-	/*	v.setUltimoMantenimiento(fechaUltMant);
-		v.setUltimoUso(fechaUltUso);
-		v.setVencimientoGarantia(vencimientoGarantia); 
-		v.setSucursal(new Sucursal().fromDTO(v.getSucursal()).toDTO());
-		v.setTemperaturaMin(1070f);
-		v.setTemperaturaMax(200f);
-		v.setPlanMantenimiento(bd.getPlanMantenimiento(1));
-		
-		veh = new Vehiculo().fromDTO(v);
-		veh.modificar();*/
-		
-    	/*BusinessDelegate bd = new BusinessDelegate();
-    	DTO_Sucursal suc = new DTO_Sucursal();
-    	suc.setDescripcion("hola suc");
-    	
-    	DTO_Direccion dir = new DTO_Direccion();
-	    dir.setCalle("calle");
-	    dir.setCodigoPostal(123);
-	    dir.setLocalidad("cap");
-	    dir.setNro(12);
-	    PaisE pais = PaisDao.getInstancia().getById(1);
-	    ProvinciaE prov = ProvinciaDao.getInstancia().getById(1);
-	    dir.setPais(pais.toDTO());
-	    dir.setProvincia(prov.toDTO());
-    	suc.setDireccion(dir);
-    	
-    	suc.setIdGerente(1);
-    	suc.setTelefono("123132");
-    	
-   	bd.altaSucursal(suc);
-   
-    DTO_Proveedor p = new DTO_Proveedor();
-    p.setActivo("1");
-    p.setRazonSocial("RAZON");
-    p.setCuit("444");
-    DTO_Direccion dir = new DTO_Direccion();
-    dir.setCalle("calle");
-    dir.setCodigoPostal(123);
-    dir.setLocalidad("cap");
-    dir.setNro(12);
-    PaisE pais = PaisDao.getInstancia().getById(1);
-    ProvinciaE prov = ProvinciaDao.getInstancia().getById(1);
-    dir.setPais(pais.toDTO());
-    dir.setProvincia(prov.toDTO());
-    
-    p.setDireccion(dir);
-    p.setEmail("dana@dana.com");
-    p.setTelefono("1231233");
-    
-    BusinessDelegate bd = new BusinessDelegate();
-    bd.altaProveedor(p);
-   */ 	
-   
-	//testControlViajes();
-     	//VehiculosTest.TestVehiculos();
-        //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
-
-    	//VehiculosTest.TestVehiculos();
-       //EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
-
-    	//VehiculosTest.TestVehiculos();
-    	//EncomiendasTest.TestCrearEncomiendaYAsignaleElEnvio();
-    	//testControlViajes();
-
-    	
-    	//TestTareasVencidas(20);
-    	//TestCrearPlanesYTareasYVehiculos();
-        //TestRealizarTareas();
-    	
-    	//TestGetPlanes();    	
-    	//crearPaisesYProvincias();
-    	//TestAltaCliente();
-    	//TestEncomienda();
-        //testAsignarEnvios();
-    	//TestFacturaEncomiendaParticular();
-    	
-    	//TestSucursal("Sucursal Origen");
-    	//TestSucursal("Sucursal Destino");
-    	
-    	//TestPaisDao();
-    	//TestUsuario();
     	
     	System.exit(0);
     }
+    
+    private static  CoordenadaE obtenerPosicionActual(int idEnvio, String dir) {
+
+    	EnvioE env = EnvioDao.getInstancia().getById(idEnvio);
+    	CoordenadaE coord  = new CoordenadaE();
+    	
+    	if(env.getVehiculo()!=null){
+			//File f = new File("./PosicionVehiculos/");
+			File f = new File("./"+dir+"/");
+	
+	    	File[] matchingFiles = f.listFiles(new FilenameFilter() {
+	    	    public boolean accept(File dir, String name) {
+	    	    	
+	    	        return name.startsWith(env.getVehiculo().getPatente());
+	    	    }
+	    	});
+	    	
+	    	long latestModified = -1;
+	    	File lastModifiedFile = null;
+	    	
+	    	for(File file:matchingFiles){
+	    		if(f.lastModified() > latestModified) {
+	                lastModifiedFile = file;
+	                latestModified = file.lastModified();
+	            }
+	    	}
+	    	
+	    	Envio e = new Envio().fromEntity(env);
+	
+	    	try{
+	    	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(lastModifiedFile);
+	
+			doc.getDocumentElement().normalize();
+	
+			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+	
+			NodeList nList = doc.getElementsByTagName("vehiculo");
+	
+			System.out.println("----------------------------");
+	
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+	
+				Node nNode = nList.item(temp);
+	
+				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+	
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+	
+					Element eElement = (Element) nNode;
+	
+					System.out.println("Patente Vehiculo : " + eElement.getAttribute("patente"));
+					System.out.println("Nro Remito : " + eElement.getElementsByTagName("nroRemito").item(0).getTextContent());
+					System.out.println("Fecha : " + eElement.getElementsByTagName("fecha").item(0).getTextContent());
+					System.out.println("Hora : " + eElement.getElementsByTagName("hora").item(0).getTextContent());
+					System.out.println("Latitud : " + eElement.getElementsByTagName("latitud").item(0).getTextContent());
+					System.out.println("Longitud : " + eElement.getElementsByTagName("longitud").item(0).getTextContent());
+	
+					coord.setLatitud(eElement.getElementsByTagName("latitud").item(0).getTextContent());
+					coord.setLongitud(eElement.getElementsByTagName("longitud").item(0).getTextContent());
+				}
+			}
+			return coord;
+		    } 
+	    	catch (Exception exc) {
+		    	exc.printStackTrace();
+		    }
+    	}
+    	return null;
+	}
     
     	private static void TestAltaCliente() {  	
     	DTO_Direccion dir = new DTO_Direccion();

@@ -3,6 +3,7 @@ package com.ADG04.Servidor.rmi;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -55,6 +59,7 @@ import com.ADG04.Negocio.Usuario;
 import com.ADG04.Negocio.Vehiculo;
 import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
+import com.ADG04.Repositorio.Exceptions.MyRMIException;
 import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
 import com.ADG04.Repositorio.Interfaces.InterfazRemotaDistribucionPaquetes;
 import com.ADG04.Servidor.dao.ClienteDao;
@@ -113,6 +118,7 @@ import com.ADG04.Servidor.model.ServicioSeguridadE;
 import com.ADG04.Servidor.model.ProveedorE;
 import com.ADG04.Servidor.model.UsuarioE;
 import com.ADG04.Servidor.model.VehiculoE;
+import com.ADG04.Servidor.util.ExceptionManager;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
 import com.ADG04.bean.Administracion.DTO_Provincia;
@@ -152,10 +158,14 @@ import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements InterfazRemotaDistribucionPaquetes {
 
+    Logger logger = Logger.getLogger("MyLog");  
+    
 	private static final long serialVersionUID = 1L;
 
-	public DistribucionPaquetesRMI() throws RemoteException {
+	public DistribucionPaquetesRMI() throws SecurityException, IOException {
 		super();
+		
+		logger = ExceptionManager.InitLogger("DistribucionPaquetesRMI", logger);
 	}
 	
 
@@ -451,6 +461,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encP) throws BusinessException {
 		
+		try{
 		//Cuando creo la encomienda, la sucursal actual es la misma que la de origen
 		Sucursal sucursalActual = new Sucursal();
 		sucursalActual.setIdSucursal(encP.getSucursalOrigen().getId());
@@ -467,6 +478,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		//Direccion direccionOrigen = new Direccion();
 		//direccionOrigen.setIdDireccion(encP.getDireccionOrigen().getIdDireccion());
 
+		if(encP.getCliente() == null || encP.getCliente().getId() == null){
+			throw new ClientNotFoundException();	
+		}
+		
 		ClienteParticularE cliE = (ClienteParticularE)ClienteDao.getInstancia().getById(encP.getCliente().getId());
 		
 		if(sucursalActual == null)
@@ -516,6 +531,26 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		nuevaEncomienda.asignarEnvio(null);
 		
 		return idEncomienda;
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		    // the following statement is used to log any messages  
+	        logger.info("My first log");
+	        
+	        String msg = "";
+	        StackTraceElement[] ts = ex.getStackTrace();
+	        for(StackTraceElement t:ts){
+	        	msg += " - " + t.toString();
+	        	msg += " - " + t.getClassName() +" - " + t.getFileName()+" - " +t.getMethodName()+" - " + t.getLineNumber();
+	        }
+
+	        msg += " - " + ex.getCause().getMessage();
+	        
+	        logger.severe(msg);
+	        
+			throw ex;
+		
+		}
 	}
 	
 	@SuppressWarnings("unused")

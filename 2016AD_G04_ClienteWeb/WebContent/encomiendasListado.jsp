@@ -152,17 +152,14 @@ $(document).ready(function() {
 	  			$("#divTodo").load("altaCliente.jsp");
 	  		});
 	  		
-	  		$("#menu_new_encom_particular").on("click",function(){
+	  		/*$("#menu_new_encom_particular").on("click",function(){
 	  			$("#divTodo").load("altaEncomiendaParticular_ok.jsp");
-	  		});
+	  		});*/
 	  		
 	  		$("#menu_new_encom_empresa").on("click",function(){
 	  			$("#divTodo").load("altaEncomiendaEmpresa.jsp");
 	  		});
 	  		
-	  		$("#menu_ingreso_encom_stock_empresa").on("click",function(){
-	  			$("#divTodo").load("altaEncomiendaEnStock.jsp");
-	  		});
 
 	  		$("#menu_pagar_fact_particular").on("click",function(){
 	  			$("#divTodo").load("pagarFacturaParticular.jsp");
@@ -233,9 +230,7 @@ $(document).ready(function() {
         							<ul class="sub-menu">
         									<li><a id="menu_new_encom_particular">Nueva Encomienda Particular</a></li>
         									<li><a id="menu_new_encom_empresa">Nueva Encomienda Empresa</a></li>
-        									<li><a id="menu_ingreso_encom_stock_empresa">Ingresar Encomienda al stock</a>
-        									<li><a id="menu_egresar_encom_stock_empresa">Egresar Encomienda del stock</a>
-        							</ul>
+									</ul>
         					</li>
         					<li class="parent">
         						<a class="parent" href="#"> ENV&Iacute;OS</a>

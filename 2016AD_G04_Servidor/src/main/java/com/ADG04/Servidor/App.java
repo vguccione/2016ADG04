@@ -194,7 +194,7 @@ public class App
 	}
 	
 	public static Integer TestEncomienda(int idSucursalOrigen, int idSucursalDestino, String dniCliente, int nmro, float alto
-			,float peso, float volumen, float carga, int dias, float largo, float ancho) throws RemoteException, BusinessException{
+			,float peso, float volumen, float carga, int dias, float largo, float ancho) throws BusinessException, SecurityException, IOException{
 		
 		int idCliente = ClienteDao.getInstancia().getByDni(dniCliente).getIdCliente();
 		
@@ -772,7 +772,7 @@ public class App
 	 * Fecha de recepcion: hoy + días por parámtro.
 	 */
 	public static EncomiendaE testEncomienda(int idSucursalOrigen, int idSucursalDestino, int idCliente, int nmro, float alto
-			,float peso, float volumen, float carga, int dias) throws RemoteException, BusinessException{
+			,float peso, float volumen, float carga, int dias) throws BusinessException, SecurityException, IOException{
 				
 		float nro = nmro;
 		DTO_ClienteParticular cli = new DTO_ClienteParticular();

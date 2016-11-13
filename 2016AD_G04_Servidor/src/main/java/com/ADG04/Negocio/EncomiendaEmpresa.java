@@ -336,11 +336,6 @@ public class EncomiendaEmpresa extends Encomienda{
 		return dto;
 	}
 
-	public void facturar() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public EncomiendaEmpresa fromEntity(EncomiendaE ence) {
 		EncomiendaEmpresa enc = new EncomiendaEmpresa();
 		enc.setAlto(ence.getAlto());
@@ -392,6 +387,7 @@ public class EncomiendaEmpresa extends Encomienda{
 		return enc;
 	}
 
+	
 	
 	
 }

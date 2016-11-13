@@ -113,11 +113,12 @@ public class ServletEncomiendaParticular extends HttpServlet {
 						else
 							e.setTercerizada(false);
 
-						DTO_ClienteParticular cliente = new DTO_ClienteParticular();
-						
-						cliente.setNombre((String)request.getParameter("nombreParticular"));
-						cliente.setApellido((String)request.getParameter("apellidoParticular"));
-						cliente.setDni((String)request.getParameter("dniParticular"));
+						DTO_ClienteParticular cliente = WebBusinessDelegate.getInstancia().getClienteParticularByDni((String)request.getParameter("dniParticular"));
+			
+						//cliente.setNombre((String)request.getParameter("nombreParticular"));
+						//cliente.setApellido((String)request.getParameter("apellidoParticular"));
+						//cliente.setDni((String)request.getParameter("dniParticular"));
+							
 						e.setCliente(cliente);
 						
 						e.setDniReceptor((String)request.getParameter("dniReceptor"));
@@ -138,7 +139,6 @@ public class ServletEncomiendaParticular extends HttpServlet {
 				}
 			}
 	
-			dispatch(jspPage, request, response);
 		
 		}
 		catch(BusinessException cEx){
@@ -149,6 +149,9 @@ public class ServletEncomiendaParticular extends HttpServlet {
 			e.printStackTrace();
 			jspPage = "mostrarMensaje.jsp";
 			request.setAttribute("mensaje", "Ha ocurrido un error");
+		}
+		finally{
+			dispatch(jspPage, request, response);
 		}
 	}
 	

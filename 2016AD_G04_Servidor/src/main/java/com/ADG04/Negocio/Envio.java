@@ -415,6 +415,7 @@ public class Envio{
 
 	public EnvioE toEntity(){
 		EnvioE  env = new EnvioE();
+		env.setIdEnvio(this.idEnvio);
 		env.setEstado(estado);
 		env.setFechaYHoraLlegadaEstimada(fechaYHoraLlegadaEstimada);
 		env.setFechaYHoraSalida(fechaYHoraSalida);
@@ -430,7 +431,7 @@ public class Envio{
 		env.setSucursalDestino(SucursalDao.getInstancia().getById(this.getSucursalDestino().getIdSucursal()));
 		env.setSucursalOrigen(SucursalDao.getInstancia().getById(this.getSucursalOrigen().getIdSucursal()));
 		env.setFechaActualizacion(fechaActualizacion);
-	
+		
 		return env;
 	}
 	

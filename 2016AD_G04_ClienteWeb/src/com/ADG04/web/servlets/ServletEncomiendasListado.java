@@ -37,23 +37,38 @@ public class ServletEncomiendasListado extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		//String postcode = request.getParameter("type") ;
-		//if(postcode == null || postcode.trim().length() == 0) postcode = "BS21 7RH";
-		//System.out.println("Type: " + postcode);
-			  
-		List<EncomiendaWeb> encomiendas = new ArrayList<EncomiendaWeb>();
-			 
-		int totalNumberOfPages = 1;
-		int currentPageNumber = 1;
-		int totalNumberOfRecords = 8; // All in there are 8 records in our dummy data object
-			 
-		JqGridData<EncomiendaWeb> gridData = new JqGridData<EncomiendaWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, encomiendas);
-		gridData.addItem(new EncomiendaWeb(1, 1, true));
-		gridData.addItem(new EncomiendaWeb(2, 2, false));
-		gridData.addItem(new EncomiendaWeb(3, 3, true));
-		System.out.println("Grid Data: " + gridData.getJsonString());
-		response.getWriter().write(gridData.getJsonString());
+		try{
+			//String postcode = request.getParameter("type") ;
+			//if(postcode == null || postcode.trim().length() == 0) postcode = "BS21 7RH";
+			//System.out.println("Type: " + postcode);
+				  
+			List<EncomiendaWeb> encomiendas = new ArrayList<EncomiendaWeb>();
+				 
+			int totalNumberOfPages = 1;
+			int currentPageNumber = 1;
+			int totalNumberOfRecords = 8; // All in there are 8 records in our dummy data object
+				 
+			List<DTO_EncomiendaParticular> encomiendasP = WebBusinessDelegate.getInstancia().listarEncomiendasParticulares();
+			JqGridData<EncomiendaWeb> gridData = new JqGridData<EncomiendaWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, encomiendas);
+			
+			for(DTO_EncomiendaParticular encP:encomiendasP){
 
+				boolean envioAsignado = (encP.getEnvio() != null);
+				gridData.addItem(new EncomiendaWeb(encP.getIdEncomienda(), encP.getCliente().getId(), envioAsignado));
+			}
+			
+			System.out.println("Grid Data: " + gridData.getJsonString());
+			response.getWriter().write(gridData.getJsonString());
+		}
+		catch(BusinessException cEx){
+			//jspPage = "mostrarMensaje.jsp";
+			request.setAttribute("mensaje", cEx.getMessage());	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			//jspPage = "mostrarMensaje.jsp";
+			request.setAttribute("mensaje", "Ha ocurrido un error");
+		}
 	}
 
 

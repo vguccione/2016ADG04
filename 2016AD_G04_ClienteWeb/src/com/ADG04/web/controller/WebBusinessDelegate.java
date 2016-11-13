@@ -380,8 +380,7 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	
 	public DTO_ClienteParticular getClienteParticularByDni(String dni)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return objetoRemoto.getClienteParticularByDni(dni);
 	}
 
 	
@@ -706,6 +705,10 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 
 	public Integer nuevaEncomiedaEmpresa(DTO_EncomiendaEmpresa encomiendaEmpresa) throws RemoteException, BusinessException {
 		return objetoRemoto.nuevaEncomiedaEmpresa(encomiendaEmpresa);		
+	}
+
+	public List<DTO_EncomiendaParticular> listarEncomiendasParticulares() throws RemoteException {
+		return objetoRemoto.listarEncomiendasParticulares();
 	}
 	
 	//Clientes-----------------------------------------------------------------

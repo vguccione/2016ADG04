@@ -382,7 +382,7 @@ public class GestionEncomienda {
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date()); // Now use today date.
 		c.add(Calendar.DATE, 30); // Adding 30 days
-		factura.setVencimiento(c.getTime());
+		factura.setFechaVencimiento(c.getTime());
 		
 		
 		//almaceno los items
@@ -670,7 +670,7 @@ public class GestionEncomienda {
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date()); // Now use today date.
 		c.add(Calendar.DATE, 30); // Adding 30 days
-		factura.setVencimiento(c.getTime());
+		factura.setFechaVencimiento(c.getTime());
 		
 		
 		//almaceno los items

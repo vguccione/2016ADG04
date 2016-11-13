@@ -1337,7 +1337,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	@Override
-	public DTO_Encomienda getEncomiendaParticular(Integer id)
+	public DTO_EncomiendaParticular getEncomiendaParticular(Integer id)
 			throws RemoteException {
 		DTO_EncomiendaParticular enc = new EncomiendaParticular().fromEntity(EncomiendaDao.getInstancia().getById(id)).toDTO();
 		if(enc.getTipoEncomienda().contains("P"))
@@ -1372,13 +1372,20 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public List<DTO_EncomiendaEmpresa> listarEncomiendasEmpresas()
 			throws RemoteException {
-		List<DTO_EncomiendaEmpresa> listaDTO = new ArrayList<DTO_EncomiendaEmpresa>();
-		List<EncomiendaE> lista = EncomiendaDao.getInstancia().getAllEmpresas();
-        for(EncomiendaE enc: lista){
-        	EncomiendaEmpresa ence = new EncomiendaEmpresa().fromEntity(enc);
-        	listaDTO.add( ence.toDTO());
-        }
-		 return listaDTO;
+		
+		try{
+			List<DTO_EncomiendaEmpresa> listaDTO = new ArrayList<DTO_EncomiendaEmpresa>();
+			List<EncomiendaE> lista = EncomiendaDao.getInstancia().getAllEmpresas();
+	        for(EncomiendaE enc: lista){
+	        	EncomiendaEmpresa ence = new EncomiendaEmpresa().fromEntity(enc);
+	        	listaDTO.add( ence.toDTO());
+	        }
+			 return listaDTO;
+		}
+		catch(Exception ex){
+			ExceptionManager.LogException(ex, logger);
+			throw ex;
+		}
 	}
 
 	@Override
@@ -1388,26 +1395,40 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	@Override
 	public List<DTO_EnvioPropio> listarEnviosPropios() throws RemoteException {
-		List<DTO_EnvioPropio> listaDTO = new ArrayList<DTO_EnvioPropio>();
-		List<EnvioE> lista = EnvioDao.getInstancia().getEnviosPropios();
-        for(EnvioE env: lista){
-        	Envio e = new Envio().fromEntity(env);
-        	listaDTO.add( (DTO_EnvioPropio) e.toDTO());
-        }
-		 return listaDTO;
+		
+		try{
+			List<DTO_EnvioPropio> listaDTO = new ArrayList<DTO_EnvioPropio>();
+			List<EnvioE> lista = EnvioDao.getInstancia().getEnviosPropios();
+	        for(EnvioE env: lista){
+	        	Envio e = new Envio().fromEntity(env);
+	        	listaDTO.add( (DTO_EnvioPropio) e.toDTO());
+	        }
+			return listaDTO;
+		}
+		catch(Exception ex){
+			ExceptionManager.LogException(ex, logger);
+			throw ex;
+		}
 	}
 
 	@Override
 	public List<DTO_EnvioTercerizado> listarEnviosTercerizados()
 			throws RemoteException {
-		List<DTO_EnvioTercerizado> listaDTO = new ArrayList<DTO_EnvioTercerizado>();
-		List<EnvioE> lista = EnvioDao.getInstancia().getEnviosTercerizados();
-        for(EnvioE env: lista){
-        	Envio e = new Envio().fromEntity(env);
-        	listaDTO.add( (DTO_EnvioTercerizado) e.toDTO());
-        }
-        
-		 return listaDTO;
+		
+		try{
+			List<DTO_EnvioTercerizado> listaDTO = new ArrayList<DTO_EnvioTercerizado>();
+			List<EnvioE> lista = EnvioDao.getInstancia().getEnviosTercerizados();
+	        for(EnvioE env: lista){
+	        	Envio e = new Envio().fromEntity(env);
+	        	listaDTO.add( (DTO_EnvioTercerizado) e.toDTO());
+	        }
+	        
+			return listaDTO;
+		} catch(Exception ex){
+			ExceptionManager.LogException(ex, logger);
+			throw ex;
+		}
+
 	}
 
 	@Override

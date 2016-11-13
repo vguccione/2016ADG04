@@ -7,10 +7,15 @@
 	 <script type="text/javascript" src="js/mainmenu.js"></script>
 	 <script src="jquery/jquery-ui.js" type="text/javascript"></script>
 	 <script type="text/javascript" src="jquery/jquery.timepicker.js"></script>
+    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
+    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
+	 
 	 <!-- Hojas de estilo -->
 	 <link href="css/style.css" rel="stylesheet" type="text/css" />
 	 <link href="jquery/jquery-ui.css" rel="stylesheet" type="text/css" />
 	 <link href="css/jquery.timepicker.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
+	 
 	 <!-- Fonts -->
 	 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 	 <link href="css/font-awesome.css" rel="stylesheet" type="text/css" >

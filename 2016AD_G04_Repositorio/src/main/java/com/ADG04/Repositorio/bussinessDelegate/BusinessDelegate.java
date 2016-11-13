@@ -668,7 +668,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.buscarFacturasPendientesByDniCliente(filtro);
 	}
 
-	public DTO_Encomienda getEncomiendaParticular(Integer id)throws RemoteException {
+	public DTO_EncomiendaParticular getEncomiendaParticular(Integer id)throws RemoteException {
 		return this.businessService.getEncomiendaParticular(id);
 	}
 

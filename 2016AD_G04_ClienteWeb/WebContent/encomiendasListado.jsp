@@ -7,170 +7,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- Cabecera -->
-<head>
- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Consultar Encomiendas</title>
- 
- <script src="jquery/jquery-2.1.1.js" type="text/javascript"></script>
- <script type="text/javascript" src="js/mainmenu.js"></script>
-<script src="jquery/jquery-ui.js" type="text/javascript"></script>
- <script type="text/javascript" src="jquery/jquery.timepicker.js"></script>
- 
-     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
-    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
-    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
- 
- <!-- Hojas de estilo -->
- <link href="css/style.css" rel="stylesheet" type="text/css" />
- <link href="jquery/jquery-ui.css" rel="stylesheet" type="text/css" />
- <link href="css/jquery.timepicker.css" rel="stylesheet" type="text/css">
- <!-- Fonts -->
- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
- <link href="css/font-awesome.css" rel="stylesheet" type="text/css" >
- 
-</head>
+<%@ include file="header.jsp" %>
+
 <!-- Fin Cabecera -->
-<!-- Declaraciones -->
-<%
-	String usuario;
-    String sucursal;
-    String encomienda;
-    String destinos;
-    String estado;
-    String sucursalNombre;
-	
-	usuario = "";
-	sucursal = "0";
-	encomienda = "0";
-	destinos = "";
-	sucursalNombre = "";
-	
-	HttpSession sesionIntento = request.getSession();
-	if(sesionIntento.getAttribute("usuario") != null){
-		usuario = (String)sesionIntento.getAttribute("usuario");
-		sucursal = (String)sesionIntento.getAttribute("sucursal");
-	}   
-	encomienda = (String)request.getAttribute("idEncomienda");
-	destinos = (String)request.getAttribute("destinos");
-	sucursalNombre = (String)request.getAttribute("sucursalNombre");
-	estado = (String)request.getAttribute("estado");
-%>
-<input id="iInt_Logueado" type="hidden" value =""/>
-<input id="iStr_User"     type="hidden" value =""/>
+
 <!-- Fin Declaraciones -->
 
 <!-- Scripts -->
 <script type="text/javascript">
-/*
-   $(window).load(function(){
-	    var data = [[48803, "DSK1", "", "02200220", "OPEN1"], [48769, "APPR", "", "77733337", "ENTERED1"]];
-	     
-	    $("#grid").jqGrid({
-	        datatype: "local",
-	        height: 250,
-	        colNames: ['Inv No', 'Thingy', 'Blank', 'Number', 'Status'],
-	        colModel: [{
-	            name: 'id',
-	            index: 'id',
-	            width: 60,
-	            sorttype: "int"},
-	        {
-	            name: 'thingy',
-	            index: 'thingy',
-	            width: 90,
-	            sorttype: "date"},
-	        {
-	            name: 'blank',
-	            index: 'blank',
-	            width: 30},
-	        {
-	            name: 'number',
-	            index: 'number',
-	            width: 80,
-	            sorttype: "float"},
-	        {
-	            name: 'status',
-	            index: 'status',
-	            width: 80,
-	            sorttype: "float"}
-	        ],
-	        caption: "Static Data Example",
-	        // ondblClickRow: function(rowid,iRow,iCol,e){alert('double clicked');}
-	    });
-	     
-	    var names = ["id", "thingy", "blank", "number", "status"];
-	    var mydata = [];
-	     
-	    for (var i = 0; i < data.length; i++) {
-	        mydata[i] = {};
-	        for (var j = 0; j < data[i].length; j++) {
-	            mydata[i][names[j]] = data[i][j];
-	        }
-	    }
-	    
-	    for (var i = 0; i <= mydata.length; i++) {
-	        $("#grid").jqGrid('addRowData', i + 1, mydata[i]);
-	    }
-	  */  
-	    /*
-	    $("#grid").jqGrid('setGridParam', {onSelectRow: function(rowid,iRow,iCol,e){alert('row clicked');}});
-	    */
-	/*    $("#grid").jqGrid('setGridParam', {ondblClickRow: function(rowid,iRow,iCol,e){alert('double clicked');}});
-	     
-	   });*/
-
 
 
 $(document).ready(function() {	
 	
-	
-	  	  var usuario = <%= '"' + usuario + '"'%>
-	  	  var sucursal = <%= '"' + sucursal + '"'%>
-	  	  var sucursalNombre = <%= '"' + sucursalNombre + '"'%>
-	  	  var encomienda = <%= '"' + encomienda + '"'%>
-	  	  var estado = <%= '"' + estado + '"'%>
- 	  
-
-		  if(usuario == "")	
-		  {	  
-	  		$("#nombreUsuario").text("");
-	 		$("#divLogin").load("login.jsp");
-	 		$("#lCerrarSesion").text("");
-	 		
-		  }
-		  else
-		  {
-	  		$("#nombreUsuario").text("Hola " + usuario + "("+sucursal+")" );
-	  		$("#lCerrarSesion").text("Cerrar Sesion");
-	  		$("#cerrarSesion").load("logout.jsp");
-
-	  		
-
-	  		$("#menu_nuevo_cliente").on("click",function(){
-	  			$("#divTodo").load("altaCliente.jsp");
-	  		});
-	  		
-	  		/*$("#menu_new_encom_particular").on("click",function(){
-	  			$("#divTodo").load("altaEncomiendaParticular_ok.jsp");
-	  		});*/
-	  		
-	  		$("#menu_new_encom_empresa").on("click",function(){
-	  			$("#divTodo").load("altaEncomiendaEmpresa.jsp");
-	  		});
-	  		
-
-	  		$("#menu_pagar_fact_particular").on("click",function(){
-	  			$("#divTodo").load("pagarFacturaParticular.jsp");
-	  		});
-
-	  		$("#menu_egresar_encom_stock_empresa").on("click",function(){
-	  			$("#divTodo").load("egresarEncomiendaEnStock.jsp");
-	  		});
-
-	   	  }
-
              $("#projectTable").jqGrid({
                   url: "servletEncomiendasListado",//?type=BS21 7RH",
                   datatype: "json",

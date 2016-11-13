@@ -49,7 +49,7 @@ public class JqGridData<T> {
 		return JSONValue.toJSONString(map);
 	}
 
-	public void addItem(T encomiendaWeb) {
-		this.rows.add(encomiendaWeb);
+	public void addItem(T item) {
+		this.rows.add(item);
 	}
 }

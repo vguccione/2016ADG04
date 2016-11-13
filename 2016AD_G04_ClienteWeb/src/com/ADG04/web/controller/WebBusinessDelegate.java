@@ -710,6 +710,14 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	public List<DTO_EncomiendaParticular> listarEncomiendasParticulares() throws RemoteException {
 		return objetoRemoto.listarEncomiendasParticulares();
 	}
+
+	public List<DTO_EncomiendaEmpresa> listarEncomiendasEmpresa() throws RemoteException {
+		return this.objetoRemoto.listarEncomiendasEmpresas();
+	}
+
+	public DTO_EncomiendaParticular getEncomiendaParticular(int idEncomienda) throws RemoteException {
+		return objetoRemoto.getEncomiendaParticular(idEncomienda);
+	}
 	
 	//Clientes-----------------------------------------------------------------
 	// TODO Completar el metodo	altaCliente

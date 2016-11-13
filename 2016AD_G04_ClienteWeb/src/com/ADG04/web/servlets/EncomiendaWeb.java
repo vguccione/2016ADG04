@@ -5,9 +5,7 @@ public class EncomiendaWeb {
 	private Integer idEncomienda;
 	private Integer idCliente;
 	private Boolean envioAsignado;
-	
-	
-	
+		
 	public EncomiendaWeb(Integer idEncomienda, Integer idCliente,
 			Boolean envioAsignado) {
 		super();

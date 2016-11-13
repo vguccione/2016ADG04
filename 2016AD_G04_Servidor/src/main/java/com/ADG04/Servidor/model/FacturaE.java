@@ -48,12 +48,13 @@ public class FacturaE implements java.io.Serializable {
 	@Column(name = "Pagada", nullable = false)
 	private boolean pagada;
 	
-	@Column(name="FechaVencimiento")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="FechaVencimiento", nullable = false, length = 23)
 	private Date fechaVencimiento;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	/*@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Vencimiento", nullable = false, length = 23)
-	private Date vencimiento;
+	private Date vencimiento;*/
 	
 	@OneToOne
 	@JoinColumn(name="IdEncomienda")
@@ -65,13 +66,13 @@ public class FacturaE implements java.io.Serializable {
 	public FacturaE() {
 	}
 
-	public FacturaE(int idFactura, String tipoFactura, Date fecha, boolean pagada,
-			Date vencimiento) {
+	public FacturaE(int idFactura, String tipoFactura, Date fecha, boolean pagada){
+			//Date vencimiento) {
 		this.idFactura = idFactura;
 		this.tipoFactura = tipoFactura;
 		this.fecha = fecha;
 		this.pagada = pagada;
-		this.vencimiento = vencimiento;
+		//this.vencimiento = vencimiento;
 	}
 
 	
@@ -116,13 +117,6 @@ public class FacturaE implements java.io.Serializable {
 		this.pagada = pagada;
 	}
 
-	public Date getVencimiento() {
-		return this.vencimiento;
-	}
-
-	public void setVencimiento(Date vencimiento) {
-		this.vencimiento = vencimiento;
-	}
 
 	public Date getFechaVencimiento() {
 		return fechaVencimiento;

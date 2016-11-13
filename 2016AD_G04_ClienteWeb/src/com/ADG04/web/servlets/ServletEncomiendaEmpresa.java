@@ -43,78 +43,35 @@ public class ServletEncomiendaEmpresa extends HttpServlet {
 		String jspPage = "mostrarMensaje.jsp";
 
 		try { 	
-			
-				if("buscarCliente".equals(action)){
-					String text = "some text";
+			if("buscarCliente".equals(action)){
+				String text = "some text";
 
-				    response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-				    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-				    response.getWriter().write(text);       // Write response body.
-					//doPost(request, response);
-				}
-				if ("altaEncomiendaEmpresa".equals(action)) {
+			    response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+			    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+			    response.getWriter().write(text);       // Write response body.
+				//doPost(request, response);
+			}
+			if ("altaEncomiendaEmpresa".equals(action)) {
 
-					Integer idEncomienda = SaveEncomienda(request);
-					
-					jspPage = "mostrarMensaje.jsp";
-					request.setAttribute("mensaje", "La encomienda se ha generado correctamente y con el numero: " + Integer.toString(idEncomienda));	
+				Integer idEncomienda = SaveEncomienda(request);
+				
+				jspPage = "mostrarMensaje.jsp";
+				request.setAttribute("mensaje", "La encomienda se ha generado correctamente y con el numero: " + Integer.toString(idEncomienda));	
 
-				}
-				else
-				{
-					/*jspPage = "mostrarMensaje.jsp";
-					request.setAttribute("mensaje", "Ha ocurrido un error con la encomienda");	
-					
-					if ("altaEncomiendaEnStock".equals(action)){
-						DTO_EncomiendaEmpresa es = new DTO_EncomiendaEmpresa();
-						es.setIdEncomienda(Integer.parseInt((String)request.getParameter("idEncomienda")));
-						
-						Integer reciboStock = WebBusinessDelegate.getInstancia().ingresarEncomiendaEmpresaAStock(es);
-						Integer envio = WebBusinessDelegate.getInstancia().asignarEnvio(Integer.parseInt((String)request.getParameter("idEncomienda")));
-						jspPage = "mostrarMensaje.jsp";
-						request.setAttribute("mensaje", "La encomienda se ha ingresado al stock. El numero de recibo comprobante es : " + Integer.toString(reciboStock) + " Se le ha asignado el envio:" + envio);	
-						
-					}
-					else
-					{
-						jspPage = "mostrarMensaje.jsp";
-						request.setAttribute("mensaje", "Ha ocurrido un error con el stock");	
-						
-						if ("egresarEncomiendaEnStock".equals(action)){
-							
-							Integer stock = Integer.parseInt((String)request.getParameter("idStock"));
-							Integer fact = Integer.parseInt((String)request.getParameter("idEncomienda"));
-							
-							
-							Integer remitoStock = WebBusinessDelegate.getInstancia().egresarEncomiendaEmpresaDeStock(stock,fact);
-							
-							jspPage = "mostrarMensaje.jsp";
-							request.setAttribute("mensaje", "La encomienda se ha egresado del stock. El numero de remito es : " + Integer.toString(remitoStock));	
-							
-						}
-						else
-						{
-							jspPage = "mostrarMensaje.jsp";
-							request.setAttribute("mensaje", "Ha ocurrido un error con el stock");	
-						
-						}						
-					}
-						*/			
-				}
-			
-				dispatch(jspPage, request, response);
-		
+			}
+
 		}
 		catch(BusinessException cEx){
-			jspPage = "mostrarMensaje.jsp";
-			request.setAttribute("mensaje", cEx.getMessage());	
+			cEx.printStackTrace();
+			request.setAttribute("mensaje", cEx.getMessage());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			jspPage = "mostrarMensaje.jsp";
 			request.setAttribute("mensaje", "Ha ocurrido un error");
 		}
-	
+		finally{
+			dispatch(jspPage, request, response);
+		}
 	}
 
 

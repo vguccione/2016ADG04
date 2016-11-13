@@ -63,7 +63,7 @@ $(document).ready(function() {
 	  	  var sucursal = <%= '"' + sucursal + '"'%>
 	  	  var sucursalNombre = <%= '"' + sucursalNombre + '"'%>
 	  	  var encomienda = <%= '"' + encomienda + '"'%>
-	  	  var estado = <%= '"' + estado + '"'%>
+	  	  /*var estado = <%= /*'"' + estado + '"'*/%>*/
 	
 		  if(usuario == "")	
 		  {	  
@@ -84,9 +84,9 @@ $(document).ready(function() {
 	  			$("#divTodo").load("altaCliente.jsp");
 	  		});
 	  		
-	  		$("#menu_new_encom_particular").on("click",function(){
+	  		/*$("#menu_new_encom_particular").on("click",function(){
 	  			$("#divTodo").load("altaEncomiendaParticular.jsp");
-	  		});
+	  		});*/
 	  		
 	   	  }
 
@@ -149,8 +149,8 @@ $(document).ready(function() {
         					<li class="parent">
         						<a class="parent" href="#"> ENCOMIENDA</a>
         							<ul class="sub-menu">
-        									<li><a id="menu_new_encom_particular">Nueva Encomienda Particular</a></li>
-        									<li><a id="menu_new_encom_empresa">Nueva Encomienda Empresa</a></li>
+        									<li><a id="menu_new_encom_particular" href="altaEncomiendaParticular.jsp">Nueva Encomienda Particular</a></li>
+        									<li><a id="menu_new_encom_empresa" href="altaEncomiendaEmpresa.jsp">Nueva Encomienda Empresa</a></li>
         							</ul>
         					</li>
         					<li class="parent">

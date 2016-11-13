@@ -17,6 +17,7 @@ import java.util.Set;
 
 
 
+
 import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
 import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
@@ -33,6 +34,7 @@ import com.ADG04.Servidor.dao.SeguroDao;
 import com.ADG04.Servidor.dao.ServicioSeguridadDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.model.EnvioE;
@@ -686,8 +688,12 @@ public  class Encomienda{
 			calendar.setTime(hoy);
 			calendar.add(Calendar.HOUR, (int) mr.getDuracion());
 			
+			System.out.println("esEnvioTercerizado-------------");
+			System.out.println("this.getFechaEstimadaEntrega(): " + this.getFechaEstimadaEntrega());
+			
 			//Si tengo que enviarlo si o si hoy para que llegue y no hay vehiculos disponibles
-			if(this.getFechaEstimadaEntrega().compareTo(calendar.getTime())==0 ){
+			if(this.getFechaEstimadaEntrega() != null &&
+					(this.getFechaEstimadaEntrega().compareTo(calendar.getTime())==0) ){
 				if(!hayVehiculosDisponibles()){
 					return true;
 				}
@@ -744,7 +750,7 @@ public  class Encomienda{
 		return EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
 	}
 	
-public void facturar() throws BusinessException {
+	public void facturar() throws BusinessException {
 		
 		//Calculo la primer linea de la factura - El valor del transporte lo define la cantidad de km y el costo
 		//que se obtiene del mapa de ruta. 
@@ -795,6 +801,8 @@ public void facturar() throws BusinessException {
 		FacturaE facturaEntity = new FacturaE();//("A", new Date(), false, c.getTime(), this);
 		facturaEntity.setFecha(new Date());
 		facturaEntity.setEncomienda(this.toEntity());
+		System.out.println("FechaVencimiento: ");
+		System.out.println(c.getTime().toString());
 		facturaEntity.setFechaVencimiento(c.getTime());
 		facturaEntity.setPagada(false);
 		facturaEntity.setTipoFactura("A");
@@ -813,7 +821,7 @@ public void facturar() throws BusinessException {
 		EncomiendaDao.getInstancia().saveOrUpdate(encomiendaEntity);
 		
 		//Actualizo los datos de factura en el objeto this
-		this.factura = new Factura(fe.getTipoFactura(), fe.getFecha(), fe.isPagada(), fe.getVencimiento(), this);
+		this.factura = new Factura(fe.getTipoFactura(), fe.getFecha(), fe.isPagada(), fe.getFechaVencimiento(), this);
 		this.factura.setIdFactura(fe.getIdFactura());
 		for(ItemFactura item:this.getFactura().getItemsFactura()){
 			this.factura.addItem(item);
@@ -829,7 +837,7 @@ public void facturar() throws BusinessException {
 		SucursalE actual = SucursalDao.getInstancia().getById(this.getSucursalActual().getIdSucursal());
 		SucursalE origen = SucursalDao.getInstancia().getById(this.getSucursalOrigen().getIdSucursal());
 		SucursalE destino = SucursalDao.getInstancia().getById(this.getSucursalDestino().getIdSucursal());
-		ClienteEmpresaE cli = (ClienteEmpresaE)ClienteDao.getInstancia().getById(this.getCliente().getIdCliente());
+		ClienteE cli = ClienteDao.getInstancia().getById(this.getCliente().getIdCliente());
 		
 		if(actual == null)
 			throw new SucursalNotFoundException(this.getSucursalActual().getIdSucursal());
@@ -841,6 +849,8 @@ public void facturar() throws BusinessException {
 			throw new ClientNotFoundException();
 				
 		EncomiendaE encomienda = new EncomiendaE();
+		if(this.idEncomienda != 0)
+			encomienda.setIdEncomienda(this.idEncomienda);
 		encomienda.setCliente(cli);
 		encomienda.setSucursalOrigen(origen);
 		encomienda.setSucursalActual(actual);
@@ -869,6 +879,7 @@ public void facturar() throws BusinessException {
 		encomienda.setTercerizado(this.isTercerizado());
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
 		encomienda.setFechaCreacion(new Date());
+		encomienda.setFechaEstimadaEntrega(this.fechaEstimadaEntrega);		
 		
 		//El Mapa de Ruta es el encargado de calcular la fecha de entrega, porque la calculamos en base a 
 		//la distancia

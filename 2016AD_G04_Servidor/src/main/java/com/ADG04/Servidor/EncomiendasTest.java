@@ -131,7 +131,7 @@ public class EncomiendasTest {
 	}
 	
 
-	private static void asignarEnvios(int idSucursal, int idEncomienda) throws RemoteException {
+	private static void asignarEnvios(int idSucursal, int idEncomienda) throws SecurityException, IOException {
 
 		DistribucionPaquetesRMI bDelegate = new DistribucionPaquetesRMI();
 		

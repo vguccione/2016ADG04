@@ -2,10 +2,10 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
 body {
-	color: #666;
+	color: #E6E6E6;/*#666;*/
 	font-family: 'Open Sans', sans-serif;
 	margin:0px;
-	padding:0px;
+	padding:100px;
 }
 
 a {
@@ -43,6 +43,7 @@ ol, ul {
 
 .relative {
 	position: relative;
+	padding: 100px;
 }
 
 .right {

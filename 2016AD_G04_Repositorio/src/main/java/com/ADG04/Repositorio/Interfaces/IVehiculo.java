@@ -14,9 +14,9 @@ public interface IVehiculo {
 	
 	public List<DTO_Vehiculo> listarVehiculos() throws RemoteException;;
 	public Integer altaVehiculo(DTO_Vehiculo v) throws RemoteException;
-	public void altaTareaMantenimiento(DTO_TareasPorKilometro tareaXKM, Integer idVehiculo) throws RemoteException, Exception  ;
-	public Integer altaPlanMantenimiento(DTO_PlanMantenimiento pm, Integer idVehiculo)	throws RemoteException, Exception;
-	public Integer altaTareaMantenimiento(DTO_TareasPorTiempo tareaXTiempo, Integer idVehiculo) throws RemoteException, Exception  ;
+	//public void altaTareaMantenimiento(DTO_TareasPorKilometro tareaXKM, Integer idVehiculo) throws RemoteException, Exception  ;
+	//public Integer altaPlanMantenimiento(DTO_PlanMantenimiento pm, Integer idVehiculo)	throws RemoteException, Exception;
+	//public Integer altaTareaMantenimiento(DTO_TareasPorTiempo tareaXTiempo, Integer idVehiculo) throws RemoteException, Exception  ;
 	public List<DTO_TareaMantenimiento> getTareasVencidas(int idVehiculo)throws RemoteException  ;
 	public List<DTO_PlanMantenimiento> listarPlanesMantenimiento() throws RemoteException;
 	public List<DTO_TareaMantenimientoRealizada> listarTareaMantenimientoRealizada() throws RemoteException;

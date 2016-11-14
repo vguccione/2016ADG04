@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
-import com.ADG04.Negocio.GestionVehiculo;
+import com.ADG04.Negocio._GestionVehiculo;
 import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
 import com.ADG04.Servidor.dao.TareaMantenimientoDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
@@ -42,7 +42,7 @@ public class VehiculosTest {
 			
 			int idVehiculo = getIntFromConsole("Id Vehiculo: ");
 			VehiculoE vehiculo = VehiculoDao.getInstancia().getById(idVehiculo);
-			List<TareaMantenimientoE> tareasVencidas= new GestionVehiculo(vehiculo).getTareasVencidas();
+			List<TareaMantenimientoE> tareasVencidas= new _GestionVehiculo(vehiculo).getTareasVencidas();
 			if(tareasVencidas == null || tareasVencidas.isEmpty()) { System.out.println("No hay tareas vencidas."); }
 			ok = getStringFromConsole("Buscar tareas vencidas de otro vehículo (si/no)?");
 		}
@@ -80,7 +80,7 @@ public class VehiculosTest {
 
 	private static void TestTareasVencidas(int idVehiculo){
     	
-		List<TareaMantenimientoE> tareas = new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).getTareasVencidas(); 
+		List<TareaMantenimientoE> tareas = new _GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).getTareasVencidas(); 
 		System.out.println("\n----------------Tareas que deben realizarse:-----------------------------");		    	
     	for(TareaMantenimientoE t :tareas){
     		System.out.println(t.getTarea());
@@ -160,7 +160,7 @@ public class VehiculosTest {
    	
     	System.out.println("---------------------------Planes de mantenimiento - Vehiculo: " + idVehiculo + "---------------------");
     	
-    	DTO_PlanMantenimiento planDTO = new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).getPlan();
+    	DTO_PlanMantenimiento planDTO = new _GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).getPlan();
     	System.out.println(planDTO.getDescripcion());
     	System.out.println("------------------------------------------------------------");
     	System.out.println("Plan de mantenimiento del vehiculo " + idVehiculo);
@@ -189,7 +189,7 @@ public class VehiculosTest {
     	pm.setDescripcion(descPlan);
     	pm.setTolerancia(123);
     	
-    	int idPm = new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).altaPlanMantenimiento(pm.getDescripcion(), pm.getComentarios());
+    	int idPm = new _GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).altaPlanMantenimiento(pm.getDescripcion(), pm.getComentarios());
     	System.out.println("Plan nro " + idPm + " creado.");
     	return idPm;
 	}
@@ -201,7 +201,7 @@ public class VehiculosTest {
     	tareaXKM.setIdPlanMantenimiento(idPlanMantenimiento);
     	tareaXKM.setTarea(tareaKm);
     	
-    	GestionVehiculo gestion = new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo));
+    	_GestionVehiculo gestion = new _GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo));
     	gestion.altaTareaMantenimientoPorKm(tareaXKM.getTarea(), tareaXKM.getCantidadKilometros());
     	
     	DTO_TareasPorTiempo tareaXTiempo = new DTO_TareasPorTiempo();
@@ -218,7 +218,7 @@ public class VehiculosTest {
     	tRealizada.setIdProveedor(idProveedor);
     	tRealizada.setIdVehiculo(idVehiculo);
     	tRealizada.setIdTareaMantenimiento(idTarea);
-    	new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).realizarTareaMantenimiento(tRealizada);
+    	new _GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).realizarTareaMantenimiento(tRealizada);
     }
     
     private static void TestRealizarTareaPorTiempo(int idVehiculo, int idProveedor, int idTarea, Date fechaRealizada) throws Exception{
@@ -228,7 +228,7 @@ public class VehiculosTest {
     	tRealizada.setIdProveedor(idProveedor);
     	tRealizada.setIdVehiculo(idVehiculo);
     	tRealizada.setIdTareaMantenimiento(idTarea);
-    	new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).realizarTareaMantenimiento(tRealizada);
+    	new _GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).realizarTareaMantenimiento(tRealizada);
     }
     	
 	private static String getStringFromConsole(String msg) throws IOException{

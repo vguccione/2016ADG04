@@ -40,18 +40,18 @@ import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
-public class GestionVehiculo {
+public class _GestionVehiculo {
 
 	private PlanMantenimientoE planMantenimiento;
 	private VehiculoE vehiculo;
 	private List<TareaMantenimientoRealizadaE> tareasRealizadas = new ArrayList<TareaMantenimientoRealizadaE>();
 	private EntityManagerFactory factory;
 			
-	public GestionVehiculo(){
+	public _GestionVehiculo(){
 		factory = EntityManagerProvider.getInstance().getEntityManagerFactory();
 	}
 	
-	public GestionVehiculo(VehiculoE vehiculo){
+	public _GestionVehiculo(VehiculoE vehiculo){
 		
 		this.vehiculo = vehiculo;
 		this.tareasRealizadas = new ArrayList<TareaMantenimientoRealizadaE>();

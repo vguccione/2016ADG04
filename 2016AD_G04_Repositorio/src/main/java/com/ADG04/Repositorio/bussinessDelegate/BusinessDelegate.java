@@ -456,7 +456,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		return this.businessService.altaVehiculo(v);
 	}
 
-	public void altaTareaMantenimiento(DTO_TareasPorKilometro tareaXKM, Integer idVehiculo) throws RemoteException, Exception  {
+	/*public void altaTareaMantenimiento(DTO_TareasPorKilometro tareaXKM, Integer idVehiculo) throws RemoteException, Exception  {
 		this.businessService.altaTareaMantenimiento(tareaXKM, idVehiculo);		
 	}
 
@@ -467,7 +467,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public Integer altaTareaMantenimiento(DTO_TareasPorTiempo tareaXTiempo, Integer idVehiculo) throws RemoteException, Exception   {
 		return this.businessService.altaTareaMantenimiento(tareaXTiempo, idVehiculo);
 	}
-
+*/
 	public List<com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento> getTareasVencidas(int idVehiculo) throws RemoteException   {
 		return this.businessService.getTareasVencidas(idVehiculo);
 	}

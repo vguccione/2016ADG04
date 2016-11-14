@@ -3,9 +3,12 @@ package com.ADG04.Negocio;
 // Generated Sep 8, 2016 3:23:54 PM by Hibernate Tools 3.4.0.CR1
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+
 
 
 
@@ -27,9 +30,17 @@ import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.VehiculoDao;
+import com.ADG04.Servidor.model.SucursalE;
+import com.ADG04.Servidor.model.TareaMantenimientoE;
+import com.ADG04.Servidor.model.TareaMantenimientoPorKmE;
+import com.ADG04.Servidor.model.TareaMantenimientoPorTiempoE;
 import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EntityManagerProvider;
+import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
+import com.ADG04.bean.Vehiculo.DTO_TareaMantenimiento;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
+import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
 public class Vehiculo{
@@ -418,6 +429,84 @@ public class Vehiculo{
 		em.getTransaction().begin();
 		VehiculoDao.getInstancia().saveOrUpdate(this.toEntity());
 		em.getTransaction().commit();	
+	}
+	
+	public boolean tieneTareasVencidas() {
+		
+		List<TareaMantenimientoE> tareas = new ArrayList<TareaMantenimientoE>(); 
+		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorKm(this.getIdVehiculo()));
+		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(this.getIdVehiculo()));
+	
+		if(tareas.size()!=0)
+			return true;
+		else
+			return false;
+	}
+
+	
+	public boolean estaUtilizable() {
+
+		if(this.getEstado() == EnvioEstado.Pendiente.toString() || this.getEstado() == "" ||  
+				this.getEstado() == null)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean estaAsignado() {
+		
+		long asignado = VehiculoDao.getInstancia().getEstadoAsignacion(this.toEntity());
+		if(asignado == 0)
+			return false;
+		else
+			return true;	
+	}
+
+	public List<TareaMantenimientoE> getTareasVencidas() {
+		
+		List<TareaMantenimientoE> tareas = new ArrayList<TareaMantenimientoE>(); 
+		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorKm(this.getIdVehiculo()));
+		tareas.addAll(PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(this.getIdVehiculo()));
+		
+		return tareas;
+	}
+	
+	public List<DTO_TareaMantenimiento> getTareasVencidas2() {
+		
+		List<DTO_TareaMantenimiento> tareas = new ArrayList<DTO_TareaMantenimiento>();
+		
+		List<TareaMantenimientoPorKmE> tKms = PlanMantenimientoDao.getInstancia().getTareasVencidasPorKm(this.getIdVehiculo());
+		List<TareaMantenimientoPorTiempoE> tTiempos = PlanMantenimientoDao.getInstancia().getTareasVencidasPorTiempo(this.getIdVehiculo());
+				
+		List<TareaMantenimientoPorKmE> tareasVencidasKm = new ArrayList<TareaMantenimientoPorKmE>();
+		List<TareaMantenimientoPorTiempoE> tareasVencidasTiempo = new ArrayList<TareaMantenimientoPorTiempoE>();
+		
+		tareasVencidasKm.addAll(tKms);
+		tareasVencidasTiempo.addAll(tTiempos);
+		
+		for(TareaMantenimientoPorTiempoE tt:tTiempos){
+			
+			DTO_TareasPorTiempo tDto = new DTO_TareasPorTiempo();
+			tDto.setCantidadDias(tt.getCantidadDias());
+			tDto.setId(tt.getIdTareaMantenimiento());
+			tDto.setIdPlanMantenimiento(tt.getPlanMantenimiento().getIdPlanMantenimiento());
+			tDto.setTarea(tt.getTarea());
+			
+			tareas.add(tDto);
+		}
+		
+		for(TareaMantenimientoPorKmE tt:tKms){
+			
+			DTO_TareasPorKilometro tDto = new DTO_TareasPorKilometro();
+			tDto.setCantidadKilometros(tt.getCantidadKilometros());
+			tDto.setId(tt.getIdTareaMantenimiento());
+			tDto.setIdPlanMantenimiento(tt.getPlanMantenimiento().getIdPlanMantenimiento());
+			tDto.setTarea(tt.getTarea());
+			
+			tareas.add(tDto);
+		}
+		
+		return tareas;
 	}
 
 }

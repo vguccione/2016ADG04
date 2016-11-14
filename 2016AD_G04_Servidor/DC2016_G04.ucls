@@ -282,669 +282,766 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="31">    
+  <class id="31" language="java" name="com.ADG04.Negocio.MapaDeRuta" project="2016AD_G04_Servidor" 
+    file="/2016AD_G04_Servidor/src/main/java/com/ADG04/Negocio/MapaDeRuta.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2949" y="681"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="false" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="com.ADG04.Negocio.Coordenada" project="2016AD_G04_Servidor" 
+    file="/2016AD_G04_Servidor/src/main/java/com/ADG04/Negocio/Coordenada.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3015" y="326"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="false" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="33">    
     <end type="SOURCE" refId="10" navigable="false" variant="ASSOCIATION">      
-      <attribute id="32" name="encomiendasSucursalActual"/>      
-      <multiplicity id="33" minimum="0" maximum="2147483647"/>    
+      <attribute id="34" name="encomiendasSucursalActual"/>      
+      <multiplicity id="35" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="34">    
+  <association id="36">    
     <end type="SOURCE" refId="15" navigable="false" variant="AGGREGATION">      
-      <attribute id="35" name="tareaMantenimiento"/>      
-      <multiplicity id="36" minimum="0" maximum="1"/>    
+      <attribute id="37" name="tareaMantenimiento"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="37">    
+  <association id="39">    
     <end type="SOURCE" refId="23" navigable="false" variant="ASSOCIATION">      
-      <attribute id="38" name="encomienda"/>      
-      <multiplicity id="39" minimum="0" maximum="1"/>    
+      <attribute id="40" name="encomienda"/>      
+      <multiplicity id="41" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="40">    
+  <association id="42">    
     <bendpoint x="2710" y="-1252"/>    
     <bendpoint x="2710" y="-1233"/>    
     <bendpoint x="2578" y="-1233"/>    
     <end type="SOURCE" refId="28" navigable="false" variant="ASSOCIATION">      
-      <attribute id="41" name="proveedor"/>      
-      <multiplicity id="42" minimum="0" maximum="1"/>    
+      <attribute id="43" name="proveedor"/>      
+      <multiplicity id="44" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="43">    
+  <association id="45">    
     <bendpoint x="1834" y="-1195"/>    
     <bendpoint x="2224" y="-1195"/>    
     <end type="SOURCE" refId="16" navigable="false" variant="AGGREGATION">      
-      <attribute id="44" name="manifiestos"/>      
-      <multiplicity id="45" minimum="0" maximum="2147483647"/>    
+      <attribute id="46" name="manifiestos"/>      
+      <multiplicity id="47" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="24" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="46">    
+  <association id="48">    
     <end type="SOURCE" refId="9" navigable="false" variant="COMPOSITION">      
-      <attribute id="47" name="tareasMantenimientoRealizadas"/>      
-      <multiplicity id="48" minimum="0" maximum="2147483647"/>    
+      <attribute id="49" name="tareasMantenimientoRealizadas"/>      
+      <multiplicity id="50" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="15" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="49">    
+  <association id="51">    
     <end type="SOURCE" refId="6" navigable="false" variant="AGGREGATION">      
-      <attribute id="50" name="cliente"/>      
-      <multiplicity id="51" minimum="0" maximum="1"/>    
+      <attribute id="52" name="cliente"/>      
+      <multiplicity id="53" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="52">    
+  <association id="54">    
     <end type="SOURCE" refId="22" navigable="false" variant="ASSOCIATION">      
-      <attribute id="53" name="encomienda"/>      
-      <multiplicity id="54" minimum="0" maximum="1"/>    
+      <attribute id="55" name="encomienda"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="55">    
+  <association id="57">    
     <end type="SOURCE" refId="12" navigable="false" variant="ASSOCIATION">      
-      <attribute id="56" name="tareasMantenimientoRealizadas"/>      
-      <multiplicity id="57" minimum="0" maximum="2147483647"/>    
+      <attribute id="58" name="tareasMantenimientoRealizadas"/>      
+      <multiplicity id="59" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="15" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="58">    
+  <association id="60">    
     <bendpoint x="389" y="577"/>    
     <bendpoint x="389" y="1020"/>    
     <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
-      <attribute id="59" name="vehiculos"/>      
-      <multiplicity id="60" minimum="0" maximum="2147483647"/>    
+      <attribute id="61" name="vehiculos"/>      
+      <multiplicity id="62" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="61">    
+  <association id="63">    
     <end type="SOURCE" refId="19" navigable="false" variant="ASSOCIATION">      
-      <attribute id="62" name="encomienda"/>      
-      <multiplicity id="63" minimum="0" maximum="1"/>    
+      <attribute id="64" name="encomienda"/>      
+      <multiplicity id="65" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="64">    
+  <association id="66">    
     <end type="SOURCE" refId="7" navigable="false" variant="COMPOSITION">      
-      <attribute id="65" name="encomiendas"/>      
-      <multiplicity id="66" minimum="0" maximum="2147483647"/>    
+      <attribute id="67" name="encomiendas"/>      
+      <multiplicity id="68" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="67">    
+  <association id="69">    
     <end type="SOURCE" refId="6" navigable="false" variant="COMPOSITION">      
-      <attribute id="68" name="factura"/>      
-      <multiplicity id="69" minimum="0" maximum="1"/>    
+      <attribute id="70" name="factura"/>      
+      <multiplicity id="71" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="70">    
+  <association id="72">    
     <end type="SOURCE" refId="25" navigable="false" variant="ASSOCIATION">      
-      <attribute id="71" name="remito"/>      
-      <multiplicity id="72" minimum="0" maximum="1"/>    
+      <attribute id="73" name="remito"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="23" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="73">    
+  <association id="75">    
     <bendpoint x="2336" y="1910"/>    
     <end type="SOURCE" refId="10" navigable="false" variant="ASSOCIATION">      
-      <attribute id="74" name="usuarios"/>      
-      <multiplicity id="75" minimum="0" maximum="2147483647"/>    
+      <attribute id="76" name="usuarios"/>      
+      <multiplicity id="77" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="29" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="76">    
+  <association id="78">    
     <end type="SOURCE" refId="7" navigable="false" variant="AGGREGATION">      
-      <attribute id="77" name="sucursalDestino"/>      
-      <multiplicity id="78" minimum="0" maximum="1"/>    
+      <attribute id="79" name="sucursalDestino"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="79">    
+  <association id="81">    
     <end type="SOURCE" refId="12" navigable="false" variant="ASSOCIATION">      
-      <attribute id="80" name="planMantenimiento"/>      
-      <multiplicity id="81" minimum="0" maximum="1"/>    
+      <attribute id="82" name="planMantenimiento"/>      
+      <multiplicity id="83" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="11" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="82">    
+  <association id="84">    
     <bendpoint x="1816" y="1144"/>    
     <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
-      <attribute id="83" name="planes"/>      
-      <multiplicity id="84" minimum="0" maximum="2147483647"/>    
+      <attribute id="85" name="planes"/>      
+      <multiplicity id="86" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="11" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="85">    
+  <association id="87">    
     <end type="SOURCE" refId="27" navigable="false" variant="ASSOCIATION">      
-      <attribute id="86" name="proveedor"/>      
-      <multiplicity id="87" minimum="0" maximum="1"/>    
+      <attribute id="88" name="proveedor"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="88">    
+  <association id="90">    
+    <end type="SOURCE" refId="31" navigable="false" variant="ASSOCIATION">      
+      <attribute id="91" name="sucursalDestino"/>      
+      <multiplicity id="92" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="93">    
     <end type="SOURCE" refId="10" navigable="false" variant="ASSOCIATION">      
-      <attribute id="89" name="encomiendasSucursalOrigen"/>      
-      <multiplicity id="90" minimum="0" maximum="2147483647"/>    
+      <attribute id="94" name="encomiendasSucursalOrigen"/>      
+      <multiplicity id="95" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <generalization id="91">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="12"/>  
-  </generalization>  
-  <association id="92">    
-    <bendpoint x="947" y="1600"/>    
-    <bendpoint x="2686" y="1600"/>    
-    <bendpoint x="2686" y="-338"/>    
-    <end type="SOURCE" refId="7" navigable="false" variant="AGGREGATION">      
-      <attribute id="93" name="proveedor"/>      
-      <multiplicity id="94" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="95">    
-    <end type="SOURCE" refId="17" navigable="false" variant="AGGREGATION">      
-      <attribute id="96" name="producto"/>      
-      <multiplicity id="97" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="98">    
-    <end type="SOURCE" refId="7" navigable="false" variant="AGGREGATION">      
-      <attribute id="99" name="sucursalOrigen"/>      
-      <multiplicity id="100" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="101">    
-    <end type="SOURCE" refId="6" navigable="false" variant="AGGREGATION">      
-      <attribute id="102" name="sucursalDestino"/>      
-      <multiplicity id="103" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="104">    
-    <end type="SOURCE" refId="22" navigable="false" variant="ASSOCIATION">      
-      <attribute id="105" name="itemsManifiesto"/>      
-      <multiplicity id="106" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="107">    
-    <end type="SOURCE" refId="29" navigable="false" variant="AGGREGATION">      
-      <attribute id="108" name="roles"/>      
-      <multiplicity id="109" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="30" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="110">    
-    <end type="SOURCE" refId="9" navigable="false" variant="AGGREGATION">      
-      <attribute id="111" name="sucursal"/>      
-      <multiplicity id="112" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="113">    
-    <end type="SOURCE" refId="17" navigable="false" variant="ASSOCIATION">      
-      <attribute id="114" name="encomienda"/>      
-      <multiplicity id="115" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="116">    
-    <end type="SOURCE" refId="16" navigable="false" variant="ASSOCIATION">      
-      <attribute id="117" name="productoEncomiendas"/>      
-      <multiplicity id="118" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="119">    
-    <end type="SOURCE" refId="19" navigable="false" variant="ASSOCIATION">      
-      <attribute id="120" name="cuentaCorriente"/>      
-      <multiplicity id="121" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="122">    
-    <end type="SOURCE" refId="26" navigable="false" variant="ASSOCIATION">      
-      <attribute id="123" name="proveedor"/>      
-      <multiplicity id="124" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="125">    
-    <bendpoint x="565" y="-1583"/>    
-    <bendpoint x="1700" y="-1583"/>    
-    <end type="SOURCE" refId="3" navigable="false" variant="AGGREGATION">      
-      <attribute id="126" name="productos"/>      
-      <multiplicity id="127" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="128">    
-    <bendpoint x="2835" y="272"/>    
-    <end type="SOURCE" refId="27" navigable="false" variant="ASSOCIATION">      
-      <attribute id="129" name="origen"/>      
-      <multiplicity id="130" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="131">    
-    <end type="SOURCE" refId="10" navigable="false" variant="ASSOCIATION">      
-      <attribute id="132" name="enviosSucursalOrigen"/>      
-      <multiplicity id="133" minimum="0" maximum="2147483647"/>    
+  <association id="96">    
+    <end type="SOURCE" refId="31" navigable="false" variant="ASSOCIATION">      
+      <attribute id="97" name="envios"/>      
+      <multiplicity id="98" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="134">    
-    <bendpoint x="2485" y="1531"/>    
-    <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
-      <attribute id="135" name="sucursales"/>      
-      <multiplicity id="136" minimum="0" maximum="2147483647"/>    
+  <generalization id="99">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="100">    
+    <bendpoint x="947" y="1600"/>    
+    <bendpoint x="2686" y="1600"/>    
+    <bendpoint x="2686" y="-338"/>    
+    <end type="SOURCE" refId="7" navigable="false" variant="AGGREGATION">      
+      <attribute id="101" name="proveedor"/>      
+      <multiplicity id="102" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
+    <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="137">    
-    <bendpoint x="2366" y="-789"/>    
-    <end type="SOURCE" refId="18" navigable="false" variant="ASSOCIATION">      
-      <attribute id="138" name="direccion"/>      
-      <multiplicity id="139" minimum="0" maximum="1"/>    
+  <association id="103">    
+    <end type="SOURCE" refId="32" navigable="false" variant="ASSOCIATION">      
+      <attribute id="104" name="rutas"/>      
+      <multiplicity id="105" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true" variant="ASSOCIATION"/>    
+    <end type="TARGET" refId="31" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="140">    
-    <bendpoint x="284" y="-1595"/>    
-    <bendpoint x="1728" y="-1595"/>    
-    <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
-      <attribute id="141" name="productos"/>      
-      <multiplicity id="142" minimum="0" maximum="2147483647"/>    
+  <association id="106">    
+    <end type="SOURCE" refId="17" navigable="false" variant="AGGREGATION">      
+      <attribute id="107" name="producto"/>      
+      <multiplicity id="108" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="16" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <generalization id="143">    
+  <association id="109">    
+    <end type="SOURCE" refId="7" navigable="false" variant="AGGREGATION">      
+      <attribute id="110" name="sucursalOrigen"/>      
+      <multiplicity id="111" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="112">    
+    <end type="SOURCE" refId="6" navigable="false" variant="AGGREGATION">      
+      <attribute id="113" name="sucursalDestino"/>      
+      <multiplicity id="114" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="115">    
+    <end type="SOURCE" refId="22" navigable="false" variant="ASSOCIATION">      
+      <attribute id="116" name="itemsManifiesto"/>      
+      <multiplicity id="117" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="118">    
+    <end type="SOURCE" refId="29" navigable="false" variant="AGGREGATION">      
+      <attribute id="119" name="roles"/>      
+      <multiplicity id="120" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="121">    
+    <end type="SOURCE" refId="9" navigable="false" variant="AGGREGATION">      
+      <attribute id="122" name="sucursal"/>      
+      <multiplicity id="123" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="124">    
+    <bendpoint x="392" y="1640"/>    
+    <bendpoint x="392" y="1888"/>    
+    <bendpoint x="3060" y="1888"/>    
+    <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
+      <attribute id="125" name="mapas"/>      
+      <multiplicity id="126" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="127">    
+    <end type="SOURCE" refId="10" navigable="false" variant="AGGREGATION">      
+      <attribute id="128" name="coordenadas"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="130">    
+    <end type="SOURCE" refId="17" navigable="false" variant="ASSOCIATION">      
+      <attribute id="131" name="encomienda"/>      
+      <multiplicity id="132" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="133">    
+    <end type="SOURCE" refId="16" navigable="false" variant="ASSOCIATION">      
+      <attribute id="134" name="productoEncomiendas"/>      
+      <multiplicity id="135" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="136">    
+    <end type="SOURCE" refId="19" navigable="false" variant="ASSOCIATION">      
+      <attribute id="137" name="cuentaCorriente"/>      
+      <multiplicity id="138" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="139">    
+    <end type="SOURCE" refId="26" navigable="false" variant="ASSOCIATION">      
+      <attribute id="140" name="proveedor"/>      
+      <multiplicity id="141" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="142">    
+    <bendpoint x="565" y="-1583"/>    
+    <bendpoint x="1700" y="-1583"/>    
+    <end type="SOURCE" refId="3" navigable="false" variant="AGGREGATION">      
+      <attribute id="143" name="productos"/>      
+      <multiplicity id="144" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="145">    
+    <bendpoint x="2835" y="272"/>    
+    <end type="SOURCE" refId="27" navigable="false" variant="ASSOCIATION">      
+      <attribute id="146" name="origen"/>      
+      <multiplicity id="147" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="148">    
+    <end type="SOURCE" refId="10" navigable="false" variant="ASSOCIATION">      
+      <attribute id="149" name="enviosSucursalOrigen"/>      
+      <multiplicity id="150" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="151">    
+    <bendpoint x="2485" y="1531"/>    
+    <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
+      <attribute id="152" name="sucursales"/>      
+      <multiplicity id="153" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="154">    
+    <bendpoint x="2366" y="-789"/>    
+    <end type="SOURCE" refId="18" navigable="false" variant="ASSOCIATION">      
+      <attribute id="155" name="direccion"/>      
+      <multiplicity id="156" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="157">    
+    <bendpoint x="284" y="-1595"/>    
+    <bendpoint x="1728" y="-1595"/>    
+    <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
+      <attribute id="158" name="productos"/>      
+      <multiplicity id="159" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="160">    
     <bendpoint x="962" y="-1301"/>    
     <bendpoint x="962" y="-1300"/>    
     <bendpoint x="887" y="-1300"/>    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <association id="144">    
+  <association id="161">    
     <end type="SOURCE" refId="6" navigable="false" variant="COMPOSITION">      
-      <attribute id="145" name="direccionDestino"/>      
-      <multiplicity id="146" minimum="0" maximum="1"/>    
+      <attribute id="162" name="direccionDestino"/>      
+      <multiplicity id="163" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <generalization id="147">    
+  <association id="164">    
+    <bendpoint x="1002" y="802"/>    
+    <bendpoint x="1019" y="802"/>    
+    <bendpoint x="1019" y="1583"/>    
+    <bendpoint x="3112" y="1583"/>    
+    <end type="SOURCE" refId="7" navigable="false" variant="ASSOCIATION">      
+      <attribute id="165" name="posicionActual"/>      
+      <multiplicity id="166" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="167">    
     <end type="SOURCE" refId="14"/>    
     <end type="TARGET" refId="12"/>  
   </generalization>  
-  <association id="148">    
+  <association id="168">    
     <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
-      <attribute id="149" name="encomiendas"/>      
-      <multiplicity id="150" minimum="0" maximum="2147483647"/>    
+      <attribute id="169" name="encomiendas"/>      
+      <multiplicity id="170" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="151">    
+  <association id="171">    
     <end type="SOURCE" refId="20" navigable="false" variant="COMPOSITION">      
-      <attribute id="152" name="cliente"/>      
-      <multiplicity id="153" minimum="0" maximum="1"/>    
+      <attribute id="172" name="cliente"/>      
+      <multiplicity id="173" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="154">    
+  <association id="174">    
     <end type="SOURCE" refId="10" navigable="false" variant="ASSOCIATION">      
-      <attribute id="155" name="vehiculos"/>      
-      <multiplicity id="156" minimum="0" maximum="2147483647"/>    
+      <attribute id="175" name="vehiculos"/>      
+      <multiplicity id="176" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="157">    
+  <association id="177">    
     <end type="SOURCE" refId="15" navigable="false" variant="ASSOCIATION">      
-      <attribute id="158" name="vehiculo"/>      
-      <multiplicity id="159" minimum="0" maximum="1"/>    
+      <attribute id="178" name="vehiculo"/>      
+      <multiplicity id="179" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="160">    
+  <association id="180">    
+    <end type="SOURCE" refId="31" navigable="false" variant="ASSOCIATION">      
+      <attribute id="181" name="sucursalOrigen"/>      
+      <multiplicity id="182" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="183">    
     <bendpoint x="1059" y="526"/>    
     <bendpoint x="1059" y="531"/>    
     <end type="SOURCE" refId="7" navigable="false" variant="ASSOCIATION">      
-      <attribute id="161" name="vehiculo"/>      
-      <multiplicity id="162" minimum="0" maximum="1"/>    
+      <attribute id="184" name="vehiculo"/>      
+      <multiplicity id="185" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="163">    
+  <association id="186">    
     <bendpoint x="2355" y="1922"/>    
     <end type="SOURCE" refId="10" navigable="false" variant="ASSOCIATION">      
-      <attribute id="164" name="gerente"/>      
-      <multiplicity id="165" minimum="0" maximum="1"/>    
+      <attribute id="187" name="gerente"/>      
+      <multiplicity id="188" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="29" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="166">    
+  <association id="189">    
     <end type="SOURCE" refId="8" navigable="false" variant="ASSOCIATION">      
-      <attribute id="167" name="envio"/>      
-      <multiplicity id="168" minimum="0" maximum="1"/>    
+      <attribute id="190" name="envio"/>      
+      <multiplicity id="191" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="169">    
+  <association id="192">    
     <bendpoint x="2275" y="-1511"/>    
     <bendpoint x="2275" y="-188"/>    
     <end type="SOURCE" refId="16" navigable="false" variant="ASSOCIATION">      
-      <attribute id="170" name="remitos"/>      
-      <multiplicity id="171" minimum="0" maximum="2147483647"/>    
+      <attribute id="193" name="remitos"/>      
+      <multiplicity id="194" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="25" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="172">    
+  <association id="195">    
     <bendpoint x="2294" y="129"/>    
     <bendpoint x="2293" y="129"/>    
     <bendpoint x="2293" y="-721"/>    
     <end type="SOURCE" refId="10" navigable="false" variant="COMPOSITION">      
-      <attribute id="173" name="direccion"/>      
-      <multiplicity id="174" minimum="0" maximum="1"/>    
+      <attribute id="196" name="direccion"/>      
+      <multiplicity id="197" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="175">    
+  <association id="198">    
     <end type="SOURCE" refId="11" navigable="false" variant="ASSOCIATION">      
-      <attribute id="176" name="vehiculos"/>      
-      <multiplicity id="177" minimum="0" maximum="2147483647"/>    
+      <attribute id="199" name="vehiculos"/>      
+      <multiplicity id="200" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="178">    
+  <association id="201">    
+    <bendpoint x="211" y="-1601"/>    
+    <bendpoint x="2540" y="-1601"/>    
+    <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
+      <attribute id="202" name="proveedores"/>      
+      <multiplicity id="203" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="204">    
     <end type="SOURCE" refId="10" navigable="false" variant="ASSOCIATION">      
-      <attribute id="179" name="encomiendasSucursalDestino"/>      
-      <multiplicity id="180" minimum="0" maximum="2147483647"/>    
+      <attribute id="205" name="encomiendasSucursalDestino"/>      
+      <multiplicity id="206" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="181">    
-    <bendpoint x="211" y="-1601"/>    
-    <bendpoint x="2540" y="-1601"/>    
-    <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
-      <attribute id="182" name="proveedores"/>      
-      <multiplicity id="183" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="184">    
+  <association id="207">    
     <end type="SOURCE" refId="6" navigable="false" variant="ASSOCIATION">      
-      <attribute id="185" name="envios"/>      
-      <multiplicity id="186" minimum="0" maximum="2147483647"/>    
+      <attribute id="208" name="envios"/>      
+      <multiplicity id="209" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="187">    
+  <association id="210">    
     <bendpoint x="1506" y="1559"/>    
     <bendpoint x="2529" y="1559"/>    
     <end type="SOURCE" refId="15" navigable="false" variant="AGGREGATION">      
-      <attribute id="188" name="proveedor"/>      
-      <multiplicity id="189" minimum="0" maximum="1"/>    
+      <attribute id="211" name="proveedor"/>      
+      <multiplicity id="212" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="190">    
+  <association id="213">    
+    <end type="SOURCE" refId="7" navigable="false" variant="ASSOCIATION">      
+      <attribute id="214" name="mapaDeRuta"/>      
+      <multiplicity id="215" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="216">    
     <end type="SOURCE" refId="6" navigable="false" variant="AGGREGATION">      
-      <attribute id="191" name="sucursalOrigen"/>      
-      <multiplicity id="192" minimum="0" maximum="1"/>    
+      <attribute id="217" name="sucursalOrigen"/>      
+      <multiplicity id="218" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="193">    
+  <association id="219">    
     <end type="SOURCE" refId="9" navigable="false" variant="AGGREGATION">      
-      <attribute id="194" name="planMantenimiento"/>      
-      <multiplicity id="195" minimum="0" maximum="1"/>    
+      <attribute id="220" name="planMantenimiento"/>      
+      <multiplicity id="221" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="11" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="196">    
+  <association id="222">    
     <end type="SOURCE" refId="3" navigable="false" variant="ASSOCIATION">      
-      <attribute id="197" name="cuentaCorrientes"/>      
-      <multiplicity id="198" minimum="0" maximum="1"/>    
+      <attribute id="223" name="cuentaCorrientes"/>      
+      <multiplicity id="224" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="20" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="199">    
+  <association id="225">    
+    <end type="SOURCE" refId="31" navigable="false" variant="AGGREGATION">      
+      <attribute id="226" name="coordenadas"/>      
+      <multiplicity id="227" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="228">    
     <bendpoint x="2266" y="-234"/>    
     <bendpoint x="2266" y="-1496"/>    
     <end type="SOURCE" refId="25" navigable="false" variant="ASSOCIATION">      
-      <attribute id="200" name="producto"/>      
-      <multiplicity id="201" minimum="0" maximum="1"/>    
+      <attribute id="229" name="producto"/>      
+      <multiplicity id="230" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="16" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="202">    
+  <association id="231">    
     <bendpoint x="2202" y="-1182"/>    
     <bendpoint x="1813" y="-1182"/>    
     <end type="SOURCE" refId="24" navigable="false" variant="ASSOCIATION">      
-      <attribute id="203" name="producto"/>      
-      <multiplicity id="204" minimum="0" maximum="1"/>    
+      <attribute id="232" name="producto"/>      
+      <multiplicity id="233" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="16" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="205">    
+  <association id="234">    
     <end type="SOURCE" refId="6" navigable="false" variant="COMPOSITION">      
-      <attribute id="206" name="direccionOrigen"/>      
-      <multiplicity id="207" minimum="0" maximum="1"/>    
+      <attribute id="235" name="direccionOrigen"/>      
+      <multiplicity id="236" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="208">    
+  <association id="237">    
     <end type="SOURCE" refId="10" navigable="false" variant="ASSOCIATION">      
-      <attribute id="209" name="enviosSucursalDestino"/>      
-      <multiplicity id="210" minimum="0" maximum="2147483647"/>    
+      <attribute id="238" name="enviosSucursalDestino"/>      
+      <multiplicity id="239" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <generalization id="211">    
+  <generalization id="240">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <association id="212">    
+  <association id="241">    
     <bendpoint x="1556" y="-1466"/>    
     <bendpoint x="1556" y="-938"/>    
     <end type="SOURCE" refId="2" navigable="false" variant="COMPOSITION">      
-      <attribute id="213" name="direccion"/>      
-      <multiplicity id="214" minimum="0" maximum="1"/>    
+      <attribute id="242" name="direccion"/>      
+      <multiplicity id="243" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="215">    
+  <association id="244">    
     <end type="SOURCE" refId="6" navigable="false" variant="AGGREGATION">      
-      <attribute id="216" name="sucursalActual"/>      
-      <multiplicity id="217" minimum="0" maximum="1"/>    
+      <attribute id="245" name="sucursalActual"/>      
+      <multiplicity id="246" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="218">    
+  <association id="247">    
     <end type="SOURCE" refId="23" navigable="false" variant="ASSOCIATION">      
-      <attribute id="219" name="itemsRemito"/>      
-      <multiplicity id="220" minimum="0" maximum="2147483647"/>    
+      <attribute id="248" name="itemsRemito"/>      
+      <multiplicity id="249" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="25" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="221">    
+  <association id="250">    
     <end type="SOURCE" refId="19" navigable="false" variant="ASSOCIATION">      
-      <attribute id="222" name="itemsFactura"/>      
-      <multiplicity id="223" minimum="0" maximum="2147483647"/>    
+      <attribute id="251" name="itemsFactura"/>      
+      <multiplicity id="252" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="21" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="224">    
+  <association id="253">    
     <bendpoint x="1463" y="-1496"/>    
     <bendpoint x="1463" y="-1497"/>    
     <end type="SOURCE" refId="16" navigable="false" variant="ASSOCIATION">      
-      <attribute id="225" name="cliente"/>      
-      <multiplicity id="226" minimum="0" maximum="1"/>    
+      <attribute id="254" name="cliente"/>      
+      <multiplicity id="255" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="227">    
+  <association id="256">    
     <end type="SOURCE" refId="20" navigable="false" variant="ASSOCIATION">      
-      <attribute id="228" name="facturas"/>      
-      <multiplicity id="229" minimum="0" maximum="2147483647"/>    
+      <attribute id="257" name="facturas"/>      
+      <multiplicity id="258" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="230">    
+  <association id="259">    
     <bendpoint x="1569" y="-862"/>    
     <bendpoint x="1566" y="-862"/>    
     <bendpoint x="1566" y="-1589"/>    
     <bendpoint x="3017" y="-1589"/>    
     <end type="SOURCE" refId="6" navigable="false" variant="AGGREGATION">      
-      <attribute id="231" name="servicioSeguridad"/>      
-      <multiplicity id="232" minimum="0" maximum="1"/>    
+      <attribute id="260" name="servicioSeguridad"/>      
+      <multiplicity id="261" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="28" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="233">    
+  <association id="262">    
     <end type="SOURCE" refId="6" navigable="false" variant="ASSOCIATION">      
-      <attribute id="234" name="manifiesto"/>      
-      <multiplicity id="235" minimum="0" maximum="1"/>    
+      <attribute id="263" name="manifiesto"/>      
+      <multiplicity id="264" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="22" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="236">    
+  <association id="265">    
     <end type="SOURCE" refId="11" navigable="false" variant="COMPOSITION">      
-      <attribute id="237" name="tareaMantenimientos"/>      
-      <multiplicity id="238" minimum="0" maximum="2147483647"/>    
+      <attribute id="266" name="tareaMantenimientos"/>      
+      <multiplicity id="267" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="239">    
+  <association id="268">    
     <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
-      <attribute id="240" name="encomiendas"/>      
-      <multiplicity id="241" minimum="0" maximum="2147483647"/>    
+      <attribute id="269" name="encomiendas"/>      
+      <multiplicity id="270" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="242">    
+  <association id="271">    
     <end type="SOURCE" refId="1" navigable="false" variant="ASSOCIATION">      
-      <attribute id="243" name="usuarios"/>      
-      <multiplicity id="244" minimum="0" maximum="2147483647"/>    
+      <attribute id="272" name="usuarios"/>      
+      <multiplicity id="273" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="29" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="245">    
+  <association id="274">    
     <end type="SOURCE" refId="6" navigable="false" variant="ASSOCIATION">      
-      <attribute id="246" name="remito"/>      
-      <multiplicity id="247" minimum="0" maximum="1"/>    
+      <attribute id="275" name="remito"/>      
+      <multiplicity id="276" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="23" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="248">    
+  <association id="277">    
     <end type="SOURCE" refId="30" navigable="false" variant="ASSOCIATION">      
-      <attribute id="249" name="usuarios"/>      
-      <multiplicity id="250" minimum="0" maximum="2147483647"/>    
+      <attribute id="278" name="usuarios"/>      
+      <multiplicity id="279" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="29" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="251">    
+  <association id="280">    
     <end type="SOURCE" refId="21" navigable="false" variant="ASSOCIATION">      
-      <attribute id="252" name="factura"/>      
-      <multiplicity id="253" minimum="0" maximum="1"/>    
+      <attribute id="281" name="factura"/>      
+      <multiplicity id="282" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="254">    
+  <association id="283">    
     <bendpoint x="525" y="-1386"/>    
     <bendpoint x="525" y="-1387"/>    
     <end type="SOURCE" refId="1" navigable="false" variant="COMPOSITION">      
-      <attribute id="255" name="clientes"/>      
-      <multiplicity id="256" minimum="0" maximum="2147483647"/>    
+      <attribute id="284" name="clientes"/>      
+      <multiplicity id="285" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="257">    
+  <association id="286">    
     <bendpoint x="2697" y="-338"/>    
     <bendpoint x="2697" y="1625"/>    
     <bendpoint x="917" y="1625"/>    
     <end type="SOURCE" refId="18" navigable="false" variant="ASSOCIATION">      
-      <attribute id="258" name="envios"/>      
-      <multiplicity id="259" minimum="0" maximum="2147483647"/>    
+      <attribute id="287" name="envios"/>      
+      <multiplicity id="288" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true" variant="ASSOCIATION"/>    
     <display labels="false" multiplicity="true"/>  

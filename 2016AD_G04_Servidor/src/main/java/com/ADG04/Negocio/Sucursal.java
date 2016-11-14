@@ -238,7 +238,8 @@ public class Sucursal{
 	public Sucursal fromDTO(DTO_Sucursal dto) {
 		if(dto!=null){
 			Sucursal suc = new Sucursal();
-			suc.setIdSucursal(dto.getId());
+			if(dto.getId()!=null)
+				suc.setIdSucursal(dto.getId());
 			suc.setDescripcion(dto.getDescripcion());
 			suc.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
 			if(dto.getIdGerente()!=null){

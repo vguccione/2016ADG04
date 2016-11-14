@@ -244,7 +244,11 @@ public class Usuario{
 
 	public Usuario fromEntity(UsuarioE usu) {
 		if(usu!=null){
-			Usuario usuario =new Usuario(usu.getSucursal().getIdSucursal(), usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
+			int idSucursal=0;
+			if(usu.getSucursal()!=null)
+				idSucursal=usu.getSucursal().getIdSucursal();
+				
+			Usuario usuario =new Usuario(idSucursal, usu.getIdUsuario(), usu.getNombre(), usu.getApellido(), 
 					 usu.getUsuario(),usu.getDni(), usu.getPassword(), usu.getUltimoAcceso(), usu.getFechaCreacion());
 			
 			List<Rol> roles = new ArrayList<Rol>();

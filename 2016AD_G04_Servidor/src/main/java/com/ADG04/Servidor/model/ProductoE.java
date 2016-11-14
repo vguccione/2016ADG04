@@ -41,7 +41,7 @@ public class ProductoE implements java.io.Serializable {
 	@Column(name = "Descripcion", nullable = false, length = 100)
 	private String descripcion;
 
-	@Column(name = "Unidad", nullable = false, length = 1)
+	@Column(name = "Unidad", nullable = false, length = 255)
 	private String unidad;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")

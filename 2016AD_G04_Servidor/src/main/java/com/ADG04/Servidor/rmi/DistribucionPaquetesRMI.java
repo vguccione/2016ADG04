@@ -33,9 +33,7 @@ import com.ADG04.Negocio.EncomiendaEmpresa;
 import com.ADG04.Negocio.EncomiendaParticular;
 import com.ADG04.Negocio.Envio;
 import com.ADG04.Negocio.EnvioHistorico;
-import com.ADG04.Negocio.GestionControlViajes;
-import com.ADG04.Negocio.GestionEncomienda;
-import com.ADG04.Negocio._GestionVehiculo;
+
 import com.ADG04.Negocio.ItemManifiesto;
 import com.ADG04.Negocio.Manifiesto;
 import com.ADG04.Negocio.MapaDeRuta;
@@ -759,8 +757,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		seg.modificar();
 	}
 	
-	public Integer gestionarEnvioEncomienda(int idEncomienda){		
-		return GestionEncomienda.getInstancia().asignarEnvio(idEncomienda, null);		
+	public Integer gestionarEnvioEncomienda(int idEncomienda){
+		EncomiendaE encomiendaE = EncomiendaDao.getInstancia().getById(idEncomienda);
+		Encomienda enc = new Encomienda().fromEntity(encomiendaE);
+		
+		return enc.asignarEnvio(null);		
 	}
 	
 	public DTO_EnvioPropio getInfoEnvioPropio(int idEnvio){
@@ -784,14 +785,20 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	public void modificarCoordenadas(int idEnvio, DTO_Coordenada coordenadas) {
 		
-		CoordenadaE coor = CoordenadaDao.getInstancia().getById(coordenadas.getId());
-		GestionControlViajes.getInstancia().actualizarEstadoVehiculo(idEnvio, coor);
+		//CoordenadaE coor = CoordenadaDao.getInstancia().getById(coordenadas.getId());
+		Envio envio = new Envio();
+		envio.setIdEnvio(idEnvio);
+		
+		envio.actualizarEstadoVehiculo(coordenadas.getLatitud(), coordenadas.getLongitud());
 		
 	}
 
 	public void marcarEnvioDemorado(int idEnvio) {
 
-		GestionControlViajes.getInstancia().estaEnvioDemorado(idEnvio);
+		Envio envio = new Envio();
+		envio.setIdEnvio(idEnvio);
+		
+		envio.estaEnvioDemorado();
 		
 	}
 

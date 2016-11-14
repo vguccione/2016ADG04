@@ -35,7 +35,7 @@ import com.ADG04.Negocio.Envio;
 import com.ADG04.Negocio.EnvioHistorico;
 import com.ADG04.Negocio.GestionControlViajes;
 import com.ADG04.Negocio.GestionEncomienda;
-import com.ADG04.Negocio.GestionVehiculo;
+import com.ADG04.Negocio._GestionVehiculo;
 import com.ADG04.Negocio.ItemManifiesto;
 import com.ADG04.Negocio.Manifiesto;
 import com.ADG04.Negocio.MapaDeRuta;
@@ -809,7 +809,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		veh.modificar();
 	}
 
-	@Override
+/*	@Override
 	public void altaTareaMantenimiento(DTO_TareasPorKilometro tareaXKM, Integer idVehiculo)
 			throws RemoteException, Exception {
 		try {
@@ -821,8 +821,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		}
 		
 	}
-
-	@Override
+*/
+	/*@Override
 	public Integer altaPlanMantenimiento(DTO_PlanMantenimiento pm, Integer idVehiculo)	throws RemoteException, Exception {			
 		GestionVehiculo v = new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo));
 		return v.altaPlanMantenimiento(pm.getDescripcion(), pm.getComentarios());
@@ -833,13 +833,14 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException, Exception {
 		return new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).altaTareaMantenimientoPorTiempo(tareaXTiempo.getTarea(), tareaXTiempo.getCantidadDias());
 	}
+*/
 
 	@Override
 	public List<DTO_TareaMantenimiento> getTareasVencidas(int idVehiculo)
 			throws RemoteException {
-		return new GestionVehiculo(VehiculoDao.getInstancia().getById(idVehiculo)).getTareasVencidas2();
+		return new Vehiculo().fromEntity(VehiculoDao.getInstancia().getById(idVehiculo)).getTareasVencidas2();
 	}
-
+	
 	@Override
 	public List<DTO_Vehiculo> listarVehiculos() throws RemoteException {
 		List<VehiculoE> lista = VehiculoDao.getInstancia().getAll();

@@ -978,7 +978,7 @@ public class GestionEncomienda {
 		List<VehiculoE> vehiculos = VehiculoDao.getInstancia().getPorVolumenPesoSucursalTareasRealizadas(idSucursalOrigen, peso, volumen);
 				
 		for(VehiculoE vehiculo: vehiculos){
-			GestionVehiculo gVehiculo = new GestionVehiculo(vehiculo);
+			_GestionVehiculo gVehiculo = new _GestionVehiculo(vehiculo);
 			if(gVehiculo.estaUtilizable() && !gVehiculo.estaAsignado() && !gVehiculo.tieneTareasVencidas()){
 				vehiculos.add(gVehiculo.getVehiculo());
 			}

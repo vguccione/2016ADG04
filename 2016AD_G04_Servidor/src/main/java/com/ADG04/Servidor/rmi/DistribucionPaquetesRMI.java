@@ -1549,6 +1549,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		PlanMantenimiento pm = new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(tpk.getIdPlanMantenimiento()));
 		TareaMantenimientoPorKm tarea = new TareaMantenimientoPorKm(pm, tpk.getTarea(), tpk.getCantidadKilometros());
+		tarea.guardar();
 	}
 
 	@Override
@@ -1556,6 +1557,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		PlanMantenimiento pm = new PlanMantenimiento().fromEntity(PlanMantenimientoDao.getInstancia().getById(tpt.getIdPlanMantenimiento()));
 		TareaMantenimientoPorTiempo tarea = new TareaMantenimientoPorTiempo(pm, tpt.getTarea(), tpt.getCantidadDias());
+		tarea.guardar();
 	}
 
 	@Override

@@ -4,6 +4,15 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.ClienteParticularDao;
+import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.dao.TareaMantenimientoDao;
+import com.ADG04.Servidor.model.TareaMantenimientoPorKmE;
+import com.ADG04.Servidor.model.TareaMantenimientoPorTiempoE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
+
 public class TareaMantenimientoPorKm extends TareaMantenimiento{
 
 	private float cantidadKilometros;
@@ -30,4 +39,21 @@ public class TareaMantenimientoPorKm extends TareaMantenimiento{
 		this.cantidadKilometros = cantidadKilometros;
 	}
 
+	public void guardar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		TareaMantenimientoDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();
+	}
+
+	public TareaMantenimientoPorKmE toEntity(){
+		TareaMantenimientoPorKmE tt = new TareaMantenimientoPorKmE();
+		tt.setCantidadKilometros(cantidadKilometros);
+		if(this.getIdTareaMantenimiento()!=0)
+			tt.setIdTareaMantenimiento(this.getIdTareaMantenimiento());
+		tt.setPlanMantenimiento(PlanMantenimientoDao.getInstancia().getById(this.getPlanMantenimiento().getIdPlanMantenimiento()));
+		tt.setTarea(this.getTarea());
+		
+		return tt;
+	}
 }

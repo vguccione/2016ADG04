@@ -230,14 +230,9 @@ public class RegistrarTareaRealizada {
 		button_1.setVisible(false);
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				int pos = tarea.getSelectedIndex();
 				boolean flag=false;
-				if(pos!=0){
-					DTO_TareaMantenimiento t = tareas.get(pos);
-					
-					flag = Controlador.getInstancia().altaTareaMantenimientoRealizada(t.getId(), vehiculoDTO.getId(), new Date(), vehiculoDTO.getKmsRecorridos(), proveedorDTO.getId());
-				}
+				DTO_TareaMantenimiento t = tareas.get(tarea.getSelectedIndex());		
+				flag = Controlador.getInstancia().altaTareaMantenimientoRealizada(t.getId(), vehiculoDTO.getId(), new Date(), vehiculoDTO.getKmsRecorridos(), proveedorDTO.getId());
 				if(flag){
 					JOptionPane.showMessageDialog(null,"Se ha dado de alta tarea mantenimiento realizada", "Alta tarea mantenimiento realizada", JOptionPane.INFORMATION_MESSAGE);
 					frame.setVisible(false);

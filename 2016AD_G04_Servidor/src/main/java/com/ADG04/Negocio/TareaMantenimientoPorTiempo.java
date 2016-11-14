@@ -4,6 +4,13 @@ package com.ADG04.Negocio;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import com.ADG04.Servidor.dao.PlanMantenimientoDao;
+import com.ADG04.Servidor.dao.TareaMantenimientoDao;
+import com.ADG04.Servidor.model.TareaMantenimientoPorTiempoE;
+import com.ADG04.Servidor.util.EntityManagerProvider;
+
 public class TareaMantenimientoPorTiempo extends TareaMantenimiento{
 
 	private int cantidadDias;
@@ -29,5 +36,25 @@ public class TareaMantenimientoPorTiempo extends TareaMantenimiento{
 	public void setCantidadDias(int cantidadDias) {
 		this.cantidadDias = cantidadDias;
 	}
+	
+	public void guardar() {
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();;
+		em.getTransaction().begin();
+		TareaMantenimientoDao.getInstancia().persist(this.toEntity());
+		em.getTransaction().commit();
+	}
+	
+	public TareaMantenimientoPorTiempoE toEntity(){
+		TareaMantenimientoPorTiempoE tt = new TareaMantenimientoPorTiempoE();
+		tt.setCantidadDias(cantidadDias);
+		if(this.getIdTareaMantenimiento()!=0)
+			tt.setIdTareaMantenimiento(this.getIdTareaMantenimiento());
+		tt.setPlanMantenimiento(PlanMantenimientoDao.getInstancia().getById(this.getPlanMantenimiento().getIdPlanMantenimiento()));
+		tt.setTarea(this.getTarea());
+		
+		return tt;
+	}
+	
+	
 
 }

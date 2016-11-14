@@ -968,9 +968,11 @@ public  class Encomienda{
 		List<VehiculoE> vehiculosDisponibles = new ArrayList<VehiculoE>();
 		
 		for(VehiculoE vehiculo: vehiculos){
-			_GestionVehiculo gVehiculo = new _GestionVehiculo(vehiculo);
+			//_GestionVehiculo gVehiculo = new _GestionVehiculo(vehiculo);
+			Vehiculo gVehiculo = new Vehiculo().fromEntity(vehiculo);
+			
 			if(gVehiculo.estaUtilizable() && !gVehiculo.estaAsignado() && !gVehiculo.tieneTareasVencidas()){
-				vehiculosDisponibles.add(gVehiculo.getVehiculo());
+				vehiculosDisponibles.add(vehiculo);
 			}
 		}
 		

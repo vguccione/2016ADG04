@@ -5,7 +5,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.ADG04.Negocio.Cliente;
-import com.ADG04.Negocio._GestionVehiculo;
 import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.model.EnvioE;
 import com.ADG04.Servidor.model.TareaMantenimientoE;

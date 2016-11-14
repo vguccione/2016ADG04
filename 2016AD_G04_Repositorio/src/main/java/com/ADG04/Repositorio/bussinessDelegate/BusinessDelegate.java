@@ -920,4 +920,8 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public DTO_EnvioPropio getEnvioPropio(Integer id) throws RemoteException {
 		return this.businessService.getEnvioPropio(id);
 	}
+
+	public boolean existeMapaDeRuta(Integer idSucOrigen, Integer idSucDestino) throws RemoteException{
+		return this.businessService.existeMapaDeRuta(idSucOrigen, idSucDestino);
+	}
 }

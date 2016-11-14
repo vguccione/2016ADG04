@@ -49,7 +49,7 @@ public class SucursalDao extends GenericDao<SucursalE, Integer> {
 		try{
 			List<EncomiendaE> encomiendas= 	entityManager
 	                .createQuery("from EncomiendaE e where sucursalOrigen.idSucursal=:id OR"
-	                		+ " sucursalDestino.idSucursal=:id OR sucursalActual.idSucursal=:id")
+	                		+ " sucursalDestno.idSucursal=:id OR sucursalActual.idSucursal=:id")
 	                .setParameter("id", id)
 	                .getResultList();
 			if(encomiendas.size()>0)

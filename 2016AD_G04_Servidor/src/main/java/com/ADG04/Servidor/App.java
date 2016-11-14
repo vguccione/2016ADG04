@@ -63,96 +63,18 @@ public class App
 	
     public static void main( String[] args ) throws IOException, NotBoundException
     {
-
-    	List<EnvioE> envios = EnvioDao.getInstancia().getAll();
-		for(EnvioE envio :envios){
-			Envio e = new Envio().fromEntity(envio);
-			e.estaEnvioDemorado();
-			CoordenadaE coord = obtenerPosicionActual(e.getIdEnvio(),"PosicionVehiculos");
-			String latitud = e.getPosicionActual().getLatitud();
-			String longitud = e.getPosicionActual().getLongitud();
-				
-			if(coord!=null){
-				latitud = coord.getLatitud();
-				longitud = coord.getLongitud();
-			}
-				
-			e.actualizarEstadoVehiculo(latitud, longitud);
-		}
+    	DTO_Producto prod = new DTO_Producto();
+    	prod.setCategoria("a");
+    	prod.setCodigo("codigo");
+    	prod.setDescripcion("descr");
+    	prod.setIdCliente(1);
+    	prod.setUnidad("p");
+    	
+    	Producto p = new Producto().fromDTO(prod);
+    	p.guardar();
     	
     	System.exit(0);
     }
-    
-    private static  CoordenadaE obtenerPosicionActual(int idEnvio, String dir) {
-
-    	EnvioE env = EnvioDao.getInstancia().getById(idEnvio);
-    	CoordenadaE coord  = new CoordenadaE();
-    	
-    	if(env.getVehiculo()!=null){
-			//File f = new File("./PosicionVehiculos/");
-			File f = new File("./"+dir+"/");
-	
-	    	File[] matchingFiles = f.listFiles(new FilenameFilter() {
-	    	    public boolean accept(File dir, String name) {
-	    	    	
-	    	        return name.startsWith(env.getVehiculo().getPatente());
-	    	    }
-	    	});
-	    	
-	    	long latestModified = -1;
-	    	File lastModifiedFile = null;
-	    	
-	    	for(File file:matchingFiles){
-	    		if(f.lastModified() > latestModified) {
-	                lastModifiedFile = file;
-	                latestModified = file.lastModified();
-	            }
-	    	}
-	    	
-	    	Envio e = new Envio().fromEntity(env);
-	
-	    	try{
-	    	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(lastModifiedFile);
-	
-			doc.getDocumentElement().normalize();
-	
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-	
-			NodeList nList = doc.getElementsByTagName("vehiculo");
-	
-			System.out.println("----------------------------");
-	
-			for (int temp = 0; temp < nList.getLength(); temp++) {
-	
-				Node nNode = nList.item(temp);
-	
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
-	
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-	
-					Element eElement = (Element) nNode;
-	
-					System.out.println("Patente Vehiculo : " + eElement.getAttribute("patente"));
-					System.out.println("Nro Remito : " + eElement.getElementsByTagName("nroRemito").item(0).getTextContent());
-					System.out.println("Fecha : " + eElement.getElementsByTagName("fecha").item(0).getTextContent());
-					System.out.println("Hora : " + eElement.getElementsByTagName("hora").item(0).getTextContent());
-					System.out.println("Latitud : " + eElement.getElementsByTagName("latitud").item(0).getTextContent());
-					System.out.println("Longitud : " + eElement.getElementsByTagName("longitud").item(0).getTextContent());
-	
-					coord.setLatitud(eElement.getElementsByTagName("latitud").item(0).getTextContent());
-					coord.setLongitud(eElement.getElementsByTagName("longitud").item(0).getTextContent());
-				}
-			}
-			return coord;
-		    } 
-	    	catch (Exception exc) {
-		    	exc.printStackTrace();
-		    }
-    	}
-    	return null;
-	}
     
     	private static void TestAltaCliente() {  	
     	DTO_Direccion dir = new DTO_Direccion();

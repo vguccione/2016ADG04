@@ -1693,6 +1693,18 @@ public class Controlador {
 		}
 		return null;
 	}
+
+	public boolean existeMapaDeRuta(DTO_Sucursal sucursalOrigen,
+			DTO_Sucursal sucursalDestino) {
+		try{
+			return bd.existeMapaDeRuta(sucursalOrigen.getId(), sucursalDestino.getId());
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al verificar exista mapa de ruta");
+		}
+		return false;
+	}
 		
 	
 }

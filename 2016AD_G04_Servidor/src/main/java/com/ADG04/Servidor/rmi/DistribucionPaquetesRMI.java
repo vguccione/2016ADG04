@@ -1986,4 +1986,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 
+	@Override
+	public boolean existeMapaDeRuta(Integer idSucOrigen, Integer idSucDestino)
+			throws RemoteException {
+		MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(idSucOrigen, idSucDestino);
+		if(mr==null)
+			return false;
+		else
+			return true;
+	}
+
+
 }

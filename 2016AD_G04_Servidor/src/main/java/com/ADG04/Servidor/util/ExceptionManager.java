@@ -29,7 +29,7 @@ public class ExceptionManager {
 	
 		Date date = new Date();
 		Long ticks = date.getTime();
-		String fileName = "D:/Facu/Distribuidas/TPO/git/2016ADG04/2016AD_G04_Servidor/logs/"+type +"-"+ticks.toString()+".log";
+		String fileName = "./logs/"+type +"-"+ticks.toString()+".log";
 		FileHandler fh = null;
         // This block configure the logger with handler and formatter  
         try {

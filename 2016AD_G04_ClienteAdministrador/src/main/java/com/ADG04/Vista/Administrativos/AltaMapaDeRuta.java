@@ -457,14 +457,19 @@ public class AltaMapaDeRuta extends javax.swing.JFrame {
 					if (validacion()) {
 						try{
 							if(dto==null){
-								Map<String, String> mapLatLong = new HashMap();
-			               
-				                for (int i = 0; i < data.size(); i++) {
-				                	mapLatLong.put(data.elementAt(i).elementAt(0), data.elementAt(i).elementAt(1));
-				                }
-						
-				                Controlador.getInstancia().altaMapaDeRuta(sucursalOrigen,sucursalDestino,(Float) jFormattedTextFieldCantKm.getValue(),
-				                						(Float)jFormattedTextFieldCosto.getValue(),(Float) jFormattedTextFieldDuracion.getValue(),mapLatLong );
+								if(!Controlador.getInstancia().existeMapaDeRuta(sucursalOrigen,sucursalDestino)){
+									Map<String, String> mapLatLong = new HashMap();
+				               
+					                for (int i = 0; i < data.size(); i++) {
+					                	mapLatLong.put(data.elementAt(i).elementAt(0), data.elementAt(i).elementAt(1));
+					                }
+							
+					                Controlador.getInstancia().altaMapaDeRuta(sucursalOrigen,sucursalDestino,(Float) jFormattedTextFieldCantKm.getValue(),
+					                						(Float)jFormattedTextFieldCosto.getValue(),(Float) jFormattedTextFieldDuracion.getValue(),mapLatLong );
+								}
+								else{
+									JOptionPane.showMessageDialog(null,"Ya existe un mapa de ruta para esa sucursal de origen y destino.", "Error", JOptionPane.ERROR_MESSAGE);
+								}
 							}
 							else{
 								Map<String, String> mapLatLong = new HashMap();

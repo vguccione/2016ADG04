@@ -161,6 +161,17 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
     Logger logger = Logger.getLogger("MyLog");  
     
 	private static final long serialVersionUID = 1L;
+	
+	private List<Sucursal> sucursales;
+	private List<Encomienda> encomiendas;
+	private List<Usuario> usuarios;
+	private List<Vehiculo> vehiculos;
+	private List<Proveedor> proveedores;
+	private List<Cliente> clientes;
+	private List<MapaDeRuta> mapas;
+	private List<Producto> productos;
+	private List<PlanMantenimiento> planes;
+	
 
 	public DistribucionPaquetesRMI() throws SecurityException, IOException {
 		super();

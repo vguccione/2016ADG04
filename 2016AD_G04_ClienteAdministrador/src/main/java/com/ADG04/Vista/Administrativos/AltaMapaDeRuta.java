@@ -226,7 +226,7 @@ public class AltaMapaDeRuta extends javax.swing.JFrame {
 	private JLabel getJLabelDuracion() {
 		if (jLabelDuracion == null) {
 			jLabelDuracion = new JLabel();
-			jLabelDuracion.setText("Duracion (en minutos)");
+			jLabelDuracion.setText("Duracion(hrs)");
 			jLabelDuracion.setBounds(6, 143, 140, 15);
 		}
 		return jLabelDuracion;

@@ -7,6 +7,8 @@ import java.util.List;
 import dto.Encomienda.DTO_Envio;
 import dto.Vehiculo.DTO_Vehiculo;*/
 
+import com.ADG04.bean.Encomienda.DTO_Coordenada;
+
 public class DTO_Sucursal implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -16,6 +18,7 @@ public class DTO_Sucursal implements Serializable{
 	private DTO_Direccion direccion;
 	private String telefono;
 	private Integer idGerente; 
+	private DTO_Coordenada posicionActual;
 	
 	/*private List<DTO_Empleado> empleados;
 	private List<DTO_Destino> destinos;
@@ -75,6 +78,15 @@ public class DTO_Sucursal implements Serializable{
 		this.idGerente = idGerente;
 	}
 
+	public DTO_Coordenada getPosicionActual() {
+		return posicionActual;
+	}
+
+	public void setPosicionActual(DTO_Coordenada posicionActual) {
+		this.posicionActual = posicionActual;
+	}
+
+	
 	/*public List<DTO_Empleado> getEmpleados() {
 		return empleados;
 	}

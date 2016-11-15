@@ -138,6 +138,21 @@ public class MapaDeRuta{
 		else
 			return null;
 	}
+	
+	public Date calcularFechaEstimadaDeEntrega(Date fechaPartida) {
+		
+		//MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(idSucursalOrigen, idSucursalDestino);
+		MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getById(this.idMapaDeRuta);
+		System.out.println("calcularFechaEstimadaDeEntrega , mapa de ruta id " + mr.getIdMapaDeRuta());
+		if(mr!=null){
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(fechaPartida);
+			calendar.add(Calendar.HOUR, (int) mr.getDuracion());
+			return calendar.getTime();
+		}
+		else
+			return null;
+	}
 
 	public MapaDeRuta fromDTO(DTO_MapaDeRuta mapa) {
 		MapaDeRuta mr = new MapaDeRuta();

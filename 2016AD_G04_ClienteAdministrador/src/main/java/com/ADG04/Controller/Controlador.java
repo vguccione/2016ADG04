@@ -582,11 +582,16 @@ public class Controlador {
 	}
 
 	public void altaSucursal(String desc, String calle, String prov,
-			String loc, String codPostal, String telefono, String dniGerente) {
+			String loc, String codPostal, String telefono, String dniGerente, String lat, String longitud) {
 		try{
 			DTO_Sucursal sucursal = new DTO_Sucursal();
 			sucursal.setDescripcion(desc);
 			sucursal.setTelefono(telefono);
+			DTO_Coordenada posicionActual = new DTO_Coordenada();
+			
+			posicionActual.setLatitud(lat);
+			posicionActual.setLongitud(longitud);
+			sucursal.setPosicionActual(posicionActual);
 			
 			DTO_Provincia provincia = buscarProvinciaByNombre(prov);
 			
@@ -596,6 +601,7 @@ public class Controlador {
 			dir.setLocalidad(loc);
 			dir.setProvincia(provincia);
 			dir.setPais(provincia.getPais());
+			
 			
 			DTO_Usuario gerente =bd.getUsuarioPorDni(dniGerente);
 			
@@ -1482,11 +1488,17 @@ public class Controlador {
 	}
 
 	public void modificarSucursal(int id, String desc, String calle, String prov,
-			String loc, String codPostal, String telefono, String dniGerente) {
+			String loc, String codPostal, String telefono, String dniGerente, String lat, String longitud) {
 		try{
 			DTO_Sucursal sucursal = new DTO_Sucursal();
 			sucursal.setDescripcion(desc);
 			sucursal.setTelefono(telefono);
+			
+			DTO_Coordenada coord = new DTO_Coordenada();
+			coord.setLatitud(lat);
+			coord.setLongitud(longitud);
+			
+			sucursal.setPosicionActual(coord);
 			
 			DTO_Provincia provincia = buscarProvinciaByNombre(prov);
 			

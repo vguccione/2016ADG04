@@ -386,8 +386,15 @@ public class Envio{
 		for(EncomiendaE enc:encomiendasEntities)
 		{
 			try{
-				enc.setEstado(EncomiendaEstado.EnSucursalDestino.toString());
 				enc.setSucursalActual(e.getSucursalDestino());
+				
+				//Si la encomienda llego a su destino final (sucursalDestino)
+				//se indica como EnSucursalDestino
+				if(e.getSucursalDestino()==enc.getSucursalDestino())
+					enc.setEstado(EncomiendaEstado.EnSucursalDestino.toString());
+				else //Espera nueva asignacion
+					enc.setEstado(EncomiendaEstado.EnEsperaAsignacion.toString());
+				
 				EncomiendaDao.getInstancia().saveOrUpdate(enc);
 				e.setEstado(EnvioEstado.Concluido.toString());
 				e.setFechaActualizacion(new Date());

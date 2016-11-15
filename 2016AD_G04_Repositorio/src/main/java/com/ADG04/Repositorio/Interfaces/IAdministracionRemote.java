@@ -94,4 +94,5 @@ public interface IAdministracionRemote {
 	public DTO_MapaDeRuta getMapaDeRuta(Integer id) throws RemoteException;
 	public void modificarMapaDeRuta(DTO_MapaDeRuta mapa) throws RemoteException, BusinessException;
 	public boolean existeMapaDeRuta(Integer idSucOrigen, Integer idSucDestino) throws RemoteException;
+	public List<DTO_MapaDeRuta> listarMapasDeRuta() throws RemoteException;
 }

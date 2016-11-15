@@ -2007,4 +2007,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 
+	@Override
+	public List<DTO_MapaDeRuta> listarMapasDeRuta() throws RemoteException {
+		List<DTO_MapaDeRuta> mapas = new ArrayList<DTO_MapaDeRuta>();
+		for(MapaDeRutaE mr : MapaDeRutaDao.getInstancia().getAll()){
+			MapaDeRuta mapa = new MapaDeRuta().fromEntity(mr);
+			mapas.add(mapa.toDTO());
+		}
+		return mapas;
+	}
+
+
 }

@@ -1717,6 +1717,17 @@ public class Controlador {
 		}
 		return false;
 	}
+
+	public List<DTO_MapaDeRuta> listarMapasDeRuta() {
+		try{
+			return bd.listarMapasDeRuta();
+			}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error al traer listado de mapa de rutas");
+		}
+		return null;
+	}
 		
 	
 }

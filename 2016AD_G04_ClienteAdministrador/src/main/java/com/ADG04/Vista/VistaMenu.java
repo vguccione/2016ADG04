@@ -40,6 +40,7 @@ import com.ADG04.Vista.Listados.ListadoEnviosTercerizados;
 import com.ADG04.Vista.Listados.ListadoFacturasClientes;
 import com.ADG04.Vista.Listados.ListadoFacturasClientesPendientes;
 import com.ADG04.Vista.Listados.ListadoManifiestos;
+import com.ADG04.Vista.Listados.ListadoMapasDeRuta;
 import com.ADG04.Vista.Listados.ListadoPlanMantenimiento;
 import com.ADG04.Vista.Listados.ListadoProducto;
 import com.ADG04.Vista.Listados.ListadoProveedores;
@@ -937,6 +938,29 @@ public class VistaMenu extends javax.swing.JFrame {
 							JMenuItem12.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									ListadoSucursales inst = new ListadoSucursales();
+									inst.setLocationRelativeTo(null);
+									inst.setVisible(true);
+								}
+							});
+						}
+					}
+					{
+						JMenuConsultasSucursales = new JMenu();
+						JMenu6.add(JMenuConsultasSucursales);
+						JMenuConsultasSucursales.setText("Mapas de Ruta");
+						{
+							JMenuItem12 = new JMenuItem();
+							JMenuConsultasSucursales.add(JMenuItem12);
+							JMenuItem12.setText("Mapas de Ruta");
+							if (roles.contains("ADMINISTRACION")) {
+								JMenuItem12.setVisible(true);
+							} else {
+								JMenuItem12.setVisible(false);
+								JMenuItem12.setBounds(0, 21, 80, 21);
+							}
+							JMenuItem12.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									ListadoMapasDeRuta inst = new ListadoMapasDeRuta();
 									inst.setLocationRelativeTo(null);
 									inst.setVisible(true);
 								}

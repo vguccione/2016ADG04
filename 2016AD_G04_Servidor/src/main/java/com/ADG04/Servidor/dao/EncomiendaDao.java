@@ -114,4 +114,18 @@ public class EncomiendaDao extends GenericDao<EncomiendaE, Integer> {
 		return encomiendas;
 	}
 
+	public List<EncomiendaE> getBySucursalActual(int idSucursal) {
+		List<EncomiendaE> encomiendas = new ArrayList<EncomiendaE>();
+		try{
+			encomiendas = entityManager.createQuery("select enc from EncomiendaE enc "
+					+ " where sucursalActual.idSucusal=:idSucursal")
+					.setParameter("idSucursal",idSucursal)
+					.getResultList();
+		}
+		catch(Exception e){
+			System.out.println("No existen encomiendas para esa sucursal");
+		}
+		return encomiendas;
+	}
+
 }

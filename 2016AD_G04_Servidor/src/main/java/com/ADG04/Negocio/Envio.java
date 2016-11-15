@@ -387,6 +387,7 @@ public class Envio{
 		{
 			try{
 				enc.setEstado(EncomiendaEstado.EnSucursalDestino.toString());
+				enc.setSucursalActual(e.getSucursalDestino());
 				EncomiendaDao.getInstancia().saveOrUpdate(enc);
 				e.setEstado(EnvioEstado.Concluido.toString());
 				e.setFechaActualizacion(new Date());

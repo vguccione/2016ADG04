@@ -2018,4 +2018,16 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 
+	@Override
+	public List<DTO_Encomienda> listarEncomiendasBySucursal(int idSucursal)
+			throws RemoteException {
+		List<DTO_Encomienda> encomiendas = new ArrayList<DTO_Encomienda>();
+		for(EncomiendaE e: EncomiendaDao.getInstancia().getBySucursalActual(idSucursal)){
+			Encomienda enc = new Encomienda().fromEntity(e);
+			encomiendas.add(enc.toDTO());
+		}
+		return encomiendas;
+	}
+
+
 }

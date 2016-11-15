@@ -928,4 +928,9 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public List<DTO_MapaDeRuta> listarMapasDeRuta() throws RemoteException {
 		return this.businessService.listarMapasDeRuta();
 	}
+
+	public List<DTO_Encomienda> listarEncomiendasBySucursal(int idSucursal)
+			throws RemoteException {
+		return this.businessService.listarEncomiendasBySucursal(idSucursal);
+	}
 }

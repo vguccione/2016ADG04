@@ -7,7 +7,7 @@ public enum EncomiendaEstado {
 	Colocada,
 	EnViaje,		//esta en viaje
 	EnSucursalDestino,	//llego a la sucursal de destino del envio
-	EnDestino	,		//llego a donde debia llegar
+	EnEsperaAsignacion,		//esperando nueva asignacion a envio
 	Entregada,			//entregada al receptor
 	Cancelada
 }

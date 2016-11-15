@@ -176,7 +176,7 @@ public  class Encomienda{
 		
 		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
 		 * y asi marco esos envios y vehiculos como no disponibles*/
-		//ponerEnViajeEncomiendasPorVencer();
+		ponerEnViajeEncomiendasPorVencer();
 		
 		EncomiendaE e = EncomiendaDao.getInstancia().getById(idEncomienda);
 		System.out.println(e.toString());
@@ -336,9 +336,23 @@ public  class Encomienda{
 		
 
 		/*Coloco las encomiendas en viaje y envio en viaje si hay encomiendas por vencer*/
-//		ponerEnViajeEncomiendasPorVencer();
+		ponerEnViajeEncomiendasPorVencer();
 		
 		return idEnvio;
+	}
+	
+	public void ponerEnViajeEncomiendasPorVencer(){
+		List<EncomiendaE> encomiendasColocadasPorVencer = EncomiendaDao.getInstancia().obtenerEncomiendasColocadasPorVencerHoy();
+		for(EncomiendaE enc : encomiendasColocadasPorVencer){
+		      enc.setEstado(EncomiendaEstado.EnViaje.toString());
+		      EnvioE envio = EnvioDao.getInstancia().getByEncomiendaColocada(enc.getIdEncomienda());
+		      if(envio!=null){
+			      envio.setEstado(EnvioEstado.EnViaje.toString());
+			      
+				  EncomiendaDao.getInstancia().saveOrUpdate(enc);
+				  EnvioDao.getInstancia().saveOrUpdate(envio);
+		      }
+		}
 	}
 	
 	

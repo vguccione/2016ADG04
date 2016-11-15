@@ -30,6 +30,7 @@ import com.ADG04.Repositorio.bussinessDelegate.BusinessDelegate;
 import com.ADG04.Servidor.dao.*;
 import com.ADG04.Servidor.model.*;
 import com.ADG04.Servidor.rmi.DistribucionPaquetesRMI;
+import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Administracion.*;
@@ -46,6 +47,77 @@ import com.ADG04.bean.Vehiculo.*;
 public class App 
 {
 
+	public static void main(String[] args) throws IOException, BusinessException {
+		Integer idEncomienda = AltaEncomiendaParticular();
+		Encomienda enc = new Encomienda().fromEntity(EncomiendaDao.getInstancia().getById(idEncomienda));
+		System.out.println("Fecha estimada entrega :");
+		System.out.println(enc.getFechaEstimadaEntrega());
+		
+		//verificar que exista sucursal 3 con mapa de ruta de 1 a 3 y de 2 a 3
+/*
+ * IdMapaDeRuta	CantKm	costo	Duracion	IdSucursalDestino	IdSucursalOrigen
+	1			1000	48		72				2					1
+	1002		100		220		42				3					1
+	1003		30		44		32				2					3
+ * */
+		int idEnvio = enc.asignarEnvio(null, 3);
+		
+		if(enc.existeDemoraEntrega(idEnvio)){
+			System.out.println("Existe Demora");
+		}
+		
+	}
+	
+	private static Integer AltaEncomiendaParticular() throws IOException, BusinessException {
+		EncomiendaParticular enc = new EncomiendaParticular();
+		enc.setAlto(100f);
+		enc.setAncho(100f);
+		enc.setApellidoReceptor("apellido");
+		enc.setApilable(false);
+		enc.setCliente(new Cliente().fromEntity(ClienteDao.getInstancia().getById(1)));
+		enc.setCondicionTransporte("ninguna");
+		enc.setDniReceptor("121212");
+		enc.setEstado(EncomiendaEstado.Ingresada.toString());
+		enc.setFechaCreacion(new Date());
+		
+		int idSucursalOrigen = 1;
+		int idSucursalDestino = 2;
+		enc.setSucursalActual(new Sucursal().fromEntity(SucursalDao.getInstancia().getById(idSucursalOrigen)));
+		enc.setSucursalOrigen(new Sucursal().fromEntity(SucursalDao.getInstancia().getById(idSucursalOrigen)));
+		enc.setSucursalDestino(new Sucursal().fromEntity(SucursalDao.getInstancia().getById(idSucursalDestino)));
+		
+		MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(idSucursalOrigen, idSucursalDestino);
+		
+		Date fechaEstimadaEntrega = new MapaDeRuta().fromEntity(mr).calcularFechaEstimadaDeEntrega(); 
+		enc.setFechaEstimadaEntrega(fechaEstimadaEntrega);
+		enc.setIndicacionesManipulacion("");
+		enc.setInternacional(false);
+		enc.setLargo(100f);
+		enc.setNombreReceptor("nombre");
+		enc.setPeso(200f);
+		enc.setRefrigerado(false);
+		enc.setTratamiento("ninguno");
+		enc.setTerciarizado(false);
+		enc.setVolumen(200f);
+		
+		Manifiesto m = new Manifiesto();
+		m.setFecha(new Date());
+		ItemManifiesto im = new ItemManifiesto();
+		im.setCantidad(10);
+		im.setDescripcion("hola");
+		im.setProducto(new Producto().fromEntity(ProductoDao.getInstancia().getById(4)));
+		List<ItemManifiesto> itemsManifiesto = new ArrayList<ItemManifiesto>();
+		itemsManifiesto.add(im);
+		m.setItemsManifiesto(itemsManifiesto);
+		
+		enc.setManifiesto(m);
+		
+		Integer idEncomienda =  enc.saveOrUpdate();
+		
+		return idEncomienda;
+		
+	}
+	
 /*	public static void main(String[] args) throws IOException {
 		
 		try {

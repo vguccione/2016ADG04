@@ -26,12 +26,15 @@ import java.util.List;
 
 
 
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.dao.UsuarioDao;
+import com.ADG04.Servidor.model.CoordenadaE;
 import com.ADG04.Servidor.model.DireccionE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
 import com.ADG04.Servidor.model.SucursalE;
@@ -39,6 +42,7 @@ import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Administracion.DTO_Rol;
 import com.ADG04.bean.Administracion.DTO_Sucursal;
 import com.ADG04.bean.Administracion.DTO_Usuario;
+import com.ADG04.bean.Encomienda.DTO_Coordenada;
 
 
 public class Sucursal{
@@ -203,6 +207,13 @@ public class Sucursal{
 		s.setDescripcion(this.descripcion);
 		s.setTelefono(this.telefono);
 		s.setDireccion(this.getDireccion().toDTO());
+		
+		DTO_Coordenada coord = new DTO_Coordenada();
+		if(this.getCoordenadas()!=null){
+			coord.setLatitud(this.getCoordenadas().getLatitud());
+			coord.setLongitud(this.getCoordenadas().getLongitud());
+			s.setPosicionActual(coord);
+		}
 		if(this.getGerente()!=null)
 			s.setIdGerente(this.getGerente().getIdUsuario());
 		return s;
@@ -215,6 +226,12 @@ public class Sucursal{
 				this.getDireccion().getCalle(),this.getDireccion().getNro(), this.getDireccion().getLocalidad(),
 				this.getDireccion().getCodigoPostal());
 		suc.setDireccion(dir);
+		
+		CoordenadaE coord = new CoordenadaE();
+		coord.setLatitud(this.getCoordenadas().getLatitud());
+		coord.setLongitud(this.getCoordenadas().getLongitud());
+		suc.setCoordenadas(coord);
+		
 		suc.setIdSucursal(this.getIdSucursal());
 		return suc;
 	}
@@ -242,6 +259,13 @@ public class Sucursal{
 				suc.setIdSucursal(dto.getId());
 			suc.setDescripcion(dto.getDescripcion());
 			suc.setDireccion(new Direccion().fromDTO(dto.getDireccion()));
+			
+			Coordenada coord = new Coordenada();
+			coord.setIdCoordenada(dto.getPosicionActual().getId());
+			coord.setLatitud(dto.getPosicionActual().getLatitud());
+			coord.setLongitud(dto.getPosicionActual().getLongitud());
+			suc.setCoordenadas(coord);
+			
 			if(dto.getIdGerente()!=null){
 				suc.setGerente(new Usuario().fromEntity(UsuarioDao.getInstancia().getById(dto.getIdGerente())));
 			}
@@ -257,6 +281,11 @@ public class Sucursal{
 			Sucursal sucursal = new Sucursal();
 			sucursal.setDescripcion(suc.getDescripcion());
 			sucursal.setDireccion(new Direccion().fromEntity(suc.getDireccion()));
+			
+			CoordenadaE coord = suc.getCoordenadas();
+			if(coord!=null)
+				sucursal.setCoordenadas(new Coordenada(coord.getLatitud(), coord.getLongitud()));
+			
 			if(suc.getGerente()!=null){
 				sucursal.setGerente(new Usuario().fromEntity(UsuarioDao.getInstancia().getById(suc.getGerente().getIdUsuario())));
 			}

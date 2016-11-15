@@ -254,14 +254,14 @@ public  class Encomienda{
 						
 							e.setEstado(EncomiendaEstado.Colocada.toString());
 							
-							EnvioDao.getInstancia().saveOrUpdate(envProp);
+							EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envProp);
 							EncomiendaDao.getInstancia().saveOrUpdate(e);
 							nuevoEnvio = false;
 							
-							Envio env = new Envio().fromEntity(envProp);
+							Envio env = new Envio().fromEntity(envio);
 							env.actualizarHistorico();
 							
-							idEnvio =  envProp.getIdEnvio();
+							idEnvio =  envio.getIdEnvio();
 						} 
 					}
 				}//End loop
@@ -322,7 +322,7 @@ public  class Encomienda{
 									EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
 									EncomiendaDao.getInstancia().saveOrUpdate(e);
 									
-									Envio env = new Envio().fromEntity(envioPropio);
+									Envio env = new Envio().fromEntity(envio);
 									env.actualizarHistorico();
 									
 									idEnvio =  envio.getIdEnvio();
@@ -353,6 +353,201 @@ public  class Encomienda{
 				  EnvioDao.getInstancia().saveOrUpdate(envio);
 		      }
 		}
+	}
+	
+	
+	
+	/*Asignar envio manualmente indicando sucursal de destino */
+	public Integer asignarEnvio(Integer idCarrier, int idSucursalDest) {
+		
+		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
+		 * y asi marco esos envios y vehiculos como no disponibles*/
+		ponerEnViajeEncomiendasPorVencer();
+		
+		EncomiendaE e = EncomiendaDao.getInstancia().getById(idEncomienda);
+		System.out.println(e.toString());
+		Integer idEnvio = null;
+		if(e != null){
+			if(esEnvioTercerizado()){ 
+				EnvioE envioTercerizado = new EnvioE();
+				if(e.isInternacional()){
+					ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
+					envioTercerizado.setProveedor(prov);
+				}
+				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
+				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
+				envioTercerizado.setNroTracking(2000);
+				envioTercerizado.setSucursalOrigen(e.getSucursalOrigen());
+				envioTercerizado.setSucursalDestino(e.getSucursalDestino());
+				envioTercerizado.setFechaYHoraSalida(new Date());
+				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+				envioTercerizado.setMapaDeRuta(mr);
+				envioTercerizado.setPropio(false);
+				envioTercerizado.setFechaActualizacion(new Date());
+				List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
+				lista.add(e);
+				envioTercerizado.setEncomiendas(lista);
+				e.setEstado(EncomiendaEstado.Colocada.toString());
+				
+				EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
+				EncomiendaDao.getInstancia().saveOrUpdate(e);
+				
+				Envio env = new Envio().fromEntity(envio);
+				env.actualizarHistorico();
+				
+				idEnvio = envio.getIdEnvio();
+			} else {
+				//Busco si ya hay algun envio que vaya a la misma ciudad y pendientes
+				boolean nuevoEnvio = true;
+				List<EnvioE> envios = EnvioDao.getInstancia().listarEnviosPorSucursalDestino(idSucursalDest, e.getFechaEstimadaEntrega());
+				boolean pesoOK = false;
+				boolean volumenOK = false;
+				for(EnvioE envProp: envios){
+					if(!pesoOK || !volumenOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
+						//Sumo los pesos y los volumenes
+						float peso = 0;
+						float volumen = 0;
+						float pesoTotal = envProp.getVehiculo().getPeso() - envProp.getVehiculo().getTara();
+						float volumenTotal = envProp.getVehiculo().getVolumen();
+						for(EncomiendaE enc: envProp.getEncomiendas()){
+							peso = (float) (peso + enc.getPeso());
+							volumen = (float) (volumen + enc.getVolumen());
+						}
+						
+						//Verifico si entra el nuevo pedido
+						if(pesoTotal >= peso + e.getPeso()){
+							pesoOK = true;
+						}
+						if(volumenTotal >= volumen + e.getVolumen()){
+							volumenOK = true;
+						}
+	
+						if(pesoOK && volumenOK){ //lo asigno a este envio
+							
+							List<EncomiendaE> encomiendas = envProp.getEncomiendas();
+							encomiendas.add(e);
+							envProp.setEncomiendas(encomiendas);
+							envProp.setPropio(true);
+							envProp.setFechaActualizacion(new Date());
+					
+							float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
+							float peso70 = (float)(peso + e.getPeso()/pesoTotal);
+							
+							if(peso70 > 0.7 || volumen70 > 0.7){
+								envProp.setEstado("Listo");
+							}
+						
+							e.setEstado(EncomiendaEstado.Colocada.toString());
+							
+							EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envProp);
+							EncomiendaDao.getInstancia().saveOrUpdate(e);
+							nuevoEnvio = false;
+							
+							Envio env = new Envio().fromEntity(envio);
+							env.actualizarHistorico();
+							
+							idEnvio =  envProp.getIdEnvio();
+						} 
+					}
+				}//End loop
+				
+				//Es un nuevo envio por que no se encontro camion disponible
+				if (nuevoEnvio){
+					//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<>Pendiente)
+					List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(e.getSucursalActual().getIdSucursal(),  e.getVolumen(), e.getPeso());
+					boolean pesoNuevoOK = false;
+					boolean volumenNuevoOK = false;
+					
+					if(vehiculosDisponibles.size() == 0) {
+						System.out.println("No hay vehículos disponibles para generar el envío");
+					} else {
+						for(VehiculoE v: vehiculosDisponibles){
+							//Sumo los pesos y los volumenes
+							if(!pesoNuevoOK || !volumenNuevoOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
+								float pesoTotal = v.getPeso() - v.getTara();
+								float volumenTotal = v.getVolumen();
+								
+								
+								//Verifico si entra el nuevo pedido
+								if(pesoTotal >= e.getPeso()){
+									pesoNuevoOK = true;
+								}
+								if(volumenTotal >= e.getVolumen()){
+									volumenNuevoOK = true;
+								}
+								if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
+									//Genero el envio
+									
+									MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), idSucursalDest);
+									
+									EnvioE envioPropio = new EnvioE();
+									envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+									envioPropio.setFechaYHoraSalida(new Date());
+									
+									envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
+									envioPropio.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+									envioPropio.setVehiculo(v);
+									envioPropio.setPropio(true);
+									envioPropio.setFechaActualizacion(new Date());
+								
+									envioPropio.setSucursalOrigen(e.getSucursalActual());
+									envioPropio.setSucursalDestino(SucursalDao.getInstancia().getById(idSucursalDest));
+									envioPropio.setMapaDeRuta(mr);
+									List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
+									lista.add(e);
+									envioPropio.setEncomiendas(lista);
+									float volumen70 = (float)(e.getVolumen()/volumenTotal);
+									float peso70 = (float)(e.getPeso()/pesoTotal);
+									
+									if(peso70 > 0.7 || volumen70 > 0.7){
+										e.setEstado(EncomiendaEstado.Colocada.toString());
+										envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+									}
+									
+									EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
+									EncomiendaDao.getInstancia().saveOrUpdate(e);
+									
+									Envio env = new Envio().fromEntity(envio);
+									env.actualizarHistorico();
+									
+									idEnvio =  envio.getIdEnvio();
+								}
+							}
+						}//End for
+					}
+				}//End Nuevo Envio
+			}//End if else envio propio/tercerizado
+		}//End if no encontro encomienda
+			/*Coloco las encomiendas en viaje y envio en viaje si hay encomiendas por vencer*/
+		ponerEnViajeEncomiendasPorVencer();
+		
+		return idEnvio;
+	}
+	
+	/* En base al envio indicado calcula el tiempo total de viaje a la sucursal destino
+	 * original de la encomienda y avisa si habra demora o no. 
+	 * Asume que desde el nuevo destino indicado por el envio se mandara luego directamente
+	 * a la sucursal destino original de la encomienda y compara la nueva fecha de llegada
+	 * con la fecha estimada original  de la encomienda.*/
+	public boolean existeDemoraEntrega(int idEnvio){
+		EnvioE envio = EnvioDao.getInstancia().getById(idEnvio);
+		MapaDeRutaE mr = envio.getMapaDeRuta();
+		MapaDeRuta mapaEnvio = new MapaDeRuta().fromEntity(mr);
+		Date fechaLLegadaEnvio = mapaEnvio.calcularFechaEstimadaDeEntrega();
+		
+		//Si el envio no lleva directamente la encomienda a la sucursal destino
+		if(mr.getSucursalDestino().getIdSucursal()!=this.getSucursalDestino().getIdSucursal()){
+			MapaDeRutaE mr2 = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(mr.getSucursalDestino().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
+			MapaDeRuta mapaASucursalDestinoEncomienda = new MapaDeRuta().fromEntity(mr2);
+			
+			Date fechaLlegadaADestino =mapaASucursalDestinoEncomienda.calcularFechaEstimadaDeEntrega(fechaLLegadaEnvio);
+			System.out.println(fechaLlegadaADestino);
+			if(fechaLlegadaADestino.after(this.getFechaEstimadaEntrega()))
+				return true;
+		
+		}
+		return false;
 	}
 	
 	
@@ -609,14 +804,6 @@ public  class Encomienda{
 		//p.setProveedor(ProveedorDao.getInstancia().getById(1));
 		p.setProveedor(new Proveedor(1));
 		return p;
-	}
-
-	public Sucursal getSucursalDestno() {
-		return sucursalDestino;
-	}
-
-	public void setSucursalDestno(Sucursal sucursalDestno) {
-		this.sucursalDestino = sucursalDestno;
 	}
 
 	public boolean isTerciarizado() {

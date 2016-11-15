@@ -184,6 +184,7 @@ public class EncomiendaParticular extends Encomienda{
 		//EntityTransaction tx = em.getTransaction();
 		//tx.begin();	
 		
+		
 		Manifiesto dtoM = this.getManifiesto();
 
 		ManifiestoE manifiestoE = new ManifiestoE();

@@ -65,6 +65,12 @@ public class AltaSucursal extends javax.swing.JFrame {
 	private JTextField jTextFieldCodigoPostal;
 	private JTextField jTextFieldDireccion;
 	private JTextField jTextFieldDescripcion;
+	private JTextField jTextFieldLat;
+	private JTextField jTextFieldLong;
+	
+	private JLabel jLabelCoordenadaLat;
+	private JLabel jLabelCoordenadaLong;
+	
 	private JLabel jLabel10;
 	private JLabel jLabel9;
 	private JLabel jLabel8;
@@ -212,13 +218,35 @@ public class AltaSucursal extends javax.swing.JFrame {
 		return jLabel10;
 	}
 
+	private JLabel getJLabelCoordenadaLat() {
+		if(jLabelCoordenadaLat == null) {
+			jLabelCoordenadaLat = new JLabel();
+			jLabelCoordenadaLat.setText("Latitud:");
+			jLabelCoordenadaLat.setFont(new java.awt.Font("Verdana",0,11));
+			jLabelCoordenadaLat.setLayout(null);
+			jLabelCoordenadaLat.setBounds(6, 157, 80, 14);
+		}
+		return jLabelCoordenadaLat;
+	}
+	
+	private JLabel getJLabelCoordenadaLong() {
+		if(jLabelCoordenadaLong == null) {
+			jLabelCoordenadaLong = new JLabel();
+			jLabelCoordenadaLong.setText("Longitud:");
+			jLabelCoordenadaLong.setFont(new java.awt.Font("Verdana",0,11));
+			jLabelCoordenadaLong.setLayout(null);
+			jLabelCoordenadaLong.setBounds(262, 157, 80, 14);
+		}
+		return jLabelCoordenadaLong;
+	}
+	
 	private JLabel getJLabelGerente() {
 		if(jLabelGerente == null) {
 			jLabelGerente = new JLabel();
 			jLabelGerente.setText("Gerente");
 			jLabelGerente.setFont(new java.awt.Font("Verdana",0,11));
 			jLabelGerente.setLayout(null);
-			jLabelGerente.setBounds(6, 157, 80, 14);
+			jLabelGerente.setBounds(6, 187, 80, 14);
 		}
 		return jLabelGerente;
 	}
@@ -235,7 +263,7 @@ public class AltaSucursal extends javax.swing.JFrame {
 			ComboBoxModel jComboBoxGerenteModel = new DefaultComboBoxModel(v);
 			jComboBoxGerente = new JComboBox();
 			jComboBoxGerente.setModel(jComboBoxGerenteModel);
-			jComboBoxGerente.setBounds(94, 157, 154, 20);
+			jComboBoxGerente.setBounds(94, 187, 154, 20);
 			if(dto!=null){
 				int j=0;
 				for(DTO_Usuario u:lista){
@@ -299,6 +327,28 @@ public class AltaSucursal extends javax.swing.JFrame {
 	
 		return jTextFieldTelefono;
 	}
+	
+	private JTextField getJTextFieldLat() {
+		if(jTextFieldLat == null) {
+			jTextFieldLat = new JTextField();
+			jTextFieldLat.setBounds(95, 157, 117, 18);
+		}
+		if(dto!=null)
+			jTextFieldLat.setText(dto.getPosicionActual().getLatitud());
+	
+		return jTextFieldLat;
+	}
+	
+	private JTextField getJTextFieldLong() {
+		if(jTextFieldLong == null) {
+			jTextFieldLong = new JTextField();
+			jTextFieldLong.setBounds(331, 157, 117, 18);
+		}
+		if(dto!=null)
+			jTextFieldLong.setText(dto.getPosicionActual().getLongitud());
+	
+		return jTextFieldLong;
+	}
 
 	private JButton getJButtonCancelar() {
 		if(jButtonCancelar == null) {
@@ -324,11 +374,11 @@ public class AltaSucursal extends javax.swing.JFrame {
 					if (validacion()) {
 						try{
 						  if(dto==null){
-							Controlador.getInstancia().altaSucursal(jTextFieldDescripcion.getText(), jTextFieldDireccion.getText(), jComboBoxProvincias.getSelectedItem().toString(), jTextFieldLocalidad.getText(), jTextFieldCodigoPostal.getText(), jTextFieldTelefono.getText(), jComboBoxGerente.getSelectedItem().toString());
+							Controlador.getInstancia().altaSucursal(jTextFieldDescripcion.getText(), jTextFieldDireccion.getText(), jComboBoxProvincias.getSelectedItem().toString(), jTextFieldLocalidad.getText(), jTextFieldCodigoPostal.getText(), jTextFieldTelefono.getText(), jComboBoxGerente.getSelectedItem().toString(), jTextFieldLat.getText(), jTextFieldLong.getText());
 							JOptionPane.showMessageDialog(null,"Se ha dado de alta la sucursal:" + jTextFieldDescripcion.getText(), "Alta sucursal realizada", JOptionPane.INFORMATION_MESSAGE);
 							}
 							else{
-								Controlador.getInstancia().modificarSucursal(dto.getId(),jTextFieldDescripcion.getText(), jTextFieldDireccion.getText(), jComboBoxProvincias.getSelectedItem().toString(), jTextFieldLocalidad.getText(), jTextFieldCodigoPostal.getText(), jTextFieldTelefono.getText(), jComboBoxGerente.getSelectedItem().toString());
+								Controlador.getInstancia().modificarSucursal(dto.getId(),jTextFieldDescripcion.getText(), jTextFieldDireccion.getText(), jComboBoxProvincias.getSelectedItem().toString(), jTextFieldLocalidad.getText(), jTextFieldCodigoPostal.getText(), jTextFieldTelefono.getText(), jComboBoxGerente.getSelectedItem().toString(),jTextFieldLat.getText(), jTextFieldLong.getText());
 								JOptionPane.showMessageDialog(null,"Se ha modificado la sucursal:" + jTextFieldDescripcion.getText(), "Modificacion sucursal realizada", JOptionPane.INFORMATION_MESSAGE);
 							}
 						setVisible(false);
@@ -350,7 +400,7 @@ public class AltaSucursal extends javax.swing.JFrame {
 			jPanel1 = new JPanel();
 			jPanel1.setLayout(null);
 			jPanel1.setBorder(BorderFactory.createTitledBorder("General"));
-			jPanel1.setBounds(10, 48, 464, 203);
+			jPanel1.setBounds(10, 48, 464, 303);
 			jPanel1.add(getjLabelDesc());
 			jPanel1.add(getJTextField1());
 			jPanel1.add(getJLabel3());
@@ -365,6 +415,10 @@ public class AltaSucursal extends javax.swing.JFrame {
 			jPanel1.add(getJTextField5());
 			jPanel1.add(getJLabelGerente());
 			jPanel1.add(getJComboBoxGerente());
+			jPanel1.add(getJTextFieldLat());
+			jPanel1.add(getJTextFieldLong());
+			jPanel1.add(getJLabelCoordenadaLat());
+			jPanel1.add(getJLabelCoordenadaLong());
 
 		}
 		return jPanel1;
@@ -416,7 +470,14 @@ public class AltaSucursal extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(null,"Por favor, seleccione el telefono.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			jTextFieldTelefono.requestFocus();
 			return false;
-			
+		}  else if(jTextFieldLat.getText().equals("")){
+			JOptionPane.showMessageDialog(null,"Por favor, seleccione la latitud.", "Atencion", JOptionPane.WARNING_MESSAGE);
+			jTextFieldLat.requestFocus();
+			return false;	 
+		}  else if(jTextFieldLong.getText().equals("")){
+			JOptionPane.showMessageDialog(null,"Por favor, seleccione la longitud.", "Atencion", JOptionPane.WARNING_MESSAGE);
+			jTextFieldLat.requestFocus();
+			return false;
 		} else if(jLabelGerente.getText().equals("")){
 			JOptionPane.showMessageDialog(null,"Por favor, seleccione el Gerente.", "Atencion", JOptionPane.WARNING_MESSAGE);
 			jFormattedTextFieldIdGerente.requestFocus();

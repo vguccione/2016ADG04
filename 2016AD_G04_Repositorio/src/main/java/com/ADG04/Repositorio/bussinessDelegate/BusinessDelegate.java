@@ -924,4 +924,8 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public boolean existeMapaDeRuta(Integer idSucOrigen, Integer idSucDestino) throws RemoteException{
 		return this.businessService.existeMapaDeRuta(idSucOrigen, idSucDestino);
 	}
+
+	public List<DTO_MapaDeRuta> listarMapasDeRuta() throws RemoteException {
+		return this.businessService.listarMapasDeRuta();
+	}
 }

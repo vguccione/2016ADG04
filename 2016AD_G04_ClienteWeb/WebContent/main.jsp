@@ -14,20 +14,7 @@
     <div class="content">
   
     <!-- Pagina principal -->
-    <div class="amarillo"></div>
-  	<div class="page" style="background: #FFF; padding: 25px 50px;">
-      <div id="divLogin">
-      </div>
-      <div id="divTodo">
-      </div>
-      <div id="divAltaEncomienda">
-      </div>
-      <div id="paginaClientes">
-      </div>
-    </div>
-
-    <!-- Fin Pagina principal -->   
-    <div class="amarillo"></div>
+  
     </div>
   </div>
 </body>

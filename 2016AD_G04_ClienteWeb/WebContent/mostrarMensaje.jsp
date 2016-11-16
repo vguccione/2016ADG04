@@ -10,18 +10,6 @@
 <head>
  
 </head>
-<!-- Fin Cabecera -->
-<!-- Declaraciones -->
-<%
-	String usuario;
-	
-	usuario = "";
-	
-	HttpSession sesionIntento = request.getSession();
-	if(sesionIntento.getAttribute("usuario") != null){
-		usuario = (String)sesionIntento.getAttribute("usuario");
-	}    
-%>
 <input id="iInt_Logueado" type="hidden" value =""/>
 <input id="iStr_User"     type="hidden" value =""/>
 <!-- Fin Declaraciones -->
@@ -33,37 +21,29 @@
 <!-- Fin Scripts -->
  
 <!-- Cuerpo -->
+<%@ include file="header.jsp" %>
 <body>
 <div class="container">
     <div class="content">
-        <div id="wrap">
-        	<header>
        		<div class="inner relative">
                       <ul style="width:227px;">
-        				<li style="width:230px;"><a class="logo" href="main.jsp"><img src="images/logo_web_dgv_02.jpg" alt="Der grobe Verteiler" border="0"></a></li>
                      	<li class="logueado" style="width:227px; margin-top:10px;font-size:18px; line-height:25px; color:#f0af1e;">
                          <span id="nombreUsuario"> </span>               
-                        </li>
-                        <div id="cerrarSesion" style="width:227px;color:#fff; font-size:14px;" > </div>           	
+                        </li>         	
          			    </ul>
                     <a id="menu-toggle" class="button dark" href="#"></a>
-        			<nav id="navigation">
-          
-        		    </nav>
+        			
         			<div class="clear"></div>
-          		</div>
- 
-        	</header>
         </div>	
   
     <!-- Pagina principal -->
     <div class="amarillo"></div>
-  	<div class="page" style="background: #FFF; padding: 25px 50px;">
+  	<div class="page" style="background: #CCC; padding: 25px 100px;">
       <div id="divLogin">
       
       </div>
-      <div id="divTodo">
-       <%= '"' + (String)request.getAttribute("mensaje") + '"'%>
+      <div id="divTodo" >
+      <span style=color:red> <%= (String)request.getAttribute("mensaje")%></span>
       </div>
       <div id="divAltaEncomienda">
       </div>

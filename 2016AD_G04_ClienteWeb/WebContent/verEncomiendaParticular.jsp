@@ -99,8 +99,8 @@ $(document).ready(function() {
  
 <!-- Cuerpo -->
 <body>
-<div class="container" style="background-color: #E6E6E6;">>
-    <div class="content">
+<div class="container" style="background-color: #E6E6E6;">
+<div class="content" style="height:800px">
 
 <h2>Encomienda Particular:</h2>
 
@@ -108,38 +108,38 @@ $(document).ready(function() {
 	<!--Sólo se ve si es Particular --> 
     
     <ul>
-	<li><label>Dni:</label><input class="input-field" name="dniParticular" type="text" id="dniParticular" readonly="readonly" value='<%=request.getAttribute("dniCliente")%>' /></li><br/>
+	<li><label>Dni: </label><input class="input-field" name="dniParticular" type="text" id="dniParticular" readonly="readonly" value='<%=request.getAttribute("dniCliente")%>' /></li><br/>
 	
-    <li><label>Código Sucursal de origen:</label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value='<%=request.getAttribute("idSucursalOrigen")%>'/></li><br/>
-	<li><label>Código Sucursal de destino:</label><input name="idSucursalDestino" type="text" readonly="readonly" class="input-field" id="idSucursalDestino" value='<%=request.getAttribute("idSucursalDestino")%>' /></li><br/>
+    <li><label>Código Sucursal de origen: </label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value='<%=request.getAttribute("idSucursalOrigen")%>'/></li><br/>
+	<li><label>Código Sucursal de destino: </label><input name="idSucursalDestino" type="text" readonly="readonly" class="input-field" id="idSucursalDestino" value='<%=request.getAttribute("idSucursalDestino")%>' /></li><br/>
 	
  	<br/>
  	
-	<li><label>Fecha de recepci&oacute;n:</label><input type="date" id="fechaRecepcion" class="datepicker" readonly="readonly" value='<%=request.getAttribute("fechaCreacion")%>' ></li><br/>
- 	<li><label>Ancho (cm):</label><input class="input-field" name="largo" type="text" id="largo" size="18" readonly="readonly" value='<%=request.getAttribute("largo")%>' /></li><br/>
-    <li><label>Alto (cm):</label><input class="input-field" name="alto" type="text" id="alto" size="18" readonly="readonly" value='<%=request.getAttribute("alto")%>' /></li><br/>
-    <li><label>Profundidad (cm):</label><input class="input-field" name="ancho" type="text" id="ancho" size="18" readonly="readonly" value='<%=request.getAttribute("ancho")%>' /></li><br/>
- 	<li><label>Peso (kg):</label><input class="input-field" name="peso" type="text" id="peso" size="18" readonly="readonly" value='<%=request.getAttribute("peso")%>' /></li><br/>
-    <li><label>Tratamiento:</label><input class="input-field" name="tratamiento" type="text" id="tratamiento" value="" maxlength="50" readonly="readonly" value='<%=request.getAttribute("tratamiento")%>' /></li><br/>
+	<li><label>Fecha de recepci&oacute;n: </label><input type="date" id="fechaRecepcion" class="datepicker" readonly="readonly" value='<%=request.getAttribute("fechaCreacion")%>' ></li><br/>
+ 	<li><label>Ancho (cm): </label><input class="input-field" name="largo" type="text" id="largo" size="18" readonly="readonly" value='<%=request.getAttribute("largo")%>' /></li><br/>
+    <li><label>Alto (cm): </label><input class="input-field" name="alto" type="text" id="alto" size="18" readonly="readonly" value='<%=request.getAttribute("alto")%>' /></li><br/>
+    <li><label>Profundidad (cm): </label><input class="input-field" name="ancho" type="text" id="ancho" size="18" readonly="readonly" value='<%=request.getAttribute("ancho")%>' /></li><br/>
+ 	<li><label>Peso (kg): </label><input class="input-field" name="peso" type="text" id="peso" size="18" readonly="readonly" value='<%=request.getAttribute("peso")%>' /></li><br/>
+    <li><label>Tratamiento: </label><input class="input-field" name="tratamiento" type="text" id="tratamiento" value="" maxlength="50" readonly="readonly" value='<%=request.getAttribute("tratamiento")%>' /></li><br/>
  	<li><label>Apilable:</label> <input class="input-field" name="apilable" type="text" id="apilable" value="" maxlength="50" readonly="readonly" value='<%=request.getAttribute("apilable")%>' /></li><br/>
-    <br/><li><label>Cantidad Apilable:</label><input class="input-field" name="cantApilable" type="text" id="cantApilable" size="10" readonly="readonly" value='<%=request.getAttribute("cantApilable")%>' /></li>
- 	<br/><li><label>Refrigerado:</label><input class="input-field" name="refrigerado" type="text" id="cantApilable" size="10" readonly="readonly" value='<%=request.getAttribute("refrigerado")%>' />
-	<br/><li><label>Condición de transporte</label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" readonly="readonly" value='<%=request.getAttribute("condicionTransporte")%>'  /></li>
-<br/>	<li><label>Indicaciones de manipulaci&oacute;n:</label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" readonly="readonly" value='<%=request.getAttribute("indicacionesManipulacion")%>' /></li>      
-	<br/><li><label>Fragilidad:</label><input class="input-field" name="" type="text" id="fragilidad" maxlength="20" readonly="readonly" value='<%=request.getAttribute("fragilidad")%>' /></li>
-	<br/><li><label>Tercerizado:</label><input class="input-field" name="" type="text" id="tercerizado" maxlength="20" readonly="readonly" value='<%=request.getAttribute("tercerizado")%>' /></li>    
+    <br/><li><label>Cantidad Apilable: </label><input class="input-field" name="cantApilable" type="text" id="cantApilable" size="10" readonly="readonly" value='<%=request.getAttribute("cantApilable")%>' /></li>
+ 	<br/><li><label>Refrigerado: </label><input class="input-field" name="refrigerado" type="text" id="cantApilable" size="10" readonly="readonly" value='<%=request.getAttribute("refrigerado")%>' />
+	<br/><li><label>Condición de transporte </label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" readonly="readonly" value='<%=request.getAttribute("condicionTransporte")%>'  /></li>
+<br/>	<li><label>Indicaciones de manipulaci&oacute;n: </label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" readonly="readonly" value='<%=request.getAttribute("indicacionesManipulacion")%>' /></li>      
+	<br/><li><label>Fragilidad: </label><input class="input-field" name="" type="text" id="fragilidad" maxlength="20" readonly="readonly" value='<%=request.getAttribute("fragilidad")%>' /></li>
+	<br/><li><label>Tercerizado: </label><input class="input-field" name="" type="text" id="tercerizado" maxlength="20" readonly="readonly" value='<%=request.getAttribute("tercerizado")%>' /></li>    
 </ul>
 <br/><br/>
 <label>Datos del Receptor</label>
 <!--Sólo se ve si es Particular --> 
     <fieldset><ul>
-		<li><label>DNI:</label><input class="input-field" name="dniReceptor" type="text" id="dniReceptor" maxlength="10" readonly="readonly" value='<%=request.getAttribute("dniReceptor")%>' /></li>
-		<li><label>Nombre:</label><input class="input-field" name="nombreReceptor" type="text" id="nombreReceptor" maxlength="50" readonly="readonly" value='<%=request.getAttribute("nombreReceptor")%>' /></li>
-		<li><label>Apellido:</label><input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" readonly="readonly" value='<%=request.getAttribute("apellidoReceptor")%>' /></li>
+		<li><label>DNI: </label><input class="input-field" name="dniReceptor" type="text" id="dniReceptor" maxlength="10" readonly="readonly" value='<%=request.getAttribute("dniReceptor")%>' /></li>
+		<li><label>Nombre: </label><input class="input-field" name="nombreReceptor" type="text" id="nombreReceptor" maxlength="50" readonly="readonly" value='<%=request.getAttribute("nombreReceptor")%>' /></li>
+		<li><label>Apellido: </label><input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" readonly="readonly" value='<%=request.getAttribute("apellidoReceptor")%>' /></li>
     </ul></fieldset>
     
-	<li><label>Envío Asignado:</label><input class="input-field" name="envioAsignado" type="text" id="envioAsignado" readonly="readonly" value='<%=request.getAttribute("envioAsignado")%>' /></li>
-	<li><label>Id Envío:</label><input class="input-field" name="idEnvio" type="text" id="idEnvio" readonly="readonly" value='<%=request.getAttribute("idEnvio")%>' /></li>
+	<li><label>Envío Asignado: </label><input class="input-field" name="envioAsignado" type="text" id="envioAsignado" readonly="readonly" value='<%=request.getAttribute("envioAsignado")%>' /></li>
+	<li><label>Id Envío: </label><input class="input-field" name="idEnvio" type="text" id="idEnvio" readonly="readonly" value='<%=request.getAttribute("idEnvio")%>' /></li>
 </table>
 		<% 
 			List<DTO_ItemFactura> rows = (List<DTO_ItemFactura>)request.getAttribute("itemsFactura");

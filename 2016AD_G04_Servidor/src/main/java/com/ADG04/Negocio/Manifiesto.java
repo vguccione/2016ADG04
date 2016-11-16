@@ -124,7 +124,12 @@ public class Manifiesto{
     		list.add(itm);
     	}
 		m.setItemsManifiesto(list);
-		m.setEncomienda(new Encomienda().fromEntity(manifiesto.getEncomienda()));
+		
+		Encomienda e = new Encomienda();
+		e.setIdEncomienda(manifiesto.getEncomienda().getIdEncomienda());
+		
+		m.setEncomienda(e);
+		
 		return m;
 	}
 

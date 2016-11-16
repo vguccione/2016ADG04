@@ -79,16 +79,6 @@ public class ServletEncomiendaEmpresa extends HttpServlet {
 			throws RemoteException, BusinessException, Exception {
 		DTO_EncomiendaEmpresa e = new DTO_EncomiendaEmpresa();
 							
-		//m.setDescripcion((String)request.getParameter("manifiesto"));
-		
-		//Integer idManifiesto = WebBusinessDelegate.getInstancia().altaManifiesto(m);
-		
-		//e.setIdManifiesto(idManifiesto);
-//		String FechaRecepcion = (String)request.getParameter("fechaRecepcion");
-//	FechaRecepcion = FechaRecepcion.split("/")[2]+"-"+FechaRecepcion.split("/")[0]+"-"+FechaRecepcion.split("/")[1];
-//	String FechaMaxima = (String)request.getParameter("fechaMaxima");
-//	FechaMaxima = FechaMaxima.split("/")[2]+"-"+FechaMaxima.split("/")[0]+"-"+FechaMaxima.split("/")[1];
-
 		DTO_Sucursal sucOrigen= new DTO_Sucursal(Integer.parseInt((String)request.getParameter("idSucursalOrigen")));
 		DTO_Sucursal sucActual= new DTO_Sucursal(Integer.parseInt((String)request.getParameter("idSucursalOrigen")));
 		DTO_Sucursal sucDestino= new DTO_Sucursal(Integer.parseInt((String)request.getParameter("idSucursalDestino")));
@@ -123,22 +113,6 @@ public class ServletEncomiendaEmpresa extends HttpServlet {
 		DTO_ClienteEmpresa cliente = new DTO_ClienteEmpresa();
 		cliente.setCuit(((String)request.getParameter("cuitEmpresa")));
 		e.setCliente(cliente);
-		
-		//e.setIdDireccionEntrega(Integer.parseInt((String)request.getParameter("idDireccionEntrega")));
-		/*
-		if(request.getParameter("tercerizado").equals("true"))
-			e.setTercerizada(true);
-		else
-			e.setTercerizada(false);*/
-		
-		//e.setKilometrosRecorridos(0);
-		//e.setFacturado(false);
-		//e.setValorEstimado((float)Float.parseFloat((String)request.getParameter("valorEstimado")));
-		//e.setDistanciaEstimadaKM((float)Float.parseFloat((String)request.getParameter("distanciaEstimadaKM")));
-		
-		//Integer factura = WebBusinessDelegate.getInstancia().confirmarEncomiendaEmpresa(e);
-
-		//No hay receptor en una encmienda empresa
 		e.setDniReceptor((String)request.getParameter("dniReceptor"));
 		e.setNombreReceptor((String)request.getParameter("nombreReceptor"));
 		e.setApellidoReceptor((String)request.getParameter("apellidoReceptor"));

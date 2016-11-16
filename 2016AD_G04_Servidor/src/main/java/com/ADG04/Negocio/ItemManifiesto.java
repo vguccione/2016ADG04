@@ -66,7 +66,9 @@ public class ItemManifiesto{
     	DTO_ItemManifiesto im = new DTO_ItemManifiesto();
     	im.setCantidad(this.cantidad);
     	im.setDescripcion(this.descripcion);
-    	im.setProducto(this.getProducto().toDTO());
+    	
+    	if(this.getProducto() != null)
+    		im.setProducto(this.getProducto().toDTO());
     	im.setIdManifiesto(this.idItemManifiesto);
     	return im;
     }
@@ -77,7 +79,10 @@ public class ItemManifiesto{
 		ItemManifiesto item = new ItemManifiesto();
 		item.setCantidad(itemE.getCantidad());
 		item.setDescripcion(itemE.getDescripcion());
-		item.setProducto(new Producto().fromEntity(itemE.getProducto()));
+		
+		if(itemE.getProducto() != null)
+			item.setProducto(new Producto().fromEntity(itemE.getProducto()));
+		
 		item.setIdItemManifiesto(itemE.getIdItemManifiesto());
 		return item;
 	}

@@ -33,7 +33,6 @@ import com.ADG04.Negocio.EncomiendaEmpresa;
 import com.ADG04.Negocio.EncomiendaParticular;
 import com.ADG04.Negocio.Envio;
 import com.ADG04.Negocio.EnvioHistorico;
-
 import com.ADG04.Negocio.ItemManifiesto;
 import com.ADG04.Negocio.Manifiesto;
 import com.ADG04.Negocio.MapaDeRuta;
@@ -285,14 +284,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public DTO_ClienteParticular getClienteParticular(String dni) throws RemoteException {
 
 		DTO_ClienteParticular cdto = new DTO_ClienteParticular();
-		//ClienteDao dao = new ClienteDao(EntityManagerProvider.getInstance().getEntityManager());
-		//Cliente cliente = dao.getCliente(cuit);
+		ClienteParticularE clieE = ClienteParticularDao.getInstancia().getByDni(dni);
 		
-		cdto.setDni("12345678");
-		cdto.setNombre("Peperulo");
-		cdto.setApellido("Perez");
+		ClienteParticular cli = new ClienteParticular().fromEntity(clieE);
+		return cli.toDTO();
 		
-		return cdto;
 	}
 
 	
@@ -1358,11 +1354,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_EncomiendaParticular getEncomiendaParticular(Integer id)
 			throws RemoteException {
-		DTO_EncomiendaParticular enc = new EncomiendaParticular().fromEntity(EncomiendaDao.getInstancia().getById(id)).toDTO();
-		if(enc.getTipoEncomienda().contains("P"))
-			return enc;
-		else
-			return null;
+		
+		EncomiendaE encE = EncomiendaDao.getInstancia().getById(id);
+		EncomiendaParticular ep = (EncomiendaParticular)new EncomiendaParticular().fromEntity(encE);
+		DTO_EncomiendaParticular dto = (DTO_EncomiendaParticular)ep.toDTO();
+		//DTO_EncomiendaParticular enc = (DTO_EncomiendaParticular)new EncomiendaParticular().fromEntity(EncomiendaDao.getInstancia().getById(id)).toDTO();
+		return dto;
 	}
 
 	@Override
@@ -1381,8 +1378,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		List<DTO_EncomiendaParticular> listaDTO = new ArrayList<DTO_EncomiendaParticular>();
 		List<EncomiendaE> lista = EncomiendaDao.getInstancia().getAllParticulares();
         for(EncomiendaE enc: lista){
-        	EncomiendaParticular e = new EncomiendaParticular().fromEntity(enc);
-        	listaDTO.add( e.toDTO());
+        	EncomiendaParticular e = (EncomiendaParticular)new EncomiendaParticular().fromEntity(enc);
+        	listaDTO.add((DTO_EncomiendaParticular)e.toDTO());
         }
         
 		 return listaDTO;
@@ -1396,8 +1393,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			List<DTO_EncomiendaEmpresa> listaDTO = new ArrayList<DTO_EncomiendaEmpresa>();
 			List<EncomiendaE> lista = EncomiendaDao.getInstancia().getAllEmpresas();
 	        for(EncomiendaE enc: lista){
-	        	EncomiendaEmpresa ence = new EncomiendaEmpresa().fromEntity(enc);
-	        	listaDTO.add( ence.toDTO());
+	        	EncomiendaEmpresa ence = (EncomiendaEmpresa)new EncomiendaEmpresa().fromEntity(enc);
+	        	listaDTO.add((DTO_EncomiendaEmpresa)ence.toDTO());
 	        }
 			 return listaDTO;
 		}
@@ -2027,6 +2024,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			encomiendas.add(enc.toDTO());
 		}
 		return encomiendas;
+	}
+
+
+	@Override
+	public DTO_Factura getFacturaById(Integer id) throws RemoteException {
+		FacturaE f = FacturaDao.getInstancia().getById(id);
+		if(f != null)
+			return f.toDTO();
+		return null;
 	}
 
 

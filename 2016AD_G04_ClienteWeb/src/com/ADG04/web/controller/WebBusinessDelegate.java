@@ -373,8 +373,7 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	
 	public DTO_ClienteParticular getClienteParticularById(Integer idCliente)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.objetoRemoto.getClienteParticularById(idCliente);
 	}
 
 	
@@ -399,8 +398,7 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	
 	public DTO_ClienteEmpresa getClienteEmpresaById(Integer idCliente)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.objetoRemoto.getClienteEmpresaById(idCliente);
 	}
 
 	
@@ -717,6 +715,10 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 
 	public DTO_EncomiendaParticular getEncomiendaParticular(int idEncomienda) throws RemoteException {
 		return objetoRemoto.getEncomiendaParticular(idEncomienda);
+	}
+
+	public DTO_Factura getFacturaById(Integer id) throws RemoteException {
+		return objetoRemoto.getFacturaById(id);
 	}
 	
 	//Clientes-----------------------------------------------------------------

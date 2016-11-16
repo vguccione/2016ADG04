@@ -146,6 +146,7 @@ public class ClienteParticular extends Cliente{
 	
 	
 	public ClienteParticular fromEntity(ClienteParticularE cliente) {
+		
 		if(cliente!=null){
 			ClienteParticular cli = new ClienteParticular();
 			cli.setApellido(cliente.getApellido());
@@ -157,6 +158,7 @@ public class ClienteParticular extends Cliente{
 			cli.setNombre(cliente.getNombre());
 			cli.setTelefono(cliente.getTelefono());
 			cli.setTipo('P');
+			
 			return cli;
 		}
 		else

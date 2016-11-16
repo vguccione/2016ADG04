@@ -127,4 +127,11 @@ public class DTO_Factura implements Serializable{
 		this.idCuentaCorriente = idCuentaCorriente;
 	}
 
+	public void addItem(DTO_ItemFactura item) {
+		if(this.detalle == null)
+			this.detalle = new ArrayList<DTO_ItemFactura>();
+		
+		this.detalle.add(item);
+	}
+
 }

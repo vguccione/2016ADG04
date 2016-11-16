@@ -134,6 +134,12 @@ public class FacturaE implements java.io.Serializable {
 		this.itemsFactura = itemsFactura;
 	}
 	
+	public void addItemFactura(ItemFacturaE itemFactura){
+		if(this.itemsFactura == null)
+			this.itemsFactura = new ArrayList<ItemFacturaE>();
+		
+		this.itemsFactura.add(itemFactura);
+	}
 
 	public EncomiendaE getEncomienda() {
 		return encomienda;
@@ -144,21 +150,23 @@ public class FacturaE implements java.io.Serializable {
 	}
 
 	public DTO_Factura toDTO(){
+		
 		DTO_Factura f = new DTO_Factura();
+		
+		f.setFechaVencimiento(this.fechaVencimiento);
 		f.setId(this.getIdFactura());
 		f.setIdEncomienda(this.getEncomienda().getIdEncomienda());
     	f.setFecha(this.fecha);
-    	f.setIdCuentaCorriente(this.cuentaCorriente.getIdCtaCte());
+    	if(this.cuentaCorriente != null)
+    		f.setIdCuentaCorriente(this.cuentaCorriente.getIdCtaCte());
     	f.setPagado(this.pagada);
     	f.setTipo(this.tipoFactura);
     	
     	List<DTO_ItemFactura> list = new ArrayList<DTO_ItemFactura>();
     	for(ItemFacturaE item : this.itemsFactura){
-    		list.add(item.toDTO());
+    		f.addItem(item.toDTO());
     	}
-    	
-    	f.setItems(list);
-    	
+    	    	
     	return f;
     }
 

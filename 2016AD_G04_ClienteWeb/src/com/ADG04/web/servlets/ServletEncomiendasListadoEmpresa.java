@@ -25,7 +25,7 @@ import com.ADG04.web.controller.WebBusinessDelegate;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-@WebServlet(asyncSupported = true, urlPatterns = { "/servletEncomiendasListado" })
+@WebServlet(asyncSupported = true, urlPatterns = { "/servletEncomiendasListadoEmpresa" })
 public class ServletEncomiendasListadoEmpresa extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

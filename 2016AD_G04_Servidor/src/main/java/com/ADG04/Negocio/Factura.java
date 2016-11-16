@@ -132,7 +132,7 @@ public class Factura{
 		f.setId(this.getIdFactura());
 		//f.setIdEncomienda(this.getEncomienda().getIdEncomienda());
     	f.setFecha(this.fecha);
-    	f.setIdCuentaCorriente(this.cuentaCorriente.getIdCtaCte());
+    //	f.setIdCuentaCorriente(this.cuentaCorriente.getIdCtaCte());
     	f.setPagado(this.pagada);
     	f.setTipo(this.tipoFactura);
     	
@@ -153,13 +153,14 @@ public class Factura{
 	}
 
 	public Factura fromEntity(FacturaE fe) {
+		
 		if(fe!=null){
 			Factura f = new Factura();
 			if(fe.getCuentaCorriente()!=null)
 				f.setCuentaCorriente(new CuentaCorriente().fromEntity(fe.getCuentaCorriente()));
 			f.setFecha(fe.getFecha());
 			f.setFechaVencimiento(fe.getFechaVencimiento());
-			//f.setIdFactura(fe.getIdFactura());
+			f.setIdFactura(fe.getIdFactura());
 			f.setPagada(fe.isPagada());
 			f.setTipoFactura(fe.getTipoFactura());
 			f.setVencimiento(f.getVencimiento());

@@ -47,12 +47,12 @@ import com.ADG04.bean.Vehiculo.*;
 public class App 
 {
 
-	public static void main(String[] args) throws IOException, BusinessException {
-		Integer idEncomienda = AltaEncomiendaParticular();
-		Encomienda enc = new Encomienda().fromEntity(EncomiendaDao.getInstancia().getById(idEncomienda));
-		System.out.println("Fecha estimada entrega :");
-		System.out.println(enc.getFechaEstimadaEntrega());
-		
+	public static void mainddd(String[] args) throws IOException, BusinessException {
+//		Integer idEncomienda = AltaEncomiendaParticular();
+//		Encomienda enc = new Encomienda().fromEntity(EncomiendaDao.getInstancia().getById(idEncomienda));
+//		System.out.println("Fecha estimada entrega :");
+//		System.out.println(enc.getFechaEstimadaEntrega());
+//		
 		//verificar que exista sucursal 3 con mapa de ruta de 1 a 3 y de 2 a 3
 /*
  * IdMapaDeRuta	CantKm	costo	Duracion	IdSucursalDestino	IdSucursalOrigen
@@ -60,11 +60,6 @@ public class App
 	1002		100		220		42				3					1
 	1003		30		44		32				2					3
  * */
-		int idEnvio = enc.asignarEnvio(null, 3);
-		
-		if(enc.existeDemoraEntrega(idEnvio)){
-			System.out.println("Existe Demora");
-		}
 		
 	}
 	

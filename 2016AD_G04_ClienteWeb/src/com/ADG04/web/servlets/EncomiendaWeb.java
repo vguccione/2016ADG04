@@ -36,7 +36,7 @@ public class EncomiendaWeb {
         return "{\"idEncomienda\":\"" + idEncomienda.toString() 
         		+ "\", \"idCliente\":\"" + idCliente.toString() 
         		+ "\", \"envioAsignado\":\"" + this.tieneEnvio() 
-        		+ "\", \"verEncomienda\":\"" + "<a href=verEncomienda.jsp?idEncomienda="+idEncomienda.toString()+">Ver Encomienda</a>" + "\"}";
+        		+ "\", \"verEncomienda\":\"" + "<a href=ServletVerEncomiendasParticular?idEncomienda="+idEncomienda.toString()+">Ver Encomienda</a>" + "\"}";
     }
 	
 	private String tieneEnvio(){

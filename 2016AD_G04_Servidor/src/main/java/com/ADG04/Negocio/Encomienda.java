@@ -18,6 +18,8 @@ import java.util.Set;
 
 
 
+
+
 import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
 import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
@@ -25,6 +27,7 @@ import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
 import com.ADG04.Servidor.dao.EnvioDao;
 import com.ADG04.Servidor.dao.FacturaDao;
+import com.ADG04.Servidor.dao.ItemFacturaDao;
 import com.ADG04.Servidor.dao.ManifiestoDao;
 import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.ProductoDao;
@@ -958,43 +961,6 @@ public  class Encomienda{
 		float kilometros = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCantKm();
 		float costo = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCosto();
 
-		List<ItemFacturaE> items = new ArrayList<ItemFacturaE>();
-
-		//Costo por Km
-		ItemFacturaE itemTransporte = new ItemFacturaE();
-		itemTransporte.setDescripcion("Transporte: " + this.cliente.getIdCliente() + "-" + this.sucursalOrigen.getIdSucursal() + "-" + this.sucursalDestino.getIdSucursal());
-		itemTransporte.setCantidad(1);
-		itemTransporte.setValor(costo);
-		items.add(itemTransporte);
-						
-		//Segunda Linea Seguros
-		SeguroE pSeguro = SeguroDao.getInstancia().getById(this.getSeguro().getIdSeguro());
-		if(pSeguro != null){
-			ItemFacturaE itemSeguro = new ItemFacturaE();
-			itemSeguro.setDescripcion("Seguro: " + this.cliente.getIdCliente() + "-" + this.sucursalOrigen.getIdSucursal() + "-" + this.sucursalDestino.getIdSucursal());
-			itemSeguro.setCantidad(1);
-			itemSeguro.setValor((float)(pSeguro.getTarifa() + (pSeguro.getTarifaPorKm() * kilometros)));
-			items.add(itemSeguro);
-		}
-				
-		//Tercer Linea Servicio Seguridad
-		ServicioSeguridadE ss = ServicioSeguridadDao.getInstancia().getById(this.getServicioSeguridad().getIdServicioSeguridad());
-		if(ss != null){
-			ItemFacturaE itemSeguridad = new ItemFacturaE();
-			itemSeguridad.setDescripcion("Servicio de Seguridad: " + ss.getDescripcion());
-			itemSeguridad.setCantidad(1);
-			itemSeguridad.setValor((float)(ss.getTarifa()));
-			items.add(itemSeguridad);
-		}
-	
-		//Cuarta Linea Impueestos
-		ItemFacturaE itemImpuesto = new ItemFacturaE();
-		itemImpuesto.setDescripcion("IVA 21%");
-		itemImpuesto.setCantidad(1);
-		float costoTotal = (float) (calcularIVA(items) * 0.21);
-		itemImpuesto.setValor(costoTotal);
-		items.add(itemImpuesto);
-		
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date()); // Now use today date.
 		c.add(Calendar.DATE, 30); // Adding 30 days
@@ -1007,27 +973,70 @@ public  class Encomienda{
 		facturaEntity.setFechaVencimiento(c.getTime());
 		facturaEntity.setPagada(false);
 		facturaEntity.setTipoFactura("A");
-		facturaEntity.setItemsFactura(items);
 		
 		/*EntityManager em = factory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();*/
 		
 		//Guardo la factura
-		FacturaE fe = FacturaDao.getInstancia().saveOrUpdate(facturaEntity);
+		facturaEntity = FacturaDao.getInstancia().saveOrUpdate(facturaEntity);
+
+		//Costo por Km
+		ItemFacturaE itemTransporte = new ItemFacturaE();
+		itemTransporte.setDescripcion("Transporte: " + this.cliente.getIdCliente() + "-" + this.sucursalOrigen.getIdSucursal() + "-" + this.sucursalDestino.getIdSucursal());
+		itemTransporte.setCantidad(1);
+		itemTransporte.setValor(costo);
+		itemTransporte.setFactura(facturaEntity);
+		ItemFacturaDao.getInstancia().saveOrUpdate(itemTransporte);
+		facturaEntity.addItemFactura(itemTransporte);
+					
 		
+		//Segunda Linea Seguros
+		SeguroE pSeguro = SeguroDao.getInstancia().getById(this.getSeguro().getIdSeguro());
+		if(pSeguro != null){
+			ItemFacturaE itemSeguro = new ItemFacturaE();
+			itemSeguro.setDescripcion("Seguro: " + this.cliente.getIdCliente() + "-" + this.sucursalOrigen.getIdSucursal() + "-" + this.sucursalDestino.getIdSucursal());
+			itemSeguro.setCantidad(1);
+			itemSeguro.setValor((float)(pSeguro.getTarifa() + (pSeguro.getTarifaPorKm() * kilometros)));
+			itemSeguro.setFactura(facturaEntity);
+			ItemFacturaDao.getInstancia().saveOrUpdate(itemSeguro);
+			facturaEntity.addItemFactura(itemSeguro);
+		}
+				
+		//Tercer Linea Servicio Seguridad
+		ServicioSeguridadE ss = ServicioSeguridadDao.getInstancia().getById(this.getServicioSeguridad().getIdServicioSeguridad());
+		if(ss != null){
+			ItemFacturaE itemSeguridad = new ItemFacturaE();
+			itemSeguridad.setDescripcion("Servicio de Seguridad: " + ss.getDescripcion());
+			itemSeguridad.setCantidad(1);
+			itemSeguridad.setValor((float)(ss.getTarifa()));
+			itemSeguridad.setFactura(facturaEntity);
+			ItemFacturaDao.getInstancia().saveOrUpdate(itemSeguridad);
+			facturaEntity.addItemFactura(itemSeguridad);
+		}
+	
+		//Cuarta Linea Impueestos
+		ItemFacturaE itemImpuesto = new ItemFacturaE();
+		itemImpuesto.setDescripcion("IVA 21%");
+		itemImpuesto.setCantidad(1);
+		float costoTotal = (float) (calcularIVA(facturaEntity.getItemsFactura()) * 0.21);
+		itemImpuesto.setValor(costoTotal);
+		itemImpuesto.setFactura(facturaEntity);
+		ItemFacturaDao.getInstancia().saveOrUpdate(itemImpuesto);
+		facturaEntity.addItemFactura(itemImpuesto);
+				
 		//actualizo la encomienda
 		EncomiendaE encomiendaEntity = this.toEntity();
-		encomiendaEntity.setFactura(fe);
+		encomiendaEntity.setFactura(facturaEntity);
 		EncomiendaDao.getInstancia().saveOrUpdate(encomiendaEntity);
 		
 		//Actualizo los datos de factura en el objeto this
-		this.factura = new Factura(fe.getTipoFactura(), fe.getFecha(), fe.isPagada(), fe.getFechaVencimiento(), this);
-		this.factura.setIdFactura(fe.getIdFactura());
+	/*	this.factura = new Factura().fromEntity(facturaEntity);
+		this.factura.setIdFactura(facturaEntity.getIdFactura());
 		for(ItemFactura item:this.getFactura().getItemsFactura()){
 			this.factura.addItem(item);
 		}
-		
+		*/
 		//tx.commit();
 
 		
@@ -1180,56 +1189,60 @@ public  class Encomienda{
 		return vehiculosDisponibles;
 		
 	}
-
-
-
-	public Encomienda fromEntity(EncomiendaE e) {
+	
+	public Encomienda fromEntity(EncomiendaE ence) {
+	
 		Encomienda enc = new Encomienda();
-		enc.setAlto(e.getAlto());
-		enc.setAncho(e.getAncho());
-		enc.setApellidoReceptor(e.getApellidoReceptor());
-		enc.setApilable(e.getApilable());
-		enc.setCantApilable(e.getCantApilable());
-		enc.setCargaGranel(e.getCargaGranel());
-		enc.setCliente(new Cliente().fromEntity(e.getCliente()));
-		enc.setCondicionTransporte(e.getCondicionTransporte());
-		enc.setDireccionDestino(new Direccion().fromEntity(e.getDireccionDestino()));
-		enc.setDireccionOrigen(new Direccion().fromEntity(e.getDireccionOrigen()));
-		enc.setDniReceptor(e.getDniReceptor());
-		enc.setEstado(e.getEstado());
-		enc.setFactura(new Factura().fromEntity(e.getFactura()));
-		enc.setFechaCreacion(e.getFechaCreacion());
-		enc.setFechaEstimadaEntrega(e.getFechaEstimadaEntrega());
-		enc.setFragilidad(e.getFragilidad());
-		enc.setIdEncomienda(e.getIdEncomienda());
-		enc.setIndicacionesManipulacion(e.getIndicacionesManipulacion());
-		enc.setInternacional(e.isInternacional());
-		enc.setLargo(e.getLargo());
-		enc.setNombreReceptor(e.getNombreReceptor());
-		enc.setPeso(e.getPeso());
-		enc.setRefrigerado(e.getRefrigerado());
-		enc.setServicioSeguridad(new ServicioSeguridad().fromEntity(e.getServicioSeguridad()));
-		enc.setSucursalActual(new Sucursal().fromEntity(e.getSucursalActual()));
-		enc.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
-		enc.setSucursalOrigen(new Sucursal().fromEntity(e.getSucursalOrigen()));
-		enc.setTercerizado(e.isTercerizado());
-		enc.setTratamiento(e.getTratamiento());
-		enc.setUnidadGranel(e.getUnidadGranel());
-		enc.setVolumen(e.getVolumen());
-		enc.setVolumenGranel(e.getVolumenGranel());
+		enc.setAlto(ence.getAlto());
+		enc.setAncho(ence.getAncho());
+		enc.setApellidoReceptor(ence.getApellidoReceptor());
+		enc.setApilable(ence.getApilable());
+		enc.setCantApilable(ence.getCantApilable());
+		enc.setCargaGranel(ence.getCargaGranel());
+		enc.setCondicionTransporte(ence.getCondicionTransporte());
+		
+		if(ence.getFactura()!=null)
+			enc.setFactura(new Factura().fromEntity(FacturaDao.getInstancia().getById(ence.getFactura().getIdFactura())));
+		
+		enc.setDniReceptor(ence.getDniReceptor());
+		enc.setEstado(ence.getEstado());
+		enc.setFechaCreacion(ence.getFechaCreacion());
+		enc.setFragilidad(ence.getFragilidad());
+		enc.setIdEncomienda(ence.getIdEncomienda());
+		enc.setIndicacionesManipulacion(ence.getIndicacionesManipulacion());
+		enc.setInternacional(ence.isInternacional());
+		enc.setLargo(ence.getLargo());
+		if(ence.getManifiesto()!=null)
+			enc.setManifiesto(new Manifiesto().fromEntity(ence.getManifiesto()));
+		
+		enc.setNombreReceptor(ence.getNombreReceptor());
+		enc.setPeso(ence.getPeso());
+		enc.setRefrigerado(ence.getRefrigerado());
+		enc.setSucursalActual(new Sucursal().fromEntity(ence.getSucursalActual()));
+		enc.setSucursalDestino(new Sucursal().fromEntity(ence.getSucursalDestino()));
+		enc.setSucursalOrigen(new Sucursal().fromEntity(ence.getSucursalOrigen()));
+		enc.setTercerizado(ence.isTercerizado());
+		enc.setTratamiento(ence.getTratamiento());
+		enc.setUnidadGranel(ence.getUnidadGranel());
+		enc.setVolumen(ence.getVolumen());
+		enc.setVolumenGranel(ence.getVolumenGranel());
+		enc.setCliente(new Cliente().fromEntity(ClienteDao.getInstancia().getById(ence.getCliente().getIdCliente())));
+		enc.setFechaEstimadaEntrega(ence.getFechaEstimadaEntrega());
+		
 		return enc;
 	}
 
-
-
+	
 	public DTO_Encomienda toDTO() {
 			
 		DTO_Encomienda encomienda = new DTO_Encomienda();
 		encomienda.setIdEncomienda(this.getIdEncomienda());
 		encomienda.setCliente(this.getCliente().toDTO());
+
 		encomienda.setSucursalOrigen(this.getSucursalOrigen().toDTO());
 		encomienda.setSucursalActual(this.getSucursalDestino().toDTO());
 		encomienda.setSucursalDestino(this.getSucursalActual().toDTO());
+		
 		encomienda.setLargo(this.getLargo());
 		encomienda.setAncho(this.getAncho());
 		encomienda.setInternacional(this.isInternacional());
@@ -1250,7 +1263,6 @@ public  class Encomienda{
 		encomienda.setUnidadGranel(this.getUnidadGranel());
 		encomienda.setCargaGranel(this.getCargaGranel());		
 		
-		
 		encomienda.setTercerizada(this.isTercerizado());
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
 		encomienda.setFechaCreacion(new Date());
@@ -1260,6 +1272,9 @@ public  class Encomienda{
 		
 		if(this.getRemito()!=null)
 			encomienda.setRemito(this.getRemito().toDTO());
+		
+		if(this.factura != null)
+			encomienda.setFactura(this.factura.toDTO());
 		
 		return encomienda;
 	}

@@ -933,4 +933,8 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 			throws RemoteException {
 		return this.businessService.listarEncomiendasBySucursal(idSucursal);
 	}
+
+	public DTO_Factura getFacturaById(Integer id) throws RemoteException {
+		return this.businessService.getFacturaById(id);
+	}
 }

@@ -83,7 +83,8 @@ public class EncomiendaParticular extends Encomienda{
 						+ " internacional +" + internacional + "]";
 	}
 
-	public DTO_EncomiendaParticular toDTO() {
+	public DTO_Encomienda toDTO() {
+		
 		DTO_EncomiendaParticular dto = new DTO_EncomiendaParticular();
 		dto.setAlto(this.getAlto());
 		dto.setAncho(this.getAncho());
@@ -119,6 +120,7 @@ public class EncomiendaParticular extends Encomienda{
 		dto.setVolumen(this.getVolumen());
 		dto.setVolumenGranel(this.getVolumenGranel());
 		dto.setCliente(this.getCliente().toDTO());
+		dto.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
 		return dto;
 	}
 
@@ -255,25 +257,9 @@ public class EncomiendaParticular extends Encomienda{
 		this.idEncomienda = encomienda.getIdEncomienda();
 		return encomienda.getIdEncomienda();
 	}
-	
-	private EntityManager getEntityFactoryInstace() {
-		return EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
-	}
 
-	
-
-	private float calcularPrecioTotal() {
+	public Encomienda fromEntity(EncomiendaE ence){
 		
-		float costoTotal=0;
-		
-		for(ItemFactura item: this.factura.getItemsFactura()){
-			costoTotal =+ item.getValor();
-		}
-
-		return costoTotal;
-	}
-
-	public EncomiendaParticular fromEntity(EncomiendaE ence) {
 		EncomiendaParticular enc = new EncomiendaParticular();
 		enc.setAlto(ence.getAlto());
 		enc.setAncho(ence.getAncho());
@@ -309,8 +295,28 @@ public class EncomiendaParticular extends Encomienda{
 		enc.setVolumen(ence.getVolumen());
 		enc.setVolumenGranel(ence.getVolumenGranel());
 		enc.setCliente(new Cliente().fromEntity(ClienteDao.getInstancia().getById(ence.getCliente().getIdCliente())));
+		enc.setFechaEstimadaEntrega(ence.getFechaEstimadaEntrega());
 		
 		return enc;
 	}
+
 	
+	private EntityManager getEntityFactoryInstace() {
+		return EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
+	}
+
+	
+
+	private float calcularPrecioTotal() {
+		
+		float costoTotal=0;
+		
+		for(ItemFactura item: this.factura.getItemsFactura()){
+			costoTotal =+ item.getValor();
+		}
+
+		return costoTotal;
+	}
+
+		
 }

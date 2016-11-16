@@ -11,7 +11,7 @@
     <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
 	 
 	 <!-- Hojas de estilo -->
-	 <link href="css/style.css" rel="stylesheet" type="text/css" />
+	  <link href="css/style.css" rel="stylesheet" type="text/css" />
 	 <link href="jquery/jquery-ui.css" rel="stylesheet" type="text/css" />
 	 <link href="css/jquery.timepicker.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">

@@ -24,6 +24,7 @@ import java.util.Set;
 
 
 
+
 import org.hibernate.property.Getter;
 
 import com.ADG04.Repositorio.Exceptions.BusinessException;
@@ -191,9 +192,9 @@ public class EncomiendaEmpresa extends Encomienda{
 		Manifiesto dtoM = this.getManifiesto();
 
 		ManifiestoE manifiestoE = new ManifiestoE();
-		manifiestoE.setEncomienda(encomiendaEntity);
+		
 		manifiestoE.setFecha(new Date());		
-		manifiestoE.setEncomienda(encomiendaEntity);
+		
 	
 		List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
 		for(ItemManifiesto item:dtoM.getItemsManifiesto()){
@@ -214,8 +215,8 @@ public class EncomiendaEmpresa extends Encomienda{
 		}
 		manifiestoE.setItemsManifiesto(itemsManifiesto);
 		
-		encomiendaEntity.setManifiesto(manifiestoE);
-		
+		//encomiendaEntity.setManifiesto(manifiestoE);
+		manifiestoE.setEncomienda(encomiendaEntity);
 		/*Deberia persistir en cascada*/
 		if(this.productosEncomienda == null || this.productosEncomienda.size() == 0)
 			throw new BusinessException("La encomienda no tiene productos asignados");
@@ -287,7 +288,7 @@ public class EncomiendaEmpresa extends Encomienda{
 	}
 
 	
-	public DTO_EncomiendaEmpresa toDTO() {
+	public DTO_Encomienda toDTO() {
 		
 		DTO_EncomiendaEmpresa dto = new DTO_EncomiendaEmpresa();
 		dto.setAlto(this.getAlto());
@@ -324,7 +325,8 @@ public class EncomiendaEmpresa extends Encomienda{
 		dto.setVolumen(this.getVolumen());
 		dto.setVolumenGranel(this.getVolumenGranel());
 		dto.setCliente(this.getCliente().toDTO());
-		
+		dto.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
+	
 		if(this.productosEncomienda != null){
 			for(ProductoEncomienda pe: this.productosEncomienda){
 				
@@ -336,7 +338,8 @@ public class EncomiendaEmpresa extends Encomienda{
 		return dto;
 	}
 
-	public EncomiendaEmpresa fromEntity(EncomiendaE ence) {
+	public Encomienda fromEntity(EncomiendaE ence) {
+		
 		EncomiendaEmpresa enc = new EncomiendaEmpresa();
 		enc.setAlto(ence.getAlto());
 		enc.setAncho(ence.getAncho());
@@ -371,7 +374,10 @@ public class EncomiendaEmpresa extends Encomienda{
 		enc.setUnidadGranel(ence.getUnidadGranel());
 		enc.setVolumen(ence.getVolumen());
 		enc.setVolumenGranel(ence.getVolumenGranel());
-		enc.setCliente(new Cliente().fromEntity((ClienteE)ence.getCliente()));
+		enc.setCliente(new Cliente().fromEntity(ClienteDao.getInstancia().getById(ence.getCliente().getIdCliente())));
+		enc.setFechaEstimadaEntrega(ence.getFechaEstimadaEntrega());
+		
+		enc = (EncomiendaEmpresa)super.fromEntity(ence);
 		
 		if(ence.getProductoEncomiendas() != null){
 			List<ProductoEncomienda> productos =new  ArrayList<ProductoEncomienda>();

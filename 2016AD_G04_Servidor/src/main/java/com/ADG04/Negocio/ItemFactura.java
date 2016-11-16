@@ -76,6 +76,7 @@ public class ItemFactura{
 
 	public ItemFactura fromEntity(ItemFacturaE item) {
 		ItemFactura it = new ItemFactura();
+
 		it.setCantidad(item.getCantidad());
 		it.setDescripcion(item.getDescripcion());
 		it.setIdItemFactura(item.getIdItemFactura());

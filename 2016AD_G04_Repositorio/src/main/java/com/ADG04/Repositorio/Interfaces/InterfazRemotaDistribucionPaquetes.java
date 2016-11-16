@@ -20,7 +20,6 @@ import com.ADG04.bean.Vehiculo.DTO_TareasPorKilometro;
 import com.ADG04.bean.Vehiculo.DTO_TareasPorTiempo;
 import com.ADG04.bean.Vehiculo.DTO_Vehiculo;
 
-
 public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministracionRemote, IClienteRemote, IFacturaRemote, IEncomiendaRemote, IVehiculo{
 	
 	public static final String url = "localhost/DistribucionPaquetesRMI";
@@ -35,6 +34,8 @@ public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministrac
 	DTO_Usuario getEmpleado(Integer idEmpleado)throws RemoteException;
 
 	Integer facturarEncomiendaParticular(DTO_EncomiendaParticular enc)throws RemoteException;
+
+	
 
 	
 

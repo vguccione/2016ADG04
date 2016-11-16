@@ -41,11 +41,11 @@ ID automáticos que levanta:
 
 <form action="servletCliente?action=altaCliente" method="post" name="frmAltaCliente" class="form-style-2" >
  <ul>
-  <li><label>Nro. de Cliente:</label><input readonly class="input-trae" name="idCliente" type="text" value="" /></li>
-  <li><label>Raz&oacute;n social:</label><input class="input-field" name="" type="text" id="razonSocial" maxlength="50" /></li>
-  <li><label>Nro. de CUIT:</label><input class="input-field" name="" type="text" id="cuit" maxlength="50" /></li>
-   <li><label>Teléfono:</label><input class="input-field" name="" type="text" id="telefono" maxlength="50" /></li>
-    <li><label>Email:</label><input class="input-field" name="" type="text" id="email" maxlength="50" /></li>
+  <li><label>Nro. de Cliente: </label><input readonly class="input-trae" name="idCliente" type="text" value="" /></li>
+  <li><label>Raz&oacute;n social: </label><input class="input-field" name="" type="text" id="razonSocial" maxlength="50" /></li>
+  <li><label>Nro. de CUIT: </label><input class="input-field" name="" type="text" id="cuit" maxlength="50" /></li>
+   <li><label>Teléfono: </label><input class="input-field" name="" type="text" id="telefono" maxlength="50" /></li>
+    <li><label>Email: </label><input class="input-field" name="" type="text" id="email" maxlength="50" /></li>
   <li><label>Estado:</label>
    <input type="radio" name="estado" value="True" id="estado"/>Activo
     <input type="radio" name="estado" value="False" id="estado"  style="margin-left:35px;"/>Inactivo
@@ -54,10 +54,10 @@ ID automáticos que levanta:
                          	 <option>Seleccionar Pa&iacute;s</option></select></li>
   <li><label>Provincia destino:</label><select name="provinciaDestino" id="provinciaDestino" class="select-field"  style="margin-right:400px; margin-bottom:10px;width:200px;" >
                       		  <option>Seleccionar Provincia</option></select></li>
-  <li><label>Localidad:</label><input class="input-field" name="" type="text" id="localidad" maxlength="50" /></li>
-  <li><label>Direcci&oacute;n:</label><input class="input-field" name="" type="text" id="direccion" maxlength="50" /></li>
-  <li><label>C&oacute;digo postal:</label><input class="input-field" name="" type="text" id="codigoPostal" maxlength="50" /></li>
-  <li><label>Cuenta Corriente:</label><input class="input-field" name="" type="text" id="idCuentaCorriente" maxlength="2" /></li>
+  <li><label>Localidad: </label><input class="input-field" name="" type="text" id="localidad" maxlength="50" /></li>
+  <li><label>Direcci&oacute;n: </label><input class="input-field" name="" type="text" id="direccion" maxlength="50" /></li>
+  <li><label>C&oacute;digo postal: </label><input class="input-field" name="" type="text" id="codigoPostal" maxlength="50" /></li>
+  <li><label>Cuenta Corriente: </label><input class="input-field" name="" type="text" id="idCuentaCorriente" maxlength="2" /></li>
   </ul>
 <div class="btn_centrado"><input name="Ingresar" type="submit" id="btnCliente" value="Enviar" /></div>
 </form>

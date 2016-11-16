@@ -11,10 +11,10 @@
     <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
 	 
 	 <!-- Hojas de estilo -->
-	  <link href="css/style.css" rel="stylesheet" type="text/css" />
-	 <link href="jquery/jquery-ui.css" rel="stylesheet" type="text/css" />
-	 <link href="css/jquery.timepicker.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
+	<link href="jquery/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+	 <link href="css/jquery.timepicker.css" rel="stylesheet" type="text/css">
 	 
 	 <!-- Fonts -->
 	 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
@@ -64,7 +64,7 @@ $(document).ready(function() {
 	}
 	else
 	{
-		$("#nombreUsuario").text("Hola " + usuario + "("+sucursal+")" );
+		$("#nombreUsuario").text("Hola " + usuario + " ("+sucursalNom+")" );
 		$("#lCerrarSesion").text("Cerrar Sesion");
 		$("#cerrarSesion").load("logout.jsp");
 	}
@@ -88,6 +88,7 @@ $(document).ready(function() {
 						</li>
 						<div id="cerrarSesion" style="width:227px;color:#fff; font-size:14px;" > </div>           	
 					</ul>
+					<%if(sesionIntento.getAttribute("usuario") != null) { %>
 					<a id="menu-toggle" class="button dark" href="#"/>
 					<nav id="navigation">
 						<ul id="main-menu">
@@ -204,7 +205,7 @@ $(document).ready(function() {
 								</ul>    
 							</li>       -->
 						</ul>            
-					</nav>
+					</nav><%} %>
 					<div class="clear"/>
 				</div>
 

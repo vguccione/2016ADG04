@@ -188,9 +188,10 @@ public class TestClient {
     	pm.setDescripcion(descPlan);
     	pm.setTolerancia(123);
     	
-    	Integer idPm = bDelegate.altaPlanMantenimiento(pm, idVehiculo);
+   /* 	Integer idPm = bDelegate.altaPlanMantenimiento(pm, idVehiculo);
     	System.out.println("Plan nro " + idPm + " creado.");
-    	return idPm;
+    	return idPm;*/
+    	return 0;
 	}
     
     private static void TestAddTareasToPlan(String tareaKm, float kms, String tareaTiempo, int dias, int idPlanMantenimiento, Integer idVehiculo) throws Exception{
@@ -201,14 +202,14 @@ public class TestClient {
     	tareaXKM.setIdPlanMantenimiento(idPlanMantenimiento);
     	tareaXKM.setTarea(tareaKm);
     	
-    	bDelegate.altaTareaMantenimiento(tareaXKM, idVehiculo);
+    /*	bDelegate.altaTareaMantenimiento(tareaXKM, idVehiculo);*/
     	
     	DTO_TareasPorTiempo tareaXTiempo = new DTO_TareasPorTiempo();
     	tareaXTiempo.setCantidadDias(dias);
     	tareaXTiempo.setIdPlanMantenimiento(idPlanMantenimiento);
     	tareaXTiempo.setTarea(tareaTiempo);
     	
-    	Integer idTarea = bDelegate.altaTareaMantenimiento(tareaXTiempo, idVehiculo);
+    	//Integer idTarea = bDelegate.altaTareaMantenimiento(tareaXTiempo, idVehiculo);
     }
 
 
@@ -323,7 +324,7 @@ public class TestClient {
 
 			BusinessDelegate bDelegate = new BusinessDelegate();
 			System.out.println("Nueva encomienda particular");
-			int idEncomienda = bDelegate.nuevaEncomiedaParticular(dniCliente, 1, 2, idSucOrigen, idSucDestino, largo, ancho, alto, peso, volumen, 
+		/*	int idEncomienda = bDelegate.nuevaEncomiedaParticular(dniCliente, 1, 2, idSucOrigen, idSucDestino, largo, ancho, alto, peso, volumen, 
 					"", false, (short) 0, false, "", "", "", "", "", "", 0f, "");
 			
 			System.out.println("----------Encomienda: "+idEncomienda+"--------------------------------");
@@ -340,7 +341,7 @@ public class TestClient {
 				System.out.println("Estado env�o: "+envio.getEstado());
 				
 				System.out.println(envio.toString());
-			}
+			}*/
 			//System.out.println("Encomienda con 70% del peso del vehiculo 1 que esta disponible");
 			/*System.out.println("Peso del Vehiculo: " + (envio.get().getPeso() - envio.getVehiculo().getTara()));
 			System.out.println("Peso de la encomienda: " + enc.getPeso());

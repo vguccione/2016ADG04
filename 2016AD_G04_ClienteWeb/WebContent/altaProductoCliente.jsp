@@ -84,11 +84,11 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
    <div class="tabla">
 <span>Agregar producto cliente:</span>
 <form action="" method="post" name="idProductoCliente"><ul>
-<li><label class="txt_input">Producto Cliente:</label><input name="" type="text" id="idProductoCliente" /></li>
-<li><label class="txt_input">Cliente</label><input name="" type="text" id="idCliente" /></li>
-<li><label class="txt_input">C&oacute;digo:</label><input name="" type="text" id="codigo" maxlength="50" /></li>
-<li><label class="txt_input">Descripci&oacute;n:</label><input name="" type="text" id="descripcion" maxlength="100" /></li>
-<li><label class="txt_input">Categor&iacute;a:</label><input name="" type="text" id="categoria" maxlength="50" /></li>
+<li><label class="txt_input">Producto Cliente: </label><input name="" type="text" id="idProductoCliente" /></li>
+<li><label class="txt_input">Cliente </label><input name="" type="text" id="idCliente" /></li>
+<li><label class="txt_input">C&oacute;digo: </label><input name="" type="text" id="codigo" maxlength="50" /></li>
+<li><label class="txt_input">Descripci&oacute;n: </label><input name="" type="text" id="descripcion" maxlength="100" /></li>
+<li><label class="txt_input">Categor&iacute;a: </label><input name="" type="text" id="categoria" maxlength="50" /></li>
 <input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" />
 </ul></form>
 <!-- end tabla --></div>

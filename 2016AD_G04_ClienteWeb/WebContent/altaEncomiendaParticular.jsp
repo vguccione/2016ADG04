@@ -18,7 +18,7 @@
 	destinos = "";
 	encomienda = (String)request.getAttribute("idEncomienda");
 	destinos = (String)request.getAttribute("destinos");
-//	sucursalNombre = (String)request.getAttribute("sucursalNombre");
+	sucursalNombre = (String)request.getAttribute("sucursalNombre");
 	estado = (String)request.getAttribute("estado");
 %>
 <!-- Fin Declaraciones -->
@@ -63,9 +63,8 @@ function findClient(){
  
 <!-- Cuerpo -->
 <body>
-<div class="container" style="background-color: #E6E6E6;">>
-    <div class="content">
-
+<div class="container" style="background-color: #E6E6E6;">
+ <div class="content" >
 <h2>Encomienda Particular:</h2>
 <form action="serveletEncomiendaParticular?action=altaEncomiendaParticular" method="post" name="frm_idEncomienda"> <!-- class="form-style-2">-->
 
@@ -74,33 +73,33 @@ function findClient(){
 	<!--Sólo se ve si es Particular --> 
     
     <ul>
-	<li><label>Dni:</label><input class="input-field" name="dniParticular" type="text" id="dniParticular" maxlength="10" /></li><br/>
+	<li><label>Dni:  </label><input class="input-field" name="dniParticular" type="text" id="dniParticular" maxlength="10" /></li><br/>
 		<!-- <button id="btnBuscarCliente" onclick="findClient()">Buscar Cliente</button>
         				<div id="divBuscarCliente"></div> -->
-		<!-- <li><label>Nombre del particular:</label><input class="input-field" name="nombreParticular" type="text" id="nombreParticular" maxlength="50" /></li>
-		<li><label>Apellido del particular:</label><input class="input-field" name="apellidoParticular" type="text" id="apellidoParticular" maxlength="50" /></li>-->
+		<!-- <li><label>Nombre del particular: </label><input class="input-field" name="nombreParticular" type="text" id="nombreParticular" maxlength="50" /></li>
+		<li><label>Apellido del particular: </label><input class="input-field" name="apellidoParticular" type="text" id="apellidoParticular" maxlength="50" /></li>-->
     
-    <li><label>Código Sucursal de origen:</label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value="<%=sucursal%>"/></li><br/>
-	<li><label>Código Sucursal de destino:</label><input name="idSucursalDestino" type="text" class="input-field" id="idSucursalDestino" /></li><br/>
+    <li><label>Código Sucursal de origen:  </label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value="<%=sucursal%>"/></li><br/>
+	<li><label>Código Sucursal de destino:  </label><input name="idSucursalDestino" type="text" class="input-field" id="idSucursalDestino" /></li><br/>
 	
  	<br/>
  	
-	<li><label>Fecha de recepci&oacute;n:</label><input type="date" id="fechaRecepcion" class="datepicker"></li><br/>
- 	<li><label>Ancho (cm):</label><input class="input-field" name="largo" type="text" id="largo" size="18" /></li><br/>
-    <li><label>Alto (cm):</label><input class="input-field" name="alto" type="text" id="alto" size="18" /></li><br/>
-    <li><label>Profundidad (cm):</label><input class="input-field" name="ancho" type="text" id="ancho" size="18" /></li><br/>
- 	<li><label>Peso (kg):</label><input class="input-field" name="peso" type="text" id="peso" size="18" /></li><br/>
-    <li><label>Tratamiento:</label><input class="input-field" name="" type="text" id="tratamiento" value="" maxlength="50" /></li><br/>
+	<li><label>Fecha de recepci&oacute;n:  </label><input type="date" id="fechaRecepcion" class="datepicker"></li><br/>
+ 	<li><label>Ancho (cm): </label><input class="input-field" name="largo" type="text" id="largo" size="18" /></li><br/>
+    <li><label>Alto (cm): </label><input class="input-field" name="alto" type="text" id="alto" size="18" /></li><br/>
+    <li><label>Profundidad (cm): </label><input class="input-field" name="ancho" type="text" id="ancho" size="18" /></li><br/>
+ 	<li><label>Peso (kg): </label><input class="input-field" name="peso" type="text" id="peso" size="18" /></li><br/>
+    <li><label>Tratamiento: </label><input class="input-field" name="" type="text" id="tratamiento" value="" maxlength="50" /></li><br/>
  	<li><label>Apilable:</label>
      			<label class="input-radio-field"><input type="radio" name="Apilable" value="true" id="Apilable" />Sí</label>
        			<label class="input-radio-field"><input type="radio" name="Apilable" value="false" id="Apilable" />No</label></li>
- 	<br/><li><label>Cantidad Apilable:</label><input class="input-field" name="cantApilable" type="text" id="cantApilable" size="10" /></li>
+ 	<br/><li><label>Cantidad Apilable: </label><input class="input-field" name="cantApilable" type="text" id="cantApilable" size="10" /></li>
  	<br/><li><label>Refrigerado:</label>
     			<label class="input-radio-field"><input type="radio" name="Refrigerado" value="true" id="Refrigerado" />Sí</label>
            	<label class="input-radio-field"><input type="radio" name="Refrigerado" value="false" id="Refrigerado" />No</label></li>
-	<br/><li><label>Condición de transporte</label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" /></li>
-<br/>	<li><label>Indicaciones de manipulaci&oacute;n:</label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" /></li>      
-	<br/><li><label>Fragilidad:</label><input class="input-field" name="" type="text" id="fragilidad" maxlength="20" /></li>
+	<br/><li><label>Condición de transporte </label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" /></li>
+<br/>	<li><label>Indicaciones de manipulaci&oacute;n: </label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" /></li>      
+	<br/><li><label>Fragilidad: </label><input class="input-field" name="" type="text" id="fragilidad" maxlength="20" /></li>
 	<br/><li><label>Tercerizado:</label>
 				<label class="input-radio-field"><input type="radio" name="tercerizado" value="true" id="tercerizado" />Sí</label>
        			<label class="input-radio-field"><input type="radio" name="tercerizado" value="false" id="tercerizado" />No</label></li>
@@ -110,9 +109,9 @@ function findClient(){
 <label>Datos del Receptor</label>
 <!--Sólo se ve si es Particular --> 
     <fieldset><ul>
-		<li><label>DNI:</label><input class="input-field" name="dniReceptor" type="text" id="dniReceptor" maxlength="10" /></li>
-		<li><label>Nombre:</label><input class="input-field" name="nombreReceptor" type="text" id="nombreReceptor" maxlength="50" /></li>
-		<li><label>Apellido:</label><input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" /></li>
+		<li><label>DNI: </label><input class="input-field" name="dniReceptor" type="text" id="dniReceptor" maxlength="10" /></li>
+		<li><label>Nombre: </label><input class="input-field" name="nombreReceptor" type="text" id="nombreReceptor" maxlength="50" /></li>
+		<li><label>Apellido: </label><input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" /></li>
     </ul></fieldset>
 
 

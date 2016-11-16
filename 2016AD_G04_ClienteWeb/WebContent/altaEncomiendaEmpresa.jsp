@@ -185,32 +185,32 @@ $(document).ready(function() {
 							<ul>
 								<li>
 									<div id="producto1">
-										<label>Codigo Producto: </label><input class="input-field" name="producto1" type="text" id="producto1" maxlength="10" />
-										<label>Cantidad: </label><input class="input-field" name="producto1cantidad" type="text" id="producto1cantidad" maxlength="4" />
+										<label>Codigo Producto:  </label><input class="input-field" name="producto1" type="text" id="producto1" maxlength="10" />
+										<label>Cantidad:  </label><input class="input-field" name="producto1cantidad" type="text" id="producto1cantidad" maxlength="4" />
 									</div>
 								</li>
 								<li>
 									<div id="producto2">
-										<label>Codigo Producto: </label><input class="input-field" name="producto2" type="text" id="producto2" maxlength="10" />
-										<label>Cantidad: </label><input class="input-field" name="producto2cantidad" type="text" id="producto2cantidad" maxlength="4" />
+										<label>Codigo Producto:  </label><input class="input-field" name="producto2" type="text" id="producto2" maxlength="10" />
+										<label>Cantidad:  </label><input class="input-field" name="producto2cantidad" type="text" id="producto2cantidad" maxlength="4" />
 									</div>
 								</li>
 								<li>
 									<div id="producto3">
-										<label>Codigo Producto: </label><input class="input-field" name="producto3" type="text" id="producto3" maxlength="10" />
-										<label>Cantidad: </label><input class="input-field" name="producto3cantidad" type="text" id="producto3cantidad" maxlength="4" />
+										<label>Codigo Producto:  </label><input class="input-field" name="producto3" type="text" id="producto3" maxlength="10" />
+										<label>Cantidad:  </label><input class="input-field" name="producto3cantidad" type="text" id="producto3cantidad" maxlength="4" />
 									</div>
 								</li>
 								<li>
 									<div id="producto4">
-										<label>Codigo Producto: </label><input class="input-field" name="producto4" type="text" id="producto4" maxlength="10" />
-										<label>Cantidad: </label><input class="input-field" name="producto4cantidad" type="text" id="producto4cantidad" maxlength="4" />
+										<label>Codigo Producto:  </label><input class="input-field" name="producto4" type="text" id="producto4" maxlength="10" />
+										<label>Cantidad:  </label><input class="input-field" name="producto4cantidad" type="text" id="producto4cantidad" maxlength="4" />
 									</div>
 								</li>
 								<li>
 									<div id="producto5">
-										<label>Codigo Producto: </label><input class="input-field" name="producto5" type="text" id="producto5" maxlength="10" />
-										<label>Cantidad: </label><input class="input-field" name="producto5cantidad" type="text" id="producto5cantidad" maxlength="4" />
+										<label>Codigo Producto:  </label><input class="input-field" name="producto5" type="text" id="producto5" maxlength="10" />
+										<label>Cantidad:  </label><input class="input-field" name="producto5cantidad" type="text" id="producto5cantidad" maxlength="4" />
 									</div>
 								</li>
 							</ul>

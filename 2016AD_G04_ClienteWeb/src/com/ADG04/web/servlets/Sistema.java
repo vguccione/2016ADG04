@@ -54,7 +54,7 @@ public class Sistema extends HttpServlet {
 						HttpSession sesionIniciada = request.getSession();
 						sesionIniciada.setAttribute("usuario", usu.getUsuario());
 						sesionIniciada.setAttribute("sucursal", Integer.toString(sucrusal));
-					//	sesionIniciada.setAttribute("sucursalNombre", suc.getDescripcion());
+						sesionIniciada.setAttribute("sucursalNombre", WebBusinessDelegate.getInstancia().getSucursalNombre(sucrusal));
 						
 					}
 					else
@@ -66,6 +66,7 @@ public class Sistema extends HttpServlet {
 				else
 				{
 					if ("cerrarSesion".equals(action)) {
+						jspPage="login.jsp";
 						HttpSession sesionIniciada = request.getSession();
 						sesionIniciada.setAttribute("usuario", "");					
 					}
@@ -80,13 +81,13 @@ public class Sistema extends HttpServlet {
 				
 				e.printStackTrace();
 				
-				request.setAttribute("mensaje", "Error: \n Descripcion :" + e.getMessage());
+				request.setAttribute("mensaje",e.getMessage());
 				dispatch("mostrarMensaje.jsp", request, response);
 			}catch (Exception e) {
 			
 			e.printStackTrace();
 			
-			request.setAttribute("mensaje", "Error: \n Descripcion:"+e.toString() + " - " + e.getStackTrace().toString() + " - " + e.getCause());
+			request.setAttribute("mensaje",e.toString() + " - " + e.getStackTrace().toString() + " - " + e.getCause());
 			dispatch("mostrarMensaje.jsp", request, response);
 		}
 	}

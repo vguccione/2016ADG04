@@ -46,10 +46,10 @@ public class ServletEncomiendasListado extends HttpServlet {
 				 
 			int totalNumberOfPages = 1;
 			int currentPageNumber = 1;
-			int totalNumberOfRecords = 8; // All in there are 8 records in our dummy data object
 				 
 			List<DTO_EncomiendaParticular> encomiendasP = WebBusinessDelegate.getInstancia().listarEncomiendasParticulares();
-			JqGridData<EncomiendaWeb> gridData = new JqGridData<EncomiendaWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, encomiendas);
+			int totalNumberOfRecords = encomiendasP.size(); 
+			JqGridData<EncomiendaWeb> gridData = new JqGridData<EncomiendaWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, encomiendas);		
 			
 			for(DTO_EncomiendaParticular encP:encomiendasP){
 

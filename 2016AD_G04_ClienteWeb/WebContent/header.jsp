@@ -88,7 +88,7 @@ $(document).ready(function() {
 						</li>
 						<div id="cerrarSesion" style="width:227px;color:#fff; font-size:14px;" > </div>           	
 					</ul>
-					<%if(sesionIntento.getAttribute("usuario") != null) { %>
+					<%if(usuario!="") { %>
 					<a id="menu-toggle" class="button dark" href="#"/>
 					<nav id="navigation">
 						<ul id="main-menu">

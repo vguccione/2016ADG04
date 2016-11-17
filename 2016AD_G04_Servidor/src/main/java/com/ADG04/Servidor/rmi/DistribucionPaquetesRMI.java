@@ -744,7 +744,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		seg.modificar();
 	}
 	
-	public Integer gestionarEnvioEncomienda(int idEncomienda){
+	public Integer gestionarEnvioEncomienda(int idEncomienda) throws BusinessException{
 		EncomiendaE encomiendaE = EncomiendaDao.getInstancia().getById(idEncomienda);
 		Encomienda enc = new Encomienda().fromEntity(encomiendaE);
 		
@@ -1950,6 +1950,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 
 	@Override
 	public DTO_Envio getEnvio(Integer id) throws RemoteException {
+		
 		EnvioE env = EnvioDao.getInstancia().getById(id);
 		if(env!=null){
 			Envio envio = new Envio().fromEntity(env);
@@ -2027,4 +2028,27 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 
+	public Integer asignarEnvio(Integer idEncomienda)throws RemoteException, BusinessException{
+		
+		EncomiendaE enc = EncomiendaDao.getInstancia().getById(idEncomienda);
+		
+		if(enc == null){
+			throw new BusinessException("La encomienda nro " + idEncomienda + " no existe.");
+		}
+		Integer idEnvio = 0;
+		if(enc.getTipoEncomienda().equals('P')){
+			EncomiendaParticular particular = (EncomiendaParticular) new EncomiendaParticular().fromEntity(enc);
+			idEnvio = particular.asignarEnvio(null);
+			
+		}else{
+			EncomiendaEmpresa empresa = (EncomiendaEmpresa) new EncomiendaEmpresa().fromEntity(enc);
+			idEnvio = empresa.asignarEnvio(null);
+		}
+		
+		if(idEnvio <= 0){
+			throw new BusinessException("No se pudo generar el envio.");
+		}
+		
+		return idEnvio;
+	}
 }

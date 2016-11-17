@@ -30,6 +30,23 @@
 
 $(document).ready(function() {	
 	  
+	//divAsignarEnvio
+    $('#btnAsignarEnvio').on("click",function(){
+    	
+    	alert(<%= request.getParameter("idEncomienda") %>);
+    	
+        $.get('servletAsignarEnvio?action=asignarEnvio', {
+        		idEncomienda : <%= request.getParameter("idEncomienda") %>
+        	}, 
+        	function(responseText) {
+        		
+    			$("#idEnvioAsignado").val(responseText);
+    			$("#divAsignarEnvio").css("display", "block");
+    			$("#btnAsignarEnvio").css("display", "none");
+        	})
+    });
+
+	
   	  var encomienda = <%= '"' + encomienda + '"'%>
   	  var estado = <%= '"' + estado + '"'%>
 
@@ -132,6 +149,7 @@ $(document).ready(function() {
 	<li><label>Dni: </label><input class="input-field" name="dniParticular" type="text" id="dniParticular" readonly="readonly" value='<%=request.getAttribute("dniCliente")%>' /></li><br/>
 	
     <li><label>Código Sucursal de origen: </label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value='<%=request.getAttribute("idSucursalOrigen")%>'/></li><br/>
+    <li><label>Código Sucursal actual: </label><input name="idSucursalActual" type="text" readonly="readonly" class="input-field" id="idSucursalActual" value='<%=request.getAttribute("idSucursalActual")%>'/></li><br/>
 	<li><label>Código Sucursal de destino: </label><input name="idSucursalDestino" type="text" readonly="readonly" class="input-field" id="idSucursalDestino" value='<%=request.getAttribute("idSucursalDestino")%>' /></li><br/>
 	
  	<br/>
@@ -159,8 +177,35 @@ $(document).ready(function() {
 		<li><label>Apellido: </label><input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" readonly="readonly" value='<%=request.getAttribute("apellidoReceptor")%>' /></li>
     </ul></fieldset>
     
-	<li><label>Envío Asignado: </label><input class="input-field" name="envioAsignado" type="text" id="envioAsignado" readonly="readonly" value='<%=request.getAttribute("envioAsignado")%>' /></li>
-	<li><label>Id Envío: </label><input class="input-field" name="idEnvio" type="text" id="idEnvio" readonly="readonly" value='<%=request.getAttribute("idEnvio")%>' /></li>
+    </table>
+	<% 
+		List<String> listaEnvios = (List<String>)request.getAttribute("listaEnvios");
+		for (int i = 0; i < listaEnvios.size(); i++) { %> 
+			<tr> <td> <%= listaEnvios.get(i) %> </td> </tr>
+		<%}
+        
+   	%>
+   	</table>
+   	
+  <br />
+  <br />	<input type="button" value="asignarEnvio" id="btnAsignarEnvio" /> 
+    <div style="display: none;" id="divAsignarEnvio"> 
+    <input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;"/> 
+    </div>
+   	 
+<%-- 		<% --%>
+<!--  		Boolean tieneEnvio = (Boolean)request.getAttribute("tieneEnvio");-->
+<%--    		if(tieneEnvio){ %> --%>
+<%--    			<label>Nro Envío asignado: </label><input class="input-field" name="idEnvio" type="text" id="idEnvio" readonly="readonly" value='<%=request.getAttribute("idEnvio")%>' /> --%>
+<%--    		<% --%>
+<%--    		} else {%> --%>
+<!--    			<input type="button" value="asignarEnvio" id="btnAsignarEnvio" /> -->
+<!--    			<div style="display: none;" id="divAsignarEnvio"> -->
+<!--    				<input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;" /> -->
+<!--    			</div> -->
+<%--    		<%} --%>
+<%--     %> --%>
+    
 	<br /><br />
 	<input id="btnVerFactura" type="button" onclick="showFactura();" value="Ver Factura ">
 	

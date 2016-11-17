@@ -20,8 +20,14 @@ import java.util.Set;
 
 
 
+
+
+
+
+
 import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
+import com.ADG04.Repositorio.Exceptions.NoHayVehiculosDisponiblesException;
 import com.ADG04.Repositorio.Exceptions.SucursalNotFoundException;
 import com.ADG04.Servidor.dao.ClienteDao;
 import com.ADG04.Servidor.dao.EncomiendaDao;
@@ -55,6 +61,7 @@ import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
+import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 
 
@@ -99,6 +106,7 @@ public  class Encomienda{
 	protected List<Envio> envios;
 	
 	public Encomienda() {
+		this.envios = new ArrayList<Envio>();
 	}
 
 	
@@ -151,6 +159,7 @@ public  class Encomienda{
 		this.factura = factura;
 		this.remito = remito;
 		this.internacional = internacional;
+		this.envios = new ArrayList<Envio>();
 	}
 
 
@@ -175,7 +184,7 @@ public  class Encomienda{
 	//	this.dniReceptor = dniReceptor;
 	}
 
-	public Integer asignarEnvio(Integer idCarrier) {
+	public Integer asignarEnvio(Integer idCarrier) throws BusinessException {
 		
 		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
 		 * y asi marco esos envios y vehiculos como no disponibles*/
@@ -277,7 +286,8 @@ public  class Encomienda{
 					boolean volumenNuevoOK = false;
 					
 					if(vehiculosDisponibles.size() == 0) {
-						System.out.println("No hay vehículos disponibles para generar el envío");
+						//System.out.println("No hay vehículos disponibles para generar el envío");
+						throw new NoHayVehiculosDisponiblesException(this.getSucursalOrigen().getIdSucursal());
 					} else {
 						for(VehiculoE v: vehiculosDisponibles){
 							//Sumo los pesos y los volumenes
@@ -361,7 +371,7 @@ public  class Encomienda{
 	
 	
 	/*Asignar envio manualmente indicando sucursal de destino */
-	public Integer asignarEnvio(Integer idCarrier, int idSucursalDest) {
+	public Integer asignarEnvio(Integer idCarrier, int idSucursalDest) throws BusinessException {
 		
 		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
 		 * y asi marco esos envios y vehiculos como no disponibles*/
@@ -463,7 +473,7 @@ public  class Encomienda{
 					boolean volumenNuevoOK = false;
 					
 					if(vehiculosDisponibles.size() == 0) {
-						System.out.println("No hay vehículos disponibles para generar el envío");
+						throw new NoHayVehiculosDisponiblesException(this.getSucursalDestino().getIdSucursal());
 					} else {
 						for(VehiculoE v: vehiculosDisponibles){
 							//Sumo los pesos y los volumenes
@@ -1189,6 +1199,10 @@ public  class Encomienda{
 		return vehiculosDisponibles;
 		
 	}
+
+	public void addEnvio(Envio e) {
+		this.envios.add(e);		
+	}
 	
 	public Encomienda fromEntity(EncomiendaE ence) {
 	
@@ -1228,6 +1242,13 @@ public  class Encomienda{
 		enc.setVolumenGranel(ence.getVolumenGranel());
 		enc.setCliente(new Cliente().fromEntity(ClienteDao.getInstancia().getById(ence.getCliente().getIdCliente())));
 		enc.setFechaEstimadaEntrega(ence.getFechaEstimadaEntrega());
+		
+		//Envios
+		for(EnvioE envioE:ence.getEnvios()){
+			Envio e = new Envio();
+			e.setIdEnvio(envioE.getIdEnvio());
+			enc.addEnvio(e);
+		}
 		
 		return enc;
 	}
@@ -1275,6 +1296,13 @@ public  class Encomienda{
 		
 		if(this.factura != null)
 			encomienda.setFactura(this.factura.toDTO());
+
+		//Envios
+		for(Envio envio:this.getEnvios()){
+			DTO_Envio e = new DTO_Envio();
+			e.setId(envio.getIdEnvio());
+			encomienda.addEnvio(e);
+		}
 		
 		return encomienda;
 	}

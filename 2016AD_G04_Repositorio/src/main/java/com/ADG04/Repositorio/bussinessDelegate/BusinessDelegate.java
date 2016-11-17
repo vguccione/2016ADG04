@@ -362,7 +362,7 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 		
 	}
 	
-	public Integer gestionarEnvioEncomienda(int idEncomienda) throws RemoteException{
+	public Integer gestionarEnvioEncomienda(int idEncomienda) throws RemoteException, BusinessException{
 		return this.businessService.gestionarEnvioEncomienda(idEncomienda);
 	}
 	

@@ -289,6 +289,8 @@ public class Envio{
 				lista.add(enc.toDTO());
 			}
 			dto.setEncomiendas(lista);
+			dto.setIdSucursalOrigen(this.sucursalDestino.getIdSucursal());
+			dto.setIdSucursalOrigen(this.sucursalOrigen.getIdSucursal());
 			
 			return dto;
 		}
@@ -305,6 +307,9 @@ public class Envio{
 				lista.add(enc.toDTO());
 			}
 			dto.setEncomiendas(lista);
+			
+			dto.setIdSucursalOrigen(this.sucursalDestino.getIdSucursal());
+			dto.setIdSucursalOrigen(this.sucursalOrigen.getIdSucursal());
 			
 			return dto;
 		}

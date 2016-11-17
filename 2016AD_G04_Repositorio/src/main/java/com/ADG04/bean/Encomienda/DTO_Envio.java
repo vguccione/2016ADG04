@@ -6,17 +6,44 @@ import java.util.Date;
 import java.util.List;
 
 public class DTO_Envio implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String estado;
 	private DTO_Coordenada posicionActual;
 	private List<DTO_Encomienda> encomiendas;
 	private Date fechaActualizacion;
-	
+	private int idSucursalOrigen;
+	private int idSucursalDestino;
 	
 	public DTO_Envio(){
 		encomiendas = new ArrayList<DTO_Encomienda>();
 	}
+
+	
+
+	public Integer getIdSucursalOrigen() {
+		return idSucursalOrigen;
+	}
+
+
+
+	public void setIdSucursalOrigen(int idSucursalOrigen) {
+		this.idSucursalOrigen = idSucursalOrigen;
+	}
+
+
+
+	public Integer getIdSucursalDestino() {
+		return idSucursalDestino;
+	}
+
+
+
+	public void setIdSucursalDestino(int idSucursalDestino) {
+		this.idSucursalDestino = idSucursalDestino;
+	}
+
 
 
 	public Integer getId() {
@@ -67,4 +94,5 @@ public class DTO_Envio implements Serializable{
 	public void setFechaActualizacion(Date fechaActualizacion) {
 		this.fechaActualizacion = fechaActualizacion;
 	}
+
 }

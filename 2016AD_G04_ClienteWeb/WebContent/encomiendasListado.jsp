@@ -24,11 +24,12 @@ $(document).ready(function() {
  
                   datatype: "json",
                   jsonReader: {repeatitems: false, id: "ref"},
-                  colNames:['Nro Encomienda','Nro Cliente', 'Envio asignado', 'Ver Encomienda'],
+                  colNames:['Nro Encomienda','Nro Cliente', 'Envio asignado', 'Estado','Ver Encomienda'],
                   colModel:[
                       {name:'idEncomienda',index:'idEncomienda', width:100},
                       {name:'idCliente',index:'idCliente', width:100},
                       {name:'envioAsignado',index:'envioAsignado', width:100},
+ 					  {name:'estado',index:'estado', width:100},
  					  {name:'verEncomienda',index:'verEncomienda', width:100}
                   ],
                   rowNum:20,

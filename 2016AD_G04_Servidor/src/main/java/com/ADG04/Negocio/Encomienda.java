@@ -1247,6 +1247,7 @@ public  class Encomienda{
 		for(EnvioE envioE:ence.getEnvios()){
 			Envio e = new Envio();
 			e.setIdEnvio(envioE.getIdEnvio());
+			e.setEstado(envioE.getEstado());
 			enc.addEnvio(e);
 		}
 		
@@ -1307,5 +1308,15 @@ public  class Encomienda{
 		return encomienda;
 	}
 	
+	
+	public boolean estaAsignada(){
+		if(this.getEnvios()!=null){
+			for(Envio e : this.getEnvios()){
+				if(!e.getEstado().contains(EnvioEstado.Concluido.toString()))
+					return true;
+			}
+		}	
+		return false;
+	}
 	
 }

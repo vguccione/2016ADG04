@@ -729,6 +729,10 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 		return objetoRemoto.getEnvio(idEnvio);
 	}
 	
+	public boolean estaEncomiendaAsignada(int idEncomienda)throws RemoteException{
+		return objetoRemoto.estaEncomiendaAsignada(idEncomienda);
+	}
+	
 	//Clientes-----------------------------------------------------------------
 	// TODO Completar el metodo	altaCliente
 	/*public boolean altaCliente(dto.Cliente.DTO_Cliente cliente){

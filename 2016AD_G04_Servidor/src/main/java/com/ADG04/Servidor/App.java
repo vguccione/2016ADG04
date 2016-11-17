@@ -47,7 +47,7 @@ import com.ADG04.bean.Vehiculo.*;
 public class App 
 {
 
-	public static void mainddd(String[] args) throws IOException, BusinessException {
+	public static void main(String[] args) throws IOException, BusinessException {
 //		Integer idEncomienda = AltaEncomiendaParticular();
 //		Encomienda enc = new Encomienda().fromEntity(EncomiendaDao.getInstancia().getById(idEncomienda));
 //		System.out.println("Fecha estimada entrega :");
@@ -61,6 +61,16 @@ public class App
 	1003		30		44		32				2					3
  * */
 		
+		List<EncomiendaE> encomiendas = EncomiendaDao.getInstancia().getAll();
+		List<Encomienda> lista = new ArrayList<Encomienda>();
+		for(EncomiendaE enc : encomiendas){
+			lista.add(new Encomienda().fromEntity(enc));
+		}
+		
+		for(Encomienda e: lista){
+			if(e.estaAsignada())
+				System.out.println(e.getIdEncomienda());
+		}
 	}
 	
 	private static Integer AltaEncomiendaParticular() throws IOException, BusinessException {

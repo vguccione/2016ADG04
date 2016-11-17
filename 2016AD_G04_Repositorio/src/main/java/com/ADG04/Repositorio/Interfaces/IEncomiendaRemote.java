@@ -46,6 +46,7 @@ public interface IEncomiendaRemote {
 	public List<DTO_EncomiendaParticular> listarEncomiendasParticulares()throws RemoteException;
 	public List<DTO_EncomiendaEmpresa> listarEncomiendasEmpresas()throws RemoteException;
 	public List<DTO_Encomienda> listarEncomiendasBySucursal(int idSucursal) throws RemoteException;
+	public List<DTO_Encomienda> listarEncomiendasBySucursalPendientes(int idSucursal) throws RemoteException;
 	public DTO_Coordenada getCoordenadasById(int id)throws RemoteException;
 	public List<DTO_EnvioPropio> listarEnviosPropios()throws RemoteException;
 	public List<DTO_EnvioTercerizado> listarEnviosTercerizados()throws RemoteException;

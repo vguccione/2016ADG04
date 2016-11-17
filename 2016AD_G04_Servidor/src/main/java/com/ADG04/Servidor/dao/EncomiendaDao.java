@@ -127,5 +127,20 @@ public class EncomiendaDao extends GenericDao<EncomiendaE, Integer> {
 		}
 		return encomiendas;
 	}
+	
+	public List<EncomiendaE> getBySucursalActualPendientes(int idSucursal) {
+		List<EncomiendaE> encomiendas = new ArrayList<EncomiendaE>();
+		try{
+			encomiendas = entityManager.createQuery("select enc from EncomiendaE enc "
+					+ " where sucursalActual.idSucusal=:idSucursal"
+					+ " AND (estado='EnEsperaAsignacion' OR estado='Ingresada') ")
+					.setParameter("idSucursal",idSucursal)
+					.getResultList();
+		}
+		catch(Exception e){
+			System.out.println("No existen encomiendas pendientes para esa sucursal");
+		}
+		return encomiendas;
+	}
 
 }

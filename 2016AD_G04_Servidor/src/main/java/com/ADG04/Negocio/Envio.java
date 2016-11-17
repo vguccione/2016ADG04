@@ -352,6 +352,12 @@ public class Envio{
 					}
 				}
 			}
+			else{ //Si no esta desviado y estaba antes desviado, se volvera a poner en viaje
+				if(e.getEstado().equals(EnvioEstado.Desviado.toString())){
+					e.setEstado(EnvioEstado.EnViaje.toString());
+					actualizarHistorico();
+				}
+			}
 			CoordenadaE coorE = CoordenadaDao.getInstancia().getById(posicionActual.getIdCoordenada());
 			e.setPosicionActual(coorE);
 			e.setFechaActualizacion(new Date());

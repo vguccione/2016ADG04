@@ -109,6 +109,10 @@ public class Manifiesto{
 
 
 	public void addItem(ItemManifiesto itemManifiesto) {
+		if(this.itemsManifiesto == null){
+			this.itemsManifiesto = new ArrayList<ItemManifiesto>();
+		}
+		
 		this.itemsManifiesto.add(itemManifiesto);		
 	}
 

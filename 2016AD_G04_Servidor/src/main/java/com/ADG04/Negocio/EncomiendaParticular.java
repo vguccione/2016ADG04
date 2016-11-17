@@ -308,11 +308,13 @@ public class EncomiendaParticular extends Encomienda{
 		enc.setCliente(new Cliente().fromEntity(ClienteDao.getInstancia().getById(ence.getCliente().getIdCliente())));
 		enc.setFechaEstimadaEntrega(ence.getFechaEstimadaEntrega());
 		
-		//Envios
-		for(EnvioE envioE:ence.getEnvios()){
-			Envio e = new Envio();
-			e.setIdEnvio(envioE.getIdEnvio());
-			enc.addEnvio(e);
+		if(ence.getEnvios()!=null){
+			//Envios
+			for(EnvioE envioE:ence.getEnvios()){
+				Envio e = new Envio();
+				e.setIdEnvio(envioE.getIdEnvio());
+				enc.addEnvio(e);
+			}
 		}
 		
 		return enc;

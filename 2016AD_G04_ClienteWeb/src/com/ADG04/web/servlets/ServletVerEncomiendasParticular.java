@@ -83,21 +83,11 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		if(e.getEnvio() != null)
 			envioAsignado = true;
 		
-//		EncomiendaParticularWeb enc = new EncomiendaParticularWeb(e.getCliente().getId(), e.getIdEncomienda(), 
-//				e.getSucursalDestino().getId(), e.getSucursalOrigen().getId(), 
-//				e.getSucursalActual().getId(), e.getFechaCreacion(), e.getFechaEstimadaEntrega(), e.getEstado(), 
-//				e.isTercerizada(), e.getLargo(), e.getAlto(), e.getAncho(), e.getPeso(), e.getVolumen(), 
-//				e.getTratamiento(), e.getApilable(), e.getCantApilable(), e.getRefrigerado(), 
-//				e.getCondicionTransporte(), 
-//				e.getIndicacionesManipulacion(), e.getFragilidad(),
-//				e.getNombreReceptor(), e.getApellidoReceptor(), e.getDniReceptor(), 
-//				e.getVolumenGranel(), e.getUnidadGranel(), e.getCargaGranel(),  
-//				envioAsignado);
-//		
 		DTO_ClienteParticular cli = WebBusinessDelegate.getInstancia().getClienteParticularById(e.getCliente().getId());
 		
 		request.setAttribute("dniCliente", cli.getDni() );
 		request.setAttribute("idSucursalOrigen",e.getSucursalOrigen().getId().toString());
+		request.setAttribute("idSucursalDestino",e.getSucursalDestino().getId().toString());
 		request.setAttribute("idSucursalActual", "");
 		if(e.getSucursalActual() != null)
 			request.setAttribute("idSucursalActual", e.getSucursalActual().getId().toString());
@@ -146,6 +136,13 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			request.setAttribute("idEnvio",0);
 		}
 		
+		//Manifiesto
+		 e.getManifiesto().getId();
+		DTO_Manifiesto manifiesto = e.getManifiesto();
+		if(manifiesto != null){
+			request.setAttribute("itemsManifiesto", manifiesto.getDetalle());
+		}
+		
 		//Ver factura
 		DTO_Factura factura = WebBusinessDelegate.getInstancia().getFacturaById(e.getFactura().getId());
 		if(factura != null){
@@ -173,6 +170,8 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			else{
 				request.setAttribute("itemsFactura",new ArrayList<DTO_ItemFactura>());
 			}
+			
+			request.setAttribute("totalFactura", total.toString());
 		}
 	}
 

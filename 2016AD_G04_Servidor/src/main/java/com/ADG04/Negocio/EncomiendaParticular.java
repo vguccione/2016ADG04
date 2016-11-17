@@ -121,6 +121,7 @@ public class EncomiendaParticular extends Encomienda{
 		dto.setVolumenGranel(this.getVolumenGranel());
 		dto.setCliente(this.getCliente().toDTO());
 		dto.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
+		dto.setTratamiento(this.getTratamiento());
 		return dto;
 	}
 

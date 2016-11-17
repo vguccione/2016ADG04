@@ -505,19 +505,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		ServicioSeguridad servicioSeg = new ServicioSeguridad();
 		servicioSeg.setIdServicioSeguridad(encP.getIdServicioSeguridad());
 		
-		Manifiesto manifiesto = new Manifiesto(encP.getManifiesto().getId(), encP.getManifiesto().getFecha());
-		
-		for (DTO_ItemManifiesto item : encP.getManifiesto().getDetalle()) {
-			Producto producto = null;
-			
-			if(item.getProducto() != null){
-					producto = new Producto();
-					producto.setIdProducto(item.getProducto().getId());
-			}
-			
-			manifiesto.addItem(new ItemManifiesto(item.getDescripcion(), item.getCantidad(), producto)); 
-		}
-		
+		String desc = "Encomienda: " + cliente.getDni() + " - " + sucursalOrigen.getIdSucursal() + " - " + sucursalDestino.getIdSucursal();
+		Manifiesto manifiesto = new Manifiesto();
+		manifiesto.addItem(new ItemManifiesto(desc, 1, null));
+				
 		EncomiendaParticular nuevaEncomienda = 		
 		new EncomiendaParticular(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
 				encP.getFechaCreacion(), encP.getFechaEstimadaEntrega(), encP.getEstado(), encP.isTercerizada(), 

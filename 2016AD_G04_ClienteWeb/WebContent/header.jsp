@@ -99,8 +99,14 @@ $(document).ready(function() {
 								<a class="parent" href="#"> ENCOMIENDA</a>
 								<ul class="sub-menu">
 									<li>
+										<a id="menu_ver_encom_particular" href="encomiendasListado.jsp">Ver Encomiendas Particulares</a>
+									</li>								
+									<li>
 										<a id="menu_new_encom_particular" href="altaEncomiendaParticular.jsp">Nueva Encomienda Particular</a>
 									</li>
+									<li>
+										<a id="menu_ver_encom_empresa" href="encomiendasListadoEmpresa.jsp">Ver Encomiendas Empresas</a>
+									</li>									
 									<li>
 										<a id="menu_new_encom_empresa" href="altaEncomiendaEmpresa.jsp">Nueva Encomienda Empresa</a>
 									</li>

@@ -1,3 +1,4 @@
+<%@page import="com.ADG04.bean.Encomienda.DTO_ItemManifiesto"%>
 <%@page import="com.ADG04.bean.Cliente.DTO_ItemFactura"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -41,6 +42,26 @@ $(document).ready(function() {
 	   
 }); //document ready
 
+
+function showFactura(){
+	$("#btnVerFactura").css("display", "none");
+	$("#divFactura").css("display", "block");
+}
+
+function hideFactura(){
+	$("#btnVerFactura").css("display", "block");
+	$("#divFactura").css("display", "none");
+}
+
+function showManifiesto(){
+	$("#btnVerManifiesto").css("display", "none");
+	$("#divManifiesto").css("display", "block");
+}
+
+function hideManifiesto(){
+	$("#btnVerManifiesto").css("display", "block");
+	$("#divManifiesto").css("display", "none");
+}
 
 </script>
 <!-- Timepicker -->
@@ -115,7 +136,7 @@ $(document).ready(function() {
 	
  	<br/>
  	
-	<li><label>Fecha de recepci&oacute;n: </label><input type="date" id="fechaRecepcion" class="datepicker" readonly="readonly" value='<%=request.getAttribute("fechaCreacion")%>' ></li><br/>
+	<li><label>Fecha de recepci&oacute;n: </label><input type="text" id="fechaRecepcion" class="input-field" readonly="readonly" value='<%=request.getAttribute("fechaCreacion")%>' ></li><br/>
  	<li><label>Ancho (cm): </label><input class="input-field" name="largo" type="text" id="largo" size="18" readonly="readonly" value='<%=request.getAttribute("largo")%>' /></li><br/>
     <li><label>Alto (cm): </label><input class="input-field" name="alto" type="text" id="alto" size="18" readonly="readonly" value='<%=request.getAttribute("alto")%>' /></li><br/>
     <li><label>Profundidad (cm): </label><input class="input-field" name="ancho" type="text" id="ancho" size="18" readonly="readonly" value='<%=request.getAttribute("ancho")%>' /></li><br/>
@@ -140,38 +161,97 @@ $(document).ready(function() {
     
 	<li><label>Envío Asignado: </label><input class="input-field" name="envioAsignado" type="text" id="envioAsignado" readonly="readonly" value='<%=request.getAttribute("envioAsignado")%>' /></li>
 	<li><label>Id Envío: </label><input class="input-field" name="idEnvio" type="text" id="idEnvio" readonly="readonly" value='<%=request.getAttribute("idEnvio")%>' /></li>
-</table>
-		<% 
-			List<DTO_ItemFactura> rows = (List<DTO_ItemFactura>)request.getAttribute("itemsFactura");
-			for (int i = 0; i < rows.size(); i++) { 
-				DTO_ItemFactura rowObj = rows.get(i);
-        %>
-        <tr>
+	<br /><br />
+	<input id="btnVerFactura" type="button" onclick="showFactura();" value="Ver Factura ">
+	
+	<div id="divFactura" style="display: none;">
+	<input id="btnHideFactura" type="button" onclick="hideFactura();" value="Ocultar Factura "> <br />
+	<u> <label>Factura:</label> </u>
+	<label>Vencida:<%= request.getAttribute("facturaVencida")%></label>
+	<label>Pagada:<%= request.getAttribute("pagado")%></label>
+	<table style="border-color: black !important; border-style: solid !important; border-width: thin !important;">
+		<thead>
+			<tr style="border-color: black !important; border-style: solid !important; border-width: thin !important;"> 
+	            <td style="width: 100px;">Descripcion</td>
+	            <td style="width: 10px;">Cantidad</td>
+	            <td style="width: 10x;">Precio</td>
+			</tr>
+			<tr> 
+	            <td style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10x;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			</tr>
+		</thead>
+		<tbody>
+			<% 
+				List<DTO_ItemFactura> rows = (List<DTO_ItemFactura>)request.getAttribute("itemsFactura");
+				for (int i = 0; i < rows.size(); i++) { 
+					DTO_ItemFactura rowObj = rows.get(i);
+	        %>
+	        <tr>
+	
+	            <% 
+	               String cantidad = ((Integer)rowObj.getCantidad()).toString(); 
+	               String desc = rowObj.getDescripcion();
+	               String valor = ((Float)rowObj.getValor()).toString();
+	            %>
+	            <td style="width: 150px;"><%=desc%></td>
+	            <td style="width: 10px;"><%=cantidad%></td>
+	            <td style="width: 10x;"><%=valor%></td>
+	        </tr>
+	        <% } %>
+	    </tbody>
+	    <tfoot>
+	    	<tr> 
+	            <td style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10x;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			</tr>
+	    	<tr style="padding-top:10px;">
+	    		<td style="width: 150px;">Total:</td>
+	            <td style="width: 10px;"></td>
+	            <td style="width: 10x;"><%=request.getAttribute("totalFactura")%></td>
+	    	</tr>
+	    </tfoot>    
+	</table>
+</div> <!-- divFactura -->
 
-            <% for (int j = 0; j < 7; j++) {
-               // This RHS made up due to not knowing the class of objects
-               // in your map, use something equivalent
-               String cell = rowObj.getDescripcion(); 
-            %>
-            <td>
-                <center>
-                   <%=cell.toString()%>
-                </center>
-            </td>
-            <% } %>
-        </tr>
-        <% } %>
-<table>
-
-<!-- 
-itemsFactura
-for(DTO_ItemFactura item:factura.getItems()){
-					items += item.getDescripcion() +  "-" + item.getCantidad() + "-" + item.getValor() + "---";
-				} -->
-
-<!--       <div class="btn_centrado"><input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" /></div>-->
-
-      </div>
+	<br /><br />
+	<input id="btnVerManifiesto" type="button" onclick="showManifiesto();" value="Ver Manifiesto ">
+	<div id="divManifiesto" style="display: none;">
+	<input id="btnHideManifiesto" type="button" onclick="hideManifiesto();" value="Ocultar Manifiesto "> <br />
+	<u> <label>Manifiesto:</label> </u>
+	<table style="border-color: black !important; border-style: solid !important; border-width: thin !important;">
+		<thead>
+			<tr style="border-color: black !important; border-style: solid !important; border-width: thin !important;"> 
+	            <td style="width: 300px;">Descripcion</td>
+	            <td style="width: 10px;">Cantidad</td>
+			</tr>
+			<tr> 
+	            <td style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			</tr>
+		</thead>
+		<tbody>
+			<% 
+				List<DTO_ItemManifiesto> ims = (List<DTO_ItemManifiesto>)request.getAttribute("itemsManifiesto");
+				for (int i = 0; i < ims.size(); i++) { 
+					DTO_ItemManifiesto item = ims.get(i);
+	        %>
+	        <tr>
+	
+	            <% 
+	               String cantidad = ((Integer)item.getCantidad()).toString(); 
+	               String desc = item.getDescripcion();
+	            %>
+	            <td style="width: 300px;"><%=desc%></td>
+	            <td style="width: 10px;"><%=cantidad%></td>
+	        </tr>
+	        <% } %>
+	    </tbody>
+	</table>
+	
+	</div> <!-- divManifiesto -->
     <br />
      <!-- end .content --></div>
   <!-- end .container --></div>

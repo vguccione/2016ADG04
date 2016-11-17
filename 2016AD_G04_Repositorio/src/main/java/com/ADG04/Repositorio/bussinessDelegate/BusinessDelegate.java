@@ -942,4 +942,9 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 			int idSucursal) throws RemoteException {
 		return this.businessService.listarEncomiendasBySucursalPendientes(idSucursal);
 	}
+
+	public boolean estaEncomiendaAsignada(int idEncomienda)
+			throws RemoteException {
+		return this.businessService.estaEncomiendaAsignada(idEncomienda);
+	}
 }

@@ -60,6 +60,7 @@ public interface IEncomiendaRemote {
 	public DTO_Envio getEnvio(Integer id) throws RemoteException;
 	public List<DTO_EnvioHistorico> getHistorico(Integer id) throws RemoteException;
 	public DTO_EnvioPropio getEnvioPropio(Integer id) throws RemoteException;
+	public boolean estaEncomiendaAsignada(int idEncomienda) throws RemoteException;
 	
 
 }

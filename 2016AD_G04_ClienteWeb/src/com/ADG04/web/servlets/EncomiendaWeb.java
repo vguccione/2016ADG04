@@ -5,12 +5,14 @@ public class EncomiendaWeb {
 	private Integer idEncomienda;
 	private Integer idCliente;
 	private Boolean envioAsignado;
+	private String estado;
 		
-	public EncomiendaWeb(Integer idEncomienda, Integer idCliente,
+	public EncomiendaWeb(Integer idEncomienda, Integer idCliente, String estado,
 			Boolean envioAsignado) {
 		super();
 		this.idEncomienda = idEncomienda;
 		this.idCliente = idCliente;
+		this.estado = estado;
 		this.envioAsignado = envioAsignado;
 	}
 	public Integer getIdEncomienda() {
@@ -32,9 +34,18 @@ public class EncomiendaWeb {
 		this.envioAsignado = envioAsignado;
 	}
 	
+	
+	
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 	public String toString() {
         return "{\"idEncomienda\":\"" + idEncomienda.toString() 
         		+ "\", \"idCliente\":\"" + idCliente.toString() 
+        		+ "\", \"estado\":\"" + this.getEstado()
         		+ "\", \"envioAsignado\":\"" + this.tieneEnvio() 
         		+ "\", \"verEncomienda\":\"" + "<a href=ServletVerEncomiendasParticular?idEncomienda="+idEncomienda.toString()+">Ver Encomienda</a>" + "\"}";
     }

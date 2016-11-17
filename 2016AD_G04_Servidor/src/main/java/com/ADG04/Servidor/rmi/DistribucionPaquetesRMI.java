@@ -2062,4 +2062,12 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		return idEnvio;
 	}
+	
+	public boolean estaEncomiendaAsignada(int idEncomienda) throws RemoteException{
+		Encomienda enc = new Encomienda().fromEntity(EncomiendaDao.getInstancia().getById(idEncomienda));
+		if(enc!=null)
+			return enc.estaAsignada();
+		else
+			return false;
+	}
 }

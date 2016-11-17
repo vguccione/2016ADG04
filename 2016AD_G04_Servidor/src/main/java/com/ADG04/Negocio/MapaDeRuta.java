@@ -132,7 +132,9 @@ public class MapaDeRuta{
 			Date hoy = new Date();
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(hoy);
-			calendar.add(Calendar.HOUR, (int) mr.getDuracion());
+			//se calculara 1 dia mas a lo que lleva el viaje de sucursal a sucursal (politica de la empresa)
+			int tiempoViaje = (int) mr.getDuracion() + 24;
+			calendar.add(Calendar.HOUR, tiempoViaje);
 			return calendar.getTime();
 		}
 		else
@@ -147,7 +149,9 @@ public class MapaDeRuta{
 		if(mr!=null){
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(fechaPartida);
-			calendar.add(Calendar.HOUR, (int) mr.getDuracion());
+			//se calculara 1 dia mas a lo que lleva el viaje de sucursal a sucursal (politica de la empresa)
+			int tiempoViaje = (int) mr.getDuracion() + 24;
+			calendar.add(Calendar.HOUR, tiempoViaje);
 			return calendar.getTime();
 		}
 		else

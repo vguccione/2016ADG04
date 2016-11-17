@@ -393,7 +393,7 @@ public class EncomiendaEmpresa extends Encomienda{
 		enc.setCliente(new Cliente().fromEntity(ClienteDao.getInstancia().getById(ence.getCliente().getIdCliente())));
 		enc.setFechaEstimadaEntrega(ence.getFechaEstimadaEntrega());
 		
-		enc = (EncomiendaEmpresa)super.fromEntity(ence);
+		//enc = (EncomiendaEmpresa)super.fromEntity(ence);
 		
 		if(ence.getProductoEncomiendas() != null){
 			List<ProductoEncomienda> productos =new  ArrayList<ProductoEncomienda>();

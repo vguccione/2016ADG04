@@ -720,6 +720,14 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	public DTO_Factura getFacturaById(Integer id) throws RemoteException {
 		return objetoRemoto.getFacturaById(id);
 	}
+
+	public Integer asignarEnvio(Integer idEncomienda) throws RemoteException, BusinessException {
+		return objetoRemoto.asignarEnvio(idEncomienda);
+	}
+
+	public DTO_Envio getEnvio(Integer idEnvio)throws RemoteException {
+		return objetoRemoto.getEnvio(idEnvio);
+	}
 	
 	//Clientes-----------------------------------------------------------------
 	// TODO Completar el metodo	altaCliente

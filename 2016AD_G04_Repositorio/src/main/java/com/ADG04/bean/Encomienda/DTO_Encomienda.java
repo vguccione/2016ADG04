@@ -1,6 +1,7 @@
 package com.ADG04.bean.Encomienda;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class DTO_Encomienda implements Serializable{
 	private DTO_ItemFactura itemFactura;
 	private DTO_Direccion direccionOrigen;
 	private DTO_Direccion direccionDestino;
-	private DTO_Envio envio;
+	private List<DTO_Envio> envios;
 	
 	private DTO_Cliente cliente;
 	
@@ -61,10 +62,23 @@ public class DTO_Encomienda implements Serializable{
 			
 	public DTO_Encomienda() {
 		super();
+		envios = new ArrayList<DTO_Envio>();
 	}
 	
 	
 	
+	public List<DTO_Envio> getEnvios() {
+		return envios;
+	}
+
+
+
+	public void setEnvios(List<DTO_Envio> envios) {
+		this.envios = envios;
+	}
+
+
+
 	public int getIdServicioSeguridad() {
 		return idServicioSeguridad;
 	}
@@ -107,12 +121,6 @@ public class DTO_Encomienda implements Serializable{
 	}
 	public void setSucursalActual(DTO_Sucursal sucursalActual) {
 		this.sucursalActual = sucursalActual;
-	}
-	public DTO_Envio getEnvio() {
-		return envio;
-	}
-	public void setEnvio(DTO_Envio envio) {
-		this.envio = envio;
 	}
 	public DTO_Sucursal getSucursalOrigen() {
 		return sucursalOrigen;
@@ -293,6 +301,15 @@ public class DTO_Encomienda implements Serializable{
 	}
 	public void setTipoEncomienda(String tipoEncomienda) {
 		this.tipoEncomienda = tipoEncomienda;
+	}
+
+
+
+	public void addEnvio(DTO_Envio e) {
+		if(this.envios == null)
+			this.envios = new ArrayList<DTO_Envio>();
+			
+		this.envios.add(e);
 	}
 	
 

@@ -22,9 +22,11 @@ import com.ADG04.bean.Encomienda.DTO_Remito;
 
 public interface IEncomiendaRemote {
 
+	public Integer asignarEnvio(Integer idEncomienda)throws RemoteException, BusinessException;
+	
 	public void modificarCoordenadas(int idEnvio, DTO_Coordenada coordenadas) throws RemoteException;
 	
-	public Integer gestionarEnvioEncomienda(int idEncomienda) throws RemoteException;
+	public Integer gestionarEnvioEncomienda(int idEncomienda) throws RemoteException, BusinessException;
 
 	public Integer nuevaEncomiedaEmpresa(DTO_EncomiendaEmpresa encomiendaEmpresa)  throws RemoteException, BusinessException;
 	

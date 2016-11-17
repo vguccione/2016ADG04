@@ -21,6 +21,7 @@ import com.ADG04.bean.Cliente.DTO_ItemFactura;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
+import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.web.controller.WebBusinessDelegate;
@@ -79,10 +80,13 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		int idEncomienda = Integer.parseInt(request.getParameter("idEncomienda"));
 		DTO_EncomiendaParticular e = WebBusinessDelegate.getInstancia().getEncomiendaParticular(idEncomienda);
 		
-		boolean envioAsignado = false;
-		if(e.getEnvio() != null)
-			envioAsignado = true;
-		
+		List<String> envios = new ArrayList<String>();
+		for(DTO_Envio envio:e.getEnvios()){
+			DTO_Envio env = WebBusinessDelegate.getInstancia().getEnvio(envio.getId());
+			String envMsg = "Envio nro: (De Sucursal "+env.getIdSucursalOrigen().toString()  +" a "+env.getIdSucursalDestino().toString() +") " + env.getId() + " - Estado: "+env.getEstado()+" <a href='verEstadoEnvio?idEnvio'"+envio.getId()+">Ver estado</a>";
+			envios.add(envMsg);
+		}
+		request.setAttribute("listaEnvios", envios);
 		DTO_ClienteParticular cli = WebBusinessDelegate.getInstancia().getClienteParticularById(e.getCliente().getId());
 		
 		request.setAttribute("dniCliente", cli.getDni() );
@@ -126,15 +130,17 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		request.setAttribute("dniReceptor",e.getDniReceptor());
 		request.setAttribute("nombreReceptor",e.getNombreReceptor());
 		request.setAttribute("apellidoReceptor",e.getApellidoReceptor());
-
-		if(envioAsignado){ 
+/*
+		if(envioAsignado){
+			request.setAttribute("tieneEnvio", true);
 			request.setAttribute("envioAsignado","Si");
 			request.setAttribute("idEnvio",e.getEnvio().getId());
 		}
 		else{
+			request.setAttribute("tieneEnvio", false);
 			request.setAttribute("envioAsignado","No");
 			request.setAttribute("idEnvio",0);
-		}
+		}*/
 		
 		//Manifiesto
 		 e.getManifiesto().getId();

@@ -22,10 +22,12 @@ import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
+import com.ADG04.bean.Encomienda.DTO_Envio;
 
 public class EncomiendaParticular extends Encomienda{
 
 	public EncomiendaParticular() {
+		super();
 	}
 
 	public EncomiendaParticular(Direccion direccionDestino, Sucursal sucursalDestno,
@@ -122,6 +124,14 @@ public class EncomiendaParticular extends Encomienda{
 		dto.setCliente(this.getCliente().toDTO());
 		dto.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
 		dto.setTratamiento(this.getTratamiento());
+		
+		//Envios
+		for(Envio envio:this.getEnvios()){
+			DTO_Envio e = new DTO_Envio();
+			e.setId(envio.getIdEnvio());
+			dto.addEnvio(e);
+		}
+		
 		return dto;
 	}
 
@@ -298,10 +308,17 @@ public class EncomiendaParticular extends Encomienda{
 		enc.setCliente(new Cliente().fromEntity(ClienteDao.getInstancia().getById(ence.getCliente().getIdCliente())));
 		enc.setFechaEstimadaEntrega(ence.getFechaEstimadaEntrega());
 		
+		//Envios
+		for(EnvioE envioE:ence.getEnvios()){
+			Envio e = new Envio();
+			e.setIdEnvio(envioE.getIdEnvio());
+			enc.addEnvio(e);
+		}
+		
 		return enc;
 	}
 
-	
+
 	private EntityManager getEntityFactoryInstace() {
 		return EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();
 	}

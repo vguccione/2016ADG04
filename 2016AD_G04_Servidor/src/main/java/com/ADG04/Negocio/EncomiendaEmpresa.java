@@ -25,6 +25,10 @@ import java.util.Set;
 
 
 
+
+
+
+import org.hibernate.mapping.Array;
 import org.hibernate.property.Getter;
 
 import com.ADG04.Repositorio.Exceptions.BusinessException;
@@ -45,6 +49,7 @@ import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteEmpresaE;
 import com.ADG04.Servidor.model.ClienteParticularE;
 import com.ADG04.Servidor.model.EncomiendaE;
+import com.ADG04.Servidor.model.EnvioE;
 import com.ADG04.Servidor.model.ItemManifiestoE;
 import com.ADG04.Servidor.model.ItemRemitoE;
 import com.ADG04.Servidor.model.ManifiestoE;
@@ -56,6 +61,7 @@ import com.ADG04.Servidor.model.SucursalE;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
+import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 
 
@@ -64,6 +70,9 @@ public class EncomiendaEmpresa extends Encomienda{
 	private List<ProductoEncomienda> productosEncomienda;
 	
 	public EncomiendaEmpresa() {
+		super();
+		this.productosEncomienda = new ArrayList<ProductoEncomienda>();
+		
 	}
 
 	
@@ -335,6 +344,13 @@ public class EncomiendaEmpresa extends Encomienda{
 			}
 		}
 		
+		//Envios
+		for(Envio envio:this.getEnvios()){
+			DTO_Envio e = new DTO_Envio();
+			e.setId(envio.getIdEnvio());
+			dto.addEnvio(e);
+		}
+				
 		return dto;
 	}
 
@@ -389,6 +405,14 @@ public class EncomiendaEmpresa extends Encomienda{
 			if(productos.size()>0)
 				enc.setProductoEncomiendas(productos);;
 		}
+		
+		//Envios
+		for(EnvioE envioE:ence.getEnvios()){
+			Envio e = new Envio();
+			e.setIdEnvio(envioE.getIdEnvio());
+			enc.addEnvio(e);
+		}
+
 		
 		return enc;
 	}

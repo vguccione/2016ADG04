@@ -53,7 +53,7 @@ public class ServletEncomiendasListado extends HttpServlet {
 			
 			for(DTO_EncomiendaParticular encP:encomiendasP){
 
-				boolean envioAsignado = (encP.getEnvio() != null);
+				boolean envioAsignado = (encP.getEnvios() != null && encP.getEnvios().size() > 0);
 				gridData.addItem(new EncomiendaWeb(encP.getIdEncomienda(), encP.getCliente().getId(), envioAsignado));
 			}
 			

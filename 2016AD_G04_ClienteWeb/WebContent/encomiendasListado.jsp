@@ -62,7 +62,7 @@ $(document).ready(function() {
 <div class="container">
     <div class="content">
      <div class="amarillo"></div>
-  	<div class="page" style="background: #ccc; padding: 25px 100px;height:200px">
+  	<div class="page" style="background: #ccc; padding: 25px 100px;height:500px">
 	          <div style="float: left; height: 200px !important;">
 	              <table id="projectTable"></table>
 	              <div id="pagingDiv"></div>

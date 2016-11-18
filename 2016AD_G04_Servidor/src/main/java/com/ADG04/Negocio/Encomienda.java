@@ -184,7 +184,302 @@ public  class Encomienda{
 	//	this.apellidoReceptor = apellidoReceptor;
 	//	this.dniReceptor = dniReceptor;
 	}
+	
 
+	public int getIdEncomienda() {
+		return this.idEncomienda;
+	}
+
+	public void setIdEncomienda(int idEncomienda) {
+		this.idEncomienda = idEncomienda;
+	}
+
+	public Factura getFactura() {
+		return this.factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
+
+	public Direccion getDireccionDestino() {
+		return this.direccionDestino;
+	}
+
+	public void setDireccionDestino(
+			Direccion direccionDestino) {
+		this.direccionDestino = direccionDestino;
+	}
+
+	public Sucursal getSucursalDestino() {
+		return this.sucursalDestino;
+	}
+
+	public void setSucursalDestino(
+			Sucursal sucursalDestino) {
+		this.sucursalDestino = sucursalDestino;
+	}
+
+	public Sucursal getSucursalOrigen() {
+		return this.sucursalOrigen;
+	}
+
+	public void setSucursalOrigen(
+			Sucursal sucursalOrigen) {
+		this.sucursalOrigen = sucursalOrigen;
+	}
+
+	public Direccion getDireccionOrigen() {
+		return this.direccionOrigen;
+	}
+
+	public void setDireccionOrigen(
+			Direccion direccionOrigen) {
+		this.direccionOrigen = direccionOrigen;
+	}
+
+
+	public Sucursal getSucursalActual() {
+		return this.sucursalActual;
+	}
+
+	public void setSucursalActual(Sucursal sucursalActual) {
+		this.sucursalActual = sucursalActual;
+	}
+
+	public Cliente getCliente() {
+		return this.cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Date getFechaCreacion() {
+		return this.fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Date getFechaEstimadaEntrega() {
+		return this.fechaEstimadaEntrega;
+	}
+
+	public void setFechaEstimadaEntrega(Date fechaEstimadaEntrega) {
+		this.fechaEstimadaEntrega = fechaEstimadaEntrega;
+	}
+
+	public String getEstado() {
+		return this.estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public boolean isTercerizado() {
+		return this.tercerizado;
+	}
+
+	public void setTercerizado(boolean tercerizado) {
+		this.tercerizado = tercerizado;
+	}
+
+	public float getLargo() {
+		return this.largo;
+	}
+
+	public void setLargo(float largo) {
+		this.largo = largo;
+	}
+
+	public float getAlto() {
+		return this.alto;
+	}
+
+	public void setAlto(float alto) {
+		this.alto = alto;
+	}
+
+	public float getAncho() {
+		return this.ancho;
+	}
+
+	public void setAncho(float ancho) {
+		this.ancho = ancho;
+	}
+
+	public float getPeso() {
+		return this.peso;
+	}
+
+	public void setPeso(float peso) {
+		this.peso = peso;
+	}
+
+	public float getVolumen() {
+		return this.volumen;
+	}
+
+	public void setVolumen(float volumen) {
+		this.volumen = volumen;
+	}
+
+	public String getTratamiento() {
+		return this.tratamiento;
+	}
+
+	public void setTratamiento(String tratamiento) {
+		this.tratamiento = tratamiento;
+	}
+
+	public Boolean getApilable() {
+		return this.apilable;
+	}
+
+	public void setApilable(Boolean apilable) {
+		this.apilable = apilable;
+	}
+
+	public Short getCantApilable() {
+		return this.cantApilable;
+	}
+
+	public void setCantApilable(Short cantApilable) {
+		this.cantApilable = cantApilable;
+	}
+
+	public Boolean getRefrigerado() {
+		return this.refrigerado;
+	}
+
+	public void setRefrigerado(Boolean refrigerado) {
+		this.refrigerado = refrigerado;
+	}
+
+	public String getCondicionTransporte() {
+		return this.condicionTransporte;
+	}
+
+	public void setCondicionTransporte(String condicionTransporte) {
+		this.condicionTransporte = condicionTransporte;
+	}
+
+	public String getIndicacionesManipulacion() {
+		return this.indicacionesManipulacion;
+	}
+
+	public void setIndicacionesManipulacion(String indicacionesManipulacion) {
+		this.indicacionesManipulacion = indicacionesManipulacion;
+	}
+
+	public String getFragilidad() {
+		return this.fragilidad;
+	}
+
+	public void setFragilidad(String fragilidad) {
+		this.fragilidad = fragilidad;
+	}
+
+	public String getNombreReceptor() {
+		return this.nombreReceptor;
+	}
+
+	public void setNombreReceptor(String nombreReceptor) {
+		this.nombreReceptor = nombreReceptor;
+	}
+
+	public String getApellidoReceptor() {
+		return this.apellidoReceptor;
+	}
+
+	public void setApellidoReceptor(String apellidoReceptor) {
+		this.apellidoReceptor = apellidoReceptor;
+	}
+
+	public String getDniReceptor() {
+		return this.dniReceptor;
+	}
+
+	public void setDniReceptor(String dniReceptor) {
+		this.dniReceptor = dniReceptor;
+	}
+
+	public float getVolumenGranel() {
+		return this.volumenGranel;
+	}
+
+	public void setVolumenGranel(float volumenGranel) {
+		this.volumenGranel = volumenGranel;
+	}
+
+	public String getUnidadGranel() {
+		return this.unidadGranel;
+	}
+
+	public void setUnidadGranel(String unidadGranel) {
+		this.unidadGranel = unidadGranel;
+	}
+
+	public String getCargaGranel() {
+		return this.cargaGranel;
+	}
+
+	public void setCargaGranel(String cargaGranel) {
+		this.cargaGranel = cargaGranel;
+	}
+
+	
+	public ServicioSeguridad getServicioSeguridad() {
+		return servicioSeguridad;
+	}
+
+	public void setServicioSeguridad(ServicioSeguridad servicioSeguridad) {
+		this.servicioSeguridad = servicioSeguridad;
+	}
+
+	public Manifiesto getManifiesto() {
+		return manifiesto;
+	}
+
+	public void setManifiesto(Manifiesto manifiesto) {
+		this.manifiesto = manifiesto;
+	}
+
+	public Remito getRemito() {
+		return remito;
+	}
+
+	public void setRemito(Remito remito) {
+		this.remito = remito;
+	}
+
+	public boolean isInternacional() {
+		return internacional;
+	}
+
+	public void setInternacional(boolean internacional) {
+		this.internacional = internacional;
+	}
+
+	public List<Envio> getEnvios() {
+		return envios;
+	}
+
+	public void setEnvios(List<Envio> envios) {
+		this.envios = envios;
+	}
+	
+	public boolean isTerciarizado() {
+		return tercerizado;
+	}
+
+	public void setTerciarizado(boolean terciarizado) {
+		this.tercerizado = terciarizado;
+	}
+	
 	public Integer asignarEnvio(Integer idCarrier) throws BusinessException {
 		
 		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
@@ -201,7 +496,7 @@ public  class Encomienda{
 					ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
 					envioTercerizado.setProveedor(prov);
 				}
-				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
 				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
 				envioTercerizado.setNroTracking(2000);
@@ -282,7 +577,7 @@ public  class Encomienda{
 				//Es un nuevo envio por que no se encontro camion disponible
 				if (nuevoEnvio){
 					//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<>Pendiente)
-					List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(e.getSucursalOrigen().getIdSucursal(),  e.getVolumen(), e.getPeso());
+					List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(e.getSucursalActual().getIdSucursal(),  e.getVolumen(), e.getPeso());
 					boolean pesoNuevoOK = false;
 					boolean volumenNuevoOK = false;
 					
@@ -307,7 +602,7 @@ public  class Encomienda{
 								if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
 									//Genero el envio
 									
-									MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+									MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 									
 									EnvioE envioPropio = new EnvioE();
 									envioPropio.setEstado(EnvioEstado.Pendiente.toString());
@@ -565,250 +860,6 @@ public  class Encomienda{
 	}
 	
 	
-	public int getIdEncomienda() {
-		return this.idEncomienda;
-	}
-
-	public void setIdEncomienda(int idEncomienda) {
-		this.idEncomienda = idEncomienda;
-	}
-
-	public Factura getFactura() {
-		return this.factura;
-	}
-
-	public void setFactura(Factura factura) {
-		this.factura = factura;
-	}
-
-	public Direccion getDireccionDestino() {
-		return this.direccionDestino;
-	}
-
-	public void setDireccionDestino(
-			Direccion direccionDestino) {
-		this.direccionDestino = direccionDestino;
-	}
-
-	public Sucursal getSucursalDestino() {
-		return this.sucursalDestino;
-	}
-
-	public void setSucursalDestino(
-			Sucursal sucursalDestino) {
-		this.sucursalDestino = sucursalDestino;
-	}
-
-	public Sucursal getSucursalOrigen() {
-		return this.sucursalOrigen;
-	}
-
-	public void setSucursalOrigen(
-			Sucursal sucursalOrigen) {
-		this.sucursalOrigen = sucursalOrigen;
-	}
-
-	public Direccion getDireccionOrigen() {
-		return this.direccionOrigen;
-	}
-
-	public void setDireccionOrigen(
-			Direccion direccionOrigen) {
-		this.direccionOrigen = direccionOrigen;
-	}
-
-
-	public Sucursal getSucursalActual() {
-		return this.sucursalActual;
-	}
-
-	public void setSucursalActual(Sucursal sucursalActual) {
-		this.sucursalActual = sucursalActual;
-	}
-
-	public Cliente getCliente() {
-		return this.cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Date getFechaCreacion() {
-		return this.fechaCreacion;
-	}
-
-	public void setFechaCreacion(Date fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
-
-	public Date getFechaEstimadaEntrega() {
-		return this.fechaEstimadaEntrega;
-	}
-
-	public void setFechaEstimadaEntrega(Date fechaEstimadaEntrega) {
-		this.fechaEstimadaEntrega = fechaEstimadaEntrega;
-	}
-
-	public String getEstado() {
-		return this.estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public boolean isTercerizado() {
-		return this.tercerizado;
-	}
-
-	public void setTercerizado(boolean tercerizado) {
-		this.tercerizado = tercerizado;
-	}
-
-	public float getLargo() {
-		return this.largo;
-	}
-
-	public void setLargo(float largo) {
-		this.largo = largo;
-	}
-
-	public float getAlto() {
-		return this.alto;
-	}
-
-	public void setAlto(float alto) {
-		this.alto = alto;
-	}
-
-	public float getAncho() {
-		return this.ancho;
-	}
-
-	public void setAncho(float ancho) {
-		this.ancho = ancho;
-	}
-
-	public float getPeso() {
-		return this.peso;
-	}
-
-	public void setPeso(float peso) {
-		this.peso = peso;
-	}
-
-	public float getVolumen() {
-		return this.volumen;
-	}
-
-	public void setVolumen(float volumen) {
-		this.volumen = volumen;
-	}
-
-	public String getTratamiento() {
-		return this.tratamiento;
-	}
-
-	public void setTratamiento(String tratamiento) {
-		this.tratamiento = tratamiento;
-	}
-
-	public Boolean getApilable() {
-		return this.apilable;
-	}
-
-	public void setApilable(Boolean apilable) {
-		this.apilable = apilable;
-	}
-
-	public Short getCantApilable() {
-		return this.cantApilable;
-	}
-
-	public void setCantApilable(Short cantApilable) {
-		this.cantApilable = cantApilable;
-	}
-
-	public Boolean getRefrigerado() {
-		return this.refrigerado;
-	}
-
-	public void setRefrigerado(Boolean refrigerado) {
-		this.refrigerado = refrigerado;
-	}
-
-	public String getCondicionTransporte() {
-		return this.condicionTransporte;
-	}
-
-	public void setCondicionTransporte(String condicionTransporte) {
-		this.condicionTransporte = condicionTransporte;
-	}
-
-	public String getIndicacionesManipulacion() {
-		return this.indicacionesManipulacion;
-	}
-
-	public void setIndicacionesManipulacion(String indicacionesManipulacion) {
-		this.indicacionesManipulacion = indicacionesManipulacion;
-	}
-
-	public String getFragilidad() {
-		return this.fragilidad;
-	}
-
-	public void setFragilidad(String fragilidad) {
-		this.fragilidad = fragilidad;
-	}
-
-	public String getNombreReceptor() {
-		return this.nombreReceptor;
-	}
-
-	public void setNombreReceptor(String nombreReceptor) {
-		this.nombreReceptor = nombreReceptor;
-	}
-
-	public String getApellidoReceptor() {
-		return this.apellidoReceptor;
-	}
-
-	public void setApellidoReceptor(String apellidoReceptor) {
-		this.apellidoReceptor = apellidoReceptor;
-	}
-
-	public String getDniReceptor() {
-		return this.dniReceptor;
-	}
-
-	public void setDniReceptor(String dniReceptor) {
-		this.dniReceptor = dniReceptor;
-	}
-
-	public float getVolumenGranel() {
-		return this.volumenGranel;
-	}
-
-	public void setVolumenGranel(float volumenGranel) {
-		this.volumenGranel = volumenGranel;
-	}
-
-	public String getUnidadGranel() {
-		return this.unidadGranel;
-	}
-
-	public void setUnidadGranel(String unidadGranel) {
-		this.unidadGranel = unidadGranel;
-	}
-
-	public String getCargaGranel() {
-		return this.cargaGranel;
-	}
-
-	public void setCargaGranel(String cargaGranel) {
-		this.cargaGranel = cargaGranel;
-	}
 
 	public Seguro getSeguro() {
 		Seguro p = new Seguro();
@@ -820,53 +871,7 @@ public  class Encomienda{
 		return p;
 	}
 
-	public boolean isTerciarizado() {
-		return tercerizado;
-	}
-
-	public void setTerciarizado(boolean terciarizado) {
-		this.tercerizado = terciarizado;
-	}
-
-	public ServicioSeguridad getServicioSeguridad() {
-		return servicioSeguridad;
-	}
-
-	public void setServicioSeguridad(ServicioSeguridad servicioSeguridad) {
-		this.servicioSeguridad = servicioSeguridad;
-	}
-
-	public Manifiesto getManifiesto() {
-		return manifiesto;
-	}
-
-	public void setManifiesto(Manifiesto manifiesto) {
-		this.manifiesto = manifiesto;
-	}
-
-	public Remito getRemito() {
-		return remito;
-	}
-
-	public void setRemito(Remito remito) {
-		this.remito = remito;
-	}
-
-	public boolean isInternacional() {
-		return internacional;
-	}
-
-	public void setInternacional(boolean internacional) {
-		this.internacional = internacional;
-	}
-
-	public List<Envio> getEnvios() {
-		return envios;
-	}
-
-	public void setEnvios(List<Envio> envios) {
-		this.envios = envios;
-	}
+	
 
 	@Override
 	public String toString() {
@@ -1248,9 +1253,12 @@ public  class Encomienda{
 		
 		//Envios
 		if(ence.getEnvios() != null){
+			List<Envio> envios = new ArrayList<Envio>();
 			for(EnvioE envioE:ence.getEnvios()){
 				Envio e = this.parseEnvioFromEntity(envioE);
+				envios.add(e);
 			}
+			enc.setEnvios(envios);
 		}
 		
 		return enc;
@@ -1355,7 +1363,8 @@ public  class Encomienda{
 				if(!e.getEstado().contains(EnvioEstado.Concluido.toString()))
 					return true;
 			}
-		}	
+		}
+		
 		return false;
 	}
 	

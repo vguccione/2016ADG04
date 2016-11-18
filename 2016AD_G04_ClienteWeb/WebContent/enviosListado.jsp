@@ -43,7 +43,7 @@ $(document).ready(function() {
 	                  height:200,
 	                  pager: "#pagingDivTerceros",
 	                  viewrecords: true,
-	                  caption: ""
+	                  caption: "Envios Tercerizados"
 	              });
 	 
 	             $("#enviosPropios").jqGrid({
@@ -64,7 +64,7 @@ $(document).ready(function() {
 	                  height:200,
 	                  pager: "#pagingDiv",
 	                  viewrecords: true,
-	                  caption: ""
+	                  caption: "Envios Propios"
 	              }); 
 
 		 

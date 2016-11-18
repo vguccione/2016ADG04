@@ -112,7 +112,7 @@ $(document).ready(function() {
 <!-- Cuerpo -->
 <body>
 <div class="container" style="background-color: #E6E6E6;">
-<div class="content" style="height:800px">
+<div class="content" style="height:1200px">
 
 <h2>Encomienda Particular:</h2>
 

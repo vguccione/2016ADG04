@@ -34,7 +34,7 @@ $(document).ready(function() {
 
 		rowNum:20,
 		//   rowList:[20,60,100],
-		height:500,
+		height:200,
 		pager: "#pagingDiv",
 		viewrecords: true,
 		caption: ""

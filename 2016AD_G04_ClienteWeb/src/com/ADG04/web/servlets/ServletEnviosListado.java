@@ -19,6 +19,8 @@ import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
+import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.web.controller.WebBusinessDelegate;
@@ -38,6 +40,19 @@ public class ServletEnviosListado extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		String action = request.getParameter("action").toString();
+		System.out.println(action);
+		if(action.equals("enviosTerceros"))
+			findEnviosTerceros(request, response);			
+		
+		if(action.equals("enviosPropios"))
+			findEnviosPropios(request, response);
+
+	}
+
+
+	private void findEnviosPropios(HttpServletRequest request, HttpServletResponse response) {
+
 		try{
 				  
 			int idSucursalDestino = Integer.parseInt((request.getParameter("idSucursalDestino")));
@@ -53,7 +68,8 @@ public class ServletEnviosListado extends HttpServlet {
 			
 			for(DTO_Envio envioDTO:dtoEnvios){
 
-				gridData.addItem(new EnvioWeb(envioDTO.getId(), envioDTO.getEstado(), envioDTO.getIdSucursalOrigen(), envioDTO.getIdSucursalDestino())	);
+				if(envioDTO.getClass() == DTO_EnvioPropio.class)
+					gridData.addItem(new EnvioWeb(envioDTO.getId(), envioDTO.getEstado(), envioDTO.getIdSucursalOrigen(), envioDTO.getIdSucursalDestino())	);
 			}
 			
 			System.out.println("Grid Data: " + gridData.getJsonString());
@@ -71,6 +87,41 @@ public class ServletEnviosListado extends HttpServlet {
 	}
 
 
+	private void findEnviosTerceros(HttpServletRequest request, HttpServletResponse response) {
+
+		try{
+				  
+			int idSucursalDestino = Integer.parseInt((request.getParameter("idSucursalDestino")));
+			
+			List<EnvioWeb> enviosWeb = new ArrayList<EnvioWeb>();
+				 
+			int totalNumberOfPages = 1;
+			int currentPageNumber = 1;
+				 
+			List<DTO_Envio> dtoEnvios = WebBusinessDelegate.getInstancia().listarEnviosPendientesBySucursalDestino(idSucursalDestino);
+			int totalNumberOfRecords = dtoEnvios.size(); 
+			JqGridData<EnvioWeb> gridData = new JqGridData<EnvioWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, enviosWeb);		
+			
+			for(DTO_Envio envioDTO:dtoEnvios){
+				if(envioDTO.getClass() == DTO_EnvioTercerizado.class)
+					gridData.addItem(new EnvioWeb(envioDTO.getId(), envioDTO.getEstado(), envioDTO.getIdSucursalOrigen(), envioDTO.getIdSucursalDestino())	);
+			}
+			
+			System.out.println("Grid Data: " + gridData.getJsonString());
+			response.getWriter().write(gridData.getJsonString());
+		}
+		catch(BusinessException cEx){
+			//jspPage = "mostrarMensaje.jsp";
+			request.setAttribute("mensaje", cEx.getMessage());	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			//jspPage = "mostrarMensaje.jsp";
+			request.setAttribute("mensaje", "Ha ocurrido un error");
+		}
+	}
+
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 	

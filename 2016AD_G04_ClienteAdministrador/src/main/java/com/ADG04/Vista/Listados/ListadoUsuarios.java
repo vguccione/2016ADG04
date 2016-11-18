@@ -122,6 +122,7 @@ public class ListadoUsuarios extends javax.swing.JFrame {
 																		u.getNombre() + ' ' +u.getApellido() ,
 																		u.getDni(),
 																		u.getUsuario(),
+																		Controlador.getInstancia().getSucursal(u.getIdSucursal()).getDescripcion(),
 																		roles,
 																		ultimoAcceso
 																		});
@@ -148,6 +149,7 @@ public class ListadoUsuarios extends javax.swing.JFrame {
 					jTableListadoModel.addColumn("Empleado");
 					jTableListadoModel.addColumn("Dni");
 					jTableListadoModel.addColumn("usuario");
+					jTableListadoModel.addColumn("Sucursal");
 					jTableListadoModel.addColumn("Roles");
 					jTableListadoModel.addColumn("Ultimo Acceso");
 
@@ -171,6 +173,7 @@ public class ListadoUsuarios extends javax.swing.JFrame {
 																u.getNombre() + ' ' +u.getApellido() ,
 																u.getDni(),
 																u.getUsuario(),
+																Controlador.getInstancia().getSucursal(u.getIdSucursal()).getDescripcion(),
 																roles,
 																ultimoAcceso
 																});

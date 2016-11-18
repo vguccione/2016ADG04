@@ -888,9 +888,7 @@ public class Controlador {
 			
 			prov.setTipo(tipo);
 			prov.setDireccion(direccion);
-			
-			System.out.println(prov.toString());
-			
+					
 			bd.altaProveedor(prov);
 			
 		}

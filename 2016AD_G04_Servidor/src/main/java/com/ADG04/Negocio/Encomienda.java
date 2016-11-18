@@ -903,13 +903,14 @@ public  class Encomienda{
 			calendar.setTime(hoy);
 			calendar.add(Calendar.HOUR, (int) mr.getDuracion());
 			
-			System.out.println("esEnvioTercerizado-------------");
-			System.out.println("this.getFechaEstimadaEntrega(): " + this.getFechaEstimadaEntrega());
 			
+			System.out.println("this.getFechaEstimadaEntrega(): " + this.getFechaEstimadaEntrega());
+			System.out.println(calendar.getTime().toString());
 			//Si tengo que enviarlo si o si hoy para que llegue y no hay vehiculos disponibles
 			if(this.getFechaEstimadaEntrega() != null &&
-					(this.getFechaEstimadaEntrega().compareTo(calendar.getTime())==0) ){
+					(this.getFechaEstimadaEntrega().compareTo(calendar.getTime())<=0) ){
 				if(!hayVehiculosDisponibles()){
+					System.out.println("esEnvioTercerizado-------------");
 					return true;
 				}
 				else
@@ -957,6 +958,7 @@ public  class Encomienda{
 				}
 			}
 		}
+		System.out.println("No hay vehiculos disponibles che");
 		return false;
 	}
 

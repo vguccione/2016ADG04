@@ -407,10 +407,12 @@ public class EncomiendaEmpresa extends Encomienda{
 		}
 		
 		//Envios
-		for(EnvioE envioE:ence.getEnvios()){
-			Envio e = new Envio();
-			e.setIdEnvio(envioE.getIdEnvio());
-			enc.addEnvio(e);
+		if(ence.getEnvios()!=null){
+			for(EnvioE envioE:ence.getEnvios()){
+				Envio e = new Envio();
+				e.setIdEnvio(envioE.getIdEnvio());
+				enc.addEnvio(e);
+			}
 		}
 
 		

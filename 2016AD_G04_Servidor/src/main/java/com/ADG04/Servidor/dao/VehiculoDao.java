@@ -41,9 +41,8 @@ public class VehiculoDao extends GenericDao<VehiculoE, Integer> {
 		long asignado = 0;
 		asignado = (long) entityManager.createQuery("select count(*) from EnvioE e "
 				+ " where e.vehiculo.idVehiculo =:idVehiculo"
-				+ " and e.estado!=:pendiente")
+				+ " and e.estado!='Concluido'")
 				.setParameter("idVehiculo", v.getIdVehiculo())
-				.setParameter("pendiente", EnvioEstado.Pendiente.toString())
 				.getSingleResult();
 
 		return asignado;

@@ -81,7 +81,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		DTO_EncomiendaParticular e = WebBusinessDelegate.getInstancia().getEncomiendaParticular(idEncomienda);
 		
 		request.setAttribute("nroEncomienda", idEncomienda );
-		
+		request.setAttribute("estadoEncomienda", e.getEstado());
 		List<String> envios = new ArrayList<String>();
 		for(DTO_Envio envio:e.getEnvios()){
 			System.out.println(envio.getId());

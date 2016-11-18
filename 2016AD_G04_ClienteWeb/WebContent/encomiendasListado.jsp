@@ -34,7 +34,7 @@ $(document).ready(function() {
                   ],
                   rowNum:20,
                //   rowList:[20,60,100],
-                  height:500,
+                  height:200,
                   pager: "#pagingDiv",
                   viewrecords: true,
                   caption: ""
@@ -62,18 +62,8 @@ $(document).ready(function() {
 <div class="container">
     <div class="content">
      <div class="amarillo"></div>
-  	<div class="page" style="background: #ccc; padding: 25px 100px;height:1000px">
-
-
-<!-- 	  <table id="grid"></table>-->
-                 <div >
-                     <label>Filtrar:</label>
-                     <select id="pcSelect">
-                         <option>Con envio asignado</option>
-                         <option>Sin envio asignado</option>
-                     </select>
-                 </div>
-	          <div style="float: left;">
+  	<div class="page" style="background: #ccc; padding: 25px 100px;height:200px">
+	          <div style="float: left; height: 200px !important;">
 	              <table id="projectTable"></table>
 	              <div id="pagingDiv"></div>
 	          </div>

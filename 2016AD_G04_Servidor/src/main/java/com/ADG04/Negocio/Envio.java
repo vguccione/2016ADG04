@@ -301,7 +301,8 @@ public class Envio{
 			dto.setId(this.getIdEnvio());
 			dto.setEstado(this.getEstado());
 			dto.setPosicionActual(this.getPosicionActual().toDTO());
-			dto.setIdProveedor(this.getProveedor().getIdProveedor());
+			if(this.getProveedor()!=null)
+				dto.setIdProveedor(this.getProveedor().getIdProveedor());
 			dto.setNumeroTracking(String.valueOf(this.getNroTracking()));
 			dto.setFechaActualizacion(fechaActualizacion);
 			List<DTO_Encomienda>lista = new ArrayList<DTO_Encomienda>();

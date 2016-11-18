@@ -291,7 +291,7 @@ public class Envio{
 				lista.add(enc.toDTO());
 			}
 			dto.setEncomiendas(lista);
-			dto.setIdSucursalOrigen(this.sucursalDestino.getIdSucursal());
+			dto.setIdSucursalDestino(this.sucursalDestino.getIdSucursal());
 			dto.setIdSucursalOrigen(this.sucursalOrigen.getIdSucursal());
 			
 			return dto;
@@ -310,9 +310,9 @@ public class Envio{
 			}
 			dto.setEncomiendas(lista);
 			
-			dto.setIdSucursalOrigen(this.sucursalDestino.getIdSucursal());
+			dto.setIdSucursalDestino(this.sucursalDestino.getIdSucursal());
 			dto.setIdSucursalOrigen(this.sucursalOrigen.getIdSucursal());
-			
+						
 			return dto;
 		}
 		
@@ -398,23 +398,10 @@ public class Envio{
 		if(estado.equals(EnvioEstado.Concluido.toString()))
 			concluirEnvio();
 		
-		
-		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();	
-		EntityTransaction tx = em.getTransaction();
-		
-		try{
-		tx.begin();
-		
 		EnvioE envioE = EnvioDao.getInstancia().getById(this.idEnvio);
 		envioE.setEstado(estado);
+		EnvioDao.getInstancia().saveOrUpdate(envioE);
 		actualizarHistorico();
-
-		tx.commit();
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
-			throw ex;
-		}
 	}
 	
 	public void concluirEnvio() {
@@ -493,6 +480,7 @@ public class Envio{
 	}
 	
 	public Envio fromEntity(EnvioE e){
+		
 		Envio  env = new Envio();
 		env.setEstado(e.getEstado());
 		env.setFechaYHoraLlegadaEstimada(e.getFechaYHoraLlegadaEstimada());

@@ -84,8 +84,9 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		
 		List<String> envios = new ArrayList<String>();
 		for(DTO_Envio envio:e.getEnvios()){
+			System.out.println(envio.getId());
 			DTO_Envio env = WebBusinessDelegate.getInstancia().getEnvio(envio.getId());
-			String envMsg = "Envio nro: (De Sucursal "+env.getIdSucursalOrigen().toString()  +" a "+env.getIdSucursalDestino().toString() +") " + env.getId() + " - Estado: "+env.getEstado()+" <a href='verEstadoEnvio?idEnvio'"+envio.getId()+">Ver estado</a>";
+			String envMsg = "Envio nro: (Entre Sucursales "+env.getIdSucursalOrigen().toString()  +" y "+env.getIdSucursalDestino().toString() +") " + env.getId() + " - Estado: "+env.getEstado()+" <a href='ServletVerEnvio?idEnvio'"+envio.getId()+">Ver estado</a>";
 			envios.add(envMsg);
 		}
 		request.setAttribute("listaEnvios", envios);

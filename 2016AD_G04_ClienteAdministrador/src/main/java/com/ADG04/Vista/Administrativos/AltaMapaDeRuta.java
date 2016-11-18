@@ -253,13 +253,13 @@ public class AltaMapaDeRuta extends javax.swing.JFrame {
 		return jLabelLatitud;
 	}
 	
-	private JTextField getJTextFieldLongitud() {
-		if(jTextFieldLongitud == null) {
-			jTextFieldLongitud = new JTextField();
-			jTextFieldLongitud.setBounds(94, 173, 54, 18);
+	private JTextField getJTextFieldLatitud() {
+		if(jTextFieldLatitud == null) {
+			jTextFieldLatitud = new JTextField();
+			jTextFieldLatitud.setBounds(94, 173, 54, 18);
 			
 		}
-		return jTextFieldLongitud;
+		return jTextFieldLatitud;
 	}
 	
 	private JLabel getJLabelLongitud() {
@@ -271,13 +271,13 @@ public class AltaMapaDeRuta extends javax.swing.JFrame {
 		return jLabelLongitud;
 	}
 	
-	private JTextField getJTextFieldLatitud() {
-		if(jTextFieldLatitud == null) {
-			jTextFieldLatitud = new JTextField();
-			jTextFieldLatitud.setBounds(240, 173, 54, 18);
+	private JTextField getJTextFieldLongitud() {
+		if(jTextFieldLongitud == null) {
+			jTextFieldLongitud = new JTextField();
+			jTextFieldLongitud.setBounds(240, 173, 54, 18);
 			
 		}
-		return jTextFieldLatitud;
+		return jTextFieldLongitud;
 	}
 	
 	private JLabel getJLabel1() {
@@ -381,18 +381,7 @@ public class AltaMapaDeRuta extends javax.swing.JFrame {
 	    JButton btnAgregar = new JButton("+");	    
 	    btnAgregar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	        	if(dto!=null){
-	        		if(dto.getCoordenadas()!=null){
-	        			data.removeAllElements();
-	    		    	for(DTO_Coordenada coord: dto.getCoordenadas()){
-	    		    		dataCoordenadas = new Vector<String>();
-	    		    		dataCoordenadas.add(coord.getLatitud());
-	    		    		dataCoordenadas.add(coord.getLongitud());
-	    		    		data.add(dataCoordenadas);
-	    		    	}
-	    		    dataCoordenadas = new Vector<String>();
-	    	    	}
-	        	}
+	        	dataCoordenadas = new Vector<String>();
 	            dataCoordenadas.add(jTextFieldLatitud.getText());
 	            dataCoordenadas.add(jTextFieldLongitud.getText());
 	            data.add(dataCoordenadas);

@@ -60,17 +60,7 @@ public class App
 	1002		100		220		42				3					1
 	1003		30		44		32				2					3
  * */
-		
-		List<EncomiendaE> encomiendas = EncomiendaDao.getInstancia().getAll();
-		List<Encomienda> lista = new ArrayList<Encomienda>();
-		for(EncomiendaE enc : encomiendas){
-			lista.add(new Encomienda().fromEntity(enc));
-		}
-		
-		for(Encomienda e: lista){
-			if(e.estaAsignada())
-				System.out.println(e.getIdEncomienda());
-		}
+
 	}
 	
 	private static Integer AltaEncomiendaParticular() throws IOException, BusinessException {

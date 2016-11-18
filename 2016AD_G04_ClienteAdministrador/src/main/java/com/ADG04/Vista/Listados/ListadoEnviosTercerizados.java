@@ -100,12 +100,16 @@ public class ListadoEnviosTercerizados extends javax.swing.JFrame {
 						
 						if(listadto!=null){
 							for (DTO_EnvioTercerizado env :listadto){
-								DTO_Proveedor prov = Controlador.getInstancia().getProveedor(env.getIdProveedor());
+								String proveedor="";
+								if(env.getIdProveedor()!=null){
+									DTO_Proveedor prov = Controlador.getInstancia().getProveedor(env.getIdProveedor());
+									proveedor=prov.getRazonSocial();
+								}
 								DTO_Coordenada coord = Controlador.getInstancia().getCoordenadaById(env.getPosicionActual().getId());
 								jTableListadoModel.addRow(new Object[] { 
 										env.getId(),
 										env.getEstado(),
-										prov.getRazonSocial(),
+										proveedor,
 										env.getNumeroTracking(),
 										coord.getLatitud() + ' ' + coord.getLongitud()
 								});	
@@ -133,12 +137,16 @@ public class ListadoEnviosTercerizados extends javax.swing.JFrame {
 	
 					if(listadto!=null){
 					for (DTO_EnvioTercerizado env :listadto){
-						DTO_Proveedor prov = Controlador.getInstancia().getProveedor(env.getIdProveedor());
+						String proveedor = "";
+						if(env.getIdProveedor()!=null){
+							DTO_Proveedor prov  = Controlador.getInstancia().getProveedor(env.getIdProveedor());
+							proveedor= prov.getRazonSocial();
+						}
 						DTO_Coordenada coord = Controlador.getInstancia().getCoordenadaById(env.getPosicionActual().getId());
 						jTableListadoModel.addRow(new Object[] { 
 								env.getId(),
 								env.getEstado(),
-								prov.getRazonSocial(),
+								proveedor,
 								env.getNumeroTracking(),
 								coord.getLatitud() + ' ' + coord.getLongitud()
 						});	

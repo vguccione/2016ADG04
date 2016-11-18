@@ -6,15 +6,15 @@ import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 public class ProductoEncomienda{
 
 	private int idProductoEncomienda;
-	private Encomienda encomienda;
+	private int idEncomienda;
 	private Producto producto;
 	private Integer cantidad;
 	
 	public ProductoEncomienda() {
 	}
 
-	public ProductoEncomienda(Encomienda encomienda,Producto producto) {
-		this.encomienda = encomienda;
+	public ProductoEncomienda(int idEncomienda,Producto producto) {
+		this.idEncomienda = idEncomienda;
 		this.producto = producto;
 	}
 
@@ -36,12 +36,13 @@ public class ProductoEncomienda{
 		this.idProductoEncomienda = idProductoEncomienda;
 	}
 
-	public Encomienda getEncomienda() {
-		return this.encomienda;
+
+	public int getIdEncomienda() {
+		return idEncomienda;
 	}
 
-	public void setEncomienda(Encomienda encomienda) {
-		this.encomienda = encomienda;
+	public void setIdEncomienda(int idEncomienda) {
+		this.idEncomienda = idEncomienda;
 	}
 
 	public Producto getProducto() {
@@ -55,9 +56,8 @@ public class ProductoEncomienda{
 	public DTO_ProductoEncomienda toDTO() {
 		
 		DTO_ProductoEncomienda p = new DTO_ProductoEncomienda();
-		
 		p.setCantidad(this.cantidad);
-		p.setIdEncomienda(this.encomienda.getIdEncomienda());
+		p.setIdEncomienda(this.getIdEncomienda());
 		p.setIdProductoCliente(this.producto.getIdProducto());
 		
 		return p;
@@ -71,9 +71,13 @@ public class ProductoEncomienda{
 		this.cantidad = cantidad;
 	}
 
-	public ProductoEncomienda fromEntity(ProductoEncomiendaE byId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ProductoEncomienda fromEntity(ProductoEncomiendaE pe) {
+		ProductoEncomienda prod = new ProductoEncomienda();
+		prod.setCantidad((int) pe.getCantidad());
+		prod.setIdProductoEncomienda(pe.getIdProductoEncomienda());
+		prod.setIdEncomienda(pe.getEncomienda().getIdEncomienda());
+		prod.setProducto(new Producto().fromEntity(pe.getProducto()));
+		return prod;
 	}
 
 }

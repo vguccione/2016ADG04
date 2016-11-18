@@ -7,7 +7,7 @@ import com.ADG04.bean.Administracion.DTO_Sucursal;
 
 public class DTO_EnvioPropio extends DTO_Envio implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private Integer idVehiculo;
+	private int idVehiculo;
 	private Integer idHojaDeRuta;
 	private Date fechaYHoraSalida;
 	private Date fechaYHoraLlegada;
@@ -19,13 +19,16 @@ public class DTO_EnvioPropio extends DTO_Envio implements Serializable{
 		super();
 	}
 
+	
 	public int getIdVehiculo() {
 		return idVehiculo;
 	}
 
-	public void setIdVehiculo(Integer idVehiculo) {
+
+	public void setIdVehiculo(int idVehiculo) {
 		this.idVehiculo = idVehiculo;
 	}
+
 
 	public Integer getIdHojaDeRuta() {
 		return idHojaDeRuta;

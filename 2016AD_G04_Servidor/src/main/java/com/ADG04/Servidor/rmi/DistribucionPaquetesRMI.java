@@ -1005,6 +1005,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	@Override
 	public DTO_Proveedor getProveedor(Integer idProveedor)
 			throws RemoteException {
+		
 		ProveedorE prov = ProveedorDao.getInstancia().getById(idProveedor);
 		if(prov!=null){
 			return new Proveedor().fromEntity(prov).toDTO();

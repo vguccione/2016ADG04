@@ -236,7 +236,7 @@ public class EncomiendaEmpresa extends Encomienda{
 			
 			//TODO: revisar. habria que guardar esto en transaccion
 			//Si es encomienda de empresa, tiene productos asociados
-			if(this.productosEncomienda != null){
+			if(this.productosEncomienda.size()>0){
 				for(ProductoEncomienda pe: this.productosEncomienda){
 					
 					ProductoE pEntity = ProductoDao.getInstancia().getById(pe.getProducto().getIdProducto()); 
@@ -336,9 +336,8 @@ public class EncomiendaEmpresa extends Encomienda{
 		dto.setCliente(this.getCliente().toDTO());
 		dto.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
 	
-		if(this.productosEncomienda != null){
-			for(ProductoEncomienda pe: this.productosEncomienda){
-				
+		if(this.productosEncomienda.size()>0){
+			for(ProductoEncomienda pe: this.productosEncomienda){	
 				DTO_ProductoEncomienda pdto = pe.toDTO();
 				dto.addProducto(pdto);
 			}
@@ -399,7 +398,7 @@ public class EncomiendaEmpresa extends Encomienda{
 			List<ProductoEncomienda> productos =new  ArrayList<ProductoEncomienda>();
 			for(ProductoEncomiendaE pe: ence.getProductoEncomiendas()){
 				
-				ProductoEncomienda prod = new ProductoEncomienda().fromEntity(ProductoEncomiendaDao.getInstancia().getById(pe.getIdProductoEncomienda()));
+				ProductoEncomienda prod = new ProductoEncomienda().fromEntity(pe);
 				productos.add(prod);
 			}
 			if(productos.size()>0)

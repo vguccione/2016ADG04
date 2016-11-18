@@ -19,7 +19,7 @@ public class DTO_EnvioPropio extends DTO_Envio implements Serializable{
 		super();
 	}
 
-	public Integer getIdVehiculo() {
+	public int getIdVehiculo() {
 		return idVehiculo;
 	}
 

@@ -65,6 +65,7 @@ public class GenericDao<E,PK> {
     		return entityManager.find(this.getType(), id);
     	}
     	catch(Exception ex){
+    		ex.printStackTrace();
     		ExceptionManager.LogException(ex, logger);
     		throw ex;
     	}

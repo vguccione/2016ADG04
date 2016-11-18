@@ -22,6 +22,8 @@ import com.ADG04.bean.Encomienda.DTO_Remito;
 
 public interface IEncomiendaRemote {
 
+	public void actualizarEstadoEnvio(Integer idEnvio, String estado) throws RemoteException;
+	
 	public Integer asignarEnvio(Integer idEncomienda)throws RemoteException, BusinessException;
 	
 	public void modificarCoordenadas(int idEnvio, DTO_Coordenada coordenadas) throws RemoteException;
@@ -61,6 +63,10 @@ public interface IEncomiendaRemote {
 	public List<DTO_EnvioHistorico> getHistorico(Integer id) throws RemoteException;
 	public DTO_EnvioPropio getEnvioPropio(Integer id) throws RemoteException;
 	public boolean estaEncomiendaAsignada(int idEncomienda) throws RemoteException;
-	
+	public List<DTO_Encomienda> listarEncomiendasByEnvio(int idEnvio) throws RemoteException;	
 
+	/***
+	 * Envios que tienen la sucursal de destino indicada, y no están en estado concluído.
+	 ****/
+	public List<DTO_Envio> listarEnviosPendientesBySucursalDestino(int idSucursalDestino) throws RemoteException;
 }

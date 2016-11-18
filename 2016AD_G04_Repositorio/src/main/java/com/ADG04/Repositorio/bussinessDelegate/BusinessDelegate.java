@@ -947,4 +947,19 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 			throws RemoteException {
 		return this.businessService.estaEncomiendaAsignada(idEncomienda);
 	}
+
+	public void actualizarEstadoEnvio(Integer idEnvio, String estado)
+			throws RemoteException {
+		this.businessService.actualizarEstadoEnvio(idEnvio, estado);
+	}
+
+	public List<DTO_Encomienda> listarEncomiendasByEnvio(int idEnvio)
+			throws RemoteException {
+		return this.businessService.listarEncomiendasByEnvio(idEnvio);
+	}
+
+	public List<DTO_Envio> listarEnviosPendientesBySucursalDestino(
+			int idSucursalDestino) throws RemoteException {
+		return this.businessService.listarEnviosPendientesBySucursalDestino(idSucursalDestino);
+	}
 }

@@ -65,11 +65,8 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	public DTO_Usuario validarUsuario(String usuario, String contrasena) throws BusinessException{		
 		try {
 			DTO_Usuario usu = objetoRemoto.login(usuario,contrasena);
-			//List<DTO_Rol> roles = objetoRemoto.buscarRolesUsuario(usu.getUsuario());
-			//usu.setRoles(roles);
 			return usu;			
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -732,27 +729,17 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	public boolean estaEncomiendaAsignada(int idEncomienda)throws RemoteException{
 		return objetoRemoto.estaEncomiendaAsignada(idEncomienda);
 	}
-	
-	//Clientes-----------------------------------------------------------------
-	// TODO Completar el metodo	altaCliente
-	/*public boolean altaCliente(dto.Cliente.DTO_Cliente cliente){
-		boolean resp = false;
-		return true;
+
+	public void actualizarEstadoEnvio(Integer idEnvio, String estado) throws RemoteException {
+		this.objetoRemoto.actualizarEstadoEnvio(idEnvio, estado);
 	}
-	
-	// TODO Completar el metodo	agregarDireccionEntrega
-	public boolean agregarDireccionEntrega(int idCliente, dto.Cliente.DTO_DireccionEntrega direccionEntrega){
-		boolean resp = false;
-		return true;
-	}*/
-	
-	//Encomiendas--------------------------------------------------------------
 
-/*
-	public Integer asignarEnvio(Integer idEncomienda) throws RemoteException {
-		return objetoRemoto.asignarEnvio(idEncomienda);
-	}*/
+	public List<DTO_Encomienda> listarEncomiendasByEnvio(int idEnvio) throws RemoteException {
+		return this.objetoRemoto.listarEncomiendasByEnvio(idEnvio);
+	}
 
-	
-	
+	public List<DTO_Envio> listarEnviosPendientesBySucursalDestino(int idSucursalDestino) throws RemoteException {
+		return this.objetoRemoto.listarEnviosPendientesBySucursalDestino(idSucursalDestino);
+	}
+		
 }

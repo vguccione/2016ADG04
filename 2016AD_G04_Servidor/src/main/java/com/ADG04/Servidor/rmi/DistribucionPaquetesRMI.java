@@ -115,6 +115,7 @@ import com.ADG04.Servidor.model.ServicioSeguridadE;
 import com.ADG04.Servidor.model.ProveedorE;
 import com.ADG04.Servidor.model.UsuarioE;
 import com.ADG04.Servidor.model.VehiculoE;
+import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.Servidor.util.ExceptionManager;
 import com.ADG04.bean.Administracion.DTO_Direccion;
 import com.ADG04.bean.Administracion.DTO_Pais;
@@ -2069,5 +2070,48 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			return enc.estaAsignada();
 		else
 			return false;
+	}
+
+
+	@Override
+	public void actualizarEstadoEnvio(Integer idEnvio, String estado)
+			throws RemoteException {
+		
+		EnvioE envioE= EnvioDao.getInstancia().getById(idEnvio);
+		Envio envio = new Envio();
+		envio.setIdEnvio(envio.getIdEnvio());
+		
+		envio.actualizarEstado(estado);
+	}
+
+
+	@Override
+	public List<DTO_Encomienda> listarEncomiendasByEnvio(int idEnvio)
+			throws RemoteException {
+		
+		List<EncomiendaE> encs= EncomiendaDao.getInstancia().getEncomiendasByEnvio(idEnvio);
+		
+		List<DTO_Encomienda> dtos = new ArrayList<DTO_Encomienda>();
+		for(EncomiendaE encE:encs){
+			dtos.add(new Encomienda().fromEntity(encE).toDTO());
+		}
+		
+		return dtos;
+	}
+
+
+	@Override
+	public List<DTO_Envio> listarEnviosPendientesBySucursalDestino(int idSucursalDestino)
+			throws RemoteException {
+		
+		List<EnvioE> envios = EnvioDao.getInstancia().listarEnviosBySucDestinoDestino(idSucursalDestino);
+		List<DTO_Envio> enviosDto = new ArrayList<DTO_Envio>();
+		
+		for(EnvioE env:envios){
+			if(env.getEstado() != EnvioEstado.Concluido.toString())
+				enviosDto.add(new Envio().fromEntity(env).toDTO());
+		}
+		
+		return enviosDto;
 	}
 }

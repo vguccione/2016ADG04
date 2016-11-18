@@ -108,7 +108,7 @@ public class RegistrarTareaRealizada {
 				if (vehiculoDTO != null){
 					cliente.setText(vehiculoDTO.getTipo() + " " + vehiculoDTO.getMarca());
 
-					planDTO = Controlador.getInstancia().getPlanMantenimiento(vehiculoDTO.getId());
+					planDTO = Controlador.getInstancia().getPlanMantenimiento(vehiculoDTO.getPlanMantenimiento().getId());
 					if(planDTO != null){
 						plan.setEnabled(false);
 						plan.setText(planDTO.getDescripcion());

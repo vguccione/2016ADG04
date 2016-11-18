@@ -728,6 +728,12 @@ public boolean validacion(){
 			sucursalTextField.requestFocus();
 			return false;
 		}
+
+		else if((Integer)jFormattedTextField1.getValue() == 0){
+			JOptionPane.showMessageDialog(null,"Por favor, ingrese una tarea de mantenimiento.", "Atencion", JOptionPane.WARNING_MESSAGE);
+			sucursalTextField.requestFocus();
+			return false;
+		}
 		return true;
 		
 

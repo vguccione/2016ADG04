@@ -49,6 +49,7 @@ import java.util.Set;
 
 
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.xml.parsers.DocumentBuilder;
@@ -72,6 +73,7 @@ import com.ADG04.Servidor.model.EncomiendaE;
 import com.ADG04.Servidor.model.EnvioE;
 import com.ADG04.Servidor.model.EnvioHistoricoE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
+import com.ADG04.Servidor.model.VehiculoE;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EntityManagerProvider;
 import com.ADG04.Servidor.util.EnvioEstado;
@@ -410,6 +412,10 @@ public class Envio{
 				e.setEstado(EnvioEstado.Concluido.toString());
 				e.setFechaActualizacion(new Date());
 				EnvioDao.getInstancia().saveOrUpdate(e);
+				/*actualizo posicion del vehiculo al llegar a sucursal destino*/
+				VehiculoE veh = e.getVehiculo();
+				veh.setSucursal(e.getSucursalDestino());
+				VehiculoDao.getInstancia().saveOrUpdate(veh);
 			}
 			catch(Exception exc){
 				System.out.println("Error al concluir envio");

@@ -921,7 +921,7 @@ public  class Encomienda{
 
 	public boolean hayVehiculosDisponibles(){
 		
-		List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(this.getSucursalOrigen().getIdSucursal(),  
+		List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(this.getSucursalActual().getIdSucursal(),  
 				this.getVolumen(), this.getPeso());
 		boolean pesoOK = false;
 		boolean volumenOK = false;

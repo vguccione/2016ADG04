@@ -33,10 +33,16 @@ public class MapaDeRutaDao extends GenericDao<MapaDeRutaE, Integer> {
 	}
 
 	public MapaDeRutaE getBySucursalOrigenyDestino(int idSucursalOrigen, int idSucursalDestino) {
-		return (MapaDeRutaE) entityManager.createQuery("from MapaDeRutaE mr where mr.sucursalOrigen.idSucursal=:idSucursalOrigen"
+		try{
+			MapaDeRutaE mapa= (MapaDeRutaE) entityManager.createQuery("from MapaDeRutaE mr where mr.sucursalOrigen.idSucursal=:idSucursalOrigen"
 				+ " and mr.sucursalDestino.idSucursal=:idSucursalDestino")
 				.setParameter("idSucursalOrigen", idSucursalOrigen)
 				.setParameter("idSucursalDestino", idSucursalDestino).getSingleResult();
+			return mapa;
+		}
+		catch(Exception e){
+			return null;
+		}
 	}
 
 }

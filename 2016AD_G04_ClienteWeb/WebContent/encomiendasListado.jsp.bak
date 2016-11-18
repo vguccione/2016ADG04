@@ -20,7 +20,7 @@
 $(document).ready(function() {	
 	
              $("#projectTable").jqGrid({
-                  url: "servletEncomiendasListado",
+                  url: "servletEncomiendasListado",//?type=BS21 7RH",
  
                   datatype: "json",
                   jsonReader: {repeatitems: false, id: "ref"},

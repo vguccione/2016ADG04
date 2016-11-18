@@ -29,12 +29,14 @@
 <script type="text/javascript">
 
 $(document).ready(function() {	
-	
+	  
 	//divAsignarEnvio
     $('#btnAsignarEnvio').on("click",function(){
-    
-         $.get('servletAsignarEnvio?action=asignarEnvio&idEncomienda='+$("#nroEncomienda").val(), {
-        		//idEncomienda : $("#nroEncomienda").val() 
+    	
+    	alert(<%= request.getParameter("idEncomienda") %>);
+    	
+        $.get('servletAsignarEnvio?action=asignarEnvio', {
+        		idEncomienda : <%= request.getParameter("idEncomienda") %>
         	}, 
         	function(responseText) {
         		
@@ -101,8 +103,6 @@ $(document).ready(function() {
 
 <h2>Encomienda Particular:</h2>
 
-	<li><label>Nro de encomienda: </label><input class="input-field" name="nroEncomienda" type="text" id="nroEncomienda" readonly="readonly" value='<%=request.getAttribute("nroEncomienda")%>' /></li><br/>
-
   <label>Datos del Cliente</label>
 	<!--Sólo se ve si es Particular --> 
     
@@ -112,8 +112,6 @@ $(document).ready(function() {
     <li><label>Código Sucursal de origen: </label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value='<%=request.getAttribute("idSucursalOrigen")%>'/></li><br/>
     <li><label>Código Sucursal actual: </label><input name="idSucursalActual" type="text" readonly="readonly" class="input-field" id="idSucursalActual" value='<%=request.getAttribute("idSucursalActual")%>'/></li><br/>
 	<li><label>Código Sucursal de destino: </label><input name="idSucursalDestino" type="text" readonly="readonly" class="input-field" id="idSucursalDestino" value='<%=request.getAttribute("idSucursalDestino")%>' /></li><br/>
-	
-	<li><label>Estado: </label><input name="estadoEncomienda" type="text" readonly="readonly" class="input-field" id="estadoEncomienda" value='<%=request.getAttribute("estadoEncomienda")%>' /></li><br/>
 	
  	<br/>
  	

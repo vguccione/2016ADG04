@@ -11,6 +11,7 @@ import com.ADG04.bean.Cliente.DTO_Cliente;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.bean.Cliente.DTO_CuentaCorriente;
 import com.ADG04.bean.Cliente.DTO_Factura;
+import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
@@ -34,6 +35,10 @@ public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministrac
 	DTO_Usuario getEmpleado(Integer idEmpleado)throws RemoteException;
 
 	Integer facturarEncomiendaParticular(DTO_EncomiendaParticular enc)throws RemoteException;
+
+
+
+	
 
 	
 

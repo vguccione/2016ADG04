@@ -70,6 +70,19 @@ public class EnvioDao extends GenericDao<EnvioE, Integer> {
 		
 	}
 
+	public List<EnvioE> listarEnviosBySucDestinoDestino(int idSucursalDestino) {
+		@SuppressWarnings("unchecked")
+		List<EnvioE> envios = entityManager.createQuery("from EnvioE e"
+				+ " where e.sucursalDestino.idSucursal=:idSucursal"
+				+ " ORDER BY e.fechaYHoraLlegadaEstimada ASC")
+				.setParameter("idSucursal", idSucursalDestino)
+				.getResultList();
+
+		return envios;
+		
+	}
+
+	
 	public EnvioE getByEncomiendaColocada(int idEncomienda) {
 		EnvioE envio = null;
 		try{

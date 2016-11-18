@@ -15,12 +15,25 @@ public class DTO_Envio implements Serializable{
 	private Date fechaActualizacion;
 	private int idSucursalOrigen;
 	private int idSucursalDestino;
+	private int idVehiculo;	
 	
 	public DTO_Envio(){
 		encomiendas = new ArrayList<DTO_Encomienda>();
 	}
 
 	
+
+	public int getIdVehiculo() {
+		return idVehiculo;
+	}
+
+
+
+	public void setIdVehiculo(int idVehiculo) {
+		this.idVehiculo = idVehiculo;
+	}
+
+
 
 	public Integer getIdSucursalOrigen() {
 		return idSucursalOrigen;

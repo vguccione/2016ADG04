@@ -64,6 +64,19 @@ public class EncomiendaDao extends GenericDao<EncomiendaE, Integer> {
 		}
 		return enc;
 	}
+	
+	public List<EncomiendaE> getEncomiendasByEnvio(int idEnvio) {
+		List<EncomiendaE> enc = null;
+		try{
+			enc = (List<EncomiendaE>) entityManager.createQuery("select enc from EncomiendaE enc"
+					+ " join enc.envios env"
+					+ " where env.idEnvio =:idEnvio").setParameter("idEnvio", idEnvio).getResultList();
+		}
+		catch(Exception e){
+			return null;
+		}
+		return enc;
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<EncomiendaE> getEncomiendasPendientesBySucursal(int idSucursal) {

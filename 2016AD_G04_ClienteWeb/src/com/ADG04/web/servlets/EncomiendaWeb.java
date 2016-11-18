@@ -15,6 +15,9 @@ public class EncomiendaWeb {
 		this.estado = estado;
 		this.envioAsignado = envioAsignado;
 	}
+	public EncomiendaWeb() {
+		// TODO Auto-generated constructor stub
+	}
 	public Integer getIdEncomienda() {
 		return idEncomienda;
 	}

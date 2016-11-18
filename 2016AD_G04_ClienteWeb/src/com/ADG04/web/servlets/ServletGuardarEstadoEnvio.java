@@ -1,7 +1,6 @@
 package com.ADG04.web.servlets;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,42 +13,31 @@ import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.bean.Cliente.DTO_ClienteEmpresa;
 import com.ADG04.bean.Cliente.DTO_ClienteParticular;
 import com.ADG04.web.controller.WebBusinessDelegate;
-import com.sun.jmx.snmp.Enumerated;
 
 //import com.sistemadistribucion.controlador.BusinessDelegate;
 //import dto.Cliente.*;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 
  
-@WebServlet(asyncSupported = true, urlPatterns = { "/servletAsignarEnvio" })
-public class ServletAsignarEnvio extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = { "/servletGuardarEstadoEnvio" })
+public class ServletGuardarEstadoEnvio extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
  
-    public ServletAsignarEnvio() {
+    public ServletGuardarEstadoEnvio() {
         super();
     }
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	 		
-		Enumeration<String> params = request.getParameterNames();
-		
-		while(params.hasMoreElements()){
-			System.out.println(params.nextElement());
-		}
-		
 		String responseText = "";
+		
+		Integer idEnvio = Integer.getInteger(request.getParameter("idEnvio"));
+		String estado = request.getParameter("estado");
+		
 		try{
-			String action = request.getParameter("action");
-			if(action.equals("asignarEnvio")){
-			
-				String pepe = request.getParameter("idEncomienda").toString();
-				System.out.println(pepe);
-				
-				Integer idEncomienda = Integer.parseInt(request.getParameter("idEncomienda").toString());
-				Integer idEnvio = WebBusinessDelegate.getInstancia().asignarEnvio(idEncomienda);
-				responseText = "Se ha asignado el envio nro " + idEnvio.toString();
-			}
+			WebBusinessDelegate.getInstancia().actualizarEstadoEnvio(idEnvio, estado);
+			responseText = "Se ha actualizado el envio nro " + idEnvio.toString() + " al estado " + estado;
 		}
 		catch(BusinessException ex){
 			responseText = ex.getMessage();

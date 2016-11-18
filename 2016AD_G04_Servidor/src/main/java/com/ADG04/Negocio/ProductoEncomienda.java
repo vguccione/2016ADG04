@@ -8,7 +8,7 @@ public class ProductoEncomienda{
 	private int idProductoEncomienda;
 	private Encomienda encomienda;
 	private Producto producto;
-	private float cantidad;
+	private Integer cantidad;
 	
 	public ProductoEncomienda() {
 	}
@@ -23,7 +23,7 @@ public class ProductoEncomienda{
 		this.producto =producto;
 	}
 
-	public ProductoEncomienda(Producto producto, float cantidad) {
+	public ProductoEncomienda(Producto producto, Integer cantidad) {
 		this.producto =producto;
 		this.cantidad = cantidad;
 	}
@@ -67,7 +67,7 @@ public class ProductoEncomienda{
 		return cantidad;
 	}
 
-	public void setCantidad(float cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 

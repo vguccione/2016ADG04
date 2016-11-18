@@ -1244,11 +1244,13 @@ public  class Encomienda{
 		enc.setFechaEstimadaEntrega(ence.getFechaEstimadaEntrega());
 		
 		//Envios
-		for(EnvioE envioE:ence.getEnvios()){
-			Envio e = new Envio();
-			e.setIdEnvio(envioE.getIdEnvio());
-			e.setEstado(envioE.getEstado());
-			enc.addEnvio(e);
+		if(ence.getEnvios() != null){
+			for(EnvioE envioE:ence.getEnvios()){
+				Envio e = new Envio();
+				e.setIdEnvio(envioE.getIdEnvio());
+				e.setEstado(envioE.getEstado());
+				enc.addEnvio(e);
+			}
 		}
 		
 		return enc;

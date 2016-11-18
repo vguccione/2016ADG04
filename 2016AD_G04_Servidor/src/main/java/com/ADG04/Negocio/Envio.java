@@ -385,6 +385,38 @@ public class Envio{
 		}
 	}
 
+	public void actualizarEstado(String estado){
+		/*
+		Pendiente,	//por salir en viaje
+		VehiculoCompleto, //se lleno la capacidad del vehiculo
+		EnViaje,	//esta en viaje
+		Desviado,   //el vehiculo asignado al envio no esta siguiendo la ruta acordada
+		Alerta,     //el vehiculo asignado hace 10 minutos que esta en otra ruta
+		Demorado,   //el envio llego mas tarde de lo pautado
+		Concluido   //llego a destino*/
+				
+		if(estado.equals(EnvioEstado.Concluido.toString()))
+			concluirEnvio();
+		
+		
+		EntityManager em = EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();	
+		EntityTransaction tx = em.getTransaction();
+		
+		try{
+		tx.begin();
+		
+		EnvioE envioE = EnvioDao.getInstancia().getById(this.idEnvio);
+		envioE.setEstado(estado);
+		actualizarHistorico();
+
+		tx.commit();
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
+	}
+	
 	public void concluirEnvio() {
 		
 		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
@@ -483,7 +515,10 @@ public class Envio{
 			env.setMapaDeRuta(mapa);	
 		
 		env.setProveedor(new Proveedor().fromEntity(e.getProveedor()));
-		env.setVehiculo(new Vehiculo().fromEntity(e.getVehiculo()));
+		
+		if(e.getVehiculo() != null)
+			env.setVehiculo(new Vehiculo().fromEntity(e.getVehiculo()));
+		
 		env.setPosicionActual(new Coordenada().fromEntity(e.getPosicionActual()));
 		env.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
 		env.setSucursalOrigen(new Sucursal().fromEntity(e.getSucursalOrigen()));

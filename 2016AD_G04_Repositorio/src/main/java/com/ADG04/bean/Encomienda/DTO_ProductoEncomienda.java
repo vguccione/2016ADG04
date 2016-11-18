@@ -8,20 +8,21 @@ public class DTO_ProductoEncomienda implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private float cantidad;
+	private Integer cantidad;
 	private Integer idProductoCliente;
 	private Integer idEncomienda;
+	private String descProducto;
 	
 	public DTO_ProductoEncomienda(){
 	}
 	
-	public DTO_ProductoEncomienda(float cantidad, Integer idProductoCliente) {
+	public DTO_ProductoEncomienda(Integer cantidad, Integer idProductoCliente) {
 		super();
 		this.cantidad = cantidad;
 		this.idProductoCliente = idProductoCliente;
 	}
 	
-	public DTO_ProductoEncomienda(float cantidad, Integer idProductoCliente,
+	public DTO_ProductoEncomienda(Integer cantidad, Integer idProductoCliente,
 			Integer idEncomienda) {
 		super();
 		this.cantidad = cantidad;
@@ -31,6 +32,24 @@ public class DTO_ProductoEncomienda implements Serializable{
 
 
 
+	public DTO_ProductoEncomienda(Integer id, Integer cantidad,
+			Integer idProductoCliente, Integer idEncomienda, String descProducto) {
+		super();
+		this.id = id;
+		this.cantidad = cantidad;
+		this.idProductoCliente = idProductoCliente;
+		this.idEncomienda = idEncomienda;
+		this.descProducto = descProducto;
+	}
+
+	public String getDescProducto() {
+		return descProducto;
+	}
+
+	public void setDescProducto(String descProducto) {
+		this.descProducto = descProducto;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -38,11 +57,11 @@ public class DTO_ProductoEncomienda implements Serializable{
 		this.id = id;
 	}
 	
-	public float getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(float cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 

@@ -3,18 +3,22 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	 <title>Der groe Verteiler - Distribuci&oacute;n y env&iacute;os</title>
 
-	 <script src="jquery/jquery-2.1.1.js" type="text/javascript"></script>
-	 <script type="text/javascript" src="js/mainmenu.js"></script>
-	 <script src="jquery/jquery-ui.js" type="text/javascript"></script>
-	 <script type="text/javascript" src="jquery/jquery.timepicker.js"></script>
-    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
-    <script type='text/javascript' src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
+	<script type="text/javascript" src="jquery/jquery-2.1.1.js"></script>
+	<script type="text/javascript" src="jquery/jquery-browser-plugin-master/dist/jquery.browser.min.js"></script>
+ 	<script type="text/javascript" src="js/mainmenu.js"></script>
+	<script type="text/javascript" src="jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="jquery/jquery.timepicker.js"></script>
+	<script type="text/javascript" src="jquery/jquery.jqGrid-4.4.3/src/grid.base.js"></script>
+	<script type="text/javascript" src="jquery/jquery.jqGrid-4.4.3/plugins/grid.addons.js"></script>
+	<script type="text/javascript" src="jquery/jquery.jqGrid-4.4.3/js/jquery.jqGrid.src.js"></script>
+	<!-- <script type="text/javascript" src="jquery/jquery.jqGrid-4.4.3/js/jquery.jqGrid.min.js"></script>-->
+	<script type="text/javascript" src="jquery/jquery.jqGrid-4.4.3/js/i18n/grid.locale-en.js"></script>
 	 
 	 <!-- Hojas de estilo -->
-    <link rel="stylesheet" type="text/css" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="jquery/jquery.jqGrid-4.4.3/css/ui.jqgrid.css">
 	<link href="jquery/jquery-ui.css" rel="stylesheet" type="text/css" />
-
-	 <link href="css/jquery.timepicker.css" rel="stylesheet" type="text/css">
+	<link href="css/jquery.timepicker.css" rel="stylesheet" type="text/css">
 	 
 	 <!-- Fonts -->
 	 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
@@ -34,6 +38,7 @@
 	%>
 
 <script type="text/javascript">
+
 $(document).ready(function() {
 	console.log("js document ready begin");
 	/* MAIN MENU */

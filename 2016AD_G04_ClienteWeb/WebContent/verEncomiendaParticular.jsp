@@ -1,3 +1,4 @@
+<%@page import="com.ADG04.web.controller.WebBusinessDelegate"%>
 <%@page import="com.ADG04.bean.Encomienda.DTO_ItemManifiesto"%>
 <%@page import="com.ADG04.bean.Cliente.DTO_ItemFactura"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -97,7 +98,7 @@ $(document).ready(function() {
 <!-- Cuerpo -->
 <body>
 <div class="container" style="background-color: #E6E6E6;">
-<div class="content" style="height:800px">
+<div class="content" style="height:1300px">
 
 <h2>Encomienda Particular:</h2>
 
@@ -151,7 +152,9 @@ $(document).ready(function() {
    	</table>
    	
   <br />
-  <br />	<input type="button" value="asignarEnvio" id="btnAsignarEnvio" /> 
+  <br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" 
+  <% if(estado!="Pendiente" && estado!="EnEsperaAsignacion"){%>	
+ 		 style="display: none;"<%} %> />
     <div style="display: none;" id="divAsignarEnvio"> 
     <input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;"/> 
     </div>

@@ -32,19 +32,18 @@ public class ServletGuardarEstadoEnvio extends HttpServlet {
 	 		
 		String responseText = "";
 		
-		Integer idEnvio = Integer.getInteger(request.getParameter("idEnvio"));
+		Integer idEnvio = Integer.parseInt(request.getParameter("idEnvio"));
 		String estado = request.getParameter("estado");
 		
 		try{
 			WebBusinessDelegate.getInstancia().actualizarEstadoEnvio(idEnvio, estado);
-			responseText = "Se ha actualizado el envio nro " + idEnvio.toString() + " al estado " + estado;
+			responseText = estado;
 		}
 		catch(BusinessException ex){
-			responseText = ex.getMessage();
+			ex.printStackTrace();
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
-			responseText = "Ha ocurrido un error al intentar asignar el envio.";
 		}
 		finally{
 			response.setContentType("text/plain");

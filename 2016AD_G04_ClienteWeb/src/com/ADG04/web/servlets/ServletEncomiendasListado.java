@@ -38,10 +38,6 @@ public class ServletEncomiendasListado extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		try{
-			//String postcode = request.getParameter("type") ;
-			//if(postcode == null || postcode.trim().length() == 0) postcode = "BS21 7RH";
-			//System.out.println("Type: " + postcode);
-				  
 			List<EncomiendaWeb> encomiendas = new ArrayList<EncomiendaWeb>();
 				 
 			int totalNumberOfPages = 1;

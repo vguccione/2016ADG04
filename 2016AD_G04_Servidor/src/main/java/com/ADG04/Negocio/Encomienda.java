@@ -25,6 +25,7 @@ import java.util.Set;
 
 
 
+
 import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
 import com.ADG04.Repositorio.Exceptions.NoHayVehiculosDisponiblesException;
@@ -1246,16 +1247,51 @@ public  class Encomienda{
 		//Envios
 		if(ence.getEnvios() != null){
 			for(EnvioE envioE:ence.getEnvios()){
-				Envio e = new Envio();
-				e.setIdEnvio(envioE.getIdEnvio());
-				e.setEstado(envioE.getEstado());
-				enc.addEnvio(e);
+				Envio e = this.parseEnvioFromEntity(envioE);
 			}
 		}
 		
 		return enc;
 	}
 
+	/**
+	 * Parse Envio from Entity, sin las encomiendas 
+	 *  **/
+	private Envio parseEnvioFromEntity(EnvioE e){
+		
+		Envio  env = new Envio();
+		env.setEstado(e.getEstado());
+		env.setFechaYHoraLlegadaEstimada(e.getFechaYHoraLlegadaEstimada());
+		env.setFechaYHoraSalida(e.getFechaYHoraSalida());
+		env.setIdEnvio(e.getIdEnvio());
+		env.setNroTracking(e.getNroTracking());
+		env.setPropio(e.isPropio());
+		env.setFechaActualizacion(e.getFechaActualizacion());
+		
+		MapaDeRuta mapa = null;
+		if(e.getMapaDeRuta()==null){
+			MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+			mapa = new MapaDeRuta().fromEntity(mr);
+		}
+		else{
+			mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
+		}
+		
+		if(mapa!=null)
+			env.setMapaDeRuta(mapa);	
+		
+		env.setProveedor(new Proveedor().fromEntity(e.getProveedor()));
+		
+		if(e.getVehiculo() != null)
+			env.setVehiculo(new Vehiculo().fromEntity(e.getVehiculo()));
+		
+		env.setPosicionActual(new Coordenada().fromEntity(e.getPosicionActual()));
+		env.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
+		env.setSucursalOrigen(new Sucursal().fromEntity(e.getSucursalOrigen()));
+		
+		return env;
+	}
+	
 	
 	public DTO_Encomienda toDTO() {
 			
@@ -1288,8 +1324,8 @@ public  class Encomienda{
 		encomienda.setCargaGranel(this.getCargaGranel());		
 		
 		encomienda.setTercerizada(this.isTercerizado());
-		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
-		encomienda.setFechaCreacion(new Date());
+		encomienda.setEstado(this.getEstado());
+		encomienda.setFechaCreacion(this.getFechaEstimadaEntrega());
 		encomienda.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
 		if(this.getManifiesto()!=null)
 			encomienda.setManifiesto(this.getManifiesto().toDTO());

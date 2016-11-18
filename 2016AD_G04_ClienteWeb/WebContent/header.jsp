@@ -116,38 +116,7 @@ $(document).ready(function() {
 								<a class="parent" href="#"> ENV&Iacute;OS</a>
 								<ul class="sub-menu">
 									<li>
-										<a href=" "> Recepci&oacute;n</a>
-									</li>
-									<li>
-										<a href=" ">Env&iacute;os propios</a>
-									</li>
-									<li>
-										<a href=" ">Env&iacute;os tercerizados</a>
-									</li>
-								</ul>
-							</li>
-							<li class="parent">
-								<a href=" ">CLIENTES</a>
-								<ul class="sub-menu">
-									<li>
-										<a id="menu_nuevo_cliente">Nuevo Clientes</a>
-									</li>
-									<li>
-										<a id="mClientes">Buscar Clientes</a>
-									</li>
-									<li>
-										<a href=" ">Cuentas corrientes</a>
-									</li>
-								</ul>
-							</li>   
-							<li class="parent">
-								<a href=" ">VIAJES</a>
-								<ul class="sub-menu">
-									<li>
-										<a href=" ">Control de viajes</a>
-									</li>
-									<li>
-										<a href=" ">Contrataci&oacute;n de viajes</a>
+										<a href="enviosListado.jsp">Ver Envios</a>
 									</li>
 								</ul>
 							</li>

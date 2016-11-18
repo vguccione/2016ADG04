@@ -2078,9 +2078,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			throws RemoteException {
 		
 		EnvioE envioE= EnvioDao.getInstancia().getById(idEnvio);
-		Envio envio = new Envio();
-		envio.setIdEnvio(envio.getIdEnvio());
-		
+		Envio envio = new Envio().fromEntity(envioE);
+				
 		envio.actualizarEstado(estado);
 	}
 

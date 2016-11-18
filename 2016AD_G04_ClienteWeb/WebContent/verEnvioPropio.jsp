@@ -23,13 +23,15 @@ $(document).ready(function() {
 		url: "servletEncomiendasListadoByEnvio?idEnvio="+<%= request.getParameter("idEnvio") %>,
 		datatype: "json",
 		jsonReader: {repeatitems: false, id: "ref"},
-		colNames:['Nro Encomienda','Nro Cliente', 'Envio asignado'],
-		
+		colNames:['Nro Encomienda','Nro Cliente', 'Envio asignado', 'Estado','Ver Encomienda'],
 		colModel:[
-			{name:'idEncomienda',index:'idEncomienda', width:100},
-			{name:'idCliente',index:'idCliente', width:100},
+        	{name:'idEncomienda',index:'idEncomienda', width:100},
+            {name:'idCliente',index:'idCliente', width:100},
+            {name:'envioAsignado',index:'envioAsignado', width:100},
+			{name:'estado',index:'estado', width:100},
 			{name:'verEncomienda',index:'verEncomienda', width:100}
-		],
+        ],
+
 		rowNum:20,
 		//Â Â Â rowList:[20,60,100],
 		height:500,
@@ -52,12 +54,36 @@ $(document).ready(function() {
 <script>
 
 $(document).ready(function() {
-
+	
+	showHideByTipoEnvio();
 
 });
 
+function showHideByTipoEnvio(){
+	
+	var tipoEnvio  = '<%=request.getAttribute("tipoEnvio")%>';
+	
+	if(tipoEnvio == "Propio"){
+		$("#idVehiculo").css("display", "inline");
+		$("#fechaYHoraSalida").css("display", "inline");
+		$("#fechaYHoraLlegada").css("display", "inline");
+		$("#labelFHLlegada").css("display", "inline");
+		$("#labelFHSalida").css("display", "inline");
+		$("#labelVehiculo").css("display", "inline");
+	}
+	else {
+		$("#idVehiculo").css("display", "none");
+		$("#fechaYHoraSalida").css("display", "none");
+		$("#fechaYHoraLlegada").css("display", "none");
+		$("#labelFHLlegada").css("display", "none");
+		$("#labelFHSalida").css("display", "none");
+		$("#labelVehiculo").css("display", "none");
+	}
+	
+}
+
 function showCambiarEstado(){
-	$("#cambiarEstado").css("display", "block");
+	$("#cambiarEstado").css("display", "inline");
 	$("#btnCambiarEstado").css("display", "none");	
 }
 
@@ -89,12 +115,14 @@ function guardarEstadoEnvio(){
 		}, 
 		function(responseText) {
 			
-			if(responseText == "error"){
-				alert('Ha ocurrido un error');
+			if(responseText == ""){
+				alert('Ha ocurrido un error al intentar cambiar el estado.');
 			}
 			else{
+				alert('Se ha modificado el estado a ' + estadoSelected);
 				$("#estadoEnvio").val(responseText);
 				hideCambiarEstado();
+				
 			}
 		}
 	);	
@@ -116,32 +144,34 @@ $(function() {
 			<h2>Envio:</h2>
 			<ul>
 				<li><label>Nro envio: </label><input class="input-field" name="idEnvio" type="text" id="idEnvio" readonly="readonly" value='<%=request.getAttribute("idEnvio")%>' /></li><br/>
-				
-				<li><label>Nro de vehiculo: </label><input name="idVehiculo" type="text" readonly="readonly" class="input-field" id="idVehiculo" value='<%=request.getAttribute("idVehiculo")%>'/></li><br/>
-				<li><label>Fecha y Hora de Salida: </label><input name="fechaYHoraSalida" type="text" readonly="readonly" class="input-field" id="fechaYHoraSalida" value='<%=request.getAttribute("fechaYHoraSalida")%>'/></li><br/>
-				<li><label>Fecha y Hora de Llegada: </label><input name="fechaYHoraLlegada" type="text" readonly="readonly" class="input-field" id="fechaYHoraLlegada" value='<%=request.getAttribute("fechaYHoraLlegada")%>' /></li><br/>
+
+				<li><label id="labelVehiculo">Nro de vehiculo: </label><input name="idVehiculo" type="text" readonly="readonly" class="input-field" id="idVehiculo" value='<%=request.getAttribute("idVehiculo")%>'/></li><br/>
+				<li><label id="labelFHSalida">Fecha y Hora de Salida: </label><input name="fechaYHoraSalida" type="text" readonly="readonly" class="input-field" id="fechaYHoraSalida" value='<%=request.getAttribute("fechaYHoraSalida")%>'/></li><br/>
+				<li><label id="labelFHLlegada">Fecha y Hora de Llegada: </label><input name="fechaYHoraLlegada" type="text" readonly="readonly" class="input-field" id="fechaYHoraLlegada" value='<%=request.getAttribute("fechaYHoraLlegada")%>' /></li><br/>
 				<li><label>CÃ³digo Sucursal de origen: </label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value='<%=request.getAttribute("idSucursalOrigen")%>'/></li><br/>
 				<li><label>CÃ³digo Sucursal de destino: </label><input name="idSucursalDestino" type="text" readonly="readonly" class="input-field" id="idSucursalDestino" value='<%=request.getAttribute("idSucursalDestino")%>' /></li><br/>
 				
-				<li><label>Estado: </label><input name="estadoEnvio" type="text" readonly="readonly" class="input-field" id="estadoEnvio" value='<%=request.getAttribute("estadoEnvio")%>' /></li><br/>
-				<li><label>Coordenadas actuales: </label><input name="coordenadasActuales" type="text" readonly="readonly" class="input-field" id="coordenadasActuales" value='<%=request.getAttribute("coordenadasActuales")%>' /></li><br/>
-
+				<br/><li><label>Coordenadas actuales: </label> <%=request.getAttribute("coordenadasActuales")%></li><br/>
+					<br/>			
+				<li><label>Estado: </label><input name="estadoEnvio" type="text" readonly="readonly" class="input-field" id="estadoEnvio" value='<%=request.getAttribute("estadoEnvio")%>' /></li>
+				
 				<input type="button" value="Cambiar estado" id="btnCambiarEstado" onclick="showCambiarEstado();" />
 				<div id="cambiarEstado" style="display:none;">
 					<fieldset>
-						<input type="radio" name="rbnEstadoEnvio" value="Pendiente" id="rbnPendiente" /> <!--por salir en viaje-->
-						<input type="radio" name="rbnEstadoEnvio" value="VehiculoCompleto" id="rbnVehiculoCompleto" /> <!--//se lleno la capacidad del vehiculo-->
-						<input type="radio" name="rbnEstadoEnvio" value="EnViaje" id="rbnEnViaje"  /> 	<!--esta en viaje-->
-						<input type="radio" name="rbnEstadoEnvio" value="Desviado" id="rbnDesviado"  />   <!--el vehiculo asignado al envio no esta siguiendo la ruta acordada-->
-						<input type="radio" name="rbnEstadoEnvio" value="Alerta" id="rbnAlerta"  />     <!--el vehiculo asignado hace 10 minutos que esta en otra ruta-->
-						<input type="radio" name="rbnEstadoEnvio" value="Demorado" id="rbnDemorado"  />   <!--el envio llego mas tarde de lo pautado-->
-						<input type="radio" name="rbnEstadoEnvio" value="Concluido" id="rbnConcluido"  />   <!--llego a destino-->				
+						Pendiente:<input type="radio" name="rbnEstadoEnvio" value="Pendiente" id="rbnPendiente" /> <!--por salir en viaje-->
+						Vehiculo Completo:<input type="radio" name="rbnEstadoEnvio" value="VehiculoCompleto" id="rbnVehiculoCompleto" /> <!--//se lleno la capacidad del vehiculo-->
+						En viaje:<input type="radio" name="rbnEstadoEnvio" value="EnViaje" id="rbnEnViaje"  /> 	<!--esta en viaje-->
+						Desviado:<input type="radio" name="rbnEstadoEnvio" value="Desviado" id="rbnDesviado"  />   <!--el vehiculo asignado al envio no esta siguiendo la ruta acordada-->
+						Alerta:<input type="radio" name="rbnEstadoEnvio" value="Alerta" id="rbnAlerta"  />     <!--el vehiculo asignado hace 10 minutos que esta en otra ruta-->
+						Demorado:<input type="radio" name="rbnEstadoEnvio" value="Demorado" id="rbnDemorado"  />   <!--el envio llego mas tarde de lo pautado-->
+						Concluido:<input type="radio" name="rbnEstadoEnvio" value="Concluido" id="rbnConcluido"  />   <!--llego a destino-->				
 					</fieldset>
 					<input type="button" value="Guardar estado" id="btnGuardarEstado" onclick="guardarEstadoEnvio();" />
 				</div>		
-				<br/>
-
+				
+				<br /><br />
 				<div style="float: left;">
+				Encomiendas:
 					<table id="projectTable"></table>
 					<div id="pagingDiv"></div>
 				</div>

@@ -19,60 +19,73 @@
 
 
 $(document).ready(function() {	
+	               
+	 $("#btnBuscarEnvios").click(function(){
+		
+
+			var idSucDestino = $("#idSucursalDestino").val();
+
+	         $("#enviosTerceros").jqGrid({
+	                  url: "servletEnviosListado?action=enviosTerceros&idSucursalDestino="+idSucDestino,
+	 
+	                  datatype: "json",
+	                  jsonReader: {repeatitems: false, id: "ref"},
+	                  colNames:['Nro Envio','Estado', 'Sucursal Original', 'Sucursal Destino', 'Ver Envio'],
+	                  colModel:[
+			                       {name:'idEnvio',index:'idEncomienda', width:100},
+			                       {name:'estado',index:'estadi', width:100},
+			                       {name:'idSucursalOrigen',index:'idSucursalOrigen', width:100},
+								  {name:'idSucursalDestino',index:'idSucursalDestino', width:100},
+								  {name:'verEnvio',index:'verEnvio', width:100}
+			                   ],
+	                  rowNum:20,
+	               //   rowList:[20,60,100],
+	                  height:200,
+	                  pager: "#pagingDivTerceros",
+	                  viewrecords: true,
+	                  caption: ""
+	              });
+	 
+	             $("#enviosPropios").jqGrid({
+	                  url: "servletEnviosListado?action=enviosPropios&idSucursalDestino="+idSucDestino,
+	 
+	                  datatype: "json",
+	                  jsonReader: {repeatitems: false, id: "ref"},
+	                  colNames:['Nro Envio','Estado', 'Sucursal Original', 'Sucursal Destino', 'Ver Envio'],
+	                  colModel:[
+	                      {name:'idEnvio',index:'idEncomienda', width:100},
+	                      {name:'estado',index:'estadi', width:100},
+	                      {name:'idSucursalOrigen',index:'idSucursalOrigen', width:100},
+						  {name:'idSucursalDestino',index:'idSucursalDestino', width:100},
+						  {name:'verEnvio',index:'verEnvio', width:100}
+	                  ],
+	                  rowNum:20,
+	               //   rowList:[20,60,100],
+	                  height:200,
+	                  pager: "#pagingDiv",
+	                  viewrecords: true,
+	                  caption: ""
+	              }); 
+
+		 
+	 });
+	 
+             $("#pcSelect").change(function(){
+                 var postcode = $("#pcSelect").val();
+                 jQuery("#projectTable").jqGrid(
+                         "setGridParam",{
+                             url:"LoadJsonDataServlet?type="+ postcode,
+                             page:1})
+                         .trigger("reloadGrid");
+             });
+
+	});
+
+
+function findEnvios(){
 	
-	var idSucursal = 2;
-	alert("p2p2");
-             $("#enviosTerceros").jqGrid({
-                  url: "servletEnviosListado",//?type=BS21 7RH",
- 
-                  datatype: "json",
-                  jsonReader: {repeatitems: false, id: "ref"},
-                  colNames:['Nro Envio','Estado', 'Sucursal Origen', 'Sucursal Destino'],
-                  colModel:[
-                      {name:'idEnvio',index:'idEncomienda', width:100},
-                      {name:'estado',index:'estado', width:100},
-                      {name:'idSucursalOrigen',index:'idSucursalOrigen', width:100},
- 					  {name:'idSucursalDestino',index:'idSucursalDestino', width:100}
-                  ],
-                  rowNum:20,
-               //   rowList:[20,60,100],
-                  height:500,
-                  pager: "#pagingDiv",
-                  viewrecords: true,
-                  caption: ""
-              });
- 
-             $("#enviosPropios").jqGrid({
-                  url: "servletEnviosListado",//?type=BS21 7RH",
- 
-                  datatype: "json",
-                  jsonReader: {repeatitems: false, id: "ref"},
-                  colNames:['Nro Envio','Estado', 'Sucursal Original', 'Sucursal Destino', 'Ver Envio'],
-                  colModel:[
-                      {name:'idEnvio',index:'idEncomienda', width:100},
-                      {name:'estado',index:'estadi', width:100},
-                      {name:'idSucursalOrigen',index:'idSucursalOrigen', width:100},
- 					  {name:'idSucursalDestino',index:'idSucursalDestino', width:100},
-					  {name:'verEnvio',index:'verEnvio', width:100}
-                  ],
-                  rowNum:20,
-               //   rowList:[20,60,100],
-                  height:500,
-                  pager: "#pagingDiv",
-                  viewrecords: true,
-                  caption: ""
-              }); 
-               
-              $("#pcSelect").change(function(){
-                  var postcode = $("#pcSelect").val();
-                  jQuery("#projectTable").jqGrid(
-                          "setGridParam",{
-                              url:"LoadJsonDataServlet?type="+ postcode,
-                              page:1})
-                          .trigger("reloadGrid");
-              });
- 
- 	});
+}
+
 
 </script>
 
@@ -81,6 +94,10 @@ $(document).ready(function() {
 	<div class="container">
 		<div class="content">
 			<div class="page" style="background: #ccc; padding: 25px 100px;height:3000px">
+			
+			<label>Ingrese sucursal de destino: </label><input class="input-field" name="idSucursalDestino" width="100px" type="text" id="idSucursalDestino" />
+			<br /><br/>
+			<input type="button" value="Buscar Envios" id="btnBuscarEnvios"  />
 				<!--<div>
 					<label>Filtrar:</label>
 					<select id="pcSelect">
@@ -88,15 +105,15 @@ $(document).ready(function() {
 						<option>Sin envio asignado</option>
 					</select>
 				</div>-->
-				<div style="float: left;">
-					<table id="enviosTerceros"></table>
-					<div id="pagingDiv"></div>
-				</div>
-				<div style="float: left;">
-					<table id="enviosPropios"></table>
-					<div id="pagingDiv"></div>
-				</div>
 				
+				<div>
+					<table id="enviosPropios" title="Envios Propios" ></table>
+					<div id="pagingDiv"></div>
+				</div>
+				<div>
+					<table id="enviosTerceros" title="Envios de terceros" ></table>
+					<div id="pagingDivTerceros"></div>
+				</div>
 			</div>
 		</div>
 

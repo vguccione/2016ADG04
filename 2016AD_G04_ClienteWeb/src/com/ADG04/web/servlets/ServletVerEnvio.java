@@ -23,6 +23,8 @@ import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaEmpresa;
 import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
+import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.web.controller.WebBusinessDelegate;
@@ -77,11 +79,29 @@ public class ServletVerEnvio extends HttpServlet {
 		Integer idEnvio = Integer.parseInt(request.getParameter("idEnvio"));
 		DTO_Envio e = WebBusinessDelegate.getInstancia().getEnvio(idEnvio);
 		
+		if(e.getClass().equals(DTO_EnvioPropio.class))
+		{
+			DTO_EnvioPropio ep = (DTO_EnvioPropio)e;
+			request.setAttribute("fechaYHoraSalida", ep.getFechaYHoraSalida().toString());
+			if(ep.getFechaYHoraLlegada() != null)
+				request.setAttribute("fechaYHoraLlegada", ep.getFechaYHoraLlegada().toString());
+			else
+				request.setAttribute("fechaYHoraLlegada", "");
+			
+			request.setAttribute("idVehiculo", ep.getIdVehiculo());
+			request.setAttribute("tipoEnvio", "Propio");
+		}
+		else{
+			request.setAttribute("idVehiculo", ((DTO_EnvioTercerizado)e).getIdProveedor());
+			request.setAttribute("tipoEnvio", "Tercero");
+		}
 		request.setAttribute("idEnvio", idEnvio);
-		request.setAttribute("idVehiculo", e.getIdVehiculo() );
+		
 		request.setAttribute("idSucursalOrigen",e.getIdSucursalOrigen());
 		request.setAttribute("idSucursalDestino",e.getIdSucursalDestino());
 		request.setAttribute("estadoEnvio",e.getEstado());
+		
+		
 		
 		DTO_Coordenada coordenadas = e.getPosicionActual();
 		String posicionAcutal = "Latitud: " + coordenadas.getLatitud() + " - Longitud: " + coordenadas.getLongitud();

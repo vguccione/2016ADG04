@@ -140,7 +140,7 @@ $(document).ready(function() {
 		<li><label>Apellido: </label><input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" readonly="readonly" value='<%=request.getAttribute("apellidoReceptor")%>' /></li>
     </ul></fieldset>
     
-    </table>
+    <table>
 	<% 
 		List<String> listaEnvios = (List<String>)request.getAttribute("listaEnvios");
 		for (int i = 0; i < listaEnvios.size(); i++) { %> 

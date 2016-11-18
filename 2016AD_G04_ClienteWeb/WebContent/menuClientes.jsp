@@ -3,20 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- Cabecera -->
-
-
- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
- <title>Der große Verteiler - Distribuci&oacute;n y env&iacute;os</title>
- <!-- Scripts --> 
- <script src="jquery/jquery-2.1.1.js" type="text/javascript"></script>
- <script type="text/javascript" src="js/mainmenu.js"></script>
- <!-- Hojas de estilo -->
- <link href="css/style.css" rel="stylesheet" type="text/css" />
- <link href="jquery/jquery-ui.css" rel="stylesheet" type="text/css" />
- <!-- Fonts -->
- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
- <link href="css/font-awesome.css" rel="stylesheet" type="text/css" >
-</head>
 <!-- Fin Cabecera -->
 <!-- Declaraciones -->
 <%

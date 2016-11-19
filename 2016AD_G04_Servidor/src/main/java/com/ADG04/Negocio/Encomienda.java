@@ -559,15 +559,17 @@ public  class Encomienda{
 							envProp.setEncomiendas(encomiendas);
 							envProp.setPropio(true);
 							envProp.setFechaActualizacion(new Date());
-					
+							envProp.setEstado(EnvioEstado.Pendiente.toString());
+							
 							float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
 							float peso70 = (float)(peso + e.getPeso()/pesoTotal);
 							
 							if(peso70 > 0.7 || volumen70 > 0.7){
-								envProp.setEstado("Listo");
+								envProp.setEstado(EnvioEstado.VehiculoCompleto.toString());
 							}
 						
 							e.setEstado(EncomiendaEstado.Colocada.toString());
+							
 							
 							EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envProp);
 							EncomiendaDao.getInstancia().saveOrUpdate(e);
@@ -629,10 +631,10 @@ public  class Encomienda{
 									envioPropio.setEncomiendas(lista);
 									float volumen70 = (float)(e.getVolumen()/volumenTotal);
 									float peso70 = (float)(e.getPeso()/pesoTotal);
+									e.setEstado(EncomiendaEstado.Colocada.toString());
 									
 									if(peso70 > 0.7 || volumen70 > 0.7){
-										e.setEstado(EncomiendaEstado.Colocada.toString());
-										envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+										envioPropio.setEstado(EnvioEstado.VehiculoCompleto.toString());
 									}
 									
 									EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
@@ -746,12 +748,13 @@ public  class Encomienda{
 							envProp.setEncomiendas(encomiendas);
 							envProp.setPropio(true);
 							envProp.setFechaActualizacion(new Date());
-					
+							envProp.setEstado(EnvioEstado.Pendiente.toString());
+							
 							float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
 							float peso70 = (float)(peso + e.getPeso()/pesoTotal);
 							
 							if(peso70 > 0.7 || volumen70 > 0.7){
-								envProp.setEstado("Listo");
+								envProp.setEstado(EnvioEstado.VehiculoCompleto.toString());
 							}
 						
 							e.setEstado(EncomiendaEstado.Colocada.toString());
@@ -816,9 +819,10 @@ public  class Encomienda{
 									float volumen70 = (float)(e.getVolumen()/volumenTotal);
 									float peso70 = (float)(e.getPeso()/pesoTotal);
 									
+									e.setEstado(EncomiendaEstado.Colocada.toString());									
+
 									if(peso70 > 0.7 || volumen70 > 0.7){
-										e.setEstado(EncomiendaEstado.Colocada.toString());
-										envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+										envioPropio.setEstado(EnvioEstado.VehiculoCompleto.toString());
 									}
 									
 									EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);

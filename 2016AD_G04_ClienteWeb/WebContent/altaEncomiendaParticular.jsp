@@ -66,16 +66,32 @@ function findClient(){
 		alert("Por favor ingrese el alto del paquete");
 		valido=false;
 	}
+	if(isNaN(document.getElementById("alto").value)){
+		alert("Alto debe ser un numero");
+		valido=false;
+	}
 	if(document.getElementById("ancho").value==""){
 		alert("Por favor ingrese el ancho del paquete");
+		valido=false;
+	}
+	if(isNaN(document.getElementById("ancho").value)){
+		alert("Ancho debe ser un numero");
 		valido=false;
 	}
 	if(document.getElementById("largo").value==""){
 		alert("Por favor ingrese el largo del paquete");
 		valido=false;
 	}
+	if(isNaN(document.getElementById("largo").value)){
+		alert("Largo debe ser un numero");
+		valido=false;
+	}
 	if(document.getElementById("peso").value==""){
 		alert("Por favor ingrese el peso del paquete");
+		valido=false;
+	}
+	if(isNaN(document.getElementById("peso").value)){
+		alert("Peso debe ser un numero");
 		valido=false;
 	}
 	if(document.getElementById("dniReceptor").value==""){

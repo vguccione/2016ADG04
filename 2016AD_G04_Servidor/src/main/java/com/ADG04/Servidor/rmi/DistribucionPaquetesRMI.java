@@ -34,6 +34,7 @@ import com.ADG04.Negocio.EncomiendaParticular;
 import com.ADG04.Negocio.Envio;
 import com.ADG04.Negocio.EnvioHistorico;
 import com.ADG04.Negocio.ItemManifiesto;
+import com.ADG04.Negocio.ItemRemito;
 import com.ADG04.Negocio.Manifiesto;
 import com.ADG04.Negocio.MapaDeRuta;
 import com.ADG04.Negocio.Pais;
@@ -92,6 +93,7 @@ import com.ADG04.Servidor.model.ClienteParticularE;
 import com.ADG04.Servidor.model.CuentaCorrienteE;
 import com.ADG04.Servidor.model.EnvioHistoricoE;
 import com.ADG04.Servidor.model.FacturaE;
+import com.ADG04.Servidor.model.ItemRemitoE;
 import com.ADG04.Servidor.model.ManifiestoE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
 import com.ADG04.Servidor.model.PaisE;
@@ -137,6 +139,7 @@ import com.ADG04.bean.Encomienda.DTO_EnvioHistorico;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
+import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
 import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
@@ -509,7 +512,16 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		String desc = "Encomienda: " + cliente.getDni() + " - " + sucursalOrigen.getIdSucursal() + " - " + sucursalDestino.getIdSucursal();
 		Manifiesto manifiesto = new Manifiesto();
 		manifiesto.addItem(new ItemManifiesto(desc, 1, null));
-				
+		
+		Remito remito = new Remito();
+		List<ItemRemito> items = new ArrayList<ItemRemito>();
+		ItemRemito itr = new ItemRemito();
+		itr.setCantidad(1);
+		itr.setDescripcion(desc);
+		itr.setProducto(null);
+		items.add(itr);
+		remito.setItemsRemito(items);
+		
 		EncomiendaParticular nuevaEncomienda = 		
 		new EncomiendaParticular(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
 				encP.getFechaCreacion(), encP.getFechaEstimadaEntrega(), encP.getEstado(), encP.isTercerizada(), 
@@ -518,7 +530,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 				encP.getApilable(), encP.getCantApilable(), encP.getRefrigerado(), encP.getCondicionTransporte(), 
 				encP.getIndicacionesManipulacion(), encP.getFragilidad(), encP.getNombreReceptor(), 
 				encP.getApellidoReceptor(), encP.getDniReceptor(), encP.getVolumenGranel(), encP.getUnidadGranel(), 
-				encP.getCargaGranel(), servicioSeg, manifiesto, encP.isInternacional());
+				encP.getCargaGranel(), servicioSeg, manifiesto, remito, encP.isInternacional());
 		
 		Integer idEncomienda = nuevaEncomienda.saveOrUpdate();
 		
@@ -588,7 +600,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		servicioSeg.setIdServicioSeguridad(encP.getIdServicioSeguridad());
 		
 		Manifiesto manifiesto = new Manifiesto(encP.getManifiesto().getId(), encP.getManifiesto().getFecha());
-		
 		for (DTO_ItemManifiesto item : encP.getManifiesto().getDetalle()) {
 			Producto producto = null;
 			
@@ -600,15 +611,26 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			manifiesto.addItem(new ItemManifiesto(item.getDescripcion(), item.getCantidad(), producto)); 
 		}
 		
+		Remito remito = null;
+		if(encP.getRemito()!=null){
+			remito = new Remito(encP.getNombreReceptor(), encP.getApellidoReceptor(), encP.getDniReceptor(), true, encP.getFechaCreacion());
+			List<ItemRemito> myItems = new ArrayList<ItemRemito>();
+			for(DTO_ItemRemito i:encP.getRemito().getDetalle()){
+				ItemRemito itr = new ItemRemito(i.getId(), i.getDescripcion(), i.getCantidad());
+				itr.setProducto(new Producto().fromDTO(i.getProducto()));
+				myItems.add(itr);
+			}
+			remito.setItemsRemito(myItems);
+		}
+		
 		EncomiendaEmpresa nuevaEncomienda = 		
 		new EncomiendaEmpresa(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
 				encP.getFechaCreacion(), encP.getFechaEstimadaEntrega(), encP.getEstado(), encP.isTercerizada(), 
 				encP.getLargo(), encP.getAlto(), encP.getAncho(), encP.getPeso(), encP.getVolumen(), encP.getTratamiento(), 
-
 				encP.getApilable(), encP.getCantApilable(), encP.getRefrigerado(), encP.getCondicionTransporte(), 
 				encP.getIndicacionesManipulacion(), encP.getFragilidad(), encP.getNombreReceptor(), 
 				encP.getApellidoReceptor(), encP.getDniReceptor(), encP.getVolumenGranel(), encP.getUnidadGranel(), 
-				encP.getCargaGranel(), servicioSeg, manifiesto, encP.isInternacional());
+				encP.getCargaGranel(), servicioSeg, manifiesto, remito,  encP.isInternacional());
 		
 				
 		//Agrego los productos

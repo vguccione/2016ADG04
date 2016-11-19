@@ -88,7 +88,7 @@ public class EncomiendaEmpresa extends Encomienda{
 			String nombreReceptor, String apellidoReceptor, String dniReceptor,
 			float volumenGranel, String unidadGranel, String cargaGranel,
 			ServicioSeguridad servicioSeguridad,
-			Manifiesto manifiesto, 
+			Manifiesto manifiesto, Remito remito,
 			//Factura factura, Remito remito,
 			boolean internacional){
 	
@@ -96,7 +96,7 @@ public class EncomiendaEmpresa extends Encomienda{
 				cliente, fechaCreacion, fechaEstimadaEntrega, estado, tercerizado, largo, alto, ancho, peso, volumen, 
 				tratamiento, apilable, cantApilable, refrigerado, condicionTransporte, indicacionesManipulacion, 
 				fragilidad, nombreReceptor, apellidoReceptor, dniReceptor, volumenGranel, unidadGranel, cargaGranel, 
-				servicioSeguridad, manifiesto, 
+				servicioSeguridad, manifiesto, remito,
 				//factura, remito, 
 				internacional);
 		
@@ -276,7 +276,7 @@ public class EncomiendaEmpresa extends Encomienda{
 				remitoEntity = RemitoDao.getInstancia().saveOrUpdate(remitoEntity);
 				encomiendaEntity.setRemito(remitoEntity);
 				
-				this.remito = new Remito(this, remitoEntity.getNombreReceptor(), remitoEntity.getApellidoReceptor(), remitoEntity.getDniReceptor(), remitoEntity.isConformado(), remitoEntity.getFechaConformado());
+				this.remito = new Remito(remitoEntity.getNombreReceptor(), remitoEntity.getApellidoReceptor(), remitoEntity.getDniReceptor(), remitoEntity.isConformado(), remitoEntity.getFechaConformado());
 				this.remito.setIdRemito(remitoEntity.getIdRemito());
 				List<ItemRemito> myItems = new ArrayList<ItemRemito>();
 				for(ItemRemitoE i:remitoEntity.getItemsRemito()){

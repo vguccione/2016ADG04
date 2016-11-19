@@ -76,7 +76,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			throws RemoteException, Exception {
 		
 		List<EncomiendaParticularWeb> encomiendas = new ArrayList<EncomiendaParticularWeb>();
-		//TODO: tomar de parámetro
+		//TODO: tomar de parï¿½metro
 		int idEncomienda = Integer.parseInt(request.getParameter("idEncomienda"));
 		DTO_EncomiendaParticular e = WebBusinessDelegate.getInstancia().getEncomiendaParticular(idEncomienda);
 		
@@ -104,6 +104,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		request.setAttribute("ancho",((Float)e.getAncho()).toString());
 		request.setAttribute("peso",((Float)e.getPeso()).toString());
 		request.setAttribute("tratamiento",e.getTratamiento());
+		request.setAttribute("estado", (String) e.getEstado());
 		
 		if(e.getApilable()) 
 			request.setAttribute("apilable","Si");

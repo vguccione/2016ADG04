@@ -26,6 +26,10 @@ import java.util.Set;
 
 
 
+
+
+
+
 import com.ADG04.Repositorio.Exceptions.BusinessException;
 import com.ADG04.Repositorio.Exceptions.ClientNotFoundException;
 import com.ADG04.Repositorio.Exceptions.NoHayVehiculosDisponiblesException;
@@ -51,10 +55,12 @@ import com.ADG04.Servidor.model.EnvioE;
 import com.ADG04.Servidor.model.FacturaE;
 import com.ADG04.Servidor.model.ItemFacturaE;
 import com.ADG04.Servidor.model.ItemManifiestoE;
+import com.ADG04.Servidor.model.ItemRemitoE;
 import com.ADG04.Servidor.model.ManifiestoE;
 import com.ADG04.Servidor.model.MapaDeRutaE;
 import com.ADG04.Servidor.model.ProductoE;
 import com.ADG04.Servidor.model.ProveedorE;
+import com.ADG04.Servidor.model.RemitoE;
 import com.ADG04.Servidor.model.SeguroE;
 import com.ADG04.Servidor.model.ServicioSeguridadE;
 import com.ADG04.Servidor.model.SucursalE;
@@ -63,7 +69,9 @@ import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.Servidor.util.EnvioEstado;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
 import com.ADG04.bean.Encomienda.DTO_Envio;
+import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
+import com.ADG04.bean.Encomienda.DTO_Remito;
 
 
 public  class Encomienda{
@@ -123,8 +131,7 @@ public  class Encomienda{
 			String nombreReceptor, String apellidoReceptor, String dniReceptor,
 			float volumenGranel, String unidadGranel, String cargaGranel,
 			ServicioSeguridad servicioSeguridad,
-			Manifiesto manifiesto, 
-			//Factura factura, Remito remito,
+			Manifiesto manifiesto, Remito remito,
 			boolean internacional) {
 		super();
 		this.direccionDestino = direccionDestino;
@@ -1148,33 +1155,35 @@ public  class Encomienda{
 		
 		encomienda.setManifiesto(manifiestoE);
 	
-		/*
-		DTO_Remito dtoR = this.getRemito();
+		
+		Remito dtoR = this.getRemito();
 		if(dtoR != null){
 			RemitoE remito = new RemitoE();
-			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
-			remito.setConformado(dtoR.isConformado());
-			remito.setDniReceptor(dtoR.getDniReceptor());
-			remito.setFechaConformado(dtoR.getFecha());
-			remito.setNombreReceptor(dtoR.getNombreReceptor());
-			remito.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
-			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
-			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
+			remito.setApellidoReceptor(this.getApellidoReceptor());
+			remito.setConformado(true);
+			remito.setDniReceptor(this.getDniReceptor());
+			remito.setFechaConformado(this.getFechaCreacion());
+			remito.setNombreReceptor(this.getNombreReceptor());
+			remito.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
+			remito.setCondicionTransporte(this.getCondicionTransporte());
+			remito.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
 			
 			List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
-			for(DTO_ItemRemito item:dtoR.getDetalle()){
+			for(ItemRemito item:dtoR.getItemsRemito()){
 				ItemRemitoE ir = new ItemRemitoE();
 				ir.setCantidad(item.getCantidad());
 				ir.setDescripcion(item.getDescripcion());
-				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getId());
-				ir.setProducto(prod);
+				if(item.getProducto()!=null){
+					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getIdProducto());
+					ir.setProducto(prod);
+				}
 				ir.setRemito(remito);
 				itemsRemito.add(ir);
 			}
 			remito.setItemsRemito(itemsRemito);
 			remito.setEncomienda(encomienda);
 			encomienda.setRemito(remito);
-		}*/
+		}
 		
 		return encomienda;
 	}
@@ -1236,6 +1245,9 @@ public  class Encomienda{
 		enc.setLargo(ence.getLargo());
 		if(ence.getManifiesto()!=null)
 			enc.setManifiesto(new Manifiesto().fromEntity(ence.getManifiesto()));
+		
+		if(ence.getRemito()!=null)
+			enc.setRemito(new Remito().fromEntity(ence.getRemito()));
 		
 		enc.setNombreReceptor(ence.getNombreReceptor());
 		enc.setPeso(ence.getPeso());
@@ -1337,6 +1349,7 @@ public  class Encomienda{
 		encomienda.setEstado(this.getEstado());
 		encomienda.setFechaCreacion(this.getFechaEstimadaEntrega());
 		encomienda.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
+		
 		if(this.getManifiesto()!=null)
 			encomienda.setManifiesto(this.getManifiesto().toDTO());
 		

@@ -41,17 +41,15 @@ public class EncomiendaParticular extends Encomienda{
 			String nombreReceptor, String apellidoReceptor, String dniReceptor,
 			float volumenGranel, String unidadGranel, String cargaGranel,
 			ServicioSeguridad servicioSeguridad,
-			Manifiesto manifiesto, 
-			//Factura factura, Remito remito,
+			Manifiesto manifiesto,Remito remito, 
+			//Factura factura, ,
 			boolean internacional) {
 		
 		super(direccionDestino, sucursalDestno, sucursalOrigen, direccionOrigen, sucursalActual, 
 				cliente, fechaCreacion, fechaEstimadaEntrega, estado, tercerizado, largo, alto, ancho, peso, volumen, 
 				tratamiento, apilable, cantApilable, refrigerado, condicionTransporte, indicacionesManipulacion, 
 				fragilidad, nombreReceptor, apellidoReceptor, dniReceptor, volumenGranel, unidadGranel, cargaGranel, 
-				servicioSeguridad, manifiesto, 
-				//factura, remito, 
-				internacional);
+				servicioSeguridad, manifiesto, remito,	internacional);
 	}
 	
 	public EncomiendaParticular(//ItemFactura itemFactura,
@@ -212,7 +210,6 @@ public class EncomiendaParticular extends Encomienda{
 				im.setCantidad(item.getCantidad());
 				im.setDescripcion(item.getDescripcion());
 				
-				//TODO: tiene que tener productos??????? No es para las empresas los productos
 				if(item.getProducto() != null) {	
 					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getIdProducto());
 					im.setProducto(prod);
@@ -226,33 +223,36 @@ public class EncomiendaParticular extends Encomienda{
 		
 		encomienda.setManifiesto(manifiestoE);
 		
-		/*Remito dtoR = this.getRemito();
-		if(dtoR != null){
-			RemitoE remito = new RemitoE();
-			remito.setApellidoReceptor(dtoR.getApellidoReceptor());
-			remito.setConformado(dtoR.isConformado());
-			remito.setDniReceptor(dtoR.getDniReceptor());
-			remito.setFechaConformado(dtoR.getFecha());
-			remito.setNombreReceptor(dtoR.getNombreReceptor());
-			remito.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
-			remito.setCondicionTransporte(dtoR.getCondicionTransporte());
-			remito.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
+		Remito r = this.getRemito();
+		
+		RemitoE remito = new RemitoE();
+		remito.setApellidoReceptor(this.getApellidoReceptor());
+		remito.setConformado(true);
+		remito.setDniReceptor(this.getDniReceptor());
+		remito.setFechaConformado(this.getFechaCreacion());
+		remito.setNombreReceptor(this.getNombreReceptor());
+		remito.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
+		remito.setCondicionTransporte(this.getCondicionTransporte());
+		remito.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
+		remito.setEncomienda(encomienda);
+		List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
+		for(ItemRemito item:r.getItemsRemito()){
+			ItemRemitoE ir = new ItemRemitoE();
+			ir.setCantidad(item.getCantidad());
+			ir.setDescripcion(item.getDescripcion());
 			
-			List<ItemRemitoE> itemsRemito = new ArrayList<ItemRemitoE>();
-			for(ItemRemito item:dtoR.getItemsRemito()){
-				ItemRemitoE ir = new ItemRemitoE();
-				ir.setCantidad(item.getCantidad());
-				ir.setDescripcion(item.getDescripcion());
+			if(item.getProducto()!=null){
 				ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getIdProducto());
 				ir.setProducto(prod);
-				ir.setRemito(remito);
-				itemsRemito.add(ir);
 			}
+			ir.setRemito(remito);
+			itemsRemito.add(ir);
+			
 			
 			remito.setItemsRemito(itemsRemito);
 			remito.setEncomienda(encomienda);
 			encomienda.setRemito(remito);
-		}*/
+		}
 
 		/*Deberia persistir en cascada*/
 

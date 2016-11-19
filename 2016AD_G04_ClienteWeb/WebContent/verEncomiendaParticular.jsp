@@ -153,8 +153,14 @@ $(document).ready(function() {
    	
   <br />
   <br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" 
-  <% if(estado!="Pendiente" && estado!="EnEsperaAsignacion"){%>	
- 		 style="display: none;"<%} %> />
+  <% 
+  String es = (String)request.getAttribute("estado");
+  boolean show=false;
+  if("ingresada".equals(estado.toLowerCase()) || "enesperaasignacion".equals(estado.toLowerCase())){
+	  show = true;
+  }
+  if(!show){ %>	
+ 		 style="display: none;"<%}  %> />
     <div style="display: none;" id="divAsignarEnvio"> 
     <input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;"/> 
     </div>

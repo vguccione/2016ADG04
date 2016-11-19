@@ -16,7 +16,9 @@ import java.util.List;
 
 
 
+
 import javax.persistence.MapsId;
+
 
 
 
@@ -46,10 +48,9 @@ public class Remito{
 	public Remito() {
 	}
 
-	public Remito(Encomienda encomienda, String nombreReceptor,
+	public Remito(String nombreReceptor,
 			String apellidoReceptor, String dniReceptor, boolean conformado,
 			Date fechaConformado) {
-		this.encomienda = encomienda;
 		this.nombreReceptor = nombreReceptor;
 		this.apellidoReceptor = apellidoReceptor;
 		this.dniReceptor = dniReceptor;
@@ -165,7 +166,8 @@ public class Remito{
 		r.setCondicionTransporte(condicionTransporte);
 		r.setFechaEstimadaEntrega(fechaEstimadaEntrega);
 		r.setIndicacionesManipulacion(indicacionesManipulacion);
-		r.setIdEncomienda(this.getEncomienda().getIdEncomienda());
+		if(this.getEncomienda()!=null)
+			r.setIdEncomienda(this.getEncomienda().getIdEncomienda());
     	
     	List<DTO_ItemRemito> list = new ArrayList<DTO_ItemRemito>();
     	for(ItemRemito item : this.itemsRemito){
@@ -187,7 +189,11 @@ public class Remito{
 			remito.setIdRemito(r.getIdRemito());
 			remito.setIndicacionesManipulacion(r.getIndicacionesManipulacion());
 			remito.setNombreReceptor(r.getNombreReceptor());
-			remito.setEncomienda(new Encomienda().fromEntity(r.getEncomienda()));
+			
+			Encomienda e = new Encomienda();
+			e.setIdEncomienda(r.getEncomienda().getIdEncomienda());
+			
+			remito.setEncomienda(e);
 			
 			List<ItemRemito> list = new ArrayList<ItemRemito>();
 	    	for(ItemRemitoE item : r.getItemsRemito()){

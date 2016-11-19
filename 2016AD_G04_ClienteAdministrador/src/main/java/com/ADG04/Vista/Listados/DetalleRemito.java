@@ -119,8 +119,11 @@ public class DetalleRemito extends javax.swing.JFrame {
 	private JLabel getJLabelFechaEstimadaEntrega() {
 		if (jLabelFechaEstimada == null) {
 			jLabelFechaEstimada = new JLabel();
-			//jLabelFechaEstimada.setText(dto.getFechaEstimadaEntrega().toString());
-			jLabelFechaEstimada.setText("");
+			if(dto.getFechaEstimadaEntrega()!=null){
+				jLabelFechaEstimada.setText(dto.getFechaEstimadaEntrega().toString());
+			}
+			else
+				jLabelFechaEstimada.setText("");
 			jLabelFechaEstimada.setFont(new java.awt.Font("Verdana",0,11));
 			jLabelFechaEstimada.setBounds(204, 73, 353, 15);
 		}
@@ -309,7 +312,7 @@ public class DetalleRemito extends javax.swing.JFrame {
 		    	for(DTO_ItemRemito item: dto.getDetalle()){
 		    		String codigo = "";
 		    		if(item.getProducto()!=null)
-		    			codigo = item.getProducto().getCodigo();
+		    			codigo = String.valueOf(item.getProducto().getId());
 		    		dataRemito = new Vector<String>();
 		    		dataRemito.add(codigo);
 		    		dataRemito.add(String.valueOf(item.getCantidad()));

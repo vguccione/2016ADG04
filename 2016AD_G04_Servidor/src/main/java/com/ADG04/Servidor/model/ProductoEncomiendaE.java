@@ -20,7 +20,7 @@ public class ProductoEncomiendaE implements java.io.Serializable {
 	@Column(name = "IdProductoEncomienda", unique = true, nullable = false)
 	private int idProductoEncomienda;
 
-	@Column(name = "cantidad", unique = true, nullable = false)
+	@Column(name = "cantidad", nullable = false)
 	private float cantidad;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

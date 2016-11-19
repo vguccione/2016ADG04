@@ -21,7 +21,6 @@
 	encomienda = "0";
 	destinos = "";
 	encomienda = (String)request.getAttribute("idEncomienda");
-	destinos = (String)request.getAttribute("destinos");
 //	sucursalNombre = (String)request.getAttribute("sucursalNombre");
 	estado = (String)request.getAttribute("estado");
 %>
@@ -31,14 +30,12 @@
 <script type="text/javascript">
 
 $(document).ready(function() {	
-	  
+	
 	//divAsignarEnvio
     $('#btnAsignarEnvio').on("click",function(){
-    	
-    	alert(<%= request.getParameter("idEncomienda") %>);
-    	
-        $.get('servletAsignarEnvio?action=asignarEnvio', {
-        		idEncomienda : <%= request.getParameter("idEncomienda") %>
+    
+         $.get('servletAsignarEnvio?action=asignarEnvio&idEncomienda='+$("#nroEncomienda").val(), {
+        		//idEncomienda : $("#nroEncomienda").val() 
         	}, 
         	function(responseText) {
         		
@@ -98,7 +95,6 @@ function hideProductos(){
 
 $(document).ready(function() {
 
-
 });
 
 	$(function() {
@@ -112,9 +108,11 @@ $(document).ready(function() {
 <!-- Cuerpo -->
 <body>
 <div class="container" style="background-color: #E6E6E6;">
-<div class="content" style="height:1200px">
+<div class="content" style="height:1300px">
 
-<h2>Encomienda Particular:</h2>
+<h2>Encomienda Empresa:</h2>
+
+	<li><label>Nro de encomienda: </label><input class="input-field" name="nroEncomienda" type="text" id="nroEncomienda" readonly="readonly" value='<%=request.getAttribute("nroEncomienda")%>' /></li><br/>
 
   <label>Datos del Cliente</label>
 	<!--Sólo se ve si es Particular --> 
@@ -125,7 +123,9 @@ $(document).ready(function() {
     <li><label>Código Sucursal de origen: </label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value='<%=request.getAttribute("idSucursalOrigen")%>'/></li><br/>
     <li><label>Código Sucursal actual: </label><input name="idSucursalActual" type="text" readonly="readonly" class="input-field" id="idSucursalActual" value='<%=request.getAttribute("idSucursalActual")%>'/></li><br/>
 	<li><label>Código Sucursal de destino: </label><input name="idSucursalDestino" type="text" readonly="readonly" class="input-field" id="idSucursalDestino" value='<%=request.getAttribute("idSucursalDestino")%>' /></li><br/>
+
 	<li><label>Estado: </label><input name="estadoEncomienda" type="text" readonly="readonly" class="input-field" id="estadoEncomienda" value='<%=request.getAttribute("estadoEncomienda")%>' /></li><br/>
+
  	<br/>
  	
 	<li><label>Fecha de recepci&oacute;n: </label><input type="text" id="fechaRecepcion" class="input-field" readonly="readonly" value='<%=request.getAttribute("fechaCreacion")%>' ></li><br/>
@@ -151,7 +151,7 @@ $(document).ready(function() {
 		<li><label>Apellido: </label><input class="input-field" name="apellidoReceptor" type="text" id="apellidoReceptor" maxlength="50" readonly="readonly" value='<%=request.getAttribute("apellidoReceptor")%>' /></li>
     </ul></fieldset>
     
-    </table>
+    <table>
 	<% 
 		List<String> listaEnvios = (List<String>)request.getAttribute("listaEnvios");
 		for (int i = 0; i < listaEnvios.size(); i++) { %> 
@@ -161,109 +161,72 @@ $(document).ready(function() {
    	%>
    	</table>
    	
-  <br />
-  <br />	<input type="button" value="asignarEnvio" id="btnAsignarEnvio" /> 
+   	  <br />
+  	<br /> 
+    <% if(estado!="Colocada" && estado!="EnViaje" && estado!="Entregada" && estado != "Cancelada"){ %>	
+  	<br />
+  	<br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" /> 
+   	<% } %>
+   	
     <div style="display: none;" id="divAsignarEnvio"> 
     <input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;"/> 
     </div>
-    
-	<!-- Ver factura -->	
+   
 	<br /><br />
 	<input id="btnVerFactura" type="button" onclick="showFactura();" value="Ver Factura ">
 	
 	<div id="divFactura" style="display: none;">
-		<input id="btnHideFactura" type="button" onclick="hideFactura();" value="Ocultar Factura "> <br />
-		<u> <label>Factura:</label> </u>
-		<label>Vencida:<%= request.getAttribute("facturaVencida")%></label>
-		<label>Pagada:<%= request.getAttribute("pagado")%></label>
-		<table style="border-color: black !important; border-style: solid !important; border-width: thin !important;">
-			<thead>
-				<tr style="border-color: black !important; border-style: solid !important; border-width: thin !important;"> 
-					<td style="width: 100px;">Descripcion</td>
-					<td style="width: 10px;">Cantidad</td>
-					<td style="width: 10x;">Precio</td>
-				</tr>
-				<tr> 
-					<td style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td style="width: 10x;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				</tr>
-			</thead>
-			<tbody>
-				<% 
-					List<DTO_ItemFactura> rows = (List<DTO_ItemFactura>)request.getAttribute("itemsFactura");
-					for (int i = 0; i < rows.size(); i++) { 
-						DTO_ItemFactura rowObj = rows.get(i);
-				%>
-				<tr>
-		
-					<% 
-					   String cantidad = ((Integer)rowObj.getCantidad()).toString(); 
-					   String desc = rowObj.getDescripcion();
-					   String valor = ((Float)rowObj.getValor()).toString();
-					%>
-					<td style="width: 150px;"><%=desc%></td>
-					<td style="width: 10px;"><%=cantidad%></td>
-					<td style="width: 10x;"><%=valor%></td>
-				</tr>
-				<% } %>
-			</tbody>
-			<tfoot>
-				<tr> 
-					<td style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td style="width: 10x;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				</tr>
-				<tr style="padding-top:10px;">
-					<td style="width: 150px;">Total:</td>
-					<td style="width: 10px;"></td>
-					<td style="width: 10x;"><%=request.getAttribute("totalFactura")%></td>
-				</tr>
-			</tfoot>    
-		</table>
-	</div> <!-- divFactura -->
-	<!-- ---------------Fin Ver Factura --------------------------- -->
-	
-	<!-- ----------------- Productos ---------------------------- -->
-	<br /><br />
-	<input id="btnVerProductos" type="button" onclick="showProductos();" value="Ver Productos">
-	<div id="divProducto" style="display: none;">
-	<input id="btnHideProductos" type="button" onclick="hideProductos();" value="Ocultar Productos"> <br />
-	<u> <label>Producto:</label> </u>
+	<input id="btnHideFactura" type="button" onclick="hideFactura();" value="Ocultar Factura "> <br />
+	<u> <label>Factura:</label> </u>
+	<label>Vencida:<%= request.getAttribute("facturaVencida")%></label>
+	<label>Pagada:<%= request.getAttribute("pagado")%></label>
 	<table style="border-color: black !important; border-style: solid !important; border-width: thin !important;">
 		<thead>
 			<tr style="border-color: black !important; border-style: solid !important; border-width: thin !important;"> 
-	            <td style="width: 300px;">Descripcion</td>
+	            <td style="width: 100px;">Descripcion</td>
 	            <td style="width: 10px;">Cantidad</td>
+	            <td style="width: 10x;">Precio</td>
 			</tr>
 			<tr> 
 	            <td style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 	            <td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10x;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			</tr>
 		</thead>
 		<tbody>
 			<% 
-				List<DTO_ProductoEncomienda> productos = (List<DTO_ProductoEncomienda>)request.getAttribute("productos");
-				for (int i = 0; i < productos.size(); i++) { 
-					DTO_ProductoEncomienda producto = productos.get(i);
+				List<DTO_ItemFactura> rows = (List<DTO_ItemFactura>)request.getAttribute("itemsFactura");
+				for (int i = 0; i < rows.size(); i++) { 
+					DTO_ItemFactura rowObj = rows.get(i);
 	        %>
 	        <tr>
 	
 	            <% 
-	               String cantidad = producto.getCantidad().toString(); 
-	               String desc = producto.getDescProducto() + producto.getId().toString();
+	               String cantidad = ((Integer)rowObj.getCantidad()).toString(); 
+	               String desc = rowObj.getDescripcion();
+	               String valor = ((Float)rowObj.getValor()).toString();
 	            %>
-	            <td style="width: 300px;"><%=desc%></td>
+	            <td style="width: 150px;"><%=desc%></td>
 	            <td style="width: 10px;"><%=cantidad%></td>
+	            <td style="width: 10x;"><%=valor%></td>
 	        </tr>
 	        <% } %>
 	    </tbody>
+	    <tfoot>
+	    	<tr> 
+	            <td style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10x;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			</tr>
+	    	<tr style="padding-top:10px;">
+	    		<td style="width: 150px;">Total:</td>
+	            <td style="width: 10px;"></td>
+	            <td style="width: 10x;"><%=request.getAttribute("totalFactura")%></td>
+	    	</tr>
+	    </tfoot>    
 	</table>
-	
-	</div> 
-	<!-------------------- Fin productos ----------------------------------->
+</div> <!-- divFactura -->
 
-	<!-- -----------------------------Ver Manifiesto------------------------------ -->
 	<br /><br />
 	<input id="btnVerManifiesto" type="button" onclick="showManifiesto();" value="Ver Manifiesto ">
 	<div id="divManifiesto" style="display: none;">
@@ -300,9 +263,49 @@ $(document).ready(function() {
 	</table>
 	
 	</div> <!-- divManifiesto -->
+   	   	
+	<!-- ----------------- Productos ---------------------------- -->
+	<br /><br />
+	<input id="btnVerProductos" type="button" onclick="showProductos();" value="Ver Productos">
+	<div id="divProducto" style="display: none;">
+	<input id="btnHideProductos" type="button" onclick="hideProductos();" value="Ocultar Productos"> <br />
+	<u> <label>Producto:</label> </u>
+	<table style="border-color: black !important; border-style: solid !important; border-width: thin !important;">
+		<thead>
+			<tr style="border-color: black !important; border-style: solid !important; border-width: thin !important;"> 
+	            <td style="width: 300px;">Descripcion</td>
+	            <td style="width: 10px;">Cantidad</td>
+			</tr>
+			<tr> 
+	            <td style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			</tr>
+		</thead>
+		<tbody>
+			<% 
+				List<DTO_ProductoEncomienda> productos = (List<DTO_ProductoEncomienda>)request.getAttribute("productos");
+				if(productos != null){
+				for (int i = 0; i < productos.size(); i++) { 
+					DTO_ProductoEncomienda producto = productos.get(i);
+	        %>
+	        <tr>
 	
-	<!-- ----------------- Fin Ver manifiesto ------------------------------ -->
+	            <% 
+	               String cantidad = producto.getCantidad().toString(); 
+	               String desc = producto.getDescProducto() + producto.getIdProductoCliente().toString();
+	            %>
+	            <td style="width: 300px;"><%=desc%></td>
+	            <td style="width: 10px;"><%=cantidad%></td>
+	        </tr>
+	        <% } }%>
+	    </tbody>
+	</table>
 	
+	</div> 
+	<!-------------------- Fin productos ----------------------------------->
+   	
+   	
+   	
     <br />
      <!-- end .content --></div>
   <!-- end .container --></div>

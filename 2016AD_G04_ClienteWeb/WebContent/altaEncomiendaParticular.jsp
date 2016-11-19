@@ -51,6 +51,64 @@ function findClient(){
 
 
 </script>
+ <script>
+ function validar(){
+	valido = true;
+	if(document.getElementById("idSucursalDestino").value==""){
+		alert("Por favor ingrese sucursal destino");
+		valido=false;
+	}
+	if(isNaN(document.getElementById("idSucursalDestino").value)){
+		alert("Sucursal destino debe ser un numero");
+		valido=false;
+	}
+	if(document.getElementById("alto").value==""){
+		alert("Por favor ingrese el alto del paquete");
+		valido=false;
+	}
+	if(document.getElementById("ancho").value==""){
+		alert("Por favor ingrese el ancho del paquete");
+		valido=false;
+	}
+	if(document.getElementById("largo").value==""){
+		alert("Por favor ingrese el largo del paquete");
+		valido=false;
+	}
+	if(document.getElementById("peso").value==""){
+		alert("Por favor ingrese el peso del paquete");
+		valido=false;
+	}
+	if(document.getElementById("dniReceptor").value==""){
+		alert("Por favor ingrese el dni del receptor");
+		valido=false;
+	}
+	if(document.getElementById("nombreReceptor").value==""){
+		alert("Por favor ingrese el nombre del receptor");
+		valido=false;
+	}
+	if(document.getElementById("apellidoReceptor").value==""){
+		alert("Por favor ingrese el apellido del receptor");
+		valido=false;
+	}
+
+	
+	var apilable = document.getElementsByName("Apilable");
+	for(var i = 0; i < apilable.length; i++){
+		if(apilable[i].checked && apilable[i].value==="true"){
+			if(document.getElementById("cantApilable").value==""){
+				alert("Por favor ingrese la cantidad apilable aceptada");
+				valido=false;
+			}
+			if(isNaN(document.getElementById("cantApilable").value)){
+				alert("Cantidad apilable aceptada debe ser un numero");
+				valido=false;
+			}
+		}
+	}
+	return valido;
+ }
+
+ </script>
 <!-- Timepicker -->
 <script>
                 $(function() {
@@ -66,7 +124,7 @@ function findClient(){
 <div class="container" style="background-color: #E6E6E6;">
  <div class="content" >
 <h2>Encomienda Particular:</h2>
-<form action="serveletEncomiendaParticular?action=altaEncomiendaParticular" method="post" name="frm_idEncomienda"> <!-- class="form-style-2">-->
+<form action="serveletEncomiendaParticular?action=altaEncomiendaParticular" method="post" name="frm_idEncomienda" onsubmit="return validar()"> <!-- class="form-style-2">-->
 
 
   <label>Datos del Cliente</label>
@@ -92,11 +150,11 @@ function findClient(){
     <li><label>Tratamiento: </label><input class="input-field" name="" type="text" id="tratamiento" value="" maxlength="50" /></li><br/>
  	<li><label>Apilable:</label>
      			<label class="input-radio-field"><input type="radio" name="Apilable" value="true" id="Apilable" />Sí</label>
-       			<label class="input-radio-field"><input type="radio" name="Apilable" value="false" id="Apilable" />No</label></li>
+       			<label class="input-radio-field"><input type="radio" name="Apilable" value="false" id="Apilable" checked/>No</label></li>
  	<br/><li><label>Cantidad Apilable: </label><input class="input-field" name="cantApilable" type="text" id="cantApilable" size="10" /></li>
  	<br/><li><label>Refrigerado:</label>
     			<label class="input-radio-field"><input type="radio" name="Refrigerado" value="true" id="Refrigerado" />Sí</label>
-           	<label class="input-radio-field"><input type="radio" name="Refrigerado" value="false" id="Refrigerado" />No</label></li>
+           	<label class="input-radio-field"><input type="radio" name="Refrigerado" value="false" id="Refrigerado" checked/>No</label></li>
 	<br/><li><label>Condición de transporte </label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" /></li>
 <br/>	<li><label>Indicaciones de manipulaci&oacute;n: </label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" /></li>      
 	<br/><li><label>Fragilidad: </label><input class="input-field" name="" type="text" id="fragilidad" maxlength="20" /></li>

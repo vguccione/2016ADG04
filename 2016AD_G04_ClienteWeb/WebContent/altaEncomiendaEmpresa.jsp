@@ -34,6 +34,18 @@
 
 $(document).ready(function() {	
 	  
+	$('#agregarProd').on("click",function() {
+
+		var ul = document.getElementById("productos");
+		var items = ul.getElementsByTagName("li");
+		var i =  parseInt(items.length) + 1;
+		var elemento = "<li><div id='producto"+i+"''><label>Codigo Producto:  </label><input class='input-field' name='producto"+i+"' type='text' id='producto"+i+"' maxlength='10' /><label>Cantidad:  </label><input class='input-field' name='producto"+i+"cantidad' type='text' id='producto"+i+"cantidad' maxlength='4' /></div></li>";
+	  	
+	  	$('#productos').append(elemento);
+	  	
+	  	document.getElementById("cantProd").value=i;
+	  	return false;
+	 });
 	
     $('#btnBuscarCliente').on("click",function(){
     	var cuitCliente = $('#cuitEmpresaBuscar').val();
@@ -74,6 +86,8 @@ $(document).ready(function() {
 		  	   
 }); //document ready
 
+
+
 </script>
 <!-- Timepicker -->
 <script>
@@ -84,7 +98,62 @@ $(document).ready(function() {
 		$("#horaMaximaPartic" ).datepicker();
 	});
 </script>
- 
+ <script>
+ function validar(){
+	valido = true;
+	if(document.getElementById("idSucursalDestino").value==""){
+		alert("Por favor ingrese sucursal destino");
+		valido=false;
+	}
+	if(isNaN(document.getElementById("idSucursalDestino").value)){
+		alert("Sucursal destino debe ser un numero");
+		valido=false;
+	}
+	if(document.getElementById("alto").value==""){
+		alert("Por favor ingrese el alto del paquete");
+		valido=false;
+	}
+	if(document.getElementById("ancho").value==""){
+		alert("Por favor ingrese el ancho del paquete");
+		valido=false;
+	}
+	if(document.getElementById("largo").value==""){
+		alert("Por favor ingrese el largo del paquete");
+		valido=false;
+	}
+	if(document.getElementById("peso").value==""){
+		alert("Por favor ingrese el peso del paquete");
+		valido=false;
+	}
+	if(document.getElementById("dniReceptor").value==""){
+		alert("Por favor ingrese el dni del receptor");
+		valido=false;
+	}
+	if(document.getElementById("nombreReceptor").value==""){
+		alert("Por favor ingrese el nombre del receptor");
+		valido=false;
+	}
+	if(document.getElementById("apellidoReceptor").value==""){
+		alert("Por favor ingrese el apellido del receptor");
+		valido=false;
+	}
+	var apilable = document.getElementsByName("Apilable");
+	for(var i = 0; i < apilable.length; i++){
+		if(apilable[i].checked && apilable[i].value==="true"){
+			if(document.getElementById("cantApilable").value==""){
+				alert("Por favor ingrese la cantidad apilable aceptada");
+				valido=false;
+			}
+			if(isNaN(document.getElementById("cantApilable").value)){
+				alert("Cantidad apilable aceptada debe ser un numero");
+				valido=false;
+			}
+		}
+	}
+	return valido;
+ }
+
+ </script>
 <!-- Cuerpo -->
 <body>
 <div class="container" style="background-color: #E6E6E6;">
@@ -105,7 +174,7 @@ $(document).ready(function() {
 <br/>
 <div id="altaEncomiendaForm" style="display:none;">
 
-<form action="ServeletEncomiendaEmpresa?action=altaEncomiendaEmpresa" method="post" name="frm_idEncomienda" > <!-- class="form-style-2"> -->
+<form action="ServeletEncomiendaEmpresa?action=altaEncomiendaEmpresa" method="post" name="frm_idEncomienda"  onsubmit="return validar()"> <!-- class="form-style-2"> -->
 	<ul>
 		<li>
 			<label>CUIT cliente:</label>
@@ -149,7 +218,7 @@ $(document).ready(function() {
 							<label class="input-radio-field">
 								<input type="radio" name="Apilable" value="true" id="Apilable" />Sí</label>
 							<label class="input-radio-field">
-								<input type="radio" name="Apilable" value="false" id="Apilable" />No</label>
+								<input type="radio" name="Apilable" value="false" id="Apilable" checked />No</label>
 						</li>
 						<br/>
 						<li>
@@ -162,7 +231,7 @@ $(document).ready(function() {
 							<label class="input-radio-field">
 								<input type="radio" name="Refrigerado" value="true" id="Refrigerado" />Sí</label>
 							<label class="input-radio-field">
-								<input type="radio" name="Refrigerado" value="false" id="Refrigerado" />No</label>
+								<input type="radio" name="Refrigerado" value="false" id="Refrigerado" checked />No</label>
 						</li>
 						<br/>
 						<li>
@@ -179,40 +248,17 @@ $(document).ready(function() {
 							<input class="input-field" name="" type="text" id="fragilidad" maxlength="20" />
 						</li>
 						<br/>
-						<label>Agregar productos</label><br/>
+						<label>Agregar productos</label><br/><button type="button" id="agregarProd" name="agregarProd" value="Agregar" )>Agregar Producto</button>
 						<!--Sólo se ve si es Particular --> 
 						<fieldset>
-							<ul>
+							<ul id="productos">
 								<li>
 									<div id="producto1">
 										<label>Codigo Producto:  </label><input class="input-field" name="producto1" type="text" id="producto1" maxlength="10" />
 										<label>Cantidad:  </label><input class="input-field" name="producto1cantidad" type="text" id="producto1cantidad" maxlength="4" />
 									</div>
 								</li>
-								<li>
-									<div id="producto2">
-										<label>Codigo Producto:  </label><input class="input-field" name="producto2" type="text" id="producto2" maxlength="10" />
-										<label>Cantidad:  </label><input class="input-field" name="producto2cantidad" type="text" id="producto2cantidad" maxlength="4" />
-									</div>
-								</li>
-								<li>
-									<div id="producto3">
-										<label>Codigo Producto:  </label><input class="input-field" name="producto3" type="text" id="producto3" maxlength="10" />
-										<label>Cantidad:  </label><input class="input-field" name="producto3cantidad" type="text" id="producto3cantidad" maxlength="4" />
-									</div>
-								</li>
-								<li>
-									<div id="producto4">
-										<label>Codigo Producto:  </label><input class="input-field" name="producto4" type="text" id="producto4" maxlength="10" />
-										<label>Cantidad:  </label><input class="input-field" name="producto4cantidad" type="text" id="producto4cantidad" maxlength="4" />
-									</div>
-								</li>
-								<li>
-									<div id="producto5">
-										<label>Codigo Producto:  </label><input class="input-field" name="producto5" type="text" id="producto5" maxlength="10" />
-										<label>Cantidad:  </label><input class="input-field" name="producto5cantidad" type="text" id="producto5cantidad" maxlength="4" />
-									</div>
-								</li>
+								<input type=hidden name="cantProd" id="cantProd" value="">
 							</ul>
 						</fieldset>
 						
@@ -236,7 +282,7 @@ $(document).ready(function() {
 						</fieldset>
 					</ul>
 					<div class="btn_centrado">
-						<input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" />
+						<input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar"/>
 					</div>
 
 				</form>

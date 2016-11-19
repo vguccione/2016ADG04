@@ -173,11 +173,9 @@ $(document).ready(function() {
   if("ingresada".equals(estado.toLowerCase()) || "enesperaasignacion".equals(estado.toLowerCase())){
 	  show = true;
   }
-  if(!show){ %>	 style="display: none;"<%}  %> />
+  if(!show){ %>	 <br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" /><%}  %> />
 
-  <br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" /> 
-
-
+   
     <div style="display: none;" id="divAsignarEnvio"> 
     <input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;"/> 
     </div>

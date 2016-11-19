@@ -72,12 +72,15 @@ public class ListadoRemitos extends javax.swing.JFrame {
 					
 					if(listadto!=null){
 					for (DTO_Remito r :listadto){
+						String fecha="";
+						if(r.getFechaEstimadaEntrega()!=null)
+							fecha = r.getFechaEstimadaEntrega().toString();
 						
 						jTableListadoModel.addRow(new Object[] { r.getId(),
 								r.getFecha().toString(),
 								r.getIdEncomienda(),
 								r.getNombreReceptor() + " " + r.getApellidoReceptor() + " (DNI:" + r.getDniReceptor() + ")",
-								r.getFechaEstimadaEntrega().toString(),
+								fecha,
 								r.getCondicionTransporte(),
 								r.getIndicacionesManipulacion()
 						});

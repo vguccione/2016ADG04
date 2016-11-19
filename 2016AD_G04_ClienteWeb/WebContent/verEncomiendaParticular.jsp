@@ -1,5 +1,6 @@
 <%@page import="com.ADG04.web.controller.WebBusinessDelegate"%>
 <%@page import="com.ADG04.bean.Encomienda.DTO_ItemManifiesto"%>
+<%@page import="com.ADG04.bean.Encomienda.DTO_ItemRemito"%>
 <%@page import="com.ADG04.bean.Cliente.DTO_ItemFactura"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -78,6 +79,19 @@ function hideManifiesto(){
 	$("#btnVerManifiesto").css("display", "block");
 	$("#divManifiesto").css("display", "none");
 }
+
+
+
+function hideRemito(){
+	$("#btnVerRemito").css("display", "block");
+	$("#divRemito").css("display", "none");
+}
+
+function showRemito(){
+	$("#btnVerRemito").css("display", "none");
+	$("#divRemito").css("display", "block");
+}
+
 
 </script>
 <!-- Timepicker -->
@@ -159,8 +173,7 @@ $(document).ready(function() {
   if("ingresada".equals(estado.toLowerCase()) || "enesperaasignacion".equals(estado.toLowerCase())){
 	  show = true;
   }
-  if(!show){ %>	
- 		 style="display: none;"<%}  %> />
+  if(!show){ %>	 style="display: none;"<%}  %> />
     <div style="display: none;" id="divAsignarEnvio"> 
     <input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;"/> 
     </div>
@@ -269,6 +282,45 @@ $(document).ready(function() {
 	</table>
 	
 	</div> <!-- divManifiesto -->
+	<br /><br /><%
+	if(request.getAttribute("itemsRemito")!=null){
+	%>
+	<input id="btnVerRemito" type="button" onclick="showRemito();" value="Ver Remito ">
+	<div id="divRemito" style="display: none;">
+	<input id="btnHideRemito" type="button" onclick="hideRemito();" value="Ocultar Remito "> <br />
+	<u> <label>Manifiesto:</label> </u>
+	<table style="border-color: black !important; border-style: solid !important; border-width: thin !important;">
+		<thead>
+			<tr style="border-color: black !important; border-style: solid !important; border-width: thin !important;"> 
+	            <td style="width: 300px;">Descripcion</td>
+	            <td style="width: 10px;">Cantidad</td>
+			</tr>
+			<tr> 
+	            <td style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	            <td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			</tr>
+		</thead>
+		<tbody>
+			<% 
+				List<DTO_ItemRemito> irs = (List<DTO_ItemRemito>)request.getAttribute("itemsRemito");
+				for (int i = 0; i < irs.size(); i++) { 
+					DTO_ItemRemito item = irs.get(i);
+	        %>
+	        <tr>
+	
+	            <% 
+	               String cantidad = ((Integer)item.getCantidad()).toString(); 
+	               String desc = item.getDescripcion();
+	            %>
+	            <td style="width: 300px;"><%=desc%></td>
+	            <td style="width: 10px;"><%=cantidad%></td>
+	        </tr>
+	        <% } %>
+	    </tbody>
+	</table>
+	
+	</div> <!-- divRemito --><%
+	}%>
     <br />
      <!-- end .content --></div>
   <!-- end .container --></div>

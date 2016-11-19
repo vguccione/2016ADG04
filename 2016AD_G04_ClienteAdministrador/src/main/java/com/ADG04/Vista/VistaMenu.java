@@ -1054,7 +1054,7 @@ public class VistaMenu extends javax.swing.JFrame {
 							{
 								JMenuItem25 = new JMenuItem();
 								JMenu1.add(JMenuItem25);
-								JMenuItem25.setText("Bisqueda Remitos");
+								JMenuItem25.setText("Busqueda Remitos");
 								JMenuItem25.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										BusquedaRemito inst = new BusquedaRemito();

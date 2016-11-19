@@ -108,6 +108,9 @@ public class EncomiendaParticular extends Encomienda{
 		if(this.getManifiesto()!=null)
 			dto.setManifiesto(this.getManifiesto().toDTO());
 		
+		if(this.getRemito()!=null)
+			dto.setRemito(this.getRemito().toDTO());
+		
 		dto.setNombreReceptor(this.getNombreReceptor());
 		dto.setPeso(this.getPeso());
 		dto.setRefrigerado(this.refrigerado);
@@ -293,6 +296,10 @@ public class EncomiendaParticular extends Encomienda{
 		enc.setLargo(ence.getLargo());
 		if(ence.getManifiesto()!=null)
 			enc.setManifiesto(new Manifiesto().fromEntity(ence.getManifiesto()));
+		
+		
+		if(ence.getRemito()!=null)
+			enc.setRemito(new Remito().fromEntity(ence.getRemito()));
 		
 		enc.setNombreReceptor(ence.getNombreReceptor());
 		enc.setPeso(ence.getPeso());

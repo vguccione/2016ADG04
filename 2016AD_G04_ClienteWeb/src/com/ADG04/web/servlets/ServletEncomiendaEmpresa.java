@@ -122,43 +122,16 @@ public class ServletEncomiendaEmpresa extends HttpServlet {
 		DTO_Manifiesto m = new DTO_Manifiesto();
 		DTO_Remito remito = new DTO_Remito();
 		
-		//agrego los productos, y los productos al manifiesto.
-		if(!request.getParameter("producto1").isEmpty() && !request.getParameter("producto1cantidad").isEmpty()){
-			Integer prodId = Integer.parseInt(((String)request.getParameter("producto1")));
-			Integer cantidad = Integer.parseInt(((String)request.getParameter("producto1cantidad")));
-			e.addProducto(new DTO_ProductoEncomienda(cantidad, prodId));
-			m.addItem(new DTO_ItemManifiesto("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
-			remito.addItem(new DTO_ItemRemito("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
+		for(int i=1; i<= Integer.parseInt((String)request.getParameter("cantProd")) ;i++){
+			//agrego los productos, y los productos al manifiesto.
+			if(!request.getParameter("producto"+i).isEmpty() && !request.getParameter("producto"+i+"cantidad").isEmpty()){
+				Integer prodId = Integer.parseInt(((String)request.getParameter("producto"+i)));
+				Integer cantidad = Integer.parseInt(((String)request.getParameter("producto"+i+"cantidad")));
+				e.addProducto(new DTO_ProductoEncomienda(cantidad, prodId));
+				m.addItem(new DTO_ItemManifiesto("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
+				remito.addItem(new DTO_ItemRemito("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
+			}
 		}
-		if(!request.getParameter("producto2").isEmpty() && !request.getParameter("producto2cantidad").isEmpty()){
-			Integer prodId = Integer.parseInt(((String)request.getParameter("producto2")));
-			Integer cantidad = Integer.parseInt(((String)request.getParameter("producto2cantidad")));
-			e.addProducto(new DTO_ProductoEncomienda(cantidad, prodId));
-			m.addItem(new DTO_ItemManifiesto("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
-			remito.addItem(new DTO_ItemRemito("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
-		}
-		if(!request.getParameter("producto3").isEmpty() && !request.getParameter("producto3cantidad").isEmpty()){
-			Integer prodId = Integer.parseInt(((String)request.getParameter("producto3")));
-			Integer cantidad = Integer.parseInt(((String)request.getParameter("producto3cantidad")));
-			e.addProducto(new DTO_ProductoEncomienda(cantidad, prodId));
-			m.addItem(new DTO_ItemManifiesto("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
-			remito.addItem(new DTO_ItemRemito("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
-		}
-		if(!request.getParameter("producto4").isEmpty() && !request.getParameter("producto4cantidad").isEmpty()){
-			Integer prodId = Integer.parseInt(((String)request.getParameter("producto4")));
-			Integer cantidad = Integer.parseInt(((String)request.getParameter("producto4cantidad")));
-			e.addProducto(new DTO_ProductoEncomienda(cantidad, prodId));
-			m.addItem(new DTO_ItemManifiesto("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
-			remito.addItem(new DTO_ItemRemito("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
-		}
-		if(!request.getParameter("producto5").isEmpty() && !request.getParameter("producto5cantidad").isEmpty()){
-			Integer prodId = Integer.parseInt(((String)request.getParameter("producto5")));
-			Integer cantidad = Integer.parseInt(((String)request.getParameter("producto5cantidad")));
-			e.addProducto(new DTO_ProductoEncomienda(cantidad, prodId));
-			m.addItem(new DTO_ItemManifiesto("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
-			remito.addItem(new DTO_ItemRemito("Producto " + prodId.toString() + " - Cantidad " + cantidad.toString(), prodId, cantidad));
-		}
-		
 		if(e.getProductos().isEmpty())
 			throw new BusinessException("Debe agregar los productos a enviar");
 		

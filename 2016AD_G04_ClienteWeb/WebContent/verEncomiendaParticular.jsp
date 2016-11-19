@@ -173,7 +173,7 @@ $(document).ready(function() {
   if("ingresada".equals(estado.toLowerCase()) || "enesperaasignacion".equals(estado.toLowerCase())){
 	  show = true;
   }
-  if(!show){ %>	 <br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" /><%}  %> />
+  if(show){ %>	 <br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" /> <%}  %>
 
    
     <div style="display: none;" id="divAsignarEnvio"> 

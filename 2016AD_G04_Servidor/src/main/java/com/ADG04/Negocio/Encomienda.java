@@ -979,7 +979,7 @@ public  class Encomienda{
 		return EncomiendaDao.getInstancia().getEncomiendasPendientesBySucursal(idSucursal);
 	}
 	
-	public void facturar() throws BusinessException {
+	public void facturar(String tipo) throws BusinessException {
 		
 		//Calculo la primer linea de la factura - El valor del transporte lo define la cantidad de km y el costo
 		//que se obtiene del mapa de ruta. 
@@ -1051,7 +1051,13 @@ public  class Encomienda{
 		facturaEntity.addItemFactura(itemImpuesto);
 				
 		//actualizo la encomienda
+		
 		EncomiendaE encomiendaEntity = this.toEntity();
+		if("P".equals(tipo))
+			encomiendaEntity.setTipoEncomienda("P");
+		else
+			encomiendaEntity.setTipoEncomienda("E");
+		
 		encomiendaEntity.setFactura(facturaEntity);
 		EncomiendaDao.getInstancia().saveOrUpdate(encomiendaEntity);
 		
@@ -1108,8 +1114,7 @@ public  class Encomienda{
 		encomienda.setDniReceptor(this.getDniReceptor()); 
 		encomienda.setVolumenGranel(this.getVolumenGranel()); 
 		encomienda.setUnidadGranel(this.getUnidadGranel());
-		encomienda.setCargaGranel(this.getCargaGranel());		
-		//encomienda.setTipoEncomienda("P");	//OJO, encomienda empresa!!!!!!!1
+		encomienda.setCargaGranel(this.getCargaGranel());	
 		
 		encomienda.setTercerizado(this.isTercerizado());
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());

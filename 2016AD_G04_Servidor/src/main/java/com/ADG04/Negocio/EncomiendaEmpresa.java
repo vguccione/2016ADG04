@@ -178,7 +178,7 @@ public class EncomiendaEmpresa extends Encomienda{
 		encomiendaEntity.setVolumenGranel(this.getVolumenGranel()); 
 		encomiendaEntity.setUnidadGranel(this.getUnidadGranel());
 		encomiendaEntity.setCargaGranel(this.getCargaGranel());		
-		encomiendaEntity.setTipoEncomienda("E");	//OJO, encomienda empresa!!!!!!!1
+		encomiendaEntity.setTipoEncomienda("E");
 		
 		encomiendaEntity.setTercerizado(this.isTercerizado());
 		encomiendaEntity.setEstado(EncomiendaEstado.Ingresada.toString());
@@ -200,11 +200,9 @@ public class EncomiendaEmpresa extends Encomienda{
 		//tx.begin();	
 		
 		Manifiesto dtoM = this.getManifiesto();
-
 		ManifiestoE manifiestoE = new ManifiestoE();
-		manifiestoE.setEncomienda(encomiendaEntity);
-		manifiestoE.setFecha(new Date());		
-		manifiestoE.setEncomienda(encomiendaEntity);
+		manifiestoE.setFecha(new Date());			
+
 	
 		List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
 		for(ItemManifiesto item:dtoM.getItemsManifiesto()){
@@ -213,7 +211,6 @@ public class EncomiendaEmpresa extends Encomienda{
 				im.setCantidad(item.getCantidad());
 				im.setDescripcion(item.getDescripcion());
 				
-				//TODO: tiene que tener productos??????? No es para las empresas los productos
 				if(item.getProducto() != null) {	
 					ProductoE prod = ProductoDao.getInstancia().getById(item.getProducto().getIdProducto());
 					im.setProducto(prod);
@@ -224,8 +221,14 @@ public class EncomiendaEmpresa extends Encomienda{
 			}
 		}
 		manifiestoE.setItemsManifiesto(itemsManifiesto);
+		manifiestoE.setEncomienda(encomiendaEntity);
 		
-		encomiendaEntity.setManifiesto(manifiestoE);
+		
+		//Remito
+		Remito r = this.getRemito();
+		r.setEncomienda(this);
+		RemitoE remitoE = r.toEntity();
+		remitoE.setEncomienda(encomiendaEntity);
 		
 		/*Deberia persistir en cascada*/
 		if(this.productosEncomienda == null || this.productosEncomienda.size() == 0)
@@ -246,45 +249,6 @@ public class EncomiendaEmpresa extends Encomienda{
 					ProductoEncomiendaDao.getInstancia().saveOrUpdate(productoEncomiendaEntity);
 				}
 			}
-
-			Remito dtoR = this.getRemito();
-			if(dtoR != null){
-				RemitoE remitoEntity = new RemitoE();
-				remitoEntity.setApellidoReceptor(dtoR.getApellidoReceptor());
-				remitoEntity.setConformado(dtoR.isConformado());
-				remitoEntity.setDniReceptor(dtoR.getDniReceptor());
-				remitoEntity.setFechaConformado(dtoR.getFechaConformado());
-				remitoEntity.setNombreReceptor(dtoR.getNombreReceptor());
-				remitoEntity.setFechaEstimadaEntrega(dtoR.getFechaEstimadaEntrega());
-				remitoEntity.setCondicionTransporte(dtoR.getCondicionTransporte());
-				remitoEntity.setIndicacionesManipulacion(dtoR.getIndicacionesManipulacion());
-				
-				List<ItemRemitoE> itemsRemitoEntity = new ArrayList<ItemRemitoE>();
-				for(ItemRemito item:dtoR.getItemsRemito()){
-					ItemRemitoE ir = new ItemRemitoE();
-					ir.setCantidad(item.getCantidad());
-					ir.setDescripcion(item.getDescripcion());
-					ProductoE prodEntity = ProductoDao.getInstancia().getById(item.getProducto().getIdProducto());
-					ir.setProducto(prodEntity);
-					ir.setRemito(remitoEntity);
-					itemsRemitoEntity.add(ir);
-				}
-
-				remitoEntity.setItemsRemito(itemsRemitoEntity);
-				
-				remitoEntity.setItemsRemito(itemsRemitoEntity);
-				remitoEntity.setEncomienda(encomiendaEntity);
-				remitoEntity = RemitoDao.getInstancia().saveOrUpdate(remitoEntity);
-				encomiendaEntity.setRemito(remitoEntity);
-				
-				this.remito = new Remito(remitoEntity.getNombreReceptor(), remitoEntity.getApellidoReceptor(), remitoEntity.getDniReceptor(), remitoEntity.isConformado(), remitoEntity.getFechaConformado());
-				this.remito.setIdRemito(remitoEntity.getIdRemito());
-				List<ItemRemito> myItems = new ArrayList<ItemRemito>();
-				for(ItemRemitoE i:remitoEntity.getItemsRemito()){
-					myItems.add(new ItemRemito(i.getIdItemRemito(), i.getDescripcion(), i.getCantidad()));
-				}
-				this.remito.setItemsRemito(myItems);
-			}
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());
@@ -293,6 +257,7 @@ public class EncomiendaEmpresa extends Encomienda{
 		}
 //		tx.commit();
 		this.manifiesto.setIdManifiesto(manifiestoE.getIdManifiesto());
+		this.remito.setIdRemito(remitoE.getIdRemito());
 		this.idEncomienda = encomiendaEntity.getIdEncomienda();
 		return encomiendaEntity.getIdEncomienda();
 	}

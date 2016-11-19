@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.ADG04.Servidor.model.ItemRemitoE;
 import com.ADG04.bean.Cliente.DTO_ItemFactura;
+import com.ADG04.bean.Cliente.DTO_Producto;
 import com.ADG04.bean.Encomienda.DTO_ItemRemito;
 
 public class ItemRemito{
@@ -26,6 +27,16 @@ public class ItemRemito{
 		this.descripcion = descripcion;
 		this.cantidad = cantidad;
 	}
+	
+	
+
+	public ItemRemito(String descripcion, int cantidad, Producto producto) {
+		super();
+		this.descripcion = descripcion;
+		this.cantidad = cantidad;
+		this.producto = producto;
+	}
+
 
 	public String getDescripcion() {
 		return descripcion;
@@ -70,6 +81,10 @@ public class ItemRemito{
     	item.setCantidad(this.cantidad);
     	item.setDescripcion(this.descripcion);
     	item.setId(this.idItemRemito);
+    	if(this.getProducto()!=null){
+    		DTO_Producto prod = this.getProducto().toDTO();
+    		item.setProducto(prod);
+    	}
     	return item;
 	}
 

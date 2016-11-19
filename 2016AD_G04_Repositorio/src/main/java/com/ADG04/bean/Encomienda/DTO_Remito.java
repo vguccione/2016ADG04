@@ -1,6 +1,7 @@
 package com.ADG04.bean.Encomienda;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class DTO_Remito implements Serializable{
 	private String apellidoReceptor;
 	private String nombreReceptor;
 	private String dniReceptor;
-	private List<DTO_ItemRemito> detalle;
+	private List<DTO_ItemRemito> detalle=new ArrayList<DTO_ItemRemito>();
 	private Date fechaEstimadaEntrega;
 	private String condicionTransporte;
 	private String indicacionesManipulacion;
@@ -115,5 +116,10 @@ public class DTO_Remito implements Serializable{
 	public void setIndicacionesManipulacion(String indicacionesManipulacion) {
 		this.indicacionesManipulacion = indicacionesManipulacion;
 	}	
+	
+	public void addItem(DTO_ItemRemito item) {
+		this.detalle.add(item);
+		
+	}
 
 }

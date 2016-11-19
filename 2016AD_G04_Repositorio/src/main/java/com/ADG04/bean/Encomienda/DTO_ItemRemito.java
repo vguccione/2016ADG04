@@ -16,6 +16,19 @@ public class DTO_ItemRemito implements Serializable{
 	
 	public DTO_ItemRemito(){
 	}
+	
+	
+
+	public DTO_ItemRemito(String descripcion,
+			int idProducto,int cantidad) {
+		
+		this.cantidad = cantidad;
+		this.descripcion = descripcion;
+		this.producto = new DTO_Producto();
+		this.producto.setId(idProducto);
+	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -58,5 +71,7 @@ public class DTO_ItemRemito implements Serializable{
 	public void setProducto(DTO_Producto producto) {
 		this.producto = producto;
 	}
+
+
 	
 }

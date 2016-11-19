@@ -534,7 +534,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		Integer idEncomienda = nuevaEncomienda.saveOrUpdate();
 		
-		nuevaEncomienda.facturar();
+		nuevaEncomienda.facturar("P");
 		
 		//Intento asignar la encomienda a un envío.
 		//nuevaEncomienda.asignarEnvio(null);
@@ -594,7 +594,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		ClienteEmpresa cliente = new ClienteEmpresa();
 		cliente.setIdCliente(cliE.getIdCliente());
-		//cliente.setDni(cliE.getDni());
 						
 		ServicioSeguridad servicioSeg = new ServicioSeguridad();
 		servicioSeg.setIdServicioSeguridad(encP.getIdServicioSeguridad());
@@ -611,16 +610,25 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			manifiesto.addItem(new ItemManifiesto(item.getDescripcion(), item.getCantidad(), producto)); 
 		}
 		
-		Remito remito = null;
+		//calculo fecha estimada si no existe para agregarla al remito
+		
+		MapaDeRutaE me = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(encP.getSucursalActual().getId(), encP.getSucursalDestino().getId());
+		MapaDeRuta mr = new MapaDeRuta().fromEntity(me);
+		Date fechaEstimada = mr.calcularFechaEstimadaDeEntrega();
+		
+		Remito remito = new Remito(encP.getNombreReceptor(),encP.getApellidoReceptor(),encP.getDniReceptor(),true, encP.getFechaCreacion(), fechaEstimada,encP.getCondicionTransporte(), encP.getIndicacionesManipulacion());
+	
 		if(encP.getRemito()!=null){
-			remito = new Remito(encP.getNombreReceptor(), encP.getApellidoReceptor(), encP.getDniReceptor(), true, encP.getFechaCreacion());
-			List<ItemRemito> myItems = new ArrayList<ItemRemito>();
-			for(DTO_ItemRemito i:encP.getRemito().getDetalle()){
-				ItemRemito itr = new ItemRemito(i.getId(), i.getDescripcion(), i.getCantidad());
-				itr.setProducto(new Producto().fromDTO(i.getProducto()));
-				myItems.add(itr);
+			for (DTO_ItemRemito item : encP.getRemito().getDetalle()) {
+				Producto producto = null;
+				
+				if(item.getProducto() != null){
+						producto = new Producto();
+						producto.setIdProducto(item.getProducto().getId());
+				}
+				
+				remito.addItem(new ItemRemito(item.getDescripcion(), item.getCantidad(), producto)); 
 			}
-			remito.setItemsRemito(myItems);
 		}
 		
 		EncomiendaEmpresa nuevaEncomienda = 		
@@ -640,7 +648,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		Integer idEncomienda = nuevaEncomienda.saveOrUpdate();
 		
-		nuevaEncomienda.facturar();
+		nuevaEncomienda.facturar("E");
 		
 		//Intento asignar la encomienda a un envío.
 		//nuevaEncomienda.asignarEnvio(null);

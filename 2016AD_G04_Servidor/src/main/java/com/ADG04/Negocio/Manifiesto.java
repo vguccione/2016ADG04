@@ -122,12 +122,14 @@ public class Manifiesto{
 		m.setFecha(manifiesto.getFecha());
 		m.setIdManifiesto(manifiesto.getIdManifiesto());
 		
-		List<ItemManifiesto> list = new ArrayList<ItemManifiesto>();
-    	for(ItemManifiestoE item : manifiesto.getItemsManifiesto()){
-    		ItemManifiesto itm = new ItemManifiesto().fromEntity(item);
-    		list.add(itm);
-    	}
-		m.setItemsManifiesto(list);
+		if(manifiesto.getItemsManifiesto()!=null){
+			List<ItemManifiesto> list = new ArrayList<ItemManifiesto>();
+	    	for(ItemManifiestoE item : manifiesto.getItemsManifiesto()){
+	    		ItemManifiesto itm = new ItemManifiesto().fromEntity(item);
+	    		list.add(itm);
+	    	}
+			m.setItemsManifiesto(list);
+		}
 		
 		Encomienda e = new Encomienda();
 		e.setIdEncomienda(manifiesto.getEncomienda().getIdEncomienda());

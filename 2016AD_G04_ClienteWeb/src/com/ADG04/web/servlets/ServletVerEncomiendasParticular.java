@@ -24,6 +24,7 @@ import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
+import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.web.controller.WebBusinessDelegate;
 
 //import com.fasterxml.jackson.databind.ObjectMapper;
@@ -151,6 +152,15 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		DTO_Manifiesto manifiesto = e.getManifiesto();
 		if(manifiesto != null){
 			request.setAttribute("itemsManifiesto", manifiesto.getDetalle());
+		}
+		
+		//Remito
+		if(e.getRemito()!=null){
+			e.getRemito().getId();
+			DTO_Remito remito = e.getRemito();
+			if(remito != null){
+				request.setAttribute("itemsRemito", remito.getDetalle());
+			}
 		}
 		
 		//Ver factura

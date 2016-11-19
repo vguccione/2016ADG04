@@ -60,14 +60,9 @@ public class App
 	1002		100		220		42				3					1
 	1003		30		44		32				2					3
  * */
-
-		for(EncomiendaE enc : EncomiendaDao.getInstancia().getAll()){
-			Encomienda e = new Encomienda().fromEntity(enc);
-			if(e.estaAsignada())
-				System.out.println(e.getIdEncomienda() + " Esta Asignada");
-			else
-				System.out.println(e.getIdEncomienda() + " NO esta Asignada");
-		}
+		EncomiendaE encE = EncomiendaDao.getInstancia().getById(12);
+		EncomiendaParticular ep = (EncomiendaParticular)new EncomiendaParticular().fromEntity(encE);
+		System.out.println(ep.toString());
 	}
 	
 	private static Integer AltaEncomiendaParticular() throws IOException, BusinessException {

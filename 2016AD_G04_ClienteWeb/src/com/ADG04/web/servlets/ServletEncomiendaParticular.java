@@ -128,7 +128,7 @@ public class ServletEncomiendaParticular extends HttpServlet {
 						Integer idencomienda = WebBusinessDelegate.getInstancia().nuevaEncomiedaParticular(e);
 
 						jspPage = "mostrarMensaje.jsp";
-						request.setAttribute("mensaje", "La encomienda se ha generado correctamente y se le asignó con el numero: " + Integer.toString(idencomienda));	
+						request.setAttribute("mensaje", "La encomienda se ha generado correctamente y se le asignï¿½ con el numero: " + Integer.toString(idencomienda));	
 		
 					}
 					else

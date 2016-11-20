@@ -431,7 +431,7 @@ public class Envio{
 		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
 		Date hoy = new Date();
 		if(e.getFechaYHoraLlegadaEstimada().compareTo(hoy)<0){
-			if(!e.getEstado().equals(EnvioEstado.Demorado.toString())){
+			if(!e.getEstado().equals(EnvioEstado.Demorado.toString()) && !e.getEstado().equals(EnvioEstado.Concluido.toString())){
 				e.setEstado(EnvioEstado.Demorado.toString());
 				e.setFechaActualizacion(new Date());
 				EnvioDao.getInstancia().saveOrUpdate(e);

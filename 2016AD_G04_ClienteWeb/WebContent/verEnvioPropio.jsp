@@ -17,6 +17,19 @@
 <script type="text/javascript">
 
 $(document).ready(function() {	
+	
+	fillEncomiendasGrid();
+	showHideByTipoEnvio();	
+	$("#diasEntrega").datepicker();
+	$("#fechaRecepcion").datepicker();
+	$("#fechaMaxima" ).datepicker();
+	$("#fechaRetiro" ).datepicker();
+	$("#fechaEstimada" ).datepicker();
+	$("#fechaRetiropartic" ).datepicker();
+	   
+}); //document ready
+
+function fillEncomiendasGrid(){
 	  
 	$("#projectTable").jqGrid({
 
@@ -39,25 +52,12 @@ $(document).ready(function() {
 		viewrecords: true,
 		caption: ""
 	});
-	
-	$("#diasEntrega").datepicker();
-	$("#fechaRecepcion").datepicker();
-	$("#fechaMaxima" ).datepicker();
-	$("#fechaRetiro" ).datepicker();
-	$("#fechaEstimada" ).datepicker();
-	$("#fechaRetiropartic" ).datepicker();
-	   
-}); //document ready
+
+}
 
 </script>
 <!-- Timepicker -->
 <script>
-
-$(document).ready(function() {
-	
-	showHideByTipoEnvio();
-
-});
 
 function showHideByTipoEnvio(){
 	
@@ -122,7 +122,8 @@ function guardarEstadoEnvio(){
 				alert('Se ha modificado el estado a ' + estadoSelected);
 				$("#estadoEnvio").val(responseText);
 				hideCambiarEstado();
-				
+				$("#projectTable").jqGrid('GridUnload');
+				fillEncomiendasGrid();
 			}
 		}
 	);	

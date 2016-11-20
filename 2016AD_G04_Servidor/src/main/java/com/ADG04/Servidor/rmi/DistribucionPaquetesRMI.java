@@ -1389,6 +1389,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public DTO_EncomiendaEmpresa getEncomiendaEmpresa(Integer id) throws RemoteException {
 		EncomiendaEmpresa encEmpresa = (EncomiendaEmpresa)new EncomiendaEmpresa().fromEntity(EncomiendaDao.getInstancia().getById(id));
 		DTO_EncomiendaEmpresa enc = (DTO_EncomiendaEmpresa)encEmpresa.toDTO();
+		
 		return enc;
 	}
 

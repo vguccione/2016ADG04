@@ -677,9 +677,10 @@ public  class Encomienda{
 		      }
 		}
 	}
-		
+	
+
 	/**
-	 * Asignar envio manualmente indicando sucursal de destino */
+	 // * Asignar envio manualmente indicando sucursal de destino */
 	public Integer asignarEnvio(Integer idCarrier, int idSucursalDest) throws BusinessException {
 		
 		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
@@ -696,12 +697,12 @@ public  class Encomienda{
 					ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
 					envioTercerizado.setProveedor(prov);
 				}
-				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), idSucursalDest);
 				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
 				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
 				envioTercerizado.setNroTracking(2000);
 				envioTercerizado.setSucursalOrigen(e.getSucursalOrigen());
-				envioTercerizado.setSucursalDestino(e.getSucursalDestino());
+				envioTercerizado.setSucursalDestino(SucursalDao.getInstancia().getById(idSucursalDest));
 				envioTercerizado.setFechaYHoraSalida(new Date());
 				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
 				envioTercerizado.setMapaDeRuta(mr);
@@ -783,7 +784,7 @@ public  class Encomienda{
 					boolean volumenNuevoOK = false;
 					
 					if(vehiculosDisponibles.size() == 0) {
-						throw new NoHayVehiculosDisponiblesException(this.getSucursalDestino().getIdSucursal());
+						throw new NoHayVehiculosDisponiblesException(this.getSucursalActual().getIdSucursal());
 					} else {
 						for(VehiculoE v: vehiculosDisponibles){
 							//Sumo los pesos y los volumenes
@@ -848,7 +849,8 @@ public  class Encomienda{
 		
 		return idEnvio;
 	}
-	
+
+			
 	/* En base al envio indicado calcula el tiempo total de viaje a la sucursal destino
 	 * original de la encomienda y avisa si habra demora o no. 
 	 * Asume que desde el nuevo destino indicado por el envio se mandara luego directamente

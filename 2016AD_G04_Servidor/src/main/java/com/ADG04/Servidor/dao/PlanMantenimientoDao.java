@@ -48,7 +48,6 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 		//Me quedo con las tareas que son por tiempo
 		List<TareaMantenimientoPorKmE> tareasVencidas = new ArrayList<TareaMantenimientoPorKmE>();
 		
-		//Por cada una de estas tareas, tengo que buscar cuando fue la ultima vez que se realizo.
 		List<Object[]> lista = (List<Object[]>)entityManager.createQuery("select tt, v.kmRecorridos "
 				+ " from PlanMantenimientoE p"
 				+ " join p.tareaMantenimientos tt"
@@ -56,7 +55,8 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 				//+ " left outer join v.tareasMantenimientoRealizadas ts"
 				+ " where v.idVehiculo=:idVeh").setParameter("idVeh", idVehiculo)
 				.getResultList();
-			
+
+		//Por cada una de estas tareas, tengo que buscar cuando fue la ultima vez que se realizo.
 		for(Object[] o :lista){
 			
 			//Si la tarea es de kms, me tengo que fijar cuatos kms tenia la ultima vez que se hizo
@@ -74,15 +74,19 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 				
 				//Cuantos kms tenia el vehiculo la ultima vez que se realizó la tarea??
 				
-				//Tengo que fijarme cuando se realizó por última vez cada tarea
+				//Por cada una de estas tareas, tengo que buscar cuando fue la ultima vez que se realizo.
 				List<TareaMantenimientoRealizadaE> tRealizadas = (List<TareaMantenimientoRealizadaE>)entityManager.createQuery("select tr "
 						+ " from TareaMantenimientoRealizadaE tr"
-						+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea")
+						+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea"
+						+ " and tr.vehiculo.idVehiculo=:idVeh"
+						+ " order by tr.fechaRealizada desc")
 						.setParameter("idTarea", tarea.getIdTareaMantenimiento())
+						.setParameter("idVeh", idVehiculo)
 						.getResultList(); 
+
+				if(tRealizadas != null && !tRealizadas.isEmpty()){
 				
-				for(TareaMantenimientoRealizadaE tRealizada:tRealizadas){
-				
+					TareaMantenimientoRealizadaE tRealizada = tRealizadas.get(0);
 					if(tRealizada != null){
 						
 						float kmCuandoSeRealizoTarea = tRealizada.getCantidadKilometros();
@@ -156,12 +160,16 @@ public class PlanMantenimientoDao extends GenericDao<PlanMantenimientoE, Integer
 					//Tengo que fijarme cuando se realizó por última vez esta tarea.
 					List<TareaMantenimientoRealizadaE> tRealizadas = (List<TareaMantenimientoRealizadaE>)entityManager.createQuery("select tr "
 							+ " from TareaMantenimientoRealizadaE tr"
-							+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea")
+							+ " where tr.tareaMantenimiento.idTareaMantenimiento=:idTarea "
+							+ " and tr.vehiculo.idVehiculo=:idVeh"
+							+ "order by tr.fechaRealizada desc")
 							.setParameter("idTarea", tarea.getIdTareaMantenimiento())
+							.setParameter("idVeh", idVehiculo)
 							.getResultList();
 				
-					for(TareaMantenimientoRealizadaE tRealizada:tRealizadas){
+					if(tRealizadas != null && !tRealizadas.isEmpty()){
 						
+						TareaMantenimientoRealizadaE tRealizada = tRealizadas.get(0);		
 						if(tRealizada != null){
 							
 							Calendar cal2 = Calendar.getInstance();

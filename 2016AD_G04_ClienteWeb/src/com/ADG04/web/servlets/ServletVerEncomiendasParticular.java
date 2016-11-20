@@ -102,6 +102,15 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			}
 		}
 		
+		//Remito
+		if(e.getRemito()!=null){
+			e.getRemito().getId();
+			DTO_Remito remito = e.getRemito();
+			if(remito != null){
+				request.setAttribute("itemsRemito", remito.getDetalle());
+			}
+		}
+				
 		request.setAttribute("listaEnvios", envios);
 		
 		DTO_ClienteEmpresa cli = WebBusinessDelegate.getInstancia().getClienteEmpresaById(e.getCliente().getId());

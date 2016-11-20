@@ -199,7 +199,8 @@ $(document).ready(function() {
 <% 
     String estadoEncomienda = request.getAttribute("estadoEncomienda").toString();
     if(!estadoEncomienda.equals("Colocada") && !estadoEncomienda.equals("EnViaje") 
-    		&& !estadoEncomienda.equals("Entregada") && !estadoEncomienda.equals("Cancelada")){ %>	
+    		&& !estadoEncomienda.equals("Entregada") && !estadoEncomienda.equals("Cancelada")
+    		 && !estadoEncomienda.equals("EnSucursalDestino")){ %>	
   	<br /> 
   	<br /><input type="button" value="Asignar Proximo Envio" id="btnAsignarEnvio" /> 
   		<label id="lblSucDestinoEnvio" style="display:none;">Indique sucursal de destino: </label> <input type="text" id="idSucDestinoEnvio" style="display:none;" maxlength="4" width="50px;" /><br/>
@@ -310,7 +311,7 @@ $(document).ready(function() {
 	<input id="btnVerRemito" type="button" onclick="showRemito();" value="Ver Remito ">
 	<div id="divRemito" style="display: none;">
 	<input id="btnHideRemito" type="button" onclick="hideRemito();" value="Ocultar Remito "> <br />
-	<u> <label>Manifiesto:</label> </u>
+	<u> <label>Remito:</label> </u>
 	<table style="border-color: black !important; border-style: solid !important; border-width: thin !important;">
 		<thead>
 			<tr style="border-color: black !important; border-style: solid !important; border-width: thin !important;"> 

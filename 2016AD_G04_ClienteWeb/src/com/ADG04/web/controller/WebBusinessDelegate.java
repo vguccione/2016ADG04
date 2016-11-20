@@ -71,33 +71,6 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 		}
 		return null;
 	}
-
-
-	//@SuppressWarnings("null")
-	public Integer pagarFacturaClientePaticular(Integer idFactura){
-		//
-		try {
-			return  objetoRemoto.cobrarEncomiendaParticular(idFactura);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0;
-	}
-	
-	//@SuppressWarnings("null")
-		public Integer pagarFacturaClienteEmpresa(Integer idFactura){
-			//
-			try {
-				return  objetoRemoto.cobrarEncomiendaEmpresa(idFactura);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return 0;
-		}
-	
-	
 	
 
 	//@SuppressWarnings("null")
@@ -502,6 +475,10 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 
 	public void actualizarEstadoEnvios() throws RemoteException {
 		this.objetoRemoto.actualizarEstadoEnvios("PosicionVehiculos");
+	}
+
+	public void pagarFactura(int idEncomienda) throws RemoteException {
+		this.objetoRemoto.pagarFactura(idEncomienda);
 	}
 		
 }

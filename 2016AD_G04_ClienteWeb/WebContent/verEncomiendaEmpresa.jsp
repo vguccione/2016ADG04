@@ -178,10 +178,10 @@ $(document).ready(function() {
     <li><label>Alto (cm): </label><input class="input-field" name="alto" type="text" id="alto" size="18" readonly="readonly" value='<%=request.getAttribute("alto")%>' /></li><br/>
     <li><label>Profundidad (cm): </label><input class="input-field" name="ancho" type="text" id="ancho" size="18" readonly="readonly" value='<%=request.getAttribute("ancho")%>' /></li><br/>
  	<li><label>Peso (kg): </label><input class="input-field" name="peso" type="text" id="peso" size="18" readonly="readonly" value='<%=request.getAttribute("peso")%>' /></li><br/>
-    <li><label>Tratamiento: </label><input class="input-field" name="tratamiento" type="text" id="tratamiento" value="" maxlength="50" readonly="readonly" value='<%=request.getAttribute("tratamiento")%>' /></li><br/>
- 	<li><label>Apilable:</label> <input class="input-field" name="apilable" type="text" id="apilable" value="" readonly="readonly" value='<%=request.getAttribute("apilable")%>' /></li>  
+    <li><label>Tratamiento: </label><input class="input-field" name="tratamiento" type="text" id="tratamiento"  maxlength="50" readonly="readonly" value='<%=request.getAttribute("tratamiento")%>' /></li><br/>
+ 	<li><label>Apilable:</label> <input class="input-field" name="apilable" type="text" id="apilable"  readonly="readonly" value='<%= request.getAttribute("apilable")%>' /></li>  
     <br/><li><label>Cantidad Apilable: </label><input class="input-field" name="cantApilable" type="text" id="cantApilable" size="10" readonly="readonly" value='<%=request.getAttribute("cantApilable")%>' /></li>
- 	<br/><li><label>Refrigerado: </label><input class="input-field" name="refrigerado" type="text" id="cantApilable" size="10" readonly="readonly" value='<%=request.getAttribute("refrigerado")%>' />
+ 	<br/><li><label>Refrigerado: </label><input class="input-field" name="refrigerado" type="text" id="refrigerado" size="10" readonly="readonly" value='<%=request.getAttribute("refrigerado")%>' />
 	<br/><li><label>Condición de transporte </label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" readonly="readonly" value='<%=request.getAttribute("condicionTransporte")%>'  /></li>
 <br/>	<li><label>Indicaciones de manipulaci&oacute;n: </label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" readonly="readonly" value='<%=request.getAttribute("indicacionesManipulacion")%>' /></li>      
 	<br/><li><label>Fragilidad: </label><input class="input-field" name="" type="text" id="fragilidad" maxlength="20" readonly="readonly" value='<%=request.getAttribute("fragilidad")%>' /></li>

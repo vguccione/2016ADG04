@@ -42,6 +42,13 @@ public class ServletEnviosListado extends HttpServlet {
 	
 		String action = request.getParameter("action").toString();
 		System.out.println(action);
+		
+		try {
+			WebBusinessDelegate.getInstancia().actualizarEstadoEnvios();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		if(action.equals("enviosTerceros"))
 			findEnviosTerceros(request, response);			
 		
@@ -61,7 +68,8 @@ public class ServletEnviosListado extends HttpServlet {
 				 
 			int totalNumberOfPages = 1;
 			int currentPageNumber = 1;
-				 
+			
+			
 			List<DTO_Envio> dtoEnvios = WebBusinessDelegate.getInstancia().listarEnviosPendientesBySucursalDestino(idSucursalDestino);
 			int totalNumberOfRecords = dtoEnvios.size(); 
 			JqGridData<EnvioWeb> gridData = new JqGridData<EnvioWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, enviosWeb);		

@@ -67,7 +67,8 @@ public interface IEncomiendaRemote {
 	public List<DTO_EnvioHistorico> getHistorico(Integer id) throws RemoteException;
 	public DTO_EnvioPropio getEnvioPropio(Integer id) throws RemoteException;
 	public boolean estaEncomiendaAsignada(int idEncomienda) throws RemoteException;
-	public List<DTO_Encomienda> listarEncomiendasByEnvio(int idEnvio) throws RemoteException;	
+	public List<DTO_Encomienda> listarEncomiendasByEnvio(int idEnvio) throws RemoteException;
+	public Date calcularFechaEntrega(int idSucursalOrigen, int idSucursalDestino) throws RemoteException;
 
 	/***
 	 * Envios que tienen la sucursal de destino indicada, y no están en estado concluído.

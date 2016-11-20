@@ -2187,4 +2187,11 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		}
 	}
 	
+	@Override
+	public Date calcularFechaEntrega(int idSucursalOrigen, int idSucursalDestino) throws RemoteException{
+		MapaDeRutaE me = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(idSucursalOrigen, idSucursalDestino);
+		MapaDeRuta mr = new MapaDeRuta().fromEntity(me);
+		Date fechaEstimada = mr.calcularFechaEstimadaDeEntrega();
+		return fechaEstimada;
+	}
 }

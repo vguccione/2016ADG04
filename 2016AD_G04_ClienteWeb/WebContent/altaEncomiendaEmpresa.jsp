@@ -70,6 +70,22 @@ $(document).ready(function() {
         );
 	});
 	
+    $('#btnCalcularFecha').on("click",function(){
+    	var sucursalOrigen = $('#idSucursalOrigen').val();
+    	var sucursalDestino = $('#idSucursalDestino').val();
+    	if(sucursalDestino=="")
+        	alert("Por favor indique sucursal destino");
+    	else{
+	        $.get('servletCalcularFechaEntrega', {
+	        		idSucursalOrigen : sucursalOrigen,
+	        		idSucursalDestino: sucursalDestino
+	        	}, 
+	        	function(responseText) {
+		        	$("#fechaRecepcion").val(responseText);
+	        	}
+	        );
+    	}
+	});
 	
 	  	  var usuario = <%= '"' + usuario + '"'%>
 	  	  var sucursal = <%= '"' + sucursal + '"'%>
@@ -208,7 +224,7 @@ $(document).ready(function() {
 					<br/>
 					<li>
 						<label>Fecha de recepci&oacute;n:</label>
-						<input type="date" id="fechaRecepcion" class="datepicker">
+						<input type="text" id="fechaRecepcion" name="fechaRecepcion" class="input-field" readonly="readonly" ><button type="button" id="btnCalcularFecha">Calcular</button>
 					</li>
 					<br/>
 					<li>
@@ -274,7 +290,7 @@ $(document).ready(function() {
 										<label>Cantidad:  </label><input class="input-field" name="producto1cantidad" type="text" id="producto1cantidad" maxlength="4" />
 									</div>
 								</li>
-								<input type=hidden name="cantProd" id="cantProd" value="">
+								<input type=hidden name="cantProd" id="cantProd" value="1">
 							</ul>
 						</fieldset>
 						

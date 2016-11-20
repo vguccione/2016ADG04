@@ -480,5 +480,10 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	public void pagarFactura(int idEncomienda) throws RemoteException {
 		this.objetoRemoto.pagarFactura(idEncomienda);
 	}
+
+	public Date calcularFechaEstimadaEntrega(String sucursalOrigen,
+			String sucursalDestino) throws NumberFormatException, RemoteException {
+		return this.objetoRemoto.calcularFechaEntrega(Integer.valueOf(sucursalOrigen), Integer.valueOf(sucursalDestino));
+	}
 		
 }

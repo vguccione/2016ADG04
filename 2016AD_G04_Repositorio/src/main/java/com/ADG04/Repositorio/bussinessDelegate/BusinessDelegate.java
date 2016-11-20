@@ -976,4 +976,8 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	public void pagarFactura(int idEncomienda) throws RemoteException {
 		this.businessService.pagarFactura(idEncomienda);
 	}
+	
+	public Date calcularFechaEntrega(int idSucursalOrigen, int idSucursalDestino) throws RemoteException{
+		return this.calcularFechaEntrega(idSucursalOrigen, idSucursalDestino);
+	}
 }

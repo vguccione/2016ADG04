@@ -164,7 +164,7 @@ function findClient(){
  	<br/>
  	
 	<li>
-	<label>Fecha de recepci&oacute;n:</label>
+	<label>Fecha estimada de entrega:</label>
 	<input type="text" id="fechaRecepcion" name="fechaRecepcion" class="input-field" readonly="readonly" ><button type="button" id="btnCalcularFecha">Calcular</button>
 	</li><br/>
  	<li><label>Ancho (cm): </label><input class="input-field" name="largo" type="text" id="largo" size="18" /></li><br/>

@@ -52,7 +52,7 @@ public class Remito{
 	private String indicacionesManipulacion;
 	private Encomienda encomienda;		
 	private List<ItemRemito> itemsRemito = new ArrayList<ItemRemito>();
-
+		
 	public Remito() {
 	}
 
@@ -83,6 +83,8 @@ public class Remito{
 		this.indicacionesManipulacion = indicacionesManipulacion;
 	}
 
+	
+	
 	public int getIdRemito() {
 		return this.idRemito;
 	}

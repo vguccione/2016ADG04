@@ -198,7 +198,9 @@ public class EncomiendaParticular extends Encomienda{
 		System.out.println(m.getIdMapaDeRuta());
 		MapaDeRuta mapa = new MapaDeRuta();
 		mapa.setIdMapaDeRuta(m.getIdMapaDeRuta());
-		encomienda.setFechaEstimadaEntrega(mapa.calcularFechaEstimadaDeEntrega());
+		Date fechaEstimadaDeEntrega = mapa.calcularFechaEstimadaDeEntrega();
+		encomienda.setFechaEstimadaEntrega(fechaEstimadaDeEntrega);
+		this.setFechaEstimadaEntrega(fechaEstimadaDeEntrega);
 					
 	//	EntityManager em = getEntityFactoryInstace();
 		//EntityTransaction tx = em.getTransaction();

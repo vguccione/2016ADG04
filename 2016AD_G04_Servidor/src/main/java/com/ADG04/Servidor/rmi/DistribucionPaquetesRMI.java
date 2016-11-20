@@ -522,7 +522,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		itr.setProducto(null);
 		items.add(itr);
 		remito.setItemsRemito(items);
-		
+				
 		EncomiendaParticular nuevaEncomienda = 		
 		new EncomiendaParticular(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
 				encP.getFechaCreacion(), encP.getFechaEstimadaEntrega(), encP.getEstado(), encP.isTercerizada(), 

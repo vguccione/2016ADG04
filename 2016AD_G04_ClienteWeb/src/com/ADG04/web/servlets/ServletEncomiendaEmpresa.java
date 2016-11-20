@@ -112,6 +112,22 @@ public class ServletEncomiendaEmpresa extends HttpServlet {
 		e.setIndicacionesManipulacion((String)request.getParameter("indicacionesManipulacion"));
 		e.setFragilidad((String)request.getParameter("fragilidad"));
 		
+		if(request.getParameter("internacional").equals("true")){
+			
+			e.setInternacional(true);
+			
+			//Si es internacional, es tercerizada.
+			e.setTercerizada(true);
+		}
+		else{
+			if(request.getParameter("tercerizado").equals("true"))
+				e.setTercerizada(true);
+			else
+				e.setTercerizada(false);
+			
+			e.setInternacional(false);
+		}
+		
 		DTO_ClienteEmpresa cliente = new DTO_ClienteEmpresa();
 		cliente.setCuit(((String)request.getParameter("cuitEmpresa")));
 		e.setCliente(cliente);

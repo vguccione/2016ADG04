@@ -162,6 +162,16 @@ function findClient(){
 	return valido;
  }
 
+
+ function seleccionarTercerizado(){
+	 var tercerizado = document.getElementsByName("tercerizado");
+		for(var i = 0; i < tercerizado.length; i++){
+			if(tercerizado[i].value==="true"){
+				tercerizado[i].checked=true;
+			}
+		}
+		document.getElementById("tercerizado").readOnly = true;
+	}
  </script>
  
 <!-- Cuerpo -->
@@ -212,12 +222,12 @@ function findClient(){
 	<br/><li><label>Condición de transporte </label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" /></li>
 <br/>	<li><label>Indicaciones de manipulaci&oacute;n: </label><input class="input-field" name="indicacionesManipulacion" type="text" id="indicacionesManipulacion" maxlength="400" /></li>      
 	<br/><li><label>Fragilidad: </label><input class="input-field" name="fragilidad" type="text" id="fragilidad" maxlength="20" /></li>
-	<br/><li><label>Tercerizado:</label>
+	<br/><li><label>Internacional:</label>
+				<label class="input-radio-field"><input type="radio" name="internacional" value="true" id="internacional" onclick="seleccionarTercerizado()"/>Sí</label>
+       			<label class="input-radio-field"><input type="radio" name="internacional" value="false" id="internacional" />No</label></li>
+    <br/><li><label>Tercerizado:</label>
 				<label class="input-radio-field"><input type="radio" name="tercerizado" value="true" id="tercerizado" />Sí</label>
        			<label class="input-radio-field"><input type="radio" name="tercerizado" value="false" id="tercerizado" />No</label></li>
-    <br/><li><label>Internacional:</label>
-				<label class="input-radio-field"><input type="radio" name="internacional" value="true" id="internacional" />Sí</label>
-       			<label class="input-radio-field"><input type="radio" name="internacional" value="false" id="internacional" />No</label></li>
     
 </ul>
 <br/><br/>

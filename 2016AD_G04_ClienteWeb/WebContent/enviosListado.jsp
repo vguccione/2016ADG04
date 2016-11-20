@@ -19,12 +19,15 @@
 
 
 $(document).ready(function() {	
-	               
+	 var firstClick = true;       
 	 $("#btnBuscarEnvios").click(function(){
-		
-
 			var idSucDestino = $("#idSucursalDestino").val();
 
+			 if (!firstClick) {
+	             $("#enviosTerceros").jqGrid('GridUnload'); 
+	             $("#enviosPropios").jqGrid('GridUnload'); 
+	         }
+			 firstClick = false;
 	         $("#enviosTerceros").jqGrid({
 	                  url: "servletEnviosListado?action=enviosTerceros&idSucursalDestino="+idSucDestino,
 	 
@@ -97,7 +100,7 @@ function findEnvios(){
 			
 			<label>Ingrese sucursal de destino: </label><input class="input-field" name="idSucursalDestino" width="100px" type="text" id="idSucursalDestino" />
 			<br /><br/>
-			<input type="button" value="Buscar Envios" id="btnBuscarEnvios"  />
+			<input type="button" value="Buscar Envios" id="btnBuscarEnvios" />
 				<!--<div>
 					<label>Filtrar:</label>
 					<select id="pcSelect">

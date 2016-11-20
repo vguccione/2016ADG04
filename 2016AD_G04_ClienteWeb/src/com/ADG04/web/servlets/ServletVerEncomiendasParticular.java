@@ -128,6 +128,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		request.setAttribute("peso",((Float)e.getPeso()).toString());
 		request.setAttribute("tratamiento",e.getTratamiento());
 		
+		
 		if(e.getApilable()) 
 			request.setAttribute("apilable","Si");
 		else
@@ -206,7 +207,6 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			request.setAttribute("totalFactura", total.toString());
 
 			List<DTO_ProductoEncomienda> ps = new ArrayList<DTO_ProductoEncomienda>();
-			System.out.println("eeeeeeeeeeeeee");
 			if(e.getProductos() != null){
 				
 				for(DTO_ProductoEncomienda pe:e.getProductos()){

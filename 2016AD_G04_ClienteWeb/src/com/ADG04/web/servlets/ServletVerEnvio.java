@@ -75,7 +75,7 @@ public class ServletVerEnvio extends HttpServlet {
 	private void getEnvio(HttpServletRequest request)
 			throws RemoteException, Exception {
 		
-		//TODO: tomar de parámetro
+		//TODO: tomar de parï¿½metro
 		Integer idEnvio = Integer.parseInt(request.getParameter("idEnvio"));
 		DTO_Envio e = WebBusinessDelegate.getInstancia().getEnvio(idEnvio);
 		

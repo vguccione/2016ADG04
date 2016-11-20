@@ -456,6 +456,16 @@ public class Envio{
 		EnvioE envioE = EnvioDao.getInstancia().getById(this.idEnvio);
 		envioE.setEstado(estado);
 		EnvioDao.getInstancia().saveOrUpdate(envioE);
+		
+		if(estado.equals(EnvioEstado.EnViaje.toString())){
+			for(Encomienda enc:this.getEncomiendas()){
+				EncomiendaE ence=EncomiendaDao.getInstancia().getById(enc.getIdEncomienda());
+				ence.setEstado(EncomiendaEstado.EnViaje.toString());
+				EncomiendaDao.getInstancia().saveOrUpdate(ence);
+			}
+		}
+		
+		
 		actualizarHistorico();
 	}
 	

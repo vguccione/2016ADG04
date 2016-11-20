@@ -215,6 +215,9 @@ function findClient(){
 	<br/><li><label>Tercerizado:</label>
 				<label class="input-radio-field"><input type="radio" name="tercerizado" value="true" id="tercerizado" />Sí</label>
        			<label class="input-radio-field"><input type="radio" name="tercerizado" value="false" id="tercerizado" />No</label></li>
+    <br/><li><label>Internacional:</label>
+				<label class="input-radio-field"><input type="radio" name="internacional" value="true" id="internacional" />Sí</label>
+       			<label class="input-radio-field"><input type="radio" name="internacional" value="false" id="internacional" />No</label></li>
     
 </ul>
 <br/><br/>

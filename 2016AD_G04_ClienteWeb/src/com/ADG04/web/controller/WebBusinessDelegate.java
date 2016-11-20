@@ -485,5 +485,9 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 			String sucursalDestino) throws NumberFormatException, RemoteException {
 		return this.objetoRemoto.calcularFechaEntrega(Integer.valueOf(sucursalOrigen), Integer.valueOf(sucursalDestino));
 	}
+
+	public Integer asignarEnvio(Integer idEncomienda, Integer idSucDestino,	Integer idCarrier) throws RemoteException, BusinessException {
+		return this.objetoRemoto.asignarEnvio(idEncomienda, idSucDestino, idCarrier); 
+	}
 		
 }

@@ -171,7 +171,16 @@ $(document).ready(function() {
 	<br/><li><label>Condición de transporte </label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" readonly="readonly" value='<%=request.getAttribute("condicionTransporte")%>'  /></li>
 <br/>	<li><label>Indicaciones de manipulaci&oacute;n: </label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" readonly="readonly" value='<%=request.getAttribute("indicacionesManipulacion")%>' /></li>      
 	<br/><li><label>Fragilidad: </label><input class="input-field" name="fragilidad" type="text" id="fragilidad" maxlength="20" readonly="readonly" value='<%=request.getAttribute("fragilidad")%>' /></li>
-	<br/><li><label>Tercerizado: </label><input class="input-field" name="tercerizado" type="text" id="tercerizado" maxlength="20" readonly="readonly" value='<%=request.getAttribute("tercerizado")%>' /></li>    
+	<br/><li><label>Tercerizado: </label><input class="input-field" name="tercerizado" type="text" id="tercerizado" maxlength="20" readonly="readonly" value='<%=request.getAttribute("tercerizado")%>' /></li>
+	<br/><li><label>Internacional: </label><input class="input-field" name="internacional" type="text" id="internacional" maxlength="20" readonly="readonly" value='<%=request.getAttribute("internacional")%>' /></li>
+	
+	
+	<% if(request.getAttribute("tercerizado").toString().equals("Si")) {%>	
+   		<li><label>Codigo carrier:</label>
+ 		<input class="input-field" name="idCarrier" type="text" id="idCarrier" size="4" width="50px;" />
+ 	</li>
+   <% }%>
+	    
 </ul>
 <br/><br/>
 <label>Datos del Receptor</label>

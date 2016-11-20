@@ -108,11 +108,23 @@ public class ServletEncomiendaParticular extends HttpServlet {
 						e.setIndicacionesManipulacion((String)request.getParameter("indicacionesManipulacion"));
 						e.setFragilidad((String)request.getParameter("fragilidad"));
 												
-						if(request.getParameter("tercerizado").equals("true"))
+						
+						if(request.getParameter("internacional").equals("true")){
+							
+							e.setInternacional(true);
+							
+							//Si es internacional, es tercerizada.
 							e.setTercerizada(true);
-						else
-							e.setTercerizada(false);
-
+						}
+						else{
+							if(request.getParameter("tercerizado").equals("true"))
+								e.setTercerizada(true);
+							else
+								e.setTercerizada(false);
+							
+							e.setInternacional(false);
+						}
+						
 						DTO_ClienteParticular cliente = WebBusinessDelegate.getInstancia().getClienteParticularByDni((String)request.getParameter("dniParticular"));
 			
 						//cliente.setNombre((String)request.getParameter("nombreParticular"));

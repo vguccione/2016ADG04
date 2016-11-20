@@ -272,7 +272,7 @@ $(document).ready(function() {
 						</li>
 						<br/>
 						<label>Agregar productos</label><br/><button type="button" id="agregarProd" name="agregarProd" value="Agregar" )>Agregar Producto</button>
-						<!--Sólo se ve si es Particular --> 
+						
 						<fieldset>
 							<ul id="productos">
 								<li>

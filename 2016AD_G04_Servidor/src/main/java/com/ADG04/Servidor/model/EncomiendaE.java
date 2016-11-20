@@ -439,13 +439,13 @@ public class EncomiendaE implements java.io.Serializable {
 		this.productoEncomiendas = productoEncomiendas;
 	}
 
-	public SeguroE getSeguro() {
+	/*public SeguroE getSeguro() {
 		SeguroE p = new SeguroE();
 		p.setTarifa(123.0F);
 		p.setTarifaPorKm(456.0F);
 		p.setProveedor(ProveedorDao.getInstancia().getById(1));
 		return p;
-	}
+	}*/
 
 	public SucursalE getSucursalDestno() {
 		return sucursalDestno;

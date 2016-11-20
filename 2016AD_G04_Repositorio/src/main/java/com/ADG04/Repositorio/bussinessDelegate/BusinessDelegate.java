@@ -978,6 +978,10 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 	}
 	
 	public Date calcularFechaEntrega(int idSucursalOrigen, int idSucursalDestino) throws RemoteException{
-		return this.calcularFechaEntrega(idSucursalOrigen, idSucursalDestino);
+		return this.businessService.calcularFechaEntrega(idSucursalOrigen, idSucursalDestino);
+	}
+
+	public Integer asignarEnvio(Integer idEncomienda, Integer idSucursalDestino,Integer idCarrier) throws RemoteException, BusinessException {
+		return this.businessService.asignarEnvio(idEncomienda, idSucursalDestino, idCarrier);
 	}
 }

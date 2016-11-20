@@ -33,6 +33,7 @@ import java.util.Set;
 
 
 
+
 import org.hibernate.mapping.Array;
 import org.hibernate.property.Getter;
 
@@ -344,6 +345,10 @@ public class EncomiendaEmpresa extends Encomienda{
 		
 		if(ence.getFactura()!=null)
 			enc.setFactura(new Factura().fromEntity(FacturaDao.getInstancia().getById(ence.getFactura().getIdFactura())));
+		
+		if(ence.getRemito()!=null)
+			enc.setRemito(new Remito().fromEntity(ence.getRemito()));
+		
 		
 		enc.setDniReceptor(ence.getDniReceptor());
 		enc.setEstado(ence.getEstado());

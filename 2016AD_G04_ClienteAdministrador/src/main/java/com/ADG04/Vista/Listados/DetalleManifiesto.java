@@ -194,7 +194,10 @@ public class DetalleManifiesto extends javax.swing.JFrame {
 	    		 
 		    	for(DTO_ItemManifiesto item: dto.getDetalle()){
 		    		dataManifiesto = new Vector<String>();
-		    		dataManifiesto.add(item.getProducto().getCodigo());
+		    		if(item.getProducto()!=null)
+		    			dataManifiesto.add(item.getProducto().getCodigo());
+		    		else
+		    			dataManifiesto.add("");
 		    		dataManifiesto.add(String.valueOf(item.getCantidad()));
 		    		dataManifiesto.add(item.getDescripcion());
 		    		data.add(dataManifiesto);

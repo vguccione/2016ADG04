@@ -25,7 +25,7 @@ public class ItemRemitoE implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "IdItemFactura", unique = true, nullable = false)
+	@Column(name = "IdItemRemito", unique = true, nullable = false)
 	private int idItemRemito;
 
 	@ManyToOne(fetch = FetchType.LAZY)

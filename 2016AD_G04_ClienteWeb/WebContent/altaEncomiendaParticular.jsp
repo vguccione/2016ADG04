@@ -32,13 +32,27 @@ $(document).ready(function() {
 	  	  var estado = <%= '"' + estado + '"'%>
 
 		  $("#diasEntrega").datepicker();
-		  $("#fechaRecepcion").datepicker();
 		  $("#fechaMaxima" ).datepicker();
 		  $("#fechaRetiro" ).datepicker();
 		  $("#fechaEstimada" ).datepicker();
 		  $("#fechaRetiropartic" ).datepicker();
 
-		  
+		  $('#btnCalcularFecha').on("click",function(){
+		    	var sucursalOrigen = $('#idSucursalOrigen').val();
+		    	var sucursalDestino = $('#idSucursalDestino').val();
+		    	if(sucursalDestino=="")
+		        	alert("Por favor indique sucursal destino");
+		    	else{
+			        $.get('servletCalcularFechaEntrega', {
+			        		idSucursalOrigen : sucursalOrigen,
+			        		idSucursalDestino: sucursalDestino
+			        	}, 
+			        	function(responseText) {
+				        	$("#fechaRecepcion").val(responseText);
+			        	}
+			        );
+		    	}
+			});
 	   
 }); //document ready
 
@@ -125,15 +139,6 @@ function findClient(){
  }
 
  </script>
-<!-- Timepicker -->
-<script>
-                $(function() {
-                    $('#horaMinima').timepicker();
-					$('#horaMaxima').timepicker();
-					 $("#horaMinimaPartic" ).datepicker();
-					 $("#horaMaximaPartic" ).datepicker();
-                });
-</script>
  
 <!-- Cuerpo -->
 <body>
@@ -158,7 +163,10 @@ function findClient(){
 	
  	<br/>
  	
-	<li><label>Fecha de recepci&oacute;n:  </label><input type="date" id="fechaRecepcion" class="datepicker"></li><br/>
+	<li>
+	<label>Fecha de recepci&oacute;n:</label>
+	<input type="text" id="fechaRecepcion" name="fechaRecepcion" class="input-field" readonly="readonly" ><button type="button" id="btnCalcularFecha">Calcular</button>
+	</li><br/>
  	<li><label>Ancho (cm): </label><input class="input-field" name="largo" type="text" id="largo" size="18" /></li><br/>
     <li><label>Alto (cm): </label><input class="input-field" name="alto" type="text" id="alto" size="18" /></li><br/>
     <li><label>Profundidad (cm): </label><input class="input-field" name="ancho" type="text" id="ancho" size="18" /></li><br/>

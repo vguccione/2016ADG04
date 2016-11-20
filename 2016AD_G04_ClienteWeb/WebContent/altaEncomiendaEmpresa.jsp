@@ -94,7 +94,6 @@ $(document).ready(function() {
 	  	  var estado = <%= '"' + estado + '"'%>
  	  
 		  $("#diasEntrega").datepicker();
-		  $("#fechaRecepcion").datepicker();
 		  $("#fechaMaxima" ).datepicker();
 		  $("#fechaRetiro" ).datepicker();
 		  $("#fechaEstimada" ).datepicker();
@@ -105,15 +104,7 @@ $(document).ready(function() {
 
 
 </script>
-<!-- Timepicker -->
-<script>
-	$(function() {
-		$('#horaMinima').timepicker();
-		$('#horaMaxima').timepicker();
-		$("#horaMinimaPartic" ).datepicker();
-		$("#horaMaximaPartic" ).datepicker();
-	});
-</script>
+
  <script>
  function validar(){
 	valido = true;

@@ -68,7 +68,7 @@ function saveEnvio(){
 		return;
 	}
 	
-    $.get('servletAsignarEnvio?action=asignarEnvio&idEncomienda='+$("#nroEncomienda").val()+'&idSucDestino='+$("#idSucDestinoEnvio").val(), {
+    $.get('servletAsignarEnvio?action=asignarEnvio&idEncomienda='+$("#nroEncomienda").val()+'&idSucDestino='+$("#idSucDestinoEnvio").val()+'&idCarrier='+$("#idCarrier").val(), {
    		//idEncomienda : $("#nroEncomienda").val() 
    	}, 
    	function(responseText) {
@@ -185,7 +185,12 @@ $(document).ready(function() {
 	<br/><li><label>Condición de transporte </label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" readonly="readonly" value='<%=request.getAttribute("condicionTransporte")%>'  /></li>
 <br/>	<li><label>Indicaciones de manipulaci&oacute;n: </label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" readonly="readonly" value='<%=request.getAttribute("indicacionesManipulacion")%>' /></li>      
 	<br/><li><label>Fragilidad: </label><input class="input-field" name="" type="text" id="fragilidad" maxlength="20" readonly="readonly" value='<%=request.getAttribute("fragilidad")%>' /></li>
-	<br/><li><label>Tercerizado: </label><input class="input-field" name="" type="text" id="tercerizado" maxlength="20" readonly="readonly" value='<%=request.getAttribute("tercerizado")%>' /></li>    
+	<br/><li><label>Tercerizado: </label><input class="input-field" name="" type="text" id="tercerizado" maxlength="20" readonly="readonly" value='<%=request.getAttribute("tercerizado")%>' /></li>
+	<% if(request.getAttribute("internacional").toString().equals("Si")) {%>	
+   		<li><label>Codigo carrier:</label>
+ 		<input class="input-field" name="idCarrier" type="text" id="idCarrier" size="4" width="50px;" />
+ 	</li>
+   <% }%>    
 </ul>
 <br/><br/>
 <label>Datos del Receptor</label>
@@ -213,7 +218,11 @@ $(document).ready(function() {
     		&& !estadoEncomienda.equals("EnSucursalDestino")){ %>	
   	<br /> 
   	<br /><input type="button" value="Asignar Proximo Envio" id="btnAsignarEnvio" /> 
+  		<% if(request.getAttribute("internacional").toString().equals("No")) {%>
   		<label id="lblSucDestinoEnvio" style="display:none;">Indique sucursal de destino: </label> <input type="text" id="idSucDestinoEnvio" style="display:none;" maxlength="4" width="50px;" /><br/>
+  		<%} else{%>
+  		 <input type="hidden" value=0 id="idSucDestinoEnvio" style="display:none;" maxlength="4" width="50px;" />
+  		<%} %>
   		<input type="button" value="Guardar Envio" id="btnSaveEnvio" style="display:none;" /> 
    	<% } %>
    	

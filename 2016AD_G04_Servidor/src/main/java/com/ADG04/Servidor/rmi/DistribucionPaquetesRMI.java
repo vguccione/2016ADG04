@@ -605,11 +605,15 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			manifiesto.addItem(new ItemManifiesto(item.getDescripcion(), item.getCantidad(), producto)); 
 		}
 		
+		Date fechaEstimada = new Date();
 		//calculo fecha estimada si no existe para agregarla al remito
-		
-		MapaDeRutaE me = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(encP.getSucursalActual().getId(), encP.getSucursalDestino().getId());
-		MapaDeRuta mr = new MapaDeRuta().fromEntity(me);
-		Date fechaEstimada = mr.calcularFechaEstimadaDeEntrega();
+		if(encP.getSucursalDestino()!=null ){
+			if(encP.getSucursalDestino().getId()!=0){
+				MapaDeRutaE me = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(encP.getSucursalActual().getId(), encP.getSucursalDestino().getId());
+				MapaDeRuta mr = new MapaDeRuta().fromEntity(me);
+				fechaEstimada = mr.calcularFechaEstimadaDeEntrega();
+			}
+		}
 		
 		Remito remito = new Remito(encP.getNombreReceptor(),encP.getApellidoReceptor(),encP.getDniReceptor(),true, encP.getFechaCreacion(), fechaEstimada,encP.getCondicionTransporte(), encP.getIndicacionesManipulacion());
 	

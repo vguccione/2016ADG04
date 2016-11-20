@@ -38,9 +38,12 @@ public class ServletAsignarEnvio extends HttpServlet {
 			if(action.equals("asignarEnvio")){
 				
 				Integer idEncomienda = Integer.parseInt(request.getParameter("idEncomienda").toString());
-				Integer idSucDestino = Integer.parseInt(request.getParameter("idSucDestino").toString());
-				Integer idEnvio = 0;
+				Integer idSucDestino=null;
 				
+				if(request.getParameter("idSucDestino").toString()!="0")
+					idSucDestino = Integer.parseInt(request.getParameter("idSucDestino").toString());
+				Integer idEnvio = 0;
+	
 				if(request.getParameter("idCarrier")!= null){
 					
 					Integer idCarrier = Integer.parseInt(request.getParameter("idCarrier").toString());

@@ -51,7 +51,7 @@ public class EnvioE implements java.io.Serializable {
 	private CoordenadaE posicionActual;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdSucursalDestino", nullable = false)
+	@JoinColumn(name = "IdSucursalDestino", nullable = true)
 	private SucursalE sucursalDestino;
 
 	@ManyToOne(fetch = FetchType.LAZY)

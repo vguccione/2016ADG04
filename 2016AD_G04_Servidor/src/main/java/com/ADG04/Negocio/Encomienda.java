@@ -709,7 +709,11 @@ public  class Encomienda{
 					ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
 					envioTercerizado.setProveedor(prov);
 				}
-				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), idSucursalDest);
+				else{
+					MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), idSucursalDest);
+					envioTercerizado.setMapaDeRuta(mr);
+				}
+				
 				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
 				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
 				envioTercerizado.setNroTracking(2000);
@@ -717,7 +721,7 @@ public  class Encomienda{
 				envioTercerizado.setSucursalDestino(SucursalDao.getInstancia().getById(idSucursalDest));
 				envioTercerizado.setFechaYHoraSalida(new Date());
 				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
-				envioTercerizado.setMapaDeRuta(mr);
+				
 				envioTercerizado.setPropio(false);
 				envioTercerizado.setFechaActualizacion(new Date());
 				List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
@@ -1318,12 +1322,13 @@ public  class Encomienda{
 		env.setFechaActualizacion(e.getFechaActualizacion());
 		
 		MapaDeRuta mapa = null;
-		if(e.getMapaDeRuta()==null){
+		if(e.getMapaDeRuta()==null && e.getSucursalDestino()!=null){
 			MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 			mapa = new MapaDeRuta().fromEntity(mr);
 		}
 		else{
-			mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
+			if(e.getMapaDeRuta()!=null)
+				mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
 		}
 		
 		if(mapa!=null)

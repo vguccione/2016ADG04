@@ -154,6 +154,11 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			request.setAttribute("tercerizado","Si");
 		else
 			request.setAttribute("tercerizado","No");
+		
+		if(e.isInternacional()) 
+			request.setAttribute("internacional","Si");
+		else
+			request.setAttribute("internacional","No");
 		    
 		request.setAttribute("dniReceptor",e.getDniReceptor());
 		request.setAttribute("nombreReceptor",e.getNombreReceptor());
@@ -291,6 +296,11 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			request.setAttribute("tercerizado","Si");
 		else
 			request.setAttribute("tercerizado","No");
+		
+		if(e.isInternacional()) 
+			request.setAttribute("internacional","Si");
+		else
+			request.setAttribute("internacional","No");
 		    
 		request.setAttribute("dniReceptor",e.getDniReceptor());
 		request.setAttribute("nombreReceptor",e.getNombreReceptor());

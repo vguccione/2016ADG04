@@ -318,7 +318,8 @@ public class Envio{
 				dto.setEncomiendas(lista);
 			}
 			
-			dto.setIdSucursalDestino(this.sucursalDestino.getIdSucursal());
+			if(this.getSucursalDestino()!=null)
+				dto.setIdSucursalDestino(this.sucursalDestino.getIdSucursal());
 			dto.setIdSucursalOrigen(this.sucursalOrigen.getIdSucursal());
 						
 			return dto;
@@ -534,13 +535,15 @@ public class Envio{
 		env.setIdEnvio(idEnvio);
 		env.setNroTracking(nroTracking);
 		env.setPropio(propio);
-		env.setMapaDeRuta(MapaDeRutaDao.getInstancia().getById(this.mapaDeRuta.getIdMapaDeRuta()));
+		if(this.mapaDeRuta!=null)
+			env.setMapaDeRuta(MapaDeRutaDao.getInstancia().getById(this.mapaDeRuta.getIdMapaDeRuta()));
 		if(proveedor!=null)
 			env.setProveedor(ProveedorDao.getInstancia().getById(this.proveedor.getIdProveedor()));
 		if(vehiculo!=null)
 			env.setVehiculo(VehiculoDao.getInstancia().getById(this.vehiculo.getIdVehiculo()));
 		env.setPosicionActual(CoordenadaDao.getInstancia().getById(this.posicionActual.getIdCoordenada()));
-		env.setSucursalDestino(SucursalDao.getInstancia().getById(this.getSucursalDestino().getIdSucursal()));
+		if(this.getSucursalDestino()!=null)
+			env.setSucursalDestino(SucursalDao.getInstancia().getById(this.getSucursalDestino().getIdSucursal()));
 		env.setSucursalOrigen(SucursalDao.getInstancia().getById(this.getSucursalOrigen().getIdSucursal()));
 		env.setFechaActualizacion(fechaActualizacion);
 		
@@ -559,12 +562,13 @@ public class Envio{
 		env.setFechaActualizacion(e.getFechaActualizacion());
 		
 		MapaDeRuta mapa = null;
-		if(e.getMapaDeRuta()==null){
+		if(e.getMapaDeRuta()==null && e.getSucursalDestino()!=null){
 			MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 			mapa = new MapaDeRuta().fromEntity(mr);
 		}
 		else{
-			mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
+			if(e.getMapaDeRuta()!=null)
+				mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
 		}
 		
 		if(mapa!=null)
@@ -576,7 +580,8 @@ public class Envio{
 			env.setVehiculo(new Vehiculo().fromEntity(e.getVehiculo()));
 		
 		env.setPosicionActual(new Coordenada().fromEntity(e.getPosicionActual()));
-		env.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
+		if(e.getSucursalDestino()!=null)
+			env.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
 		env.setSucursalOrigen(new Sucursal().fromEntity(e.getSucursalOrigen()));
 		
 		if(e.getEncomiendas()!=null){

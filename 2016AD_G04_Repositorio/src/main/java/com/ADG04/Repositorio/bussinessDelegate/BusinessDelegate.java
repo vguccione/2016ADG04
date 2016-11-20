@@ -962,4 +962,14 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 			int idSucursalDestino) throws RemoteException {
 		return this.businessService.listarEnviosPendientesBySucursalDestino(idSucursalDestino);
 	}
+
+	public List<DTO_Envio> getEnviosByEncomienda(int idEncomienda)
+			throws RemoteException {
+		return this.businessService.getEnviosByEncomienda(idEncomienda);
+	}
+
+	public Integer asignarEnvio(Integer idEncomienda, Integer idSucursalDestino)
+			throws RemoteException {
+		return this.asignarEnvio(idEncomienda, idSucursalDestino);
+	}
 }

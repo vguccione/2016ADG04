@@ -31,20 +31,22 @@
 
 $(document).ready(function() {	
 	
+	$("#btnVerProductos").on("click", function(){
+		showProductos();
+	});
+
+	$("#btnHideProductos").on("click", function(){
+		hideProductos();
+	});
+	
 	//divAsignarEnvio
     $('#btnAsignarEnvio').on("click",function(){
-    
-         $.get('servletAsignarEnvio?action=asignarEnvio&idEncomienda='+$("#nroEncomienda").val(), {
-        		//idEncomienda : $("#nroEncomienda").val() 
-        	}, 
-        	function(responseText) {
-        		
-    			$("#idEnvioAsignado").val(responseText);
-    			$("#divAsignarEnvio").css("display", "block");
-    			$("#btnAsignarEnvio").css("display", "none");
-        	})
+    	showAsignarEnvio();
     });
 
+    $('#btnSaveEnvio').on("click",function(){
+    	saveEnvio();
+    });
 	
   	  var encomienda = <%= '"' + encomienda + '"'%>
   	  var estado = <%= '"' + estado + '"'%>
@@ -58,6 +60,33 @@ $(document).ready(function() {
 	   
 }); //document ready
 
+function saveEnvio(){
+
+	if($("#idSucDestinoEnvio").val() == ""){
+		alert("Debe completar la sucursal de destino.");
+		return;
+	}
+	
+    $.get('servletAsignarEnvio?action=asignarEnvio&idEncomienda='+$("#nroEncomienda").val()+'&idSucDestino='+$("#idSucDestinoEnvio").val(), {
+   		//idEncomienda : $("#nroEncomienda").val() 
+   	}, 
+   	function(responseText) {
+   		
+			$("#idEnvioAsignado").val(responseText);
+			$("#divAsignarEnvio").css("display", "block");
+			$("#btnAsignarEnvio").css("display", "none");
+			$("#idSucDestinoEnvio").css("display", "none");
+			$("#lblSucDestinoEnvio").css("display", "none");
+			$("#btnSaveEnvio").css("display", "none");
+	})
+}
+
+function showAsignarEnvio(){
+	$("#btnAsignarEnvio").css("display", "none");
+	$("#idSucDestinoEnvio").css("display", "inline");
+	$("#lblSucDestinoEnvio").css("display", "inline");
+	$("#btnSaveEnvio").css("display", "block");
+}
 
 function showFactura(){
 	$("#btnVerFactura").css("display", "none");
@@ -79,12 +108,16 @@ function hideManifiesto(){
 	$("#divManifiesto").css("display", "none");
 }
 
+
 function showProductos(){
+
 	$("#btnVerProductos").css("display", "none");
 	$("#divProductos").css("display", "block");
+	console.log($("#divProductos").css("display"));
 }
 
 function hideProductos(){
+
 	$("#btnVerProductos").css("display", "block");
 	$("#divProductos").css("display", "none");
 }
@@ -134,7 +167,7 @@ $(document).ready(function() {
     <li><label>Profundidad (cm): </label><input class="input-field" name="ancho" type="text" id="ancho" size="18" readonly="readonly" value='<%=request.getAttribute("ancho")%>' /></li><br/>
  	<li><label>Peso (kg): </label><input class="input-field" name="peso" type="text" id="peso" size="18" readonly="readonly" value='<%=request.getAttribute("peso")%>' /></li><br/>
     <li><label>Tratamiento: </label><input class="input-field" name="tratamiento" type="text" id="tratamiento" value="" maxlength="50" readonly="readonly" value='<%=request.getAttribute("tratamiento")%>' /></li><br/>
- 	<li><label>Apilable:</label> <input class="input-field" name="apilable" type="text" id="apilable" value="" maxlength="50" readonly="readonly" value='<%=request.getAttribute("apilable")%>' /></li><br/>
+ 	<li><label>Apilable:</label> <input class="input-field" name="apilable" type="text" id="apilable" value="" readonly="readonly" value='<%=request.getAttribute("apilable")%>' /></li>  
     <br/><li><label>Cantidad Apilable: </label><input class="input-field" name="cantApilable" type="text" id="cantApilable" size="10" readonly="readonly" value='<%=request.getAttribute("cantApilable")%>' /></li>
  	<br/><li><label>Refrigerado: </label><input class="input-field" name="refrigerado" type="text" id="cantApilable" size="10" readonly="readonly" value='<%=request.getAttribute("refrigerado")%>' />
 	<br/><li><label>Condición de transporte </label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" readonly="readonly" value='<%=request.getAttribute("condicionTransporte")%>'  /></li>
@@ -161,13 +194,18 @@ $(document).ready(function() {
    	%>
    	</table>
    	
-   	  <br />
+    <% 
+    String estadoEncomienda = request.getAttribute("estadoEncomienda").toString();
+    if(!estadoEncomienda.equals("Colocada") && !estadoEncomienda.equals("EnViaje") 
+    		&& !estadoEncomienda.equals("Entregada") && !estadoEncomienda.equals("Cancelada")){ %>	
   	<br /> 
-    <% if(estado!="Colocada" && estado!="EnViaje" && estado!="Entregada" && estado != "Cancelada"){ %>	
-  	<br />
-  	<br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" /> 
+  	<br /><input type="button" value="Asignar Proximo Envio" id="btnAsignarEnvio" /> 
+  		<label id="lblSucDestinoEnvio" style="display:none;">Indique sucursal de destino: </label> <input type="text" id="idSucDestinoEnvio" style="display:none;" maxlength="4" width="50px;" /><br/>
+  		<input type="button" value="Guardar Envio" id="btnSaveEnvio" style="display:none;" /> 
    	<% } %>
    	
+   	  <br />
+  	<br /> 
     <div style="display: none;" id="divAsignarEnvio"> 
     <input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;"/> 
     </div>
@@ -266,9 +304,9 @@ $(document).ready(function() {
    	   	
 	<!-- ----------------- Productos ---------------------------- -->
 	<br /><br />
-	<input id="btnVerProductos" type="button" onclick="showProductos();" value="Ver Productos">
-	<div id="divProducto" style="display: none;">
-	<input id="btnHideProductos" type="button" onclick="hideProductos();" value="Ocultar Productos"> <br />
+	<input id="btnVerProductos" type="button" value="Ver Productos">
+	<div id="divProductos" style="display: none;">
+	<input id="btnHideProductos" type="button"  value="Ocultar Productos"> <br />
 	<u> <label>Producto:</label> </u>
 	<table style="border-color: black !important; border-style: solid !important; border-width: thin !important;">
 		<thead>

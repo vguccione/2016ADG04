@@ -98,7 +98,7 @@ $(document).ready(function() {
 					<nav id="navigation">
 						<ul id="main-menu">
 							<li class="current-menu-item">
-								<a href="">HOME</a>
+								<a href="main.jsp">HOME</a>
 							</li>
 							<li class="parent">
 								<a class="parent" href="#"> ENCOMIENDA</a>

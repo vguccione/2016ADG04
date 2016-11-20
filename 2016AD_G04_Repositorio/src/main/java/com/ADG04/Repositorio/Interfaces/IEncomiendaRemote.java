@@ -22,6 +22,10 @@ import com.ADG04.bean.Encomienda.DTO_Remito;
 
 public interface IEncomiendaRemote {
 
+	public Integer asignarEnvio(Integer idEncomienda, Integer idSucursalDestino)throws RemoteException, BusinessException;
+	
+	public List<DTO_Envio> getEnviosByEncomienda(int idEncomienda)throws RemoteException;
+	
 	public void actualizarEstadoEnvio(Integer idEnvio, String estado) throws RemoteException;
 	
 	public Integer asignarEnvio(Integer idEncomienda)throws RemoteException, BusinessException;

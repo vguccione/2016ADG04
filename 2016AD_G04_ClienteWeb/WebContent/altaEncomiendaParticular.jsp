@@ -43,7 +43,7 @@ $(document).ready(function() {
 }); //document ready
 
 function findClient(){
-	alert('findClient');
+
 	$.get("ServletBuscarCliente", function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
         $("#divBuscarCliente").text(responseText);           // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
     });
@@ -163,7 +163,7 @@ function findClient(){
     <li><label>Alto (cm): </label><input class="input-field" name="alto" type="text" id="alto" size="18" /></li><br/>
     <li><label>Profundidad (cm): </label><input class="input-field" name="ancho" type="text" id="ancho" size="18" /></li><br/>
  	<li><label>Peso (kg): </label><input class="input-field" name="peso" type="text" id="peso" size="18" /></li><br/>
-    <li><label>Tratamiento: </label><input class="input-field" name="" type="text" id="tratamiento" value="" maxlength="50" /></li><br/>
+    <li><label>Tratamiento: </label><input class="input-field" name="tratamiento" type="text" id="tratamiento" value="" maxlength="50" /></li><br/>
  	<li><label>Apilable:</label>
      			<label class="input-radio-field"><input type="radio" name="Apilable" value="true" id="Apilable" />Sí</label>
        			<label class="input-radio-field"><input type="radio" name="Apilable" value="false" id="Apilable" checked/>No</label></li>
@@ -172,8 +172,8 @@ function findClient(){
     			<label class="input-radio-field"><input type="radio" name="Refrigerado" value="true" id="Refrigerado" />Sí</label>
            	<label class="input-radio-field"><input type="radio" name="Refrigerado" value="false" id="Refrigerado" checked/>No</label></li>
 	<br/><li><label>Condición de transporte </label><input class="input-field" name="condicionTransporte" type="text" id="condicionTransporte" maxlength="50" /></li>
-<br/>	<li><label>Indicaciones de manipulaci&oacute;n: </label><input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" /></li>      
-	<br/><li><label>Fragilidad: </label><input class="input-field" name="" type="text" id="fragilidad" maxlength="20" /></li>
+<br/>	<li><label>Indicaciones de manipulaci&oacute;n: </label><input class="input-field" name="indicacionesManipulacion" type="text" id="indicacionesManipulacion" maxlength="400" /></li>      
+	<br/><li><label>Fragilidad: </label><input class="input-field" name="fragilidad" type="text" id="fragilidad" maxlength="20" /></li>
 	<br/><li><label>Tercerizado:</label>
 				<label class="input-radio-field"><input type="radio" name="tercerizado" value="true" id="tercerizado" />Sí</label>
        			<label class="input-radio-field"><input type="radio" name="tercerizado" value="false" id="tercerizado" />No</label></li>

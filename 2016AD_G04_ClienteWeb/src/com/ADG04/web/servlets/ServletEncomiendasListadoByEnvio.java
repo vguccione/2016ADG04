@@ -46,13 +46,16 @@ public class ServletEncomiendasListadoByEnvio extends HttpServlet {
 			int currentPageNumber = 1;
 				 
 			List<DTO_Encomienda> encomiendasP = WebBusinessDelegate.getInstancia().listarEncomiendasByEnvio(idEnvio);
+			
 			int totalNumberOfRecords = encomiendasP.size(); 
 			JqGridData<EncomiendaWeb> gridData = new JqGridData<EncomiendaWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, encomiendas);		
 			
 			for(DTO_Encomienda encP:encomiendasP){
 
 				boolean envioAsignado = WebBusinessDelegate.getInstancia().estaEncomiendaAsignada(encP.getIdEncomienda());
-				gridData.addItem(new EncomiendaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado));
+				EncomiendaWeb enc = new EncomiendaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado);
+				enc.setTipo(encP.getTipoEncomienda());
+				gridData.addItem(enc);
 			}
 			
 			System.out.println("Grid Data: " + gridData.getJsonString());

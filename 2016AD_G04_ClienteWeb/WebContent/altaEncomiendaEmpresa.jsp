@@ -257,11 +257,11 @@ $(document).ready(function() {
 						<br/>
 						<li>
 							<label>Indicaciones de manipulaci&oacute;n:</label>
-							<input class="input-field" name="" type="text" id="indicacionesManipulacion" maxlength="400" />
+							<input class="input-field" name="indicacionesManipulacion" type="text" id="indicacionesManipulacion" maxlength="400" />
 						</li>      
 						<li>
 							<label>Fragilidad:</label>
-							<input class="input-field" name="" type="text" id="fragilidad" maxlength="20" />
+							<input class="input-field" name="fragilidad" type="text" id="fragilidad" maxlength="20" />
 						</li>
 						<br/>
 						<label>Agregar productos</label><br/><button type="button" id="agregarProd" name="agregarProd" value="Agregar" )>Agregar Producto</button>

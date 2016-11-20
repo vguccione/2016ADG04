@@ -658,6 +658,11 @@ public  class Encomienda{
 		
 		return idEnvio;
 	}
+
+	
+	
+	
+	
 	
 	public void ponerEnViajeEncomiendasPorVencer(){
 		List<EncomiendaE> encomiendasColocadasPorVencer = EncomiendaDao.getInstancia().obtenerEncomiendasColocadasPorVencerHoy();
@@ -672,10 +677,9 @@ public  class Encomienda{
 		      }
 		}
 	}
-	
-	
-	
-	/*Asignar envio manualmente indicando sucursal de destino */
+		
+	/**
+	 * Asignar envio manualmente indicando sucursal de destino */
 	public Integer asignarEnvio(Integer idCarrier, int idSucursalDest) throws BusinessException {
 		
 		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 

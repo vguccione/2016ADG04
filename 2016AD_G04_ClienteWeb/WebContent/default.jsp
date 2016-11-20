@@ -7,6 +7,6 @@
 <title>Principal</title>
 </head>
 <body>
-Sistema de Distribución
+	<% response.sendRedirect("main.jsp");%>
 </body>
 </html>

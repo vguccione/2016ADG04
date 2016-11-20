@@ -1863,22 +1863,24 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public void actualizarEstadoEnvios(String dir) throws RemoteException {
 		List<EnvioE> envios = EnvioDao.getInstancia().getAll();
 		for(EnvioE envio :envios){
-			Envio e = new Envio().fromEntity(envio);
-			e.estaEnvioDemorado();
-			CoordenadaE coord = obtenerPosicionActual(e.getIdEnvio(),dir);
-			String latitud = e.getPosicionActual().getLatitud();
-			String longitud = e.getPosicionActual().getLongitud();
+			if(envio.getSucursalDestino()!=null){
+				Envio e = new Envio().fromEntity(envio);
+				e.estaEnvioDemorado();
+				CoordenadaE coord = obtenerPosicionActual(e.getIdEnvio(),dir);
+				String latitud = e.getPosicionActual().getLatitud();
+				String longitud = e.getPosicionActual().getLongitud();
+					
+				if(coord!=null){
+					latitud = coord.getLatitud();
+					longitud = coord.getLongitud();
+				}
 				
-			if(coord!=null){
-				latitud = coord.getLatitud();
-				longitud = coord.getLongitud();
+				/*Verifico la ultima actualizacion haya sido realizada hace 5 minutos*/
+				Date now = new Date();
+				long diffInMillies = now.getTime() -  e.getFechaActualizacion().getTime();
+				if(diffInMillies>=300000)
+					e.actualizarEstadoVehiculo(latitud, longitud);
 			}
-			
-			/*Verifico la ultima actualizacion haya sido realizada hace 5 minutos*/
-			Date now = new Date();
-			long diffInMillies = now.getTime() -  e.getFechaActualizacion().getTime();
-			if(diffInMillies>=300000)
-				e.actualizarEstadoVehiculo(latitud, longitud);
 		}
 	}
 

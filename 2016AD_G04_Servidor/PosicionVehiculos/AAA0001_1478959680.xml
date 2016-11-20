@@ -4,7 +4,7 @@
 		<nroRemito>1</nroRemito>
 		<fecha>2016-11-12</fecha>
 		<hora>11:13:00</hora>
-		<latitud>1</latitud>
-		<longitud>2</longitud>
+		<latitud>50</latitud>
+		<longitud>20</longitud>
 	</vehiculo>
 </viaje>

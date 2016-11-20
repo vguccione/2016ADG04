@@ -403,7 +403,7 @@ public class Envio{
 			}
 			
 			if(!encontrado){
-				if(e.getEstado().equals(EnvioEstado.EnViaje.toString())){
+				if(e.getEstado().equals(EnvioEstado.EnViaje.toString()) || e.getEstado().equals(EnvioEstado.Demorado.toString())){
 					e.setEstado(EnvioEstado.Desviado.toString());
 					actualizarHistorico();
 				}
@@ -431,7 +431,7 @@ public class Envio{
 		EnvioE e = EnvioDao.getInstancia().getById(idEnvio);
 		Date hoy = new Date();
 		if(e.getFechaYHoraLlegadaEstimada().compareTo(hoy)<0){
-			if(!e.getEstado().equals("Demorado")){
+			if(!e.getEstado().equals(EnvioEstado.Demorado.toString())){
 				e.setEstado(EnvioEstado.Demorado.toString());
 				e.setFechaActualizacion(new Date());
 				EnvioDao.getInstancia().saveOrUpdate(e);

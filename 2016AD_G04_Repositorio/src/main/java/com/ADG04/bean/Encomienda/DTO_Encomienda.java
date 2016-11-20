@@ -16,6 +16,7 @@ public class DTO_Encomienda implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int idEncomienda;
+	private int idCarrier;
 	private DTO_ItemFactura itemFactura;
 	private DTO_Direccion direccionOrigen;
 	private DTO_Direccion direccionDestino;
@@ -303,7 +304,13 @@ public class DTO_Encomienda implements Serializable{
 		this.tipoEncomienda = tipoEncomienda;
 	}
 
+	public int getIdCarrier() {
+		return idCarrier;
+	}
 
+	public void setIdCarrier(int idCarrier) {
+		this.idCarrier = idCarrier;
+	}
 
 	public void addEnvio(DTO_Envio e) {
 		if(this.envios == null)

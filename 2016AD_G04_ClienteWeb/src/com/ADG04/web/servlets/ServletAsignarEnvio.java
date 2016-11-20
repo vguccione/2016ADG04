@@ -39,7 +39,17 @@ public class ServletAsignarEnvio extends HttpServlet {
 				
 				Integer idEncomienda = Integer.parseInt(request.getParameter("idEncomienda").toString());
 				Integer idSucDestino = Integer.parseInt(request.getParameter("idSucDestino").toString());
-				Integer idEnvio = WebBusinessDelegate.getInstancia().asignarEnvio(idEncomienda, idSucDestino);
+				Integer idEnvio = 0;
+				
+				if(request.getParameter("idCarrier")!= null){
+					
+					Integer idCarrier = Integer.parseInt(request.getParameter("idCarrier").toString());
+					idEnvio = WebBusinessDelegate.getInstancia().asignarEnvio(idEncomienda, idSucDestino, idCarrier);
+				}
+				else{
+					idEnvio = WebBusinessDelegate.getInstancia().asignarEnvio(idEncomienda, idSucDestino);
+				}
+												
 				responseText = "Se ha asignado el envio nro " + idEnvio.toString();
 			}
 		}

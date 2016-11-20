@@ -489,19 +489,29 @@ public  class Encomienda{
 	
 	public Integer asignarEnvio(Integer idCarrier) throws BusinessException {
 		
-		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
-		 * y asi marco esos envios y vehiculos como no disponibles*/
-		ponerEnViajeEncomiendasPorVencer();
-		
 		EncomiendaE e = EncomiendaDao.getInstancia().getById(idEncomienda);
+
+		/*Si no es tercerizada, me fijo si hay encomiendas por vencer.
+		 * Antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
+		 * y asi marco esos envios y vehiculos como no disponibles*/
+		if(!e.isInternacional() && !e.isTercerizado())	
+			ponerEnViajeEncomiendasPorVencer();
+				
 		System.out.println(e.toString());
 		Integer idEnvio = null;
 		if(e != null){
 			if(esEnvioTercerizado()){ 
 				EnvioE envioTercerizado = new EnvioE();
-				if(e.isInternacional()){
+				if(e.isInternacional() || e.isTercerizado()){
 					ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
+					if(prov == null)
+						throw new BusinessException("El Carrier " + idCarrier + " no existe");
+					if(prov.getTipo() != 'C')
+						throw new BusinessException("El Proveedor " + idCarrier + " no es de tipo Carrier (es de tipo '"+prov.getTipo()+"')");
+					
 					envioTercerizado.setProveedor(prov);
+					System.out.println("Es tercerizdo: " + e.isTercerizado() + " - Es internacional: " + e.isInternacional());
+					System.out.println("Carrier asignado: " + prov.getIdProveedor() + " (" +prov.getRazonSocial()+")"); 
 				}
 				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
@@ -652,9 +662,11 @@ public  class Encomienda{
 			}//End if else envio propio/tercerizado
 		}//End if no encontro encomienda
 		
-
-		/*Coloco las encomiendas en viaje y envio en viaje si hay encomiendas por vencer*/
-		ponerEnViajeEncomiendasPorVencer();
+		/* Si no es tercerizada, me fijo si hay encomiendas por vencer.
+		 * Coloco las encomiendas en viaje y envio en viaje si hay encomiendas por vencer 
+		 */
+		if(!e.isInternacional() && !e.isTercerizado())	
+			ponerEnViajeEncomiendasPorVencer();
 		
 		return idEnvio;
 	}

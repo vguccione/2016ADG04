@@ -152,7 +152,6 @@ public class EncomiendaParticular extends Encomienda{
 		if(cli == null)
 			throw new ClientNotFoundException();
 		
-		
 		EncomiendaE encomienda = new EncomiendaE();
 		encomienda.setCliente(cli);
 		encomienda.setSucursalOrigen(origen);
@@ -186,6 +185,9 @@ public class EncomiendaParticular extends Encomienda{
 		}
 		
 		encomienda.setTercerizado(this.isTercerizado());
+		if(this.isInternacional())	//Si es internacional, tiene que ser tercerizado.
+			encomienda.setTercerizado(true);
+		
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
 		encomienda.setFechaCreacion(new Date());
 		

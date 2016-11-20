@@ -469,84 +469,78 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		return null;
 	}
 
+	@SuppressWarnings("unused")
 	public Integer nuevaEncomiedaParticular(DTO_EncomiendaParticular encP) throws BusinessException {
 		
 		try{
-		//Cuando creo la encomienda, la sucursal actual es la misma que la de origen
-		Sucursal sucursalActual = new Sucursal();
-		sucursalActual.setIdSucursal(encP.getSucursalOrigen().getId());
-		
-		Sucursal sucursalOrigen = new Sucursal();
-		sucursalOrigen.setIdSucursal(encP.getSucursalOrigen().getId());
-		
-		Sucursal sucursalDestino = new Sucursal();
-		sucursalDestino.setIdSucursal(encP.getSucursalDestino().getId());
-		
-		//Direccion direccionDestino = new Direccion();
-		//direccionDestino.setIdDireccion(encP.getDireccionDestino().getIdDireccion());
-
-		//Direccion direccionOrigen = new Direccion();
-		//direccionOrigen.setIdDireccion(encP.getDireccionOrigen().getIdDireccion());
-
-		if(encP.getCliente() == null || encP.getCliente().getId() == null){
-			throw new ClientNotFoundException();	
-		}
-		
-		ClienteParticularE cliE = (ClienteParticularE)ClienteDao.getInstancia().getById(encP.getCliente().getId());
-		
-		if(sucursalActual == null)
-			throw new SucursalNotFoundException(encP.getSucursalActual().getId());
-		if(sucursalOrigen == null)
-			throw new SucursalNotFoundException(encP.getSucursalOrigen().getId());
-		if(sucursalDestino == null)
-			throw new SucursalNotFoundException(encP.getSucursalDestino().getId());
-		if(cliE == null)
-			throw new ClientNotFoundException();
-		
-		Cliente cliente = new Cliente();
-		cliente.setIdCliente(cliE.getIdCliente());
-		cliente.setDni(cliE.getDni());
+			//Cuando creo la encomienda, la sucursal actual es la misma que la de origen
+			Sucursal sucursalActual = new Sucursal();
+			sucursalActual.setIdSucursal(encP.getSucursalOrigen().getId());
+			
+			Sucursal sucursalOrigen = new Sucursal();
+			sucursalOrigen.setIdSucursal(encP.getSucursalOrigen().getId());
+			
+			Sucursal sucursalDestino = new Sucursal();
+			sucursalDestino.setIdSucursal(encP.getSucursalDestino().getId());
+	
+			if(encP.getCliente() == null || encP.getCliente().getId() == null){
+				throw new ClientNotFoundException();	
+			}
+			
+			ClienteParticularE cliE = (ClienteParticularE)ClienteDao.getInstancia().getById(encP.getCliente().getId());
+			
+			if(sucursalActual == null)
+				throw new SucursalNotFoundException(encP.getSucursalActual().getId());
+			if(sucursalOrigen == null)
+				throw new SucursalNotFoundException(encP.getSucursalOrigen().getId());
+			if(sucursalDestino == null)
+				throw new SucursalNotFoundException(encP.getSucursalDestino().getId());
+			if(cliE == null)
+				throw new ClientNotFoundException();
+			
+			Cliente cliente = new Cliente();
+			cliente.setIdCliente(cliE.getIdCliente());
+			cliente.setDni(cliE.getDni());
+					
+			ServicioSeguridad servicioSeg = new ServicioSeguridad();
+			servicioSeg.setIdServicioSeguridad(encP.getIdServicioSeguridad());
+			
+			String desc = "Encomienda: " + cliente.getDni() + " - " + sucursalOrigen.getIdSucursal() + " - " + sucursalDestino.getIdSucursal();
+			Manifiesto manifiesto = new Manifiesto();
+			manifiesto.addItem(new ItemManifiesto(desc, 1, null));
+			
+			Remito remito = new Remito();
+			List<ItemRemito> items = new ArrayList<ItemRemito>();
+			ItemRemito itr = new ItemRemito();
+			itr.setCantidad(1);
+			itr.setDescripcion(desc);
+			itr.setProducto(null);
+			items.add(itr);
+			remito.setItemsRemito(items);
+					
+			EncomiendaParticular nuevaEncomienda = 		
+			new EncomiendaParticular(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
+					encP.getFechaCreacion(), encP.getFechaEstimadaEntrega(), encP.getEstado(), encP.isTercerizada(), 
+					encP.getLargo(), encP.getAlto(), encP.getAncho(), encP.getPeso(), encP.getVolumen(), encP.getTratamiento(), 
+	
+					encP.getApilable(), encP.getCantApilable(), encP.getRefrigerado(), encP.getCondicionTransporte(), 
+					encP.getIndicacionesManipulacion(), encP.getFragilidad(), encP.getNombreReceptor(), 
+					encP.getApellidoReceptor(), encP.getDniReceptor(), encP.getVolumenGranel(), encP.getUnidadGranel(), 
+					encP.getCargaGranel(), servicioSeg, manifiesto, remito, encP.isInternacional());
+			
+			Integer idEncomienda = nuevaEncomienda.saveOrUpdate();
 				
-		ServicioSeguridad servicioSeg = new ServicioSeguridad();
-		servicioSeg.setIdServicioSeguridad(encP.getIdServicioSeguridad());
-		
-		String desc = "Encomienda: " + cliente.getDni() + " - " + sucursalOrigen.getIdSucursal() + " - " + sucursalDestino.getIdSucursal();
-		Manifiesto manifiesto = new Manifiesto();
-		manifiesto.addItem(new ItemManifiesto(desc, 1, null));
-		
-		Remito remito = new Remito();
-		List<ItemRemito> items = new ArrayList<ItemRemito>();
-		ItemRemito itr = new ItemRemito();
-		itr.setCantidad(1);
-		itr.setDescripcion(desc);
-		itr.setProducto(null);
-		items.add(itr);
-		remito.setItemsRemito(items);
+			nuevaEncomienda.facturar("P");
 				
-		EncomiendaParticular nuevaEncomienda = 		
-		new EncomiendaParticular(null, sucursalDestino, sucursalOrigen, null, sucursalActual, cliente, 
-				encP.getFechaCreacion(), encP.getFechaEstimadaEntrega(), encP.getEstado(), encP.isTercerizada(), 
-				encP.getLargo(), encP.getAlto(), encP.getAncho(), encP.getPeso(), encP.getVolumen(), encP.getTratamiento(), 
-
-				encP.getApilable(), encP.getCantApilable(), encP.getRefrigerado(), encP.getCondicionTransporte(), 
-				encP.getIndicacionesManipulacion(), encP.getFragilidad(), encP.getNombreReceptor(), 
-				encP.getApellidoReceptor(), encP.getDniReceptor(), encP.getVolumenGranel(), encP.getUnidadGranel(), 
-				encP.getCargaGranel(), servicioSeg, manifiesto, remito, encP.isInternacional());
-		
-		Integer idEncomienda = nuevaEncomienda.saveOrUpdate();
-		
-		nuevaEncomienda.facturar("P");
-		
-		//Intento asignar la encomienda a un envío.
-		//nuevaEncomienda.asignarEnvio(null);
-		
-		return idEncomienda;
+			//Intento asignar la encomienda a un envío.
+			//nuevaEncomienda.asignarEnvio(null);
+				
+			return idEncomienda;
 		}
 		catch(Exception ex){
+			
 			ex.printStackTrace();
-		    // the following statement is used to log any messages  
-	        logger.info("My first log");
-	        
+		    
 	        String msg = "";
 	        StackTraceElement[] ts = ex.getStackTrace();
 	        for(StackTraceElement t:ts){
@@ -2193,5 +2187,34 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		MapaDeRuta mr = new MapaDeRuta().fromEntity(me);
 		Date fechaEstimada = mr.calcularFechaEstimadaDeEntrega();
 		return fechaEstimada;
+	}
+
+
+	@Override
+	public Integer asignarEnvio(Integer idEncomienda, Integer idSucursalDestino, Integer idCarrier) throws RemoteException, BusinessException {
+
+		EncomiendaE enc = EncomiendaDao.getInstancia().getById(idEncomienda);
+		
+		if(enc == null){
+			throw new BusinessException("La encomienda nro " + idEncomienda + " no existe.");
+		}
+		
+		Integer idEnvio = 0;
+		
+		if(enc.getTipoEncomienda().equals('P')){
+			EncomiendaParticular particular = (EncomiendaParticular) new EncomiendaParticular().fromEntity(enc);
+			idEnvio = particular.asignarEnvio(idCarrier, idSucursalDestino);
+			
+		}else{
+			EncomiendaEmpresa empresa = (EncomiendaEmpresa) new EncomiendaEmpresa().fromEntity(enc);
+			idEnvio = empresa.asignarEnvio(idCarrier, idSucursalDestino);
+		}
+		
+		if(idEnvio <= 0){
+			throw new BusinessException("No se pudo generar el envio.");
+		}
+		
+		return idEnvio;
+
 	}
 }

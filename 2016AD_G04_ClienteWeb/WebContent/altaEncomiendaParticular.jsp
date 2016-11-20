@@ -54,6 +54,30 @@ $(document).ready(function() {
 		    	}
 			});
 	   
+		    $('#btnBuscarCliente').on("click",function(){
+		    	var dniCliente = $('#dniParticularBuscar').val();
+		        $.get('servletBuscarCliente?action=byDni', {
+		        	dni : dniCliente
+		        	}, 
+		        	function(responseText) {
+		        		
+		        		if(responseText == "noExiste"){
+		        			alert('El Cliente no existe');
+		        			$("#dniParticular").val("");
+			        		$("#nombreCliente").val("");
+		        			$("#altaEncomiendaForm").css("display", "none");
+		        		}
+		        		else{
+			        		//$("#divBuscarCliente").text(responseText);
+			        		$("#dniParticular").val(dniCliente);
+			        		$("#nombreCliente").val(responseText);
+			        		$("#altaEncomiendaForm").css("display", "block");
+		        		}
+		        	}
+		        );
+			});
+		  
+		  
 }); //document ready
 
 function findClient(){
@@ -145,6 +169,16 @@ function findClient(){
 <div class="container" style="background-color: #E6E6E6;">
  <div class="content" >
 <h2>Encomienda Particular:</h2>
+
+<ul><li>
+<label>Buscar cliente por DNI:</label>
+<input class="input-field" name="dniParticularBuscar" type="text" id="dniParticularBuscar" maxlength="15" />
+</li></ul>
+
+<button id="btnBuscarCliente">Buscar Cliente</button>
+<div id="divBuscarCliente"> </div>
+
+<div id="altaEncomiendaForm" style="display:none;">
 <form action="serveletEncomiendaParticular?action=altaEncomiendaParticular" method="post" name="frm_idEncomienda" onsubmit="return validar()"> <!-- class="form-style-2">-->
 
 
@@ -153,14 +187,10 @@ function findClient(){
     
     <ul>
 	<li><label>Dni:  </label><input class="input-field" name="dniParticular" type="text" id="dniParticular" maxlength="10" /></li><br/>
-		<!-- <button id="btnBuscarCliente" onclick="findClient()">Buscar Cliente</button>
-        				<div id="divBuscarCliente"></div> -->
-		<!-- <li><label>Nombre del particular: </label><input class="input-field" name="nombreParticular" type="text" id="nombreParticular" maxlength="50" /></li>
-		<li><label>Apellido del particular: </label><input class="input-field" name="apellidoParticular" type="text" id="apellidoParticular" maxlength="50" /></li>-->
-    
+	<li><label>Nombre y Apellido:  </label><input class="input-field" name="nombreCliente" type="text" id="nombreCliente" width="300px;" readonly="readonly" /></li><br/>
     <li><label>Código Sucursal de origen:  </label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value="<%=sucursal%>"/></li><br/>
 	<li><label>Código Sucursal de destino:  </label><input name="idSucursalDestino" type="text" class="input-field" id="idSucursalDestino" /></li><br/>
-	
+
  	<br/>
  	
 	<li>
@@ -199,6 +229,8 @@ function findClient(){
 
       <div class="btn_centrado"><input name="Ingresar" type="submit" id="btn_encomienda" value="Enviar" /></div>
       </form>
+
+</div> <!-- cierra div altaEncomiendaForm -->
 
       </div>
     <br />

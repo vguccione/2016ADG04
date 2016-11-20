@@ -176,6 +176,16 @@ $(document).ready(function() {
 	return valido;
  }
 
+ function seleccionarTercerizado(){
+	 var tercerizado = document.getElementsByName("tercerizado");
+		for(var i = 0; i < tercerizado.length; i++){
+			if(tercerizado[i].value==="true"){
+				tercerizado[i].checked=true;
+			}
+		}
+		document.getElementById("tercerizado").readOnly = true;
+	}
+
  </script>
 <!-- Cuerpo -->
 <body>
@@ -270,6 +280,13 @@ $(document).ready(function() {
 							<label>Fragilidad:</label>
 							<input class="input-field" name="fragilidad" type="text" id="fragilidad" maxlength="20" />
 						</li>
+						<br/><li><label>Internacional:</label>
+						<label class="input-radio-field"><input type="radio" name="internacional" value="true" id="internacional" onclick="seleccionarTercerizado()"/>Sí</label>
+		       			<label class="input-radio-field"><input type="radio" name="internacional" value="false" id="internacional" />No</label></li>
+		    				<br/><li><label>Tercerizado:</label>
+						<label class="input-radio-field"><input type="radio" name="tercerizado" value="true" id="tercerizado" />Sí</label>
+       					<label class="input-radio-field"><input type="radio" name="tercerizado" value="false" id="tercerizado" />No</label></li>
+    
 						<br/>
 						<label>Agregar productos</label><br/><button type="button" id="agregarProd" name="agregarProd" value="Agregar" )>Agregar Producto</button>
 						

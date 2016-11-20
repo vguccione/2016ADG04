@@ -179,6 +179,12 @@ public class EncomiendaParticular extends Encomienda{
 		encomienda.setCargaGranel(this.getCargaGranel());		
 		encomienda.setTipoEncomienda("P");
 		
+		//Servicio de seguridad
+		if(this.servicioSeguridad != null){
+			ServicioSeguridadE servE = ServicioSeguridadDao.getInstancia().getById(this.getServicioSeguridad().getIdServicioSeguridad());
+			encomienda.setServicioSeguridad(servE);
+		}
+		
 		encomienda.setTercerizado(this.isTercerizado());
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
 		encomienda.setFechaCreacion(new Date());

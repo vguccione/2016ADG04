@@ -82,6 +82,25 @@ public class EnvioDao extends GenericDao<EnvioE, Integer> {
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<EnvioE> getByEncomienda(int idEncomienda) {
+		
+		try{
+			return (List<EnvioE>)entityManager.createQuery("select e from EnvioE e "
+					+ " join e.encomiendas enc"
+					//+ " where enc.estado='Colocada'"
+					//+ " and e.estado='Pendiente'"
+					+ " where enc.idEncomienda=:idEncomienda")
+					.setParameter("idEncomienda", idEncomienda)
+					.getResultList();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
 	
 	public EnvioE getByEncomiendaColocada(int idEncomienda) {
 		EnvioE envio = null;

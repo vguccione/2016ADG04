@@ -26,11 +26,8 @@ import com.ADG04.bean.Encomienda.DTO_EncomiendaParticular;
 import com.ADG04.bean.Encomienda.DTO_Envio;
 import com.ADG04.bean.Encomienda.DTO_ItemManifiesto;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
-
 import com.ADG04.bean.Encomienda.DTO_Remito;
-
 import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
-
 import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 import com.ADG04.web.controller.WebBusinessDelegate;
 
@@ -91,14 +88,22 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		
 		request.setAttribute("nroEncomienda", idEncomienda );
 		request.setAttribute("estadoEncomienda", e.getEstado());
+
+		//Busco los envios
 		List<String> envios = new ArrayList<String>();
-		for(DTO_Envio envio:e.getEnvios()){
-			System.out.println(envio.getId());
-			DTO_Envio env = WebBusinessDelegate.getInstancia().getEnvio(envio.getId());
-			String envMsg = "Envio nro: (Entre Sucursales "+env.getIdSucursalOrigen().toString()  +" y "+env.getIdSucursalDestino().toString() +") " + env.getId() + " - Estado: "+env.getEstado()+" <a href='ServletVerEnvio?idEnvio'"+envio.getId()+">Ver estado</a>";
-			envios.add(envMsg);
+		List<DTO_Envio> evs = getEnviosByEncomienda(idEncomienda);
+		
+		if(evs != null){
+			for(DTO_Envio envio:evs){
+				System.out.println(envio.getId());
+				DTO_Envio env = WebBusinessDelegate.getInstancia().getEnvio(envio.getId());
+				String envMsg = "Envio nro: (Entre Sucursales "+env.getIdSucursalOrigen().toString()  +" y "+env.getIdSucursalDestino().toString() +") " + env.getId() + " - Estado: "+env.getEstado()+" <a href='ServletVerEnvio?idEnvio="+envio.getId()+"'>Ver estado</a>";
+				envios.add(envMsg);
+			}
 		}
+		
 		request.setAttribute("listaEnvios", envios);
+		
 		DTO_ClienteEmpresa cli = WebBusinessDelegate.getInstancia().getClienteEmpresaById(e.getCliente().getId());
 		
 		request.setAttribute("dniCliente", cli.getCuit() );
@@ -125,7 +130,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			request.setAttribute("cantApilable",0);
 		
 		
-		if(e.getApilable()) 
+		if(e.getRefrigerado()) 
 			request.setAttribute("refrigerado","Si");
 		else
 			request.setAttribute("refrigerado","No");
@@ -134,7 +139,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		request.setAttribute("indicacionesManipulacion",e.getIndicacionesManipulacion());      
 		request.setAttribute("fragilidad",e.getFragilidad());
 
-		if(e.getApilable()) 
+		if(e.isTercerizada()) 
 			request.setAttribute("tercerizado","Si");
 		else
 			request.setAttribute("tercerizado","No");
@@ -220,14 +225,22 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		
 		request.setAttribute("nroEncomienda", idEncomienda );
 		request.setAttribute("estadoEncomienda", e.getEstado());
+		
+		//Busco los envios
 		List<String> envios = new ArrayList<String>();
-		for(DTO_Envio envio:e.getEnvios()){
-			System.out.println(envio.getId());
-			DTO_Envio env = WebBusinessDelegate.getInstancia().getEnvio(envio.getId());
-			String envMsg = "Envio nro: (Entre Sucursales "+env.getIdSucursalOrigen().toString()  +" y "+env.getIdSucursalDestino().toString() +") " + env.getId() + " - Estado: "+env.getEstado()+" <a href='ServletVerEnvio?idEnvio="+envio.getId()+"'>Ver estado</a>";
-			envios.add(envMsg);
+		List<DTO_Envio> evs = getEnviosByEncomienda(idEncomienda);
+		
+		if(evs != null){
+			for(DTO_Envio envio:evs){
+				System.out.println(envio.getId());
+				DTO_Envio env = WebBusinessDelegate.getInstancia().getEnvio(envio.getId());
+				String envMsg = "Envio nro: (Entre Sucursales "+env.getIdSucursalOrigen().toString()  +" y "+env.getIdSucursalDestino().toString() +") " + env.getId() + " - Estado: "+env.getEstado()+" <a href='ServletVerEnvio?idEnvio="+envio.getId()+"'>Ver estado</a>";
+				envios.add(envMsg);
+			}
 		}
+		
 		request.setAttribute("listaEnvios", envios);
+		
 		DTO_ClienteParticular cli = WebBusinessDelegate.getInstancia().getClienteParticularById(e.getCliente().getId());
 		
 		request.setAttribute("dniCliente", cli.getDni() );
@@ -255,7 +268,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			request.setAttribute("cantApilable",0);
 		
 		
-		if(e.getApilable()) 
+		if(e.getRefrigerado()) 
 			request.setAttribute("refrigerado","Si");
 		else
 			request.setAttribute("refrigerado","No");
@@ -264,7 +277,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		request.setAttribute("indicacionesManipulacion",e.getIndicacionesManipulacion());      
 		request.setAttribute("fragilidad",e.getFragilidad());
 
-		if(e.getApilable()) 
+		if(e.isTercerizada()) 
 			request.setAttribute("tercerizado","Si");
 		else
 			request.setAttribute("tercerizado","No");
@@ -330,6 +343,11 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			
 			request.setAttribute("totalFactura", total.toString());
 		}
+	}
+
+
+	private List<DTO_Envio> getEnviosByEncomienda(int idEncomienda) throws RemoteException, Exception {
+		return WebBusinessDelegate.getInstancia().getEnviosByEncomienda(idEncomienda);
 	}
 
 

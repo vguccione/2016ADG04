@@ -13,7 +13,11 @@
 <div class="container">
     <div class="content">
   
-    <!-- Pagina principal -->
+    <%
+    if(sesionIntento.getAttribute("usuario") == null || sesionIntento.getAttribute("usuario").equals("")){
+    	 response.sendRedirect("login.jsp");
+    }
+    %>
   
     </div>
   </div>

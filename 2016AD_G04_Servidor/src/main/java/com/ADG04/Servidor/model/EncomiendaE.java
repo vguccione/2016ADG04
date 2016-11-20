@@ -134,9 +134,6 @@ public class EncomiendaE implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "encomienda")
 	private List<ProductoEncomiendaE> productoEncomiendas;
 	
-	@Column(name="EsTerciarizado")
-	private boolean terciarizado;
-	
 	@Column(name="ServicioSeguridad")
 	private ServicioSeguridadE servicioSeguridad;
 	
@@ -458,14 +455,6 @@ public class EncomiendaE implements java.io.Serializable {
 		this.sucursalDestno = sucursalDestno;
 	}
 
-	public boolean isTerciarizado() {
-		return terciarizado;
-	}
-
-	public void setTerciarizado(boolean terciarizado) {
-		this.terciarizado = terciarizado;
-	}
-
 	public ServicioSeguridadE getServicioSeguridad() {
 		return servicioSeguridad;
 	}
@@ -523,7 +512,7 @@ public class EncomiendaE implements java.io.Serializable {
 				+ ", dniReceptor=" + dniReceptor + ", volumenGranel="
 				+ volumenGranel + ", unidadGranel=" + unidadGranel
 				+ ", cargaGranel=" + cargaGranel + ", productoEncomiendas="
-				+ productoEncomiendas + ", terciarizado=" + terciarizado +""
+				+ productoEncomiendas + ", terciarizado=" + tercerizado +""
 						+ " internacional +" + internacional + "]";
 	}
 

@@ -6,7 +6,8 @@ public class EncomiendaWeb {
 	private Integer idCliente;
 	private Boolean envioAsignado;
 	private String estado;
-		
+	private String tipo;	
+	
 	public EncomiendaWeb(Integer idEncomienda, Integer idCliente, String estado,
 			Boolean envioAsignado) {
 		super();
@@ -39,6 +40,12 @@ public class EncomiendaWeb {
 	
 	
 	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	public String getEstado() {
 		return estado;
 	}
@@ -46,11 +53,18 @@ public class EncomiendaWeb {
 		this.estado = estado;
 	}
 	public String toString() {
-        return "{\"idEncomienda\":\"" + idEncomienda.toString() 
+		
+        String msg = "{\"idEncomienda\":\"" + idEncomienda.toString() 
         		+ "\", \"idCliente\":\"" + idCliente.toString() 
         		+ "\", \"estado\":\"" + this.getEstado()
-        		+ "\", \"envioAsignado\":\"" + this.tieneEnvio() 
-        		+ "\", \"verEncomienda\":\"" + "<a href=ServletVerEncomiendasParticular?action=getEncomienda&idEncomienda="+idEncomienda.toString()+">Ver Encomienda</a>" + "\"}";
+        		+ "\", \"envioAsignado\":\"" + this.tieneEnvio();
+        
+        if(this.getTipo().equals("P"))
+        	msg += "\", \"verEncomienda\":\"" + "<a href=ServletVerEncomiendasParticular?action=getEncomienda&idEncomienda="+idEncomienda.toString()+">Ver Encomienda</a>" + "\"}";
+        if(this.getTipo().equals("E"))
+        	msg += "\", \"verEncomienda\":\"" + "<a href=ServletVerEncomiendasParticular?action=getEncomiendaEmpresa&idEncomienda="+idEncomienda.toString()+">Ver Encomienda</a>" + "\"}";
+        
+        return msg;
     }
 	
 	private String tieneEnvio(){

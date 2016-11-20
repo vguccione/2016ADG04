@@ -31,23 +31,15 @@ public class ServletAsignarEnvio extends HttpServlet {
     }
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	 		
-		Enumeration<String> params = request.getParameterNames();
-		
-		while(params.hasMoreElements()){
-			System.out.println(params.nextElement());
-		}
 		
 		String responseText = "";
 		try{
 			String action = request.getParameter("action");
 			if(action.equals("asignarEnvio")){
-			
-				String pepe = request.getParameter("idEncomienda").toString();
-				System.out.println(pepe);
 				
 				Integer idEncomienda = Integer.parseInt(request.getParameter("idEncomienda").toString());
-				Integer idEnvio = WebBusinessDelegate.getInstancia().asignarEnvio(idEncomienda);
+				Integer idSucDestino = Integer.parseInt(request.getParameter("idSucDestino").toString());
+				Integer idEnvio = WebBusinessDelegate.getInstancia().asignarEnvio(idEncomienda, idSucDestino);
 				responseText = "Se ha asignado el envio nro " + idEnvio.toString();
 			}
 		}

@@ -470,9 +470,12 @@ public class Envio{
 		tx.begin();
 		
 		//Pongo como concluídas las encomiendas que están en este envío.
-		for(EncomiendaE enc:encomiendasEntities)
+		//for(EncomiendaE enc:encomiendasEntities)
+		int size = encomiendasEntities.size();
+		for(int i = 0; i < size; i++)
 		{
 			try{
+				EncomiendaE enc = encomiendasEntities.get(i);
 				enc.setSucursalActual(e.getSucursalDestino());
 				
 				//Si la encomienda llego a su destino final (sucursalDestino)

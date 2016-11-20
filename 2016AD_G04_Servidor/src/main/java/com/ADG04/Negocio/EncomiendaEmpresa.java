@@ -31,6 +31,8 @@ import java.util.Set;
 
 
 
+
+
 import org.hibernate.mapping.Array;
 import org.hibernate.property.Getter;
 
@@ -47,6 +49,7 @@ import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.dao.ProductoEncomiendaDao;
 import com.ADG04.Servidor.dao.ProveedorDao;
 import com.ADG04.Servidor.dao.RemitoDao;
+import com.ADG04.Servidor.dao.ServicioSeguridadDao;
 import com.ADG04.Servidor.dao.SucursalDao;
 import com.ADG04.Servidor.model.ClienteE;
 import com.ADG04.Servidor.model.ClienteEmpresaE;
@@ -60,6 +63,7 @@ import com.ADG04.Servidor.model.MapaDeRutaE;
 import com.ADG04.Servidor.model.ProductoE;
 import com.ADG04.Servidor.model.ProductoEncomiendaE;
 import com.ADG04.Servidor.model.RemitoE;
+import com.ADG04.Servidor.model.ServicioSeguridadE;
 import com.ADG04.Servidor.model.SucursalE;
 import com.ADG04.Servidor.util.EncomiendaEstado;
 import com.ADG04.bean.Encomienda.DTO_Encomienda;
@@ -179,6 +183,12 @@ public class EncomiendaEmpresa extends Encomienda{
 		encomiendaEntity.setUnidadGranel(this.getUnidadGranel());
 		encomiendaEntity.setCargaGranel(this.getCargaGranel());		
 		encomiendaEntity.setTipoEncomienda("E");
+		
+		//Servicio de seguridad
+		if(this.servicioSeguridad != null){
+			ServicioSeguridadE servE = ServicioSeguridadDao.getInstancia().getById(this.getServicioSeguridad().getIdServicioSeguridad());
+			encomiendaEntity.setServicioSeguridad(servE);
+		}
 		
 		encomiendaEntity.setTercerizado(this.isTercerizado());
 		encomiendaEntity.setEstado(EncomiendaEstado.Ingresada.toString());

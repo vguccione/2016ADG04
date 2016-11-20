@@ -100,9 +100,9 @@ function guardarEstadoEnvio(){
 	if (document.getElementById('rbnVehiculoCompleto').checked) { estadoSelected = 'VehiculoCompleto'; }
 	if (document.getElementById('rbnEnViaje').checked) { estadoSelected = 'EnViaje' }
 	if (document.getElementById('rbnDesviado').checked) { estadoSelected = 'Desviado'; }
-	if (document.getElementById('rbnAlerta').checked) { estadoSelected = document.getElementById('Alerta').value; }
-	if (document.getElementById('rbnDemorado').checked) { estadoSelected = document.getElementById('Demorado').value; }
-	if (document.getElementById('rbnConcluido').checked) { estadoSelected = document.getElementById('Concluido').value; }
+	if (document.getElementById('rbnAlerta').checked) { estadoSelected = 'Alerta'; }
+	if (document.getElementById('rbnDemorado').checked) { estadoSelected = 'Demorado'; }
+	if (document.getElementById('rbnConcluido').checked) { estadoSelected = 'Concluido'; }
 	
 	if(estadoSelected == ''){
 		alert('Debe elegir un estado');

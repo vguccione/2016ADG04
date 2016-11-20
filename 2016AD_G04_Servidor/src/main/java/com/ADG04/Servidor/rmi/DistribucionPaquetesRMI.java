@@ -2068,7 +2068,6 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		return null;
 	}
 
-
 	public Integer asignarEnvio(Integer idEncomienda)throws RemoteException, BusinessException{
 		
 		EncomiendaE enc = EncomiendaDao.getInstancia().getById(idEncomienda);
@@ -2092,6 +2091,33 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		return idEnvio;
 	}
+
+	public Integer asignarEnvio(Integer idEncomienda, Integer idSucursalDestino)throws RemoteException, BusinessException{
+		
+		EncomiendaE enc = EncomiendaDao.getInstancia().getById(idEncomienda);
+		
+		if(enc == null){
+			throw new BusinessException("La encomienda nro " + idEncomienda + " no existe.");
+		}
+		
+		Integer idEnvio = 0;
+		
+		if(enc.getTipoEncomienda().equals('P')){
+			EncomiendaParticular particular = (EncomiendaParticular) new EncomiendaParticular().fromEntity(enc);
+			idEnvio = particular.asignarEnvio(null, idSucursalDestino);
+			
+		}else{
+			EncomiendaEmpresa empresa = (EncomiendaEmpresa) new EncomiendaEmpresa().fromEntity(enc);
+			idEnvio = empresa.asignarEnvio(null, idSucursalDestino);
+		}
+		
+		if(idEnvio <= 0){
+			throw new BusinessException("No se pudo generar el envio.");
+		}
+		
+		return idEnvio;
+	}
+
 	
 	public boolean estaEncomiendaAsignada(int idEncomienda) throws RemoteException{
 		Encomienda enc = new Encomienda().fromEntity(EncomiendaDao.getInstancia().getById(idEncomienda));
@@ -2121,7 +2147,9 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		List<DTO_Encomienda> dtos = new ArrayList<DTO_Encomienda>();
 		for(EncomiendaE encE:encs){
-			dtos.add(new Encomienda().fromEntity(encE).toDTO());
+			DTO_Encomienda dto = new Encomienda().fromEntity(encE).toDTO();
+			dto.setTipoEncomienda(encE.getTipoEncomienda());
+			dtos.add(dto);
 		}
 		
 		return dtos;
@@ -2142,4 +2170,20 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		return enviosDto;
 	}
+
+
+	@Override
+	public List<DTO_Envio> getEnviosByEncomienda(int idEncomienda)
+			throws RemoteException {
+		List<EnvioE> enviosE = EnvioDao.getInstancia().getByEncomienda(idEncomienda);
+		List<DTO_Envio> dtos = new ArrayList<DTO_Envio>();
+		
+		for(EnvioE envE:enviosE){
+			Envio e = new Envio().fromEntity(envE);
+			dtos.add(e.toDTO());
+		}
+		
+		return dtos;
+	}
+	
 }

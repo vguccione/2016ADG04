@@ -210,11 +210,11 @@ public class ListadoFacturasClientes extends javax.swing.JFrame {
 							enc = Controlador.getInstancia().getEncomiendaEmpresa(item.getIdEncomienda());
 						if(enc!=null){
 							int idCliente = enc.getCliente().getId();
-							dni = Controlador.getInstancia().getClienteById(idCliente).getDni();
+							//dni = Controlador.getInstancia().getClienteById(idCliente).getDni();
 						}
 						
 						jTableListadoModel.addRow(new Object[] { item.getId(),
-																	dni,
+																	enc.getCliente().getId(),
 																	item.getTipo(),
 																	item.getFecha().toString(),
 																	Float.toString(total),

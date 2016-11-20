@@ -151,10 +151,10 @@ public class ListadoFacturasClientesPendientes extends javax.swing.JFrame {
 							enc = Controlador.getInstancia().getEncomiendaEmpresa(l.getIdEncomienda());
 						if(enc!=null){
 							int idCliente = enc.getCliente().getId();
-							dni = Controlador.getInstancia().getClienteById(idCliente).getDni();
+						//	dni = Controlador.getInstancia().getClienteById(idCliente).getDni();
 						}
 						
-						jTableListadoModel.addRow(new Object[] { 	l.getId(), dni,
+						jTableListadoModel.addRow(new Object[] { 	l.getId(), enc.getCliente().getId(),
 																	l.getTipo(), 
 																	l.getFecha().toString(),
 																	Float.toString(total)			

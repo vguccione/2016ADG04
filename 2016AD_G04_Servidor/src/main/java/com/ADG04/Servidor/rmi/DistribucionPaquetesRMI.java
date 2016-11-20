@@ -1892,8 +1892,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			File f = new File("./"+dir+"/");
 	
 	    	File[] matchingFiles = f.listFiles(new FilenameFilter() {
-	    	    public boolean accept(File dir, String name) {
-	    	    	
+	    	    public boolean accept(File dir, String name) {	    	
 	    	        return name.startsWith(env.getVehiculo().getPatente());
 	    	    }
 	    	});

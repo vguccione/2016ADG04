@@ -233,7 +233,7 @@ $(document).ready(function() {
 						<br/>
 						<li>
 							<label>Tratamiento:</label>
-							<input class="input-field" name="" type="text" id="tratamiento" value="" maxlength="50" />
+							<input class="input-field" name="tratamiento" type="text" id="tratamiento" maxlength="50" />
 						</li>
 						<br/>
 						<li>

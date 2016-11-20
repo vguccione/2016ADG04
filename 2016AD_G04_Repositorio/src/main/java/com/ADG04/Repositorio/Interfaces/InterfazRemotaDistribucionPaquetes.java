@@ -25,16 +25,9 @@ public interface InterfazRemotaDistribucionPaquetes extends Remote, IAdministrac
 	
 	public static final String url = "localhost/DistribucionPaquetesRMI";
 
-	//Metodos agregados desde la interfaz web
-	Integer cobrarEncomiendaParticular(Integer idFactura) throws RemoteException;
-
-	Integer facturarEncomiendaEmpresa(int idEncomienda)throws RemoteException;
-
-	Integer cobrarEncomiendaEmpresa(Integer idFactura)throws RemoteException;
-
 	DTO_Usuario getEmpleado(Integer idEmpleado)throws RemoteException;
 
-	Integer facturarEncomiendaParticular(DTO_EncomiendaParticular enc)throws RemoteException;
+	
 
 
 

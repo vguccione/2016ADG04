@@ -60,7 +60,7 @@ public class DTO_Factura implements Serializable{
 	
 	public boolean estaVencida(){
 		//Si está impaga y la fecha de vencimiento ya paso, return true,
-		if(fechaVencimiento.before(new Date()))
+		if(fechaVencimiento.before(new Date()) && !this.isPagado())
 			return true;
 		
 		return false;

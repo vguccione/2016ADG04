@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.ADG04.Servidor.dao.FacturaDao;
 import com.ADG04.Servidor.model.FacturaE;
 import com.ADG04.Servidor.model.ItemFacturaE;
 import com.ADG04.bean.Cliente.DTO_Factura;
@@ -174,6 +175,14 @@ public class Factura{
 		}else
 			return null;
 		
+	}
+
+	public void pagar() {
+		this.setPagada(true);
+		
+		FacturaE f = FacturaDao.getInstancia().getById(this.getIdFactura());
+		f.setPagada(true);
+		FacturaDao.getInstancia().saveOrUpdate(f);
 	}
 
 }

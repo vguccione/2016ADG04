@@ -8,6 +8,8 @@ import com.ADG04.bean.Cliente.DTO_Factura;
 public interface IFacturaRemote {
 
 	
+	public void pagarFactura(int idEncomienda)throws RemoteException;
+	
 	public DTO_Factura getFacturaById(Integer id) throws RemoteException;
 	
 	/************************** Cta Cte *****************************************/

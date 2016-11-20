@@ -214,8 +214,12 @@ $(document).ready(function() {
     </div>
    
 
-	<br /><br />
-	<input id="btnVerFactura" type="button" onclick="showFactura();" value="Ver Factura ">
+	<!-- <input id="btnVerFactura" type="button" onclick="showFactura();" value="Ver Factura ">-->
+	<% String urlVerFactura = "servletPagarFactura?action=getFactura&idEncomienda=";
+		urlVerFactura += request.getAttribute("nroEncomienda");
+	%>
+	
+	<a href='<%=urlVerFactura%>'>Ver Factura - Pagar Factura</a>
 	
 	<div id="divFactura" style="display: none;">
 	<input id="btnHideFactura" type="button" onclick="hideFactura();" value="Ocultar Factura "> <br />

@@ -64,6 +64,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 				getEncomiendaEmpresa(request);
 				jspPage = "verEncomiendaEmpresa.jsp";
 			}
+			
 		}
 		catch(BusinessException cEx){
 			cEx.printStackTrace();
@@ -353,6 +354,8 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			request.setAttribute("totalFactura", total.toString());
 		}
 	}
+
+	
 
 
 	private List<DTO_Envio> getEnviosByEncomienda(int idEncomienda) throws RemoteException, Exception {

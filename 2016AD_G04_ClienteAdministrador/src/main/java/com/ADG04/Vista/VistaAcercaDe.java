@@ -56,7 +56,7 @@ public class VistaAcercaDe extends javax.swing.JFrame {
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			//this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("images/box.png")).getImage());
+			this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("./com/ADG04/Images/logoUade.jpg")).getImage());
 			this.setResizable(false);
 			GroupLayout thisLayout = new GroupLayout((JComponent)getContentPane());
 			getContentPane().setLayout(thisLayout);
@@ -74,11 +74,6 @@ public class VistaAcercaDe extends javax.swing.JFrame {
 					jLabelAlumno2 = new JLabel();
 					jLabelAlumno2.setText("Guccione, Vanesa - LU: 1014369");
 					jLabelAlumno2.setLayout(null);
-				}
-				{
-					jLabelAlumno3 = new JLabel();
-					jLabelAlumno3.setText("Roncoroni, Veronica - LU: 124832");
-					jLabelAlumno3.setLayout(null);
 				}
 				
 				{
@@ -124,9 +119,8 @@ public class VistaAcercaDe extends javax.swing.JFrame {
 					.addComponent(jLabelAlumno1, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 					.addComponent(jLabelAlumno2, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-					.addComponent(jLabelAlumno3, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED));
+					
 				jPanel1Layout.setHorizontalGroup(jPanel1Layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(jPanel1Layout.createParallelGroup()
@@ -147,10 +141,7 @@ public class VistaAcercaDe extends javax.swing.JFrame {
 					        .addGap(0, 170, Short.MAX_VALUE))
 					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
 					        .addComponent(jLabelAlumno2, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					        .addGap(0, 181, Short.MAX_VALUE))
-					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addComponent(jLabelAlumno3, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					        .addGap(0, 195, Short.MAX_VALUE)))
+					        .addGap(0, 181, Short.MAX_VALUE)))
 					.addContainerGap());
 			}
 			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup()

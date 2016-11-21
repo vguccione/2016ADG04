@@ -68,18 +68,34 @@ function saveEnvio(){
 		return;
 	}
 	
-    $.get('servletAsignarEnvio?action=asignarEnvio&idEncomienda='+$("#nroEncomienda").val()+'&idSucDestino='+$("#idSucDestinoEnvio").val()+'&idCarrier='+$("#idCarrier").val(), {
-   		//idEncomienda : $("#nroEncomienda").val() 
-   	}, 
-   	function(responseText) {
-   		
-			$("#idEnvioAsignado").val(responseText);
-			$("#divAsignarEnvio").css("display", "block");
-			$("#btnAsignarEnvio").css("display", "none");
-			$("#idSucDestinoEnvio").css("display", "none");
-			$("#lblSucDestinoEnvio").css("display", "none");
-			$("#btnSaveEnvio").css("display", "none");
-	})
+	if($("#idCarrier").val() != undefined){
+	    $.get('servletAsignarEnvio?action=asignarEnvio&idEncomienda='+$("#nroEncomienda").val()+'&idSucDestino='+$("#idSucDestinoEnvio").val()+'&idCarrier='+$("#idCarrier").val(), {
+	   		//idEncomienda : $("#nroEncomienda").val() 
+	   	}, 
+	   	function(responseText) {
+	   		
+				$("#idEnvioAsignado").val(responseText);
+				$("#divAsignarEnvio").css("display", "block");
+				$("#btnAsignarEnvio").css("display", "none");
+				$("#idSucDestinoEnvio").css("display", "none");
+				$("#lblSucDestinoEnvio").css("display", "none");
+				$("#btnSaveEnvio").css("display", "none");
+		})
+	}
+	else{
+		$.get('servletAsignarEnvio?action=asignarEnvio&idEncomienda='+$("#nroEncomienda").val()+'&idSucDestino='+$("#idSucDestinoEnvio").val(), {
+	   		//idEncomienda : $("#nroEncomienda").val() 
+	   	}, 
+	   	function(responseText) {
+	   		
+				$("#idEnvioAsignado").val(responseText);
+				$("#divAsignarEnvio").css("display", "block");
+				$("#btnAsignarEnvio").css("display", "none");
+				$("#idSucDestinoEnvio").css("display", "none");
+				$("#lblSucDestinoEnvio").css("display", "none");
+				$("#btnSaveEnvio").css("display", "none");
+		})
+	}
 }
 
 

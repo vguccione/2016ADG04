@@ -44,7 +44,7 @@ public class ServletAsignarEnvio extends HttpServlet {
 					idSucDestino = Integer.parseInt(request.getParameter("idSucDestino").toString());
 				Integer idEnvio = 0;
 				
-				if(request.getParameter("idCarrier")!= null){
+				if(request.getParameter("idCarrier")!= null && !request.getParameter("idCarrier").isEmpty()){
 					Integer idCarrier = Integer.parseInt(request.getParameter("idCarrier").toString());
 					idEnvio = WebBusinessDelegate.getInstancia().asignarEnvio(idEncomienda, idSucDestino, idCarrier);
 				}

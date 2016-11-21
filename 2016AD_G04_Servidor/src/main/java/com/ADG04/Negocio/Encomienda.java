@@ -696,176 +696,204 @@ public  class Encomienda{
 	 // * Asignar envio manualmente indicando sucursal de destino */
 	public Integer asignarEnvio(Integer idCarrier, int idSucursalDest) throws BusinessException {
 		
-		/*antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
-		 * y asi marco esos envios y vehiculos como no disponibles*/
-		ponerEnViajeEncomiendasPorVencer();
-		
 		EncomiendaE e = EncomiendaDao.getInstancia().getById(idEncomienda);
+		
+		if(e == null){
+			throw new BusinessException("No existe la encomienda " + idEncomienda);
+		}
+		
 		System.out.println(e.toString());
 		Integer idEnvio = null;
-		if(e != null){
-			if(esEnvioTercerizado()){ 
-				EnvioE envioTercerizado = new EnvioE();
-				if(e.isInternacional()){
-					ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
-					envioTercerizado.setProveedor(prov);
-					envioTercerizado.setFechaYHoraLlegadaEstimada(new Date());
+
+		/*Si no es tercerizada, me fijo si hay encomiendas por vencer.
+		 * Antes de asignar busco encomiendas por vencer asi ya las pongo en viaje 
+		 * y asi marco esos envios y vehiculos como no disponibles*/
+		if(!e.isInternacional() && !e.isTercerizado())
+			ponerEnViajeEncomiendasPorVencer();
+		
+		if(esEnvioTercerizado()){ 
+			idEnvio = asignarEnvioTercerizado(idCarrier, idSucursalDest, e);
+		} 
+		else {	//-------si no es tercerizado
+			idEnvio = asignarEnvioPropio(idSucursalDest, e, idEnvio);
+		}
+		
+		/* Si no es tercerizada, me fijo si hay encomiendas por vencer.
+		 * Coloco las encomiendas en viaje y envio en viaje si hay encomiendas por vencer 
+		 */
+		if(!e.isInternacional() && !e.isTercerizado())	
+			ponerEnViajeEncomiendasPorVencer();
+		
+		return idEnvio;
+	}
+
+
+
+	private Integer asignarEnvioPropio(int idSucursalDest, EncomiendaE e,
+			Integer idEnvio) throws NoHayVehiculosDisponiblesException {
+		//Busco si ya hay algun envio que vaya a la misma ciudad y pendientes
+		boolean nuevoEnvio = true;
+		List<EnvioE> envios = EnvioDao.getInstancia().listarEnviosPorSucursalDestino(idSucursalDest, e.getFechaEstimadaEntrega());
+		boolean pesoOK = false;
+		boolean volumenOK = false;
+		for(EnvioE envProp: envios){
+			if(!pesoOK || !volumenOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
+				//Sumo los pesos y los volumenes
+				float peso = 0;
+				float volumen = 0;
+				float pesoTotal = envProp.getVehiculo().getPeso() - envProp.getVehiculo().getTara();
+				float volumenTotal = envProp.getVehiculo().getVolumen();
+				for(EncomiendaE enc: envProp.getEncomiendas()){
+					peso = (float) (peso + enc.getPeso());
+					volumen = (float) (volumen + enc.getVolumen());
 				}
-				else{
-					MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), idSucursalDest);
-					envioTercerizado.setMapaDeRuta(mr);
-					envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+				
+				//Verifico si entra el nuevo pedido
+				if(pesoTotal >= peso + e.getPeso()){
+					pesoOK = true;
 				}
+				if(volumenTotal >= volumen + e.getVolumen()){
+					volumenOK = true;
+				}
+
+				if(pesoOK && volumenOK){ //lo asigno a este envio
+					
+					List<EncomiendaE> encomiendas = envProp.getEncomiendas();
+					encomiendas.add(e);
+					envProp.setEncomiendas(encomiendas);
+					envProp.setPropio(true);
+					envProp.setFechaActualizacion(new Date());
+					envProp.setEstado(EnvioEstado.Pendiente.toString());
+					
+					float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
+					float peso70 = (float)(peso + e.getPeso()/pesoTotal);
+					
+					if(peso70 > 0.7 || volumen70 > 0.7){
+						envProp.setEstado(EnvioEstado.VehiculoCompleto.toString());
+					}
 				
-				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
-				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
-				envioTercerizado.setNroTracking(2000);
-				envioTercerizado.setSucursalOrigen(e.getSucursalOrigen());
-				envioTercerizado.setSucursalDestino(SucursalDao.getInstancia().getById(idSucursalDest));
-				envioTercerizado.setFechaYHoraSalida(new Date());
-				
-				
-				envioTercerizado.setPropio(false);
-				envioTercerizado.setFechaActualizacion(new Date());
-				List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
-				lista.add(e);
-				envioTercerizado.setEncomiendas(lista);
-				e.setEstado(EncomiendaEstado.Colocada.toString());
-				
-				EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
-				EncomiendaDao.getInstancia().saveOrUpdate(e);
-				
-				Envio env = new Envio().fromEntity(envio);
-				env.actualizarHistorico();
-				
-				idEnvio = envio.getIdEnvio();
+					e.setEstado(EncomiendaEstado.Colocada.toString());
+					
+					EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envProp);
+					EncomiendaDao.getInstancia().saveOrUpdate(e);
+					nuevoEnvio = false;
+					
+					Envio env = new Envio().fromEntity(envio);
+					env.actualizarHistorico();
+					
+					idEnvio =  envProp.getIdEnvio();
+				} 
+			}
+		}//End loop
+		
+		//Es un nuevo envio por que no se encontro camion disponible
+		if (nuevoEnvio){
+			//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<>Pendiente)
+			List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(e.getSucursalActual().getIdSucursal(),  e.getVolumen(), e.getPeso());
+			boolean pesoNuevoOK = false;
+			boolean volumenNuevoOK = false;
+			
+			if(vehiculosDisponibles.size() == 0) {
+				throw new NoHayVehiculosDisponiblesException(this.getSucursalActual().getIdSucursal());
 			} else {
-				//Busco si ya hay algun envio que vaya a la misma ciudad y pendientes
-				boolean nuevoEnvio = true;
-				List<EnvioE> envios = EnvioDao.getInstancia().listarEnviosPorSucursalDestino(idSucursalDest, e.getFechaEstimadaEntrega());
-				boolean pesoOK = false;
-				boolean volumenOK = false;
-				for(EnvioE envProp: envios){
-					if(!pesoOK || !volumenOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
-						//Sumo los pesos y los volumenes
-						float peso = 0;
-						float volumen = 0;
-						float pesoTotal = envProp.getVehiculo().getPeso() - envProp.getVehiculo().getTara();
-						float volumenTotal = envProp.getVehiculo().getVolumen();
-						for(EncomiendaE enc: envProp.getEncomiendas()){
-							peso = (float) (peso + enc.getPeso());
-							volumen = (float) (volumen + enc.getVolumen());
-						}
+				for(VehiculoE v: vehiculosDisponibles){
+					//Sumo los pesos y los volumenes
+					if(!pesoNuevoOK || !volumenNuevoOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
+						float pesoTotal = v.getPeso() - v.getTara();
+						float volumenTotal = v.getVolumen();
+						
 						
 						//Verifico si entra el nuevo pedido
-						if(pesoTotal >= peso + e.getPeso()){
-							pesoOK = true;
+						if(pesoTotal >= e.getPeso()){
+							pesoNuevoOK = true;
 						}
-						if(volumenTotal >= volumen + e.getVolumen()){
-							volumenOK = true;
+						if(volumenTotal >= e.getVolumen()){
+							volumenNuevoOK = true;
 						}
-	
-						if(pesoOK && volumenOK){ //lo asigno a este envio
+						if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
+							//Genero el envio
 							
-							List<EncomiendaE> encomiendas = envProp.getEncomiendas();
-							encomiendas.add(e);
-							envProp.setEncomiendas(encomiendas);
-							envProp.setPropio(true);
-							envProp.setFechaActualizacion(new Date());
-							envProp.setEstado(EnvioEstado.Pendiente.toString());
+							MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), idSucursalDest);
 							
-							float volumen70 = (float)(volumen + e.getVolumen()/volumenTotal);
-							float peso70 = (float)(peso + e.getPeso()/pesoTotal);
+							EnvioE envioPropio = new EnvioE();
+							envioPropio.setEstado(EnvioEstado.Pendiente.toString());
+							envioPropio.setFechaYHoraSalida(new Date());
 							
-							if(peso70 > 0.7 || volumen70 > 0.7){
-								envProp.setEstado(EnvioEstado.VehiculoCompleto.toString());
-							}
+							envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
+							envioPropio.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+							envioPropio.setVehiculo(v);
+							envioPropio.setPropio(true);
+							envioPropio.setFechaActualizacion(new Date());
 						
-							e.setEstado(EncomiendaEstado.Colocada.toString());
+							envioPropio.setSucursalOrigen(e.getSucursalActual());
+							envioPropio.setSucursalDestino(SucursalDao.getInstancia().getById(idSucursalDest));
+							envioPropio.setMapaDeRuta(mr);
+							List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
+							lista.add(e);
+							envioPropio.setEncomiendas(lista);
+							float volumen70 = (float)(e.getVolumen()/volumenTotal);
+							float peso70 = (float)(e.getPeso()/pesoTotal);
 							
-							EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envProp);
+							e.setEstado(EncomiendaEstado.Colocada.toString());									
+
+							if(peso70 > 0.7 || volumen70 > 0.7){
+								envioPropio.setEstado(EnvioEstado.VehiculoCompleto.toString());
+							}
+							
+							EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
 							EncomiendaDao.getInstancia().saveOrUpdate(e);
-							nuevoEnvio = false;
 							
 							Envio env = new Envio().fromEntity(envio);
 							env.actualizarHistorico();
 							
-							idEnvio =  envProp.getIdEnvio();
-						} 
+							idEnvio =  envio.getIdEnvio();
+						}
 					}
-				}//End loop
-				
-				//Es un nuevo envio por que no se encontro camion disponible
-				if (nuevoEnvio){
-					//Buscar Vehiculo para asignar que no pertezca a un envio en curso (<>Pendiente)
-					List<VehiculoE> vehiculosDisponibles = this.listarVehiculosDisponibles(e.getSucursalActual().getIdSucursal(),  e.getVolumen(), e.getPeso());
-					boolean pesoNuevoOK = false;
-					boolean volumenNuevoOK = false;
-					
-					if(vehiculosDisponibles.size() == 0) {
-						throw new NoHayVehiculosDisponiblesException(this.getSucursalActual().getIdSucursal());
-					} else {
-						for(VehiculoE v: vehiculosDisponibles){
-							//Sumo los pesos y los volumenes
-							if(!pesoNuevoOK || !volumenNuevoOK){ //si peso y volumen dan ok, significa que ya fue asignada la encomienda al envio
-								float pesoTotal = v.getPeso() - v.getTara();
-								float volumenTotal = v.getVolumen();
-								
-								
-								//Verifico si entra el nuevo pedido
-								if(pesoTotal >= e.getPeso()){
-									pesoNuevoOK = true;
-								}
-								if(volumenTotal >= e.getVolumen()){
-									volumenNuevoOK = true;
-								}
-								if(pesoNuevoOK && volumenNuevoOK){ //lo asigno a este envio
-									//Genero el envio
-									
-									MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), idSucursalDest);
-									
-									EnvioE envioPropio = new EnvioE();
-									envioPropio.setEstado(EnvioEstado.Pendiente.toString());
-									envioPropio.setFechaYHoraSalida(new Date());
-									
-									envioPropio.setPosicionActual(e.getSucursalActual().getCoordenadas());
-									envioPropio.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
-									envioPropio.setVehiculo(v);
-									envioPropio.setPropio(true);
-									envioPropio.setFechaActualizacion(new Date());
-								
-									envioPropio.setSucursalOrigen(e.getSucursalActual());
-									envioPropio.setSucursalDestino(SucursalDao.getInstancia().getById(idSucursalDest));
-									envioPropio.setMapaDeRuta(mr);
-									List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
-									lista.add(e);
-									envioPropio.setEncomiendas(lista);
-									float volumen70 = (float)(e.getVolumen()/volumenTotal);
-									float peso70 = (float)(e.getPeso()/pesoTotal);
-									
-									e.setEstado(EncomiendaEstado.Colocada.toString());									
+				}//End for
+			}
+		}//End Nuevo Envio
+		return idEnvio;
+	}
 
-									if(peso70 > 0.7 || volumen70 > 0.7){
-										envioPropio.setEstado(EnvioEstado.VehiculoCompleto.toString());
-									}
-									
-									EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioPropio);
-									EncomiendaDao.getInstancia().saveOrUpdate(e);
-									
-									Envio env = new Envio().fromEntity(envio);
-									env.actualizarHistorico();
-									
-									idEnvio =  envio.getIdEnvio();
-								}
-							}
-						}//End for
-					}
-				}//End Nuevo Envio
-			}//End if else envio propio/tercerizado
-		}//End if no encontro encomienda
-			/*Coloco las encomiendas en viaje y envio en viaje si hay encomiendas por vencer*/
-		ponerEnViajeEncomiendasPorVencer();
+
+
+	private Integer asignarEnvioTercerizado(Integer idCarrier,
+			int idSucursalDest, EncomiendaE e) {
+		Integer idEnvio;
+		EnvioE envioTercerizado = new EnvioE();
+		if(e.isInternacional()){
+			ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
+			envioTercerizado.setProveedor(prov);
+			envioTercerizado.setFechaYHoraLlegadaEstimada(new Date());
+		}
+		else{
+			MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), idSucursalDest);
+			envioTercerizado.setMapaDeRuta(mr);
+			envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+		}
 		
+		envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
+		envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
+		envioTercerizado.setNroTracking(2000);
+		envioTercerizado.setSucursalOrigen(e.getSucursalOrigen());
+		envioTercerizado.setSucursalDestino(SucursalDao.getInstancia().getById(idSucursalDest));
+		envioTercerizado.setFechaYHoraSalida(new Date());
+		
+		
+		envioTercerizado.setPropio(false);
+		envioTercerizado.setFechaActualizacion(new Date());
+		List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
+		lista.add(e);
+		envioTercerizado.setEncomiendas(lista);
+		e.setEstado(EncomiendaEstado.Colocada.toString());
+		
+		EnvioE envio = EnvioDao.getInstancia().saveOrUpdate(envioTercerizado);;
+		EncomiendaDao.getInstancia().saveOrUpdate(e);
+		
+		Envio env = new Envio().fromEntity(envio);
+		env.actualizarHistorico();
+		
+		idEnvio = envio.getIdEnvio();
 		return idEnvio;
 	}
 

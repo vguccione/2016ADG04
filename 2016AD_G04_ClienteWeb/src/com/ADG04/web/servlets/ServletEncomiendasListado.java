@@ -53,12 +53,36 @@ public class ServletEncomiendasListado extends HttpServlet {
 			int totalNumberOfRecords = encomiendasP.size(); 
 			JqGridData<EncomiendaWeb> gridData = new JqGridData<EncomiendaWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, encomiendas);		
 			
+			boolean noasignados=false;
+			
+			if(request.getParameter("noasignados")!=null){
+				System.out.println(request.getParameter("noasignados"));
+				if("1".equals(request.getParameter("noasignados").toString())){
+					noasignados=true;
+					System.out.println("DALE");
+				}
+			}
+			
+			
 			for(DTO_EncomiendaParticular encP:encomiendasP){
-
+				
 				boolean envioAsignado = WebBusinessDelegate.getInstancia().estaEncomiendaAsignada(encP.getIdEncomienda());
-				EncomiendaWeb enc = new EncomiendaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado);
-				enc.setTipo("P");
-				gridData.addItem(enc);
+				EncomiendaWeb enc = null;
+				if(noasignados==true){
+					if(envioAsignado==false){
+						enc = new EncomiendaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado);
+						enc.setTipo("P");
+						gridData.addItem(enc);
+						System.out.println("aca");
+					}
+				}
+				else{
+					enc = new EncomiendaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado);
+					enc.setTipo("P");
+					gridData.addItem(enc);
+				}
+				
+				
 			}
 			
 			System.out.println("Grid Data: " + gridData.getJsonString());

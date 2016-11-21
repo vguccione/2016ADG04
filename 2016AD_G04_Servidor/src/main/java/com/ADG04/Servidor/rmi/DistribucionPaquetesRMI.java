@@ -608,7 +608,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		Date fechaEstimada = new Date();
 		//calculo fecha estimada si no existe para agregarla al remito
 		if(encP.getSucursalDestino()!=null ){
-			if(encP.getSucursalDestino().getId()!=0){
+			if(encP.getSucursalDestino().getId()!=0 && encP.getSucursalDestino().getId()!=encP.getSucursalOrigen().getId()){
 				MapaDeRutaE me = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(encP.getSucursalActual().getId(), encP.getSucursalDestino().getId());
 				MapaDeRuta mr = new MapaDeRuta().fromEntity(me);
 				fechaEstimada = mr.calcularFechaEstimadaDeEntrega();

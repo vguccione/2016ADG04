@@ -108,7 +108,14 @@ $(document).ready(function() {
  <script>
  function validar(){
 	valido = true;
-	if(document.getElementById("idSucursalDestino").value==""){
+
+	esTercerizado=false;
+	var tercerizado = document.getElementsByName("tercerizado");
+	for(var i = 0; i < tercerizado.length; i++){
+		if(tercerizado[i].checked && tercerizado[i].value==="true")
+			esTercerizado=true;
+	}
+	if(document.getElementById("idSucursalDestino").value=="" && esTercerizado==false){
 		alert("Por favor ingrese sucursal destino");
 		valido=false;
 	}

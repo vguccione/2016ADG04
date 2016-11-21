@@ -510,10 +510,11 @@ public  class Encomienda{
 						throw new BusinessException("El Proveedor " + idCarrier + " no es de tipo Carrier (es de tipo '"+prov.getTipo()+"')");
 					
 					envioTercerizado.setProveedor(prov);
-					System.out.println("Es tercerizdo: " + e.isTercerizado() + " - Es internacional: " + e.isInternacional());
-					System.out.println("Carrier asignado: " + prov.getIdProveedor() + " (" +prov.getRazonSocial()+")"); 
 				}
-				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+				if(!e.isInternacional()){
+					MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+					envioTercerizado.setMapaDeRuta(mr);
+				}
 				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
 				envioTercerizado.setPosicionActual(e.getSucursalActual().getCoordenadas());
 				envioTercerizado.setNroTracking(2000);
@@ -521,7 +522,7 @@ public  class Encomienda{
 				envioTercerizado.setSucursalDestino(e.getSucursalDestino());
 				envioTercerizado.setFechaYHoraSalida(new Date());
 				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
-				envioTercerizado.setMapaDeRuta(mr);
+				
 				envioTercerizado.setPropio(false);
 				envioTercerizado.setFechaActualizacion(new Date());
 				List<EncomiendaE> lista = new ArrayList<EncomiendaE>();
@@ -708,10 +709,12 @@ public  class Encomienda{
 				if(e.isInternacional()){
 					ProveedorE prov = ProveedorDao.getInstancia().getById(idCarrier);
 					envioTercerizado.setProveedor(prov);
+					envioTercerizado.setFechaYHoraLlegadaEstimada(new Date());
 				}
 				else{
 					MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalActual().getIdSucursal(), idSucursalDest);
 					envioTercerizado.setMapaDeRuta(mr);
+					envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
 				}
 				
 				envioTercerizado.setEstado(EnvioEstado.Pendiente.toString());
@@ -720,7 +723,7 @@ public  class Encomienda{
 				envioTercerizado.setSucursalOrigen(e.getSucursalOrigen());
 				envioTercerizado.setSucursalDestino(SucursalDao.getInstancia().getById(idSucursalDest));
 				envioTercerizado.setFechaYHoraSalida(new Date());
-				envioTercerizado.setFechaYHoraLlegadaEstimada(e.getFechaEstimadaEntrega());
+				
 				
 				envioTercerizado.setPropio(false);
 				envioTercerizado.setFechaActualizacion(new Date());
@@ -934,7 +937,9 @@ public  class Encomienda{
 		if(this.isInternacional()){
 			return true;
 		}
-		MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(this.getSucursalOrigen().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
+		MapaDeRutaE mr=null;
+		if(!this.isInternacional())
+			mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(this.getSucursalOrigen().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
 		if(mr!=null){
 			Date hoy = new Date();
 			Calendar calendar = Calendar.getInstance();
@@ -1007,11 +1012,14 @@ public  class Encomienda{
 	
 	public void facturar(String tipo) throws BusinessException {
 		
+		float kilometros=0f;
+		float costo=0;
 		//Calculo la primer linea de la factura - El valor del transporte lo define la cantidad de km y el costo
 		//que se obtiene del mapa de ruta. 
-		float kilometros = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCantKm();
-		float costo = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCosto();
-
+		if(!this.isInternacional()){
+			kilometros = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCantKm();
+			costo = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(sucursalOrigen.getIdSucursal(), sucursalDestino.getIdSucursal()).getCosto();
+		}
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date()); // Now use today date.
 		c.add(Calendar.DATE, 30); // Adding 30 days
@@ -1019,8 +1027,6 @@ public  class Encomienda{
 		FacturaE facturaEntity = new FacturaE();//("A", new Date(), false, c.getTime(), this);
 		facturaEntity.setFecha(new Date());
 		facturaEntity.setEncomienda(this.toEntity());
-		System.out.println("FechaVencimiento: ");
-		System.out.println(c.getTime().toString());
 		facturaEntity.setFechaVencimiento(c.getTime());
 		facturaEntity.setPagada(false);
 		facturaEntity.setTipoFactura("A");
@@ -1149,14 +1155,12 @@ public  class Encomienda{
 		
 		//El Mapa de Ruta es el encargado de calcular la fecha de entrega, porque la calculamos en base a 
 		//la distancia
-		System.out.println("MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino");
+		if(!this.isInternacional()){
 		MapaDeRutaE m = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(this.getSucursalOrigen().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
-		System.out.println(this.getSucursalOrigen().getIdSucursal());
-		System.out.println(this.getSucursalDestino().getIdSucursal());
-		System.out.println(m.getIdMapaDeRuta());
-		MapaDeRuta mapa = new MapaDeRuta();
-		mapa.setIdMapaDeRuta(m.getIdMapaDeRuta());
-		encomienda.setFechaEstimadaEntrega(mapa.calcularFechaEstimadaDeEntrega());
+			MapaDeRuta mapa = new MapaDeRuta();
+			mapa.setIdMapaDeRuta(m.getIdMapaDeRuta());
+			encomienda.setFechaEstimadaEntrega(mapa.calcularFechaEstimadaDeEntrega());
+		}
 		
 		Manifiesto dtoM = this.getManifiesto();
 	
@@ -1322,7 +1326,7 @@ public  class Encomienda{
 		env.setFechaActualizacion(e.getFechaActualizacion());
 		
 		MapaDeRuta mapa = null;
-		if(e.getMapaDeRuta()==null && e.getSucursalDestino()!=null){
+		if(e.getMapaDeRuta()==null && e.getSucursalDestino()!=null && e.getSucursalDestino()!=e.getSucursalOrigen()){
 			MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
 			mapa = new MapaDeRuta().fromEntity(mr);
 		}

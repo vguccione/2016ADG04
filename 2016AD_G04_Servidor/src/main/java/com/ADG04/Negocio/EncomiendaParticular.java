@@ -192,7 +192,7 @@ public class EncomiendaParticular extends Encomienda{
 		encomienda.setFechaCreacion(new Date());
 		
 		//El Mapa de Ruta es el encargado de calcular la fecha de entrega, porque la calculamos en base a 
-		if(this.getSucursalDestino()!=null){
+		if(this.getSucursalDestino()!=null && this.getSucursalDestino().getIdSucursal()!=this.getSucursalOrigen().getIdSucursal()){
 			MapaDeRutaE m = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(this.getSucursalOrigen().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
 			MapaDeRuta mapa = new MapaDeRuta();
 			mapa.setIdMapaDeRuta(m.getIdMapaDeRuta());

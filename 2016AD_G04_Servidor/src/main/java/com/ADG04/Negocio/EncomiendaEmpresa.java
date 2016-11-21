@@ -195,18 +195,16 @@ public class EncomiendaEmpresa extends Encomienda{
 		encomiendaEntity.setEstado(EncomiendaEstado.Ingresada.toString());
 		encomiendaEntity.setFechaCreacion(new Date());
 		
-		//El Mapa de Ruta es el encargado de calcular la fecha de entrega, porque la calculamos en base a 
-		//la distancia
-		System.out.println("MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino");
-		MapaDeRutaE m = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(this.getSucursalOrigen().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
-		System.out.println(this.getSucursalOrigen().getIdSucursal());
-		System.out.println(this.getSucursalDestino().getIdSucursal());
-		System.out.println(m.getIdMapaDeRuta());
-		MapaDeRuta mapa = new MapaDeRuta();
-		mapa.setIdMapaDeRuta(m.getIdMapaDeRuta());
-		Date fechaEstimadaDeEntrega = mapa.calcularFechaEstimadaDeEntrega();
-		encomiendaEntity.setFechaEstimadaEntrega(fechaEstimadaDeEntrega);
-		this.setFechaEstimadaEntrega(fechaEstimadaDeEntrega);			
+		if(!this.isInternacional()){
+			MapaDeRutaE m = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(this.getSucursalOrigen().getIdSucursal(), this.getSucursalDestino().getIdSucursal());
+			MapaDeRuta mapa = new MapaDeRuta();
+			mapa.setIdMapaDeRuta(m.getIdMapaDeRuta());
+			Date fechaEstimadaDeEntrega = mapa.calcularFechaEstimadaDeEntrega();
+			encomiendaEntity.setFechaEstimadaEntrega(fechaEstimadaDeEntrega);
+			this.setFechaEstimadaEntrega(fechaEstimadaDeEntrega);	
+		}
+		else
+			this.setFechaEstimadaEntrega(new Date());
 	//	EntityManager em = getEntityFactoryInstace();
 		//EntityTransaction tx = em.getTransaction();
 		//tx.begin();	
@@ -416,12 +414,15 @@ public class EncomiendaEmpresa extends Encomienda{
 		env.setFechaActualizacion(e.getFechaActualizacion());
 		
 		MapaDeRuta mapa = null;
-		if(e.getMapaDeRuta()==null){
-			MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
-			mapa = new MapaDeRuta().fromEntity(mr);
-		}
-		else{
-			mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
+		if(e.getSucursalDestino()!=null && e.getSucursalDestino().getIdSucursal()!=e.getSucursalOrigen().getIdSucursal()){
+			if(e.getMapaDeRuta()==null){
+				MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+				mapa = new MapaDeRuta().fromEntity(mr);
+			}
+			else{
+				if(e.getMapaDeRuta()!=null)
+					mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
+			}
 		}
 		
 		if(mapa!=null)

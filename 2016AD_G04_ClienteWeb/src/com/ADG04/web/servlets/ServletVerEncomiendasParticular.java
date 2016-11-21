@@ -264,7 +264,8 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		request.setAttribute("idSucursalActual", "");
 		if(e.getSucursalActual() != null)
 			request.setAttribute("idSucursalActual", e.getSucursalActual().getId().toString());
-		request.setAttribute("fechaCreacion",e.getFechaEstimadaEntrega().toString());
+		if(e.getFechaEstimadaEntrega()!=null)
+			request.setAttribute("fechaCreacion",e.getFechaEstimadaEntrega().toString());
 		request.setAttribute("largo",((Float)e.getLargo()).toString());
 		request.setAttribute("alto",((Float)e.getAlto()).toString());
 		request.setAttribute("ancho",((Float)e.getAncho()).toString());
